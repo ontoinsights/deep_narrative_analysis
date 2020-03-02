@@ -1,0 +1,1097 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Fagaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CastaneaAlnifolia a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "bush chinkapin"@en .
+:CastaneaAlnifolia 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry sandy soils in open woodlands or in thickets, also in rich upland deciduous woodlands."@en ;
+  :plant_country_range "South-eastern N. America - N. Carolina to Arkansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Alnifolia is a deciduous Shrub growing to 1 m (3ft 3in).  It is hardy to zone (UK) 7.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Of excellent quality. The seed is small but it is sweet and larger than C. pumila though produced less abundantly. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals. The burs have less prickles, making it easier to harvest the seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin."@en .
+
+:CastaneaCrenata a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "japanese chestnut"@en .
+:CastaneaCrenata 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Foothills."@en ;
+  :plant_country_range "E. Asia - Japan."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Crenata is a deciduous Tree growing to 9 m (29ft 6in).  It is hardy to zone (UK) 4.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. A good potato substitute. A source of starch. Very poor flavour. Coarse and of little value. Very variable in size and quality, any astringency can be removed by boiling the seed in salty water."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - hard, strong, light, very durable. Used for furniture, construction, fence posts etc."@en .
+
+:CastaneaDentata a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "american sweet chestnut"@en .
+:CastaneaDentata 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry, gravelly or rocky, mostly acid soils. This species is virtually extinct in America due to chestnut blight."@en ;
+  :plant_country_range "Eastern N. America - Maine and Ontario to Michigan, Georgia and Arkansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Dentata is a deciduous Tree growing to 30 m (98ft) by 15 m (49ft).  It is hardy to zone (UK) 4.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute, :ChocolateAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. Rather on the small side, but these are the sweetest seeds of any species in this genus. The seed contains about 7% fat, 11% protein. It can be dried, ground into powder and then be added to cereals when making bread, cakes etc. A delicious oil can be extracted from the seed by crushing the nuts, boiling them in water and then skimming off the oil as it comes to the surface. It can be used as a topping for various puddings. The roasted nut can be used as a coffee substitute and a chocolate substitute can also be made from it (no further details)."@en ;
+  :plant_medicinal_use :ExpectorantAndMucoactiveAgent, :Astringent ;
+  :plant_medicinal_text "A warm water infusion of the leaves has been used to calm the respiratory nerves and promote expectoration. The infusion has also been used in the treatment of whooping cough but modern opinion is that the leaves are no more than a mild astringent."@en ;
+  :plant_other_use :Tannin, :DyeInkAndPaint, :WoodCorkAndSubstitute, :VegetableOil ;
+  :plant_other_use_text "The bark is a good source of tannin. The dried leaves contain 9% tannin. The wood and the seed husks also contain tannin. The husks contain 10 - 13% tannin. A brown dye is obtained from the bark. Wood - soft, not strong, light, very durable, liable to warp. It weighs 28lb per cubic foot. Easy to split, it is used for making cheap furniture, fence posts, in construction etc."@en .
+
+:CastaneaHenryi a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en .
+:CastaneaHenryi 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Mixed mesophytic forests on mountain slopes at elevations of 100 - 1800 metres."@en ;
+  :plant_country_range "E. Asia - W. and C. China."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Henryi is a deciduous Tree growing to 25 m (82ft 0in).  It is hardy to zone (UK) 6.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Small. Said to be of excellent eating quality. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - valued locally for construction."@en .
+
+:CastaneaMollissima a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chinese chestnut"@en .
+:CastaneaMollissima 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woods and forests to 2500 metres. Mountain slopes from near sea level to 2,800 metres."@en ;
+  :plant_country_range "E. Asia - China."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Mollissima is a deciduous Tree growing to 25 m (82ft 0in) at a medium rate.  It is hardy to zone (UK) 4.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals. The skin (or pellicle) of the seed is easily peeled. The seed is low in fats and oils but high in carbohydrates. A nutritional analysis is available."@en ;
+  :plant_medicinal_use :Astringent, :Antidote, :Stomachic ;
+  :plant_medicinal_text "The burrs (seed cases?) are rich in tannin and are astringent and stomachic. A decoction is used in the treatment of diarrhoea, uncontrollable nose bleed, dysentery, regurgitation and profound thirst. The flowers are used in the treatment of scrofula. The stem bark is used to treat poisoned wounds whilst the stem sap is used to treat lacquer poisoning."@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - hard, strong, light. Used for fence posts etc. Coppiced for fuel."@en .
+
+:CastaneaOzarkensis a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "ozark chinkapin"@en .
+:CastaneaOzarkensis 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woods and rocky slopes. Deciduous forest at elevations of 150-600 metres."@en ;
+  :plant_country_range "Central N. America - Mississippi to Oklahoma."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Ozarkensis is a deciduous Tree growing to 18 m (59ft 1in).  It is hardy to zone (UK) 6.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Small but tasty. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin."@en .
+
+:CastaneaPumila a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chinquapin"@en, "ozark chinkapin"@en .
+:CastaneaPumila 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry sandy ridges and rich hillsides where it forms thickets, also in woods and on the borders of swamps."@en ;
+  :plant_country_range "Eastern N. America - New Jersey and Pennsylvania to Florida, Missouri and Texas."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Pumila is a deciduous Shrub growing to 4 m (13ft 1in) at a slow rate. It is hardy to zone (UK) 5 and is not frost tender.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Sweet with a nice nutty flavour, it is very acceptable raw and has a superior flavour to sweet chestnuts (C. sativa). When baked it becomes even sweeter and develops a floury texture, it makes an excellent potato or cereal substitute.The seed is quite small, about 2cm thich, which is about half the size of C. dentata. It is sold in local markets in America. The seed husks only contain one (rarely two) seed. The seed contains 45% starch and 2.5% protein."@en ;
+  :plant_medicinal_use :Antiperiodic, :Astringent, :Tonic ;
+  :plant_medicinal_text "The leaves contain tannin and are antiperiodic, astringent and tonic. An infusion of the leaves has been used as an external wash for the feverish condition common to colds."@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - coarse-grained, hard, strong, light, durable, easy to split. It weighs 37lb per cubic foot. Too small for commercial use, but it is occasionally used for fence posts, fuel etc."@en .
+
+:CastaneaPumilaAshei a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chinquapin"@en .
+:CastaneaPumilaAshei 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "By the coast, in dry thickets woods and borders of swamps."@en ;
+  :plant_country_range "Eastern N. America. - Virginia to Texas."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Pumila Ashei is a deciduous Shrub growing to 5 m (16ft 5in).  It is hardy to zone (UK) 7 and is not frost tender.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Sweet with a nice nutty flavour, it is very acceptable raw. When baked it becomes even sweeter and develops a floury texture, it makes an excellent potato or cereal substitute. The seed is quite small, about half the size of C. dentata. Sold in local markets in America."@en ;
+  :plant_medicinal_use :Antiperiodic, :Astringent, :Tonic ;
+  :plant_medicinal_text "The leaves contain tannin and are antiperiodic, astringent and tonic. An infusion of the leaves has been used as an external wash for the feverish condition common to colds."@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - hard, strong, light. Used for fence posts etc."@en .
+
+:CastaneaSativa a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "sweet chestnut"@en, "european chestnut"@en .
+:CastaneaSativa 
+  :plant_hardiness_zones "5-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woods in mountains."@en ;
+  :plant_country_range "S. Europe. Long naturalized in Britain."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "5"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Sativa is a deciduous Tree growing to 30 m (98ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute, :SugarAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A somewhat astringent taste raw, it improves considerably when cooked and is delicious baked with a floury texture and a flavour rather like sweet potatoes. The seed is rich in carbohydrates, it can be dried, then ground and used as a flour in breads, puddings, as a thickener in soups etc. The roasted seed can be used as a coffee substitute. A sugar can be extracted from the seed."@en ;
+  :plant_medicinal_use :ExpectorantAndMucoactiveAgent, :Astringent, :Antiinflammatory, :Antidiarrheal ;
+  :plant_medicinal_text "Although more commonly thought of as a food crop, sweet chestnut leaves and bark are a good source of tannins and these have an astringent action useful in the treatment of bleeding, diarrhoea etc. The leaves and bark are anti-inflammatory, astringent, expectorant and tonic. They are harvested in June or July and can be used fresh or dried. An infusion has been used in the treatment of fevers and ague, but are mainly employed for their efficacy in treating convulsive coughs such as whooping cough and in other irritable conditions of the respiratory system. The leaves can also be used in the treatment of rheumatism, to ease lower back pains and to relieve stiff muscles and joints. A decoction is a useful gargle for treating sore throats. The plant is used in Bach flower remedies - the keywords for prescribing it are 'Extreme mental anguish', Hopelessness' and 'Despair'."@en ;
+  :plant_other_use :Basketry, :WoodCorkAndSubstitute, :Starch, :FuelAndPower, :Tannin, :HairCare ;
+  :plant_other_use_text "Tannin is obtained from the bark. The wood, leaves and seed husks also contain tannin. The husks contain 10 - 13% tannin. On a 10% moisture basis, the bark contains 6.8% tannin and the wood 13.4%. The meal of the seed has been used as a source of starch and also for whitening linen cloth. A hair shampoo is made from the leaves and the skins of the fruits. It imparts a golden gleam to the hair. Wood - hard, strong, light. The young growing wood is very durable, though older wood becomes brittle and liable to crack. It is used for carpentry, turnery, props, basketry, fence posts etc. A very good fuel."@en .
+
+:CastaneaSeguinii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chinese chinquapin"@en .
+:CastaneaSeguinii 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Mixed mesophytic forests and thickets at elevations of 400 - 2000 metres."@en ;
+  :plant_country_range "E. Asia - E. and C. China."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Seguinii is a deciduous Tree growing to 10 m (32ft 10in) at a medium rate.  It is hardy to zone (UK) 6.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Small, but a good flavour. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - hard, strong, light. Used for fence posts etc."@en .
+
+:CastaneaSpecies a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chestnut hybrids"@en .
+:CastaneaSpecies 
+  :plant_hardiness_zones "4-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in a wild situation."@en ;
+  :plant_country_range "Hybrid origin"@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea Species is a deciduous Tree growing to 30 m (98ft) by 25 m (82ft) at a fast rate. It is hardy to zone (UK) 4.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals. The seed is low in fats and oils but high in carbohydrates. Carbon Farming Solutions - Staple Crop: balanced carb (The term staple crop typically refers to a food that is eaten routinely and accounts for a dominant part of people's diets in a particular region of the world) ."@en ;
+  :plant_medicinal_text "Some see for example the individual entries for Castanea dentata, Castanea mollissima, Castanea pumila"@en ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - hard, strong, light. Carbon Farming Solutions - Industrial Crop: biomass, tannin (Crops grown for non-food uses. Industrial crops provide resources in three main categories: materials, chemicals, and energy. Traditional materials include lumber and thatch, paper and cardboard, and textiles) . Other Systems: woody agriculture."@en .
+
+:CastaneaXNeglecta a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (chestnut)"@en ;
+  :synonym "chinknut"@en .
+:CastaneaXNeglecta 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A natural hybrid, C. dentata x C. pumila, found on well-drained soils."@en ;
+  :plant_country_range "Eastern N. America - N. Carolina."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Castanea X Neglecta is a deciduous Shrub growing to 4 m (13ft) by 4 m (13ft) at a slow rate. It is hardy to zone (UK) 5.  It is in flower in July, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. Eaten raw, there is a distinct astringency, especially if the fleshy inner skin beneath the outer shell of the seed is not removed. When cooked, however, and especially when baked, the seed becomes much sweeter and has a floury texture. It then makes an excellent food and can be used as a staple food in much the same way as potatoes or cereals. The seed is quite small, though it is larger than C. pumila. Another report says that only one large seed is formed in each seed case."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark, leaves, wood and seed husks all contain tannin. Wood - coarse-grained, hard, strong, light, durable, easy to split."@en .
+
+:CastanopsisAcuminatissima a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "castanopsis chestnut"@en, "white oak"@en .
+:CastanopsisAcuminatissima 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Mouth ulcers and anaemia have been reported from people eating large numbers of raw nuts."@en ;
+  :plant_habitat "An upper canopy tree of primary or relict forest, mostly on hillsides and ridges and often on loamy sandy soil; at elevations from 300 - 2,500 metres."@en ;
+  :plant_country_range "E. Asia - China, Bangladesh, Myanmar, Thailand, Laos, Vietnam, Malaysia, Indonesia, New Guinea."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Castanopsis Acuminatissima is an evergreen Tree growing to 25 m (82ft) by 25 m (82ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. They are more commonly cooked, it is mainly children who collect them and eat them raw. The seeds can be boiled or roasted - when cooked they taste somewhat like rice. The seed is up to 15mm x 10mm, contained in a spiny seedcase."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Agroforestry Uses: The tree has a heavy fall of leaves which form a deep mulch on the ground and inhibit the growth of other plants. The tree is planted as a pioneer species in northern Thailand in reforestation projects to restore native woodland - it is planted in degraded woodland and open areas in a mix with various other species that all have the ability to grow fast; produce dense, weed-suppressing crowns; and attract seed-dispersing wildlife, particularly birds and bats. Other Uses The wood is white. It is used for making furniture, bridges, flooring, plywood, boat building. The trunks and bark are used in traditional house construction. The wood can be used for fuel."@en .
+
+:CastanopsisInermis a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "braided chestnut"@en, "berangan"@en .
+:CastanopsisInermis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Forests, mostly in the hills, also found in bamboo forest, and in groves on a river-bank at elevations up to 600 metres."@en ;
+  :plant_country_range "Southeast Asia - Malaysia to Indonesia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Castanopsis Inermis is an evergreen Tree growing to 20 m (65ft) by 20 m (65ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seeds - cooked. They can be boiled, parched or roasted. The seeds can be 30 - 20mm."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "The plant may be able to tolerate park conditions. The preferred local food plant for caterpillars of the butterfly, the ciliate blue (Anthene emolus) and the moth Calliteara angulata."@en .
+
+:FagusGrandifolia a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "american beech"@en .
+:FagusGrandifolia 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Large quantities of the raw seed may be toxic."@en ;
+  :plant_habitat "Rich uplands and mountain slopes, often forming nearly pure forests. In the south of its range it is also found on the margins of streams and swamps."@en ;
+  :plant_country_range "Eastern N. America - New Brunswick to Florida, west to Texas and Ontario."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Fagus Grandifolia is a deciduous Tree growing to 10 m (32ft) by 10 m (32ft) at a slow rate. It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from April to May, and the seeds ripen from October to November. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantSeed, :PlantInnerBark, :PlantLeaf ;
+  :plant_edible_use :CoffeeAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Young leaves - raw or cooked as a potherb. A very nice mild flavour but the leaves quickly become tough so only the youngest should be used. New growth is usually produced for 2 periods of 3 weeks each year, one in spring and one in mid-summer. Seed - raw or cooked. Small but very sweet and nutritious, it is sold in local markets in Canada and some parts of America. Rich in oil, the seed also contains up to 22% protein. The raw seed should not be eaten in large quantities since it is believed to cause enteritis. It can be dried and ground into a powder, then used with cereal flours in making bread, cakes etc. The germinating seeds can be eaten raw, they are tender, crisp, sweet and nutty. The roasted seed is a coffee substitute. An edible semi-drying oil is obtained from the seed. Inner bark. Dried, ground into a powder and then used as a thickening in soups etc or mixed with cereals when making bread."@en ;
+  :plant_medicinal_use :Pectoral, :Anthelmintic, :SkinTreatment ;
+  :plant_medicinal_text "A decoction of the boiled leaves has been used as a wash and poultice to treat frostbite, burns, poison ivy rash etc. The nuts have been eaten as a vermifuge. A tea made from the bark has been used in the treatment of lung ailments. It has also been used to procure an abortion when the mother was suffering."@en ;
+  :plant_other_use :Charcoal, :WoodCorkAndSubstitute, :VegetableOil ;
+  :plant_other_use_text "The oil obtained from the seed has been used as a fuel in oil lamps. Wood - strong, hard, heavy, very close grained, not durable, difficult to cure. It weighs 43lb per cubic foot. Harvested commercially, it is used for furniture, flooring, tool handles, crates etc. It makes an excellent charcoal and is used in artwork. A dynamic accumulator gathering minerals or nutrients from the soil and storing them in a more bioavailable form - used as fertilizer or to improve mulch."@en .
+
+:FagusSylvatica a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "beech"@en, "european beech"@en, "common beech"@en .
+:FagusSylvatica 
+  :plant_hardiness_zones "4-7" ;
+  :plant_hazards "Large quantities of the seed may be toxic."@en ;
+  :plant_habitat "Grows in woodlands where it is often the dominant species, especially on chalky and soft limestone soils, though sometimes also on well-drained loams and sands."@en ;
+  :plant_country_range "Europe, including Britain, from Norway south and east to Spain, Greece, W. Russia and the Crimea."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Fagus Sylvatica is a deciduous Tree growing to 30 m (98ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from April to May, and the seeds ripen from September to October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_use :CoffeeAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Young leaves - raw. A very nice mild flavour, they go well in a mixed salad. However, the leaves quickly become tough so only the youngest should be used. New growth is usually produced for 2 periods of 3 weeks each year, one in spring and one in mid-summer. Seed - raw or cooked. A pleasant sweet flavour, though rather small and fiddly. The seed can also be dried and ground into a powder and then used with cereal flours when making bread, cakes etc. The seed is rich in oil. The seed should not be eaten in large quantities because it contains a deleterious principle. The seed contains 17 - 20% of an edible semi-drying oil. This stores well without going rancid and is said to be equal in delicacy to olive oil. It is used as a dressing for salads and also for cooking. The seed residue is poisonous. The roasted seed is used as a coffee substitute."@en ;
+  :plant_medicinal_use :Antitussive, :ExpectorantAndMucoactiveAgent, :Antacid, :Odontalgic, :Antipyretic, :Antiseptic, :SkinTreatment ;
+  :plant_medicinal_text "The bark is antacid, antipyretic, antiseptic, antitussive, expectorant, odontalgic. A tar (or creosote), obtained by dry distillation of the branches, is stimulating and antiseptic. It is used internally as a stimulating expectorant and externally as an application to various skin diseases. The pure creosote has been used to give relief from toothache, but it should not be used without expert guidance. The plant is used in Bach flower remedies - the keywords for prescribing it are 'Intolerance', 'Criticism' and 'Passing judgements'."@en ;
+  :plant_other_use :VegetableOil, :WoodCorkAndSubstitute, :ToothCare, :FuelAndPower, :Hedge, :Charcoal, :StuffingAndLining ;
+  :plant_other_use_text "A semi-drying oil is obtained from the seed, it is used as a fuel for lighting, as a lubricant, for polishing wood etc. The seed residue is poisonous. The leaf buds harvested in the winter and dried on the twigs are used as toothpicks. The leaves are gathered in autumn and used as a stuffing material for mattresses etc. Wood - hard, heavy, strong, very durable. It is not suitable for outdoor use and is often attacked by a small beetle. It has a wide range of applications, including furniture, flooring, turnery etc. It makes a very good fuel, burning with a lot of heat, and yields a charcoal known as 'Carbo Ligni Pulveratus'. The wood has often been used as a source of creosote, tar, methyl alcohol. acetic acid. A dynamic accumulator gathering minerals or nutrients from the soil and storing them in a more bioavailable form - used as fertilizer or to improve mulch."@en .
+
+:QuercusAcutissima a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "sawthorn oak"@en .
+:QuercusAcutissima 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Often forming pure forests or growing with Pinus species, to 1000 metres in W. China."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Acutissima is a deciduous Tree growing to 5 m (16ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "Seed - cooked. The seed is up to 25mm long. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. Young leaves - cooked. A famine food when all else fails. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "The stem bark is used to clean foul sores. The seeds are used in the treatment of diarrhoea, menorrhagia and gastrointestinal hypertrophy. The cupule (seed cup) is astringent. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute, :Repellent, :DyeInkAndPaint, :FuelAndPower, :Charcoal ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. A black dye is obtained from the seed cups. Wood - used for boat building and construction. The wood is also used for fuel and charcoal."@en .
+
+:QuercusAgrifolia a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "encina"@en, "california live oak"@en, "coast live oak"@en .
+:QuercusAgrifolia 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Forming open groves of great extent in valleys and on not too dry slopes in woods below 1000 metres, it is also found on coastal sand dunes."@en ;
+  :plant_country_range "South-western N. America - California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Agrifolia is an evergreen Tree growing to 15 m (49ft) by 8 m (26ft) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year, in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - cooked. Used as a staple food by several native North American Indian tribes. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed, which is up to 4cm long and 2cm wide, contains bitter tannins - these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :SkinTreatment, :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. A decoction of the chipped bark has been used as a wash on skin sores."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The seed cups are used as buttons. Wood - coarse grained, hard, very heavy, very brittle. It is not exploited commercially as a wood, though it is valued as a fuel."@en .
+
+:QuercusAlba a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "white oak"@en, "hybrid oak"@en .
+:QuercusAlba 
+  :plant_hardiness_zones "3-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry woods, gravelly ridges, sandy plains, rich uplands and moist bottoms. The best specimens are found in deep rich well-drained loamy soils."@en ;
+  :plant_country_range "Eastern N. America - Maine to Florida, west to Texas and Minnesota."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Alba is a deciduous Tree growing to 20 m (65ft) by 10 m (32ft) at a slow rate. It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. Somewhat sweet. The seed is about 1 - 3cm long and ripens in its first year. It contains about 6% protein and 65% carbohydrates. It is low in tannin and needs little if any leaching. It is said that those seeds with red or pink blotches on the shell are the sweetest. Any bitter tannins can be leached out by thoroughly washing the dried and ground up seed in water, though many minerals will also be lost. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The seed can be roasted and then eaten, its taste is something like a cross between sunflower seeds and popcorn. The roasted seed is a coffee substitute that is free from caffeine."@en ;
+  :plant_medicinal_use :Astringent, :Tonic, :Antiseptic ;
+  :plant_medicinal_text "White oak was often used medicinally by several native North American Indian tribes, who valued it especially for its antiseptic and astringent properties and used it in the treatment of many complaints. It is little, if at all, used in modern herbalism. The inner bark contains 6 - 11% tannin, it has powerful antiseptic and astringent properties and is also expectorant and tonic. The bark is boiled and the liquid drunk in the treatment of bleeding piles and diarrhoea, intermittent fevers, coughs and colds, consumption, asthma, lost voice etc. The bark has been chewed as a treatment for mouth sores. Externally, it is used as a wash for skin eruptions, burns, rashes, bruises, ulcers etc and as a vaginal douche. It has also been used as a wash for muscular pains. The bark is best collected in the spring. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "Agroforestry Uses: White oak is potentially valuable for use in reforestation projects, and appears to have potential for use on other types of disturbed sites. It has been planted on strip-mined lands in Ohio, Indiana, and Illinois, and has exhibited good growth and survival on cast overburden and graded topsoil overlying mine spoils. It is well adapted to loamy and clayey spoils with a pH of 5.5 to 8.0.  Other Uses:  The leaves of most species in this genus are more or less rich in tannins. A mulch of the leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc. Fresh leaves should be used with caution, since these can utilize some of the nitrogen in the soil and this inhibit plant growth.  The bark is a rich source of tannin.  Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. A brown dye is obtained from the bark or from the galls, it does not require a mordant. Yellow, chrome and gold can also be obtained if mordants are used.  The wood is strong, very heavy, hard, tough, strong, close grained, durable. It weighs about 46lb per cubic foot.When properly dried treated, the wood glues well, machines very well and accepts a variety of finishes One of the most important timbers in N. America, it is used for cabinet making, furniture, panelling, flooring, construction, mine props, agricultural tools etc. It is highly valued for making the staves of barrels for storing wine and liquor. The wood is a good fuel giving off a lot of heat. A dynamic accumulator gathering minerals or nutrients from the soil and storing them in a more bioavailable form - used as fertilizer or to improve mulch."@en .
+
+:QuercusAucheri a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "boz-pirnal oak"@en .
+:QuercusAucheri 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. Europe - Mediterranean around Greece."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Aucheri is an evergreen Shrub growing to 5 m (16ft) by 4 m (13ft) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A sweet flavour. The seed is about 2cm long and 1.5cm wide. It is low in tannin and needs little if any leaching. Any bitter tannins can be leached out by thoroughly washing the dried and ground up seed in water, though many minerals will also be lost. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The seed can be roasted and then eaten, its taste is something like a cross between sunflower seeds and popcorn. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin ;
+  :plant_other_use_text "The following uses are for the closely related Q. coccifera, they should also be applicable here. A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is rich in tannin. A black dye can be obtained from the bark and also from the seeds."@en .
+
+:QuercusBicolor a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "swamp white oak"@en .
+:QuercusBicolor 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Bottomlands, stream margins and swamps. Tolerant of poorly drained sites, it is frequently found in heavy mucky soils."@en ;
+  :plant_country_range "Eastern N. America - Quebec to Minnesota, Georgia and Arkansas."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Bicolor is a deciduous Tree growing to 25 m (82ft 0in) at a medium rate.  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A rather sweet flavour. The seed is quite large, about 2 - 3cm long and 15 - 20mm wide, and unlike most other oaks, is attached to the tree by a long stem. It matures in its first year. The seed can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed from some trees can contain bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. Roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :RustTreatment ;
+  :plant_other_use_text "The leaves of most species in this genus are more or less rich in tannins. A mulch of the leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc. Fresh leaves should be used with caution, since these can utilize some of the nitrogen in the soil and this inhibit plant growth.  Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff.  The bark has been boiled with hemlock (Tsuga sp.?) and soft maple bark (Acer spp), and the liquid used to remove rust. The mixture was also believed to prevent rust.  The wood is close-grained, strong, hard, tough, heavy. It weighs 48lb per cubic foot. Trees do not self-prune and dead branches remain on the trees for many years. This does mean that the wood is usually quite knotty. The wood machines well, though it can check and warp if not dried properly. It is of some importance commercially. And is used for construction, cabinet making, furniture, interior finishes, veneers, fence posts etc. The wood makes a good fuel."@en .
+
+:QuercusBrantii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "barro"@en, "brant's oak"@en .
+:QuercusBrantii 
+  :plant_hardiness_zones "7-9" ;
+  :plant_hazards "All parts of the plant contain tannins. Whilst tannins are found in many foods, and have a range of medicinal uses. They are usually only present in low concentrations. In some foods made from oaks (particularly the seeds), the tannin content can be quite high unless the food is treated to reduce tannin content. Tannins are only of low toxicity and, because of their bitter taste and astringency, are unlikely to be eaten in large quantities. However, if they are taken in excess, they can cause stomach pains; constipation followed by bloody diarrhoea: excessive thirst; and excessive urination."@en ;
+  :plant_habitat "Limestone slopes; at elevations from 350 - 1,700 metres."@en ;
+  :plant_country_range "W. Asia - eastern Turkey, Iraq, Iran, Caucasus"@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Brantii is a deciduous Tree growing to 8 m (26ft) by 8 m (26ft) at a fast rate. It is hardy to zone (UK) 7. The flowers are pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw or cooked. The seed is 30 - 50mm long and 12 - 22mm wide. The seed is usually cooked before eating, though it can also be eaten raw. It can be eaten whole, though it is more commonly dried, then ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. In some species, especially many of those classified as 'white oaks', the seeds are low in tannins and have a more or less sweet and agreeable flavour. The seed of most species, however, have a very bitter flavour, due especially to the presence of tannins. In these species there are various processes that can remove or at least reduce the amount of these bitter substances (although other water-soluble substances, including some minerals, will also be removed). Tannins are water-soluble and therefore the easiest way to remove or reduce tannin levels is by soaking in water. A few different methods are listed:- A traditional method of preparing the seed was to bury it in boggy ground overwinter and allow the wet soil to gradually leach the tannins. The germinating seed was dug up in the spring when it would have lost most of its astringency and bitterness. Another method was to wrap the seeds in a cloth bag and place them in a stream for several weeks. Drying the seed and grinding it to a powder before soaking speeds up the process. The fastest method is to use hot water, by cooking the powder and changing the water several times until the cooking water is no longer bitter. Alternatively, you can use cold water (which is reported to produce the best quality flour). In this case, you soak the powdered seed in cold water for 12 - 24 hours then discard the water. Repeat this process for a number of times until the soak water is no longer bitter. The roasted seed is used as a coffee substitute. Carbon Farming - Staple Crop: balanced carb."@en ;
+  :plant_medicinal_text "The seeds are used in traditional medicine. No further details are given. Quercus (oak) species are used in the traditional medicine of many cultures, being valued especially for their tannins. Various parts of the plant can be used, most frequently it is the leaves, bark, seeds, seed cups or the galls that are produced as a result of insect damage. A decoction or infusion is astringent, antibacterial, antifungal, antiseptic, styptic and haemostatic. It is taken internally to treat conditions such as acute diarrhea, dysentery and haemorrhages. Externally, it is used as a mouthwash to treat toothache or gum problems and is applied topically as a wash on cuts, burns, various skin problems, haemorrhoids and oral, genital and anal mucosa inflammation. Extracts of the plant can be added to ointments and used for the healing of cuts."@en ;
+  :plant_other_use_text "The leaves of most species in this genus are more or less rich in tannins. A mulch of the partially decayed leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc, and these will in time break down to add humus and nutrients to the soil. Fresh leaves should be used with caution, however, since as these decay they utilize some of the nitrogen in the soil and thus can inhibit plant growth.. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff and is also used by many cultures to make ink. The bark of oak trees is also usually rich in tannins and can be used as a dyestuff and for waterproofing rope. As a source of wood and lumber the genus Quercus is one of the most important of all groups of trees. We have no specific information for this species, but in general the timber is noted for its strength, durability, and beauty, and is used everywhere for innumerable purposes, ranging from fuel to railroad ties, construction of buildings and ships, interior trim, flooring, and all grades of furniture. The woods of different species vary as to their physical qualities; some of them are very hard and tough, others are lighter in weight, softer, and less tough. The wood is a favoured fuel - burning well and giving off a lot of heat. It is also used for making a good quality charcoal. Carbon Farming - Industrial Crop: tannin. Fodder: mast."@en .
+
+:QuercusCerris a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "turkey oak"@en, "european turkey oak"@en .
+:QuercusCerris 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Hedges, thickets and woods in acid soils."@en ;
+  :plant_country_range "Europe to S.W. Asia. Naturalized in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Cerris is a deciduous Tree growing to 35 m (114ft) by 25 m (82ft) at a fast rate. It is hardy to zone (UK) 6.  It is in flower in May, and the seeds ripen in September. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. Up to 2.5cm long. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute. A sweet fluid exudes from insect damage on the stems and solidifies. This is edible and is sold as a manna in local markets in Iran. It can be boiled down into a syrup and used for sweetening food."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The seed cups are used as buttons. A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit the growth of young plants. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The leaves, bark and wood are used commercially as a source of tannins. Wood. It is valued by wheelwrights, turners and cabinet makers. Of little value. It does not weather well."@en .
+
+:QuercusCoccifera a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "kermes oak"@en .
+:QuercusCoccifera 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry places on limestone and siliceous rocks."@en ;
+  :plant_country_range "Europe - Mediterranean."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Coccifera is an evergreen Shrub growing to 4 m (13ft) by 4 m (13ft).  It is hardy to zone (UK) 6. It is in leaf all year, in flower from April to June. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is rich in tannin. A black dye can be obtained from the bark and also from the seeds."@en .
+
+:QuercusDouglasii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "blue oak"@en .
+:QuercusDouglasii 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry soils in valleys, rolling hills and lower mountain slopes to 1350 metres, often forming extensive stands."@en ;
+  :plant_country_range "South-western N. America - California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Douglasii is a deciduous Tree growing to 12 m (39ft 4in) at a slow rate. It is hardy to zone (UK) 7 and is not frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed has been used as a staple food by some native North American Indian tribes. Somewhat sweet. A good size, to 25mm long and wide. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed from some trees contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :SkinTreatment, :Astringent, :Poultice ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. A poultice of the ground galls and salt has been used in the treatment of burns, sores and cuts. It has also been used as a wash for sore eyes. The leaves have been chewed as a treatment for sore throats."@en ;
+  :plant_other_use :Basketry, :GumAndAdhesive, :WoodCorkAndSubstitute, :Repellent, :FuelAndPower, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The branches have been used to make rims for twined work baskets. The acorn meal has been used to mend cracks in clay pots. The seed cups are used as buttons. Wood - hard, heavy, strong, brittle. It has a strong cross-grain and is difficult to split. Of little commercial value, it is used mainly for fuel."@en .
+
+:QuercusEmoryi a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "black oak"@en, "emory oak"@en .
+:QuercusEmoryi 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Canyons, dry foothills and mountain slopes, 1350 - 2350 metres, growing best in sheltered valleys."@en ;
+  :plant_country_range "South-western N. America - W. Texas, New Mexico, Arizona and northern Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Emoryi is an evergreen Tree growing to 12 m (39ft 4in) at a slow rate. It is hardy to zone (UK) 7 and is not frost tender. It is in leaf all year, in flower in May, and the seeds ripen in September. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A sweet taste, it is an important item of food for the Indians in S. Arizona and northern Mexico and is sold in the local markets there. The seed is up to 2cm long and 1cm thick. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If the seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - heavy, hard, strong, brittle, close grained. Of little value commercially, though it is an important fuel in its native range."@en .
+
+:QuercusFrainetto a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "hungarian oak"@en, "italian oak"@en, "forest green oak"@en .
+:QuercusFrainetto 
+  :plant_hardiness_zones "5-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "Europe - Hungary, S. Italy and the Balkans."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Frainetto is a deciduous Tree growing to 30 m (98ft 5in) at a fast rate. It is hardy to zone (UK) 6. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. The seed is up to 3.5cm long and 1.2cm wide. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If the seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. The seed cups are used as buttons. The bark is a commercial source of tannin. Tannin is also found in the leaves and wood. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff."@en .
+
+:QuercusFruticosa a owl:Class ;
+  rdfs:subClassOf :Fagaceae .
+:QuercusFruticosa 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Sandy places in lowland and mountains."@en ;
+  :plant_country_range "S.W. Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Fruticosa is an evergreen Shrub growing to 2 m (6ft 7in).  It is hardy to zone (UK) 8. It is in leaf all year. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed is about 15mm long, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff."@en .
+
+:QuercusGambelii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "shin oak"@en, "gambel oak"@en, "rocky mountain white oak"@en .
+:QuercusGambelii 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry foothills and lower mountain slopes, 1350 - 2800 metres."@en ;
+  :plant_country_range "Western N. America - Rocky Mountains from Utah and Wyoming to Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Gambelii is a deciduous Shrub growing to 4.5 m (14ft 9in) at a slow rate. It is hardy to zone (UK) 4 and is not frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A staple food for several native North American Indian tribes. A sweet taste. The seed is about 2cm long and wide, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If the seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Analgesic, :Astringent, :Laxative ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. The acorns have been eaten to give greater sexual potency. The root bark is analgesic and cathartic. A decoction has been used to treat postpartum pain and facilitate delivery of the placenta."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The seed cups are used as buttons. Wood - hard, heavy, close-grained. The trees are generally too small to be of use commercially, though the wood is used locally for lumber and also makes a good fuel."@en .
+
+:QuercusGlauca a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "ring-cup oak"@en, "ring cupped oak"@en, "blue japanese oak"@en .
+:QuercusGlauca 
+  :plant_hardiness_zones "8-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist forests and ravines, not gregarious, 800 - 3000 metres from Pakistan to S.W. China. Shady valleys."@en ;
+  :plant_country_range "E. Asia - China, Japan, Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Glauca is an evergreen Tree growing to 15 m (49ft 3in) at a slow rate. It is hardy to zone (UK) 7 and is not frost tender. It is in leaf all year, in flower from April to May, and the seeds ripen from October to November. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A sweet taste. The seed is about 15mm long. it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If the seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. Leaves - cooked. A famine food. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - tough, very hard, takes a good polish but warps during seasoning. Used for general construction and fuel."@en .
+
+:QuercusHispanica a owl:Class ;
+  rdfs:subClassOf :Fagaceae .
+:QuercusHispanica 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in the wild."@en ;
+  :plant_country_range "A hybrid species of garden origin, Q. cerris x Q. suber."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Hispanica is a deciduous Tree growing to 20 m (65ft) by 13 m (42ft).  It is hardy to zone (UK) 7. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - cooked. Up to 2.5cm long. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The bark is a source of cork, it can be used for heat and sound insulation, flooring, floats etc. The bark is harvested every 6 - 12 years, being carefully removed so as not to harm the tree. A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood -"@en .
+
+:QuercusIlex a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "holly oak"@en, "evergreen oak"@en .
+:QuercusIlex 
+  :plant_hardiness_zones "6-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Arid places, maquis, woods and hills on limestone."@en ;
+  :plant_country_range "Europe - Mediterranean. Occasionally naturalized in Britain in S. England."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Ilex is an evergreen Tree growing to 25 m (82ft) by 20 m (65ft) at a slow rate. It is hardy to zone (UK) 7. It is in leaf all year, in flower from May to June, and the seeds ripen from September to October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. It can be sweet or bitter. The seed is up to 3cm long, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed from some trees contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute. An edible oil is obtained from the seed. One reader noted the Q. suber population of the Mamora forest in Morocco contains only sweet acorns and can be eaten raw, it has a similar taste to raw chestnuts. The skin removes quite easyl Quercus ilex also exists with tannin-free acorns in the moroccan forests, the locals say around 20 percent are sweet."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :VegetableOil, :WoodCorkAndSubstitute, :Repellent, :FuelAndPower, :Hedge, :Tannin, :Shelterbelt ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Very tolerant of maritime exposure and of trimming, it can be grown as a shelterbelt tree or hedge in maritime areas. Wood - strong, hard, durable. Used for furniture. It makes a good charcoal and a good fuel, burning well even if green. The bark is a source of tannin."@en .
+
+:QuercusIlexBallota a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "holm oak"@en .
+:QuercusIlexBallota 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Arid places, maquis, woods and hills on limestone."@en ;
+  :plant_country_range "Europe - Mediterranean."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Ilex Ballota is an evergreen Tree growing to 25 m (82ft) by 20 m (65ft) at a slow rate. It is hardy to zone (UK) 7. It is in leaf all year, in flower from May to June, and the seeds ripen from September to October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. The seed of this variety is normally sweet. The seed is up to 3cm long, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed from some trees contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute. An edible oil is obtained from the seed."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :VegetableOil, :WoodCorkAndSubstitute, :Repellent, :FuelAndPower, :Hedge, :Tannin, :Shelterbelt ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Very tolerant of maritime exposure and of trimming, it can be grown as a shelterbelt tree or hedge in maritime areas. Wood - strong, hard, durable. Used for furniture. It makes a good charcoal and a good fuel, burning well even if green. The bark is a source of tannin."@en .
+
+:QuercusInsignis a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "chicalaba"@en .
+:QuercusInsignis 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "All parts of the plant contain tannins. Whilst tannins are found in many foods, and have a range of medicinal uses. They are usually only present in low concentrations. In some foods made from oaks (particularly the seeds), the tannin content can be quite high unless the food is treated to reduce tannin content. Tannins are only of low toxicity and, because of their bitter taste and astringency, are unlikely to be eaten in large quantities. However, if they are taken in excess, they can cause stomach pains; constipation followed by bloody diarrhoea: excessive thirst; and excessive urination."@en ;
+  :plant_habitat "Cloud forest at elevations from 900 - 2,000 metres."@en ;
+  :plant_country_range "Mesoamerica. C. America - Panama, north to Guatemala, central and southern Mexico"@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Insignis is a deciduous Tree growing to 22 m (72ft) by 18 m (59ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "The ovoid to globose seed is 30 - 50mm long and up to 120mm in diameter. Although we have no specific information for this species, the seeds of all the species of oak are edible - indeed, several species have been used as staple foods, whilst most if not all have been used for food in times of shortage, when better foods were not available. The seed is usually cooked before eating, though it can also be eaten raw. It can be eaten whole, though it is more commonly dried, then ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. In some species, especially many of those classified as 'white oaks', the seeds are low in tannins and have a more or less sweet and agreeable flavour. The seed of most species, however, have a very bitter flavour, due especially to the presence of tannins. In these species there are various processes that can remove or at least reduce the amount of these bitter substances (although other water-soluble substances, including some minerals, will also be removed). Tannins are water-soluble and therefore the easiest way to remove or reduce tannin levels is by soaking in water. A few different methods are listed:- A traditional method of preparing the seed was to bury it in boggy ground overwinter and allow the wet soil to gradually leach the tannins. The germinating seed was dug up in the spring when it would have lost most of its astringency and bitterness. Another method was to wrap the seeds in a cloth bag and place them in a stream for several weeks. Drying the seed and grinding it to a powder before soaking speeds up the process. The fastest method is to use hot water, by cooking the powder and changing the water several times until the cooking water is no longer bitter. Alternatively, you can use cold water (which is reported to produce the best quality flour). In this case, you soak the powdered seed in cold water for 12 - 24 hours then discard the water. Repeat this process for a number of times until the soak water is no longer bitter. The roasted seed of many Quercus species has been used as a coffee substitute. Carbon Farming - Staple Crop: balanced carb."@en ;
+  :plant_medicinal_text "Quercus (oak) species are used in the traditional medicine of many cultures, being valued especially for their tannins. Various parts of the plant can be used, most frequently it is the leaves, bark, seeds, seed cups or the galls that are produced as a result of insect damage. A decoction or infusion is astringent, antibacterial, antifungal, antiseptic, styptic and haemostatic. It is taken internally to treat conditions such as acute diarrhea, dysentery and haemorrhages. Externally, it is used as a mouthwash to treat toothache or gum problems and is applied topically as a wash on cuts, burns, various skin problems, haemorrhoids and oral, genital and anal mucosa inflammation. Extracts of the plant can be added to ointments and used for the healing of cuts."@en ;
+  :plant_other_use_text "The leaves of most species in this genus are more or less rich in tannins. A mulch of the partially decayed leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc, and these will in time break down to add humus and nutrients to the soil. Fresh leaves should be used with caution, however, since as these decay they utilize some of the nitrogen in the soil and thus can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff and is also used by many cultures to make ink. The bark of oak trees is also usually rich in tannins and can be used as a dyestuff and for waterproofing rope. The wood is heavy, hard, highly elastic, with good impact absorption. It is recommended for use in flooring, packing boxes, tool handles, pallets, railroad ties etc. The fibres are considered to be short and semirigid for paper pulp. The wood of many Oak species is a favoured fuel - burning well and giving off a lot of heat. Carbon Farming - Industrial Crop: tannin. Fodder: mast."@en .
+
+:QuercusIthaburensisMacrolepis a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "valonia oak"@en .
+:QuercusIthaburensisMacrolepis 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Open forests in the hills or as solitary trees, usually in dry soils."@en ;
+  :plant_country_range "S.E. Europe to W. Asia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Ithaburensis Macrolepis is a deciduous Tree growing to 15 m (49ft) by 13 m (42ft).  It is hardy to zone (UK) 7. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. The seed is quite big, about 4cm x 3cm and is very low in tannin. Any bitter seeds can be leached by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. Roasted seed is a coffee substitute. A manna is obtained from the tree. No further details."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. The acorn cups contain about 45% tannin. A black dye can be obtained from them and it can be used as an ink. Gall-like excretions on the plant are caused by damage from the insect Cynips calicis. These growths contain about 30% tannin."@en .
+
+:QuercusKelloggii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "californian black oak"@en, "black oak"@en .
+:QuercusKelloggii 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Clay or gravelly soils in hills and mountains below 2500 metres. Sometimes forms groves of considerable extent in coniferous forests."@en ;
+  :plant_country_range "South-western N. America - California to Oregon."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Kelloggii is a deciduous Tree growing to 25 m (82ft 0in) at a medium rate.  It is frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked.Used as a staple food by several native North American Indian tribes. A bitter taste. The seed is 25 - 30mm long and 18mm wide, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :GumAndAdhesive, :WoodCorkAndSubstitute, :Repellent, :DyeInkAndPaint, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The galls have been used as a dark dye for the hair. Acorn meal has been used to mend cracks in clay pots. Wood - coarse-grained, heavy, hard, strong, very brittle, not very durable. It is of little economic importance, but is occasionally used for fence posts and as a fuel."@en .
+
+:QuercusLamellosa a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "bull oak"@en .
+:QuercusLamellosa 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Forms dense evergreen forests with Lithocarpus and Castanopsis species at altitudes up to 2700 metres."@en ;
+  :plant_country_range "E. Asia - Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Lamellosa is an evergreen Tree growing to 35 m (114ft 10in).  It is hardy to zone (UK) 8. It is in leaf all year. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed of this species is particularly large with four of them covering an adult hand. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "The bark and acorns are astringent. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is a source of tannin. Wood - very hard, durable if it is not wet. Used for construction, making the handles of agricultural implements etc. An excellent fuel."@en .
+
+:QuercusLyrata a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "overcup oak"@en .
+:QuercusLyrata 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Bottomlands and wet woods, usually on rich soils. Wet, poorly-drained heavy clay soils."@en ;
+  :plant_country_range "Central and South-eastern N. America - New Jersey to Florida, west to Mississippi and Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Lyrata is a deciduous Tree growing to 30 m (98ft 5in) at a slow rate. It is hardy to zone (UK) 5 and is not frost tender.  It is in flower in April, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed is about 25mm long, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed is fairly sweet and does not contain many bitter tannins. It does not require much leaching but any bitterness can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "The leaves and bark are astringent. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - close-grained, hard, tough, strong, heavy, very durable in contact with the ground. It weighs 51lb per cubic foot. Used for construction, tools, furniture etc."@en .
+
+:QuercusMacrocarpa a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "burr oak"@en, "mossy cup oak"@en .
+:QuercusMacrocarpa 
+  :plant_hardiness_zones "3-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Found in a variety of habitats from dry hillsides to moist bottomlands, rich woods and fertile slopes, mainly on limestone soils."@en ;
+  :plant_country_range "Eastern N. America - Nova Scotia to Manitoba, Wyoming, Massachusetts, Georgia, Kansas and Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Macrocarpa is a deciduous Tree growing to 15 m (49ft) by 8 m (26ft) at a slow rate. It is hardy to zone (UK) 3 and is not frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - cooked. Very large, the seed can be up to 5cm x 4cm, though it is somewhat variable in size and shape. The seed can be ground into a powder and used in making bread, dumplings etc and as a thickener in soups. The seed of this species is considered to be one of the most palatable of all the oaks. Many trees have sweet seeds with little tannin and the seed can be eaten raw or cooked. If the seed is bitter then this is due to the presence of tannins, these can be leached out by thoroughly washing the dried and ground up seed in water, though many minerals will also be lost. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Antispasmodic, :Astringent, :Tonic ;
+  :plant_medicinal_text "The bark is astringent and tonic. An infusion has been used in the treatment of diarrhoea. A decoction of the root or inner bark has been used in the treatment of cramps. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :WoodCorkAndSubstitute, :Tannin, :Mordant ;
+  :plant_other_use_text "Agroforestry Uses: The tree has been widely tested for use in rehabilitation of the soil. It has been successfully planted on coal spoils in the north-central and northern Great Plains, and in the Western Interior Coal Province which encompasses Missouri, Kansas, and Oklahoma. It may be either seeded or transplanted onto disturbed areas. Other Uses:  The leaves of most species in this genus are more or less rich in tannins. A mulch of the leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc. Fresh leaves should be used with caution, since these can utilize some of the nitrogen in the soil and this inhibit plant growth.  Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff.  The bark has been used as a mordant for fixing dyes.  The wood is hard, heavy, strong, tough, very durable, close grained. It weighs about 46lb per cubic metre. This species is of considerable importance as a timber tree, it is used for all types of construction, in making baskets, flooring, cabinet making, ship building, cooperagem fence posts etc. The wood is a good fuel."@en .
+
+:QuercusMichauxii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "swamp chestnut oak"@en .
+:QuercusMichauxii 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Inundated bottoms, stream borders and swamps."@en ;
+  :plant_country_range "South-eastern N. America - Delaware to Indiana, Missouri, Florida and Texas."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Michauxii is a deciduous Tree growing to 30 m (98ft 5in) at a medium rate.  It is hardy to zone (UK) 6 and is not frost tender. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed is large, up to 35mm long and 30mm wide, but contains bitter tannins. Other reports say that the acorns are sweet and edible. The seed can be roasted then dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The bitter tannins can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "Agroforestry Uses: The tree has been used in restoring degraded bottomland hardwood forests of the Southeastern USA. Other Uses: The leaves of most species in this genus are more or less rich in tannins. A mulch of the partially decayed leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc, and these will in time break down to add humus and nutrients to the soil. Fresh leaves should be used with caution, however, since as these decay they utilize some of the nitrogen in the soil and thus can inhibit plant growth.  Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff and is also used by many cultures to make ink. The bark of oak trees is also usually rich in tannins and can be used as a dyestuff and for waterproofing rope.  The wood is heavy, hard, very strong, tough, dense, durable, easy to split. It weighs 50lb per cubic foot. It machines well, but is subject to checking and warping if not dried properly. It i is largely used for flooring, furniture, boxes, barrels, boat making and veneer. The wood is a favoured fuel - burning well and giving off a lot of heat."@en .
+
+:QuercusMuehlenbergii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "yellow chestnut oak"@en, "chinkapin oak"@en .
+:QuercusMuehlenbergii 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry calcareous slopes and ridges, or on rich bottoms. Well-drained uplands, favouring limestone soils and avoiding acid soils."@en ;
+  :plant_country_range "Eastern N. America - Vermont and Ontario to Minnesota, Nebraska, Alabama and Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Muehlenbergii is a deciduous Tree growing to 20 m (65ft) by 10 m (32ft) at a medium rate.  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from May to June, and the seeds ripen in November. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. It is up to 18mm long. The seed contains very little bitter tannin, it is quite sweet and rather pleasant eating. Tastes nice when baked in an oven. Any bitter seeds can be leached by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency Roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent, :Antiemetic ;
+  :plant_medicinal_text "An infusion of the bark has been used in the treatment of vomiting. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :FuelAndPower ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - heavy, very hard, strong, close grained, durable. It weighs 53lb per cubic foot. Not abundant enough to be used commercially, it is used for fencing, cooperage etc and makes an excellent fuel."@en .
+
+:QuercusOblongifolia a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "mexican blue oak"@en .
+:QuercusOblongifolia 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A common tree of open oak woodlands in foothills, mountain slopes and in canyons, 1500 - 2000 metres."@en ;
+  :plant_country_range "South-western N. America - Texas, New Mexico, Arizona, Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Oblongifolia is an evergreen Shrub growing to 8 m (26ft 3in).  It is hardy to zone (UK) 7 and is not frost tender.  It is in flower in May, and the seeds ripen all year. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A staple food for some native North American Indian tribes. Very sweet, it is up to 2cm long and 8mm wide. The seed can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If any seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - very heavy, hard, strong, brittle. It is sometimes used as a fuel."@en .
+
+:QuercusPalustris a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "pin oak"@en, "swamp oak"@en .
+:QuercusPalustris 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Deep rich soils in swampy woods and bottoms at low elevations. Often found in wet, poorly drained claypan soils typical of floodplains, tolerating short periods of spring flooding."@en ;
+  :plant_country_range "North-eastern and Central N. America - Massachusetts to Michigan, Virginia and Arkansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Palustris is a deciduous Tree growing to 25 m (82ft) by 8 m (26ft) at a fast rate. It is in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed is about 15mm long, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent, :Stomachic ;
+  :plant_medicinal_text "An infusion of the inner bark has been used to treat intestinal pains. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. A black ink is made from the galls. Wood - strong, hard, coarse grained, heavy, often knotty owing to the persistence of many small limbs. It weighs 43lb per cubic foot. It is occasionally used for shingles, clap-boards, furniture, wooden nails etc and as a fuel."@en .
+
+:QuercusPetraea a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "sessile oak"@en, "durmast oak"@en .
+:QuercusPetraea 
+  :plant_hardiness_zones "5-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woods, especially on acid soils and in the western part of Britain, where it is often dominant."@en ;
+  :plant_country_range "Europe, including Britain, from Norway south and east to Spain, S.W. Russia and Greece."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Petraea is a deciduous Tree growing to 40 m (131ft) by 25 m (82ft) at a slow rate. It is hardy to zone (UK) 4.  It is in flower from April to May, and the seeds ripen from September to October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. It is noted for attracting wildlife. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute. An edible gum is obtained from the bark."@en ;
+  :plant_medicinal_use :Tonic, :Astringent, :Coagulant, :Decongestant, :Antiseptic ;
+  :plant_medicinal_text "The oak tree has a long history of medicinal use. It is anti-inflammatory, antiseptic, astringent, decongestant, haemostatic and tonic. The bark is the part of the plant that is most commonly used, though other parts such as the galls, seeds and seed cups are also sometimes used. A decoction of the bark is useful in the treatment of chronic diarrhoea, dysentery, intermittent fevers, haemorrhages etc. Externally, it is used to bathe wounds, skin eruptions, sweaty feet, piles etc. It is also used as a vaginal douche for genital inflammations and discharge, and also as a wash for throat and mouth infections. The bark is harvested from branches 5 - 12 years old, and is dried for later use. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. The plant is used in Bach flower remedies - the keywords for prescribing it are 'Despondency', 'Despair, but never ceasing effort'. A homeopathic remedy is made from the bark. It is used in the treatment of disorders of the spleen and gall bladder."@en ;
+  :plant_other_use :Basketry, :Tannin, :GumAndAdhesive, :Compost, :WoodCorkAndSubstitute, :Repellent, :DyeInkAndPaint, :FuelAndPower, :Charcoal ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is an ingredient of 'Quick Return' herbal compost activator. This is a dried and powdered mixture of several herbs that can be added to a compost heap in order to speed up bacterial activity and thus shorten the time needed to make the compost. The bark is very rich in calcium. An ink is made from the oak galls, mixed with salts of iron. The wood is a source of tar, quaiacol, acetic acid, creosote and tannin. Tannin is extracted commercially from the bark and is also found in the leaves. Wood - hard, tough, durable even under water. It is highly valued for furniture, construction etc. It is also a good fuel and charcoal. Trees can be coppiced to provide material for basket making, fuel, construction etc."@en .
+
+:QuercusPhillyreoides a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "black ridge oak"@en .
+:QuercusPhillyreoides 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Thickets and open woods near seashores in C. and S. Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Phillyreoides is an evergreen Shrub growing to 9 m (29ft 6in) at a slow rate. It is hardy to zone (UK) 7. It is in leaf all year, in flower from April to May, and the seeds ripen from October to November. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. Up to 2cm long. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff."@en .
+
+:QuercusPrinus a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "rock chestnut oak"@en .
+:QuercusPrinus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry or rocky woods, mainly on siliceous soils and on the borders of streams. The best specimens are found on deep rich well-drained soils."@en ;
+  :plant_country_range "Eastern N. America - Maine to Georgia and Alabama."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Prinus is a deciduous Tree growing to 20 m (65ft 7in) at a slow rate. It is hardy to zone (UK) 5.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. Somewhat sweet according to some reports whilst another says that it contains bitter tannin. The seed is quite large, up to 4cm long and 25mm wide. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. If the seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. The seed cups are used as buttons. The bark is a commercial source of tannin. On a 10% moisture basis, the bark contains 9.7% tannin. Tannin is also found in the leaves and wood. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. A red dye is obtained from the bark. Tan-coloured according to another report. Wood - close-grained, heavy, hard, rather tough, strong, durable in contact with the soil. It weighs 47lb per cubic foot. Used commercially like Q. alba, it is used for furniture, cabinet making, interior finishes, fence posts and fuel."@en .
+
+:QuercusRobur a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "pedunculate oak"@en, "english oak"@en .
+:QuercusRobur 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Possible digestive complaints. May delay absorption of alkaloids and other alkaline drugs ."@en ;
+  :plant_habitat "Often the dominant woodland tree, especially on clay soils and in the eastern half of Britain, but avoiding acid peat and shallow limestone soils."@en ;
+  :plant_country_range "Europe, including Britain, from Scandanavia south and east to Spain, the Urals and Crimea."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "5"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Robur is a deciduous Tree growing to 30 m (98ft) by 30 m (98ft) at a slow rate. It is hardy to zone (UK) 4.  It is in flower from April to May, and the seeds ripen from September to October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. It is noted for attracting wildlife. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. Nourishing but indigestible. Chopped and roasted, the seed is used as an almond substitute. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute. An edible gum is obtained from the bark. Another report says that an edible manna is obtained from the plant and that it is used instead of butter in cooking. This report probably refers to the gum."@en ;
+  :plant_medicinal_use :Tonic, :Astringent, :Coagulant, :Decongestant, :Antiseptic ;
+  :plant_medicinal_text "The oak tree has a long history of medicinal use. It is anti-inflammatory, antiseptic, astringent, decongestant, haemostatic and tonic. The bark is the part of the plant that is most commonly used, though other parts such as the galls, seeds and seed cups are also sometimes used. A decoction of the bark is useful in the treatment of chronic diarrhoea, dysentery, intermittent fevers, haemorrhages etc. Externally, it is used to bathe wounds, skin eruptions, sweaty feet, piles etc. It is also used as a vaginal douche for genital inflammations and discharge, and also as a wash for throat and mouth infections. The bark is harvested from branches 5 - 12 years old, and is dried for later use. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. The plant is used in Bach flower remedies - the keywords for prescribing it are 'Despondency', 'Despair, but never ceasing effort'. A homeopathic remedy is made from the bark. It is used in the treatment of disorders of the spleen and gall bladder. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Quercus robur Pedunculate Oak for coughs/bronchitis, diarrhoea, inflammation of mouth and pharynx, inflammation of the skin  (see  for critics of commission E)."@en ;
+  :plant_other_use :Basketry, :Tannin, :GumAndAdhesive, :Compost, :WoodCorkAndSubstitute, :Repellent, :DyeInkAndPaint, :FuelAndPower, :Charcoal ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. The bark is an ingredient of 'Quick Return' herbal compost activator. This is a dried and powdered mixture of several herbs that can be added to a compost heap in order to speed up bacterial activity and thus shorten the time needed to make the compost. The bark is very rich in calcium. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. A black dye and an excellent long-lasting ink is made from the oak galls, mixed with salts of iron. The colour is not very durable. When mixed with alum, the dye is brown and with salts of tin it is yellow. Trees can be coppiced to provide material for basket making, fuel, construction etc. The wood is a source of tar, quaiacol, acetic acid, creosote and tannin. Tannin is extracted commercially from the bark and is also found in the leaves. On a 10% moisture basis, the bark contains11.6% tannin and the wood 9.2%. The bark strips easily from the wood in April and May. A purplish dye is obtained from an infusion of the bark with a small quantity of copperas. It is not bright, but is said to be durable. Wood - hard, tough, durable even under water - highly valued for furniture, construction etc. It is also a good fuel and charcoal."@en .
+
+:QuercusRubra a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "red oak"@en, "northern red oak"@en .
+:QuercusRubra 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry or upland woods. Found in a variety of soils, it grows best in those that are deep and fine textured, and the largest trees are found in protected ravines or on sheltered slopes."@en ;
+  :plant_country_range "Eastern N. America - Nova Scotia to Georgia, west to Oklahoma and Minnesota."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Rubra is a deciduous Tree growing to 25 m (82ft) by 18 m (59ft) at a fast rate. It is hardy to zone (UK) 3.  It is in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. A staple food for several native North American Indian tribes. Up to 3cm long. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Tonic, :Emollient, :Antidiarrheal, :Astringent, :Antiviral, :Anticancer, :Emetic, :Antipyretic, :Antiseptic ;
+  :plant_medicinal_text "The bark and inner bark is antiseptic, astringent, emetic, febrifuge and tonic. It is used in the treatment of diarrhoea, chronic dysentery, indigestion, asthma, severe coughs, hoarseness, intermittent fevers, bleeding etc. Externally, it is used as a wash for skin eruptions, rashes, burns etc. The bark can be chewed as a treatment for mouth sores. The bark contains tannins, experimentally these have been shown to be antiviral, antiseptic, anticancer and also carcinogenic. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Tannin is obtained from the bark. A reddish-brown dye can be obtained from the bark. Wood - coarse-grained, hard, strong, heavy, not durable. It weighs 41lb per cubic foot. An important lumber source in America, it is highly valued for flooring, furniture, veneer, construction etc."@en .
+
+:QuercusSpecies a owl:Class ;
+  rdfs:subClassOf :Fagaceae .
+:QuercusSpecies 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in the wild."@en ;
+  :plant_country_range "A collection of garden hybrids."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Species is a deciduous Tree.  It is frost tender. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_text "Seed - cooked. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed probably contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff."@en .
+
+:QuercusStellata a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "post oak"@en .
+:QuercusStellata 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rocky or sandy ridges and outcrops, also in dry woodlands in a variety of soils including gravelly, sandy, poor upland soils and heavy moist loamy soils, where it reaches its greatest height."@en ;
+  :plant_country_range "South-eastern N. America - Massachusetts to New York, Iowa, Florida and Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Stellata is a deciduous Tree growing to 20 m (65ft 7in) at a slow rate. It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A sweet taste. The seed is up to 25mm long and 18mm wide, it can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed from some trees might contain bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Tonic, :Antiaphonic, :Astringent, :Emetic, :Antipyretic, :MedicinalCleaning ;
+  :plant_medicinal_text "The bark is astringent, disinfectant, emetic, febrifuge and tonic. An infusion is used in the treatment of chronic dysentery, indigestion, asthma, lost voice and intermittent fevers. The bark can be chewed to treat mouth sores. An infusion of the bark can be used as a wash on sore and chapped skin. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Disinfectant, :WoodCorkAndSubstitute, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - very heavy, hard, close grained, very durable in contact with the soil but difficult to cure. It weighs about 52lb per cubic foot. It is largely used for fencing, lumber, furniture and fuel."@en .
+
+:QuercusVelutina a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "black oak"@en .
+:QuercusVelutina 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry woods. Often found on poor dry sandy, heavy clay soils or on gravelly uplands and ridges."@en ;
+  :plant_country_range "Eastern N. America - Maine to Ontario, Minnesota, Florida and Texas."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Velutina is a deciduous Tree growing to 30 m (98ft) by 25 m (82ft) at a medium rate.  It is frost tender.  It is in flower from April to May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. The seed is up to 25mm long and wide. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Tonic, :Emollient, :Antiaphonic, :Ophthalmic, :Astringent, :Emetic, :Antipyretic, :MedicinalCleaning ;
+  :plant_medicinal_text "The inner bark contains quercitannic acid and is used medicinally, mainly as a mild astringent. It is inferior to the bark of white oaks because it contains large amounts of tannin. The bark is astringent, disinfectant, emetic, febrifuge and tonic. It is used in the treatment of chronic dysentery, intermittent fevers, indigestion, asthma and lost voice. An infusion has been used as a gargle for sore throats, hoarseness colds etc. The bark can be chewed as a treatment for mouth sores. An infusion of the bark has been used as a wash for sore and chapped skin. A decoction of the crushed bark has been used as a wash for sore eyes. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :WoodCorkAndSubstitute, :Repellent, :Disinfectant, :DyeInkAndPaint, :FuelAndPower, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is a source of tannin. A yellow dye is obtained from this tree. The bark is a rich source whilst the seed can also be used. The dye is reddish-yellow according to one report and does not need a mordant. Wood - heavy, hard, strong, coarse grained. It weighs 43lb per cubic foot. Of little value except as a fuel. Commercially important according to another report. The wood is used for rough lumber, cross-ties etc."@en .
+
+:QuercusVirginiana a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "live oak"@en .
+:QuercusVirginiana 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Sandy dry to wet soils, especially by the coast. Usually found in sandy-loam soils, but it is also found in heavy clays."@en ;
+  :plant_country_range "South-eastern N. America - Virginia to Florida and Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Virginiana is an evergreen Tree growing to 20 m (65ft 7in) at a medium rate.  It is hardy to zone (UK) 7 and is not frost tender. It is in leaf all year, in flower in April. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute, :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. Low in tannin, it has a sweet flavour. The seed is usually produced in clusters of 3 - 5 and is about 25mm long and 10mm wide. It is about 12mm long according to another report. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed contains bitter tannins, these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. An edible oil obtained from the seed is used for cooking. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Analgesic, :Astringent, :Antihemorrhoidal ;
+  :plant_medicinal_text "The bark is astringent. A decoction has been used in the treatment of dysentery. A decoction of the wood chips or the bark has been applied externally as an astringent analgesic to treat aches and pains, sores and haemorrhoids. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute, :VegetableOil ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark is a commercial source of tannin. Dyes of various colours can be obtained from the bark. Wood - very heavy, hard, strong, tough, close grained but difficult to work. It weighs 59lb per cubic foot. It is used for making hubs, cogs, shipbuilding etc. A very good fuel."@en .
+
+:QuercusWislizenii a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "live oak"@en .
+:QuercusWislizenii 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Desert mountain slopes and valleys below 1600 metres. No more than a shrub in the desert, forming trees in the sheltered coastal valleys."@en ;
+  :plant_country_range "South-western N. America - California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus Wislizenii is an evergreen Tree growing to 20 m (65ft) by 30 m (98ft) at a slow rate.It is in leaf all year, in flower in April, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - cooked. A staple food of some native North American Indian tribes. It can be dried, ground into a powder and used as a thickening in stews etc or mixed with cereals for making bread. The seed, which can be up to 35mm long and 1cm wide, contains bitter tannins - these can be leached out by thoroughly washing the seed in running water though many minerals will also be lost. Either the whole seed can be used or the seed can be dried and ground it into a powder. It can take several days or even weeks to properly leach whole seeds, one method was to wrap them in a cloth bag and place them in a stream. Leaching the powder is quicker. A simple taste test can tell when the tannin has been leached. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent, :Antiarthritic, :Antiseptic ;
+  :plant_medicinal_text "A decoction of the bark has been used as a cough medicine. The pulverized outer bark has been used as an astringent and antiseptic dusting powder on burns and running sores and is particularly useful for babies with sore umbilicus. A decoction of the inner bark has been used in the treatment of arthritis. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :GumAndAdhesive, :WoodCorkAndSubstitute, :Repellent, :FuelAndPower, :Tannin ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The acorn meal has been used to mend cracks in clay pots. Wood - heavy, very hard, strong, close grained. Of no commercial value because the trunks are never tall or clear, it is used mainly as a fuel."@en .
+
+:QuercusXBebbiana a owl:Class ;
+  rdfs:subClassOf :Fagaceae .
+:QuercusXBebbiana 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in the wild."@en ;
+  :plant_country_range "A hybrid of garden origin."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus X Bebbiana is a deciduous Tree growing to 15 m (49ft) by 8 m (26ft) at a slow rate. It is hardy to zone (UK) 3 and is not frost tender.  It is in flower in May, and the seeds ripen in October. The species is monoecious (individual flowers are either male or female, but both sexes can be found on the same plant) and is pollinated by Wind. Suitable for: medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. The large seeds are sweet and can be eaten out of hand. The seed can be ground into a powder and used in making bread, dumplings etc and as a thickener in soups. If the seed is bitter then this is due to the presence of tannins, these can be leached out by thoroughly washing the dried and ground up seed in water, though many minerals will also be lost. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Astringent ;
+  :plant_medicinal_text "Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc."@en ;
+  :plant_other_use :Repellent, :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "A mulch of the leaves repels slugs, grubs etc, though fresh leaves should not be used as these can inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. Wood - hard, heavy, strong, tough, very durable, close grained."@en .
+
+:QuercusXHybrid a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "burgambel oak"@en .
+:QuercusXHybrid 
+  :plant_hardiness_zones "3-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A cross between the bur oak, whose native range is in the eastern U.S., and the Gambel oak, whose native range is in the southwestern U.S. and Mexico."@en ;
+  :plant_country_range "Origin: Natural hybrid in W. N. America."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus X Hybrid is a deciduous Tree growing to 30 m (98ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 3. The flowers are pollinated by Wind. It is noted for attracting wildlife. Suitable for: medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Carbon Farming Solutions - Staple Crop: balanced carb (The term staple crop typically refers to a food that is eaten routinely and accounts for a dominant part of people's diets in a particular region of the world) ."@en ;
+  :plant_medicinal_text "None Report. As a cross between Quercus macrocarpa and Quercus gambelii we may expect some of the medicinal qualities to be present. Quercus macrocarpa has Antispasmodic;  Astringent; and Tonic qualities. The bark is astringent and tonic. An infusion has been used in the treatment of diarrhoea. A decoction of the root or inner bark has been used in the treatment of cramps. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. Quercus gambelii has Analgesic; Astringent; and Cathartic properties. Any galls produced on the tree are strongly astringent and can be used in the treatment of haemorrhages, chronic diarrhoea, dysentery etc. The acorns have been eaten to give greater sexual potency. The root bark is analgesic and cathartic. A decoction has been used to treat postpartum pain and facilitate delivery of the placenta."@en ;
+  :plant_other_use_text "Carbon Farming Solutions - Industrial Crop: tannin (Crops grown for non-food uses. Industrial crops provide resources in three main categories: materials, chemicals, and energy. Traditional materials include lumber and thatch, paper and cardboard, and textiles) . Fodder: mast. Drought-tolerant; suitable for xeriscaping"@en .
+
+:QuercusXSchuettei a owl:Class ;
+  rdfs:subClassOf :Fagaceae ;
+  :synonym "schuette's oak"@en .
+:QuercusXSchuettei 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None Known"@en ;
+  :plant_habitat "Native Range: Garden origin"@en ;
+  :plant_country_range "Naturally occurring hybrid scattered through locations where the ranges of the parent trees coincide (southern Ontario and Quebec south to Kentucky, Missouri and Oklahoma)."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Quercus x schuettei is a deciduous Tree growing to 18 m (59ft) by 18 m (59ft) at a fast rate. It is hardy to zone (UK) 5. The flowers are pollinated by Wind. It is noted for attracting wildlife. Suitable for: medium (loamy) and heavy (clay) soils. Suitable pH: neutral soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_text "Produces large, edible acorns that are low in tannins. Seed - cooked. The seed can be ground into a powder and used in making bread, dumplings etc and as a thickener in soups. Many trees have sweet seeds with little tannin and the seed can be eaten raw or cooked. If the seed is bitter then this is due to the presence of tannins, these can be leached out by thoroughly washing the dried and ground up seed in water, though many minerals will also be lost. The traditional method of preparing the seed was to bury it in boggy ground overwinter. The germinating seed was dug up in the spring when it would have lost most of its astringency. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Agroforestry Uses: rehabilitation of the soil. It may be either seeded or transplanted onto disturbed areas. Other Uses: The leaves of most species in this genus are more or less rich in tannins. A mulch of the leaves can be placed around vulnerable plants in order to repel slugs, snails, grubs etc. Fresh leaves should be used with caution, since these can utilize some of the nitrogen in the soil and this inhibit plant growth. Oak galls are excrescences that are sometimes produced in great numbers on the tree and are caused by the activity of the larvae of different insects. The insects live inside these galls, obtaining their nutrient therein. When the insect pupates and leaves, the gall can be used as a rich source of tannin, that can also be used as a dyestuff. The bark has been used as a mordant for fixing dyes. The wood is hard, heavy, strong, tough, very durable, close grained. The wood is a good fuel. Acorns are abundant and an excellent source of food for wildlife. Schuette’s oak is considered to be a low-maintence tree with good pest resistance. A medium shade tree for moist landscape areas. Specimen or group. Lawns or parks. Street tree. Well suited to soggy soils. Riverbanks."@en .
+

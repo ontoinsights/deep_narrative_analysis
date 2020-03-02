@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Nitrariaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:PeganumHarmala a owl:Class ;
+  rdfs:subClassOf :Nitrariaceae ;
+  :synonym "syrian rue"@en, "harmal peganum"@en, "wild rue"@en, "african rue"@en, "esfand"@en, "harmel"@en .
+:PeganumHarmala 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "Use with caution. Although the seed is used medicinally and as a condiment, it does contain hallucinogenic and narcotic alkaloids. When taken in excess it causes hallucinations and vomiting."@en ;
+  :plant_habitat "Dry steppes, especially where grazing is heavy, and dry waste places. It is often found in saline soils."@en ;
+  :plant_country_range "Europe - Mediterranean and Southeast Europe."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Peganum Harmala is a PERENNIAL growing to 0.6 m (2ft) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 8. The seeds ripen in September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_use :CondimentAndSeasoning, :VegetableOil ;
+  :plant_edible_text "Seed - used as a spice and purifying agent. Some caution is advised because the seed has narcotic properties, inducing a sense of euphoria and releasing inhibitions. An edible oil is obtained from the seed."@en ;
+  :plant_medicinal_use :Antiparasitic, :Galactogogue, :Alterative, :Oxytoxic, :Digestive, :Analgesic, :SedativeAndHypnotic, :Ophthalmic, :Aphrodisiac, :Abortifacient, :Emmenagogue, :Diuretic, :Anthelmintic, :Hallucinogenic ;
+  :plant_medicinal_text "Alterative. The fruit and seed are digestive, diuretic, hallucinogenic, narcotic and uterine stimulant. They are taken internally in the treatment of stomach complaints, urinary and sexual disorders, epilepsy, menstrual problems, mental and nervous illnesses. The seed has also been used as an anthelmintic in order to rid the body of tapeworms. This remedy should be used with caution and preferably under the guidance of a qualified practitioner since excessive doses cause vomiting and hallucinations. The seeds contain the substance 'harmine' which is being used in research into mental disease, encephalitis and inflammation of the brain. Small quantities stimulate the brain and are said to be therapeutic, but in excess harmine depresses the central nervous system. A crude preparation of the seed is more effective than an extract because of the presence of related indoles. Consumption of the seed in quantity induces a sense of euphoria and releases inhibitions. It has been used in the past as a truth drug. The oil obtained from the seed is said to be aphrodisiac. The oil is also said to have galactogogue, ophthalmic, soporific and vermifuge properties. The seed is used externally in the treatment of haemorrhoids and baldness. The whole plant is said to be abortifacient, aphrodisiac, emmenagogue and galactogogue. A decoction of the leaves is used in the treatment of rheumatism. The root has been used as a parasiticide in order to kill body lice. It is also used internally in the treatment of rheumatism and nervous conditions."@en ;
+  :plant_other_use :DyeInkAndPaint, :Incense, :Parasiticide, :VegetableOil ;
+  :plant_other_use_text "A red dye is obtained from the seed. It is widely used in Western Asia, especially as a colouring for carpets. The ripe seed contains 3.8 - 5.8% of the alkaloids harmine, harmaline, harmalol and peganine. Ineffective as a contact poison, they are active in vapour form where they are effective against algae, in higher concentrations to water animals and lethal to moulds, bacteria and intestinal parasites. The seed is used as an incense."@en .
+

@@ -1,0 +1,35 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Canellaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:WarburgiaSalutaris a owl:Class ;
+  rdfs:subClassOf :Canellaceae ;
+  :synonym "pepperbark tree"@en .
+:WarburgiaSalutaris 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Savannah woodland, coastal forest and Afromontane forest. Lower rainforests, drier highland forest areas, and in secondary bushlands and grasslands at elevations from 1,000 - 2,000 metres."@en ;
+  :plant_country_range "Southern Africa - Zimbabwe, Mozambique, S. Africa."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Warburgia Salutaris is an evergreen Tree growing to 8 m (26ft) by 8 m (26ft) at a slow rate. It is hardy to zone (UK) 10. It can fix Nitrogen.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantInnerBark, :PlantLeaf ;
+  :plant_edible_text "The leaves are used to flavour soups and curries. The leaves have a bitter, burning, aromatic taste. The leaves are used as a tea. The bark contains mannitol."@en ;
+  :plant_medicinal_text "Pepperbark tree is a widely used herbal remedy in southern Africa. The inner bark has many uses as a treatment for malaria, colds, chest pains, coughs, diarrhoea, muscle pains, stomach aches, and general body pains. The pepper-like, bitter stems and root bark are used to cure a wide range of ailments. They are used as an expectorant to treat the common cold. Taken orally are believed to cure spots in the lungs. Both stems and root bark are a remedy for malaria. Powdered and mixed with water, they are believed to cure sores in the mouth. Dried and ground, they are taken as a snuff to clear the sinuses."@en ;
+  :plant_other_use_text "Agroforestry Uses: A suitable plant for growing as a hedge as it responds well to pruning. An attractive, dense hedge. The tree can be intercropped to provide shade in coffee, banana and cocoa plantations. The plant is nitrogen fixing and can be used for green manure and mulch. It also provides good shade. Other Uses A resin can be extracted from the bark. The bark is a source of tannins. The heartwood is dark yellowish-brown; the sapwood light yellow. The wood is oily, aromatic, and pale, darkening with exposure to the air. It saws and polishes well but is not durable. It is occasionally used for construction, furniture and tools. The wood is used for fuel and to make charcoal."@en .
+

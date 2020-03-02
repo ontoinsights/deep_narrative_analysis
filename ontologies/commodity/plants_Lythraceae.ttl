@@ -1,0 +1,72 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Lythraceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:LythrumSalicaria a owl:Class ;
+  rdfs:subClassOf :Lythraceae ;
+  :synonym "purple loosestrife"@en .
+:LythrumSalicaria 
+  :plant_hardiness_zones "3-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Reed swamps at the margins of lakes and slow-flowing rivers, fens and marshes, avoiding acid soils."@en ;
+  :plant_country_range "Europe, including Britain, south to N. Africa east to western and northern Asia. N. America.."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Lythrum Salicaria is a PERENNIAL growing to 1 m (3ft 3in) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 3.  It is in flower from June to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil and can grow in water."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_use :Coloring ;
+  :plant_edible_text "Leaves - cooked. Rich in calcium. Root - cooked. An edible dye is obtained from the flowers."@en ;
+  :plant_medicinal_use :Antidiabetic, :Vulnerary, :Antidiarrheal, :Astringent, :Styptic, :Antibiotic ;
+  :plant_medicinal_text "Purple loosestrife is an astringent herb that is mainly employed as a treatment for diarrhoea and dysentery. It can be safely taken by people of all ages and has been used to help arrest diarrhoea in breast-feeding babies. It can also be used to treat heavy periods and inter-menstrual bleeding. Modern research has shown the whole plant to be antibiotic and to be particularly effective against the micro-organism that causes typhus. The flowering plant is antibiotic, highly astringent, hypoglycaemic, styptic and vulnerary. It is valued as an intestinal disinfectant, especially in cases of enteritis, an infusion is used internally in the treatment of diarrhoea, internal bleeding, excessive menstruation etc. The flowering plant is harvested in the summer and can be used fresh or dried. Externally, the plant is used as a cleansing and healing wash for wounds, sores, impetigo, eczema, excess vaginal discharge, vaginal itching etc. The powdered plant is used as a haemostatic in cases of severe nosebleeds. The stems are regarded as gum stimulators and are given to children to chew in order to strengthen weak or bleeding gums."@en ;
+  :plant_other_use :Preservative, :ToothCare, :DyeInkAndPaint, :Cosmetic, :Tannin ;
+  :plant_other_use_text "A decoction of the plant is impregnated into wood, rope etc to prevent it rotting in water. The leaves contain about 12% tannin, the stems 10.5%, the flowers 13.7% and the roots 8.5%. It is probably these tannins that preserve the wood etc. The powdered plant is used cosmetically in face-packs to counteract reddened skin."@en .
+
+:SonneratiaCaseolaris a owl:Class ;
+  rdfs:subClassOf :Lythraceae ;
+  :synonym "firefly mangrove"@en, "mangrove apple"@en .
+:SonneratiaCaseolaris 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Coastal mangrove communities, tidal creeks, in muddy soil. Less salt parts of mangrove-forests on a deeply muddy soil, never on coral-banks, often along tidal creeks with slow-moving water and ascending these as far as the flood mounts."@en ;
+  :plant_country_range "E. Asia - S. China, India, Sri Lanka, Thailand, Cambodia, Vietnam, Malaysia, Indonesia, Philippines, New Guinea, northern Australia, Pacific Islands."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Sonneratia Caseolaris is an evergreen Tree growing to 15 m (49ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Moths, bats, birds. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline and saline soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Young berries - raw or cooked. They can be eaten as a fruit, or cooked as a vegetable. A sour flavour. A cheese-like flavour. The fruits are a source of pectin. Young leaves - raw."@en ;
+  :plant_medicinal_text "The plant is said to be haemostatic. It is a folk remedy for sprains, swellings, and worms. The old fruit walls are used as a treatment for worms. Half-ripe fruits are a treatment for coughs. The fruits are used to make poultices. The pounded leaves are used as a treatment for haematuria and smallpox. The leaves are crushed, mixed with salt and applied as a poultice onto cuts and bruises."@en ;
+  :plant_other_use_text "Agroforestry Uses: A very important tree in the coastal swamp community, helping to protect the soil from erosion and providing an important habitat for wildlife. A fast-growing, pioneering species that colonizes newly formed mudflats and can expand rapidly in number, especially in optimum conditions of low salinity. Other Uses The pneumatophores (vertical roots rising above ground) are used as floats for fish nets and, being corky in texture, are employed in the manufacture of inner soles for shoes and can be used as a substitute for cork or pith. The roots are boiled before being used. The bark is a source of tannins. The heartwood is light brown to dark chocolate, the sapwood light greyish brown and 3 - 8cm thick. When wet or under varnish, the heartwood of old mature trees looks almost black. The grain is straight or very slightly crossed; the texture fine, very homogeneous, smooth, but not glossy; it has a distinct salty taste and a fishy or swampy odour, especially when fresh. The wood is moderately hard and moderately heavy to heavy. It is easy to work; lasts well in the ground and even the sapwood is rarely attacked by insects; the heartwood is said to resist teredos very well. The wood contains a small amount of salt, making the use of copper nails and screws necessary. It is used for piles, posts, poles, railway ties, paving blocks; ship, bridge, and wharf building; general strong construction; doors; siding, sheathing, ceiling, flooring, and all kinds of interior finish; ship planking and decking; furniture and cabinetwork; and musical instruments. The wood is used for fuel, but only when better woods are not available."@en .
+
+:WoodfordiaFruticosa a owl:Class ;
+  rdfs:subClassOf :Lythraceae ;
+  :synonym "fire-flame bush"@en, "fire flame bush"@en .
+:WoodfordiaFruticosa 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Habitat Open, sunny places, often on disturbed soils and on old agricultural land. Open waste land and degraded places."@en ;
+  :plant_country_range "East Africa - Tanzania, Madagascar; E. Asia - Indian subcontinent, China, Myanmar, Thailand, Indones"@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Woodfordia Fruticosa is an evergreen Shrub growing to 5 m (16ft) by 5 m (16ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFlower ;
+  :plant_edible_text "The flowers are eaten as food and used in the preparation of a cooling drink. (This report was a little unclear, and might have referred to the leaves.)"@en ;
+  :plant_medicinal_text "The flowers are astringent. They are used in the treatment of dysentery, traditionally being beaten up with honey into a kind of confection The flowers are used externally as an astringent."@en ;
+  :plant_other_use_text "Agroforestry Uses: This is a common gregarious shrub which springs up naturally on landslips, abandoned cultivation, and other open places, killing out grass, binding the soil together and acting as a useful soil-improver and a most efficient nurse to tree species, including sal, which come up freely under its protective cover. It is unable to regenerate by seed in shady places so, as the trees grow larger this species gradually dies out. It is not eaten by cattle, and is frost-hardy, and thus appears often in extensive pure masses on open ground subject to grazing. Other Uses A gum is obtained from the plant. It is similar to gum tragacanth. The flowers contain about 20% tannins. They are harvested when open and then dried for later use. When being used for their tannins, the leaves are employed more commonly than the flowers, simply because they are available in greater quantity. A dye is obtained from the flowers. It can be used on its own or combined with other dyes where they also act as a mordant. They are most commonly combined with Morinda citrifolia. The wood is used for fuel."@en .
+

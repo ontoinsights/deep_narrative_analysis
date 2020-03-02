@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Tamaricaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:TamarixGallica a owl:Class ;
+  rdfs:subClassOf :Tamaricaceae ;
+  :synonym "manna plant"@en, "french tamarisk"@en .
+:TamarixGallica 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Damp ground near the coast."@en ;
+  :plant_country_range "W. Europe - France. Naturalized in Britain."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Tamarix Gallica is a deciduous Shrub growing to 4 m (13ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 5.  It is in flower from June to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline and saline soils. It cannot grow in the shade. It prefers dry or  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSapAndManna ;
+  :plant_edible_text "A manna is produced by the plants in response to insect damage to the stems. It is sweet and mucilaginous. There is some confusion over whether the manna is produced by the plant, or whether it is an exudation from the insects. The insects in question live in the deserts around Israel, it is not known if the manna can be produced in Britain."@en ;
+  :plant_medicinal_use :ExpectorantAndMucoactiveAgent, :Astringent, :Diuretic, :MedicinalCleaning, :Laxative ;
+  :plant_medicinal_text "The branchlets and the leaves are astringent and diuretic. An external compress is applied to wounds to stop the bleeding. The manna produced on the plant is detergent, expectorant and laxative. Galls produced on the plant as a result of insect damage are astringent. They are used in the treatment of diarrhoea and dysentery."@en ;
+  :plant_other_use :SoilStabilization, :WoodCorkAndSubstitute, :DyeInkAndPaint, :FuelAndPower, :Hedge, :Tannin ;
+  :plant_other_use_text "Very tolerant of maritime exposure, it makes a good shelter hedge in coastal gardens. It dislikes being trimmed. The plant has a rather open habit, however, and so is not tremendously effective at reducing wind speeds. The extensive root system of this plant makes it suitable for use in erosion control in sandy soils. The plant contains a high level of tannin. Galls produced on the plant as a result of insect damage contain up to 40% tannin. The tannin can be used as a dyestuff for fabrics. (No details are given about the colour, though it is likely to be some shade of brown.) Wood - fairly hard, not strong, close grained, takes a high polish, it is often twisted or knotty. Used for general construction, poles, turnery. It makes a good fuel, burning well even when green due to the wax content of the wood."@en .
+

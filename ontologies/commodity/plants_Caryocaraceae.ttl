@@ -1,0 +1,75 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Caryocaraceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CaryocarBrasiliense a owl:Class ;
+  rdfs:subClassOf :Caryocaraceae ;
+  :synonym "pequi"@en, "souari nut"@en .
+:CaryocarBrasiliense 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The seed has a large number of small spines which can injure the mucous membranes of the mouth."@en ;
+  :plant_habitat "Forms pure groves in the plateaux and valleys of the savannah, elsewhere it is usually found as scattered individuals. Found in both primary and secondary formations."@en ;
+  :plant_country_range "S. America - northern Argentina, southern, eastern, central and northern Brazil, Paraguay and Bolivia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Caryocar Brasiliense is a deciduous Tree growing to 10 m (32ft) by 15 m (49ft) at a slow rate. It is hardy to zone (UK) 10. The flowers are pollinated by Bats, Insects. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay and nutritionally poor soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Edible portion: Fruit, Nut. The oily, mucilaginous fruit is nutritious. A strongly scented, fleshy pulp. It has a sweet flavour, but is an acquired taste and is mainly used as a flavouring or as a famine food. The fruit is eaten fresh or used for sweets and liqueur. The fruit, including the seed, is cooked with rice. A kind of butter and suet are extracted from the fruit. The kernel is rarely eaten because of endocarp spines. The seed has a large number of small spines which can injure the mucous membranes of the mouth. The seeds are the source of an edible oil that is mainly used for flavouring. The high melting point of the oil may give it potential as a cocoa butter substitute"@en ;
+  :plant_medicinal_text "The flowers, fruits and seeds are used in local medicine. The bark is diuretic and febrifuge. The fruits are used in the treatment of the common cold and bronchitis. The seed oil, combined with honey, is used in the treatment of the common cold and bronchitis. The leaves contain triterpenes, sterols and ellagic acid."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other uses rating: Low (2/5). Other Uses The oil from the seed is used in the cosmetic industry and locally for making soap, as an illuminant and lubricant. The leaves, bark and fruit pulp are a source of tannin. The wood is moderately heavy, soft, of good natural durability. It is used for engraving, construction, wooden machinery parts, furniture, fences etc. The wood is used for fuel and to make charcoal. Attractive to bees, butterflies and/or birds. Suitable for xeriscaping."@en .
+
+:CaryocarNuciferum a owl:Class ;
+  rdfs:subClassOf :Caryocaraceae ;
+  :synonym "souari nut"@en, "butter nut"@en .
+:CaryocarNuciferum 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Deep loams and fertile sandy soils in riverside forests."@en ;
+  :plant_country_range "Northern S. America - Brazil to Guyana."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Caryocar Nuciferum is an evergreen Tree growing to 45 m (147ft) by 30 m (98ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. The large, soft, white kernels have a delicious, rich, almond-like flavour and are enclosed in a hard shell. The seed contains over 60% fat. The kidney-shaped kernel is usually well over 5cm long and 2cm in diameter. The seed shell is about 7mm thick and difficult to crack. The large fruit containing the seeds can weigh up to 11kg and measure 18cm in diameter, it contains 1 - 4 seeds (usually 1 or 2) which are easily extracted from it. An edible oil is obtained from the seed. Excellent for preparing bakery products. Fruit - cooked. The oily, yellow pulp is cooked and eaten as a vegetable."@en ;
+  :plant_medicinal_text "The whole plant is used as a febrifuge."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Wood - hard and durable. A potentially valuable timber, well suited for making canoes and the crooks of boats, but little used because of the tree's value as a seed producer."@en .
+
+:CaryocarVillosum a owl:Class ;
+  rdfs:subClassOf :Caryocaraceae ;
+  :synonym "piquia"@en .
+:CaryocarVillosum 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The seed case beneath the pulp has rigid spines - care should be taken when eating the fresh fruit that one does not harm themselves on these spines."@en ;
+  :plant_habitat "Found in both primary and secondary rainforests on land that is not subject to periodic inundation."@en ;
+  :plant_country_range "Northern S. America - Brazil to Guyana."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Caryocar Villosum is an evergreen Tree growing to 30 m (98ft) by 35 m (114ft) at a slow rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. Eaten as a dessert. The large, soft, white kernels have a delicious, rich, almond-like flavour. Rich in oil. An edible oil is obtained from the tissue surrounding the seed. Another edible oil is obtained from the seed. Fruit - raw or cooked. It has the faint smell of rancid butter. The fruit is more commonly cooked. The fleshy, aromatic, yellow pulp has a slightly sweet flavour. The seed case beneath the pulp has rigid spines - care should be taken when eating the fresh fruit that one does not harm themselves on these spines."@en ;
+  :plant_medicinal_text "The leaves and bark are diaphoretic."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "The heartwood is yellow to light brownish grey; it is clearly demarcated from the 15mm wide band of dirty white sapwood. The wood is cross-grained, with little if any taste or odour. It is rather hard, heavy, very tough, durable and very resistant to wood-eating organisms. The wood works well; takes nails fairly well; planes moderaely easily but very badly; turns moderately easily but indifferently; polishes indifferently. It is suitable for house and ship building, cabinet making, wheel arches and hubs, fence posts, railway sleepers etc."@en .
+

@@ -1,0 +1,457 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Campanulaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:AzorinaVidalii a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:AzorinaVidalii 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Sea cliffs."@en ;
+  :plant_country_range "Azores."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Azorina Vidalii is an evergreen Shrub growing to 0.3 m (1ft) by 0.3 m (1ft in).  It is hardy to zone (UK) 9 and is frost tender. It is in leaf all year, in flower from June to July, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_text "Leaves - raw. An excellent sweet flavour, the leaves can be used like lettuce in salads, though the plant is not very productive. It is important to only harvest individual side leaves, if the growing tip is harvested the shoot will usually die off."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaAlliariifolia a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "cornish bellflower"@en .
+:CampanulaAlliariifolia 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Open scrub and conifer forests, occasionally on cliffs but frequently on steep banks. Naturalized on banks and rough ground, especially by railways, in southern England."@en ;
+  :plant_country_range "E. Europe to W. Asia. Naturalized in Britain, in Cornwall."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Alliariifolia is a deciduous Perennial growing to 0.7 m (2ft 4in) by 0.5 m (1ft 8in) at a medium rate.  It is hardy to zone (UK) 3. It is in leaf from April to November, in flower from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. The leaves are rather hairy and, especially as they age, have a slightly unpleasant bitterness. They are acceptable as a minor ingredient in mixed salads, but are generally less than pleasant to eat on their own. Flowers - a pleasant taste and texture with a slight sweetness."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Plants can be grown for ground cover when planted about 45cm apart each way, they form spreading clumps."@en .
+
+:CampanulaCarpatica a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "tussock bellflower"@en, "carpathian bellflower"@en, "carpathian harebell"@en .
+:CampanulaCarpatica 
+  :plant_hardiness_zones "3-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. E. Europe - Carpathian Mountains."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Carpatica is a PERENNIAL growing to 0.3 m (1ft) by 0.3 m (1ft in) at a slow rate. It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A pleasant flavour, they are slightly sweet but a little bit chewy when eaten raw. Flowers - raw or cooked. Slightly sweet, they make a pleasant and decorative addition to salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Plants make a good ground cover when planted about 30cm apart each way, forming a spreading clump."@en .
+
+:CampanulaCarpaticaTurbinata a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:CampanulaCarpaticaTurbinata 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. E. Europe - Carpathian Mountains."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Carpatica Turbinata is a PERENNIAL growing to 0.3 m (1ft) by 0.3 m (1ft in).  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A pleasant sweet flavour, but the leaves are a bit hairy. Flowers - raw or cooked. Slightly sweet, they make a very pleasant and decorative addition to the salad bowl."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Plants make a good ground cover when planted about 30cm apart each way, forming a spreading clump."@en .
+
+:CampanulaCochleariifolia a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "fairies thimbles"@en .
+:CampanulaCochleariifolia 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Cracks in rocks in mountains throughout most of temperate Europe."@en ;
+  :plant_country_range "Europe."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Cochleariifolia is a PERENNIAL growing to 0.2 m (0ft 8in) by 0.3 m (1ft).  It is hardy to zone (UK) 6.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A pleasant mild flavour. Flowers - raw or cooked. Slightly sweet."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaGarganica a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "adriatic bellflower"@en .
+:CampanulaGarganica 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. Europe - Italy."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Garganica is an evergreen Perennial growing to 0.2 m (0ft 8in) by 0.2 m (0ft 8in).  It is hardy to zone (UK) 5 and is not frost tender. It is in leaf all year, in flower from June to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. The leaves are quite small but have a pleasant mild flavour, and make a very acceptable addition to salads. Flowers - raw or cooked. Slightly sweet."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaGlomerata a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "clustered bellflower"@en, "dane's blood"@en, "clustered bellflower"@en .
+:CampanulaGlomerata 
+  :plant_hardiness_zones "4-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Grassy places on calcareous soils, particularly in chalk grassland, less commonly on sea-cliffs or in woods."@en ;
+  :plant_country_range "Most of Europe, including Britain, to temperate Asia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Glomerata is a PERENNIAL growing to 1 m (3ft 3in) by 0.6 m (2ft) at a medium rate.  It is hardy to zone (UK) 2 and is not frost tender.  It is in flower from June to July. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A mild flavour with a pleasant sweetness, it can be used as a major ingredient in salads. Flowers - raw. Beautiful to look at, they have a pleasant sweetness and make a very attractive decoration to a salad."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaLactiflora a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "milky bellflower"@en .
+:CampanulaLactiflora 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Naturalized in Britain in waste and rough ground, often in damp places."@en ;
+  :plant_country_range "Europe - Caucasus. Naturalized in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Lactiflora is a PERENNIAL growing to 1 m (3ft 3in) by 0.8 m (2ft 7in).  It is hardy to zone (UK) 5.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A mild flavour with a pleasant sweetness. Flowers - raw. A decorative and tasty addition to salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaLatifolia a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "large campanula"@en, "giant bellflower"@en .
+:CampanulaLatifolia 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woodlands, lush meadows and hedgerows, frequently on slightly acid soils."@en ;
+  :plant_country_range "Much of Europe, including Britain, north to Norway east to Siberia and W. Asia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Latifolia is a PERENNIAL growing to 1.5 m (5ft) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from July to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Young shoots - raw or cooked. Contains up to 400mg% of vitamin C. Root - raw. This report is rather vague and needs further investigation. Flowers - raw or cooked. A pleasant sweetness."@en ;
+  :plant_medicinal_use :Emetic ;
+  :plant_medicinal_text "The flowers are emetic."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaLatiloba a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:CampanulaLatiloba 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "Europe - Siberia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Latiloba is an evergreen Perennial growing to 0.9 m (3ft) by 0.5 m (1ft 8in) at a medium rate.  It is hardy to zone (UK) 3. It is in leaf all year, in flower from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. Pleasantly sweet, though individual leaves are quite small. The leaves are available all year round. Flowers - a pleasant taste and texture with a slight sweetness."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Plants can be grown for ground cover when planted about 45cm apart each way, they form spreading clumps."@en .
+
+:CampanulaPersicifolia a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "harebell"@en, "peachleaf bellflower"@en .
+:CampanulaPersicifolia 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Commons and open woods."@en ;
+  :plant_country_range "Europe to western and northern Asia. Locally naturalized in Britain."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Persicifolia is an evergreen Perennial growing to 1 m (3ft 3in) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 3 and is not frost tender. It is in leaf all year, in flower from June to August, and the seeds ripen from August to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. Rich in vitamin C. A mild flavour, it is nice in salads and is liked by most people who try it. The plant forms over-wintering basal rosettes of leaves and thus provides a source of fresh leaves throughout the winter. The main problem with these leaves is that they are very narrow and it takes quite a lot of picking in order to obtain a reasonable quantity. Root - raw. Flowers - raw. A pleasant sweetness, and a very ornamental addition to mixed salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaPortenschlagiana a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "adria bellflower"@en .
+:CampanulaPortenschlagiana 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Naturalized on walls and rocky banks in central and southern England."@en ;
+  :plant_country_range "S. Europe. Naturalized in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Portenschlagiana is an evergreen Perennial growing to 0.3 m (1ft) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 3 and is not frost tender. It is in leaf all year, in flower from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. The leaves are rather small, but they are produced all year round. They have a mild flavour and make an acceptable ingredient in mixed salads, especially in the winter, but we find that, eaten in quantity, they become a bit unpleasant. Flowers - raw. Very freely produced, they have a pleasant flavour and make a very decorative addition to salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A rampantly spreading plant, suitable for ground cover in a sunny position."@en .
+
+:CampanulaPoscharskyana a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "trailing bellflower"@en .
+:CampanulaPoscharskyana 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Naturalized on walls and rocky banks in central and southern England."@en ;
+  :plant_country_range "Europe - N. Yugoslavia. Naturalized in Britain."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Poscharskyana is an evergreen Perennial growing to 0.3 m (1ft) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 3 and is not frost tender. It is in leaf all year, in flower from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A pleasant sweet flavour but the leaves are a little tough. It makes a very addition to mixed salads in the winter, though we tend not to eat it much at other times of the year when there are more leaves available. Flowers - raw. Produced in abundance, they have a pleasant sweet flavour and make a decorative addition to the salad bowl."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A rampantly spreading plant, suitable for ground cover in a sunny position."@en .
+
+:CampanulaPunctata a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "chinese rampion"@en, "spotted bellflower"@en .
+:CampanulaPunctata 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Grassy slopes in lowland and low mountains all over Japan. Waste places such as roadsides and stony slopes on hills from the lowlands to elevations of 1700 metres."@en ;
+  :plant_country_range "E. Asia - Japan, Siberia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Punctata is a PERENNIAL growing to 0.4 m (1ft 4in) by 0.8 m (2ft 7in) at a fast rate. It is hardy to zone (UK) 6.  It is in flower in July, and the seeds ripen in August. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "The flowers and leaves are used as potherbs. The leaves are slightly hairy but they have a very pleasant taste raw, with a pleasant sweetness. They have been enjoyed by almost everyone we have given them to try and make a very acceptable salad. The flowers make a decorative and tasty addition to the salad bowl."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaPyramidalis a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "chimney bellflower"@en .
+:CampanulaPyramidalis 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Naturalized on walls in southern England and the Channel Islands."@en ;
+  :plant_country_range "Europe - Italy and Yugoslavia. Naturalized in southern Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Pyramidalis is a PERENNIAL growing to 1.5 m (5ft) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 8 and is not frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A mild slightly sweet flavour. Flowers - raw. A nice decorative addition to salads, the flowers have a pleasant sweet flavour."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaRapunculoides a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "creeping bellflower"@en, "rampion bellflower"@en .
+:CampanulaRapunculoides 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Fields and woods. Naturalised in Britain where it grows in fields and more or less disturbed grassy areas such as railway banks, occasionally in woods, usually near to houses."@en ;
+  :plant_country_range "Europe, north to 65°N., east to W. Asia and the Caucasus. Introduced in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Rapunculoides is a PERENNIAL growing to 1.2 m (4ft) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 3.  It is in flower from July to September, and the seeds ripen from August to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Leaves and young shoots - raw or cooked. Rich in vitamin C. A pleasant mild flavour. Root - raw or cooked. A nut-like flavour, very palatable. The young roots are best. Somewhat sweet, they are a pleasant addition to the salad bowl."@en ;
+  :plant_medicinal_text "The plant has been used as a cure for hydrophobia in Russia."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaRapunculus a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "rampion"@en .
+:CampanulaRapunculus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Hedgerows, woodland edges, fields etc, usually on gravelly soils in Britain."@en ;
+  :plant_country_range "Europe - Mediterranean. Introduced in Britain."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Rapunculus is a BIENNIAL growing to 0.9 m (3ft) by 0.3 m (1ft in).  It is hardy to zone (UK) 4.  It is in flower from July to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Root - raw or cooked. A very nice sweet flavour, reminiscent of walnuts. They are best mixed with other root vegetables and used in winter salads. Leaves - raw or cooked as a potherb. A fairly bland flavour, with a hint of sweetness, they are quite acceptable raw in salads. The leaves are rich in vitamin C, they make an acceptable winter salad. Young shoots in spring can be blanched and cooked like asparagus."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaTakesimana a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "korean bellflower"@en .
+:CampanulaTakesimana 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - Korea."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Takesimana is a PERENNIAL growing to 0.5 m (1ft 8in) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. A mild flavour with a subtle sweetness, especially in the spring and early summer they taste just like lettuce and are a pleasant addition to mixed salads. In the height of summer, the leaves often develop a slightly bitter flavour, especially if the plant is growing in a sunny position. Flowers - raw. Beautiful to look at, the flowers have a delicate sweetness and are a pleasant addition to salads. Roots - raw, cooked or dried for later use. Known as 'do-ra-jee' in Korea, where they are eaten as a delicacy. The roots are a bit small and fiddly to utilize, though they are said to have a simply delicious flavour."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CampanulaVersicolor a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:CampanulaVersicolor 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rocky places in the lower wood region."@en ;
+  :plant_country_range "Europe - Greece."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Campanula Versicolor is a PERENNIAL growing to 1.2 m (4ft) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 8 and is not frost tender.  It is in flower from July to September, and the seeds ripen from August to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, beetles, Lepidoptera (Moths & Butterflies). The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. Rich in vitamin C. A delicious mild flavour with a slight sweetness that reminds people of freshly-picked garden peas, they can be added in quantity to salads and are usually available in winter. They are liked by most people who try them. Flowers - raw. Very pleasant with a slight sweetness, they make a tasty and decorative addition to salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CodonopsisPilosula a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "dang shen"@en, "bellflower"@en .
+:CodonopsisPilosula 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dense shrubby thickets, the shade of trees at forest edges, streambanks etc."@en ;
+  :plant_country_range "N.E. Asia - Korea"@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Codonopsis Pilosula is a PERENNIAL CLIMBER growing to 1.7 m (5ft 7in).  It is hardy to zone (UK) 6 and is not frost tender.  It is in flower from June to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Root - raw or cooked."@en ;
+  :plant_medicinal_use :Galactogogue, :Stomachic, :Tonic, :Adaptogen, :Digestive, :Sialagogue, :AppetiteStimulant ;
+  :plant_medicinal_text "Dang Shun is an important herb in Chinese medicine, it is a gentle tonic that increases energy levels and helps the body adapt to stress. The root contains saponins, triterpenes and steroids, it is similar in action to ginseng (Panax species), but it is milder and has a shorter-lasting effect. It is a sweet, warm, soothing herb that is taken as an energy tonic. It acts mainly on the spleen, lungs and stomach, raising secretion of body fluids and blood sugar levels, and stimulating the immune system. Research has shown that it increases haemoglobin and red blood cell levels and lowers the blood pressure. It also helps increase endurance to stress and promotes alertness. The root and the whole plant are adaptogen, appetizer, digestive, galactogogue, sialagogue, stomachic and tonic. It is taken internally in the treatment of low energy, poor appetite and digestion, anaemia, shallow breathing and debility after illness. It is often cooked with rice until it is glutinous and used as a tonic food. The dried root is decocted with other herbs and used to treat a wide range of ailments. The roots of plants at least three years old are harvested in the autumn and can be used fresh or dried."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CodonopsisTangshen a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "chuan dang"@en .
+:CodonopsisTangshen 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Alpine brush and rocky slopes. Upland fields."@en ;
+  :plant_country_range "E. Asia - W. China."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Codonopsis Tangshen is a PERENNIAL CLIMBER growing to 3 m (9ft 10in).  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from June to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Adaptogen, :Tonic, :Aphrodisiac ;
+  :plant_medicinal_text "This species is an important herb in Chinese medicine, the root is widely used as a substitute for ginseng. It is a sweet, warm, soothing herb that is taken as an energy tonic. It acts mainly on the spleen, lungs and stomach, raising secretion of body fluids and blood sugar levels, lowering the blood pressure and stimulating the immune system. The root and the whole plant are adaptogen, aphrodisiac and tonic. It is taken internally in the treatment of low energy, poor appetite and digestion, anaemia, shallow breathing and debility after illness. It is often cooked with rice until it is glutinous as a tonic food. The roots of plants at least three years old are harvested in the autumn and can be used fresh or dried."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CodonopsisTubulosa a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:CodonopsisTubulosa 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Alpine brush and rocky slopes."@en ;
+  :plant_country_range "E. Asia - Southwest China."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Codonopsis Tubulosa is a PERENNIAL CLIMBER growing to 1.5 m (5ft).  It is hardy to zone (UK) 7 and is not frost tender.  It is in flower from June to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Adaptogen, :Tonic, :Aphrodisiac ;
+  :plant_medicinal_text "This species is an important herb in Chinese medicine, the root is widely used as a substitute for ginseng. It is a sweet, warm, soothing herb that is taken as an energy tonic. It acts mainly on the spleen, lungs and stomach, raising secretion of body fluids and blood sugar levels, lowering the blood pressure and stimulating the immune system. It is taken internally in the treatment of low energy, poor appetite and digestion, anaemia, shallow breathing and debility after illness. It is often cooked with rice until it is glutinous as a tonic food. The roots of plants at least three years old are harvested in the autumn and can be used fresh or dried."@en ;
+  :plant_other_use_text "None known"@en .
+
+:LobeliaCardinalis a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "cardinal flower"@en .
+:LobeliaCardinalis 
+  :plant_hardiness_zones "3-9" ;
+  :plant_hazards "The plant is potentially toxic, but the degree of toxicity is unknown. It contains the alkaloid lobeline which has a similar effect upon the nervous system as nicotine. he sap of the plant has been known to cause skin irritation."@en ;
+  :plant_habitat "Damp shores, meadows and swamps."@en ;
+  :plant_country_range "N. America - New Brunswick to Quebec, south to Florida and Texas."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Lobelia Cardinalis is a PERENNIAL growing to 1 m (3ft 3in) by 0.3 m (1ft) at a medium rate.  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil and can grow in water."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Analgesic, :Stomachic, :Nervine, :ExpectorantAndMucoactiveAgent, :Antispasmodic, :Anthelmintic, :Emetic, :Antipyretic ;
+  :plant_medicinal_text "Emetic, expectorant and nervine. The root is analgesic, anthelmintic, antispasmodic and stomachic. A tea made from the roots has been used in the treatment of epilepsy, syphilis, typhoid, stomach aches, cramps, worms etc. A poultice of the roots has been applied to sores that are hard to heal. The leaves are analgesic and febrifuge. A tea made from the leaves is used in the treatment of croup, nosebleeds, colds, fevers, headaches etc. A poultice of the leaves has been applied to the head to relieve the pain of headaches. This species is considered to have similar medicinal activity to L. inflata, but in a milder form. It was seldom if ever used. The plant is used to make a homeopathic remedy. The report does not say which part of the plant is used, nor what it treats."@en ;
+  :plant_other_use_text "None known"@en .
+
+:LobeliaInflata a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "indian tobacco"@en .
+:LobeliaInflata 
+  :plant_hazards "Some reports say that the plant is poisonous, whilst another says that toxicity has not been established. It contains the alkaloid lobeline which has a similar effect upon the nervous system as nicotine. See also the notes below on medicinal uses. Do not use during pregnancy and lactation. Excessive use discouraged. Avoid if high blood pressure, tendency to fits and heart disease ."@en ;
+  :plant_habitat "Meadows, fields, roadsides, waste places and open woods. Usually in dry soils."@en ;
+  :plant_country_range "Northern N. America - Labrador to Saskatchewan, Georgia, Kansas and Arkansas."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Lobelia Inflata is a ANNUAL growing to 0.6 m (2ft) by 0.3 m (1ft in).  It is in flower from July to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Nervine, :Antiasthmatic, :ExpectorantAndMucoactiveAgent, :Antispasmodic, :Diaphoretic, :Diuretic, :Emetic ;
+  :plant_medicinal_text "Indian Tobacco was a traditional North American Indian remedy for a wide range of conditions. Nowadays it is used mainly as a powerful antispasmodic herb in the treatment of respiratory and muscle disorders. Acting also as a respiratory stimulant, Indian Tobacco is a valuable remedy for conditions such as bronchial asthma and chronic bronchitis. The dried flowering herb and the seed are antiasthmatic, antispasmodic, diaphoretic, diuretic, emetic, expectorant and nervine. The plant is taken internally in the treatment of asthma, bronchitis, whooping cough and pleurisy. This remedy should be used with great caution and only under the supervision of a qualified practitioner. Excess doses cause nausea, vomiting, drowsiness and respiratory failure. See also the notes above on toxicity. The plant contains the alkaline 'lobeline' which has proved to be of value in helping people to give up smoking tobacco. It is contained in many proprietary anti-smoking mixtures where it mimics the effects of nicotine. The alkaloids present in the leaves are used to stimulate the removal of phlegm from the respiratory tract. When chewed, the leaves induce vomiting, headache and nausea - in larger doses it has caused death. The alkaloids first act as a stimulant and then as a depressive to the autonomic nervous system and in high doses paralyses muscular action in the same way as curare. Externally, the plant is used in treating pleurisy, rheumatism, tennis elbow, whiplash injuries, boils and ulcers. The whole plant is harvested when the lower fruits are ripe and it is used fresh or dried."@en ;
+  :plant_other_use :Repellent ;
+  :plant_other_use_text "The plant has been burnt in order to smoke out gnats."@en .
+
+:LobeliaRadicans a owl:Class ;
+  rdfs:subClassOf :Campanulaceae .
+:LobeliaRadicans 
+  :plant_hazards "The plant contains the alkaloid lobeline which has a similar effect upon the nervous system as nicotine."@en ;
+  :plant_habitat "Wet places, especially around paddy fields and in lowland all over Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea, India."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Lobelia Radicans is a PERENNIAL growing to 0.2 m (0ft 6in). The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Antivenereal, :Diuretic, :Antiinflammatory, :Antipyretic, :Antiarthritic, :Depurative, :Laxative ;
+  :plant_medicinal_text "This plant is commonly used in Chinese herbalism, where it is considered to be one of the 50 fundamental herbs. The whole plant is antiphlogistic, depurative, diuretic and febrifuge. A decoction is used in the treatment of sores and abscesses, poisonous snakebites, tooth abscesses, ascites and traumatic injuries. The fresh plant can also be crushed and used as a poultice. The root is antirheumatic, antisyphilitic, cathartic, depurative and diuretic."@en ;
+  :plant_other_use_text "None known"@en .
+
+:PlatycodonGrandiflorus a owl:Class ;
+  rdfs:subClassOf :Campanulaceae ;
+  :synonym "balloon flower"@en, "chinese bellflower"@en, "platycodon"@en .
+:PlatycodonGrandiflorus 
+  :plant_hardiness_zones "4-9" ;
+  :plant_hazards "The root is poisonous. The older, basal leaves are also said to be slightly toxic. If these reports are true then this is an exceptional species in a family that is generally free of toxins and often used for food."@en ;
+  :plant_habitat "Grassy slopes in hills and mountains all over Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea, Manchuria."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Platycodon Grandiflorus is a PERENNIAL growing to 0.5 m (1ft 8in) by 0.4 m (1ft 4in) at a medium rate.  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from July to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "Young leaves - cooked. The radical leaves are said to be slightly toxic so only the top leaves should be used. Old leaves are powdered and used as a flavouring. Root - cooked. Eaten in soups as a tonic vegetable. It is also peeled and pickled or preserved in sugar. A nutritional analysis is available."@en ;
+  :plant_medicinal_use :Tonic, :Antitussive, :ExpectorantAndMucoactiveAgent, :Hemolytic, :Antidiabetic, :SedativeAndHypnotic, :Anticholesterolemic, :Anthelmintic, :Astringent, :Antiinflammatory, :Stomachic ;
+  :plant_medicinal_text "This species has a history of herbal use in China going back over 2,000 years and modern clinical tests have demonstrated its efficacy. It is widely used there in patent remedies and is also made into cough tablets. The root contains saponins and is anthelmintic, antiasthmatic, anticholesterolemic, antiphlogistic, antitussive, astringent, carminative, expectorant, haemolytic, hypoglycaemic, sedative, stomachic, tonic and vermifuge. It lowers blood sugar and cholesterol levels in the liver and inhibits the release of histamine. It is used internally in the treatment of coughs with profuse phlegm, colds, bronchitis, pleurisy, pulmonary abscesses and throat infections. It is also used to treat hypertension and diabetes in Korea. The root of plants 2 - 3 years old are harvested in the spring or autumn, peeled and used fresh or dried."@en ;
+  :plant_other_use_text "None known"@en .
+

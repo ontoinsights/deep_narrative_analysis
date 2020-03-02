@@ -1,0 +1,39 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Pistaciaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:PistaciaVera a owl:Class ;
+  rdfs:subClassOf :Pistaciaceae ;
+  rdfs:comment "UN Harmonized System code 0802 (pistachio)"@en ;
+  :synonym "pistachio"@en, "pistachio nut"@en .
+:PistaciaVera 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Hilly and mountainous regions, especially on sandstone soils, with a temperature range from -10°c in the winter to 40°c in the summer, to 1500 metres"@en ;
+  :plant_country_range "W. Asia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Pistacia Vera is a deciduous Tree growing to 10 m (32ft 10in) at a medium rate.  It is hardy to zone (UK) 9. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required). . The plant is not self-fertile.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. The seed is rich in oil and has a pleasant mild flavour. It is very nice when eaten raw and is also widely used in confectionery, ice cream, cakes, pies etc. An edible oil is obtained from the seed but is not produced commercially due to the high price of the seed. The fruits can be made into a flavourful marmalade."@en ;
+  :plant_medicinal_use :SedativeAndHypnotic, :Tonic ;
+  :plant_medicinal_text "The plant is used in China for the treatment of abdominal ailments, abscesses, amenorrhoea, bruises, chest ailments, circulation, dysentery, gynecopathy, pruritus, rheumatism, sclerosis of the liver, sores and trauma. The seed is said to be sedative and tonic."@en ;
+  :plant_other_use :Resin, :VegetableOil ;
+  :plant_other_use_text "The seed yields up to 40% of a non-drying oil. It is not used commercially due to the high value of the seed for food. Male trees yield a small quantity of a high grade resin. It is used in paints, lacquers etc."@en .
+

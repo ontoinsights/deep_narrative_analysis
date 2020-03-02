@@ -1,0 +1,38 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Pedaliaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:SesamumIndicum a owl:Class ;
+  rdfs:subClassOf :Pedaliaceae ;
+  :synonym "sesame"@en, "benne"@en, "beniseed"@en .
+:SesamumIndicum 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in a truly wild situation."@en ;
+  :plant_country_range "Not known but possibly northeast Africa or India."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Sesamum Indicum is a ANNUAL growing to 1 m (3ft 3in) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 10 and is frost tender.  It is in flower in July. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - cooked. Usually roasted or stewed, it can also be ground into a powder and used as a flour, added to breads, vegetables etc, used to make sweetmeats, or crushed and used as a butter or as 'tahini'. It can also be fermented into 'tempeh', ground into a powder and mixed with a sweetener to make 'halva', or made into a paste and used as the spread 'tahini'. The seeds can also be sprouted and used in salads. The seed contains about 21.5% protein, 60.8% fat, 8.9% carbohydrate, 3.4% ash. It is a rich source of unsaturated fatty acids, calcium and vitamins A, B and E. The calcium is absorbed well by the body, making sesame an excellent dietary source. An edible oil is obtained from the seed. It is used for cooking or in margarines etc. The oil is very stable and will keep for years without turning rancid. Leaves - raw or cooked as a potherb or added to soups."@en ;
+  :plant_medicinal_use :Galactogogue, :Tonic, :Emollient, :Astringent, :Diuretic, :SkinTreatment, :Restorative ;
+  :plant_medicinal_text "The leaves and seed are astringent. The leaves are rich in a gummy matter and when mixed with water they form a rich bland mucilage that is used in the treatment of infant cholera, diarrhoea, dysentery, catarrh and bladder troubles. The seed is diuretic, emollient, galactogogue, lenitive and tonic, and acts as a tonic for the liver and kidneys. It is taken internally in the treatment of premature hair loss and greying, convalescence, chronic dry constipation, dental caries, osteoporosis, stiff joints, dry cough etc. It has a marked ability to increase milk production in nursing mothers. Externally it is used to treat haemorrhoids and ulcers. The seed is very high in calories and so should be used with caution by people who are overweight. The oil is laxative and also promotes menstruation. It is used to treat dry constipation in the elderly. Mixed with lime water, the oil is used externally to treat burns, boils and ulcers. A decoction of the root is used in various traditions to treat asthma and coughs."@en ;
+  :plant_other_use :WeatherProtection, :VegetableOil ;
+  :plant_other_use_text "The seed contains up to 55% of a semi-drying oil. Apart from being edible, it is also used in soap making, lighting, as a lubricant and a source of pharmaceutical drugs etc. When added to the insecticide pyrethrum it acts as a synergist, a 10% content of oil doubling the potency of the pyrethrum. The oil can also be used in barrier creams to protect the skin from harmful UV light radiation."@en .
+

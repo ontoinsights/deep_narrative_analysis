@@ -1,0 +1,35 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Celastraceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:MaytenusObtusifolia a owl:Class ;
+  rdfs:subClassOf :Celastraceae ;
+  :synonym "blunt folia maytenus"@en .
+:MaytenusObtusifolia 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. America - northern and eastern Brazil."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Maytenus Obtusifolia is an evergreen Tree growing to 25 m (82ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_text "An infusion of the leaves is used as a substitute for China tea (Camellia sinsnsis)."@en ;
+  :plant_medicinal_text "The leaves are a popular herbal medicine in Brazil, where they are used in the treatment of serious ulcers, general inflammations, cancer and also against external ulcers on the skin. Research has shown that the plant is an effective and safe treatment against ulcers, though the mechanism of action has not yet been determined."@en ;
+  :plant_other_use_text "Other Uses The heartwood is pale pink to pinky brown, the sapwood is white or gray. The wood is hard, heavy, very strong, easy to work but not durable when in contact with the soil. It is an excellent wood for general construction, and is also used for general carpentry and rural construction work."@en .
+

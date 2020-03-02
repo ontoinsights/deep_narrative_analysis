@@ -1,0 +1,360 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Vitaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CissusQuadrangularis a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  :synonym "veldt grape"@en .
+:CissusQuadrangularis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Scrub; thicket; Acacia woodland; grassland with scattered Combretum etc; termite mounds; riverine thicket; coastal forest edges; sandy banks of rivers; outwash gully in dense mixed thicket; at elevations from near sea level to 2,250 metres in Africa"@en ;
+  :plant_country_range "Throughout tropical Africa; through the Arabian Peninsula to the Indian subcontinent, Myanmar, Thailand, Indonesia and Philippines."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Cissus Quadrangularis is an evergreen Climber growing to 5 m (16ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantStem, :PlantLeaf, :PlantShoot ;
+  :plant_edible_text "Young green stems - cooked. Usually fried or curried. The leaves and young shoots are used in the preparation of poppadoms and curries. Fruit. The ash of the plant is used as a substitute for baking powder."@en ;
+  :plant_medicinal_text "An infusion of the plant is antifungal and anthelmintic. The pulped stem is given in the treatment of asthma; is used as an alterative in cases of amenorrhoea; and is given in the treatment of haemorrhoids. The leaves or young stems are analgesic and also speed the rate of healing. They are crushed and applied as a poultice to ease the pain of broken bones; for the maturation of boils; to cure wounds and burns; to ease the pain of rheumatic joints; and also as a treatment for saddle sores on horses. The powdered dry roots are used for treating indigestion. The powdered root is considered to be a specific in the treatment of fractured bones."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). Agroforestry Uses: The plant is sometimes grown to stabilize sand dunes. The plant can be grown to form a hedge. Other Uses: The stems and roots yield a strong fibre."@en .
+
+:VitisAestivalis a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "summer grape"@en, "long grape"@en .
+:VitisAestivalis 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry woods and thickets. Stream bottom woods, usually on sandy soils, in Texas."@en ;
+  :plant_country_range "Southern and Eastern N. America - Ontario to Alabama. Locally naturalized in Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Aestivalis is a deciduous Climber growing to 20 m (65ft 7in) at a fast rate. It is hardy to zone (UK) 3.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw, cooked in jellies, jams, pies etc or dried for later use. Agreeably flavoured. The taste is best after a frost.The dried fruits are eaten as snacks or used in baked goods. The fruit is about 8mm in diameter and is produced in fairly large bunches. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. A sweet watery sap is obtained from the stem. Used as a refreshing drink. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_use :Poultice, :Hepatic, :Diuretic, :Stomachic, :Antipyretic ;
+  :plant_medicinal_text "The leaves are hepatic. They have been used in the treatment of the liver. The wilted leaves have been applied as a poultice to the breasts to draw away soreness after the birth of a child. An infusion of the bark has been used to treat urinary complaints."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisAestivalisArgentifolia a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "summer grape"@en .
+:VitisAestivalisArgentifolia 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry woods and thickets."@en ;
+  :plant_country_range "Southern and Eastern N. America - Ontario to Alabama. Locally naturalized in Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Aestivalis Argentifolia is a deciduous Climber growing to 25 m (82ft 0in) at a fast rate. It is hardy to zone (UK) 3.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw, cooked in jellies, jams, pies etc or dried for later use. Sweet and agreeably flavoured. The taste is best after a frost.The dried fruits are eaten as snacks or used in baked goods. The fruit is about 8mm in diameter. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. A sweet watery sap is obtained from the stem. Used as a refreshing drink. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisBelaii a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "grape"@en .
+:VitisBelaii 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Belaii is a deciduous Climber.  It is frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. The fruit is on the small side, but is easy to harvest because it is borne in bunches. It has a very nice flavour when fully ripe. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisBerlandieri a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "spanish grape"@en .
+:VitisBerlandieri 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woodlands. Stream bottom woods."@en ;
+  :plant_country_range "Southern N. America - Texas, New Mexico, Arkansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Berlandieri is a deciduous Climber growing to 10 m (32ft 10in).  It is hardy to zone (UK) 7.  It is in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. A rich pleasant flavour. The fruit is rather small, but it is borne in very large clusters. It has a slightly bitter flavour, but is pleasant when fully ripe. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint, :Rootstock ;
+  :plant_other_use_text "Used as a rootstock. A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisCinerea a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "sweet winter grape"@en, "graybark grape"@en, "florida grape"@en, "heller's grape"@en .
+:VitisCinerea 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woodlands. Stream bottom woods."@en ;
+  :plant_country_range "Southern N. America - Texas, New Mexico, Arkansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Cinerea is a deciduous Climber growing to 10 m (32ft 10in).  It is hardy to zone (UK) 7.  It is in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. A rich pleasant flavour. The fruit is rather small, but it is borne in very large clusters. It has a slightly bitter flavour, but is pleasant when fully ripe. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "Used as a rootstock. A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisCinereaFloridana a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "currant grape"@en .
+:VitisCinereaFloridana 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "South-eastern N. America - S.E. Virginia to Florida."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Cinerea Floridana is a deciduous Climber.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. It can also be used in pies, jellies etc. The fruit is about 4 - 6mm in diameter and is borne in bunches. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked. The sap is made into a tasty beverage."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint, :Rootstock ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. Used as a rootstock."@en .
+
+:VitisLabrusca a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "northern fox grape"@en, "fox grape"@en .
+:VitisLabrusca 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Wet or dry thickets and woodland borders."@en ;
+  :plant_country_range "Eastern N. America - Maine to S. Carolina and Tennessee. Locally naturalized in Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Labrusca is a deciduous Climber growing to 15 m (49ft 3in) at a fast rate. It is hardy to zone (UK) 7 and is not frost tender.  It is in flower from May to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Fruit - raw or dried for winter use. The fruit can also be made into pies, preserves etc. A distinctive musky aroma and taste that is not acceptable to many people. The fruit is best after a frost. Sweetish, it contains 6.6 - 16.6% sugars. The fruit is up to 2cm in diameter and is produced in fairly large bunches. Young leaves - cooked. A pleasant acid flavour, they are cooked as greens or can be wrapped around other foods and then baked, when they impart a pleasant flavour. Young tendrils - raw or cooked. Sap. Best harvested in the spring or early summer, it has a sweet flavour and makes a pleasant drink. The sap should not be harvested in quantity or it will weaken the plant. An oil is obtained from the seed. This would only really be a viable crop if large quantities of grapes were being grown for wine."@en ;
+  :plant_medicinal_use :Poultice ;
+  :plant_medicinal_text "The leaves are hepatic. An infusion has been used in the treatment of diarrhoea, hepatitis, stomach aches, fevers, headaches and thrush. Externally, the leaves are poulticed and applied to sore breasts, rheumatic joints and headaches. The wilted leaves have been applied as a poultice to the breasts to draw away soreness after the birth of a child."@en ;
+  :plant_other_use :DyeInkAndPaint, :Rootstock, :VegetableOil ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. The plant is used as a rootstock for the common grape, V. vinifera, especially in areas where phylloxera disease is prevalent."@en .
+
+:VitisLabruscana a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "Vitis × labruscana" .
+:VitisLabruscana 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known in the wild."@en ;
+  :plant_country_range "A hybrid of garden origin, V. labrusca x V. vinifera."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Labruscana is a deciduous Climber growing to 15 m (49ft 3in).  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. A 'foxy' flavour that is not normally relished in Europe. However, the fruit is larger and less 'foxy' than V. labrusca. The fruit is about 25mm in diameter and is carried in fairly large bunches. The fruit is commonly used for making wine in N. America. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. Greenish-blue and dark blue dyes can be obtained from the fruit skins of the cultivar 'Concord'."@en .
+
+:VitisLanata a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "grape"@en .
+:VitisLanata 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Found in hills to 1500 metres in the Himalayas. Moist open rocky places at elevations of 900 - 2100 metres in Nepal."@en ;
+  :plant_country_range "E. Asia - China to the Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Lanata is a deciduous Climber.  It is hardy to zone (UK) 9 and is frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. A sweet flavour with a blend of acid, the fruit is of good quality but slightly more sour than the cultivated grapes. Rather small, about 5mm in diameter, though it is carried in bunches which makes it easier to harvest. The fruit can be up to 11mm in diameter on wild plants in the Himalayas. Annual yields from wild plants average 18.5kg. The fruit contains about 13% sugars, 1% protein, 2.2% ash. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked. Sap - used as a drink. Best harvested in the spring and early summer, the plant yields abundantly. Do not harvest too much, though, or you will weaken the plant."@en ;
+  :plant_medicinal_use :Ophthalmic ;
+  :plant_medicinal_text "The watery sap from the stems is dripped into the eyes to relieve inflammation."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisMonticola a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "sweet mountain grape"@en .
+:VitisMonticola 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rich damp woodland soils. Stream bottoms and limestone areas."@en ;
+  :plant_country_range "Southern N. America - S.W. Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Monticola is a deciduous Climber growing to 10 m (32ft 10in).  It is hardy to zone (UK) 6.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. Large, thin-skinned with a tender juicy sweet pulp. Small and sweet according to another report. The fruit is about 12mm in diameter and is borne in bunches. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisMunsoniana a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "bird grape"@en, "munson's grape"@en .
+:VitisMunsoniana 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "Southern N. America."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Munsoniana is a deciduous Climber.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for later use. Thin-skinned with an acid flavour, it can be eaten raw when fully ripe. The fruit is borne in bunches, which makes harvesting easier. Young leaves - cooked as greens or wrapped around other foods and then baked, when they impart a pleasant flavour. Young tendrils - raw or cooked. Sap - used as a drink. It is best harvested in the spring or early summer, but should not be taken in quantity or it will weaken the plant."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisMustangensis a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "mustang grape"@en .
+:VitisMustangensis 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rich damp woodland soils, often on limestone."@en ;
+  :plant_country_range "Southern N. America - Oklahoma and Arkansas to Texas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Mustangensis is a deciduous Climber growing to 10 m (32ft 10in).  It is hardy to zone (UK) 5.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw, cooked or dried for winter use. Tough skinned, they are used mainly for pies and jellies.A disagreeable flavour. The fruit is about 16mm in diameter and is borne in bunches. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisRiparia a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "riverbank grape"@en .
+:VitisRiparia 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Riverbanks, bottomlands, rich thickets and woodland margins."@en ;
+  :plant_country_range "Eastern and Central N. America. Locally naturalized in Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Riparia is a deciduous Climber growing to 15 m (49ft 3in) at a fast rate. It is hardy to zone (UK) 2 and is not frost tender.  It is in flower from May to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for later use. Juicy and somewhat acid. The taste is best after a frost. The fruit is about 6 - 12mm in diameter and is carried in fairly large bunches. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked. Sap - raw. A sweet flavour, it is used as a drink. The sap can be harvested in the spring and early summer, though it should not be taken in quantity or it will weaken the plant."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint, :Rootstock ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. The plant is used as a rootstock for the common grape, V. vinifera, especially in areas where phylloxera disease is prevalent."@en .
+
+:VitisRotundifolia a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "muscadine grape"@en, "muscadine"@en, "southern fox grape"@en, "scuppernong"@en, "muscadine grape"@en .
+:VitisRotundifolia 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woods, thickets, sandhills and shores."@en ;
+  :plant_country_range "South-eastern N. America - Delaware to Indiana and Kansas, south to Florida, Texas and Mexico."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Rotundifolia is a deciduous Climber growing to 25 m (82ft 0in) at a fast rate. It is hardy to zone (UK) 5.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. Thick-skinned with a pleasant musky flavour. Pleasant to eat raw, the fruit is excellent in jellies, pies etc. The fruit is up to 25mm in diameter and is produced in small bunches. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisRupestris a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "sand grape"@en .
+:VitisRupestris 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Sandy banks, shores, hills etc."@en ;
+  :plant_country_range "Southern Central N. America - Pennsylvania to Columbia, Missouri and Texas. Locally natin Europe"@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Rupestris is a deciduous Climber growing to 2 m (6ft 7in).  It is in flower from May to June, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. Very sweet. A pleasant flavour. The fruit is about 6 - 12mm in diameter and is borne in reasonable sized bunches. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :DyeInkAndPaint, :Rootstock ;
+  :plant_other_use_text "Can be used as a rootstock for V. vinifera in areas where phylloxera is prevalent. A yellow dye is obtained from the fresh or dried leaves."@en .
+
+:VitisVinifera a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "grape"@en, "wine grape"@en, "purpleleaf grape"@en, "common grape"@en .
+:VitisVinifera 
+  :plant_hardiness_zones "6-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Riversides and damp woods. Grows on the banks of the Thames at Kew in Britain."@en ;
+  :plant_country_range "Central and southern Europe; Northern Africa; Western Asia and the Caucasus."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Vinifera is a deciduous Climber growing to 15 m (49ft 3in) at a fast rate. It is hardy to zone (UK) 6 and is not frost tender.  It is in flower from May to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantLeaf ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Fruit - raw or dried for winter use. The dried fruits are the raisins, sultanas and currants of commerce, different varieties producing the different types of dried fruit. A fully ripened fresh fruit is sweet, juicy and delicious. The fruit juice can be concentrated and used as a sweetener. This fruit is widely used in making wine. Leaves - cooked. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked. The flower clusters are used as a vegetable. An edible oil similar to sunflower oil is obtained from the seed. It needs to be refined before it can be eaten. A polyunsaturated oil, it is suitable for mayonnaise and cooking, especially frying. Sap - raw. Used as a drink, it has a sweet taste. The sap can be harvested in spring and early summer, though it should not be taken in quantity or it will weaken the plant. The roasted seed is a coffee substitute. Cream of tartar, also known as potassium bitartrate, a crystalline salt, is extracted from the residue of pressed grapes, and from the sediment of wine barrels. It is used in making baking powder."@en ;
+  :plant_medicinal_use :Analgesic, :Demulcent, :Hepatic, :Astringent, :Antiinflammatory, :Diuretic, :Lithontripic, :Stomachic, :SkinTreatment, :Laxative ;
+  :plant_medicinal_text "Grapes are a nourishing and slightly laxative fruit that can support the body through illness, especially of the gastro-intestinal tract and liver. Because the nutrient content of grapes is close to that of blood plasma, grape fasts are recommended for detoxification. Analgesic. The fresh fruit is antilithic, constructive, cooling, diuretic and strengthening. A period of time on a diet based entirely on the fruit is especially recommended in the treatment of torpid liver or sluggish biliary function. The fruit is also helpful in the treatment of varicose veins, haemorrhoids and capillary fragility. The dried fruit is demulcent, cooling, mildly expectorant, laxative and stomachic. It has a slight effect in easing coughs. The leaves, especially red leaves, are anti-inflammatory and astringent. A decoction is used in the treatment of threatened abortion, internal and external bleeding, cholera, dropsy, diarrhoea and nausea. It is also used as a wash for mouth ulcers and as douche for treating vaginal discharge. Red grape leaves are also helpful in the treatment of varicose veins, haemorrhoids and capillary fragility. The leaves are harvested in early summer and used fresh or dried. The seed is anti-inflammatory and astringent. The sap of young branches is diuretic. It is used as a remedy for skin diseases and is also an excellent lotion for the eyes. The tendrils are astringent and a decoction is used in the treatment of diarrhoea. The plant is used in Bach flower remedies - the keywords for prescribing it are 'Dominating', 'Inflexible' and 'Ambitious'."@en ;
+  :plant_other_use :DyeInkAndPaint, :VegetableOil ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. An oil from the seed is used for lighting and as an ingredient in soaps, paints etc. Cream of tartar, extracted from the residue of pressed grapes, is used in making fluxes for soldering. Especially when growing in hotter countries than Britain, the stems of very old vines attain a good size and have been used to supply a very durable timber."@en .
+
+:VitisVulpina a owl:Class ;
+  rdfs:subClassOf :Vitaceae ;
+  rdfs:comment "UN Harmonized System code 0806"@en ;
+  :synonym "frost grape"@en .
+:VitisVulpina 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Low woods, stream banks, bases of bluffs and thickets."@en ;
+  :plant_country_range "Central and Eastern N. America - New Brunswick to Manitoba, south to Maryland, Arkansas and Colorado"@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vitis Vulpina is a deciduous Climber growing to 25 m (82ft 0in).  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or dried for winter use. Very acid when it first ripens, it becomes sweet and edible after exposure to frost. The fruit is 5 - 10mm in diameter and is carried in small bunches. Young leaves are wrapped around other foods and then baked, they impart a pleasant flavour. Young tendrils - raw or cooked."@en ;
+  :plant_medicinal_use :Hepatic, :Antidiabetic, :Diuretic ;
+  :plant_medicinal_text "The leaves are hepatic. They have been used in the treatment of the liver. The wilted leaves have been applied as a poultice to the breasts to draw away soreness after the birth of a child. An infusion of the bark has been used to treat urinary complaints. An infusion of the roots has been taken in the treatment of rheumatism and diabetes."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A yellow dye is obtained from the fresh or dried leaves. The sap can be rubbed into the scalp as a tonic for the hair."@en .
+

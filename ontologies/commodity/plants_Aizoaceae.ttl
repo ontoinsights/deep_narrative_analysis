@@ -1,0 +1,53 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Aizoaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:MesembryanthemumCrystallinum a owl:Class ;
+  rdfs:subClassOf :Aizoaceae ;
+  :synonym "ice plant"@en, "common iceplant"@en .
+:MesembryanthemumCrystallinum 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Maritime sands and salt marshes."@en ;
+  :plant_country_range "S. Africa. Introduced and naturalized in S. Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Mesembryanthemum Crystallinum is a PERENNIAL growing to 0.1 m (0ft 4in) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 9 and is frost tender.  It is in flower from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "Leaves and stems - raw or cooked. They can be used as a spinach substitute. The leaves have an acid flavour, they are thick and very succulent with a slightly salty tang. They can also be pickled like cucumbers or used as a garnish. Fruit. No more details are given. Seed - a famine food used when all else fails."@en ;
+  :plant_medicinal_use :Diuretic, :Demulcent ;
+  :plant_medicinal_text "The plant is demulcent and diuretic. It is used in the treatment of inflammations of the pulmonary and genito-urinary mucous membranes. The leaves are used in the treatment of ascites, dysentery and diseases of the liver and kidney."@en ;
+  :plant_other_use :SoapAndSubstitute ;
+  :plant_other_use_text "The crushed foliage is a soap substitute."@en .
+
+:TetragoniaTetragonioides a owl:Class ;
+  rdfs:subClassOf :Aizoaceae ;
+  :synonym "new zealand spinach"@en .
+:TetragoniaTetragonioides 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Coastal sand dunes and stony beaches on North South and Stewart Islands of New Zealand. Sheltered beaches, salt marshes and arid plains in Australia."@en ;
+  :plant_country_range "Australia to New Zealand."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Tetragonia Tetragonioides is an evergreen Perennial growing to 0.2 m (0ft 8in) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 9 and is frost tender.  It is in flower from August to October, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_text "Leaves - raw or cooked. A spinach substitute, the shoot tips are harvested when about 8cm long, this encourages plenty of side growth with lots more shoots to harvest. A delicious substitute for spinach, the very young leaves and shoots can also be eaten raw in salads. The young leaves are best, older leaves developing an acrid taste."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+

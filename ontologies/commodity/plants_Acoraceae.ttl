@@ -1,0 +1,58 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Acoraceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:AcorusCalamus a owl:Class ;
+  rdfs:subClassOf :Acoraceae ;
+  :synonym "sweet flag"@en, "calamus"@en .
+:AcorusCalamus 
+  :plant_hardiness_zones "4-11" ;
+  :plant_hazards "The fresh root can be poisonous. When using the plant medicinally, the isolated essential oil should not be used. The essential oil in the roots of some populations of this plant contains the compound asarone. This has tranquillising and antibiotic activity, but is also potentially toxic and carcinogenic. It seems that these compounds are found in the triploid form of the species (found in Asia) whilst the diploid form (found in N. America and Siberia) is free of the compounds. However, the root (but not the isolated essential oil) has been used in India for thousands of years without reports of cancer which suggests that using the whole herb is completely safe, though more research is needed. Only roots free from or with a low content of beta asarone should be used in human herb therapy. Should be avoided in patients taking monoamine oxidase inhibitor antidepressants as possible side-effects ."@en ;
+  :plant_habitat "Found in moist soils and shallow water in ditches, marshes, river edges and ponds."@en ;
+  :plant_country_range "Europe, Asia and N. America. Naturalized in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Acorus Calamus is a PERENNIAL growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a medium rate.  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from May to July, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  wet soil and can grow in water."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem, :PlantLeaf ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "The rhizome is candied and made into a sweetmeat. It can be peeled and washed to remove the bitterness and then eaten raw like a fruit. It makes a palatable vegetable when roasted and can also be used as a flavouring. Rich in starch, the root contains about 1% of an essential oil that is used as a food flavouring. The root also contains a bitter glycoside. Some caution is advised, see the notes above on toxicity. The dried and powdered rhizome has a spicy flavour and is used as a substitute for ginger, cinnamon and nutmeg. A pinch of the powdered rhizome is used as a flovouring in tea. The young and tender inflorescence is often eaten by children for its sweetness. Young leaves - cooked. The fresh leaves contain 0.078% oxalic acid. The leaves can be used to flavour custards in the same way as vanilla pods. The inner portion of young stems is eaten raw. It makes a very palatable salad."@en ;
+  :plant_medicinal_use :Analgesic, :Tonic, :Stimulant, :Odontalgic, :SedativeAndHypnotic, :Diaphoretic, :Aphrodisiac, :Abortifacient, :Emmenagogue, :Anthelmintic, :Antiflatulent, :Stomachic, :Antipyretic, :Antiarthritic, :Hallucinogenic, :AromaticAndAromatherapy ;
+  :plant_medicinal_text "Sweet flag has a very long history of medicinal use in many herbal traditions. It is widely employed in modern herbal medicine as an aromatic stimulant and mild tonic. In Ayurveda it is highly valued as a rejuvenator for the brain and nervous system and as a remedy for digestive disorders. However, some care should be taken in its use since some forms of the plant might be carcinogenic - see the notes above on toxicity for more information. The root is anodyne, aphrodisiac, aromatic, carminative, diaphoretic, emmenagogue, expectorant, febrifuge, hallucinogenic, hypotensive, sedative, stimulant, stomachic, mildly tonic and vermifuge. It is used internally in the treatment of digestive complaints, bronchitis, sinusitis etc. It is said to have wonderfully tonic powers of stimulating and normalizing the appetite. In small doses it reduces stomach acidity whilst larger doses increase stomach secretions and it is, therefore, recommended in the treatment of anorexia nervosa. However if the dose is too large it will cause nausea and vomiting. Sweet flag is also used externally to treat skin eruptions, rheumatic pains and neuralgia. An infusion of the root can bring about an abortion whilst chewing the root alleviates toothache. It is a folk remedy for arthritis, cancer, convulsions, diarrhoea, dyspepsia, epilepsy etc. Chewing the root is said to kill the taste for tobacco. Roots 2 - 3 years old are used since older roots tend to become tough and hollow. They are harvested in late autumn or early spring and are dried for later use. The dry root loses 70% of its weight, but has an improved smell and taste. It does, however, deteriorate if stored for too long. Caution is advised on the use of this root, especially in the form of the distilled essential oil, since large doses can cause mild hallucinations. See also the notes above on toxicity. A homeopathic remedy is made from the roots. It is used in the treatment of flatulence, dyspepsia, anorexia and disorders of the gall bladder. Bath oils containing calamus have caused redness of the skin (erythema) and dermatitis, particularly in hypersensitive individuals ."@en ;
+  :plant_other_use :Basketry, :Insecticide, :Incense, :PlantWeaving, :Repellent, :Thatching, :Strewing ;
+  :plant_other_use_text "The leaves are used in basket making or woven into mats. They have also been used as a thatch for roofs. An essential oil from the rhizome is used in perfumery and as a food flavouring. The oil is contained mainly in the outer skin of the root, it has a fragrance reminiscent of patchouli oil. The fresh roots yield about 1.5 - 3.5% essential oil, dried roots about 0.8%. Some plants from Japan have yielded 5% essential oil. The essential oil is also an insect repellent and insecticide. It is effective against houseflies. When added to rice being stored in granaries it has significantly reduced loss caused by insect damage because the oil in the root has sterilized the male rice weevils. An essential oil obtained from the leaves is used in perfumery and for making aromatic vinegars. The leaves and the root have a refreshing scent of cinnamon. All parts of plant can be dried and used to repel insects or to scent linen cupboards. They can also be burnt as an incense, whilst the whole plant was formerly used as a strewing herb. The growing plant is said to repel mosquitoes."@en .
+
+:AcorusGramineus a owl:Class ;
+  rdfs:subClassOf :Acoraceae ;
+  :synonym "grass-leaved sweet rush"@en, "japanese sweet flag"@en, "grassy-leaved sweet flag"@en, "dwarf sweet flag"@en, "grass-leaf sweet flag"@en, "dwarf sedge"@en, "japanese rush"@en, "japanese sweet flag"@en .
+:AcorusGramineus 
+  :plant_hardiness_zones "6-10" ;
+  :plant_hazards "Although no records of toxicity have been seen, this species belongs to a family where most of the species are poisonous, at least in the fresh state. The following notes are from the related A. calamus - the fresh root can be poisonous. When using the plant medicinally, the isolated essential oil should not be used."@en ;
+  :plant_habitat "Wet places by streams and around ponds in C. and S. Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan, India."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Acorus Gramineus is an evergreen Perennial growing to 0.3 m (1ft) by 0.2 m (0ft 8in).  It is hardy to zone (UK) 5 and is not frost tender. It is in leaf all year, in flower from June to July, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist or  wet soil and can grow in water."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "Root - raw or cooked. It should be peeled, finely chopped and soaked in several changes of water first. A stronger and more pleasing taste than A. calamus. The root is also used as a ginger substitute. Some caution is advised, see the notes above on toxicity."@en ;
+  :plant_medicinal_use :AromaticAndAromatherapy, :Analgesic, :Stimulant, :Antiperiodic, :Antispasmodic, :SedativeAndHypnotic, :Antifungal, :Diuretic, :Antipyretic, :Antiparasitic, :Tonic, :ExpectorantAndMucoactiveAgent, :Antibacterial, :Antiflatulent, :Stomachic, :Antiarthritic, :HeartTreatment, :Diaphoretic, :Emmenagogue, :Anthelmintic ;
+  :plant_medicinal_text "The root is antifungal, antibacterial, antiperiodic, antirheumatic, antispasmodic, aromatic, cardiac, carminative, diaphoretic, emmenaggue, febrifuge, sedative, stimulant, stomachic, tonic and vermifuge. It is also powdered and applied to bleeding gums. It is used internally in the treatment of digestive problems - particularly gastralgia and diarrhoea, cough, bronchial asthma, neurasthenia, depression, epilepsy etc. Externally, it is used to treat body parasites, dermatosis and haemorrhoids. The root can be harvested at any time of the year, except when the plant is in flower. The root contains an essential oil consisting of asarone and asaryl aldehyde, plus a bitter glucoside acorin. Asarone increases the hypnotic effect of barbiturates and ethanol, lowers blood pressure and is antibacterial against Staphylococcus aureus, streptococci and mycobacterium. The whole plant is anodyne, antiperiodic, antispasmodic, digestive, diaphoretic, diuretic, expectorant, sedative, stimulant, stomachic, sudorific, tonic, vermifuge."@en ;
+  :plant_other_use :Insecticide, :EssentialOil, :Parasiticide, :Repellent ;
+  :plant_other_use_text "The dried root repels insects. It is probably also insecticidal and is used in Vietnam to kill lice, bugs and fleas. An essential oil is obtained from the plant. A useful ground cover plant, forming a spreading clump."@en .
+

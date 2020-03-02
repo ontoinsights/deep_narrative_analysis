@@ -1,0 +1,403 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Adoxaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:SambucusCaerulea a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "blue elder"@en .
+:SambucusCaerulea 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "The leaves, green fruits and stems of some (if not all) members of this genus are poisonous. The fruit of this species has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked."@en ;
+  :plant_habitat "Gravelly, rather dry soils on stream banks, margins of fields, woodlands etc."@en ;
+  :plant_country_range "Western N. America - British Columbia to California, east to Montana, Texas and Mexico."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Caerulea is a deciduous Shrub growing to 3 m (9ft 10in) at a medium rate.  It is hardy to zone (UK) 5.  It is in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Fruit - raw, cooked or used in preserves. Rather sweet and juicy but full of small seeds, this is the best flavoured of the North American elders. The fruit is rather nice raw, seven people ate and enjoyed a small quantity of the raw fruit with no ill effects. The fruit can be dried for later use. A somewhat rank taste fresh, the fruit is usually dried before being used. The fruit is about 6mm in diameter and is borne in large clusters. Some caution is advised, see the notes above on toxicity. Flowers - raw or cooked in fritters etc. Very pleasant and refreshing raw. A pleasant tea is made from the dried flowers."@en ;
+  :plant_medicinal_use :Analgesic, :Stomachic, :Tonic, :Emollient, :Coagulant, :Laxative, :Diaphoretic, :Pectoral, :Astringent, :Emetic, :Antipyretic, :Antiseptic ;
+  :plant_medicinal_text "Haemostatic. An infusion or extract made from the flowers, bark and root has been used to cure fevers and gripe, it is also laxative. A decoction of the plant has been used as an antiseptic wash to treat itches. The bark is analgesic and astringent. An infusion has been used in the treatment of diarrhoea and rheumatism. A decoction has been used as a wash in the treatment of swellings and pain. An ointment made by mixing the bark with fat has been used externally in the treatment of burns, ulcers, skin irritations etc. The fresh bark has been placed in a tooth cavity to ease the pain of toothache. The inner bark is strongly emetic. The leaves are analgesic, antiseptic, diaphoretic, febrifuge and purgative. A decoction has been used in the treatment of new colds. An infusion of the leaves and flowers has been used as a steam bath in the treatment of colds and headaches. A decoction of the leaves has been used as an antiseptic wash on limbs affected by blood poisoning. The crushed leaves have been used as a poultice to treat burns and swollen hands. A decoction of the root has been used in the treatment of bladder problems and dyspepsia. A decoction of the flowers has been used in the treatment of stomach troubles and lung complaints. Applied externally, it has been used to treat sprains and bruises and as an antiseptic wash for open sores and itches. A wine made from the fruit has been used as a tonic."@en ;
+  :plant_other_use :Repellent, :WoodCorkAndSubstitute, :Kindling, :Musical ;
+  :plant_other_use_text "A decoction of the leaves, when watered on plants, repels caterpillars. The dried flower stems repel insects and rodents. The hollow stems can be used as flutes and pipes. The pith of the stems has been used as a tinder for lighting fires. Wood - light, soft, weak, coarse grained. Of no commercial value, though it is used locally for flutes, skewers, pegs, straws etc."@en .
+
+:SambucusNigra a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "elderberry"@en, "european elder"@en, "black elderberry"@en, "american black elderberry"@en, "blue elderberry"@en .
+:SambucusNigra 
+  :plant_hardiness_zones "5-7" ;
+  :plant_hazards "The leaves and stems are poisonous. The fruit of many species (although no records have been seen for this species) has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked."@en ;
+  :plant_habitat "Hedgerows, scrub, woods, roadsides, waste places etc, especially on disturbed base-rich and nitrogen rich soils."@en ;
+  :plant_country_range "Europe, including Britain, from Scandanavia south and east to N. Africa and W. Asia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "5"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Nigra is a deciduous Shrub growing to 6 m (19ft) by 6 m (19ft) at a fast rate. It is hardy to zone (UK) 5 and is not frost tender. It is in leaf from March to November, in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Flies. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_use :TeaAndSubstitute, :Coloring ;
+  :plant_edible_text "Fruit - raw or cooked. The flavour of the raw fruit is not acceptable to many tastes, though when cooked it makes delicious jams, preserves, pies and so forth. It can be used fresh or dried, the dried fruit being less bitter. The fruit is used to add flavour and colour to preserves, jams, pies, sauces, chutneys etc, it is also often used to make wine. The fruit is about 8mm in diameter and is borne in large clusters. Some caution is advised, see the notes above on toxicity. Flowers - raw or cooked. They can also be dried for later use. The flowers are crisp and somewhat juicy, they have an aromatic smell and flavour and are delicious raw as a refreshing snack on a summers day, though look out for the insects. The flowers are used to add a muscatel flavour to stewed fruits, jellies and jams (especially gooseberry jam). They are often used to make a sparkling wine. A sweet tea is made from the dried flowers. The leaves are used to impart a green colouring to oils and fats."@en ;
+  :plant_medicinal_use :Galactogogue, :Emollient, :Stimulant, :ExpectorantAndMucoactiveAgent, :Coagulant, :Diaphoretic, :Ophthalmic, :Diuretic, :Antiinflammatory, :Emetic, :Laxative ;
+  :plant_medicinal_text "Elder has a very long history of household use as a medicinal herb and is also much used by herbalists. The plant has been called 'the medicine chest of country people'. The flowers are the main part used in modern herbalism, though all parts of the plant have been used at times. Stimulant. The inner bark is collected from young trees in the autumn and is best sun-dried. It is diuretic, a strong purgative and in large doses emetic. It is used in the treatment of constipation and arthritic conditions. An emollient ointment is made from the green inner bark. The leaves can be used both fresh or dry. For drying, they are harvested in periods of fine weather during June and July. The leaves are purgative, but are more nauseous than the bark. They are also diaphoretic, diuretic, expectorant and haemostatic. The juice is said to be a good treatment for inflamed eyes. An ointment made from the leaves is emollient and is used in the treatment of bruises, sprains, chilblains, wounds etc. The fresh flowers are used in the distillation of 'Elder Flower Water'. The flowers can be preserved with salt to make them available for distillation later in the season. The water is mildly astringent and a gentle stimulant. It is mainly used as a vehicle for eye and skin lotions. The dried flowers are diaphoretic, diuretic, expectorant, galactogogue and pectoral. An infusion is very effective in the treatment of chest complaints and is also used to bathe inflamed eyes. The infusion is also a very good spring tonic and blood cleanser. Externally, the flowers are used in poultices to ease pain and abate inflammation. Used as an ointment, it treats chilblains, burns, wounds, scalds etc. The fruit is depurative, weakly diaphoretic and gently laxative. A tea made from the dried berries is said to be a good remedy for colic and diarrhoea. The fruit is widely used for making wines, preserves etc., and these are said to retain the medicinal properties of the fruit. The pith of young stems is used in treating burns and scalds. The root is no longer used in herbal medicine but it formerly had a high reputation as an emetic and purgative that was very effective against dropsy. A homeopathic remedy is made from the fresh inner bark of young branches. It relieves asthmatic symptoms and spurious croup in children. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Sambucus nigra for cough and bronchitis, fevers and colds (see  for critics of commission E)."@en ;
+  :plant_other_use :Fungicide, :Insecticide, :PioneerPlant, :WoodCorkAndSubstitute, :Musical, :Pipe, :Repellent, :DyeInkAndPaint, :Cosmetic, :Hedge, :Compost ;
+  :plant_other_use_text "The plant is a valuable addition to the compost heap, its flowers are an alternative ingredient of 'QR' herbal compost activator and the roots of the plant improve fermentation of the compost heap when growing nearby. The leaves are used as an insect repellent, very effective when rubbed on the skin though they do impart their own unique fragrance. They can be powdered and placed amongst plants to act as a deterrent, or made into a spray when they act as an insecticide. This is prepared by boiling 3 - 4 handfuls of leaves in a litre of water, then straining and allowing to cool before applying. Effective against many insects, it also treats various fungal infections such as leaf rot and powdery mildew.The dried flowering shoots are used to repel insects, rodents etc. The flowers are used in skin lotions, oils and ointments. Tolerant of salt-laden gales, this species can be grown as a shelter hedge in exposed maritime areas, it is rather bare in the winter though. This is an excellent pioneer species to use when re-establishing woodlands. It is very tough and wind-resistant, grows quickly and provides shelter for longer-lived and taller woodland species to establish. It will generally maintain itself in the developing woodland, though usually in the sunnier positions. A dye is obtained from the fruit and the bark. The bark of older branches and the root have been used as an ingredient in dyeing black. A green dye is obtained from the leaves when alum is used as a mordant. The berries yield various shades of blue and purple dyes. They have also been used as a hair dye, turning the hair black. The blue colouring matter from the fruit can be used as a litmus to test if something is acid or alkaline. It turns green in an alkaline solution and red in an acid solution. The pith in the stems of young branches pushes out easily and the hollow stems thus made have been used as pipes for blowing air into a fire. They can also be made into musical instruments. The pith of the wood is used for making microscope slides and also for treating burns and scalds. The mature wood is white and fine-grained. It is easily cut and polishes well. Valued highly by carpenters, it has many used, for making skewers, mathematical instruments, toys etc. A good forage for animals: mule deer, elk, sheep and small birds. It is classified as nesting habitat for many birds, including hummingbirds, warblers, and vireos. Elderberries are a favorite food for migrating band-tailed pigeons in northern California."@en .
+
+:SambucusNigraSppCanadensis a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "american elder"@en .
+:SambucusNigraSppCanadensis 
+  :plant_hardiness_zones "3-9" ;
+  :plant_hazards "The leaves and stems of this species are poisonous. The fruit has been known to cause stomach upsets to some people. The unripe fruit contains a toxic alkaloid and cyanogenic glycosides. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked."@en ;
+  :plant_habitat "Rich moist soils along streams and rivers, woodland margins and waste ground."@en ;
+  :plant_country_range "Eastern N. America - Nova Scotia to Florida, west to Manitoba and Texas."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Nigra Spp Canadensis is a deciduous Shrub growing to 4 m (13ft) by 4 m (13ft) at a fast rate. It is hardy to zone (UK) 3.  It is in flower in July, and the seeds ripen in September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_text "Fruit - raw or cooked. A bittersweet flavour, the fruits are about 5mm in diameter and are borne in large clusters. They are at their best after being dried, the fresh raw fruit has a rather rank taste. The fruit is normally cooked and used in pies, jams, jellies, sauces, bread etc. Rich in vitamin C. Some caution is advised, see notes above on toxicity. Flowers - raw or cooked. They are often covered in batter and made into fritters. The flowers can be picked when unopened, pickled and then used as a flavouring in candies etc. They can also be soaked in water to make a drink. A pleasant tasting tea is made from the dried flowers. Young shoots are said to be edible when cooked and to be used as an asparagus substitute though, since the leaves are also said to be poisonous, this report should be viewed with some doubt."@en ;
+  :plant_medicinal_text "American elder was widely employed as a medicinal herb by many native North American tribes who used it to treat a wide range of complaints. It is still commonly used as a domestic remedy. A tea made from the inner bark and root bark is diuretic, emetic and a strong laxative. A tea made from the root bark is used to promote labour in childbirth and in treating headaches, kidney problems and mucous congestion. The inner bark is also applied as a poultice to cuts, sore or swollen limbs etc in order to relieve pain and swelling. A poultice of the leaves is applied to bruises and to cuts in order to stop the bleeding. An infusion of the leaf buds is strongly purgative. Elder flowers are stimulant, diaphoretic and diuretic. A warm tea of the flowers is stimulant and induces sweating, taken cold it is diuretic. It is used in the treatment of fevers and infant colic. An infusion of the leaves and flowers is used as an antiseptic wash for skin problems, wounds etc. The fresh juice of the fruit, evaporated into a syrup, is laxative. It also makes a good ointment for treating burns when mixed with an oily base. The dried fruit can be made into a tea that is useful in the treatment of cholera and diarrhoea. Some caution should be exercised if using any part of the plant fresh since it can cause poisoning."@en ;
+  :plant_other_use_text "The leaves and inner bark of young shoots are used as an insect repellent, the dried flowering shoots are said to repel insects and rodents. A decoction of the leaves can be used as an insecticide. It is prepared by boiling 3 - 4 handfuls of leaves in a litre of water, then straining and allowing to cool before applying. Effective against many insects, it also treats various fungal infections such as leaf rot and powdery mildew. A black dye is obtained from the bark. When grown near a compost heap, the root activity of this plant encourages fermentation in the compost heap. The stems can be easily hollowed out to be used as drains in tapping the sap from trees such as the Sugar Maples (Acer spp). the stems can also be used as whistles and flutes."@en .
+
+:SambucusPubens a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "american red elder"@en .
+:SambucusPubens 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Although no specific mention has been seen for this species, the leaves and stems of some, if not all, members of this genus are poisonous. The fruit of many species (although no records have been seen for this species) has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked. NC State University have noted Cyanogenic glycoside and alkaloids can cause low toxity if eaten."@en ;
+  :plant_habitat "Moist to wet soils along streams, in woods and open areas from valleys to around 3,000 metres."@en ;
+  :plant_country_range "N. America - British Columbia to Newfoundland, south to Georgia, Iowa, Colorado and California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Pubens is a deciduous Shrub growing to 4 m (13ft 1in).  It is hardy to zone (UK) 4.  It is in flower from June to July. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Fruit - raw or cooked. A bitter flavour. The fruit is quite nutritious, having a relatively high fat and protein as well as carbohydrate content. The fruit can be dried prior to use, it will then lose some of its rank taste. The fruit is about 5mm in diameter and is borne in large clusters making it easy to harvest. Some caution is advised, see the notes above on toxicity. Flowers - raw or cooked. The root is made into a tea-like beverage."@en ;
+  :plant_medicinal_use :Diuretic, :Laxative ;
+  :plant_medicinal_text "The bark and the leaves are used as a diuretic and purgative. The blossoms have been used in the treatment of measles."@en ;
+  :plant_other_use :Musical ;
+  :plant_other_use_text "The stem is easily hollowed and can be used to make a whistle."@en .
+
+:SambucusRacemosa a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "red elder"@en, "red elderberry"@en, "rocky mountain elder"@en, "european red elderberry"@en .
+:SambucusRacemosa 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Although no specific mention has been seen for this species, the leaves and stems of some, if not all, members of this genus are poisonous. The fruit of many species (although no records have been seen for this species) has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked. NC State University have noted Cyanogenic glycoside and alkaloids can cause low toxity if eaten."@en ;
+  :plant_habitat "Moist to wet soils along streams, in woods and open areas from valleys to around 3,000 metres."@en ;
+  :plant_country_range "N. America - British Columbia to Newfoundland, south to Georgia, Iowa, Colorado and California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Racemosa is a deciduous Shrub growing to 4 m (13ft 1in).  It is hardy to zone (UK) 4.  It is in flower from June to July. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_text "Fruit - raw or cooked. A bitter flavour. The fruit is quite nutritious, having a relatively high fat and protein as well as carbohydrate content. The fruit can be dried prior to use, it will then lose some of its rank taste. The fruit is about 5mm in diameter and is borne in large clusters making it easy to harvest. Some caution is advised, see the notes above on toxicity. Flowers - raw or cooked. The root is made into a tea-like beverage."@en ;
+  :plant_medicinal_use :Analgesic, :Vulnerary, :Diaphoretic, :Diuretic, :Anticancer, :Antiflatulent, :Depurative, :Laxative ;
+  :plant_medicinal_text "The bark and the leaves are used as a diuretic and purgative. The blossoms have been used in the treatment of measles."@en ;
+  :plant_other_use :Repellent, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The stem is easily hollowed and can be used to make a whistle."@en .
+
+:SambucusRacemosaKamtschatica a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "red elder"@en .
+:SambucusRacemosaKamtschatica 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Although no specific mention has been seen for this species, the leaves and stems of some, if not all, members of this genus are poisonous. The fruit of this species has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked. The seed is said to be poisonous."@en ;
+  :plant_habitat "Woods, mainly in mountains."@en ;
+  :plant_country_range "Europe to W. Asia. Occasionally naturalized in N. Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus Racemosa Kamtschatica is a deciduous Shrub growing to 3 m (9ft 10in).  It is hardy to zone (UK) 4.  It is in flower from April to May, and the seeds ripen from June to July. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_text "Fruit - raw or cooked. The tastiest fruit in this genus. Rich in vitamin C, the seed can be removed and the fruit used in jellies, preserves etc. The fruit is about 5mm in diameter and is borne in large clusters, making it easy to harvest. Some caution is advised, see notes above on toxicity. Flowers - raw or cooked."@en ;
+  :plant_medicinal_use :Analgesic, :Vulnerary, :Diaphoretic, :Diuretic, :Anticancer, :Antiflatulent, :Depurative, :Laxative ;
+  :plant_medicinal_text "The leaves, stems and the roots are anodyne, carminative and vulnerary. A decoction is used in the treatment traumatic injuries, fractures, rheumatoid arthralgia, gas pains, acute and chronic nephritis. The fruit is depurative and laxative. The leaves are diuretic, resolvent and sudorific. They are used externally to soothe abscesses and boils. The root, and the oil from the seed, are purgative."@en ;
+  :plant_other_use :Repellent, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The leaves are used to repel insects. Wood - commonly used in the manufacture of domestic items. It can be hollowed out to make flutes, pipes, straws etc."@en .
+
+:SambucusRacemosaVarRacemosa a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "red coast elder"@en .
+:SambucusRacemosaVarRacemosa 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "Although no specific mention has been seen for this species, the leaves and stems of some members of this genus are poisonous. The fruit of many species (although no records have been seen for this species) has been known to cause stomach upsets to some people. Any toxin the fruit might contain is liable to be of very low toxicity and is destroyed when the fruit is cooked."@en ;
+  :plant_habitat "River banks in low moist soils from sea-level to 2400 metres."@en ;
+  :plant_country_range "Western N. America - Alaska to California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Sambucus racemosa var. racemosa is a deciduous Shrub growing to 3 m (9ft 10in).  It is hardy to zone (UK) 6.  It is in flower from June to July, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_text "Fruit - raw or cooked. The fruit can be made into jams and preserves. It can also be dried for winter use. The fruit is about 5mm in diameter and is borne in large clusters. Some caution is advised, see notes above on toxicity. Flowers - raw or cooked."@en ;
+  :plant_medicinal_text "The leaves are abortifacient, analgesic, oxytocic and poultice. A decoction of the leaves has been used to terminate a pregnancy and can also be taken during labour to ease the birth. An infusion of the leaves has been used as an antiseptic wash on areas affected by blood poisoning. A poultice of the pounded leaves has been applied to abscess and boils and also to sore joints to help reduce the swelling. A poultice of the cooked shoots has been used to alleviate pain. The bark is cathartic. An infusion of the bark has been used in the treatment of coughs and colds. A poultice of the bark has been applied to sore joints to help reduce the swelling. The fruit has been cooked and eaten as a treatment for stomach problems."@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumCassinoides a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "withe rod"@en, "appalachian tea"@en, "witherod viburnum"@en, "witherod"@en, "wild raisin viburnum"@en .
+:ViburnumCassinoides 
+  :plant_hardiness_zones "2-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Thickets, clearings, swamps and borders of woods."@en ;
+  :plant_country_range "Eastern N. America - Newfoundland to Manitoba, Minnesota, New Jersey, Georgia and Alabama."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Cassinoides is a deciduous Shrub growing to 2.5 m (8ft 2in) at a medium rate.  It is hardy to zone (UK) 2.  It is in flower in June, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Fruit - raw or cooked. The scant flesh is sweet and well flavoured, hanging on the plant well into the winter. The oval fruit is about 10mm long and contains a single large seed. The leaves are used as a tea substitute. A pleasant taste. The leaves are steamed over boiling water, rolled between the fingers, allowed to stand overnight and then dried in an oven to be used as required."@en ;
+  :plant_medicinal_use :Tonic, :Antispasmodic, :Diaphoretic, :Mouthwash, :Antipyretic ;
+  :plant_medicinal_text "The bark and root bark is antispasmodic, diaphoretic, febrifuge and tonic. An infusion has been used to treat recurrent spasms, fevers, smallpox and ague. The infusion has also been used as a wash for a sore tongue."@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumCotinifolium a owl:Class ;
+  rdfs:subClassOf :Adoxaceae .
+:ViburnumCotinifolium 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Amongst oak and deodar in forests and shrubberies, affecting open spaces on the rather drier exposures, to 3600 metres."@en ;
+  :plant_country_range "E. Asia - Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Cotinifolium is a deciduous Shrub growing to 3.5 m (11ft 6in).  It is hardy to zone (UK) 6.  It is in flower in June, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. A sweetish flavour. The ovoid fruit is about 12mm long and contains a single large seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :WoodCorkAndSubstitute ;
+  :plant_other_use_text "Wood - hard, close grained."@en .
+
+:ViburnumDilatatum a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "linden viburnum"@en, "linden arrowwood"@en .
+:ViburnumDilatatum 
+  :plant_hardiness_zones "5-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Thickets in hills and at low elevations in mountains in Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Dilatatum is a deciduous Shrub growing to 3 m (9ft) by 2 m (6ft) at a medium rate.  It is hardy to zone (UK) 5.  It is in flower in June. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Fruit - raw or cooked. A sweet flavour. The ovoid fruit is about 8mm long and contains a single large seed. Leaves - cooked."@en ;
+  :plant_medicinal_use :Vulnerary, :Anthelmintic, :Astringent ;
+  :plant_medicinal_text "A decoction of the leaves is astringent and vermifuge. It is used for washing and healing maggoty sores. The twigs are also vermifuge whilst the fruits are used as a vermifuge for children."@en ;
+  :plant_other_use :Fibre ;
+  :plant_other_use_text "A fibre obtained from the inner bark is used for making ropes."@en .
+
+:ViburnumEdule a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "mooseberry"@en, "squashberry"@en .
+:ViburnumEdule 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Although no records of toxicity have been seen for this species, it is closely related to V. opulus, the raw fruit of which can cause nausea in some people if it is eaten in large quantities, although the cooked fruit is perfectly alright."@en ;
+  :plant_habitat "Woods, thickets and cool mountain slopes."@en ;
+  :plant_country_range "E. Asia. Eastern N. America."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Edule is a deciduous Shrub growing to 2.5 m (8ft 2in).  It is hardy to zone (UK) 5.  It is in flower in June, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_text "Fruit - raw or cooked. The fully ripe fruits are mildly acid with a pleasant taste. The ovoid fruit is about 8mm long and contains a single large seed. The fruit can also be dried for winter use. It is highly valued for jam. It is best before a frost and with the skin removed. Another report says that the native Americans would often not harvest the fruit until it had been frosted. Some caution is advised, see the notes above on toxicity. Flowers - used in fritters."@en ;
+  :plant_medicinal_use :Odontalgic, :Antispasmodic, :Astringent, :Emollient ;
+  :plant_medicinal_text "The bark is antispasmodic and astringent. An infusion of the crushed inner bark has been used in the treatment of dysentery and has also been used as a purgative. The bark has been chewed and the juice swallowed in the treatment of whooping cough and 'cold on the lungs'. A decoction of the stems has been used in the treatment of coughs. An infusion of the leaves and stems has been used as a gargle in the treatment of sore throats. The twig tips have been chewed and the juice swallowed in the treatment of sore throats. A poultice of the chewed, unopened flower buds has been applied to lip sores. A decoction of the roots has been used to treat sickness associated with teething."@en ;
+  :plant_other_use :Basketry ;
+  :plant_other_use_text "The stems have been used to reinforce birch bark basket rims."@en .
+
+:ViburnumFarreri a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "culver's root"@en, "fragrant viburnum"@en .
+:ViburnumFarreri 
+  :plant_hardiness_zones "5-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - China in Gansu."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Farreri is a deciduous Shrub growing to 3 m (9ft) by 2.5 m (8ft) at a medium rate.  It is hardy to zone (UK) 6.  It is in flower from November to February, and the seeds ripen in May. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. A sweet flavour, but the fruit is not freely borne in Britain."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumFoetens a owl:Class ;
+  rdfs:subClassOf :Adoxaceae .
+:ViburnumFoetens 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "An undershrub of coniferous forests, it is also found in oak forests from 1500 - 3300 metres."@en ;
+  :plant_country_range "E. Asia - Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Foetens is a deciduous Shrub growing to 3 m (9ft) by 3 m (9ft).  It is hardy to zone (UK) 6.  It is in flower from January to March. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. A sweetish flavour, but the fruit is not freely borne in Britain."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :WoodCorkAndSubstitute ;
+  :plant_other_use_text "Wood - hard, close grained."@en .
+
+:ViburnumGrandiflorum a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "cranberry bush"@en, "himalayan viburnum"@en .
+:ViburnumGrandiflorum 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Open forests and shrubberies, often forming dense scrub, 2700 - 3600 metres in the Himalayas."@en ;
+  :plant_country_range "E. Asia - China, Himalayas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Grandiflorum is a deciduous Shrub growing to 2 m (6ft) by 2 m (6ft).  It is hardy to zone (UK) 7.  It is in flower from January to March. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. A sweet flavour. The ovoid fruit is about 20mm long and contains a single large seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumLantanoides a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "hobbleberry"@en .
+:ViburnumLantanoides 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist woods and shady ravines."@en ;
+  :plant_country_range "Eastern N. America - New Brunswick to North Carolina, Ontario, Tennessee and Michigan."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Lantanoides is a deciduous Shrub growing to 3 m (9ft 10in).  It is hardy to zone (UK) 3.  It is in flower from May to June, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. Sweet and palatable, tasting somewhat like raisins or dates. The fruits have a large seed and a thin flesh. The taste is best after a frost. The ovoid fruit is about 15mm long and contains a single large seed."@en ;
+  :plant_medicinal_use :BloodPurifier, :Analgesic, :InfertilityTreatment ;
+  :plant_medicinal_text "The leaves are analgesic. They have been mashed and applied to the head as a poultice to ease a migraine. A decoction of the roots has been used as a blood medicine. The decoction has been used as a fertility aid by women."@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumLentago a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "sheepberry"@en, "nannyberry"@en, "nannyberry viburnum"@en .
+:ViburnumLentago 
+  :plant_hardiness_zones "2-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rich soils along woodland borders, edges of streams etc, it is also found on rocky hillsides etc."@en ;
+  :plant_country_range "Northern N. America - New Brunswick to Saskatchewan, south to Virginia and Nebraska"@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Lentago is a deciduous Tree growing to 9 m (29ft) by 5 m (16ft) at a medium rate.  It is hardy to zone (UK) 2.  It is in flower from May to June, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. It can also be dried for winter use. The fruit is variable in size and quality, the best being about 15mm long, pulpy, very sweet, somewhat juicy and pleasant tasting but with a thick skin and a single large seed. The fruit is said to be best after a frost but it is sometimes dry."@en ;
+  :plant_medicinal_use :Antispasmodic, :Diuretic, :Emmenagogue ;
+  :plant_medicinal_text "The bark is antispasmodic. A decoction of the roots has been used to treat irregular menstruation and the spitting of blood. An infusion of the leaves has been used in the treatment of measles. An infusion of the leaves has been drunk, or a poultice of leaves applied, in the treatment of dysuria."@en ;
+  :plant_other_use :WoodCorkAndSubstitute, :Hedge ;
+  :plant_other_use_text "The plant is grown as a hedge in N. America. Wood - heavy, hard, close grained, malodorous. Of no commercial value due to the small size of the trees."@en .
+
+:ViburnumNudum a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "smooth withe rod"@en, "possumhaw"@en, "withe-rod"@en, "swamp haw"@en, "smooth witherod"@en, "possum haw"@en, "wild raisin"@en .
+:ViburnumNudum 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Wooded swamps, wet pinelands and bogs. Also found on rich hillsides."@en ;
+  :plant_country_range "Eastern N. America - Maryland to Florida, west to Arkansas and Kentucky."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Nudum is a deciduous Shrub growing to 4.5 m (14ft 9in) at a medium rate.  It is hardy to zone (UK) 6.  It is in flower in June, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. It usually has a sweetish flavour but is sometimes bitter and is usually unpalatable. The ovoid fruit is about 8mm long and contains a single large seed."@en ;
+  :plant_medicinal_use :Antispasmodic, :Tonic, :Diuretic ;
+  :plant_medicinal_text "A tea made from the bark is antispasmodic, diuretic, tonic and uterine sedative."@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumOpulus a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "guelder rose"@en, "cramp bark"@en, "european cranberrybush"@en, "american cranberrybush"@en, "crampbark"@en, "water elder"@en, "snowball tree"@en .
+:ViburnumOpulus 
+  :plant_hardiness_zones "3-8" ;
+  :plant_hazards "Large quantities of the fruit can cause vomiting and diarrhoea. The fruit is of very low or zero toxicity, it only causes mild upsets when eaten unripe or in large quantities."@en ;
+  :plant_habitat "Hedges, scrub and woodland, usually on damp soils."@en ;
+  :plant_country_range "Europe, including Britain, from Scandanavia south and east to Spain, north and west Asia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Opulus is a deciduous Shrub growing to 5 m (16ft) by 5 m (16ft) at a medium rate.  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. The fruit is up to 8.5mm in diameter but with a large seed. A sour taste, it is best cooked. The crushed fruit has an unpleasant smell. Used as a cranberry substitute in making, jellies, preserves etc. Some caution is advised, see notes on toxicity at top of the page."@en ;
+  :plant_medicinal_use :Antispasmodic, :Astringent, :SedativeAndHypnotic, :BirthingAid ;
+  :plant_medicinal_text "Guelder rose is a powerful antispasmodic and is much used in the treatment of asthma, cramps and other conditions such as colic or painful menstruation. It is also used as a sedative remedy for nervous conditions. The bark is antispasmodic, astringent and sedative. The bark contains 'scopoletin', a coumarin that has a sedative affect on the uterus. A tea is used internally to relieve all types of spasms, including menstrual cramps, spasms after childbirth and threatened miscarriage. It is also used in the treatment of nervous complaints and debility. The bark is harvested in the autumn before the leaves change colour, or in the spring before the leaf buds open. It is dried for later use. The leaves and fruits are antiscorbutic, emetic and laxative. A homeopathic remedy is made from the fresh bark. It is used in the treatment of menstrual pain and spasms after childbirth."@en ;
+  :plant_other_use :DyeInkAndPaint, :WoodCorkAndSubstitute, :Hedge ;
+  :plant_other_use_text "A red dye is obtained from the fruit. An ink can be made from the dried berries. Plants can be grown as a tall hedge, they are rather bare in winter though. The wood can be used to make skewers."@en .
+
+:ViburnumRufidulum a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "southern black haw"@en, "rusty blackhaw"@en .
+:ViburnumRufidulum 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist woods and thickets. By the sides of streams, hillsides, roadsides, woodland margins and clearings. Also found in dry upland woods."@en ;
+  :plant_country_range "Southern N. America - Virginia to Florida, west to Texas, Oklahoma and Kansas."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Rufidulum is a deciduous Shrub growing to 12 m (39ft 4in).  It is hardy to zone (UK) 5.  It is in flower in June, and the seeds ripen from August to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. The fleshy fruit has a sweet taste, somewhat like raisins, but it is nearly all seed. The taste is best after a frost. The ellipsoid fruit is up to 15mm long and contains a single large seed."@en ;
+  :plant_medicinal_use :Antispasmodic ;
+  :plant_medicinal_text "The bark is antispasmodic and has been used in the treatment of cramps and colic."@en ;
+  :plant_other_use :WoodCorkAndSubstitute ;
+  :plant_other_use_text "Wood - fine-grained, heavy, hard, strong, with a disagreeable odour. Of no particular value."@en .
+
+:ViburnumTrilobum a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "american cranberry"@en, "highbush cranberry"@en, "cranberrybush"@en, "american cranberrybush viburnum"@en .
+:ViburnumTrilobum 
+  :plant_hardiness_zones "2-7" ;
+  :plant_hazards "Large quantities of the fruit can cause vomiting and diarrhoea. The fruit is of very low or zero toxicity, it only causes mild upsets when eaten unripe or in large quantities."@en ;
+  :plant_habitat "Stream banks. Low moist ground."@en ;
+  :plant_country_range "N. America - Newfoundland to British Columbia, New Jersey, Michigan, Iowa, South Dakota and Oregon."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Trilobum is a deciduous Shrub growing to 3 m (9ft 10in) at a medium rate.  It is hardy to zone (UK) 2 and is not frost tender.  It is in flower in June, and the seeds ripen from July to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. Juicy but acid, the taste is best after a frost. The fruits are rich in vitamin C, they are an excellent substitute for cranberries and are used in preserves, jams etc. A jam made from the fruit has a very pleasant flavour that goes well in a porridge. The fruit is about 8mm in diameter and contains a single large seed."@en ;
+  :plant_medicinal_use :Antipyretic, :Stomachic, :Laxative, :Emetic ;
+  :plant_medicinal_text "An infusion of the roots has been used in the treatment of prolapse of the uterus. A decoction has been given to babies with fevers. A decoction of the branches has been used to treat a fallen womb after birth. The bark is laxative. An infusion of the roots has been used to make a person vomit in the treatment of bad blood and fevers. An infusion of the inner bark has been used to treat stomach cramps."@en ;
+  :plant_other_use_text "None known"@en .
+
+:ViburnumPrunifolium a owl:Class ;
+  rdfs:subClassOf :Adoxaceae ;
+  :synonym "stagberry"@en, "black haw"@en, "hybrid blackhaw"@en, "smooth blackhaw"@en, "blackhaw viburnum"@en .
+:ViburnumPrunifolium 
+  :plant_hardiness_zones "3-9" ;
+  :plant_hazards "Overdose symptoms include: nausea, dizziness, fits (seizures), visual disturbances, increased perspiration, reduced pulse rate. Rare allergic reactions. Avoid during pregnancy due to effects on the uterus ."@en ;
+  :plant_habitat "Thickets, woodland borders, shores etc, and on dry rocky hillsides."@en ;
+  :plant_country_range "Eastern N. America - Connecticut to Florida, west to Texas and Kansas."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Viburnum Prunifolium is a deciduous Tree growing to 7.5 m (24ft) by 5 m (16ft) at a slow rate. It is hardy to zone (UK) 3.  It is in flower in June, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. A thin dry flesh with a sweet taste. The fruit is somewhat variable in size and quality, the best forms are nice raw whilst others are used for making preserves etc. The taste is best after a frost. The ovoid fruit is about 17mm long and contains a single large seed."@en ;
+  :plant_medicinal_use :Analgesic, :BirthingAid, :Nervine, :Antispasmodic, :SedativeAndHypnotic, :Abortifacient, :Astringent ;
+  :plant_medicinal_text "Stagberry was used by the North American Indians to treat dysentery and to arrest haemorrhage of the uterus. It is now considered to be a specific treatment for the relief of menstrual pain - the bark contains 'scopoletin', a coumarin that has a sedative affect on the uterus and salicin, a painkiller that is used in making aspirin. The bark of the root and stems is abortifacient, anodyne, antispasmodic, astringent, nervine and sedative. A tea is used internally in the treatment of painful or heavy menstruation, prolapse of the uterus, morning sickness, to prevent miscarriage and to relieve spasms after childbirth. It is also used to treat convulsive disorders, colic and other cramping pains that affect the bile ducts, hysteria, asthma and palpitations of a nervous origin. The stem bark is harvested in the autumn before the leaves change colour, or in the spring before the leaf buds open. The root bark is only harvested in the autumn. Both barks can be dried for later use."@en ;
+  :plant_other_use :WoodCorkAndSubstitute, :Hedge ;
+  :plant_other_use_text "Plants can be grown as a hedge, they can be sheared to make a formal screen. Wood - heavy, hard, strong, brittle, close grained. It weighs 52lb per cubic foot, but is of no commercial importance due to the small size of the trees."@en .
+

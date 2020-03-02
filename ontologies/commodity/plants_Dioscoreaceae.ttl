@@ -1,0 +1,157 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Dioscoreaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:DioscoreaAlata a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "water yam"@en, "purple yam"@en, "greater yam"@en, "white yam"@en .
+:DioscoreaAlata 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves. The uncooked tuber of this species is toxic, and is said to produce narcosis. Saponin is present and cooking renders the tubers safe to eat."@en ;
+  :plant_habitat "Not known in a wild state."@en ;
+  :plant_country_range "Probably arose in cultivation in E. Asia - Malaysia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Alata is an evergreen Perennial Climber growing to 15 m (49ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Wind, Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Root - cooked. Usually boiled or baked and used as a vegetable. An average of 3 roots are produced by the plants, these usually each weigh in the range of 5 - 10kg, though exceptionally they can weigh up to 60 kg. The root needs to be properly cooked, it can be toxic if eaten raw. The plant produces aerial tubers and these can be eaten in the same way as the tubers."@en ;
+  :plant_medicinal_text "The tuber is grated, mixed with brown stout vinegar, then spread onto paper and placed on the small of a woman's back to prevent or forestall a threatened miscarriage."@en ;
+  :plant_other_use_text "Other Uses: None known"@en .
+
+:DioscoreaBatatas a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "chinese yam"@en .
+:DioscoreaBatatas 
+  :plant_hardiness_zones "4-11" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves."@en ;
+  :plant_habitat "Found in an apparently wild situation in valleys and on the slopes of hills in China. Prefers sunny slopes in the wild."@en ;
+  :plant_country_range "Temperate E. Asia, though the exact range is not known."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Batatas is a PERENNIAL growing to 3 m (9ft) by 1.5 m (5ft).  It is hardy to zone (UK) 5.  It is in flower from September to October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required). . The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantRoot ;
+  :plant_edible_text "Tuber - cooked. A floury texture with a very pleasant flavour that is rather like a potato. The tubers can be boiled, baked, fried, mashed, grated and added to soups. They store well and for a long time and can also be left in the ground and harvested as required in the winter. This is a top quality root crop, very suitable for use as a staple food. An arrowroot can be extracted from the root, though this is not as good at binding other foods as the starch from D. japonica. The root contains about 20% starch. 75% water, 0.1% vitamin B1, 10 - 15 mg% vitamin C. Fruit. A starchy flavour, it is said to be very good for the health. We wonder if this report is referring to the tubercles. We've heard the aerial tubers can be eaten and are very tasty. Carbon Farming - Staple Crop: basic starch."@en ;
+  :plant_medicinal_use :Contraceptive, :Anthelmintic, :Antidote, :Digestive ;
+  :plant_medicinal_text "The Chinese yam, called Shan Yao in Chinese herbalism, is a sweet soothing herb that stimulates the stomach and spleen and has a tonic effect on the lungs and kidneys. The tuber contains allantoin, a cell-proliferant that speeds the healing process. The root is an ingredient of 'The herb of eight ingredients', traditionally prescribed in Chinese herbalism to treat hyperthyroidism, nephritis and diabetes. The tuber is anthelmintic, digestive and gently tonic. It is used internally in the treatment of tiredness, weight loss, poor appetite, poor digestion, chronic diarrhoea, asthma, dry coughs, frequent or uncontrollable urination, diabetes and emotional instability. It is applied externally to ulcers, boils and abscesses. The tubers are harvested in the autumn and can be used raw or baked. The leaf juice is used to treat snakebites and scorpion stings. The roots of most, if not all, members of this genus, contains diosgenin. This is widely used in modern medicine in order to manufacture progesterone and other steroid drugs. These are used as contraceptives and in the treatment of various disorders of the genitary organs as well as in a host of other diseases such as asthma and arthritis."@en ;
+  :plant_other_use_text "None known"@en .
+
+:DioscoreaBulbifera a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "aerial yam"@en, "air potato"@en .
+:DioscoreaBulbifera 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves. The aerial bulbs of this species contain toxic substances, including the alkaloid dioscorine. This can be destroyed by thorough cooking. Asiatic forms of the plant usually contain less alkaloids than plants originating in Africa. There are forms that are almost or entirely free of toxins.(Parts of plant are poisonous if ingested)"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - Malaysia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Bulbifera is an evergreen Perennial Climber growing to 10 m (32ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 9. The flowers are pollinated by Wind, Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantFlower ;
+  :plant_edible_text "Aerial tubers - cooked. An agreeable taste, they can be boiled, baked, fried etc. They must be thoroughly cooked in order to destroy toxic alkaloids. Wild forms of the plant are always toxic raw, though selected cultivars have been developed that are much lower, or even free from, the toxins. The tubers are produced, and can be harvested, over a long period of time. Root - cooked. Roots are usually around 0.5kg, though they can be up to 1.5kg. They are not always produced by the plants. The inflorescences are apparently eaten."@en ;
+  :plant_medicinal_text "The juice of the roots is taken to expel threadworm. The juice is dripped into wounds to expel worms and germs. Both the tuber and the bulbil of wild races have medicinal uses. In particular they are used externally, usually as a poultice, to treat wounds, sores, boils and inflammations; in dressings for treating dermal parasitic and fungal infections; or crushed, mixed with palm oil, and massaged onto areas of rheumatism, and for troubles of the breasts and for jiggers. In India the tuber is considered to be diuretic and to be a remedy for diarrhoea and haemorrhoids. The fruits are used to treat boils and for fever. Sap expressed from the vine stems is applied to treat purulent ophthalmia, and for snake-bite. The leaves are used, often by steam-distillation, against pink-eye. Various medically active substances have been detected in the plant. Dioscorine has been detected in the tuber, though certain Nigerian material has been reported free of the alkaloid. Alkaloids have been reported from the leaves and stems and particularly in the fruits. Diosgenin has been detected at 0?45% concentration. Saponin is present and a number of other pharmacologically active substances."@en ;
+  :plant_other_use_text "Other Uses: None known"@en .
+
+:DioscoreaCayennensis a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "yellow yam"@en, "yellow guinea yam"@en .
+:DioscoreaCayennensis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Freshly cut tubers can cause skin irritation due to the presence of raphides, which are destroyed when the tubers are cooked."@en ;
+  :plant_habitat "Not known in a truly wild situation, having arisen in cultivation."@en ;
+  :plant_country_range "Western Africa - possibly Dahomey."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Cayennensis is an evergreen Perennial Climber growing to 10 m (32ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Wind, Insects. The plant is not self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Root - cooked in various ways and eaten as a vegetable. A palatable flavour with a dry, mealy flesh. The roots are sometimes dried and milled to produce a flour for storing - this flour is then stirred into boiling water and kneaded to form a paste. The roots have a rough outer skin and a pale yellow flesh.The roots are up to 3kg in weight. The roots can contain up to 91% carbohydrate, the highest for any yam. Protein content is low, about 2.5%. A tea is made from the leaves."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: None known"@en .
+
+:DioscoreaEsculenta a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "lesser yam"@en, "potato yam"@en, "chinese yam"@en, "wild yam"@en .
+:DioscoreaEsculenta 
+  :plant_hardiness_zones "8-12" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves.(Parts of plant are poisonous if ingested)"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - India, Nepal, Bangladesh, Myanmar, Thailand, Vietnam, Malaysia, Indonesia, Philippines, New Guinea."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Esculenta is an evergreen Perennial Climber growing to 3 m (9ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 9. The flowers are pollinated by Wind, Insects.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Root - cooked and used as a vegetable. Sweet and pleasant, with a flavour somewhat like sweet potato or chestnuts. The tubers are oval, up to 20cm long and 6 - 8cm in diameter. Each plant can produce 5 - 20 tubers. The flesh is yellow or white and the average tuber weight may be 250 - 1,000g, though larger ones can weight 3,000g."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:DioscoreaJaponica a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "glutinous yam"@en, "japanese yam"@en .
+:DioscoreaJaponica 
+  :plant_hardiness_zones "7-12" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves."@en ;
+  :plant_habitat "Wooded foothills. Mixed forests and margins, scrub forests, herb communities, mountain slopes, valleys, along rivers and streams, roadsides; 100 - 1200 metres."@en ;
+  :plant_country_range "E. Asia - China, C. and S. Japan."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Japonica is a PERENNIAL CLIMBER growing to 3 m (9ft 10in).  It is hardy to zone (UK) 8.  It is in flower from September to October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required). . The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Tuber - cooked. A very pleasant mild flavour with a floury texture, the roots can be eaten as a potato substitute. The starch can be used as a binding agent for other foods. Roots contain about 1.9% protein, 20% carbohydrate, 0.1% fat and 1% ash. Leaf tips - cooked. Tubercles - cooked."@en ;
+  :plant_medicinal_use :Contraceptive, :Tonic ;
+  :plant_medicinal_text "The tubers are prescribed in the treatment of diarrhoea, enteritis, enuresis and spermatorrhoea. They are also dried and cut into shavings then used as a tonic. The roots of most, if not all, members of this genus, contains diosgenin. This is widely used in modern medicine in order to manufacture progesterone and other steroid drugs. These are used as contraceptives and in the treatment of various disorders of the genitary organs as well as in a host of other diseases such as asthma and arthritis."@en ;
+  :plant_other_use_text "None known"@en .
+
+:DioscoreaTrifida a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "cush cush yam"@en, "sweet yam"@en .
+:DioscoreaTrifida 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "Northern S. America - Brazil, Peru, Ecuador, Colombia, Venezuela, the Guyanas; C. America - Panama to Guatemala; eastern Caribbean."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Trifida is an evergreen Perennial Climber growing to 3 m (9ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Wind, Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Root - cooked. Boiled or baked, some forms have an excellent flavour. The cooked flesh is smooth in texture, attractive and of an unusual rich flavour that is readily appreciated and sufficiently moist in the mouth. Roots are about 15 - 20cm long and 6 - 8cm in diameter."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: None known"@en .
+
+:DioscoreaVillosa a owl:Class ;
+  rdfs:subClassOf :Dioscoreaceae ;
+  :synonym "wild yam"@en .
+:DioscoreaVillosa 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "Edible species of Dioscorea have opposite leaves whilst poisonous species have alternate leaves. Use of the fresh plant can cause vomiting and other side effects. Known to cause headaches, menstrual irregularities & acne. May cause hair loss & oily skin. Avoid during pregnancy. Avoid in patients with cancers of the breast, ovaries, prostate & uterus ."@en ;
+  :plant_habitat "Borders of bogs, swamps, marshes, river and lake margins, creek bottoms, sandy or rocky soils, moist or dry woods, hammocks, thickets, limestone or talus slopes, roadsides, sea level to 1500 m."@en ;
+  :plant_country_range "Eastern N. America - New England to Minnesota and Ontario, south to Virginia and Texas."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dioscorea Villosa is a PERENNIAL CLIMBER growing to 3 m (9ft 10in).  It is hardy to zone (UK) 6.  It is in flower from September to October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required). . The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Tuber - cooked. Some caution should be exercised with this plant. See 'Medicinal Uses' for more information."@en ;
+  :plant_medicinal_use :Contraceptive, :Cholagogue, :Vasodilator, :Antispasmodic, :Diaphoretic, :Antiinflammatory, :Antiarthritic ;
+  :plant_medicinal_text "Wild yam roots, and the roots of many other members of the genus, contains diosgenin. This is widely used in modern medicine in order to manufacture progesterone and other steroid drugs. These are used as contraceptives and in the treatment of various disorders of the genitary organs as well as in a host of other diseases such as asthma and arthritis. The roots are anti-inflammatory, antispasmodic, cholagogue, diaphoretic and vasodilator. They are also a visceral relaxant. This plant affords one of the best and fastest cures for bilious colic, it is especially helpful in treating the nausea of pregnant women and has been used to ease the pain of childbirth. It is also taken internally in the treatment of arthritis, irritable bowel syndrome, gastritis, gall bladder complaints, painful menstruation etc. The root is harvested in the autumn and dried for later use. The root should not be stored for longer than 1 year, since it is likely to lose its medicinal virtues. Caution is advised in the use of the this plant, when taken fresh it can cause vomiting and other side effects. The root, harvested in September, is used to make a homeopathic remedy. Its main use is in the treatment of infant colic."@en ;
+  :plant_other_use_text "None known"@en .
+

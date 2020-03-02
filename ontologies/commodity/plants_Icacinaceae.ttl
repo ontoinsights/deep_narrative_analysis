@@ -1,0 +1,54 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Icacinaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CantleyaCorniculata a owl:Class ;
+  rdfs:subClassOf :Icacinaceae ;
+  :synonym "daru"@en .
+:CantleyaCorniculata 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A canopy tree in primary forest. Lowland forest, often under swampy conditions. Drier parts of primary freshwater swamp forest, or drier hill forest, at elevations up to 300 metres, apparently local and scattered, on marshy or sandy soil."@en ;
+  :plant_country_range "Southeast Asia - Malaysia, Indonesia."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Cantleya Corniculata is an evergreen Tree growing to 30 m (98ft) by 25 m (82ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit. Said to be of a rather poor quality."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other uses rating: High (4/5). The brownish-yellow wood has a strong, aromatic scent. It is close-grained, hard, very heavy, does not split and is very durable in the ground. Because of its fragrance, it is sometimes used as a substitute for sandalwood (Santalum spp.). It is used for heavy outdoor work, house and ship building, bridges, flag poles etc. However, because it is prone to shrink and warp, it is only suitable for furniture or turnery if it has been fully seasoned."@en .
+
+:PoraqueibaSericea a owl:Class ;
+  rdfs:subClassOf :Icacinaceae ;
+  :synonym "umari"@en .
+:PoraqueibaSericea 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rainforest, on land that does not become inundated. Usually found in deep, clayey, well-drained soils."@en ;
+  :plant_country_range "S. America - northern Brazil."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Poraqueiba Sericea is an evergreen Tree growing to 20 m (65ft) by 18 m (59ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay and nutritionally poor soils. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Fruit - raw or cooked. The fleshy pulp has a peculiar taste and aroma. It is often served with manioc flour416, and is made into a 'butter' for spreading on bread. The fruit contains 12% oil and is rich in starch. The yellowish fruit is around 7cm long and 5cm wide. An edible oil is obtained from the fruit pulp and the seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Agroforestry Uses: The tree is often interplanted with crops such as Brazil nut, cashew, uvilla, and Inga species that grow well in poor, clay soils. Other Uses Children cut the endosperm of the fruit into thin, opaque slices to make toy glasses. The wood is medium to thick-textured, straight-grained, moderately heavy, hard, with moderate mechanical properties and not durable. It is suitable for carpentry and internal use in construction. It is popular for making charcoal."@en .
+

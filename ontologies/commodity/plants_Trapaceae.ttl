@@ -1,0 +1,53 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Trapaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:TrapaBicornis a owl:Class ;
+  rdfs:subClassOf :Trapaceae ;
+  :synonym "ling"@en, "water caltrop"@en, "horn nut"@en, "buffalo nut"@en, "bat nut"@en, "devil pod"@en, "ling nut"@en, "lin kok"@en, "ling kio nut"@en, "mustache nut"@en, "singhada"@en .
+:TrapaBicornis 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "The raw seed contains toxins but that these are destroyed in the cooking process."@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - China."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Trapa Bicornis is a PERENNIAL.  It is hardy to zone (UK) 5 and is not frost tender. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid and neutral soils. It cannot grow in the shade. It can grow in water."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - cooked. A crunchy texture with a bland flavour. Rich in starch, the raw seed contains a deleterious principle that is destroyed by cooking. The cooked seed can be dried and ground into a powder."@en ;
+  :plant_medicinal_use :Antipyretic, :Astringent, :Tonic, :Anticancer ;
+  :plant_medicinal_text "The flowers are astringent in fluxes. The fruit is used in the treatment of fever and sunstroke. The plant is anticancer, antipyretic and tonic."@en ;
+  :plant_other_use_text "None known"@en .
+
+:TrapaNatans a owl:Class ;
+  rdfs:subClassOf :Trapaceae ;
+  :synonym "water chestnut"@en .
+:TrapaNatans 
+  :plant_hardiness_zones "6-12" ;
+  :plant_hazards "The raw seed contains toxins but that these are destroyed in the cooking process."@en ;
+  :plant_habitat "Water up to 60cm deep."@en ;
+  :plant_country_range "Europe to E. Asia, Indo-China and N. Africa."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Trapa Natans is a PERENNIAL.  It is hardy to zone (UK) 5.  It is in flower from June to July. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid and neutral soils. It cannot grow in the shade. It can grow in water."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "Seed - raw, cooked or dried and ground into a powder. A sweet floury and agreeable flavour, similar to sweet chestnuts (Castanea spp). The seed contains up to 50% starch according to one report, 16% starch, 3% protein in another report and 15% protein, 7.5% fat in a third. (Are all these reports talking about the same thing?). One report says that the raw nut contains toxins that are destroyed by cooking the seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+

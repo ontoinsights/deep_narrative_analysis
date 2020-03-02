@@ -1,0 +1,794 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining the concept of a flowering plant and its parts, along
+#    with properties (such as hardiness, edibility, etc.)
+# Also, the file defines the (scientific) families of flowering plants 
+#    that are cultivated and sold as commodities 
+#    (these are found at the bottom)
+# The classes reference entities in codes 06, 07, 08 and 10 of the UN
+#    Commodities list 
+#    (https://comtrade.un.org/db/mr/rfCommoditiesList.aspx)
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:FloweringPlant a owl:Class ;
+  rdfs:subClassOf :Plant ;
+  :definition "A type of Plant that produces flowers, fruits and seeds (within the fruits). The group includes herbaceous (non-woody) plants, trees, shrubs and grasses."@en ;
+  :synonym "angiosperm"@en .
+
+:PlantPart a owl:Class ;
+  :definition "An enumeration specifying the various parts of a plant, such as the flower or root."@en ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :PlantBud :PlantLeaf :PlantPollen :PlantSeedpod :PlantFlower :PlantRoot :PlantShoot :PlantFruit
+                                    :PlantNectar :PlantSapAndManna :PlantStem :PlantInnerBark :PlantOil :PlantSeed ) ] .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+:plant_country_range a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String specifying the continents/countries where the plant is typically found."@en ;
+  rdfs:range xsd:string .
+
+:plant_edibility_rating a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "An integer indicating the plant's value as a food source, where 1 indicates minor value and 5 indicates large value."@en ;
+  rdfs:range xsd:integer .
+
+:plant_edible_text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String providing details for the :plant_edibility_rating."@en ;
+  rdfs:range xsd:string .
+
+:plant_habitat a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String specifying the environmental conditions where the plant grows or can be cultivated."@en ;
+  rdfs:range xsd:string .
+
+:plant_hardiness_zones a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String specifying the USDA hardiness zones where the plant is typically grown. Zones are numbered from 1 to 13, where zone 1 is the coldest and zone 13 is the warmest, defined based on the average, annual minimum winter temperature."@en ;
+  rdfs:comment "Zones are defined in 10 degree F increments where zone 1 is the range -60 to -50 F, zone 2 is the range -50 to -40 F, ... and zone 13 is the range 60 to 70 F. Therefore, if a plant is described with a USDA hardiness of '4-8', it should be able to withstand a minimum temperature of -30 F, and will also do well up to zone 8."@en ;
+  rdfs:range xsd:string .
+
+:plant_hazards a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String specifying any dangers or risks associated with the plant."@en ;
+  rdfs:range xsd:string .
+
+:plant_medicinal_rating a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "An integer indicating the plant's medicinal value, where 1 indicates minor value and 5 indicates large value."@en ;
+  rdfs:range xsd:integer .
+
+:plant_medicinal_text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String providing details for the :plant_medicinal_rating."@en ;
+  rdfs:range xsd:string .
+
+:plant_other_use_rating a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "An integer indicating the plant's usefulness other than medicinally or as a food source, where 1 indicates minor value and 5 indicates large value."@en ;
+  rdfs:range xsd:integer .
+
+:plant_other_use_text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String providing details for the :plant_other_use_rating."@en ;
+  rdfs:range xsd:string .
+
+:plant_physical_characteristics a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "String describing whether the plant is a tree, shrub, climber, etc., when it flowers and other physical features and qualities."@en ;
+  rdfs:range xsd:string .
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:plant_edible_part a owl:ObjectProperty ;
+  :definition "Reference to the parts of the plant that are edible, such as the flowers or root."@en ;
+  rdfs:range :PlantPart .
+
+:plant_edible_use a owl:ObjectProperty ;
+  :definition "Reference to the edible uses of a plant, for example, use as a sweetener or to make tea."@en ;
+  rdfs:range :Food .
+
+:plant_medicinal_use a owl:ObjectProperty ;
+  :definition "Reference to the medicinal uses of a plant, for example, use as an antacid or as an astringent."@en ;
+  rdfs:range :PharmaceuticalAndMedicinal .
+
+:plant_other_use a owl:ObjectProperty ;
+  :definition "Reference to 'other' uses of a plant beyond as a food source or for medicinal purposes, for example, use as bedding or for soap making."@en ;
+  rdfs:range :ToolAndCommodity .
+
+
+########################################################################
+# Individuals
+########################################################################
+
+:PlantBud a :PlantPart ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Bud&oldid=935131142), a Bud 'is an undeveloped or embryonic shoot and normally occurs in the axil of a leaf or at the tip of a stem. Once formed, a bud may remain for some time in a dormant condition, or it may form a shoot immediately. Buds may be specialized to develop flowers or short shoots, or may have the potential for general shoot development.'"@en .
+
+:PlantFlower a :PlantPart ;
+  :definition "The reproductive structures of angiosperms/flowering plants."@en ;
+  :synonym "blossom"@en, "bud"@en, "floret"@en, "floweret"@en .
+
+:PlantFruit a :PlantPart ;
+  :definition "The seed-bearing structures of angiosperms/flowering plants."@en ;
+  :synonym "drupe"@en, "drupelet"@en .
+
+:PlantInnerBark a :PlantPart ;
+  :definition "Bark is the outermost layers of the stems and roots of woody plants. It typcially lives for only a short time and then becomes part of the outer, protective bark layer."@en .
+
+:PlantLeaf a :PlantPart ;
+  :definition "A flat, typically green organ a plant, that is attached to a stem or stalk. Its use is for photosynthesis and transpiration."@en ;
+  :synonym "frond"@en, "leaflet"@en, "leaves"@en .
+
+:PlantNectar a :PlantPart ;
+  :definition "A sugar-rich liquid secreted by flowers or via extrafloral nectaries. It is used to attract birds, insects, etc. that pollinate, protect or otherwise benefit the plant."@en .
+
+:PlantPollen a :PlantPart ;
+  :definition "A (fine to coarse) powdery substance which are discharged as grains from the male part of a flower or cone. The grains produce male gametes that can fertilize a female pistil or cone, when transported by wind, insects, or other animals."@en .
+
+:PlantRoot a :PlantPart ;
+  :definition "The part of a plant that attaches it to the ground or to a support, and typically lies below the surface of the ground. It absorbs water and other elements for the plant, and stores food and nutrients."@en ;
+  :synonym "tuber"@en, "leaflet"@en, "leaves"@en .
+
+:PlantSapAndManna a :PlantPart ;
+  :definition "The fluid that circulates through a plant's vascular system (xylem and phloem). It is mostly water with hormones and minerals/nutrients. The phloem sap also contains sugars. When the sap is crystallized, that is referred to as manna."@en ;
+  :synonym "frond"@en, "leaflet"@en, "leaves"@en .
+
+:PlantSeed a :PlantPart ;
+  :definition "A plant's reproductive unit which consists of an embryonic plant, a source of nutrients for it and a protective covering (seed coat or seedpod)."@en .
+
+:PlantSeedpod a :PlantPart ;
+  :definition "A seed's protective covering."@en ;
+  :synonym "seed vessel"@en, "seed coat"@en, "seedcase"@en .
+
+:PlantShoot a :PlantPart ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Shoot&oldid=899711436), a shoot 'consist of stems including their appendages, the leaves and lateral buds, flowering stems and flower buds. The new growth from seed germination that grows upward is a shoot where leaves will develop. In the spring, perennial plant shoots are the new growth that grows from the ground in herbaceous plants or the new stem or flower growth that grows on woody plants.'"@en .
+
+:PlantStem a :PlantPart ;
+  :definition "The structural body/stalk of a plant. It consists of nodes (holding leaves and buds) and internodes (which separate nodes)."@en ;
+  :synonym "branch"@en, "trunk"@en, "stalk"@en .
+
+
+########################################################################
+# Plant Classes Defined Using Family Names
+# This approach was used simply as a  mechanism to create small sets of 
+#    files holding plant details, to better support change tracking
+# The plant family names are based on the APG III classification system
+# Note that some of the family names returned by PFAF used older
+#       classifications and were manually updated
+########################################################################
+
+:Aceraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "maple family"@en .
+
+:Acoraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Actinidiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "chinese gooseberry family"@en, "kiwifruit family"@en .
+
+:Adoxaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "elderberry family"@en, "moschatel family"@en .
+
+:Aizoaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "carpetweed family"@en .
+
+:Alismataceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "water-plantain"@en .
+
+:Alstroemeriaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Amaranthaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Chenopodiaceae", "amaranth family"@en, "goosefoot family"@en .
+
+:Amaryllidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Alliaceae", "Allioideae", "Agapanthoideae", "Agapanthaceae", "Amaryllidoideae", "amaryllis family"@en .
+
+:Anacardiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "cashew family"@en, "sumac family"@en .
+
+:Annonaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "custard apple family"@en, "soursop family"@en .
+
+:Apiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "celery family"@en, "carrot family"@en, "parsley family"@en, "umbellifer"@en .
+
+:Apocynaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "dogbane family"@en .
+
+:Aquifoliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "holly family"@en .
+
+:Araceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "arum family"@en, "aroid"@en .
+
+:Araliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "ginseng family"@en .
+
+:Arecaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "palm family"@en .
+
+:Aristolochiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "birthwort family"@en .
+
+:Asparagaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Agavaceae", "Agavoideae", "Asparagoideae", "Nolinoideae", "Ruscaceae", "Scilloideae", "Hyacinthaceae", "asparagus family"@en .
+
+:Asphodelaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Xanthorrhoeaceae", "Aloeaceae" .
+
+:Asteraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Compositae", "aster family"@en, "daisy family"@en, "composite family"@en, "sunflower family"@en .
+
+:Balsaminaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "balsam family"@en .
+
+:Basellaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Berberidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "barberry family"@en .
+
+:Betulaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "birch family"@en .
+
+:Bignoniaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "trumpet creeper family"@en, "catalpa family"@en .
+
+:Bixaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "achiote family"@en .
+
+:Brassicaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Cruciferae", "mustard family"@en, "crucifer"@en, "cabbage family"@en .
+
+:Bromeliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "bromeliad"@en, "pineapple family"@en .
+
+:Burseraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "torchwood family"@en .
+
+:Buxaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Calycanthaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "sweetshrub"@en, "spicebush"@en .
+
+:Canellaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Cannaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Capparaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "caper family"@en .
+
+:Caprifoliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Valerianaceae", "honeysuckle family"@en .
+
+:Cactaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "cactus family"@en .
+
+:Calophyllaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Campanulaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "bellflower family"@en .
+
+:Cannabaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Cannabidaceae", "hemp family"@en .
+
+:Caricaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "papaya family"@en .
+
+:Caryocaraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Caryophyllaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pink family"@en, "carnation family"@en .
+
+:Celastraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "staff vine"@en, "staff tree"@en, "spike thorn"@en, "bittersweet family"@en .
+
+:Chrysobalanaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Clusiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Guttiferae", "garcinia family"@en .
+
+:Combretaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "indian almond family"@en, "white mangrove family"@en .
+
+:Commelinaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "dayflower family"@en, "spiderwort family"@en .
+
+:Convolvulaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "morning-glory family"@en .
+
+:Cornaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Nyssaceae", "dogwood family"@en .
+
+:Costaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "costus family"@en .
+
+:Crassulaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "stonecrop family"@en, "orpine family"@en .
+
+:Cucurbitaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "cucurbit"@en, "gourd family"@en .
+
+:Cupressaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "cypress family"@en .
+
+:Cyperaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "sedge"@en .
+
+:Dioscoreaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "yam family"@en .
+
+:Dipterocarpaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Droseraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "sundew family"@en .
+
+:Dryopteridaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "wood fern"@en, "shield fern"@en .
+
+:Ebenaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "ebony family"@en, "persimmon family"@en .
+
+:Elaeagnaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "oleaster family"@en .
+
+:Ericaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "heath"@en, "heather"@en .
+
+:Erythroxylaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "coca family"@en .
+
+:Euphorbiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "spurge family"@en, "euphorbia"@en .
+
+:Fabaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  rdfs:comment "UN Harmonized System code 0708"@en ;
+  :synonym "Leguminosae", "legume"@en, "pea family"@en, "bean family"@en .
+
+:Fagaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "oak family"@en, "beech family"@en .
+
+:Gelsemiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Gentianaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "gentian family"@en .
+
+:Geraniaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "geranium family"@en .
+
+:Gesneriaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "african violet family"@en .
+
+:Grossulariaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "gooseberry family"@en, "currant family"@en .
+
+:Hamamelidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Altingiaceae", "witch-hazel family"@en .
+
+:Hippocastanaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "horse chestnut family"@en, "buckeye family"@en .
+
+:Hydrangeaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "hydrangea family"@en .
+
+:Hypericaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "st. john's wort family"@en .
+
+:Icacinaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Metteniusaceae", "Stemonuraceae" .
+
+:Iridaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "iris family"@en .
+
+:Irvingiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Juglandaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "walnut family"@en .
+
+:Juncaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "rush"@en .
+
+:Lamiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Labiatae", "mint family"@en, "deadnettle family"@en, "sage family"@en .
+
+:Lauraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "laurel"@en .
+
+:Lecythidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Barringtoniaceae" .
+
+:Liliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "lily family"@en .
+
+:Linaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "flax family"@en .
+
+:Loganiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Lythraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "loosestrife family"@en .
+
+:Magnoliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "magnolia family"@en .
+
+:Malpighiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Malvaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "mallow family"@en .
+
+:Marantaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "arrowroot family"@en, "prayer-plant family"@en .
+
+:Melanthiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "bunchflower family"@en .
+
+:Melastomataceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Melastomaceae" .
+
+:Meliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "mahogany family"@en .
+
+:Melianthaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Menispermaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "moonseed family"@en .
+
+:Menyanthaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Monimiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Moraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "mulberry family"@en, "fig family"@en .
+
+:Moringaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "horseradish tree family"@en, "drumstick tree family"@en .
+
+:Musaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "banana family"@en .
+
+:Myristicaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "nutmeg family"@en .
+
+:Myrtaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "myrtle family"@en .
+
+:Nartheciaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Nelumbonaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "sacred lotus family"@en .
+
+:Nitrariaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Nyctaginaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "four o'clock family"@en .
+
+:Ochnaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "ochnoid"@en .
+
+:Olacaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Aptandraceae", "Coulaceae" .
+
+:Oleaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "olive family"@en .
+
+:Onagraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "willowherb family"@en, "evening primrose family"@en .
+
+:Orchidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "orchid family"@en .
+
+:Oxalidaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "wood sorrel family"@en .
+
+:Pandanaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "screw-pine family"@en .
+
+:Papaveraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Fumarioideae", "poppy family"@en .
+
+:Passifloraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Turneraceae", "passion flower family"@en .
+
+:Pedaliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pedalium family"@en, "sesame family"@en .
+
+:Pentadiplandraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Pinaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pine family"@en .
+
+:Piperaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pepper family"@en .
+
+:Pistaciaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pistachio family"@en .
+
+:Pittosporaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Phytolaccaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "pokeweed family"@en .
+
+:Plantaginaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "plantain family"@en .
+
+:Poaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Gramineae", "grass"@en .
+
+:Polygalaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "milkwort family"@en .
+
+:Polygonaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "knotweed family"@en, "smartweed—buckwheat family"@en .
+
+:Primulaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "primrose family"@en .
+
+:Proteaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Punicaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Quillajaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Ranunculaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "buttercup family"@en, "crowfoot family"@en .
+
+:Resedaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Rhamnaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "buckthorn family"@en .
+
+:Rosaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "rose family"@en .
+
+:Rubiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "coffee family"@en, "madder family"@en, "bedstraw family"@en .
+
+:Rutaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "citrus family"@en .
+
+:Salicaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "willow family"@en .
+
+:Santalaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "sandalwood"@en .
+
+:Sapindaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "soapberry family"@en .
+
+:Sapotaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Scrophulariaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "figwort family"@en .
+
+:Simaroubaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Simmondsiaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "jojoba family"@en .
+
+:Smilacaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "greenbrier family"@en .
+
+:Solanaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "nightshade family"@en .
+
+:Tamaricaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "tamarisk family"@en .
+
+:Taxaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "yew family"@en .
+
+:Tetramelaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Theaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "camellia family"@en .
+
+:Thymelaeaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Tiliaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Trapaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Tropaeolum a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "nasturtium family"@en, "nasturtian family"@en .
+
+:Typhaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "cattail family"@en .
+
+:Ulmaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "elm family"@en .
+
+:Urticaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "nettle family"@en .
+
+:Verbenaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "verbena family"@en, "vervain family"@en .
+
+:Violaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "violet family"@en .
+
+:Viscaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "Misodendraceae", "Loranthaceae", "mistletoe family"@en .
+
+:Vitaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "grape family"@en .
+
+:Winteraceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant .
+
+:Zingiberaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "ginger family"@en .
+
+:Zygophyllaceae a owl:Class ;
+  rdfs:subClassOf :FloweringPlant ;
+  :synonym "caltrop family"@en .
+

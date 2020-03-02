@@ -1,0 +1,165 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Iridaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:BelamcandaChinensis a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "leopard lily"@en, "blackberry lily"@en, "leopard flower"@en .
+:BelamcandaChinensis 
+  :plant_hardiness_zones "4-10" ;
+  :plant_hazards "The plant is slightly toxic."@en ;
+  :plant_habitat "Shrubberies and banks at the edge of cultivation in rich damp soils in the Himalayas."@en ;
+  :plant_country_range "E. Asia - China, Japan, Himalayas."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Belamcanda Chinensis is a PERENNIAL growing to 1 m (3ft 3in) by 0.3 m (1ft) at a fast rate. It is hardy to zone (UK) 8.  It is in flower from August to October, and the seeds ripen from September to November. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_text "Leaves - cooked. Caution is advised, see the notes above on toxicity."@en ;
+  :plant_medicinal_use :Analgesic, :Tonic, :ExpectorantAndMucoactiveAgent, :Antidote, :Hepatic, :Antibacterial, :Abortifacient, :Antifungal, :Antiinflammatory, :Pectoral, :Stomachic, :Antipyretic, :Depurative, :Laxative ;
+  :plant_medicinal_text "The leopard lily has a very long history of use in traditional Chinese medicine. It is a bitter cooling herb that acts mainly on the lungs and the liver, lowering fevers and reducing inflammation. It is effective against a number of bacterial, fungal and viral organisms and has also been used as an antidote to snakebites. The root contains several medically active constituents including flavonoids and isoflavonoids. It also contains the glucosides belamcandin, tectoridin, shekanin and iridin. It is analgesic, antibacterial, antifungal, anti-inflammatory, depurative, expectorant, febrifuge, pectoral, purgative, stomachic and tonic. It is used in the treatment of acute laryngitis, acute tonsillitis, oedema of the glottis and cough with profuse sputum. The juice of the root is used in Nepal to treat liver complaints, where it has the added benefit of improving the appetite. This juice is also used to abort a foetus during the first trimester of pregnancy. The root should not be prescribed for pregnant women. The root is harvested in the summer and autumn, and dried for later use."@en ;
+  :plant_other_use :Tannin ;
+  :plant_other_use_text "The root contains tannin."@en .
+
+:CrocusNudiflorus a owl:Class ;
+  rdfs:subClassOf :Iridaceae .
+:CrocusNudiflorus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "The following reports are for C. sativus. They quite possibly also apply to this species. The plant is poisonous. The plant is perfectly safe in normal usage but 5 - 10 grams of saffron has been known to cause death."@en ;
+  :plant_habitat "Meadows."@en ;
+  :plant_country_range "S. Europe - S.W. France to N.E. Spain."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Crocus Nudiflorus is a CORM growing to 0.2 m (0ft 8in).  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, butterflies.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_use :TeaAndSubstitute, :Coloring, :CondimentAndSeasoning ;
+  :plant_edible_text "This species has been used as a saffron substitute. The following notes are for the genuine saffron, C. sativus:- The flower styles are used as a flavouring and yellow colouring for various foods such as bread, soups, sauces, rice and puddings. Extremely rich in riboflavin. Water soluble. Yields per plant are extremely low, about 4000 stigmas yield 25g of saffron. Saffron is the world's most expensive spice, it takes 150,000 flowers and 400 hours work to produce 1 kilo of dried saffron. About 25 kilos of styles can be harvested from a hectare of the plant. The flower styles are used as a tea substitute."@en ;
+  :plant_medicinal_use :Analgesic, :ExpectorantAndMucoactiveAgent, :Antispasmodic, :SedativeAndHypnotic, :Diaphoretic, :Aphrodisiac, :Emmenagogue, :Antiflatulent, :AppetiteStimulant ;
+  :plant_medicinal_text "This species has been used as a saffron substitute. The following notes are for the genuine saffron, C. sativus:- Saffron is a famous medicinal herb with a long history of effective use. The flower styles and stigmas are the parts used, but since these are very small and fiddly to harvest they are very expensive and consequently often adulterated by lesser products. They are anodyne, antispasmodic, aphrodisiac, appetizer, carminative, diaphoretic, emmenagogue, expectorant, sedative and stimulant. They are used as a diaphoretic for children and to treat chronic haemorrhages in the uterus of adults. A dental analgesic is obtained from the stigmas. The styles are harvested in the autumn when the plant is in flower and are dried for later use, they do not store well and should be used within 12 months. This remedy should be used with caution, large doses can be narcotic and quantities of 10g or more can cause an abortion."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "The yellow dye obtained from the stigmas has been used for many centuries to colour cloth. It is the favoured colouring for the cloth of Indian swamis who have renounced the material world. A blue or green dye is obtained from the petals."@en .
+
+:CrocusSativus a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "saffron"@en .
+:CrocusSativus 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "The plant is poisonous. The plant is perfectly safe in normal usage but 5 - 10 grams of saffron has been known to cause death."@en ;
+  :plant_habitat "Not known in a truly wild location."@en ;
+  :plant_country_range "S. Europe - Greece to W. Asia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Crocus Sativus is a CORM growing to 0.1 m (0ft 4in) by 0.1 m (0ft 4in).  It is hardy to zone (UK) 6 and is not frost tender. It is in leaf from October to May, in flower in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, butterflies.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_use :TeaAndSubstitute, :Coloring, :CondimentAndSeasoning ;
+  :plant_edible_text "The flower styles are commonly used as a flavouring and yellow colouring for various foods such as bread, soups, sauces, rice and puddings. They are an essential ingredient of many traditional dishes such as paella, bouillabaisse, risotto milanese and various other Italian dishes. The styles are extremely rich in riboflavin. Water soluble. Yields per plant are extremely low, about 4000 stigmas yield 25g of saffron. Saffron is the world's most expensive spice, it takes 150,000 flowers and 400 hours work to produce 1 kilo of dried saffron. About 25 kilos of styles can be harvested from a hectare of the plant. Fortunately, only very small quantities of the herb are required to impart their colour and flavour to dishes. Because of the cost, saffron is frequently adulterated with cheaper substitutes such as marigold flowers and safflower. The flower styles are used as a tea substitute. Root - cooked. The corms are toxic to young animals so this report of edibility should be treated with some caution."@en ;
+  :plant_medicinal_use :Analgesic, :Stimulant, :ExpectorantAndMucoactiveAgent, :Antispasmodic, :SedativeAndHypnotic, :Diaphoretic, :Analgesic, :Aphrodisiac, :Abortifacient, :Emmenagogue, :Antiflatulent, :AppetiteStimulant ;
+  :plant_medicinal_text "Saffron is a famous medicinal herb with a long history of effective use, though it is little used at present because cheaper and more effective herbs are available. The flower styles and stigmas are the parts used, but since these are very small and fiddly to harvest they are very expensive and consequently often adulterated by lesser products. The styles and stigmas are anodyne, antispasmodic, aphrodisiac, appetizer, carminative, diaphoretic, emmenagogue, expectorant, sedative and stimulant. They are used as a diaphoretic for children, to treat chronic haemorrhages in the uterus of adults, to induce menstruation, treat period pains and calm indigestion and colic. A dental analgesic is obtained from the stigmas. The styles are harvested in the autumn when the plant is in flower and are dried for later use, they do not store well and should be used within 12 months. This remedy should be used with caution, large doses can be narcotic and quantities of 10g or more can cause an abortion."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "The yellow dye obtained from the stigmas has been used for many centuries to colour cloth. It is the favoured colouring for the cloth of Indian swamis who have renounced the material world. A blue or green dye is obtained from the petals."@en .
+
+:IrisGermanica a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "purple flag"@en, "german iris"@en, "orris-root"@en, "tall bearded german iris"@en, "bearded iris"@en .
+:IrisGermanica 
+  :plant_hardiness_zones "4-10" ;
+  :plant_hazards "The leaves, and especially the rhizomes, of this species contain an irritating resinous substance called irisin. If ingested this can cause severe gastric disturbances. Plants can cause skin irritations and allergies in some people."@en ;
+  :plant_habitat "Dry rocky places"@en ;
+  :plant_country_range "The original habitat is obscure, it is probably of hybrid origin."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Iris Germanica is a PERENNIAL growing to 1 m (3ft 3in) by 1.5 m (5ft) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from May to June. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "The root is dried and used as a flavouring."@en ;
+  :plant_medicinal_use :ExpectorantAndMucoactiveAgent, :Diuretic, :Laxative, :Emetic ;
+  :plant_medicinal_text "The root is diuretic, emetic, expectorant and mildly purgative. Another report says that the juice of the fresh root is a strong purge of great efficiency in the treatment of dropsy. In the past, sections of the dried root have been given to teething babies to chew on, though this has been discontinued for hygienic reasons. Roots of plants 2 - 3 years old are dug up after flowering and are then dried for later use."@en ;
+  :plant_other_use :Bead, :PersonalAndBabyCare, :EssentialOil, :DyeInkAndPaint, :Cosmetic ;
+  :plant_other_use_text "The root is a source of Orris powder which has the scent of violets. It is obtained by grinding up the dried root. It is much used as a fixative in perfumery and pot-pourri, as an ingredient of toothpastes, breath fresheners etc and as a food flavouring. The root can take several years of drying to fully develop its fragrance, when fresh it has an acrid flavour and almost no smell. An essential oil is obtained from the fresh root, this has the same uses as the root. The juice of the root is sometimes used as a cosmetic and also for the removal of freckles from the skin. A black dye is obtained from the root. A blue dye is obtained from the flowers. The seeds are used as rosary beads."@en .
+
+:IrisGermanicaFlorentina a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "orris"@en, "orris-root"@en .
+:IrisGermanicaFlorentina 
+  :plant_hardiness_zones "5-10" ;
+  :plant_hazards "The leaves, and especially the rhizomes, of this species contain an irritating resinous substance called irisin. If ingested this can cause severe gastric disturbances. Plants can cause skin irritations and allergies in some people."@en ;
+  :plant_habitat "Probably an albino form of I. germanica, it is not found in a truly wild situation."@en ;
+  :plant_country_range "Europe - Mediterranean."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Iris Germanica Florentina is a PERENNIAL growing to 0.9 m (3ft) by 0.6 m (2ft in) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower in May, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "The root can be dried, ground into a powder and used as a food flavouring. The root may take several years of drying to develop its full fragrance."@en ;
+  :plant_medicinal_use :Diuretic, :Laxative, :Stomachic ;
+  :plant_medicinal_text "The dried root is diuretic, expectorant and stomachic. It is taken internally in the treatment of coughs, catarrh and diarrhoea. Externally it is applied to deep wounds. The root is harvested in late summer and early autumn and dried for later use. The juice of the fresh root is a strong purge of great efficiency in the treatment of dropsy."@en ;
+  :plant_other_use :Bead, :Incense, :EssentialOil, :DyeInkAndPaint, :Cosmetic ;
+  :plant_other_use_text "The root is a source of Orris powder which has the scent of violets. It is obtained by grinding up the dried root. It is much used as a fixative in perfumery and pot-pourri, as an ingredient of toothpastes, breath fresheners etc and as a food flavouring. The root can take several years of drying to fully develop its violet-like fragrance, when fresh it has an acrid flavour and almost no smell. An essential oil is obtained from the fresh root, this has the same uses as the root. The root has been burnt in open fires in order to sweeten the smell of a room. The juice of the root is sometimes used as a cosmetic and also for the removal of freckles from the skin. A black dye is obtained from the root. A blue dye is obtained from the flowers. The seeds are used as rosary beads. Plants can be grown for ground cover, the dense mat of roots excluding all weeds."@en .
+
+:IrisVersicolor a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "blue flag"@en, "harlequin blueflag"@en .
+:IrisVersicolor 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Many plants in this genus are thought to be poisonous if ingested, so caution is advised. The roots are especially likely to be toxic. Plants can cause skin irritations and allergies in some people. Fresh root can cause nausea and vomiting. The volatile oil furfural is irritant to mucous membranes and causes larchrymation (tears) and inflammation of the eyes. Irritation of the throat and headache also reported. The sap can cause dermatitis. Should not be used internally except in small doses. Should not be used by people with allergies or sensitivities ."@en ;
+  :plant_habitat "Swamps, wet meadows, scrub and by lakes and rivers. Wetlands."@en ;
+  :plant_country_range "Eastern N. America - Newfoundland to Manitoba, south to Florida and Arkansas."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Iris Versicolor is a PERENNIAL growing to 0.6 m (2ft) by 1 m (3ft 3in).  It is hardy to zone (UK) 5.  It is in flower from May to June. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Alterative, :Cholagogue, :Stimulant, :Sialagogue, :Diuretic, :Antiinflammatory, :Emetic, :Laxative ;
+  :plant_medicinal_text "Blue flag was one of the most popular medicinal plants amongst various native North American Indian tribes. In modern herbalism it is mainly employed to detoxify the body - it increases urination and bile production and has a mild laxative effect. Some caution should be exercised in its use, however, since there are reports that it is poisonous. The fresh root is quite acrid and when taken internally causes nausea, vomiting, colic and purging. The dried root is much less acrid. This remedy should not be prescribed for pregnant women. The root is alterative, anti-inflammatory, cathartic, cholagogue, diaphoretic, diuretic, emetic and sialagogue. Taken internally as a tea, the root has been used as a strong laxative or emetic that also acts strongly on the liver and promotes the excretion of excess body fluids. It is also stimulant for the circulatory and lymphatic system. Its detoxifying effect make it useful in the treatment of psoriasis, acne, herpes, arthritis, swollen glands, pelvic inflammatory disease etc. Externally, it is applied to skin diseases, wounds and rheumatic joints. The roots are harvested in late summer and early autumn and are usually dried for later use. The roots were boiled in water and then mashed to make a poultice which was used to relieve the pain and swelling associated with sores and bruises."@en ;
+  :plant_other_use :Repellent, :PlantWeaving ;
+  :plant_other_use_text "A fine blue infusion is obtained from the flowers and this can be used as a litmus substitute to test for acids and alkalis. The leaves have been used to weave baskets and mats. Some native North American Indian tribes used the root as a protection against rattlesnakes. It was believed that, so long as the root was handled occasionally to ensure the scent permeated the person and their clothes, rattlesnakes would not bite them. Some tribes even used to chew the root and then hold rattlesnakes with their teeth and were not bitten so long as the scent persisted."@en .
+
+:MoraeaFugax a owl:Class ;
+  rdfs:subClassOf :Iridaceae .
+:MoraeaFugax 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Flat land and mountain slopes. Deep sandy soils, rocky sandstone and granitic soils."@en ;
+  :plant_country_range "S. Africa."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Moraea Fugax is a CORM growing to 0.5 m (1ft 8in).  It is hardy to zone (UK) 9 and is frost tender.  It is in flower from August to September, and the seeds ripen in September. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb - cooked. Palatable and nourishing, with a flavour that is like sweet chestnuts or potatoes."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:TigridiaPavonia a owl:Class ;
+  rdfs:subClassOf :Iridaceae ;
+  :synonym "tiger flower"@en .
+:TigridiaPavonia 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Oak and pine forests, it is also frequent on roadsides and in semi-wild habitats."@en ;
+  :plant_country_range "Southern N. America - Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Tigridia Pavonia is a CORM growing to 0.6 m (2ft) by 0.1 m (0ft 4in).  It is hardy to zone (UK) 8 and is not frost tender.  It is in flower from June to October, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Corm - cooked. Delicious when baked, tasting like a sweet potato. The corm is quite small unfortunately and so will never be more than a very tasty occasional treat. The corm has an unpleasant, burning sensation on the mouth if it is eaten raw."@en ;
+  :plant_medicinal_use :InfertilityTreatment ;
+  :plant_medicinal_text "The plant has been used to promote fertility."@en ;
+  :plant_other_use_text "None known"@en .
+

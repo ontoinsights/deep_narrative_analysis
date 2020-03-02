@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Commelinaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CommelinaCommunis a owl:Class ;
+  rdfs:subClassOf :Commelinaceae ;
+  :synonym "day flower"@en, "asiatic dayflower"@en .
+:CommelinaCommunis 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Partly shaded grassy places, cultivated fields and roadsides usually in moist places all over Japan."@en ;
+  :plant_country_range "E. Asia - S. China, Japan, India."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Commelina Communis is a PERENNIAL growing to 0.8 m (2ft 7in).  It is hardy to zone (UK) 7.  It is in flower from July to September, and the seeds ripen from August to October. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Leaves, flowers and young shoots - raw or cooked. Chopped finely and added to salads or cooked as a potherb. A sweet taste with a mucilaginous texture."@en ;
+  :plant_medicinal_use :Antibacterial, :Astringent, :Diuretic, :Antipyretic, :Depurative ;
+  :plant_medicinal_text "The leaves are depurative, diuretic and febrifuge. Used as a throat gargle to relieve sore throats and tonsilitis. A decoction of the dried plant is used to treat bleeding, diarrhoea, fever etc. Extracts of the plant show antibacterial activity."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A bright blue dye is obtained from the petals."@en .
+

@@ -1,0 +1,149 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining general concepts used throughout the DNA ontologies
+# 
+# Created: February 9, 2020
+# Last modified: February 21, 2020
+# 
+# Changes:
+#  * Added the :probability graph/predicate property (Feb 21 20)
+########################################################################
+
+
+########################################################################
+# Annotation Properties
+########################################################################
+
+:antonym a owl:AnnotationProperty ;
+  :definition "A word which has an opposite/inverse meaning."@en .
+
+:definition a owl:AnnotationProperty ;
+  :definition "Text providing an exact meaning for/the semantics of a concept."@en .
+
+:example a owl:AnnotationProperty ;
+  :definition "Words/text that illustrate the concept/semantic being defined or whose instances would be specified as types of the concept/semantic."@en .
+
+:negative_example a owl:AnnotationProperty ;
+  :definition "Words/text whose whose definitions do not support or whose instances should be excluded from the concept/semantic being defined."@en .
+
+:noun_form a owl:AnnotationProperty ;
+  :definition "Oftentimes, concepts can be represented as either a noun or a verb. This property lists the noun forms of the concept."@en .
+
+:sentence_structure a owl:AnnotationProperty ;
+  :definition "A sentence using a specific verb and identifying its arguments. For example, for the word, 'buy', a possible sentence_structure is '[[Someone]] buys [[something]].' The definition of a sentence_structure aids in the extraction of meaning from text, since it defines what other information should/could be mined from the text. Note that the arguments in a sentence structure are indicated by square brackets ('[[' and ']]')."@en .
+
+:synonym a owl:AnnotationProperty ;
+  :definition "A word which has a similar meaning."@en .
+
+:verb_form a owl:AnnotationProperty ;
+  :definition "Oftentimes, concepts can be represented as either a noun or a verb. This property lists the verb forms of the concept."@en .
+
+
+########################################################################
+# Classes
+########################################################################
+
+:Collection a owl:Class ;
+  :definition "A grouping whose members are defined using the :has_member property."@en ;
+  :synonym "assemblage"@en, "assortment"@en, "compilation"@en, "set"@en, "compendium"@en, "accumulation"@en, "aggregation"@en .
+
+:Mention a owl:Class ;
+  :definition "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity."@en ;
+  :synonym "reference"@en, "citation"@en .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+:confidence a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Decimal from 0.0 to 1.0 defining the certainty of the related subject-predicate-object statement."@en ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:decimal ;
+               owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
+                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] .
+
+:column_label a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Defines a particular column in a spreadsheet-like InformationSource, where a Mention is extracted."@en ;
+  rdfs:domain :Mention ;
+  rdfs:range xsd:string .
+
+:count a owl:DatatypeProperty ;
+  :definition "The number of some entity. For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3."@en ;
+  rdfs:range xsd:integer .
+
+:generic a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Boolean indicating that the individual describes a class or group of things, and not a specific instance."@en ;
+  rdfs:comment "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)."@en ;
+  rdfs:range xsd:boolean .
+
+:maximum_count a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "The maximum number of some entity when an exact count is not known. For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10."@en ;
+  rdfs:range xsd:integer .
+
+:minimum_count a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "The minimum number of some entity when an exact count is not known. For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5."@en ;
+  rdfs:range xsd:integer .
+
+:probability a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Decimal set on a predicate (an RDF* property extension) indicating the likelihood of the subject being related to the object using that predicate. A variety of objects SHOULD be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object is defined as owl:Nothing."@en ;
+  rdfs:comment "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean."@en ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:decimal ;
+               owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
+                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] .
+
+:row_number a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Defines a particular row in a spreadsheet-like InformationSource, where a Mention is extracted."@en ;
+  rdfs:domain :Mention ;
+  rdfs:range xsd:integer .
+
+:sentence_offset a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted."@en ;
+  rdfs:domain :Mention ;
+  rdfs:range xsd:integer .
+
+:trigger_text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  :definition "Defines the particular text that resulted in the extraction of a Mention. For example, the sentence, 'John Smith is the president of the company.' has two 'mentions', with the :trigger_texts, 'John Smith' and 'the president'."@en ;
+  rdfs:domain :Mention ;
+  rdfs:range xsd:string .
+
+########################################################################
+# Object Properties
+########################################################################
+
+:excluded_member a owl:ObjectProperty ;
+  :definition "Defines an entity that is specifically NOT in a grouping/Collection."@en ;
+  rdfs:domain :Collection .
+
+:has_component a owl:ObjectProperty ;
+  :definition "Defines a whole-part relationship."@en .
+
+:has_member a owl:ObjectProperty ;
+  :definition "Defines an entity that is in a grouping/Collection."@en ;
+  rdfs:domain :Collection .
+
+:meets a owl:ObjectProperty ;
+  :definition "Indicates that the boundaries of an entity touch/join with another."@en .
+
+:mentioned_in a owl:ObjectProperty, owl:FunctionalProperty ;
+  :definition "A reference to the InformationSource from which the Mention is extracted."@en ;
+  rdfs:domain :Mention ;
+  rdfs:range :InformationSource .
+
+:overlaps a owl:ObjectProperty ;
+  :definition "Indicates that the boundaries of an entity extend over/cover another."@en .
+
+:sourced_from a owl:ObjectProperty ;
+  :definition "A reference to the Mention (with its provenance information, such as sentence_offset, and trigger_text) that resulted in the instantiation of an entity."@en ;
+  rdfs:range :Mention .
+
+:unifies a owl:ObjectProperty ;
+  :definition "An entity that references/relates two or more other entities, indicating that the referenced entities are the 'same' thing."@en ;
+  rdfs:comment "For example, a company, ABC, may be referenced as 'A Better Company', 'ABC, Limited' or 'ABC', in different InformationSources. Later analysis may reveal that these references all indicate the same company and can therefore be unified."@en .

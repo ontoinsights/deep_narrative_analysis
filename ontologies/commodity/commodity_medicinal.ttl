@@ -1,0 +1,1009 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining concepts related to medical/medicinal and 
+#    pharmaceutical products and technologies
+# Concepts are mainly taken from the PFAF.org "medicinal uses" page
+#    (https://pfaf.org/user/Default.aspx), and the Wikipedia page, 
+#    "Medications" (https://en.wikipedia.org/w/index.php?title=
+#    Medication&oldid=939819055)
+# The classes also reference entities in codes 2941 and 30 of the UN
+#    Commodities list (https://comtrade.un.org/db/mr/rfCommoditiesList.aspx)
+# 
+# This file will be aligned and updated with the MeSH (medical subject 
+#    headings) ontology (https://www.nlm.nih.gov/research/umls/
+#    rxnorm/sourcereleasedocs/msh.html) and with various other Bioportal
+#    ontologies
+# 
+# Created: February 16, 2020
+# Last modified: February 16, 2020
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:Abortifacient a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Any substance that induces abortion."@en .
+
+:ACEInhibitor a owl:Class ;
+  rdfs:subClassOf :Vasodilator ;
+  :definition "Medication that dilates blood vessels and thereby increases blood flow by converting angiotensin I to the vasoconstrictor angiotensin II."@en ; 
+  :synonym "angiotensin-converting enzyme inhibitor"@en .
+  
+:Acetaminophen a owl:Class ;
+  rdfs:subClassOf :Analgesic, :Antipyretic ;
+  :synonym "paracetamol", "APAP" . 
+
+:Adaptogen a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Plants that aid reaction to stressful situations, with the goal of preventing degenerative diseases."@en .
+
+:AldosteroneInhibitor a owl:Class ;
+  rdfs:subClassOf :Diuretic, :HormoneBlockerAndInhibitor ;
+  :definition "Blocks/decreases effects of aldosterone, to alleviate salt and fluid build-up and stiffening of the heart muscle."@en ;
+  :synonym "antimineralocorticoid"@en, "MCRA", "MRA" .
+
+:AlkalinizingAgent a owl:Class ;
+  rdfs:subClassOf :HeartTreatment, :KidneyTreatment, :Pectoral ;
+  :definition "Medication for treating disorders associated with low pH. pH imbalances are associated with numerous conditions, such as a decreased cardiovascular output, respiratory distress, and renal failure."@en .
+
+:AlphaBlocker a owl:Class ;
+  rdfs:subClassOf :MuscleRelaxant ;
+  :definition "Blocker of alpha-adrenergic receptors (alpha-adrenoceptors), which is used to treat hypertension, Raynaud's disease, erectile dysfunction, etc."@en ;
+  :synonym "alpha-blocker"@en, "alpha-adrenoreceptor antagonist"@en .
+
+:AlphaReductaseInhibitor a owl:Class ;
+  rdfs:subClassOf :Antiandrogenic ;
+  :definition "Medication for treatment of enlarged prostate glands (benign prostatic hyperplasia) and male pattern hair loss."@en ;
+  :synonym "finasteride"@en .
+
+:Alterative a owl:Class ;
+  rdfs:subClassOf :Restorative ;
+  :definition "Substance that causes a gradual beneficial change in the body, usually through improved nutrition and elimination, without having any marked specific action."@en . 
+
+:Aminoglycoside a owl:Class ;
+  rdfs:subClassOf :Antibacterial ;
+  :definition "Broad-spectrum antibiotic, commonly prescribed for children."@en ;
+  :synonym "gentamicin"@en, "amikacin"@en, "tobramycin"@en, "neomycin"@en, "streptomycin"@en .
+
+:Amoebicide a owl:Class ;
+  rdfs:subClassOf :Antiparasitic ;
+  :definition "Medication for treatment of amoebozoa infections (amoebiasis)."@en .
+
+:Amphetamine a owl:Class ;
+  rdfs:subClassOf :Stimulant, :Narcotic ;
+  :synonym "speed"@en .
+
+:Analgesic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Pain relief medication."@en ;
+  :synonym "painkiller"@en, "anodyne"@en .
+
+:Anaphrodisiac a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to reduce sexual desire."@en .
+
+:AndrogenicSteroid a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist ;
+  :definition "A male sex hormone, such as testosterone, or a man-made substitute."@en ;
+  :synonym "testosterone"@en, "androgen agonist"@en, "anabolic steroid"@en, "anabolic-androgenic steroid"@en .
+
+:Anesthetic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that removes local sensation/sensitivity to pain (local anesthetic) or decreases consciousness (general anesthetic)."@en ;
+  :synonym "anaesthetic"@en .
+
+:AngiotensinReceptorBlocker a owl:Class ;
+  rdfs:subClassOf :AldosteroneInhibitor, :Vasodilator ;
+  :definition "Medication to dilate veins and arteries by blocking angiotensin (a protein which promotes aldosterone secretion), to lower blood pressure."@en ;
+  :synonym "ARB" .
+
+:Antacid a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Neutralizes stomach acidity and thereby relieves heartburn, indigestion and stomach upset."@en .
+
+:Anthelmintic a owl:Class ;
+  rdfs:subClassOf :Antiparasitic ;
+  :definition "Agent that kills or expels parasitic worms (trematodes/flukes, cestodes/tapeworms and nematodes) and other types of parasites."@en ;
+  :synonym "vermifuge"@en .
+
+:Antiandrogenic a owl:Class ;
+  rdfs:subClassOf :HormoneBlockerAndInhibitor ;
+  owl:disjointWith :Androgen ;
+  :definition "Blocker of androgen, the male sex hormone. There are several types of antiandrogens: (1) antagonists (which block the effects of androgens), (2) androgen synthesis inhibitors (which lower androgen levels), and (3) antigonadotropins (which also lower levels). Further sub-classes are defined: steroidal antiandrogens and nonsteroidal antiandrogens (types of antagonists), CYP17A1 inhibitors and alpha-reductase inhibitors (types of androgen synthesis inhibitors), and  gonadotropin-releasing hormone modulators (GnRH modulators), progestogens, and estrogens (types of antigonadotropins)."@en ;
+  :synonym "androgen receptor blocker"@en, "androgen antagonist"@en, "testosterone blocker"@en, "AR antagonist"@en, "androgen synthesis inhibitor"@en, "antigonadotropin"@en .
+
+:Antiallergy a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to reduce allergic reaction."@en .
+
+:Antianginal a owl:Class ;
+  rdfs:subClassOf :HeartTreatment ;
+  :definition "Medication used to treat angina pectoris, a symptom of ischaemic heart disease."@en ;
+  :example "nitroglycerin"@en . 
+
+:Antiaphonic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to restore the voice."@en .
+
+:Antiarrhythmic a owl:Class ;
+  rdfs:subClassOf :HeartTreatment ;
+  :definition "Medication to suppress abnormal heart rhythms such as atrial or ventricular fibrillation, atrial flutter and ventricular tachycardia."@en ;
+  :synonym "cardiac dysrhythmia medication"@en .
+
+:Antiarthritic a owl:Class ;
+  rdfs:subClassOf :Antiinflammatory, :Analgesic ;
+  :definition "Agent to treat various forms of arthritis including rheumatoid arthritis, psoriatic arthritis, ankylosing spondylitis and others."@en ;
+  :synonym "antirheumatic"@en .
+
+:Antiasthmatic a owl:Class ;
+  rdfs:subClassOf :Antiallergy, :Pectoral ;
+  :definition "Medication to treat or prevent asthma attacks."@en .
+
+:Antibacterial a owl:Class ;
+  rdfs:subClassOf :Antibiotic ;
+  :definition "Agent that destroys or inhibits the growth of bacteria."@en .
+
+:Antibiotic a owl:Class ;
+  rdfs:subClassOf :Antimicrobial ;
+  rdfs:comment "UN Harmonized System codes 2941 (antibiotics in bulk) and 3004 (antibiotics in measured doses or packings for retail sale)"@en ;
+  :definition "Agent that destroys or inhibits the growth of bacteria and some parasites."@en .
+
+:Anticancer a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent used to treat cancer, including preventing or inhibiting the growth of tumors and the spread of cancer."@en ;
+  :synonym "antineoplastic"@en, "antitumor"@en .
+
+:Anticholesterolemic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that prevents the build up of cholesterol."@en .
+
+:Anticholinergic a owl:Class ;
+  rdfs:subClassOf :MuscleRelaxant, :Pectoral, :Stomachic, :KidneyTreatment ;
+  :definition "Medication that blocks the action of the neurotransmitter acetylcholine. It treats dizziness and motion sickness, and gastrointestinal, genitourinary, respiratory and other disorders."@en ;
+  :synonym "parasympatholytic"@en .
+
+:AnticholinesteraseAgent a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Medication that decreases the breakdown of acetylcholine (a chemical messenger in the brain). It treats conditions such as Alzheimer's disease."@en .
+
+:Anticoagulant a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3001 (herapin)"@en ;
+  :definition "Agent to decrease blood clotting or breakdown clots."@en ;
+  :synonym "blood thinner"@en, "anticlotting agent"@en, "antiplatelet"@en ;
+  :example "herapin"@en .
+
+:Anticonvulsant a owl:Class ;
+  rdfs:subClassOf :Antispasmodic ;
+  :synonym "antiepileptic"@en, "antiseizure"@en .
+
+:Antidiabetic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that manages blood sugar levels."@en ;
+  :synonym "hypoglycemic"@en, "antihyperglycemic"@en, "hypoglycaemic"@en, "antihyperglycaemic"@en .
+
+:Antidiarrheal a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that treats the symptoms of diarrhea - either slowing or stopping it."@en ;
+  :synonym "Antidiarrhoeal"@en .
+
+:AntidiureticHormoneAndAgonist a owl:Class ;
+ rdfs:subClassOf :HormoneAndAgonist, :KidneyTreatment ;
+ :definition "Substance that reduces urine output and increases the ability of the body to reabsorb water."@en ;
+ owl:disjointWith :Diuretic ;
+ :synonym "vasopressin"@en, "antidiuretic hormone"@en, "ADH", "arginine vasopressin"@en, "AVP", "argipressin"@en . 
+
+:Antidopaminergic a owl:Class ;
+  rdfs:subClassOf :Antipsychotic ;
+  :definition "Medication that blocks dopamine receptors."@en ;
+  :synonym "dopamine antagonist"@en, "anti-dopaminergic"@en . 
+
+:Antidote a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that counteracts a poison, such as an antivenom or some antiallergy drugs."@en .
+
+:Antiecchymotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that prevents or treats bruising."@en .
+
+:Antiemetic a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Agent that prevents vomiting."@en .
+
+:Antifibrinolytic a owl:Class ;
+  rdfs:subClassOf :Coagulant ;
+  :definition "Agent that promotes blood clotting by preventing or slowing fibrinolysis (the break down of clots)."@en .
+
+:Antiflatulent a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Agent that alleviates or prevents excessive intestinal gas."@en ;
+  :synonym "carminative"@en .
+
+:Antifungal a owl:Class ;
+  rdfs:subClassOf :Antimicrobial ;
+  :definition "Agent that destroys or inhibits the growth of fungi."@en .
+
+:Antiglaucoma a owl:Class ;
+  rdfs:subClassOf :Ophthalmic ;
+  :definition "Agent that reduces intra-ocular pressure either by reducing aqueous humor production or by increasing the flow of this fluid from the eye, where 'aqueous humor' is the clear fluid between the lens and cornea of the eye)."@en .
+
+:Antihalitosis a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that counters bad breath."@en . 
+
+:Antihemorrhoidal a owl:Class ;
+  rdfs:subClassOf :Antiinflammatory ;
+  :definition "Agent that reduces swelling and relieves discomfort of hemorrhoids."@en ;
+  :synonym "hemorroid cream"@en, "antihaemorrhoidal"@en .
+
+:Antihistamine a owl:Class ;
+  rdfs:subClassOf :Antiallergy, :Antipruritic ;
+  :definition "Blocker of histamine, used to decrease allergy symptoms."@en .
+
+:Antihydrotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that reduces, suppresses, or prevents excessive perspiration and sweating."@en .
+
+:Antiinflammatory a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that reduces inflammation/swelling of joints, due to injuries, etc."@en ;
+  :synonym "antiphlogistic"@en .
+
+:Antileprotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Medication to treat leprosy."@en .
+
+:Antimalarial a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Medication to treat or mange the symptoms of malaria."@en .
+
+:Antimicrobial a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that kills or stops the growth of microorganisms, such as antifungals, antivirals or antibiotics."@en .
+
+:Antiobesity a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to enhance a feeling of satiety and/or increase energy expenditure."@en .
+
+:Antiosteoporotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent treating osteoporosis/reduction in bone density."@en .
+
+:Antiparasitic a owl:Class ;
+  rdfs:subClassOf :Antimicrobial ;
+  :definition "Agent that treats parasitic diseases"@en ;
+  :synonym "parasiticide"@en .
+
+:Antiperiodic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that counteracts recurring illnesses such as malaria."@en .
+
+:Antiprotozoal a owl:Class ;
+  rdfs:subClassOf :Antiparasitic ;
+  :definition "Agent that treats infections caused by protozoa."@en .
+
+:Antipruritic a owl:Class ;
+  rdfs:subClassOf :SkinTreatment ;
+  :definition "Anti-itch substance such as antihistamines, corticosteroids and counter-irritant salves and ointments."@en ;
+  :synonym "anti-itch"@en, "antiitch"@en .
+
+:Antipsoriatic a owl:Class ;
+  rdfs:subClassOf :Antipruritic ;
+  :definition "Agent that prevents or decreases the effects of psoriasis."@en .
+
+:Antipsychotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Medication to manage psychoses such as schizophrenia and bipolar disorder."@en ;
+  :synonym "neuroleptic"@en, "major tranquilizer"@en .
+
+:Antipyretic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to reduce fever."@en ;
+  :synonym "febrifuge"@en .
+
+:Antiretroviral a owl:Class ;
+  rdfs:subClassOf :Antiviral ;
+  :definition "Medication that inhibits steps in the HIV replication process in order to suppress HIV infection."@en .
+
+:Antiscorbutic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent having the effect of preventing or curing scurvy."@en .
+
+:Antiscrophulatic a owl:Class ;
+  rdfs:subClassOf :Antituberculosis ;
+  :definition "Agent that counteracts scrofula which is a condition whereby the tuberculosis bacteria causes symptoms outside the lungs (usually taking the form of inflamed and irritated lymph nodes in the neck)."@en .
+
+:Antiseborrheic a owl:Class ;
+  rdfs:subClassOf :Antipruritic ;
+  :definition "Agent that prevents or relieves seborrhea/seborrheic dermatitis/dandruff."@en ;
+  :synonym "antidandruff"@en .
+
+:Antiseptic a owl:Class ;
+  rdfs:subClassOf :Antimicrobial, :MedicinalCleaning ;
+  :definition "Agent to deter the growth of disease-causing microorganisms."@en .
+
+:Antispasmodic a owl:Class ;
+  rdfs:subClassOf :MuscleRelaxant ;
+  :definition "Agent to suppress/control muscle spasms."@en ; 
+  :synonym "spasmolytic"@en .
+
+:Antithyroid a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent used to treat hyperthyroidism."@en .
+
+:AntitoxinAndAntibody a owl:Class ;
+  rdfs:subClassOf :Antidote, :Antimicrobial ;
+  rdfs:comment "UN Harmonized System code 3002 (antisera)"@en ;
+  :definition "Protein that neutralizes antigens including biologic toxins."@en ;
+  :synonym "immunoglobulin"@en .
+
+:Antituberculosis a owl:Class ;
+  rdfs:subClassOf :Pectoral ;
+  :definition "Agent used to treat or manage the symptoms and complications of tuberculosis."@en .
+
+:Antitussive a owl:Class ;
+  rdfs:subClassOf :Pectoral ;
+  :definition "Agent used to prevent or relieve coughs."@en .
+
+:Antivenereal a owl:Class ;
+  rdfs:subClassOf :Antimicrobial ;
+  :definition "Agent used to treat venereal diseases."@en .
+
+:Antivenom a owl:Class ;
+  rdfs:subClassOf :AntitoxinAndAntibody ;
+  :definition "Agent used to treat venomous/poisonous bites and strings."@en ;
+  :synonym "antivenin"@en, "venom antiserum"@en, "antivenom immunoglobulin"@en .
+
+:Antivinous a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Used in the treatment of addiction to alcohol."@en .
+
+:Antiviral a owl:Class ;
+  rdfs:subClassOf :Antimicrobial ;
+  :definition "Agent that treats viral infections."@en ;
+  :synonym "flu shot"@en .
+
+:AnxiolyticAndAntidepressant a owl:Class ;
+  rdfs:subClassOf :SedativeAndHypnotic ;
+  :definition "Agent used to treat depression, anxiety, panic and related disorders."@en ;
+  :synonym "antianxiety"@en, "antipanic"@en, "anxiolytic"@en, "antidepressant"@en .
+
+:Aphrodisiac a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to increase sexual desire."@en ;
+  owl:disjointWith :Anaphrodisiac .
+
+:AppetiteStimulant a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Agent to increase appetite."@en .
+
+:AppetiteSuppressant a owl:Class ;
+  rdfs:subClassOf :Stomachic, :Antiobesity ;
+  :definition "Agent to decrease appetite."@en .
+
+:AromataseInhibitor  a owl:Class ;
+  rdfs:subClassOf :Anticancer, :HormoneBlockerAndInhibitor ;
+  :definition "Medication that treats breast cancer in postmenopausal women and gynecomastia in men by inhibiting aromatase, an enzyme used in the synthesis of estrogen."@en .
+
+:AromaticAndAromatherapy a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Aromatics have pleasant odors and stimulant qualities. Aromatherapy uses plant oils/extracts to promote health."@en .
+
+:Astringent a owl:Class ;
+  rdfs:subClassOf :MedicinalCleaning .
+
+:Barbiturate a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant, :Anticonvulsant .
+
+:Benzodiazepine a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant, :Anticonvulsant ;
+  :synonym "benzo"@en ;
+  :example "valium"@en, "xanax"@en .
+
+:BetaBlocker a owl:Class ;
+  rdfs:subClassOf :Hypotensive, :HormoneBlockerAndInhibitor ;
+  :definition "Used to reduce blood pressure by blocking the effects of epinephrine (also known as adrenaline) and thereby causing the heart to beat more slowly and less forcefully."@en ; 
+  :synonym "beta-blocker"@en, "beta-adrenergic blocking agent"@en .
+
+:BetaReceptorAgonist a owl:Class ;
+  rdfs:subClassOf :MuscleRelaxant, :Antiasthmatic, :Vasodilator, :Hepatic ;
+  :definition "Medication that increases the receptivity of the beta-2 adrenergic receptor. It causes smooth muscle relaxation and is used (primarily) to treat asthma and other pulmonary disorders."@en ;
+  owl:disjointWith :BetaBlocker ;
+  :synonym "Beta2-adrenergic agonist"@en, "beta-receptor agonists"@en, "beta-agonist"@en, "beta2 adrenergic receptor agonist"@en, "adrenergic  beta2 receptor agonist"@en .
+
+:Biphosphonate a owl:Class ;
+  rdfs:subClassOf :Antiosteoporotic .
+
+:Biguanide a owl:Class ;
+  rdfs:subClassOf :Antidiabetic ;
+  :example "metformin"@en .
+
+:BileAcidSequestrant a owl:Class ;
+  rdfs:subClassOf :Anticholesterolemic ;
+  :definition "Medication to lower LCL cholesterol."@en .
+
+:BirthControl a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance or device to prevent fertilization/pregnancy."@en .
+
+:BirthingAid a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Anything used to facilitate or ease the birthing process"@en .
+
+:BloodAndFraction a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3002 (human blood, animal blood and blood fractions)"@en ;
+  :definition "Human or animal blood prepared for therapeutic, prophylactic or diagnostic uses, or blood fractions (which are derived from red cells, white cells, platelets or plasma)."@en .
+
+:BloodPurifier a owl:Class ;
+  rdfs:subClassOf :Depurative .
+
+:Bronchodilator a owl:Class ;
+  rdfs:subClassOf :Antiasthmatic ;
+  :definition "Medication to relax the muscles lining the airway, thereby making the airways wider and allowing better air flow."@en .
+
+:CalcitoninAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist, :Antiosteoporotic ;
+  :definition "Hormone (naturally occurring or man-made) produced by the thyroid gland's parafollicular cells (C-cells), used to control calcium and phosphate levels in the blood."@en ;
+  :synonym "calcitonin"@en, "calcitonin agonist"@en, "calcitonin receptor agonist"@en .
+
+:Calcium a owl:Class ;
+  rdfs:subClassOf :VitaminAndNutrient .
+
+:CalciumChannelBlocker a owl:Class ;
+  rdfs:subClassOf :HeartTreatment .
+
+:Cannabinoid a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant, :Antiinflammatory, :Analgesic, :Narcotic ;
+  :synonym "cannabis"@en, "marijuana"@en, "mary jane"@en, "hashish"@en, "hash"@en .
+
+:CardiacGlycoside a owl:Class ;
+  rdfs:subClassOf :HeartTreatment .
+
+:CastSplintAndBrace a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance used to create casts, splints, braces, etc. and treat broken bones."@en .
+
+:Chemotherapeutic a owl:Class ;
+  rdfs:subClassOf :Anticancer, :Cytotoxic .
+
+:Cholagogue a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Agent aiding the discharge of bile from the stomach into the duodenum/small intestines."@en .
+
+:Choleretic a owl:Class ;
+  rdfs:subClassOf :Stomachic, :Hepatic ;
+  :definition "Agent stimulating the production of bile to aid in digestion."@en .
+
+:Cholinergic a owl:Class ;
+  rdfs:subClassOf :Stimulant ;
+  :definition "Agent that enhances the effects of acetylcholine (a neurotransmitter), typically used to treat glaucoma and muscular disorders such as myasthenia gravis."@en ;
+  owl:disjointWith :Anticholinergic .
+
+:Coagulant a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent to stop bleeding and improve coagulation/blood clotting, and thereby to treat diseases such as hemophilia."@en ;
+  owl:disjointWith :Anticoagulant ;
+  :synonym "antihemophilic"@en, "antihaemophilic"@en , "antihemorrhagic"@en , "antihaemorrhagic"@en, "hemostatic"@en, "haemostatic"@en .
+
+:Cocaine a owl:Class ;
+  rdfs:subClassOf :Stimulant, :Narcotic .
+
+:Contraceptive a owl:Class ;
+  rdfs:subClassOf :BirthControl ;
+  rdfs:comment "UN Harmonized System code 3006 (contraceptives)"@en ;
+  :definition "Agent to prevent fertilization/pregnancy."@en .
+
+:ContrastMedium a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that increases the contrast of bodily structures or fluids in medical imaging by absorbing or altering external electromagnetism or ultrasound."@en ;
+  :synonym "contrast agent"@en .
+
+:Corticosteroid a owl:Class ;
+  rdfs:subClassOf :Antiinflammatory, :Antipruritic, :Antiallergy, :HormoneAndAgonist .
+
+:Cycloplegic a owl:Class ;
+  rdfs:subClassOf :Ophthalmic ;
+  :definition "Substance treating cycloplegia, a paralysis of the ciliary muscle of the eye, resulting in an inability to focus."@en .
+
+:Cyclopyrrolone a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant, :Anticonvulsant ;
+  :definition "A non-benzodiazepine drug with a similar pharmacological profile."@en . 
+
+:CYP17A1Inhibitor a owl:Class ;
+  rdfs:subClassOf :Antiandrogenic .
+  
+:Cytoprotectant a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance which protects cells from harmful agents."@en ;
+  :synonym "cytoprotective agent"@en .
+
+:Cytostatic a owl:Class ;
+  rdfs:subClassOf :Anticancer, :MedicinalCleaning ;
+  :definition "Substance that prevents cell replication and growth."@en .
+
+:Cytotoxic a owl:Class ;
+  rdfs:subClassOf :Anticancer, :Antiarthritic ;
+  :definition "Substance that is toxic to cells, and prevents their replication or growth."@en .
+
+:Decongestant a owl:Class ;
+  rdfs:subClassOf :Antiallergy, :Pectoral ;
+  :definition "Agent to reduce inflammation and mucus formation in nasal passages and eyes, thereby relieving congestion"@en .
+
+:Demulcent a owl:Class ;
+  rdfs:subClassOf :Cytoprotectant ;
+  :definition "Agent that forms a film over a mucous membrane, thereby relieving pain and inflammation."@en ;
+  :synonym "mucoprotective agent"@en .
+
+:Deobstruent a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that removes obstructions, clearing/opening passages for fluids and secretions of the body."@en .
+
+:Depurative a owl:Class ;
+  rdfs:subClassOf :AntitoxinAndAntibody ;
+  :definition "Herbs that are considered to have purifying and detoxifying effects, usually by eliminating toxins."@en .
+
+:DesloughingAgent a owl:Class ;
+  rdfs:subClassOf :MedicinalCleaning ;
+  :definition "Removal of slough (necrotic tissue) from a wound."@en .
+
+:Diaphoretic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that induces sweating."@en ;
+  owl:disjointWith :Antihydrodics .
+
+:Digestive a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Agent that aids digestion."@en . 
+
+:Diphosphonate a owl:Class ;
+  rdfs:subClassOf :Antiosteoporotic ;
+  :definition "Substance treating hypercalcemia (abnormally high blood calcium), bone pain caused by some types of cancer, osteoporosis and for bone imaging. It inhibits cells that breaks down bone."@en .
+
+:Diuretic a owl:Class ;
+  rdfs:subClassOf :Hypotensive ;
+  :definition "Substance that reduces the amount of salt and water in the body, thereby decreasing the volume of blood that the heart pumps. This, in turn, reduces blood pressure and water retention (edema)."@en .
+
+:DopamineAgonist a owl:Class ;
+  rdfs:subClassOf :Nervine, :HormoneAndAgonist ;
+  :definition "Substance relieving symptoms related to low levels of dopamine. It can be used to treat Parkinson's disease, restless legs syndrome and other conditions."@en ;
+  :synonym "dopaminergic"@en .
+
+:DopamineAntagonist a owl:Class ;
+  rdfs:subClassOf :Nervine, :HormoneBlockerAndInhibitor ;
+  :definition "Substance blocking dopamine receptors. Many antipsychotics are dopamine antagonists."@en ;
+  owl:disjointWith :DopamineAgonist ;
+  :synonym "anti-dopaminergic"@en .
+
+:DressingBandageAndRelated a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3005"@en ;
+  :definition "Wadding, gauze, bandages, adhesives and similar articles including dressings, poultices, etc."@en .
+
+:Ecstasy a owl:Class ;
+  rdfs:subClassOf :Stimulant, :Narcotic ;
+  :synonym "MDMA", "molly"@en .
+
+:Emetic a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Substance that causes vomiting."@en ;
+  owl:disjointWith :Antiemetic .
+
+:Emmenagogue a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that increases menstrual flow. In the early stages of pregnancy, it can be used to induce an abortion."@en .
+
+:Emollient a owl:Class ;
+  rdfs:subClassOf :SkinTreatment ;
+  :definition "Having the quality of softening or soothing the skin."@en ;
+  :synonym "salve"@en .
+
+:EnuresisTreatment a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance helping with enuresis/bedwetting."@en .
+
+:Errhine a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that induces sneezing and promotes nasal discharge."@en ;
+  :synonym "sternutatory agent"@en, "sternutative"@en .
+
+:ErythropoietinAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist ;
+  :definition "Hormone produced primarily by the kidneys which aid in the production of red blood cells."@en ;
+  :synonym "erythropoietin"@en, "erythropoietin agonist"@en, "erythropoietin receptor agonist"@en, "EPoR agonist"@en .
+
+:EstrogenAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist, :Antiandrogenic ;
+  :definition "One of the main female sex hormones or a man-made substitute."@en ;
+  owl:disjointWith :EstrogenAntagonist ;
+  :synonym "estrogenic"@en .
+
+:EstrogenAntagonist a owl:Class ;
+  rdfs:subClassOf :HormoneBlockerAndInhibitor .
+
+:Eugeroic a owl:Class ;
+  rdfs:subClassOf :Stimulant ;
+  :definition "Medication for wakefulness and alertness, used to treat sleep disorders."@en .  
+
+:ExpectorantAndMucoactiveAgent a owl:Class ;
+  rdfs:subClassOf :Pectoral ;
+  :definition "A mucoactive agent aids in clearing mucus from airways. It can be an exportant (which increases water secretions and hydrates the mucus, resulting in more and less viscous secretions), mucolytic (other agents that reduce the viscosity of mucus), mucokinetic (which improves the effectiveness of coughing by improving the transportability of mucous), or mucoregulator (which suppresses the secretion of mucus)."@en ;
+  :synonym "expectorant"@en, "mucoactive"@en, "mucolytic"@en, "mucokinetic"@en, "mucoregulator"@en .
+
+:Fibrinolytic a owl:Class ;
+  rdfs:subClassOf :Coagulant ;
+  owl:disjointWith :Antifibroinolytic .
+
+:Fluoroquinolone a owl:Class ;
+  rdfs:subClassOf :Antibiotic ;
+  :definition "Antibiotic used to treat illnesses such as respiratory and urinary tract infections."@en .
+
+:FollicleStimulatingHormone a owl:Class ;
+  rdfs:subClassOf :GonadotropicHormoneAndAgonist ;
+  :synonym "FSH" .
+
+:Galactofuge a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that stops or reduces the flow of milk in a nursing mother."@en .
+
+:Galactogogue a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that promotes lactation in a nursing mother."@en ;
+  owl:disjointWith :Galactofuge .
+
+:Glucocorticoid a owl:Class ;
+  rdfs:subClassOf :Corticosteroid, :Vasoconstrictor ;
+  :definition "Medication providing anti-inflammatory, immunosuppressive, anti-proliferative, and vasoconstrictive effects."@en ;
+  :example "cortisol"@en .
+
+:GonadotropicHormoneAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist, :InfertilityTreatment ;
+  :definition "Hormone (or man-made substitute) that stimulates the production of gonadotropic hormones, which in turn cause the testicles to make testosterone or the ovaries to make estrogen and progesterone."@en ;
+  :synonym "GnRH agonist"@en, "luteinizing hormone-releasing hormone"@en, "gonadotropin-releasing hormone"@en, "gonadotropin"@en, "LHRH", "LH-RH", "GnRH" .
+
+:GonadotropinReleaseInhibitor a owl:Class ;
+  rdfs:subClassOf :HormoneBlockerAndInhibitor, :InfertilityTreatment ;
+  :definition "Substance that blocks the GnRH receptor decreasing the secretion of growth hormones such as FSH and LH. It is typically used to block natural ovulation when in-vitro fertilization is attempted."@en ;
+  owl:disjointWith :GonadotropicHormoneAndAgonist ;
+  :synonym "gonadotropin-releasing hormone antagonist"@en, "gonadotropin-releasing hormone modulator"@en, "GnRH modulator"@en, "gonadotropin-releasing hormone antagonist"@en, "GnRH antagonist"@en .
+
+:GrowthHormone a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist ;
+  :definition "Substance that stimulates cell growth, reproduction, and regeneration. It is typically a protein or steroid."@en ;
+  :synonym "somatotropin"@en, "human growth hormone"@en, "hGH", "HGH", "granulocyte-colony stimulating factor"@en, "G-CSF", "GCSF", "colony-stimulating factor 3"@en, "CSF 3", "follicle-stimulating hormone"@en .
+
+:H2ReceptorAntagonist a owl:Class ;
+  rdfs:subClassOf :Stomachic, :Antihistamine ;
+  :definition "Substance that reduces stomach acid by blocking the action of histamine at the H2 receptors of the parietal cells in the stomach."@en ;
+  :synonym "histamine H2-receptor antagonist"@en, "H2 blocker"@en. 
+
+:Hallucinogenic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :synonym "psychodelic"@en .
+
+:HeartTreatment a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal .
+
+:Hemolytic a owl:Class ;
+  rdfs:subClassOf :Hypotensive ;
+  :definition "Substance that breaks down red blood cells/reduces the number of red blood cells, used to treat high blood pressure."@en ;
+  :synonym "haemolytic"@en .
+
+:Hepatic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that acts on the liver."@en .
+ 
+:HormoneAndAgonist a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3004 (hormones)"@en ;
+  :definition "Substance that is typcially produced in an organism (although it may be injected or otherwise administered) to stimulate specific cell activity or to activate tissues."@en .
+
+:HormoneBlockerAndInhibitor a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that stops the production of a hormone, blocks its activation or otherwise reduces its effectiveness."@en .
+
+:Hypolipidemic a owl:Class ;
+  rdfs:subClassOf :Anticholesterolemic ;
+  :definition "Agent that lowers concentrations of lipoproteins in the blood and thereby lower cholestrols and triglycerides (since these are transported by lipoproteins)."@en ;
+  :synonym "lipid-lowering drug"@en .
+
+:Hypotensive a owl:Class ;
+  rdfs:subClassOf :HeartTreatment ;
+  :definition "Substance that reduces blood pressure/treats hypertension (high blood pressure)."@en ;
+  :synonym "antihypertensive"@en . 
+
+:Immunosuppressant a owl:Class ;
+  rdfs:subClassOf :Anticholesterolemic ;
+  :definition "Medication that suppresses/reduces the intensity of the reaction of the immune system - for example, to make the body less likely to reject a transplanted organ."@en ;
+  :synonym "antirejection drug"@en .
+
+:InfertilityTreatment a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal .
+
+:InsulinAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist, :Antidiabetic ;
+  rdfs:comment "UN Harmonized System code 3004 (insulin)"@en ;
+  :definition "Hormone (or substitute) that regulates blood sugar levels - allowing sugars use for energy or its storage for future use. Without it, sugar level can go too high (hyperglycemia) or too low (hypoglycemia)."@en .
+
+:InterferonAndSubstitute a owl:Class ;
+  rdfs:subClassOf :Anticancer, :Antimicrobial ;
+  :definition "Agent that increases the response of the body's immune system and reduces the growth of cancer cells by regulating genes that control their growth. Interferons treat cancer and some types of infections."@en .
+
+:Irritant a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that causes irritation or abnormal sensitivity in living tissue."@en ;
+  owl:disjointWith :Emollient, :Antipruritic .
+
+:Keratolytic a owl:Class ;
+  rdfs:subClassOf :SkinTreatment ;
+  :definition "Substance that removes warts, calluses and other conditions in which the epidermis produces excess skin."@en .
+
+:Ketamine  a owl:Class ;
+  rdfs:subClassOf :Anesthetic .
+
+:KidneyTreatment a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Any substance that treats kidney conditions and disorders."@en .
+
+:Laxative a owl:Class ;
+  rdfs:subClassOf :Deobstruent ;
+  :definition "Used to relive constipation."@en ;
+  :synonym "hydrogogue"@en, "lenitive"@en, "purgative"@en, "aperient"@en .
+
+:Lithontripic a owl:Class ;
+  rdfs:subClassOf :Deobstruent, :KidneyTreatment ;
+  :definition "Substance used for dissolving or destroying stones in the bladder or kidneys."@en .
+
+:LuteinisingHormoneAndAgonist a owl:Class ;
+  rdfs:subClassOf :GonadotropicHormoneAndAgonist ;
+  :definition "Hormone (or man-made substitute) that stimulates ovulation in females and the synthesis of androgen in males."@en .
+
+:LysergicAcidDiethylamide a owl:Class ;
+  rdfs:subClassOf :Hallucinogenic, :Narcotic ;
+  :synonym "LSD" .
+
+:MastCellStabilizer a owl:Class ;
+  rdfs:subClassOf :Antiallergy ;
+  :definition "Substance used to prevent allergic reactions and treat allergic disorders by blocking mast cell degranulation, which stabilizes the cell and thereby prevents the release of histamine and related mediators."@en .
+
+:MedicinalCleaning a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Any substance used to prep for medical procedures, clean wounds, etc."@en .
+
+:MedicinalCooling a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :defintion "Agent used to cool the body."@en .
+
+:Methamphetamine a owl:Class ;
+  rdfs:subClassOf :Stimulant, :Narcotic ;
+  :synonym "meth"@en .
+
+:Mineralocorticoid a owl:Class ;
+  rdfs:subClassOf :Corticosteroid ;
+  :definition "Substance involved in regulating elecrolyte and water balance."@en . 
+
+:MonoamineOxidaseInhibitor a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant .
+
+:MoodStabilizer a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :defintion "Medication treating mood disorders characterized by mood shifts, such as bipolar and schizoaffective disorders."@en .
+
+:Mouthwash a owl:Class ;
+  rdfs:subClassOf :Antihalitosis . 
+
+:MuscleRelaxant a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Medication to decrease muscle function and tone, which is used to alleviate muscle spasms and hyperreflexia or in surgical procedures."@en ;
+  :synonym "paralytic"@en .
+
+:Mydriatic a owl:Class ;
+  rdfs:subClassOf :MuscleRelaxant ;
+  :definition "Substance that induces dilation of the pupil for examination and to treat ciliary muscle spasm (cycloplegia)."@en . 
+
+:Narcotic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "A prohibited/regulated drug with possibility for abuse and ill effect, such as cannabis, opiods, heroin, ecstasy, etc."@en .
+
+:Nervine a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that affects the nerves to either stimulate or calm."@en .
+
+:NeuromuscularBlocker a owl:Class ;
+  rdfs:subClassOf :Anticholinergic ;
+  :definition "Drug stopping transmission of nerve impulses at skeletal neuromuscular junctions, thereby preventing muscle movement. There are two types - competitive, non-depolarizing/stabilizing blockers (neuromuscular nondepolarizing agent) and noncompetitive, depolarizing agents (neuromuscular depolarizing agents)."@en ;
+  :synonym "neuromuscular blocking agent", "neuromuscular nondepolarizing agent", "neuromuscular depolarizing agent"@en, "aminosteroid"@en .
+
+:NonsteroidalAntiinflammatory a owl:Class ;
+  rdfs:subClassOf :Analgesic, :Antipyretic, :Antiinflammatory ;
+  :synonym "NSAID" ;
+  :example "aspirin"@en, "ibuprofen"@en .
+
+:Nootropic a owl:Class ;
+  rdfs:subClassOf :Stimulant ;
+  :definition "Substance to improve cognitive functions, memory, creativity, etc."@en ;
+  :synonym "smart drug"@en, "cognitive enhancer"@en . 
+
+:Odontalgic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that treats toothache and other problems of teeth and gum."@en .
+
+:Ophthalmic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Pertaining to the eye."@en .
+
+:Opioid a owl:Class ;
+  rdfs:subClassOf :Analgesic, :AnxiolyticAndAntidepressant, :Narcotic ;
+ :definition "Opium or a drug with similar effects."@en ;
+ :synonym "opiate"@en, "opium"@en, "heroin"@en, "morphine"@en, "etorphine"@en, "fentanyl"@en, "prodine"@en, "hydrocodone"@en, "oxycodone"@en, "pethidine"@en, "meperidine"@en, "ketobemidone"@en, "methadone"@en, "methadol"@en, "moramide"@en, "thiambutene"@en, "ampromide"@en ;
+ :example "oxycontin"@en, "vicodin"@en .
+
+:Oxytoxic a owl:Class ;
+  rdfs:subClassOf :BirthingAid, :Abortifacient ;
+  :definition "Substance that hastens parturition and stimulates uterine contractions."@en . 
+
+:Pectoral a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Relieves respiratory diseases."@en .
+
+:Pediculicide a owl:Class ;
+  rdfs:subClassOf :Antiparasitic ;
+  :definition "Substance that treats lice infestations."@en .
+
+:Poultice a owl:Class ;
+  rdfs:subClassOf :DressingBandageAndRelated ;
+  :definition "Moist (typically warm or hot) plant material that is applied to the skin to treat burns, stings, etc."@en .
+
+:Prebiotic a owl:Class ;
+  rdfs:subClassOf :VitaminAndNutrient, :Stomachic ;
+  :definition "Dietary fiber to increase gut bacteria and improve digestion."@en .
+
+:ProgestogenAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist, :Antiandrogenic ;
+  :definition "Hormone (or a man-made substitute) that activates the progesterone receptor to maintain pregnancy. It also functions in other phases of the estrous and menstual cycle."@en ;
+  :synonym "gestagen"@en, "progesterone"@en, "progestogen"@en, "progestin"@en, "progestogen agonist"@en, "protesterone agonist"@en, "progestogen receptor agonist"@en, "protesterone receptor agonist"@en .
+
+:ProteaseInhibitor a owl:Class ;
+  rdfs:subClassOf :Antiretroviral ;
+  :definition "Medication to prevent the replication of viruses (such as HIV and hepatitis C) by binding to their proteases and blocking proteolytic cleavage."@en .
+
+:ProtonPumpInhibitor a owl:Class ;
+  rdfs:subClassOf :Stomachic ;
+  :definition "Substance that reduces the production of stomach acid."@en ;
+  :synonym "PPI" .
+
+:Radiopharmaceutical a owl:Class ;
+  rdfs:subClassOf :Anticancer, :RadioactiveMaterial ;
+  :definition "Medicinal compound which contains radioisotopes, used for diagnosis and/or therapy."@en .
+
+:RecombinantInterleukin a owl:Class ;
+  rdfs:subClassOf :Anticancer ;
+  :definition "Substance that aids the immune system in killing cancer cells by increasing the activity and growth of white blood cells."@en .
+
+:RefluxSuppressant a owl:Class ;
+  rdfs:subClassOf :Stomachic . 
+
+:Restorative a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that restores or revives by improving health and/or strength, or by increasing energy."@en ;
+  :synonym "nutritive"@en .
+
+:Rubefacient a owl:Class ;
+  rdfs:subClassOf :Irritant ;
+  :definition "Substance that causes irritation and reddening of the skin due to increased blood flow. It is used to relieve pain in various musculoskeletal conditions."@en .
+
+:SedativeAndHypnotic a owl:Class ;
+  rdfs:subClassOf :Nervine ;
+  :definition "Substance that calms, relaxes, induces or sustains sleep, and/or reduces irritability or excitement by slowing brain activity."@en ;
+  :synonym "sedative"@en, "hypnotic"@en, "tranquilliser"@en, "tranquilizer"@en, "downer"@en, "calmative"@en, "sleeping pill"@en, "soporific"@en .
+
+:SerotoninReuptakeInhibitor a owl:Class ;
+  rdfs:subClassOf :AnxiolyticAndAntidepressant ;
+  :synonym "SSRI", "serotonin antagonist", "serotonin reuptake inhibitor"@en, "SARI" .
+
+:Sialagogue a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance that promotes the secretion of saliva."@en .
+
+:SkinTreatment a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Substance used in various treatments for the skin."@en .
+
+:Statin a owl:Class ;
+  rdfs:subClassOf :Anticholesterolemic ;
+  :synonym "HMG-CoA reductase inhibitor"@en . 
+
+:Spermicide a owl:Class ;
+  rdfs:subClassOf :BirthControl .
+
+:SterileSutureAndTissueAdhesive a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3005 (suture materials and tissue adhesives)"@en ;
+  :definition "Sterile materials to close surgical wounds."@en .
+
+:Stimulant a owl:Class ;
+  rdfs:subClassOf :Nervine ;
+  :definition "Substance to increase alertness and energy."@en ;
+  :synonym "upper"@en .
+
+:StingAndBiteTreatment a owl:Class ;
+  rdfs:subClassOf :Antivenom, :Antiallergy .
+
+:Stomachic a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that aids and improves the action of the stomach."@en .
+
+:Styptic a owl:Class ;
+  rdfs:subClassOf :Coagulant;
+  :definition "Substance that can stop bleeding when applied to a wound."@en .
+ 
+:SulfaDrug a owl:Class ;
+  rdfs:subClassOf :Antibiotic, :Antidiabetic, :Anticonvulsant, :Analgesic ;
+  :definition "Medication that contains a sulfonamide chemical group. Some classes of sulfa drugs are antibiotics while others are used as antidiabetics, anticonvulsants and analgesics."@en ;
+  :synonym "sulpha drug"@en, "sulphonamide"@en .
+
+:Sympathomimetic a owl:Class ;
+  rdfs:subClassOf :Stimulant ;
+  :definition "Medication that affects the actions of certain hormones (such as dopamine, norepinephrine and epinephrine) which are produced by the adrenal glands when under physical or emotional stress. It can treat cardiac arrest and low blood pressure, among other conditions."@en ;
+  :synonym "adrenergic"@en, "adrenergic amine"@en .
+
+:ThyroxineAndAgonist a owl:Class ;
+  rdfs:subClassOf :HormoneAndAgonist ;
+  :definition "Thyroid hormone (or a man-made substitute) used to treat hypothryroidism."@en ;
+  owl:disjointWith :Antithyroid ;
+  :synonym "thyroxine"@en, "thyroxine agonist"@en, "thyroxine receptor agonist"@en .
+
+:Tonic a owl:Class ;
+ rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+ :definition "Substance intended to improve general health."@en .
+
+:Vaccine a owl:Class ;
+ rdfs:subClassOf :AntitoxinAndAntibody ;
+  rdfs:comment "UN Harmonized System code 3002 (vaccines)"@en ;
+ :definition "Substance that stimulates production of antibodies to provide immunity against one or more diseases. It is designed to act as an antigen without inducing the disease."@en .
+
+:Vasoconstrictor a owl:Class ;
+ rdfs:subClassOf :HeartTreatment ;
+ :definition "Substance that narrows blood vessels, thereby increasing blood pressure."@en .
+
+:Vasodilator a owl:Class ;
+ rdfs:subClassOf :Hypotensive ;
+ :definition "Substance that widens the blood vessels, thereby reducing blood pressure."@en .
+
+:Vesicant a owl:Class ;
+  rdfs:subClassOf :Irritant ;
+  :definition "Agent that causes blistering."@en .
+
+:VitaminAndNutrient a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:comment "UN Harmonized System code 3004 (vitamins)"@en ;
+  :definition "An organic compound that is an essential nutrient, required for the proper functioning of an organism. Vitamins must be obtained through diet or absorption (for example, by plant roots)."@en ;
+  :synonym "dietary supplement"@en .
+
+:VitaminC a owl:Class ;
+  rdfs:subClassOf :VitaminAndNutrient, :Antiscorbutic .
+
+:Vulnerary a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  :definition "Agent that promotes healing of wounds."@en ;
+  :example "aloe"@en .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+
+########################################################################
+# Object Properties
+########################################################################
+

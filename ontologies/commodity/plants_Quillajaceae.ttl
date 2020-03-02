@@ -1,0 +1,36 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Quillajaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:QuillajaSaponaria a owl:Class ;
+  rdfs:subClassOf :Quillajaceae ;
+  :synonym "soap-bark tree"@en, "soapbark"@en .
+:QuillajaSaponaria 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "The plant is toxic if taken internally, tending to dissolve the blood corpuscles. The bark, and possibly other parts of the plant, contains saponins. Although toxic, saponins are very poorly absorbed by the body and so tend to pass through without causing harm, they are also destroyed by thorough cooking. Saponins are found in many plants, including several that are often used for food, such as certain beans. It is advisable not to eat large quantities of food that contain saponins. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Mountainous regions on the western slopes of the Andes."@en ;
+  :plant_country_range "S. America - Chile, Peru."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Quillaja Saponaria is an evergreen Tree growing to 18 m (59ft) by 6 m (19ft) at a slow rate. It is hardy to zone (UK) 10 and is frost tender. It is in leaf all year, in flower from April to May. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :ExpectorantAndMucoactiveAgent, :SkinTreatment, :Antiseborrheic, :Stimulant ;
+  :plant_medicinal_text "Soap bark tree has a long history of medicinal use with the Andean people who used it especially as a treatment for various chest problems. The saponin content of the bark helps to stimulate the production of a more fluid mucous in the airways, thus facilitating the removal of phlegm through coughing. The tree is useful for treating any condition featuring congested catarrh within the chest, but it should not be used for dry irritable coughs. The inner bark contains about 9% of complex saponins, known collectively as 'quillajasaponin'. It also contains calcium oxalate and tannin. It has been used internally as a stimulating expectorant, though it can cause irritation and inflammation of the digestive tract and so is no longer considered safe. The internal use of this plant needs to be carefully overseen by a professional practitioner. Sap bark tree is used as a source of compounds for the pharmaceutical industry. It is still used externally as a cutaneous stimulant in the treatment of skin ulcers and eruptions, dandruff etc."@en ;
+  :plant_other_use :SoapAndSubstitute, :HairCare ;
+  :plant_other_use_text "The fresh or dried inner bark is a soap substitute. It contains about 9% saponins and is a very gentle and effective cleaner. It is used for cleaning textiles and the skin. It can also be used as a hair tonic. The saponins are also used in anti-dandruff shampoos and exfoliant cleansers. They are used as a foaming agent in fire extinguishers. The bark also contains considerable quantities of carbonate of lime."@en .
+

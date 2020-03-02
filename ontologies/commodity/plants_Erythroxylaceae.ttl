@@ -1,0 +1,35 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Erythroxylaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:ErythroxylumCoca a owl:Class ;
+  rdfs:subClassOf :Erythroxylaceae ;
+  :synonym "coca"@en, "little coca"@en .
+:ErythroxylumCoca 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Parts of plant are poisonous if ingested"@en ;
+  :plant_habitat "Amazon rainforest."@en ;
+  :plant_country_range "S. America - northern Brazil, Bolivia, Peru."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Erythroxylum Coca is an evergreen Shrub growing to 1.5 m (5ft) by 1.5 m (5ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "Edible portion: Leaves - tea. The dried leaves yield a substance called cocaine which is a stimulant. The leaves are used to make coca 'wine'. The leaves are chewed as a masticatory. The extract from the nut is used to flavour drinks, candy and alcoholic drinks."@en ;
+  :plant_medicinal_text "The leaves contain cocaine and other alkaloids. They are narcotic, cerebral-stimulant and locally anaesthetic. The alkaloids are extracted and used to make various pharmaceutical drugs, including a local anaesthetic. Chewed with lime or plant ashes the leaves cause a feeling of easiness and increasing energy. Therefore they are used by native peoples as a stimulant to better endure hunger, thirst and physical stress. An infusion of the leaves serves also as remedy for altitude sickness, the feared 'soroche'."@en ;
+  :plant_other_use_text "None known"@en .
+

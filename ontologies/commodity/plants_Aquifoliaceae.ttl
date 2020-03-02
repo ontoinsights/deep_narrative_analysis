@@ -1,0 +1,36 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Aquifoliaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:IlexVerticillata a owl:Class ;
+  rdfs:subClassOf :Aquifoliaceae ;
+  :synonym "winterberry"@en, "common winterberry"@en .
+:IlexVerticillata 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "Although no specific reports of toxicity have been seen for this species, the fruits of at least some members of this genus contain saponins and are slightly toxic. They can cause vomiting, diarrhoea and stupor if eaten in quantity. The fruit is poisonous."@en ;
+  :plant_habitat "Swamps, pond margins and damp thickets."@en ;
+  :plant_country_range "Eastern N. America - Newfoundland to Minnesota and south to Georgia and Tennessee.."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Ilex Verticillata is a deciduous Shrub growing to 2 m (6ft) by 1.5 m (5ft) at a slow rate. It is hardy to zone (UK) 3.  It is in flower from May to June, and the seeds ripen in October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required).  and is pollinated by Bees. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "A tea is made from the dried and crumbled leaves. It does not contain caffeine."@en ;
+  :plant_medicinal_use :Antiseptic, :Tonic, :Astringent, :SkinTreatment, :Laxative ;
+  :plant_medicinal_text "The bark is antiseptic, astringent, cathartic and tonic. A decoction is used internally in the treatment of diarrhoea, malaria etc, and externally in the treatment of indolent sores and chronic skin disease. The bark contains about 4.8% tannin. It is harvested in the autumn before the first frosts. Another report says that the bark is harvested in the spring and dried for later use. The fruit is cathartic."@en ;
+  :plant_other_use_text "None known"@en .
+

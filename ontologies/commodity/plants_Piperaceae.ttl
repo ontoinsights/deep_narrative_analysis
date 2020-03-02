@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Piperaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:PiperNigrum a owl:Class ;
+  rdfs:subClassOf :Piperaceae ;
+  :synonym "black pepper"@en .
+:PiperNigrum 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "E. Asia - Indian Subcontinent."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Piper Nigrum is an evergreen Climber growing to 6 m (19ft) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland). It prefers  moist soil. The plant is not wind tolerant."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The pungent fruits, known as peppercorns, are dried, ground into a powder known as black pepper, and used as a condiment. A hot flavour. The globose, red fruit is 4 - 6mm in diameter. A milder flavoured spice, known as white pepper, can be obtained if the outer coverings of the fruit are removed. Unripe green fruits are pickled in vinegar and used as a relish. An essential oil obtained from the seed is used as a flavouring various foods."@en ;
+  :plant_medicinal_text "Black pepper fruits contain an essential oil (comprising beta-bisbolene, camphene, beta-caryophyllene and many other terpenes and sesquiterpenes), up to 9% alkaloids (especially piperine which is responsible for the acrid taste), about 11% protein and small quantities of minerals. They are a pungent, aromatic, warming herb that lowers fever, is antiseptic and improves digestion. Black pepper is regarded as a stimulating expectorant in Western and Ayurvedic medicine, and as a tranquilizing and anti-emetic in Chinese medicine. The seed is used internally to treat indigestion and wind in western herbalism. In Chinese medicine it is used as a warming herb to treat stomach chills, food poisoning, cholera, dysentery, diarrhoea and vomiting caused by cold. It is used externally in Ayurvedic medicine to treat nasal congestion, sinusitis, epilepsy and skin inflammations. The essential oil is antiseptic, antibacterial and febrifuge. It has been used to ease rheumatic pain and toothache."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other Uses: An essential oil obtained from the fruits is used in perfumery to add bouquets of oriental types producing spicy notes."@en .
+

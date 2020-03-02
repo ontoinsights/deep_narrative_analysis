@@ -1,0 +1,53 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Nyctaginaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:BoerhaviaDiffusa a owl:Class ;
+  rdfs:subClassOf :Nyctaginaceae ;
+  :synonym "tar vine"@en, "red spiderling"@en, "punarnava"@en, "spreading hogweed"@en, "tarvine"@en .
+:BoerhaviaDiffusa 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A pioneer of bare areas, usually found on dry sandy soils."@en ;
+  :plant_country_range "Australia - New South Wales, Queensland, South Australia, Victoria."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "1"^^xsd:integer ;
+  :plant_physical_characteristics "Boerhavia Diffusa is an evergreen Perennial growing to 0.1 m (0ft 4in) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 9.  It is in flower from June to September, and the seeds ripen from June to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "Edible portion: Leaves, Root, Fruit, Seeds, (Caution) Vegetable. Root - eaten by the Aborigines of central Australia. The root is long, thick and fleshy. Leaves - cooked as a pot herb or added to soups. Occasionally used as a vegetable. Seeds - cooked. Added to cereals."@en ;
+  :plant_medicinal_use :Stomachic, :ExpectorantAndMucoactiveAgent, :Antidote, :Diuretic, :Emetic, :Laxative ;
+  :plant_medicinal_text "Spreading hogweed is used in traditional medicine in several parts of its range, but is especially popular in India where it is a part of the Ayurvedic tradition. The whole herb, including the root, is used and it is said to be bitter, diaphoretic, diuretic, emetic, expectorant, laxative and stomachic. Research has shown the presence of an alkaloid, beta sitosterol and various other compounds in the roots An alcohol extract of the whole plant has shown significant antiinflammatory activity, a cardiotonic effect, an increase in blood pressure, a relaxant effect and promising diuretic activity. The plant is emetic and purgative. It is used in the treatment of various conditions including gastric disturbances, asthma, jaundice, anascara, anaemia and internal inflammation. It has also been used as an antidote to snake venom. A decoction of the leaves is used to treat jaundice. The leaves are used in a cataplasm for treating indurated liver. The root can be used as an ipecacuanha (Carapichea ipecacuanha) substitute. Antispasmodic, very astringent, diuretic, emetic, emmenagogue, purgative and sudorific herb, it can be used in a decoction to treat dysentery and a range of other conditions. The boiled roots are applied to ulcers, abscesses and to assist in the extraction of Guinea worm."@en ;
+  :plant_other_use_text "Boerhavia diffusa is recorded as a host for the virus causing aubergine mosaic disease (EMV); as a host of zucchini yellow mosaic polyvirus (ZYMV); and as an alternative host for the cotton aphid (Aphis gossypii). Yield losses attributed to these factors are difficult to determine. Fodder/animal feed, Forage."@en .
+
+:MirabilisExpansa a owl:Class ;
+  rdfs:subClassOf :Nyctaginaceae ;
+  :synonym "mauka"@en, "chago"@en .
+:MirabilisExpansa 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Found at heights above 2700 metres in areas subject to strong winds and near constant chill."@en ;
+  :plant_country_range "S. America - Andes."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Mirabilis Expansa is a PERENNIAL growing to 1 m (3ft 3in).  It is frost tender.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_use :Beverage ;
+  :plant_edible_text "Root - dried in the sun then boiled and eaten as a vegetable. The root contains about 7% protein, a good quantity for a root crop and up to 87% carbohydrate on a dry weight basis. Roots can be the size of a man's forearm. Some forms, especially those from Bolivia, contain an astringent substance that can burn the lips and mouth. When exposed to the sun these roots become sweet and are pleasant to eat. Forms grown in Ecuador are not astringent. Roots can be used in sweet or savoury dishes. The cooking water makes an especially flavourful drink. Leaves - raw. Added to salads. The leaves contain about 17% protein (this is probably based on the dry weight."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+

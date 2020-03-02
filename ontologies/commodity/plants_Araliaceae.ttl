@@ -1,0 +1,257 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Araliaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:AraliaCordata a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "spikenard"@en, "herbal aralia"@en, "japanese spikenard"@en, "mountain asparagus"@en .
+:AraliaCordata 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Thickets and thin woods, esp. by streams and ravines, all over Japan."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Aralia Cordata is a PERENNIAL growing to 1.8 m (6ft).  It is hardy to zone (UK) 8 and is frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem, :PlantLeaf ;
+  :plant_edible_text "Young branched shoots - cooked or raw. They can be up to 1.5 metres long and have a mild and agreeable flavour. They are usually blanched and are crisp and tender with a unique lemon-like flavour. They can be sliced and added to salads, soups etc. The shoots contain about 1.1% protein, 0.42% fat, 0.8% soluble carbohydrate, 0.55% ash. Root - cooked. Used like scorzonera."@en ;
+  :plant_medicinal_use :Analgesic, :Tonic, :Stimulant, :Diuretic, :Antiinflammatory, :Antiflatulent, :Stomachic, :Antipyretic ;
+  :plant_medicinal_text "The root is sometimes used in China as a substitute for ginseng (Panax species). It is said to be analgesic, antiinflammatory, carminative, diuretic, febrifuge, stimulant, stomachic and tonic. The root contains an essential oil, saponins, sesquiterpenes and diterpene acids. It is used in Korea to treat the common cold and migraines."@en ;
+  :plant_other_use_text "None known"@en .
+
+:AraliaNudicaulis a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "wild sarsaparilla"@en, "false sarsaparilla"@en, "shot bush"@en, "small spikenard"@en, "wild liquorice"@en, "rabbit root"@en .
+:AraliaNudicaulis 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist, shady, rocky woods."@en ;
+  :plant_country_range "N. America - Newfoundland to Manitoba, south to N. Carolina and Missouri."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Aralia Nudicaulis is a PERENNIAL growing to 0.4 m (1ft 4in) by 0.3 m (1ft).  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower in June, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf, :PlantRoot ;
+  :plant_edible_use :TeaAndSubstitute, :CondimentAndSeasoning ;
+  :plant_edible_text "The rootstock is used as a flavouring, it is a substitute for sarsaparilla and is also used for making 'root beer'. It is also used as an emergency food (usually mixed with oil), having a sweet spicy taste and a pleasant aromatic smell. A nutritious food, it was used by the Indians during wars or when they were hunting since it is very sustaining. Young shoots - cooked as a potherb. A refreshing herbal tea is made from the root. Pleasantly flavoured. The roots are boiled in water until the water is reddish-brown. A jelly is made from the fruit. The fruit is also used to make wine. The fruit is about 6mm in diameter."@en ;
+  :plant_medicinal_use :Alterative, :Stimulant, :Diaphoretic, :Pectoral, :Diuretic ;
+  :plant_medicinal_text "Wild sarsaparilla is a sweet pungent tonic herb that acts as an alterative. It had a wide range of traditional uses amongst the North American Indians and was at one time widely used as a substitute for the tropical medicinal herb sarsaparilla. The root is alterative, diaphoretic, diuretic, pectoral and stimulant. The herb encourages sweating, is stimulating and detoxifying and so is used internally in the treatment of pulmonary diseases, asthma, rheumatism, stomach aches etc. Externally it is used as a poultice in treating rheumatism, sores, burns, itchy skin, ulcers and skin problems such as eczema. The root is collected in late summer and the autumn and dried for later use. A drink made from the pulverised roots is used as a cough treatment. A poultice made from the roots and/or the fruit is applied to sores, burns, itchy skin, ulcers, swellings etc. A homeopathic remedy made from the roots is important in the treatment of cystitis."@en ;
+  :plant_other_use_text "None known"@en .
+
+:AraliaRacemosa a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "american spikenard"@en, "small spikenard"@en, "indian root"@en, "spice berry"@en, "spignet"@en, "life-of-man"@en, "petty morel"@en .
+:AraliaRacemosa 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rich woodlands and thickets."@en ;
+  :plant_country_range "Eastern N. America - Quebec to Georgia, west to Kansas and Minnesota."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Aralia Racemosa is a PERENNIAL growing to 1.8 m (6ft) by 1.2 m (4ft in).  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower in June. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf, :PlantRoot ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "Young shoot tips - cooked. Used as a potherb or as a flavouring in soups. Root - cooked. Large and spicy, it is used in soups. Pleasantly aromatic, imparting a liquorice-like flavour. A substitute for sarsaparilla (Smilax spp.), it is also used in making 'root beer'. Fruit - raw or cooked. Pleasant and wholesome to eat. They can be made into a jelly. The fruit is about 4mm in diameter."@en ;
+  :plant_medicinal_use :Alterative, :Stimulant, :ExpectorantAndMucoactiveAgent, :Diaphoretic, :Poultice, :SkinTreatment, :Antiarthritic ;
+  :plant_medicinal_text "American spikenard is a sweet pungent tonic herb that is often used in modern herbalism where it acts as an alterative. It had a wide range of traditional uses amongst the North American Indians and was at one time widely used as a substitute for the tropical medicinal herb sarsaparilla. The root is alterative, diaphoretic, diuretic, pectoral and stimulant. The herb encourages sweating, is stimulating and detoxifying and so is used internally in the treatment of pulmonary diseases, asthma, rheumatism etc. Externally it is used as a poultice in treating rheumatism and skin problems such as eczema. The root is collected in late summer and the autumn and dried for later use. A drink made from the pulverised roots is used as a cough treatment. A poultice made from the roots and/or the fruit is applied to sores, burns, itchy skin, ulcers, swellings etc."@en ;
+  :plant_other_use_text "None known"@en .
+
+:EleutherococcusGracylistylus a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "wu jia pi"@en, "Eleutherococcus gracilistylus", "Acanthopanax gracilistylus" .
+:EleutherococcusGracylistylus 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Wasted slopes or shrub thickets."@en ;
+  :plant_country_range "E. Asia - China."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Eleutherococcus Gracylistylus is a deciduous Shrub growing to 3 m (9ft 10in).  It is hardy to zone (UK) 6.  It is in flower in August. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFlower ;
+  :plant_edible_text "Flowers. No more details are given."@en ;
+  :plant_medicinal_use :Antibacterial, :Antiarthritic, :Diuretic ;
+  :plant_medicinal_text "The leafy shoots are tonic and are also believed to alleviate internal injuries by dispelling blood. The root bark is antibacterial, antirheumatic and diuretic. It is used in the treatment of arthritis, backache and a host of other ailments. A medicinal wine made from it is commonly on sale in China. A decoction of the stem bark or the roots is used in the treatment of rheumatoid arthritis, aches and pains in the back and legs, open sores on the scrotum, beriberi and traumatic injuries. The plant is aphrodisiac, nutritive and tonic."@en ;
+  :plant_other_use_text "None known"@en .
+
+:EleutherococcusSenticosus a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "siberian ginseng"@en, "devil's bush"@en, "eleuthero"@en, "ciwujia"@en, "devil's shrub"@en, "shigoka"@en, "touch-me-not"@en, "wild pepper"@en, "kan jang"@en .
+:EleutherococcusSenticosus 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "Caution if high blood pressure. Avoid coffee. 6 weeks maximum use. Avoid during pregnancy. Unsuitable for children. High doses may cause drowsiness, anxiety, irritability, mastalgia and uterine bleeding. Possible blood pressure increases and irregular heart beats. Effects of antidiabetic drugs, sedatives and anticoagulants may be potentiated"@en ;
+  :plant_habitat "Mixed and coniferous mountain forests, forming small undergrowth or groups in thickets and edges. Sometimes found in oak groves at the foot of cliffs, very rarely in high forest riparian woodland."@en ;
+  :plant_country_range "E. Asia - China, Japan, Siberia."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Eleutherococcus Senticosus is a deciduous Shrub growing to 2 m (6ft 7in) at a slow rate. It is hardy to zone (UK) 3.  It is in flower in July. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Young leaves and buds - cooked. The dried leaves are used as a tea substitute."@en ;
+  :plant_medicinal_use :Tonic, :Adaptogen, :Antidiabetic, :Vasodilator, :Antiinflammatory ;
+  :plant_medicinal_text "Siberian ginseng is a powerful tonic herb with an impressive range of health benefits. Unlike many herbs with a medicinal use, it is more useful for maintaining good health rather than treating ill health. Research has shown that it stimulates resistance to stress and so it is now widely used as a tonic in times of stress and pressure. This plant is a very commonly used folk treatment in China and Russia where it is used as a ginseng substitute. It is a pungent bitter-sweet warming herb that is said to be stronger in its action than ginseng. Regular use is said to restore vigour, improve the memory and increase longevity. The root and the root bark are adaptogen, anti-inflammatory, hypoglycaemic, tonic and vasodilator. It is taken internally during convalescence and in the treatment of menopausal problems, geriatric debility, physical and mental stress etc. It works by strengthening the bodies natural immune system. It has also been used to combat radiation sickness and exposure to toxic chemicals. This herb is not prescribed for children, and should not be used for more than 3 weeks at one time. Caffeine should not be taken when using this herb. The roots are harvested in the autumn and dried for later use. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Eleutherococcus senticosus for tendency to infection, lack of stamina (see  for critics of commission E)."@en ;
+  :plant_other_use_text "None known"@en .
+
+:EleutherococcusSessiliflorus a owl:Class ;
+  rdfs:subClassOf :Araliaceae .
+:EleutherococcusSessiliflorus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist woods, wooded riverbanks, forest edges and clearings."@en ;
+  :plant_country_range "E. Asia - China, Korea, Manchuria."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Eleutherococcus Sessiliflorus is a deciduous Shrub growing to 4.5 m (14ft 9in).  It is hardy to zone (UK) 4.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute, :Beverage ;
+  :plant_edible_text "Young leaves - raw or cooked and used as a vegetable. Old leaves are dried and used as a tea substitute. A wine is made from the bark. It is highly fancied by the Chinese. It is probably used mainly for medicinal purposes."@en ;
+  :plant_medicinal_use :Analgesic, :Adaptogen, :Diuretic, :Antiinflammatory, :Antipyretic ;
+  :plant_medicinal_text "The root bark contains saponins, acanthosides, cardiac glycosides and polysaccharides. It is adaptogenic, analgesic, anti-inflammatory, antipyretic and diuretic. It is used in Korea in the treatment of lumbago, neuralgia, arthritis and oedema."@en ;
+  :plant_other_use_text "None known"@en .
+
+:EleutherococcusSieboldianus a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "ukogi"@en, "five leafed aralia"@en .
+:EleutherococcusSieboldianus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Escaped from cultivation in Japan, where it grows wild in calcareous soils."@en ;
+  :plant_country_range "E. Asia - China, Japan."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Eleutherococcus Sieboldianus is a deciduous Shrub growing to 3 m (9ft) by 2.5 m (8ft) at a slow rate. It is hardy to zone (UK) 4.  It is in flower from June to July, and the seeds ripen from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Young leaves - cooked. A delicious somewhat fragrant flavour. The dried leaves are a tea substitute."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Hedge ;
+  :plant_other_use_text "The plant is used as a hedge."@en .
+
+:HederaHelix a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "english ivy"@en, "algerian ivy"@en, "baltic ivy"@en, "common ivy"@en, "european ivy"@en .
+:HederaHelix 
+  :plant_hardiness_zones "5-11" ;
+  :plant_hazards "The plant is said to be poisonous in large doses although the leaves are eaten with impunity by various mammals without any noticeable harmful affects. The leaves and fruits contain the saponic glycoside hederagenin which, if ingested, can cause breathing difficulties and coma. The sap can cause dermatitis with blistering and inflammation. This is apparently due to the presence of polyacetylene compounds."@en ;
+  :plant_habitat "Woodlands, hedges and shady places, climbing up trees, walls etc and clambering over the ground. Found on all types of soils."@en ;
+  :plant_country_range "Europe, including Britain, south and east to the Mediterranean and Iran."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Hedera Helix is an evergreen Climber growing to 15 m (49ft) by 5 m (16ft) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender. It is in leaf all year, in flower from October to November, and the seeds ripen from May to June. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees, flies, Lepidoptera (Moths & Butterflies). It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay and nutritionally poor soils. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers  moist or  wet soil and can tolerate drought. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_text "Although they are almost certainly not edible, there is a report that the seeds contain 16.2% protein and 35.1% fat."@en ;
+  :plant_medicinal_use :Antiparasitic, :Stimulant, :Vasodilator, :Antispasmodic, :Laxative, :Vasoconstrictor, :Diaphoretic, :Antibacterial, :Astringent, :Emmenagogue, :Anthelmintic, :Emetic, :SkinTreatment, :Antiarthritic, :Antiseptic ;
+  :plant_medicinal_text "Ivy is a bitter aromatic herb with a nauseating taste. It is often used in folk herbal remedies, especially in the treatment of rheumatism and as an external application to skin eruptions, swollen tissue, painful joints, burns and suppurating cuts. Recent research has shown that the leaves contain the compound 'emetine', which is an amoebicidal alkaloid, and also triterpene saponins, which are effective against liver flukes, molluscs, internal parasites and fungal infections. The leaves are antibacterial, antirheumatic, antiseptic, antispasmodic, astringent, cathartic, diaphoretic, emetic, emmenagogue, stimulant, sudorific, vasoconstrictor, vasodilator and vermifuge. The plant is used internally in the treatment of gout, rheumatic pain, whooping cough, bronchitis and as a parasiticide. Some caution is advised if it is being used internally since the plant is mildly toxic. Excessive doses destroy red blood cells and cause irritability, diarrhoea and vomiting. This plant should only be used under the supervision of a qualified practitioner. An infusion of the twigs in oil is recommended for the treatment of sunburn. The leaves are harvested in spring and early summer, they are used fresh and can also be dried. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Hedera helix for cough, bronchitis (see  for critics of commission E)."@en ;
+  :plant_other_use :PollutionControl, :SoapAndSubstitute, :WoodCorkAndSubstitute, :DyeInkAndPaint, :Parasiticide, :Hedge, :HairCare ;
+  :plant_other_use_text "A yellow and a brown dye are obtained from the twigs. A decoction of the leaves is used to restore black fabrics and also as a hair rinse to darken the hair. If the leaves are boiled with soda they are a soap substitute for washing clothes etc. An excellent ground cover for shady places, succeeding even in the dense shade of trees. A very effective weed suppresser. The cultivars 'Hibernica', 'Lutzii' and 'Neilsonii' have been especially mentioned. Plants can be grown along fences to form a hedge. The variety 'Digitata' is very useful for this. Plants have been grown indoors in pots in order to help remove toxins from the atmosphere. It is especially good at removing chemical vapours, especially formaldehyde. The plants will probably benefit from being placed outdoors during the summer. The wood is very hard and can be used as a substitute for Buxus sempervirens (Box), used in engraving etc. Another report says that the wood is very soft and porous and is seldom used except as a strop for sharpening knives."@en .
+
+:PanaxGinseng a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "ginseng"@en, "chinese ginseng"@en, "asian ginseng"@en, "korean ginseng"@en .
+:PanaxGinseng 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "Side effects include inability to fall asleep, increase in heart rate and blood pressure. Overuse or prolonged use may cause over stimulation (diarrhoea, nervousness, skin eruption). Caution with other stimulants needed. Avoid in patients with psychosis and manic disorders. Not recommended during pregnancy and breast feeding ."@en ;
+  :plant_habitat "Mountain forests."@en ;
+  :plant_country_range "E. Asia - China, Korea."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Panax Ginseng is a PERENNIAL growing to 0.8 m (2ft 7in) by 0.7 m (2ft 4in).  It is hardy to zone (UK) 6. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Root - chewed. This probably refers to its medicinal uses. A tea is made from the root."@en ;
+  :plant_medicinal_use :Nervine, :Tonic, :AnxiolyticAndAntidepressant, :Adaptogen, :ExpectorantAndMucoactiveAgent, :Antidiabetic, :Anticholesterolemic, :AppetiteStimulant, :Emetic ;
+  :plant_medicinal_text "Ginseng has a history of herbal use going back over 5,000 years. It is one of the most highly regarded of herbal medicines in the Orient, where it has gained an almost magical reputation for being able to promote health, general body vigour and also to prolong life. The root is adaptogen, alterative, carminative, demulcent, emetic, expectorant, stimulant and tonic. It both stimulates and relaxes the nervous system, encourages the secretion of hormones, improves stamina, lowers blood sugar and cholesterol levels and increases resistance to disease. It is used internally in the treatment of debility associated with old age or illness, lack of appetite, insomnia, stress, shock and chronic illness. Ginseng is not normally prescribed for pregnant women, or for patients under the age of 40, or those with depression, acute anxiety or acute inflammatory disease. It is normally only taken for a period of 3 weeks. Excess can cause headaches, restlessness, raised blood pressure and other side effects, especially if it is taken with caffeine, alcohol, turnips and bitter or spicy foods. The roots are harvested in the autumn, preferably from plants 6 - 7 years old, and can be used fresh or dried. A dose of 10ug/ml of ginseng saponins has been shown to be significantly radio-protective when it is administered prior to gamma-irradiation. The leaf is emetic and expectorant. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Panax ginseng for lack of stamina (see  for critics of commission E)."@en ;
+  :plant_other_use_text "None known"@en .
+
+:PanaxPseudoginseng a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "ginseng"@en, "japanese ginseng"@en, "pseudoginseng"@en, "nepal ginseng"@en, "himalayan ginseng"@en .
+:PanaxPseudoginseng 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "Avoid during pregnancy and breastfeeding. Avoid if on anticoagulants or ticlodipine (for blood clot formation) ."@en ;
+  :plant_habitat "Forests and shrubberies, 2100 - 4300 metres in C. Nepal in the Himalayas. Moist shady places at elevations of 2000 - 3300 metres in Nepal."@en ;
+  :plant_country_range "E. Asia - China to the Himalayas and Burma."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Panax Pseudoginseng is a PERENNIAL growing to 1 m (3ft 3in) by 0.7 m (2ft 4in) at a slow rate. It is hardy to zone (UK) 6. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute, :Beverage ;
+  :plant_edible_text "Young leaves and shoots - cooked as a vegetable. The roots are chewed, used as a flavouring in liqueurs or made into a tea."@en ;
+  :plant_medicinal_use :Stimulant, :ExpectorantAndMucoactiveAgent, :Antidiabetic, :HeartTreatment, :Aphrodisiac, :Antibacterial, :Antiinflammatory, :Diuretic, :Coagulant, :Antiseptic ;
+  :plant_medicinal_text "The roots and the flowers are antibacterial, anti-inflammatory, antiseptic, aphrodisiac, cardiotonic, diuretic, expectorant, haemostatic, hypoglycaemic and stimulant. The root is used internally in the treatment of indigestion, vomiting, coronary heart disease and angina. The roots are also used both internally and externally in the treatment of nosebleeds, haemorrhages from the lungs, digestive tract and uterus, and injuries. The roots are harvested in the autumn, preferably from plants 6 - 7 years old, and can be used fresh or dried. The flowers are used to treat vertigo and dizziness."@en ;
+  :plant_other_use_text "None known"@en .
+
+:PanaxPseudoginsengNotoginseng a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "san qi"@en .
+:PanaxPseudoginsengNotoginseng 
+  :plant_hazards "Avoid during pregnancy and breastfeeding. Avoid if on anticoagulants or ticlodipine (for blood clot formation) ."@en ;
+  :plant_habitat "Forests and shrubberies, 2100 - 4300 metres in Central Nepal in the Himalayas."@en ;
+  :plant_country_range "E. Asia - China to the Himalayas and Burma."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Panax Pseudoginseng Notoginseng is a PERENNIAL growing to 1.2 m (4ft) at a slow rate.The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_use :TeaAndSubstitute, :Beverage ;
+  :plant_edible_text "The roots are chewed, used as a flavouring in liqueurs or made into a tea."@en ;
+  :plant_medicinal_use :Analgesic, :Antidiabetic, :HeartTreatment, :Astringent, :Antiinflammatory, :Diuretic, :Coagulant, :Antiseptic ;
+  :plant_medicinal_text "San Qi is a fairly recent newcomer to Chinese herbalism, the first recorded usage dating from the sixteenth century. Nevertheless, it has attained an importance as a tonic medicine that supports the function of the adrenal glands, in particular the production of corticosteroids and male sex hormones. It also helps to improve blood flow through the coronary arteries, thus finding use as a treatment for arteriosclerosis, high blood pressure and angina. The roots are said to be analgesic, anti-inflammatory, antiphlogistic, antiseptic, astringent, cardiotonic, discutient, diuretic, haemostatic, hypoglycaemic, styptic, tonic and vulnerary. They are used in the treatment of contused wounds, soft tissue injuries and all kinds of bleeding, both internal and external, like haematuria, nose bleeds, haematemesis, uterine bleeding etc. They are also used in the treatment of coronary heart disease and angina pectoris. The roots can be applied externally as a poultice in order to help speed the healing of wounds and bruises. The root is harvested before flowering or after the seed has ripened. It is usually dried for later use. There is much confusion in literature over this plant and P. pseudo-ginseng. It is probable that the two can be used interchangeably but this has still to be confirmed. The following are the uses attributed to P. pseudo-ginseng:- The roots and the flowers are antibacterial, anti-inflammatory, antiseptic, cardiotonic, diuretic, haemostatic and hypoglycaemic. The root is used internally in the treatment of coronary heart disease and angina. The roots are also used both internally and externally in the treatment of nosebleeds, haemorrhages from the lungs, digestive tract and uterus, and injuries. The roots are harvested in the autumn, preferably from plants 6 - 7 years old, and can be used fresh or dried. The flowers are used to treat vertigo and dizziness."@en ;
+  :plant_other_use_text "None known"@en .
+
+:PanaxQuinquefolius a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "american ginseng"@en .
+:PanaxQuinquefolius 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rich cool woods."@en ;
+  :plant_country_range "Eastern N. America - Maine to Georgia, west to Oklahoma and Minnesota."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Panax Quinquefolius is a PERENNIAL growing to 0.3 m (1ft) by 0.5 m (1ft 8in) at a slow rate. It is hardy to zone (UK) 3.  It is in flower in June. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "A tea is made from the leaves and the roots. The aromatic root is candied and used as a masticatory."@en ;
+  :plant_medicinal_use :Demulcent, :Stimulant, :Adaptogen, :HeartTreatment, :SedativeAndHypnotic, :Sialagogue, :Stomachic ;
+  :plant_medicinal_text "This N. American species of ginseng is said to have similar properties to the Oriental ginseng, P. ginseng, though it is said to have a milder action and is more likely to be prescribed for younger patients. It is cultivated in some areas of America as a medicinal crop and is also often harvested from the wild.The root is said to be adaptogen, cardiotonic, demulcent, panacea, sedative, sialagogue, stimulant and stomachic. It is used in the treatment of chronic cough, low-grade fever, spontaneous or night sweating and fatigue due to chronic consumptive disease. When taken over an extended period it is said to increase mental efficiency and physical performance whilst helping the body adapt to high or low temperatures and stress. Some caution is advised, though, because large doses are said to raise blood pressure. The root is harvested in the autumn and dried for later use. The following notes are the list of uses for P. ginseng. Ginseng has a history of herbal use going back over 5,000 years. It is one of the most highly regarded of herbal medicines in the Orient, where it has gained an almost magical reputation for being able to promote health, general body vigour and also to prolong life. The root is adaptogen, alterative, carminative, demulcent, emetic, expectorant, stimulant and tonic. It both stimulates and relaxes the nervous system, encourages the secretion of hormones, improves stamina, lowers blood sugar and cholesterol levels and increases resistance to disease. It is used internally in the treatment of debility associated with old age or illness, lack of appetite, insomnia, stress, shock and chronic illness. Ginseng is not normally prescribed for pregnant women, or for patients under the age of 40, or those with depression, acute anxiety or acute inflammatory disease. It is normally only taken for a period of 3 weeks. Excess can cause headaches, restlessness, raised blood pressure and other side effects, especially if it is taken with caffeine, alcohol, turnips and bitter or spicy foods. The roots are harvested in the autumn, preferably from plants 6 - 7 years old, and can be used fresh or dried. A dose of 10ug/ml of ginseng saponins has been shown to be significantly radio-protective when it is administered prior to gamma-irradiation. The leaf is emetic and expectorant."@en ;
+  :plant_other_use_text "None known"@en .
+
+:PolysciasFruticosa a owl:Class ;
+  rdfs:subClassOf :Araliaceae ;
+  :synonym "ming aralia"@en, "chinese ariala"@en .
+:PolysciasFruticosa 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Handling plant may cause skin irritation or allergic reaction"@en ;
+  :plant_habitat "Not known in a truly wild location"@en ;
+  :plant_country_range "The plant probably arose through cultivation - it is grown in many parts of tropical Asia."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Polyscias Fruticosa is an evergreen Shrub growing to 2.5 m (8ft) by 2 m (6ft) at a slow rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf, :PlantShoot ;
+  :plant_edible_text "Young leaves and shoots - cooked. Steamed and eaten as greens or added to soups etc as a flavouring. They have an aromatic flavour, reminiscent of parsley. Leaves, young shoots, and also roots, are consumed raw or cooked as a vegetable and flavouring."@en ;
+  :plant_medicinal_text "The plant has been used for centuries in traditional medicine, where it is seen as being analgesic, febrifuge and diuretic. The root has an agreeable and strongly aromatic smell, it tastes like parsley, and is used as a diuretic The bark is used medicinally."@en ;
+  :plant_other_use_text "Agroforestry Uses: The plant is widely grown as a hedge in the tropics. It is one of the most common hedges in the tropical lowlands. Other Uses The plant is used for making joss sticks by the Buddhist monks in Cambodia."@en .
+

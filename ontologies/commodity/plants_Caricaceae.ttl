@@ -1,0 +1,53 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Caricaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:CaricaPapaya a owl:Class ;
+  rdfs:subClassOf :Caricaceae ;
+  rdfs:comment "UN Harmonized System code 0807 (papaya, pawpaw)"@en ;
+  :synonym "papaya"@en, "mamo"@en, "melon tree"@en, "papaw"@en, "pawpaw"@en .
+:CaricaPapaya 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "Older leaves contain the alkaloid carpaine."@en ;
+  :plant_habitat "Not known as a truly wild plant"@en ;
+  :plant_country_range "The original habitat is believed to be Central America and southern Mexico, but is not known for certain."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Carica Papaya is an evergreen Tree growing to 8 m (26ft) by 4 m (13ft) at a fast rate. It is hardy to zone (UK) 10 and is frost tender. The flowers are pollinated by Bees, Moths, Wind. The plant is not self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It cannot grow in the shade. It prefers  moist soil. The plant is not wind tolerant."@en ;
+  :plant_edible_part :PlantSeed, :PlantFruit, :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Edible portion: Fruit, Flowers, Leaves, Vegetable, Seeds - spice. Fruit - raw or cooked. The vitamin-rich fruit has a firm, creamy texture and a delightful flavour reminiscent of melon and apricot. Delicious raw, it is a very versatile fruit and can also be preserved, dried, cooked in pies, made into jam, ice cream, jellies, sherbets etc. The immature green fruit can be eaten as a vegetable, either boiled, baked, made into chutneys, jams or added to vegetable soups etc. Seeds - used as a spice, especially in salad dressings. A pungent, mustard and cress-like flavour. Male flowers - cooked and used as a green vegetable. A bitter flavour, it is probably best to change the water at least once during the cooking. Very young leaves - cooked. A strong bitter flavour. Some caution is advised since older leaves contain alkaloids."@en ;
+  :plant_medicinal_text "The skin of the unripe fruit, the leaves, sap and seeds of the papaya are all a source of the enzyme papain, a digestive stimulant that facilitates the digestion of protein. The unripe fruit is an especially good source. Papain can be used internally, especially in the form of the extracted enzyme, to treat digestive disorders. It is also applied externally to aid the healing of deep or slow-healing wounds. An infusion of the young, latex-filled, green fruit is used as a children's vermifuge. The juice of the fruit is used to treat diabetes and hypertension. The immature fruit, sometimes combined with aspirin, is used as an abortifacient. The fruit pulp is mixed with fat in a pomade to remedy abscesses; The juice of the fruit is used to dissolve warts. The leaves and the fruit, especially the unripe fruit, are taken internally in the treatment of a range of digestive disorders, diarrhoea, high blood pressure and painful womb. The green leaves are cooked as a treatment for tertiary malaria and for irregular bowel movement in children. Externally, the leaves are applied to wounds as a dressing that helps to speed the healing process. The leaves and seeds are used locally to rid the body of threadworms and roundworms. The seeds are used as a gentle purgative to rid the body of worms. Immature seeds are swallowed to treat diarrhoea. The seed is eaten as a children's vermifuge, and also to increase visual acuity. The latex from the trunk of the tree has a strong purgative action when taken internally and is sometimes used to rid the body of worms. The latex is applied externally to wounds, boils, ulcers, warts and cancerous tumours in order to speed their healing. It is also applied to the gums to treat toothache. The ripe fruit is a mild laxative. A decoction of the ripe fruit is used to treat persistent diarrhoea and dysentery in children. An infusion of the flowers is drunk in order to induce menstruation, and also to treat laryngitis, bronchitis and venereal diseases. The flowers are used in combination with milk and butter as an appetite stimulant. The bark is used to treat diarrhoea. The inner bark is used to treat toothache. The root is aphrodisiac, astringent and vermifuge. The macerated root is used in the treatment of gonorrhoea. An infusion of the root in alcohol is used to treat bladder and kidney problems. A decoction is drunk to treat abdominal stricture, diarrhoea, malaria and intestinal worms. Applied externally, an infusion of the root in alcohol is rubbed on the limbs to treat rickets. A decoction of the root is used externally to treat abdominal stricture. The latex contains the protein-degrading (proteolytic) and mucolytic enzymes papain and chymopapain. The plant contains hydrocyanic acid, carpaine, terpene hydrocarbons, terpene alcohols, cyanogenic glycosides."@en ;
+  :plant_other_use_text "Other uses rating: Medium (3/5). Agroforestry Uses: Young leaves are used as mulch. Other Uses The dried leaves can be beaten in water to form a soap substitute. Papain, found in its greatest concentration in the latex in the skin of unripe fruits, has a multitude of uses. It is added to cosmetic skin creams, termite control, used in clarifying beer, degumming natural silk etc. A fibre obtained from the plant can be up to 150cm long, but it is of questionable utility. The whitish or pale yellow wood is very soft, very lightweight, and fleshy. There is a large white pith, and the centre of the trunk is hollow except at nodes. The wood is not used."@en .
+
+:VasconcelleaXHeilbornii a owl:Class ;
+  rdfs:subClassOf :Caricaceae ;
+  :synonym "babaco"@en, "highland papaya"@en .
+:VasconcelleaXHeilbornii 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. America - Andes."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Vasconcellea X Heilbornii is an evergreen Tree growing to 2 m (6ft) by 1.5 m (5ft) at a medium rate.  It is hardy to zone (UK) 10. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. Fragrant and flavourful. The flavour has been likened to the taste of strawberry, with a hint of pineapple. The fruit is usually seedless and can weigh 2 kilos."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses None known"@en .
+

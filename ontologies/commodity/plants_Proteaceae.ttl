@@ -1,0 +1,145 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Proteaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:EuplassaCantareirae a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "louro faja"@en .
+:EuplassaCantareirae 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A canopy tree in the Atlantic rainforest, both in the mountain slopes and on the coastal plain, mainly in dense, primary forest, favouring moist, fertile soils."@en ;
+  :plant_country_range "S. America - southern and eastern Brazil."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Euplassa Cantareirae is an evergreen Tree growing to 20 m (65ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: The wood is thick-textured, wavy-grained, moderately heavy, hard to cut, with moderate mechanical properties and with low resistance to the attacks of wood-eating organisms. It is subject to warping when drying. A very beautiful wood, it can be used for decorative laminas and fine cabinet making."@en .
+
+:GevuinaAvellana a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "chilean hazel"@en, "chilean hazelnut"@en .
+:GevuinaAvellana 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Wet mountain forests, where it rapidly colonizes cleared areas. Grows from the snow-line down to the coast along the Pacific coast of the Andes. It is seldom found in groups."@en ;
+  :plant_country_range "S. America - Chile."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Gevuina Avellana is an evergreen Shrub growing to 10 m (32ft) by 10 m (32ft) at a slow rate. It is hardy to zone (UK) 9 and is frost tender. It is in leaf all year, in flower from June to August, and the seeds ripen in October. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Seed - raw or cooked. A pleasant taste, similar to cob nuts. A popular food in Chile where it is often sold in local markets and is a much sought after item of diet. The seed contains about 12.5% protein, 49.5% oil, 24.1% carbohydrate. The roasted seed is used as a coffee substitute."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Tannin, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The seedcase is a source of tannin. Wood - light, strong, easily worked, elastic, not very durable. It is used for furniture, oars, roof-shingles etc."@en .
+
+:MacadamiaHildebrandii a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "celebes nut"@en .
+:MacadamiaHildebrandii 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "In or near rainforests."@en ;
+  :plant_country_range "Origin: Sulawesi an island in Indonesia."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Macadamia Hildebrandii is an evergreen Tree growing to 14 m (46ft) by 10 m (32ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Macadamias are eaten fresh, roasted, and in baked goods. They are 7-8% protein. Carbon Farming Solutions - Staple Crop: oil (The term staple crop typically refers to a food that is eaten routinely and accounts for a dominant part of people's diets in a particular region of the world) ."@en ;
+  :plant_medicinal_text "None Known"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Possibly similar uses to similar species which include: agroforestry Uses: The decomposed husk is commonly used in potting soil. Other Uses: Macadamia shells may be used as fuel, generating sufficient energy to dry wet, in-shell nuts. The oil from the seed is used in cosmetics. The green seed hulls contain approximately 14% of tannins."@en .
+
+:MacadamiaIntegrifolia a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "macadamia"@en, "macadamia nut"@en .
+:MacadamiaIntegrifolia 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry rainforests of the eastern coastal scrub. Found mainly on alluvial situations bordering rivers and creeks where the fertile volcanic soils are rich in humus."@en ;
+  :plant_country_range "Australia - New South Wales, Queensland."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Macadamia Integrifolia is an evergreen Tree growing to 10 m (32ft) by 10 m (32ft) at a slow rate. It is hardy to zone (UK) 9 and is frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. The fine, crunchy texture, rich cream colour and delicate flavour make the macadamia nut one of the finest dessert nuts. The eating quality of the nut is enhanced by lightly roasting it in coconut oil and salting. Sweet and delicious, the seeds can also be added to cakes, biscuits, ice cream etc. They can be ground into a flour and then added to cereals to enrich their protein value. The shell is very hard, making it difficult to extract the seed. The seed is up to 3cm long and wide.  An edible oil can be obtained from the seed, though it is seldom extracted due to the high value of the seed. The seed contains the highest level of oil yet found in a nut - up to 75%. The oil contains 80% monounsaturated fats and 8% omega-6 fatty acids. It has a subtle, nutty flavour and is added to salads, used in cooking etc."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Agroforestry Uses: The decomposed husk is commonly used in potting soil. Macadamia will retard the growth of papaya trees planted near to it. Other Uses:  Macadamia shells may be used as fuel, generating sufficient energy to dry wet, in-shell nuts.  The oil from the seed is used in cosmetics.  The green seed hulls contain approximately 14% of tannins."@en .
+
+:MacadamiaTernifolia a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "macadamia nut"@en, "gympie nut"@en .
+:MacadamiaTernifolia 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Occurs in south-facing gullies with fertile, basalt-derived krasnozem soils or the interface between sandstone and basalt krasnozems."@en ;
+  :plant_country_range "Origin: E. Australia. The Small-fruited Queensland Nut is endemic to Queensland."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Macadamia Ternifolia is an evergreen Tree growing to 8 m (26ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Macadamias are eaten fresh, roasted, and in baked goods. They are 7-8% protein. Carbon Farming Solutions - Staple Crop: oil (The term staple crop typically refers to a food that is eaten routinely and accounts for a dominant part of people's diets in a particular region of the world) ."@en ;
+  :plant_medicinal_text "None Known"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Possibly similar uses to similar species which include: agroforestry Uses: The decomposed husk is commonly used in potting soil. Other Uses: Macadamia shells may be used as fuel, generating sufficient energy to dry wet, in-shell nuts. The oil from the seed is used in cosmetics. The green seed hulls contain approximately 14% of tannins. Carbon Farming Solutions - Other Systems: multistrata."@en .
+
+:MacadamiaTetraphylla a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "queensland nut"@en, "macadamia nut"@en .
+:MacadamiaTetraphylla 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "In or near rainforests. Found mainly on alluvial situations bordering rivers and creeks where the fertile volcanic soils are rich in humus."@en ;
+  :plant_country_range "Australia - New South Wales, Queensland."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Macadamia Tetraphylla is an evergreen Tree growing to 10 m (32ft) by 10 m (32ft) at a slow rate. It is hardy to zone (UK) 9 and is frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Seed - raw or cooked. Pleasantly flavoured and nutritious, the seed is a little sweeter than the related Macadamia integrifolia and contains a little less oil. They can be eaten as a dessert nut and can also be ground into a flour and then mixed with cereal flours to enrich the protein content. The shell is very hard, making it difficult to extract the seed. The seed is up to 30mm long and 24mm wide. The seed contains up to 72% of a high grade oil. This oil is seldom extracted due to the high value of the seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Agroforestry Uses: The decomposed husk is commonly used in potting soil. Other Uses:  Macadamia shells may be used as fuel, generating sufficient energy to dry wet, in-shell nuts.  The oil from the seed is used in cosmetics.  The green seed hulls contain approximately 14% of tannins.  The tree is used as a rootstock for M. Integrifolia."@en .
+
+:RoupalaMontana a owl:Class ;
+  rdfs:subClassOf :Proteaceae ;
+  :synonym "roupale"@en, "leopardwood"@en .
+:RoupalaMontana 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Savannahs in coastal areas, rock savannahs in the mountains and secondary forests on sandy soils. Moist and wet forests at elevations up to 144 metres."@en ;
+  :plant_country_range "S. America - Paraguay, Brazil, Bolivia, Peru, Ecuador, Colombia, Venezuela, the Guyanas; C. America - Panama to Mexico; Caribbean - Trinidad."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Roupala Montana is a deciduous Tree growing to 15 m (49ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "An infusion of the bark is used as a nerve stimulant."@en ;
+  :plant_other_use_text "Other Uses The wood is rough-textured, cross-grained, heavy, hard, with moderate mechanical properties, very durable in dry sites or when immersed in salt water. The wood is quite ornamental, especially the radial section, and has been compared with the European oak. It is used particularly for making furniture, fine cases and ornamental objects; and can also be used in naval construction, for sculptures, linings, window and door frames etc. (This report is for Roupala montana brasiliensis)."@en .
+

@@ -1,0 +1,797 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Asparagaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:AgaveAmericana a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "agave"@en, "american century plant"@en .
+:AgaveAmericana 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "Contact with the fresh sap can cause dermatitis in sensitive people. The plants have a very sharp and tough spine at the tip of each leaf. They need to be carefully sited in the garden."@en ;
+  :plant_habitat "Original habitat is unknown but it grows wild in Mexico on cultivated land and in pine woods. Sandy places in desert scrub at elevations around 200 metres in Texas and eastern Mexico."@en ;
+  :plant_country_range "South-western N. America. Naturalized in the Mediterranean."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Americana is an evergreen Perennial growing to 7.5 m (24ft) by 2.5 m (8ft) at a slow rate. It is hardy to zone (UK) 9 and is not frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Lepidoptera (Moths & Butterflies), bats.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantStem, :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "The heart of the plant is very rich in saccharine matter and can be eaten when baked. Sweet and nutritious, but rather fibrous. It is partly below ground. Seed - ground into a flour and used as a thickener in soups or used with cereal flours when making bread. Flower stalk - roasted. Used like asparagus. Sap from the cut flowering stems is used as a syrup or fermented into pulque or mescal. The sap can also be tapped by boring a hole into the middle of the plant at the base of the flowering stem."@en ;
+  :plant_medicinal_use :Antiseptic, :Antivenereal, :Diaphoretic, :Diuretic, :Odontalgic, :Laxative ;
+  :plant_medicinal_text "The sap of agaves has long been used in Central America as a binding agent for various powders used as poultices on wounds. The sap can also be taken internally in the treatment of diarrhoea, dysentery etc. The sap is antiseptic, diaphoretic, diuretic and laxative. An infusion of the chopped leaf is purgative and the juice of the leaves is applied to bruises. The plant is used internally in the treatment of indigestion, flatulence, constipation, jaundice and dysentery. The sap has disinfectant properties and can be taken internally to check the growth of putrefactive bacteria in the stomach and intestines. Water in which agave fibre has been soaked for a day can be used as a scalp disinfectant and tonic in cases of falling hair. Steroid drug precursors are obtained from the leaves. A gum from the root and leaf is used in the treatment of toothache. The root is diaphoretic and diuretic. It is used in the treatment of syphilis. All parts of the plant can be harvested for use as required, they can also be dried for later use. The dried leaves and roots store well."@en ;
+  :plant_other_use :Fibre, :Insecticide, :SoapAndSubstitute, :Thatching, :Paper, :SoilReclamation, :NeedleAndPin ;
+  :plant_other_use_text "The plant contains saponins. An extract of the leaves is used as a soap. The roots are used according to another report. It is likely that the root is the best source of the saponins that are used to make a soap. Chop up the leaves or the roots into small pieces and then simmer them in water to extract the saponins. Do not over boil or you will start to break down the saponins. There is a report that the plant has insecticidal properties, but further details are not given. A very strong fibre obtained from the leaves is used for making rope, coarse fabrics etc. A paper can also be made from the leaves. The thorns on the leaves are used as pins and needles. The dried flowering stems are used as a waterproof thatch and as a razor strop. The plants are used in land-reclamation schemes in arid areas of the world."@en .
+
+:AgaveCantalaAgave a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "agave"@en .
+:AgaveCantalaAgave 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "Agave cantala is a species in the genus Agave which contains approximately 257 to 341 species and belongs to the family of the Agavaceae (Century-plant Family). The type species of the genus is Agave americana."@en ;
+  :plant_habitat "Not known as a truly wild plant"@en ;
+  :plant_country_range "C. America to southern N. America - Mexico."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Cantala Agave is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft) at a fast rate. It is hardy to zone (UK) 10 and is frost tender.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantStem ;
+  :plant_edible_text "Shoot buds - cooked and eaten as a vegetable."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other uses rating: High (4/5). Agroforestry Uses: Often planted as a hedge along the roadsides and in gardens, it is also used for reducing soil erosion along rivers and brooks. Other Uses A fibre is obtained from the leaves. It is mainly used for baskets, mats, fishing-nets, ropes, harvest binding strings, hammocks, bags and sandals. The fibre is finer but less strong than that of sisal (Agave sisalana) and henequen (Agave fourcroydes). It is more suitable for spinning than that of sisal. Wrapping paper is produced from the remainders. The roots contain saponins and can be used as a soap substitute."@en .
+
+:AgaveFourcroydes a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "henequen"@en .
+:AgaveFourcroydes 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "C. America - Guatemala to southern Mexico."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Fourcroydes is an evergreen Perennial growing to 1.8 m (6ft) by 1.8 m (6ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The plant is used for medicinal purposes."@en ;
+  :plant_other_use_text "Agroforestry Uses: The plants are cultivated as hedges and living fences in Cuba. Other Uses A fibre is obtained from the leaves. Coarser than the fibres from sisal (Agave sisalana), they are used for the production of ropes, nets, floor-covering and harvest binding strings. The roots contain saponins and can be used as a soap substitute."@en .
+
+:AgaveLechuguilla a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "ixtle"@en, "chihuahua"@en .
+:AgaveLechuguilla 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Sharp Leaves"@en ;
+  :plant_habitat "Restricted to desert habitats preferring limestone soils and alluvial soils in xerophyllous scrub, the limit of the distribution goes up to Pine and Juniper forests."@en ;
+  :plant_country_range "Mesoamerica. Mexico; United States (Texas, New Mexico). Found only in the Chihuahuan Desert, where it is an indicator species."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Lechuguilla is an evergreen Perennial growing to 0.6 m (2ft) by 0.6 m (2ft in) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral and basic (alkaline) soils and can grow in very alkaline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantStem ;
+  :plant_edible_text "The water stored in the flowering stalks of this plant, rich in salts and minerals, is sold in Mexico as a sport drink."@en ;
+  :plant_medicinal_text "Aztecs made a powerful antibiotic from a mixture of Lechuguilla juice and salt and used it as a dressing for wounds and a balm for skin infections."@en ;
+  :plant_other_use_text "Carbon farming Solutions - Industrial Crop: fiber (Crops grown for non-food uses. Industrial crops provide resources in three main categories: materials, chemicals, and energy. Traditional materials include lumber and thatch, paper and cardboard, and textiles). Agroforestry Services: living fence (Agroforestry is a land use management system in which trees or shrubs are grown around or among crops or pastureland). This species is mainly used in the fabrication of brushes and scrubbers (NatureServe 2009); the leaf fibres are used to make ropes (SpottedBird 2000). Utilization of lechuguilla fibers, soaps, foods, and drinks by southwestern people (US) was extensive historically and continues today. Lechuguilla fibers called 'istles,' Ixtili, or Tampico are strong and durable. Fibers were used to make ropes, twine, sacks, saddle cloths, basketry, paint brushes, sandals, hair brushes, and when formed into a cord was used in clothing construction. Lechuguilla nectar attracts hummingbirds, wasps, bees, butterflies, and beetles."@en .
+
+:AgaveMurpheyi a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "hohokam agave"@en, "murphey agave"@en .
+:AgaveMurpheyi 
+  :plant_hardiness_zones "8-12" ;
+  :plant_hazards "Sharp Leaves"@en ;
+  :plant_habitat "Grows in warm temperate to subtropical highlands, arid to semi-arid. Plants are usually found in close proximity of major drainage systems on open, hilly slopes or alluvial terraces in desert scrub with pre-Columbian agricultural and settlement features. Agave murpheyi grows at elevations from 400 to 900 meters."@en ;
+  :plant_country_range "Southern-central Arizona (U.S.A., Northern America) from the Bradshaw and New River Mountains, east to the Sierra Ancha Mountains and northern Sonora desert (Mexico)."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Murpheyi is an evergreen Perennial growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a slow rate. It is hardy to zone (UK) 7.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantBud ;
+  :plant_edible_text "Edible Portion: Heart, Growing tip. Agave murpheyi was cultivated by the Hohokam and possibly other Native Americans for both food and fiber. For food the basal rosette was harvested just before the Hohokam agave sent up a flower stalk. At this time the concentration of sugars in the rosette is at its highest The rosettes weighing about 4 kg were cooked for two or three days in a pit filled with hot stones and covered with hot coals and dirt. The baked rosette compared in taste to a sweet potato (although containing inedible fiber) is nutritious with 347 calories and 3.5 grams of protein per 100 grams. Carbon Farming Solutions - Staple Crop: basic starch (The term staple crop typically refers to a food that is eaten routinely and accounts for a dominant part of people's diets in a particular region of the world) ."@en ;
+  :plant_medicinal_text "None Known"@en ;
+  :plant_other_use_text "A good potted plant. An excellent garden landscape plants. Accent Plant."@en .
+
+:AgaveParryi a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "century plant"@en, "parry's agave"@en, "mescal"@en .
+:AgaveParryi 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "The plants have a very sharp and tough spine at the tip of each leaf. They need to be carefully sited in the garden."@en ;
+  :plant_habitat "Semi-arid land, 1300 - 2400 metres. Gravelly to rocky places in grasslands, desert scrub, chaparral, pinyon-juniper, and oak woodlands, 1200 - 2800 metres Ariz., N.Mex.; nw Mexico."@en ;
+  :plant_country_range "South-western N. America - Arizona to New Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Parryi is an evergreen Perennial growing to 0.5 m (1ft 8in) by 1 m (3ft 3in) at a slow rate. It is hardy to zone (UK) 8 and is not frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Moths, bats.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantStem, :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "The heart of the plant is very rich in saccharine matter and can be eaten when baked. Sweet and nutritious, but rather fibrous. It is partly below ground. Seed - ground into a flour and used as a thickener in soups or used with cereal flours when making bread. Young flower stalk - raw or cooked. It was generally roasted. Tender young leaves - roasted. Sap from the cut flowering stems is used as a syrup. Nectar from the flowering stems is made into a sweet syrup. The sap can also be tapped by boring a hole into the middle of the plant at the base of the flowering stem. It can be fermented into 'Mescal', a very potent alcoholic drink."@en ;
+  :plant_medicinal_use :Laxative, :Diuretic, :Antiseptic ;
+  :plant_medicinal_text "The sap is antiseptic, diuretic and laxative."@en ;
+  :plant_other_use :Fibre, :SoapAndSubstitute, :Thatching, :Paper, :NeedleAndPin ;
+  :plant_other_use_text "The leaves contain saponins and an extract of them can be used as a soap. It is best obtained by chopping up the leaves and then simmering them in water - do not boil for too long or this will start to break down the saponins. A very strong fibre obtained from the leaves is used for making rope, coarse fabrics etc. A paper can also be made from the fibre in the leaves. The thorns on the leaves are used as pins and needles. The dried flowering stems are used as a waterproof thatch and as a razor strop."@en .
+
+:AgaveSalmiana a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "pulque agave"@en, "giant agave"@en .
+:AgaveSalmiana 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "C. America to southern N. America - southern and central Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Salmiana is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantStem ;
+  :plant_edible_text "The sap is fermented to make the alcoholic drink 'pulque'. As soon as the inflorescence bud appears (at an age of about 7 years), it is excised. The sweet juice which then exudes for the next 3 - 4 months is collected and fermented. Sometimes a brandy is produced by means of distillation of pulque which contains 4 - 8% ethanol. It is also possible to produce sugar or vinegar from the sugar-containing juice. The flowering stems are cut into sections and then chewed like sugar cane. The cuticle of the young leaves of the central spike is used as a translucent wrapping for the Mexican dish 'mixiote', which is prepared for festive occasions."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "The leaves, especially the youngest ones, provide fibres suitable for the production of laces, fine clothes and foodwear. The roots contain saponins and can be used as a soap substitute. An architectural succulent. Deer Tolerant."@en .
+
+:AgaveSisalana a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "sisal"@en .
+:AgaveSisalana 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "Sisal plants, Agave sisalana, consist of a rosette of sword-shaped leaves about 1.5-2 metres (4.9-6.6 ft) tall. Young leaves may have a few minute teeth along their margins, but lose them as they mature. The sisal plant has a 7-10 year life-span and typically produces 200-250 commercially usable leaves. Each leaf contains an average of around 1000 fibres. The fibres account for only about 4% of the plant by weight. Sisal is considered a plant of the tropics and subtropics, since production benefits from temperatures above 25 degrees Celsius and sunshine."@en ;
+  :plant_habitat "Planted abundantly in some regions, and, often escaping, seen in many localities in hedges or fence-rows."@en ;
+  :plant_country_range "C. America - southern Mexico."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Sisalana is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft) at a fast rate. It is hardy to zone (UK) 10 and is frost tender.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantSapAndManna, :PlantLeaf ;
+  :plant_edible_text "Edible portion: Leaves, Sap, Plant heart, Vegetable. Root. The heart of new shoots - cooked. The sap from the flower stalk is fermented to make an alcoholic drink. The roots are used in the production of an alcoholic beverage."@en ;
+  :plant_medicinal_text "Sisal is a folk remedy for dysentery, leprosy sores, and syphilis. It is a source of hecogenin. The leaves contain hecogenin used in the partial synthesis of the drug cortisone."@en ;
+  :plant_other_use_text "Other uses rating: High (4/5). Agroforestry Uses: The plant is cultivated for fences as well as for protection against soil erosion. Short fibres from the leaves, obtained as by-products, are used for production of compost. Other Uses A high quality fibre is obtained from the leaves.The leaves provide one of the most important hard fibres, it is used for making ropes and all kinds of strings, fishing-nets, hammocks, door-curtains, floor-covers, bags etc. The fibre cannot be spun as finely as jute and ropes tend to break suddenly. Short fibres, obtained as by-products, are used for production of cellulose, paper as well as for upholstery material. Fibres are also used to reinforce plaster boards and paper. The waste material, after extraction of the fibre, is reported to be molluscicidal and fungistatic and can be used as mulch for plants. The sharp leaf spines are traditionally used as needles."@en .
+
+:AgaveTequilana a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "blue agave"@en, "mescal"@en, "tequila"@en .
+:AgaveTequilana 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Each leaf ends in sharp point!"@en ;
+  :plant_habitat "Native to the arid highlands of Mexico. Prefers sandy soils in arid and semi-arid subtropical areas."@en ;
+  :plant_country_range "C. America to southern N. America - Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Tequilana is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Bats.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantSapAndManna ;
+  :plant_edible_text "The sap of the plant is concentrated to make a sugar-rich syrup known as 'Agave syrup' or 'Agave nectar'. The sugar-rich sap is extracted from the roasted bases of the defoliated flowering stems of the plants shortly before flowering, and is then fermented and distilled into mescal and tequila."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A fibre is obtained from the leaves. Known as 'Jarsia', the fibres are soft enough to be used for yarn production. The squeezed shoot axes are used to stabilize loam-bricks. Recently, blue agave has also been suggested as a potential source of ethanol (biofuel)."@en .
+
+:AgaveUtahensisDiscreta a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "century plant"@en .
+:AgaveUtahensisDiscreta 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "The plants have a very sharp and tough spine at the tip of each leaf. They need to be carefully sited in the garden."@en ;
+  :plant_habitat "Dry stony limestone slopes, 1000 - 1500 metres."@en ;
+  :plant_country_range "South-western N. America - found in the Grand Canyon."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Utahensis Discreta is an evergreen Perennial growing to 4 m (13ft) by 2 m (6ft).  It is hardy to zone (UK) 9 and is not frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Moths, bats.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem, :PlantSeed, :PlantLeaf, :PlantSapAndManna ;
+  :plant_edible_use :Beverage ;
+  :plant_edible_text "The heart of the plant is very rich in saccharine matter and can be eaten when baked. Sweet and delicious, but rather fibrous. It is partly below ground. Can be dried for future use or soaked in water to produce a flavourful beverage. Seed - ground into a flour. Flower stalk - roasted. Root - cooked. Sap from the cut flowering stems is used as a syrup. The sap can also be tapped by boring a hole into the middle of the plant at the base of the flowering stem. It can be fermented into 'Mescal', a very potent alcoholic drink."@en ;
+  :plant_medicinal_use :Laxative, :Diuretic, :Antiseptic ;
+  :plant_medicinal_text "The sap is antiseptic, diuretic and laxative."@en ;
+  :plant_other_use :Brush, :Fibre, :SoapAndSubstitute, :Thatching, :Paper, :NeedleAndPin ;
+  :plant_other_use_text "The leaves contain saponins and an extract of them can be used as a soap. It is best obtained by chopping up the leaves and then simmering them in water - do not boil for too long or this will start to break down the saponins. A very strong fibre obtained from the leaves is used for making rope, coarse fabrics etc. To make hair brushes and brushes for cleaning, the dried matter of a dead and rotten leaf was knocked free from the fibres, which were then bent in two. the upper end of this brush was wrapped with a cord and the bent portion was covered with a cloth. The loose fibres were cut to the right length and hardened by burning the ends. A paper can also be made from the fibre in the leaves. The thorns on the leaves are used as pins and needles. The dried flowering stems are used as a waterproof thatch and as a razor strop."@en .
+
+:AgaveUtahensisEborispina a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "century plant"@en .
+:AgaveUtahensisEborispina 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "The plants have a very sharp and tough spine at the tip of each leaf. They need to be carefully sited in the garden."@en ;
+  :plant_habitat "Dry stony limestone slopes, 1000 - 1500 metres. Calcareous outcrops with desert scrub at elevations of 1100 - 1900 metres in California and Nevada."@en ;
+  :plant_country_range "South-western N. America"@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Utahensis Eborispina is an evergreen Perennial growing to 4 m (13ft) by 2 m (6ft).  It is hardy to zone (UK) 9 and is not frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs) and is pollinated by Moths, bats.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem, :PlantSeed, :PlantLeaf, :PlantSapAndManna ;
+  :plant_edible_use :Beverage ;
+  :plant_edible_text "The heart of the plant is very rich in saccharine matter and can be eaten when baked. Sweet and delicious, but rather fibrous. It is partly below ground. Can be dried for future use or soaked in water to produce a flavourful beverage. Seed - ground into a flour. Flower stalk - roasted. Root - cooked. Sap from the cut flowering stems is used as a syrup. The sap can also be tapped by boring a hole into the middle of the plant at the base of the flowering stem. It can be fermented into 'Mescal', a very potent alcoholic drink."@en ;
+  :plant_medicinal_use :Laxative, :Diuretic, :Antiseptic ;
+  :plant_medicinal_text "The sap is antiseptic, diuretic and laxative."@en ;
+  :plant_other_use :Brush, :Fibre, :SoapAndSubstitute, :Thatching, :Paper, :NeedleAndPin ;
+  :plant_other_use_text "The leaves contain saponins and an extract of them can be used as a soap. It is best obtained by chopping up the leaves and then simmering them in water - do not boil for too long or this will start to break down the saponins. A very strong fibre obtained from the leaves is used for making rope, coarse fabrics etc. To make hair brushes and brushes for cleaning, the dried matter of a dead and rotten leaf was knocked free from the fibres, which were then bent in two. the upper end of this brush was wrapped with a cord and the bent portion was covered with a cloth. The loose fibres were cut to the right length and hardened by burning the ends. A paper can also be made from the fibre in the leaves. The thorns on the leaves are used as pins and needles. The dried flowering stems are used as a waterproof thatch and as a razor strop."@en .
+
+:AgaveVivipara a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "mescal casero"@en .
+:AgaveVivipara 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None Known"@en ;
+  :plant_habitat "Subtropical to tropical. semi-arid to humid"@en ;
+  :plant_country_range "Mesoamerica. Caribbean - Aruba; Netherlands Antilles."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Agave Vivipara is an evergreen Perennial growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFlower, :PlantFruit, :PlantStem, :PlantLeaf, :PlantSapAndManna ;
+  :plant_edible_text "Many, if not all, of the reports on the uses of this species actually refer to A. Angustifolia. To date we have not found any reports that definitely refer to this species. Since A. Angustifolia is very similar, it is quite possible that both species have similar uses. Below are the uses listed for A. Angustifolia:- Flower buds and flowers. Young flower peduncles. Stems. Leaf bases. Fruit. The flowering stems are cooked and their juice extracted, fermented, and distilled into alcoholic beverages. The sap can be concentrated into a sweet syrup known as 'Agave Nectar' or 'Agave Syrup'."@en ;
+  :plant_medicinal_text "Many, if not all, of the reports on the uses of this species actually refer to A. Angustifolia. To date we have not found any reports that definitely refer to this species. Since A. Angustifolia is very similar, it is quite possible that both species have similar uses. Below are the uses listed for A. Angustifolia:- The juice of the cooked leaves and stems, and a root infusion, are taken internally or used as poultices for both internal and external swelling, as well as for bruises, liver and kidney diseases, arthritis, and dysentery. The roots are diaphoretic and diuretic."@en ;
+  :plant_other_use_text "Agroforestry Uses: Many, if not all, of the reports on the uses of this species actually refer to A. Angustifolia. To date we have not found any reports that definitely refer to this species. Since A. Angustifolia is very similar, it is quite possible that both species have similar uses. Below are the uses listed for A. Angustifolia:- Often planted in hedges. Other Uses: A fibre from the leaves is used for making rope. The leaves are used for thatching. The spines on the leaves are used as nails or needles. The flowering stem can be used as posts, rafters, and fences. The root contains saponins and can be used as a soap substitute. The sticky sap of the leaves is added to whitewash to make it adhere to walls. The dried plant is burnt for fuel. Carbon Farming - Industrial Crop: fiber. Agroforestry Services: living fence."@en .
+
+:AsparagusAcutifolius a owl:Class ;
+  rdfs:subClassOf :Asparagaceae .
+:AsparagusAcutifolius 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Bushy and dry sunny places, mainly on limestone."@en ;
+  :plant_country_range "Europe - Mediterranean."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Asparagus Acutifolius is an evergreen Perennial growing to 1.5 m (5ft).  It is hardy to zone (UK) 8 and is frost tender. It is in leaf all year, in flower from August to September. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required).  and is pollinated by Bees. The plant is not self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantStem ;
+  :plant_edible_text "Young shoots - cooked. An asparagus substitute, it is preferred by gourmets for its stronger flavour. Excellent when seasoned with oil and lemon juice. Thin, bitter and often stringy according to another report. Very aromatic. A uniquely bitter aromatic flavour. The new shoots are rather thin and are not produced in abundance."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:AsparagusCochinchinensis a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "chinese asparagus"@en .
+:AsparagusCochinchinensis 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Near seashores all over Japan. Thinly forested slopes, roadsides and waste fields from near sea level to 1700 metres in China."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Asparagus Cochinchinensis is a PERENNIAL growing to 1.5 m (5ft) by 1 m (3ft 3in).  It is hardy to zone (UK) 7.  It is in flower from May to June, and the seeds ripen in September. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required).  and is pollinated by Bees. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantRoot ;
+  :plant_edible_text "Tubers - cooked. The tubers are up to 5cm long and 2m wide. They are washed to remove the bitterness, the fibrous core is removed and the root is then boiled. It tastes like asparagus. Another report says that the tubers are eaten after preserving in sugar. The fruit is said to be edible. The fruit is about 6 - 8mm in diameter. Another report says that the berries are harmful if eaten."@en ;
+  :plant_medicinal_use :Nervine, :Tonic, :Antitussive, :ExpectorantAndMucoactiveAgent, :InfertilityTreatment, :Sialagogue, :Antibacterial, :Antiinflammatory, :Anticancer, :Diuretic, :Stomachic, :Antipyretic, :Antiseptic ;
+  :plant_medicinal_text "This species has been used in traditional Chinese medicine for over 2,000 years. The roots contain asparagine, mucilage, starch and sugars. The dried root is antibacterial, anti-inflammatory, antipyretic, antiseptic, antitussive, diuretic, expectorant, nervine, sialagogue, stomachic, nervous stimulant and tonic. It is taken internally in the treatment of fevers, debility, sore throats, coughs etc. It is often decocted with other herbs and used in the treatment of a wide range of ailments including diabetes mellitus. It is commonly used in restorative recipes together with Rehmannia glutinosa and Codonopsis javanica. Prolonged usage is recommended for the treatment of impotence. The root is harvested when the plant is dormant and is dried for later use. The plant has a folk history for the treatment of cancer, modern research has detected antitumour activity and it is now being studied for the treatment of lung cancer."@en ;
+  :plant_other_use :Insecticide ;
+  :plant_other_use_text "Kills the larvae of flies and mosquitoes. No more details."@en .
+
+:AsparagusOfficinalis a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  rdfs:comment "UN Harmonized System code 0709 (asparagus)"@en ;
+  :synonym "asparagus"@en, "garden asparagus"@en .
+:AsparagusOfficinalis 
+  :plant_hardiness_zones "2-9" ;
+  :plant_hazards "Large quantities of the shoots can irritate the kidneys. The berries are mildly poisonous."@en ;
+  :plant_habitat "Fertile and sandy soils by the seashore and along river banks."@en ;
+  :plant_country_range "Western Europe, including Britain, from N. Germany to S. W. France."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Asparagus Officinalis is a PERENNIAL growing to 1.5 m (5ft) by 0.8 m (2ft 7in).  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower in August, and the seeds ripen from September to October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required).  and is pollinated by Bees. The plant is not self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid, very alkaline and saline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantStem ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Young shoots - raw or cooked. Considered a gourmet food, the shoots are harvested in the spring. We find them very acceptable raw in salads, with a hint of onion in their flavour. They are normally boiled or steamed and used as a vegetable. Male plants produce the best shoots. Do not over-harvest the plant because this would weaken it in the following year. The shoots are a good source of protein and dietary fibre. Roasted seeds are a coffee substitute."@en ;
+  :plant_medicinal_use :Tonic, :Demulcent, :Antispasmodic, :HeartTreatment, :SedativeAndHypnotic, :Diaphoretic, :Diuretic, :Anticancer, :Antibiotic, :Laxative ;
+  :plant_medicinal_text "Asparagus has been cultivated for over 2,000 years as a vegetable and medicinal herb. Both the roots and the shoots can be used medicinally, they have a restorative and cleansing effect on the bowels, kidneys and liver. The plant is antispasmodic, aperient, cardiac, demulcent, diaphoretic, diuretic, sedative and tonic. The freshly expressed juice is used. The root is diaphoretic, strongly diuretic and laxative. An infusion is used in the treatment of jaundice and congestive torpor of the liver. The strongly diuretic action of the roots make it useful in the treatment of a variety of urinary problems including cystitis. It is also used in the treatment of cancer. The roots are said to be able to lower blood pressure. The roots are harvested in late spring, after the shoots have been cut as a food crop, and are dried for later use. The seeds possess antibiotic activity. Another report says that the plant contains asparagusic acid which is nematocidal and is used in the treatment of schistosomiasis."@en ;
+  :plant_other_use :Insecticide ;
+  :plant_other_use_text "The plant contains asparagusic acid, which has nematocidal properties."@en .
+
+:AsparagusRacemosus a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "shatavari"@en .
+:AsparagusRacemosus 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Found at elevations up to 1,200 metres in the Himalayas, eastwards from Kashmir. Broad-leaved forests along streams or valleys at elevations of 2100 - 2200 metres in western China."@en ;
+  :plant_country_range "E. Asia - China, Japan, India."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Asparagus Racemosus is a PERENNIAL growing to 7 m (23ft).  It is hardy to zone (UK) 9 and is frost tender.  It is in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem ;
+  :plant_edible_text "Tender young shoots - cooked as a vegetable. A preserve prepared from the blanched shoots is said to be very agreeable. The tuber are candied as a sweetmeat. The only flavour is said to be that of the sugar. The roots are 5 - 13cm long."@en ;
+  :plant_medicinal_use :Galactogogue, :Alterative, :Demulcent, :InfertilityTreatment, :Antispasmodic, :Digestive, :Aphrodisiac, :Diuretic ;
+  :plant_medicinal_text "Shatavari (this is an Indian word meaning 'a woman who has a hundred husbands') is the most important herb in Ayurvedic medicine for dealing with problems connected women's fertility. The rhizome is a soothing tonic that acts mainly on the circulatory, digestive, respiratory and female reproductive organs. The root is alterative, antispasmodic, aphrodisiac, demulcent, diuretic, galactogogue and refrigerant. It is taken internally in the treatment of infertility, loss of libido, threatened miscarriage, menopausal problems, hyperacidity, stomach ulcers and bronchial infections. Externally it is used to treat stiffness in the joints. The root is used fresh in the treatment of dysentery. It is harvested in the autumn and dried for use in treating other complaints. The whole plant is used in the treatment of diarrhoea, rheumatism, diabetes and brain complaints."@en ;
+  :plant_other_use :SoapAndSubstitute ;
+  :plant_other_use_text "The squeezed root is used for washing clothes."@en .
+
+:CamassiaCusickii a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "cussick's camas"@en .
+:CamassiaCusickii 
+  :plant_hardiness_zones "3-11" ;
+  :plant_hazards "Although no hazards are known Camassia spp. can be mistaken for Zigadenus spp. when not flowering which are very toxic."@en ;
+  :plant_habitat "Damp meadows at subalpine and alpine elevations (4,000–6,000 feet (1,200–1,800 m) and tolerates pond edges, rich soils, and bloom well in either sun or shade."@en ;
+  :plant_country_range "A Pacific Northwest U.S. native that’s been cultivated commercially in the Netherlands."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Camassia Cusickii is a BULB growing to 0.9 m (3ft) by 0.6 m (2ft in) at a medium rate.  It is hardy to zone (UK) 3.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb. The cooked bulb has a sweet, anise-squash flavour. Pressure cook at 250°F or 120°C for nine hours. A larger bulb than other species in this genus but the flavour is considered poorer . Considered pungent, slimy, and bitter tasting by some (summitpost.org). The bitter taste is due to saponins in the plant. Commonly confused with C. quamash where Native Americans would harvest the roots to eat raw as a vegetables, or boiled them to create a sweet, molasses-like treat."@en ;
+  :plant_medicinal_text "None Known"@en ;
+  :plant_other_use_text "Uses include food forests, informal gardens, cottage gardens, prairie and meadows. Locations include: garden banks and slopes, beds and borders and can be underplanted with roses and other shrubs. Showy, cut flowers. Thrives among perennials. C. cusickii can naturalize and serve as a good ground cover."@en .
+
+:CamassiaLeichtlinii a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "wild hyacinth"@en, "large camas"@en, "suksdorf's large camas"@en .
+:CamassiaLeichtlinii 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Meadows, prairies and hillsides that are moist, at least in early spring."@en ;
+  :plant_country_range "Western N. America - British Columbia to S. California."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Camassia Leichtlinii is a BULB growing to 1 m (3ft 3in) by 0.2 m (0ft 8in).  It is hardy to zone (UK) 3 and is not frost tender. It is in leaf from March to August, in flower from June to July, and the seeds ripen in July. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb - raw or cooked. The bulb is about 3cm in diameter, eaten raw it has a mild, starchy flavour, but a gummy texture that reduces the enjoyment of it somewhat. It is excellent when slow baked, however, developing a sweet flavour and making a very good potato substitute. The cooked bulb can also be dried for later use or ground into a powder and used as a thickener in soups or as an additive to cereal flours when making bread, cakes etc. The bulbs can be boiled down to make a molasses, this was used on festival occasions by various Indian tribes. One report says that the bulbs contain inulin (a starch that cannot be digested by humans) but that this breaks down when the bulb is cooked slowly to form the sugar fructose which is sweet and easily digested."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:CamassiaQuamash a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "quamash"@en, "small camas"@en, "utah small camas"@en, "walpole's small camas"@en .
+:CamassiaQuamash 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Coastal mountain forests and wet meadows inland. Marshy meadows in coniferous forest, to 2300 metres."@en ;
+  :plant_country_range "Western N. America - Washington to California, east to Montana and Utah."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Camassia Quamash is a BULB growing to 0.3 m (1ft) by 0.2 m (0ft 8in).  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from May to June, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb - raw or cooked. The bulb, which can be up to 5cm in diameter, has a mild, starchy flavour when eaten raw, but a gummy texture that reduces the enjoyment of it somewhat. When cooked, however, it develops a delicious sweet flavour somewhat like sweet chestnuts, and is a highly nutritious food. Excellent when slow baked, it can also be dried and made into a powder which can be used as a thickener in stews or mixed with cereal flours when making bread, cakes etc. The bulbs can be boiled down to make a molasses, this was used on festival occasions by various Indian tribes. The bulbs can be harvested at any time of the year, but are probably best in early summer when the seeds are ripe. One report says that the bulbs contain inulin (a starch that cannot be digested by humans) but that this breaks down when the bulb is cooked slowly to form the sugar fructose which is sweet and easily digested. Quamash bulbs were a staple food of the N. American Indians. The tribes would move to the Quamash fields in the early autumn and, whilst some people harvested the bulbs, others would dig a pit, line it with boulders then fill it with wood and set fire to it. The fire would heat the boulders and the harvested bulbs would then be placed in the pit and the whole thing covered with earth and the bulbs left to cook slowly for 2 days. The pit would then be opened and the Indians would feast on the bulbs until they could no longer fit any more in their stomachs. Whatever was left would be dried and stored for winter use."@en ;
+  :plant_medicinal_use :BirthingAid, :Oxytoxic ;
+  :plant_medicinal_text "A decoction of the roots has been used to induce labour. An infusion of the leaves has been used to treat vaginal bleeding after birth and to help expel the placenta."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CamassiaScilloides a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "atlantic camas"@en .
+:CamassiaScilloides 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Low fields, meadows and open woods. Prairies at elevations of 100 - 1000 metres."@en ;
+  :plant_country_range "Eastern N. America. - Ontario to Wisconsin and southwards."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Camassia Scilloides is a BULB growing to 0.6 m (2ft).  It is hardy to zone (UK) 7 and is not frost tender.  It is in flower in May. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb - raw or cooked. The bulb was an important food for several native North American Indian tribes who used it in a variety of ways. It can be baked or dried and made into a powder which can be used as a thickener in stews or as an additive to cereal flours when making bread, cakes etc. The bulb is about 4cm long and 15mm wide."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:ChlorogalumPomeridianum a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "soap lily"@en, "wavyleaf soap plant"@en .
+:ChlorogalumPomeridianum 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "The bulb contains saponins. Although fairly toxic, these substances are very poorly absorbed by the body and most of them simply pass straight through. Saponins are found in a number of common foods, including many beans. They are destroyed by thorough cooking. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Dry open hills and plains, occasionally in woods, below 1500 metres."@en ;
+  :plant_country_range "South-western N. America - California."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Chlorogalum Pomeridianum is a BULB growing to 2 m (6ft) by 0.3 m (1ft in).  It is hardy to zone (UK) 8 and is not frost tender.  It is in flower from May to June. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Bulb - cooked. A slow baking in its skin will remove any soapiness in the taste. The bulb should be peeled before being eaten since the skin is fibrous. The bulb can also be peeled and then boiled, though the water it is cooked in should be thrown away. Although wholesome and nutritious when thoroughly cooked, the raw bulb should not be eaten because it contains saponins. The bulb is very large and can be up to 15cm in diameter. Young leaves - raw or cooked. Used as a potherb when harvested in the spring, they are very sweet when slowly baked."@en ;
+  :plant_medicinal_use :Antiseborrheic, :Laxative, :Poultice, :Diuretic, :SkinTreatment, :Antiarthritic, :Antiseptic ;
+  :plant_medicinal_text "Soap lily bulbs contain saponins, a medicinally active ingredient that is of particular value as an antiseptic wash. Saponins are somewhat toxic (see the notes above on toxicity) and so any internal use of this plant should be carried out with great care. The bulb is antiseptic, carminative, diuretic and laxative. A decoction has been used to treat wind in the stomach. Externally, the bulbs have been rubbed on rheumatic joints. The pounded bulbs were mixed with water and used as a hair wash in the treatment of dandruff, to prevent lice and also to treat skin irritations including that caused by poison oak. A poultice of the baked bulbs has been used as an antiseptic on skin sores."@en ;
+  :plant_other_use :SoapAndSubstitute, :GumAndAdhesive, :Fibre ;
+  :plant_other_use_text "A glue can be made from the sap that is expressed from baking bulbs. The bulbs can be boiled into a liquid starch which can then be used to twined baskets to close the interstices so that seeds do not fall through. A soap is obtained from the bulb. The bulb is stripped of its outer fibrous covering and rubbed on clothes or hands in water to produce a lather. It is very good for delicate fabrics and has a gentle affect upon the skin. The bulb can also be dried for later use, it can then be grated as required and used as soap flakes. A fibre obtained from the outer covering of the bulb is used to make small brushes or as a filling for mattresses etc."@en .
+
+:CordylineAustralis a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "cabbage tree"@en, "cabbage palm"@en .
+:CordylineAustralis 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Forest margins and open places. Abundant near swamps. North, South and Stewart Islands."@en ;
+  :plant_country_range "New Zealand."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Cordyline Australis is an evergreen Tree growing to 15 m (49ft) by 5 m (16ft) at a slow rate. It is hardy to zone (UK) 8 and is not frost tender. It is in leaf all year, in flower from August to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantRoot, :PlantStem, :PlantLeaf ;
+  :plant_edible_use :SugarAndSubstitute ;
+  :plant_edible_text "Root - baked. It can also be brewed into an intoxicating drink. Pith of the trunk - dried and steamed until soft. Sweet and starchy, it is used to make porridge or a sweet drink. The root and stems are rich in fructose, the yields compare favourably with sugar beet (Beta vulgaris altissima). Edible shoots - a cabbage substitute. The leaves are very fibrous even when young, we would not fancy eating them."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Paper, :Fibre ;
+  :plant_other_use_text "The leaves contain saponins, but not in commercial quantities. The leaves contain a strong fibre, used for making paper, twine, cloth, baskets, thatching, rain capes etc. The whole leaves would be used for some of these applications. When used for making paper, the leaves are harvested in summer, they are scraped to remove the outer skin and are then soaked in water for 24 hours prior to cooking. Carbon farming - Industrial Crop: fiber."@en .
+
+:CordylineIndivisa a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "cabbage tree"@en .
+:CordylineIndivisa 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Wetter mountains in North and South Islands. Openings in wet forests."@en ;
+  :plant_country_range "New Zealand."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Cordyline Indivisa is an evergreen Tree growing to 8 m (26ft) by 2 m (6ft) at a slow rate. It is hardy to zone (UK) 8 and is not frost tender. It is in leaf all year. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantStem, :PlantLeaf, :PlantRoot ;
+  :plant_edible_use :SugarAndSubstitute ;
+  :plant_edible_text "Root - baked. Pith of the trunk - dried and steamed until soft. Sweet and starchy, it is used to make porridge or a sweet drink. The root and stems are rich in fructose, the yields compare favourably with Sugar Beet (Beta vulgaris altissima). Edible shoots - a cabbage substitute. The leaves are very fibrous even when young, we would not fancy eating them. Edible fruit. The fruit is about 6mm in diameter."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Basketry, :Fibre ;
+  :plant_other_use_text "The leaves contain saponins, but not in commercial quantities. The leaves contain a strong fibre, used for making paper, twine, cloth, baskets, thatching, rain capes etc. The whole leaves would be used for some of these applications. This species makes very strong rain capes. The midrib of the leaves provides a fine red-coloured strip for plaiting. It makes a very strong rope, lasting longer in water than Phormium tenax."@en .
+
+:DichopogonFimbriatus a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "chocolate lily"@en .
+:DichopogonFimbriatus 
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Grassland, woodland and forests, often on the sides of gullies near streams."@en ;
+  :plant_country_range "Australia - New South Wales, S. Australia, Tasmania, Victoria."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dichopogon Fimbriatus is a PERENNIAL growing to 0.4 m (1ft 6in). The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Root - raw or cooked. It is usually sweet but can be bitter. Several tubers up to 3.5cm long are produced by each plant, usually up to 15cm below the surface of the soil."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:DichopogonStrictus a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "chocolate lily"@en .
+:DichopogonStrictus 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Open forests and heathlands in sandy soils. Also found in grassland."@en ;
+  :plant_country_range "Australia - New South Wales, Queensland, Tasmania, Victoria."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Dichopogon Strictus is a PERENNIAL growing to 0.9 m (3ft).  It is hardy to zone (UK) 9.  It is in flower in November. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantRoot, :PlantFlower ;
+  :plant_edible_text "Root - raw or cooked. It is usually sweet but can be bitter. Several tubers up to 3.5cm long are produced by each plant, usually up to 15cm below the surface of the soil. Flowers - raw. Chocolate scented."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:FurcraeaAcaulis a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "cocuiza"@en .
+:FurcraeaAcaulis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Sharp tips"@en ;
+  :plant_habitat "Tropical highlands. Semi-arid to humid."@en ;
+  :plant_country_range "South America."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Furcraea Acaulis is an evergreen Perennial growing to 1.5 m (5ft) by 1.5 m (5ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_text "None Known"@en ;
+  :plant_medicinal_text "None Known"@en ;
+  :plant_other_use_text "Carbon Farming Solutions - Industrial Crop: fiber (Crops grown for non-food uses. Industrial crops provide resources in three main categories: materials, chemicals, and energy. Good leaf lamina fibres that need to be seperated from the rest of the plant. Lamina fibres cannot be used for fine textiles but for rope, nets, bags, and rugs. Traditional materials include lumber and thatch, paper and cardboard, and textiles) . Agroforestry Services: living fence (Agroforestry is a land use management system in which trees or shrubs are grown around or among crops or pastureland)."@en .
+
+:FurcraeaAndina a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "pacpa"@en, "fique"@en .
+:FurcraeaAndina 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Spines or sharp edges."@en ;
+  :plant_habitat "Tropical highlands. All  climates,  from coastal plains to elevations above 3,000 metres."@en ;
+  :plant_country_range "Native to Andean regions of Colombia, Ecuador, and Peru. From here it was extended to Venezuela and the east coast of Brazil."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Furcraea Andina is a PERENNIAL growing to 2.5 m (8ft) by 1.5 m (5ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Edible Portion: Bud, Leaves - alcoholic drink. The young buds are edible.  They are pickled. The leaves are used to make a fermented drink."@en ;
+  :plant_medicinal_text "The leaves have been used in topic preparations for treatment of boils. The extract of leaves is used against horse lice."@en ;
+  :plant_other_use_text "Packing (sacks and packages for agriculture). Ropes, Tapestry (rugs and tapestry). The fibres can be stained with different organic materials, such as avocado seed, achiote and eucalyptus cortex. Handcrafts, purses, bags, handbags, mattresses, curtains, shoes, umbrellas, baskets and many other products. Subproducts: Pulp for organic fertilizer and paper. Leaves juice used for soap, fungicides, alcoholic beverages (homemade tapetusa), organic fuel and animal food. Floral stem used in the construction of houses and ladders.  Carbon Farming Solutions -  Industrial Crop: fiber. Good leaf lamina fibres that need to be seperated from the rest of the plant. Lamina fibres cannot be used for fine textiles but for rope, nets, bags, and rugs. (Industrial crops are grown for non-food uses. Industrial crops provide resources in three main categories: materials, chemicals, and energy. Traditional materials include lumber and thatch, paper and cardboard, and textiles) . Agroforestry Services: living fence (Agroforestry is a land use management system in which trees or shrubs are grown around or among crops or pastureland)."@en .
+
+:FurcraeaFoetida a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "mauritius hemp"@en .
+:FurcraeaFoetida 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "The leaves are used as a fish poison. This is probably due to a high content of saponins in the leaves."@en ;
+  :plant_habitat "Tropical highlands"@en ;
+  :plant_country_range "Northern S. America - Colombia, Venezuela and the Guyanas, north to Costa Rica and the Caribbean"@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Furcraea Foetida is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Birds, Bees. It is noted for attracting wildlife.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The root has been used as blood purifying remedy. An infusion with sweet oil is drunk as a treatment for syphilis. The root is mixed with gin and used as a treatment for back pain. The leaves are febrifuge. They are used in a preparation with molasses or honey to treat children's obstinate colds."@en ;
+  :plant_other_use_text "Agroforestry Uses: Used as a hedge plant in desert gardens. Other Uses: A strong, good quality fibre is obtained from the leaves. It is thinner and softer than sisal. The fibre is usable for ropes and sacks. The long, soft fibre is used alone or with other fibres in twine, sacks, hammocks, and other products. It breaks down in salt water but withstands fresh water. The macerated young leaves are used as a hair shampoo and a soap."@en .
+
+:MuscariComosum a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "tassel hyacinth"@en, "tassel grape hyacinth"@en .
+:MuscariComosum 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Hedgerows, edges of fields, woods and in short grass on dry soils."@en ;
+  :plant_country_range "Europe. A frequent casual, rarely naturalized in Britain."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Muscari Comosum is a BULB growing to 0.5 m (1ft 8in) by 0.1 m (0ft 4in).  It is hardy to zone (UK) 4 and is not frost tender.  It is in flower from May to July, and the seeds ripen in August. The species is hermaphrodite (has both male and female organs) and is pollinated by Insects. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantRoot ;
+  :plant_edible_text "Bulb - cooked. It is about 35mm in diameter. A slightly bitter taste that is appreciated by certain ethnic groups, especially Greeks and Italians. Used in spring. The cooked bulbs, preserved in oil, are used as a relish."@en ;
+  :plant_medicinal_use :Poultice, :Diuretic, :AppetiteStimulant ;
+  :plant_medicinal_text "The bulb is appetizer and diuretic. The bulb is rich in mucilage and can be crushed then applied as a poultice to reddened skin."@en ;
+  :plant_other_use_text "None known"@en .
+
+:RuscusAculeatus a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "butcher's broom"@en, "knee holly"@en .
+:RuscusAculeatus 
+  :plant_hardiness_zones "6-9" ;
+  :plant_hazards "The berries are purgative. Caution required if used in patients on treatment for high blood pressure. An increase in tone of veins can influence blood pressure allowing more blood to flow to the heart ."@en ;
+  :plant_habitat "Outskirts of dry woods and in moist uncultivated ground especially on chalk."@en ;
+  :plant_country_range "Western and southern Europe from Britain to Switzerland, south to the Mediterranean."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Ruscus Aculeatus is an evergreen Shrub growing to 0.8 m (2ft 7in) by 1 m (3ft 3in) at a slow rate. It is hardy to zone (UK) 7. It is in leaf all year, in flower from January to April, and the seeds ripen from August to March. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required).  and is pollinated by Insects. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay and nutritionally poor soils. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in very alkaline soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantStem ;
+  :plant_edible_use :CoffeeAndSubstitute ;
+  :plant_edible_text "Young shoots - cooked. They are harvested in the spring as they grow through the soil and used as an asparagus substitute. The taste is pungent and rather bitter. The roasted seed is a coffee substitute."@en ;
+  :plant_medicinal_use :Deobstruent, :Antipruritic, :Vasoconstrictor, :Diaphoretic, :Diuretic, :Depurative, :Laxative ;
+  :plant_medicinal_text "Butcher's broom is little used in modern herbalism but, in view of its positive effect upon varicose veins and haemorrhoids, it could be due for a revival. The root is aperient, deobstruent, depurative, diaphoretic, diuretic and vasoconstrictor. It has been taken internally in the past in the treatment of jaundice, gout, and kidney and bladder stones, at the present time it is used to treat venous insufficiency and haemorrhoids. It should not be prescribed for patients with hypertension. It is also applied externally in the treatment of haemorrhoids. The root is harvested in the autumn and dried for later use. The whole plant is also sometimes used. This remedy should not be given to people with high blood pressure. The plant contains saponin glycosides, including ruscogenin and neoruscogenin. These substances are anti-inflammatory and cause the contraction of blood vessels, especially veins. The German Commission E Monographs, a therapeutic guide to herbal medicine, approve Ruscus aculeatus for haemorrhoids (piles) and venous conditions  (see  for critics of commission E) ."@en ;
+  :plant_other_use :Scourer, :Broom ;
+  :plant_other_use_text "Mature shoots are bound into bunches and used as scourers or as besoms."@en .
+
+:SansevieriaHyacinthoides a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "african bowstring hemp"@en .
+:SansevieriaHyacinthoides 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry karoo, bushveld or savannah, in well drained sandy or rocky soil."@en ;
+  :plant_country_range "Southern Africa - Namibia to Kenya and Tanzania, south to S. Africa."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Sansevieria Hyacinthoides is an evergreen Perennial growing to 0.5 m (1ft 8in) by 0.1 m (0ft 4in) at a fast rate. It is hardy to zone (UK) 10. It is noted for attracting wildlife.  Suitable for: light (sandy) and medium (loamy) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "A decoction of the rootstock is used as a treatment against internal parasites. The plant is used as a treatment for fevers, toothache, ear affections and haemorrhoids. The leaves contain steroidal compounds.."@en ;
+  :plant_other_use_text "A good quality fibre is obtained from the leaves. An excellent, soft, silky and elastic fibre. It is used for making clothes, nets, string, mats and for the production of fine papers etc. Attracts butteflies and birds. Good for pots and indoors. Industrial Crop: Fiber."@en .
+
+:SansevieriaRoxburghiana a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "indian bowstring hemp"@en, "bowstring hemp"@en .
+:SansevieriaRoxburghiana 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Occasionally found on dry forested slopes, gravelly soil and rock crevices, less in the plains. Foothills upto 1000m. Coromandel coast."@en ;
+  :plant_country_range "E. Asia - southern and eastern India."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Sansevieria Roxburghiana is an evergreen Perennial growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "It  has  various  traditional  uses  and  recently  various  pharmacological  uses  are pursuing. Traditionally it is used as a cardiotonic, expectorant, febrifuge, purgative, tonic in glandular enlargement and rheumatism etc. The plant is known to possess antitumor, antibacterial, antidiabetic, antimicrobial,  anticancer,  antioxidant  and  analgesic  activity.  It  contains  carbohydrates,  alkaloids, flavonoids, tannins, saponins, carotenoids gallic acid, palmitic acid, caft aric acid, isorahmnitin-3-O-ß-D glucopyranoside,  buphanidine,  diethyl  ph thalate,  6-methyl-1-octanol,  3,3-dimethylhexanal, proteins,  and  phytosterols.  It  also  contains  a  rare  homoisoflavonoid  Cambodianol."@en ;
+  :plant_other_use_text "A good quality fibre is obtained from the leaves. The fibre is pliant, soft, and silky. The natural elasticity of the fibre makes it suitable for making bowstrings. The fibre is used for the preparation of cordage and matting in the regions where it occurs, and is much valued in Europe for ropes used in deep-sea dredging. It has been used for making paper, but is too expensive a fibre for this use. The fibre is usually prepared by taking the fresh leaves and placing one of them on a smooth board which is raised at one end. The lower end of the leaf is then pressed down by the toe of the workman, who squats on the plank, and with a blunt knife, or piece of iron plate scrapes upward along the surface of the leaf and thus deprives it of its fleshy pulp by successive scrapings, turning the leaf over and over, as may be necessary. When the pulp is thoroughly removed, the fibre is washed for three or four minutes, and dried in the shade. Washing in brackish or salt water, or continuous soaking in water is said to destroy the glossy white appearance of this fibre. Industrial Crop: Fiber."@en .
+
+:SansevieriaTrifasciata a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "mother-in-law's tongue"@en, "snake plant"@en .
+:SansevieriaTrifasciata 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The plant contains glycosides and saponins and is very toxic. Although poisonous, saponins are poorly absorbed by the human body and so most pass through without harm. Saponins are quite bitter and can be found in many common foods such as some beans. They can be removed by carefully leaching in running water. Thorough cooking, and perhaps changing the cooking water once, will also normally remove most of them. However, it is not advisable to eat large quantities of food that contain saponins. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "A weed of roadsides, abandoned gardens, waste areas, disturbed sites, coastal environs, open woodlands, riparian vegetation and the margins of closed forests in tropical, sub-tropical and warmer temperate regions."@en ;
+  :plant_country_range "Western Tropical Africa - Nigeria to Gabon, east to Zaire.."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Sansevieria Trifasciata is an evergreen Perennial growing to 0.8 m (2ft 6in) by 0.2 m (0ft 8in) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay and nutritionally poor soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The plant is used to treat ringworm and fungal diseases. The leaf sap is applied directly on infected sores, cuts and grazes, it is also used to treat fungal and scabies infections."@en ;
+  :plant_other_use_text "A fibre obtained from the leaves is used to make string, mats etc. The leaf pulp is used for cosmetics. The NASA Clean Air Study found S. trifasciata has air purification qualities, removing 4 of the 5 main toxins. widely used as an ornamental, in both the tropics outdoors in both pots and garden beds and as an indoor plant in temperate areas. It is popular as a houseplant because it is tolerant of low light levels and irregular watering; during winter it needs only one watering every couple of months. It will rot easily if overwatered.The variety S. trifasciata var. laurentii and the cultivar 'Bantel's Sensation' have both gained the Royal Horticultural Society's Award of Garden Merit. Industrial Crop: Fiber."@en .
+
+:SansevieriaZeylanica a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "bowstring hemp"@en .
+:SansevieriaZeylanica 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "Sharp leaves."@en ;
+  :plant_habitat "Usually found growing among rocks in the drier areas of Sri Lanka."@en ;
+  :plant_country_range "E. Asia - India, Sri Lanka."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Sansevieria Zeylanica is an evergreen Perennial growing to 0.6 m (2ft) by 0.1 m (0ft 4in) at a medium rate.  It is hardy to zone (UK) 9.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_text "None Known"@en ;
+  :plant_medicinal_text "The dried rhizomes and roots provide material for antiseptic ointments. The roots are used for purgative, tonic, expectorant and anti-fever remedies. The plant is used traditionally in the treatment of septic wounds. Modern research has confirmed that an aqueous extract of the plant possesses antifungal properties."@en ;
+  :plant_other_use_text "A fibre is obtained from the leaves. It is used for making mats, sails, cordage, coarse cloth and the production of paper pulp. Carbon Farming - Industrial Crop: fiber."@en .
+
+:UrgineaMaritima a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "sea squill"@en, "red squill"@en .
+:UrgineaMaritima 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "The bulb is poisonous in large doses. The red form especially has a fairly specific action on rats. The fresh bulb contains an acrid juice that can cause skin blisters."@en ;
+  :plant_habitat "Dry sandy places, especially near the coast."@en ;
+  :plant_country_range "Europe - Mediterranean."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Urginea Maritima is a BULB growing to 1 m (3ft 3in) by 0.3 m (1ft).  It is hardy to zone (UK) 9. It is in leaf from October to July, in flower from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Bees. It is noted for attracting wildlife.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_use :Antiseborrheic, :ExpectorantAndMucoactiveAgent, :HeartTreatment, :Diuretic, :Emetic, :Antiarrhythmic ;
+  :plant_medicinal_text "Sea squill contains cardiac glycosides which are strongly diuretic and relatively quick-acting. They do not have the same cumulative effect as those present in foxglove (Digitalis spp.). The bulb has been widely used by herbalists, mainly for its effect upon the heart and for its stimulating, expectorant and diuretic properties. The fresh bulb is slightly more active medicinally than the dried bulb, but it also contains a viscid acrid juice that can cause skin inflammations. This is a very poisonous plant and it should only be used under the supervision of a qualified practitioner. The dried bulb is cardiotonic, strongly diuretic, emetic when taken in large doses and expectorant. The bulb can weigh up to 2 kilos. It is used internally in the treatment of bronchitis, bronchitic asthma, whooping cough and oedema and is a potential substitute for foxglove in aiding a failing heart. The bulb is harvested in the autumn, sliced transversally and dried for later use. Externally, the bulb has been used in the treatment of dandruff and seborrhoea."@en ;
+  :plant_other_use_text "The red bulb form of this species contains the poisonous substance 'scilliroside'. This substance is poisonous to rodents but does not kill other species (which vomit instead)."@en .
+
+:YuccaAloifolia a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "spanish bayonet"@en, "aloe yucca"@en, "dagger plant"@en, "yucca"@en .
+:YuccaAloifolia 
+  :plant_hardiness_zones "8-10" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Sand dunes of the coast, occasionally up to 60 km inland, in pine forests. Also found on the margins of brackish marshes."@en ;
+  :plant_country_range "Southeastern N. America - North Carolina to Florida, west to Louisiana. Naturalized in S. Europe"@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Aloifolia is an evergreen Tree growing to 7.5 m (24ft 7in) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year, in flower from May to June, and the seeds ripen in September. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantStem ;
+  :plant_edible_text "Fruit - raw or cooked. A thick, succulent mass of bitter-sweet juicy flesh. The fruit is up to 10 cm long and 4cm wide. Flowers - raw or cooked. They are delicious raw, or can be dried, crushed and used as a flavouring. A crisp texture. Flowering stem - peeled and boiled. Used like asparagus."@en ;
+  :plant_medicinal_use :Emollient, :Laxative ;
+  :plant_medicinal_text "The fruit is purgative. The boiled and mashed root, mixed with oil, has been used as a salve in the treatment of various complaints."@en ;
+  :plant_other_use :Brush, :Basketry, :Fibre, :PlantWeaving, :SoapAndSubstitute, :Varnish ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets and mats. Narrow, split leaf strips have been used as sewing material for coiled plaques. The leaves have been used in several types of basketry. The leaf splints have been used as brushes to apply colour to pottery. The leaves can be split and used as a temporary string. The roots are rich in saponins and can be used as a soap substitute. They are crushed and then placed in water to form suds that are used in bathing and shampooing. The juice from the plant has been used as a varnish."@en .
+
+:YuccaAngustissima a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "narrowleaf yucca"@en, "kanab yucca"@en, "toft's yucca"@en, "yucca"@en .
+:YuccaAngustissima 
+  :plant_hardiness_zones "4-9" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Sandy places, sandstone outcrops, rocky hillsides of deserts at elevations of 900 - 2200 metres in Arizona, New Mexico and Utah."@en ;
+  :plant_country_range "South-western N. America."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Angustissima is an evergreen Shrub growing to 0.4 m (1ft 4in) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year, in flower from June to July. The species is hermaphrodite (has both male and female organs) and is pollinated by Hand.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantStem ;
+  :plant_edible_text "Fruit - the immature fruit is cooked. Baked in an oven. A bitter taste, the bitterness is in the skin. The fruit is about 6cm long and 2.5cm wide. Flowers - raw or cooked. They are delicious raw, or can be dried, crushed and used as a flavouring. Flowering stem - peeled, cooked and used like asparagus. The whitish inner portion is used."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Brush, :Basketry, :Fibre, :SoapAndSubstitute, :PlantWeaving, :Broom ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets and mats. The leaves are very fibrous and can be used as paint brushes or as a broom or woven to make mats etc. They are also used in basketry. The roots are rich in saponins and can be used as a soap substitute."@en .
+
+:YuccaBaccata a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "spanish bayonet"@en, "banana yucca"@en, "blue yucca"@en, "spanish yucca"@en .
+:YuccaBaccata 
+  :plant_hardiness_zones "6-11" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Rocky slopes, pinyon, oak, and juniper woodlands, grasslands at elevations of 400 - 2500 metres."@en ;
+  :plant_country_range "South-western N. America - Colorado to Texas, California and Mexico."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "5"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Baccata is an evergreen Shrub growing to 0.9 m (3ft) at a slow rate. It is hardy to zone (UK) 7. It is in leaf all year, in flower in August. The species is hermaphrodite (has both male and female organs) and is pollinated by Hand.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFlower, :PlantFruit, :PlantSeed, :PlantStem, :PlantLeaf ;
+  :plant_edible_text "Fully ripe fruit - raw, cooked or dried for winter use. A staple food for several native North American Indian tribes, the fruits are large, fleshy, sweet and palatable. The ovoid fruit is about 17cm long and 7cm wide. Considered to be a luxury by the native North American Indians, the fruits were often baked in ovens. The cooked fruit can be formed into cakes and then dried for later use. Large quantities of the fruit has caused diarrhoea in people who are not used to it. The dried fruit can be dissolved in water to make a drink. Flower buds - cooked. A soapy taste. The older flowers are best, they are rich in sugar. The flowers, harvested before the summer rains (which turn them bitter), have been used as a vegetable. Flowering stems - cooked. Harvested before the flowers open then roasted. Seed - cooked. It can be roasted and then ground into a powder and boiled. The tender crowns of the plants have been roasted and eaten in times of food shortage. The young leaves have been cooked as a flavouring in soups."@en ;
+  :plant_medicinal_use :Laxative, :Antiemetic ;
+  :plant_medicinal_text "An infusion of the pulverized leaves has been used as an antiemetic to prevent vomiting. The fruits have been eaten raw as a laxative."@en ;
+  :plant_other_use :Brush, :Basketry, :Fibre, :Waterproofing, :SoapAndSubstitute, :Fibre, :NeedleAndPin, :HairCare ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets and mats. The fibre can be braided into a good quality rope. The leaves can be reduced into fibre and then made into cloth. To obtain the fibre, the terminal spine and a section of the back of the leaf are removed and pounded to free the fibre from the fleshy portion of the leaf. Another method of obtaining the fibre was to fold the leaves into sections about 10cm long. The leaves were then boiled with a small quantity of cedar ashes. When sufficiently cooked, the leaves were placed in a bowl or basket and cooled, then youths and young women would peel off the epidermis and chew the leaves, starting at one end and finishing at the other. After chewing the leaves, the fibres were separated, straightened out and hung to dry. When required for weaving, they would first be soaked in water to soften them. The whole leaf is sometimes split into sections and then tied together by square knots to make a rope. The leaf can be used as a paint brush. Leaf slivers are used, the end being pounded to reveal the fibres. The leaves have also been used to make small brushes for pottery decoration. The leaf is used in basket making. Small roots have been used in making baskets. They have been used to produce a red pattern in baskets. The leaves can be split and then woven into mats. The leaves can be split and used as a temporary string. The leaf fibre has been braided into ropes. The terminal spines have been used as needles. The dried leaves have been boiled with gum, hardened, ground into a powder then mixed with water and used to make baskets waterproof. The roots are rich in saponins and can be used crushed and then soaked in water to release the suds for use as a soap. It makes a good hair wash and can also be used on the body and for washing clothes. A soap can also be obtained from the leaves and stems."@en .
+
+:YuccaBrevifolia a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "joshua tree"@en, "jaeger's joshua tree"@en, "yucca"@en, "joshua tree"@en .
+:YuccaBrevifolia 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Arid mesas and mountain slopes, usually at 650 - 2200 metres."@en ;
+  :plant_country_range "South-western N. America - California to Utah."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Brevifolia is an evergreen Tree growing to 9 m (29ft 6in) at a medium rate.  It is hardy to zone (UK) 7. It is in leaf all year, in flower in June, and the seeds ripen in September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantFruit, :PlantRoot, :PlantSeed, :PlantSeedpod ;
+  :plant_edible_text "Flowers - cooked. The flower buds, before opening, can be parboiled in salt water to remove the bitterness, drained and then cooked again and served like cauliflower. The opened flowers are rich in sugar and can be roasted and eaten as candy. Fruit - cooked. The fruits can be roasted then formed into cakes and dried for later use. Root - raw, boiled or roasted. Seed. Gathered and eaten by the local Indians. No further details are given, but it is probably ground into a powder and mixed with cornmeal or other flours and used for making bread, cakes etc. Immature seedpod. No more details given."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Brush, :Basketry, :Fibre, :SoapAndSubstitute, :Fibre, :DyeInkAndPaint ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets, sandals, clothing and mats. The whole leaf can be woven into mats etc and it can also be used as a paint brush. The dark red core of the roots has been used as a pattern material in coiled baskets. The core is split into strands, soaked and worked in with the coiling so that the colour is always on the outside. Red and black dyes have been obtained from the roots. The roots are rich in saponins and can be used as a soap substitute. It makes a good hair wash. Wood - light, soft, spongy, difficult to work. Sometimes cut into thin layers and used as wrapping material, or manufactured into boxes and other small articles."@en .
+
+:YuccaFilamentosa a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "spoonleaf yucca"@en, "adam's needle"@en, "desert candle"@en, "needle palm"@en, "st. peter's palm"@en, "spanish bayonet"@en, "adam’s needle and thread"@en .
+:YuccaFilamentosa 
+  :plant_hardiness_zones "4-10" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Sand dunes, waste ground and pine forests along the coastal plain."@en ;
+  :plant_country_range "South-eastern N. America - Southern New Jersey to Florida. Naturalized in S. Europe."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Filamentosa is an evergreen Shrub growing to 1.2 m (4ft) by 0.6 m (2ft in) at a medium rate.  It is hardy to zone (UK) 4. It is in leaf all year, in flower from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Hand.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantStem ;
+  :plant_edible_text "Fruit - raw or cooked. Large and fleshy. The fruit is often dried for winter use. Flowers - raw or dried, crushed and used as a flavouring. A tasty addition to the salad bowl. We have found the flowers to be fairly bitter. Flowering stem - cooked and used like asparagus."@en ;
+  :plant_medicinal_use :Emollient, :Poultice ;
+  :plant_medicinal_text "Medicinal Parts: Leaves and roots of non-flowering plants. A poultice made from the roots is used in the treatment of sores, skin diseases and sprains. Liver and gallbladder disorders."@en ;
+  :plant_other_use :Brush, :Paper, :SoapAndSubstitute, :Fibre ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, cloth, baskets and mats. The fibre can also be used for making paper The leaves are harvested in summer, they are scraped to remove the outer skin and are then soaked in water for 24 hours prior to cooking. The fibres are cooked for 2 hours with lye and then beaten in a ball mill for 4 hours. They make a cream paper. The leaves are used as paint brushes. The roots are rich in saponins and can be used as a soap substitute for washing the hair, body and clothing."@en .
+
+:YuccaGigantea a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "spineless yucca"@en, "izote"@en .
+:YuccaGigantea 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Common in cultivation, or in hedges and thickets, throughout the lowlands and ascending commonly in the mountains to middle elevations; it is often seen at up to 2,700 metres or perhaps even higher."@en ;
+  :plant_country_range "Central America - Panama to southern Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Gigantea is an evergreen Tree growing to 6 m (19ft) by 3 m (9ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Moth.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant is not wind tolerant."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "The flower buds are eaten in soups. They have a slightly bitter but quite agreeable flavour, and constitute a palatable vegetable. Usually they are dipped in egg and fried, or mixed with meat stews, and sometimes they are eaten raw in combination with other raw salad vegetables. The flowers are rich in vitamin C. The tender leaf bases can be eaten."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Agroforestry Uses: The tree is an ornamental one and, partly for that reason, is often planted about houses, especially for tall hedges. In some regions, it is planted thickly on steep high roadside banks to prevent erosion. It is also used to stabilize terracing in coffee plantations. Other Uses A fibre obtained from the leaves is used to make twine, cloth and baskets. Young plants are occasionally used as houseplants. However the species grows best in a hot semi-arid climate, so plants are subject to root rot if overwatered."@en .
+
+:YuccaRecurvifolia a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "curve-leaf yucca"@en .
+:YuccaRecurvifolia 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Dunes on coastal plains."@en ;
+  :plant_country_range "South-eastern N. America - Georgia to Missouri and Louisiana."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Recurvifolia is an evergreen Shrub growing to 2.5 m (8ft) by 1 m (3ft 3in).  It is hardy to zone (UK) 8. It is in leaf all year, in flower from September to October. The species is hermaphrodite (has both male and female organs) and is pollinated by Hand.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantStem ;
+  :plant_edible_text "Fruit - raw or cooked. Flowers - raw or cooked. They are delicious raw, and can also be dried, crushed and used as a flavouring. A crisp crunchy texture, the flowers are very substantial and need to be well chewed. They have a slightly bitter flavour. Flowering stem - cooked and used like asparagus."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :SoapAndSubstitute, :Fibre ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets and mats. The roots are rich in saponins and can be used as a soap substitute."@en .
+
+:YuccaSchidigera a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "mojave yucca"@en, "yucca"@en .
+:YuccaSchidigera 
+  :plant_hardiness_zones "9-10" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Found in desert habitats in chaparral and creosote bush scrub from sea level to elevations of 2500 metres."@en ;
+  :plant_country_range "South-western N. America - California, Arizona and Nevada."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Schidigera is an evergreen Tree growing to 4.5 m (14ft 9in).  It is hardy to zone (UK) 8. It is in leaf all year. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantStem ;
+  :plant_edible_text "Young flowering stems - chopped and cooked like asparagus or baked like a sweet potato. Fruit - raw or cooked. Baked then dried and ground into a powder then used in soups etc or made into a drink. The fruit can also be used to make jellies. Flowers - raw or cooked. They are delicious raw, and can also be dried, crushed and used as a flavouring and can also be used in jellies."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :Brush, :SoapAndSubstitute, :Fibre ;
+  :plant_other_use_text "The leaves, or a fibre obtained from them, has been used for making ropes, baskets and mats. The strong fibres have been used to make shoes and sandals. The leaves have been used to make brushes for body painting and for painting pots etc. The roots are rich in saponins and can be used as a soap substitute."@en .
+
+:YuccaWhipplei a owl:Class ;
+  rdfs:subClassOf :Asparagaceae ;
+  :synonym "our lord's candle"@en .
+:YuccaWhipplei 
+  :plant_hardiness_zones "7-11" ;
+  :plant_hazards "The roots contain saponins. Whilst saponins are quite toxic to people, they are poorly absorbed by the body and so tend to pass straight through. They are also destroyed by prolonged heat, such as slow baking in an oven. Saponins are found in many common foods such as beans. Saponins are much more toxic to some creatures, such as fish, and hunting tribes have traditionally put large quantities of them in streams, lakes etc in order to stupefy or kill the fish."@en ;
+  :plant_habitat "Dry, grassy and often stony slopes to 1200 metres."@en ;
+  :plant_country_range "South-western N. America - S. California, Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Yucca Whipplei is an evergreen Shrub growing to 2 m (6ft) by 1 m (3ft 3in) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year, in flower from May to June. The species is hermaphrodite (has both male and female organs). The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland). It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantStem, :PlantFlower, :PlantSeed ;
+  :plant_edible_text "Fruit - raw or cooked. Flowers - raw or cooked. They are delicious raw, and can also be dried, crushed and used as a flavouring. Young flowers have been parboiled and eaten, whilst older flowers have been boiled in three lots of water before being eaten. This suggests the flowers are quite bitter. Flowering stem - raw or cooked. It is best used when fully grown, but before the flower buds expand. It can be peeled, cut into sections then cooked and used like asparagus. The roasted stems have been dried, ground into a powder then mixed with water to make cakes. Seed - cooked. It can be ground into a powder or cooked and used as a gruel."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :SoapAndSubstitute, :Fibre ;
+  :plant_other_use_text "A fibre obtained from the leaves is used for making ropes, baskets and mats. It is fine and white. The leaves are used as paint brushes. The roots are rich in saponins and can be used as a soap substitute. Carbon Farming - Industrial Crop: fiber."@en .
+

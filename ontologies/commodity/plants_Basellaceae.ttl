@@ -1,0 +1,55 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Basellaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:BasellaAlba a owl:Class ;
+  rdfs:subClassOf :Basellaceae ;
+  :synonym "malabar spinach"@en, "indian spinach"@en, "ceylon spinach"@en, "vine spinach"@en .
+:BasellaAlba 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist places in hedges to elevations of about 500 metres in Nepal."@en ;
+  :plant_country_range "A widely cultivated plant, its original range uncertain but was possibly Africa."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Basella Alba is an evergreen Perennial Climber growing to 9 m (29ft 6in) at a fast rate. It is hardy to zone (UK) 10 and is frost tender.  It is in flower from May to September, and the seeds ripen from July to October. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantShoot, :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute, :Coloring ;
+  :plant_edible_text "Leaves and stem tips - raw or cooked. A pleasant mild spinach flavour, the leaves can be used as a spinach or added to salads. Do not overcook the leaves or they will become slimy. The mucilaginous qualities of the plant make it an excellent thickening agent in soups, stews etc where it can be used as a substitute for okra, Abelmoschatus esculentus. A nutritional analysis of the leaves is available. An infusion of the leaves is a tea substitute. The purplish sap from the fruit is used as a food colouring in pastries and sweets. The colour is enhanced by adding some lemon juice."@en ;
+  :plant_medicinal_use :Rubefacient, :Demulcent, :Antidote, :Astringent, :Diuretic, :Antipyretic, :Laxative ;
+  :plant_medicinal_text "The roots are astringent. They are cooked and used in the treatment of diarrhoea. A paste of the root is applied to swellings and is also used as a rubefacient. The leaves and stems are cooked and eaten for their laxative properties. The leaf juice is a demulcent, used in cases of dysentery. It is also diuretic, febrifuge and laxative. The leaf juice is used in Nepal to treat catarrh. A paste of the leaves is applied externally to treat boils and sores. The flowers are used as an antidote to poisons. The plant is febrifuge, its juice is a safe aperient for pregnant women and a decoction has been used to alleviate labour. The red juice of the fruit is used as eye drops to treat conjunctivitis."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A red dye is obtained from the juice of the fruits. It has been used as a rouge and also as a dye for official seals. Agroforestry Uses: The plant can be grown on living stakes, usually on a fence or on a hedge. Other Uses A red dye is obtained from the juice of the fruits. It has been used as a rouge, an ink, for colouring foods and also as a dye for official seals."@en .
+
+:UllucusTuberosus a owl:Class ;
+  rdfs:subClassOf :Basellaceae ;
+  :synonym "olluco"@en .
+:UllucusTuberosus 
+  :plant_hardiness_zones "8-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. America - Peru, Bolivia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Ullucus Tuberosus is a PERENNIAL growing to 0.3 m (1ft).  It is hardy to zone (UK) 9 and is frost tender. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantRoot, :PlantLeaf ;
+  :plant_edible_text "Tuber - cooked. Starchy and mucilaginous. The tubers can be up to 8cm long. Ulluco is a staple food in South America, being used in most of the ways that potatoes are used, indeed when boiled and fried they taste very much like potatoes. In the Andes a popular dish called 'chuño' is made by alternately freezing and drying the tubers. The tubers contain about 14% carbohydrate, 1 - 2% protein, almost no fat or fibre. They are fairly rich in vitamin C, about 23mg per 100g fresh weight. The tubers store well and will last up to 12 months in cool conditions. Leaves - raw or cooked. Mucilaginous and not that exciting. They contain about 12% protein dry weight."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+

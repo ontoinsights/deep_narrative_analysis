@@ -1,0 +1,417 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Rubiaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:BorojoaPatinoi a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "borojo"@en .
+:BorojoaPatinoi 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Lowland rainforests, usually at elevations up to 700 metres but occasionally to 1,200 metres.."@en ;
+  :plant_country_range "Northwestern S. America - Colombia and Brazil, north through Central America to Nicaragua."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Borojoa Patinoi is an evergreen Tree growing to 8 m (26ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - eaten raw or made into jellies, preserves, sauces, ice cream etc. A sweet, aromatic flavour with some bitterness. The green to brown fruit is 7 - 12 cm in diameter with a brown pulp that is very acid and dense. The fruit pulp is used to prepare juice (jugo del amor), compotes, marmalades, candies and wine."@en ;
+  :plant_medicinal_text "The fruit is prized for its tonic and cure-all qualities. It is famous in western Colombia for its supposed aphrodisiac properties."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CarapicheaIpecacuanha a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "ipecac"@en .
+:CarapicheaIpecacuanha 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The plant can be toxic in doses larger than recommended for medicinal use."@en ;
+  :plant_habitat "An understory shrub of rainforests."@en ;
+  :plant_country_range "S. America - Brazil, Colombia, Ecuador; through Central America to Nicaragua."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Carapichea Ipecacuanha is an evergreen Shrub growing to 0.5 m (1ft 8in) by 0.5 m (1ft 8in) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The roots of ipecac contain a number of medically active constituents including isoquinoline alkaloids, tannins and glycosides. They have a violently irritant action, stimulating the gastric and bronchial systems, lowering fevers and preventing cyst formation in amoebic dysentery. The roots are used internally in the treatment of coughs, bronchitis, whooping cough and amoebic dysentery. One of the surest of emetics, even moderate doses will induce vomiting until the contents of the stomach have been voided making it especially useful in the treatment of drug overdoses. It is used in a syrup to induce vomiting in children who have ingested toxins. Smaller doses are strongly expectorant and it is a common ingredient in patent cough medicines. The plant needs to be used with caution since excess causes severe vomiting and diarrhoea. The roots are harvested, usually when about 3 years old and the plants are in flower, and are dried for later use. The plants are replanted after partial removal of the roots. The plant is used in homeopathy in the treatment of nausea."@en ;
+  :plant_other_use_text "Other Uses: None known"@en .
+
+:CilioseminaPedunculata a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "ciliosemina"@en .
+:CilioseminaPedunculata 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. America - northern Brazil, Peru, Colombia, Ecuador and Venezuela."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Ciliosemina Pedunculata is an evergreen Shrub growing to 3 m (9ft) by 3 m (9ft).  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The bark is a source of quinine. Quinine contains the alkaloids quinine and quinidine. It is a very effective treatment for fevers, and especially as a treatment and preventative of malaria. The bark is a bitter, astringent herb that lowers fevers, relaxes spasms, is antimalarial (the alkaloid quinine) and slows the heart (the alkaloid quinidine). The bark is made into various preparations, such as tablets, liquid extracts, tinctures and powders. It is used internally in the treatment of malaria, neuralgia, muscle cramps and cardiac fibrillation. It is an ingredient in various proprietary cold and influenza remedies. It is also used as a gargle to treat sore throats."@en ;
+  :plant_other_use_text "None known"@en .
+
+:CinchonaCalisaya a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "peruvian bark"@en, "quinine"@en .
+:CinchonaCalisaya 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Care must be taken in the use of this herb since excess can cause a number of side effects including cinchonism, headache, rash, abdominal pain, deafness and blindness. The herb, especially in the form of the extracted alkaloid quinine, is subject to legal restrictions in some countries."@en ;
+  :plant_habitat "Cool, humid, mountain regions. Andean rainforests."@en ;
+  :plant_country_range "Western S. America - Bolivia, Peru."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Cinchona Calisaya is an evergreen Tree growing to 6 m (19ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantInnerBark ;
+  :plant_edible_text "Quinine, extracted from the bark of the tree, is used as a bitter flavouring in tonic water and carbonated drinks."@en ;
+  :plant_medicinal_text "Peruvian bark has a long history of native use, especially as a treatment for fevers and malaria. Modern research has shown it to be a very effective treatment for fevers, and especially as a treatment and preventative of malaria. The bark contains various alkaloids, particularly quinine and quinidine. Up to 70 - 80% of the total alkaloids contained in the bark are quinine. The bark is a bitter, astringent, tonic herb that lowers fevers, relaxes spasms, is antimalarial (the alkaloid quinine) and slows the heart (the alkaloid quinidine). The bark is made into various preparations, such as tablets, liquid extracts, tinctures and powders. It is used internally in the treatment of malaria, neuralgia, muscle cramps and cardiac fibrillation. It is an ingredient in various proprietary cold and influenza remedies. The liquid extract is useful as a cure for drunkenness. It is also used as a gargle to treat sore throats. Large and too constant doses must be avoided, as they produce headache, giddiness and deafness."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). The powdered bark is often used in tooth-powders, owing to its astringency."@en .
+
+:CinchonaOfficinalis a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "lojabark"@en .
+:CinchonaOfficinalis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Care must be taken in the use of this herb since excess can cause a number of side effects including cinchonism, headache, rash, abdominal pain, deafness and blindness. The herb, especially in the form of the extracted alkaloid quinine, is subject to legal restrictions in some countries."@en ;
+  :plant_habitat "Cool, humid, mountain regions at elevations of 1,200 - 3,000 metres."@en ;
+  :plant_country_range "Western S. America - Ecuador."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Cinchona Officinalis is an evergreen Tree growing to 8 m (26ft) by 8 m (26ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantInnerBark ;
+  :plant_edible_text "Quinine, extracted from the bark of the tree, is used as a bitter flavouring in tonic water and carbonated drinks."@en ;
+  :plant_medicinal_text "Lojabark has a long history of native use, especially as a treatment for fevers and malaria. Modern research has shown it to be a very effective treatment for fevers, and especially as a treatment and preventative of malaria. The bark contains various alkaloids, particularly quinine and quinidine. Up to 70 - 80% of the total alkaloids contained in the bark are quinine. The bark is a bitter, astringent, tonic herb that lowers fevers, relaxes spasms, is antimalarial (the alkaloid quinine) and slows the heart (the alkaloid quinidine). The bark is made into various preparations, such as tablets, liquid extracts, tinctures and powders. It is used internally in the treatment of malaria, neuralgia, muscle cramps and cardiac fibrillation. It is an ingredient in various proprietary cold and influenza remedies. The liquid extract is useful as a cure for drunkenness. It is also used as a gargle to treat sore throats. Large and too constant doses must be avoided, as they produce headache, giddiness and deafness."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). Other Uses: The alkaloid quinine, extracted from the bark, is used in products like hair oils and shampoo, sun-tan oil, insecticides, as a vulcanizing agent in the rubber industry, and in the preparation of certain metals."@en .
+
+:CinchonaPubescens a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "quinine tree"@en, "red bark"@en, "cinchona"@en, "quina"@en, "quinquina"@en, "quinine bark"@en, "peruvian bark"@en, "jesuit's bark"@en .
+:CinchonaPubescens 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Cool, humid, mountain regions at elevations of 1,000 - 3,700 metres."@en ;
+  :plant_country_range "S. America - Bolivia, Peru, Ecuador, Colombia, Venezuela; C. America - Panama, Costa Rica."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Cinchona Pubescens is an evergreen Tree growing to 15 m (49ft) by 15 m (49ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Bees, Butterflies.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantInnerBark ;
+  :plant_edible_text "Quinine, extracted from the bark of the tree, is used as a bitter flavouring in tonic waters, some liqueurs, carbonated drinks, baked goods, candy etc."@en ;
+  :plant_medicinal_text "Red bark has a long history of native use, especially as a treatment for fevers and malaria. Modern research has shown it to be a very effective treatment for fevers, and especially as a treatment and preventative of malaria. The bark contains various alkaloids, particularly quinine and quinidine. Up to 70 - 80% of the total alkaloids contained in the bark are quinine. The bark is a bitter, astringent, tonic herb that lowers fevers, relaxes spasms, is antimalarial (the alkaloid quinine) and slows the heart (the alkaloid quinidine). The bark is made into various preparations, such as tablets, liquid extracts, tinctures and powders. It is used internally in the treatment of malaria, neuralgia, muscle cramps and cardiac fibrillation. It is an ingredient in various proprietary cold and influenza remedies. The liquid extract is useful as a cure for drunkenness. It is also used as a gargle to treat sore throats. Care must be taken in the use of this herb since excess can cause a number of side effects including cinchonism, headache, rash, abdominal pain, deafness and blindness. The herb, especially in the form of the extracted alkaloid quinine, is subject to legal restrictions in some countries."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). The alkaloid quinine, extracted from the bark, is used in products like hair oils and shampoo, sun-tan oil, insecticides, as a vulcanizing agent in the rubber industry, and in the preparation of certain metals."@en .
+
+:CoutareaHexandra a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "coutarea"@en .
+:CoutareaHexandra 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist soils in alluvial river valleys and near rivers, in both dense, primary forests and the more open, secondary formations, generally preferring more open, sunny positions. Thickets in Panama."@en ;
+  :plant_country_range "S. America - Argentina, Paraguay, Brazil, Bolivia, Peru, Ecuador, Colombia, Venezuela, the Guyanas; C. America - Panama to Mexico; Caribbean- Trinidad"@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Coutarea Hexandra is a deciduous Tree growing to 4.5 m (14ft) by 4.5 m (14ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The stem bark is bitter, febrifuge, stomachic and tonic. It can be used as a substitute for quinine (Cinchona spp.) when treating malaria, and is also used for treating swamp fever. The root bark is mixed in a decoction with stem bark and then used as an antidiabetic and vermifuge. The plant is a rich source of neoflavonoids and their glycosides. One of the compounds in the plant has been shown to exert a relaxing effect upon the trachea. The plant extract has been shown to be antiinflammatory."@en ;
+  :plant_other_use_text "Other Uses The wood is of medium and uniform texture, moderately heavy, hard, flexible, with moderate mechanical properties and not very durable. The wood is usually too small to be of much use apart from items such as tool handles. The wood is used for fuel and to make charcoal."@en .
+
+:CinchonaMicrantha a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "huannco"@en .
+:CinchonaMicrantha 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "Western S. America - Ecuador."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Cinchona Micrantha is an evergreen Tree growing to 8 m (26ft) by 8 m (26ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantInnerBark ;
+  :plant_edible_text "Quinine, extracted from the bark of the tree, is used as a bitter flavouring in tonic water and carbonated drinks."@en ;
+  :plant_medicinal_text "Huannco has a long history of native use, especially as a treatment for fevers and malaria. Modern research has shown it to be a very effective treatment for fevers, and especially as a treatment and preventative of malaria. The bark contains various alkaloids, particularly quinine and quinidine The bark is a bitter, astringent, tonic herb that lowers fevers, relaxes spasms, is antimalarial (the alkaloid quinine) and slows the heart (the alkaloid quinidine). The bark is made into various preparations, such as tablets, liquid extracts, tinctures and powders. It is used internally in the treatment of malaria, neuralgia, muscle cramps and cardiac fibrillation. It is an ingredient in various proprietary cold and influenza remedies. It is also used as a gargle to treat sore throats. Large and too constant doses must be avoided, as they produce headache, giddiness and deafness."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). The powdered bark is often used in tooth-powders, owing to its astringency."@en .
+
+:GaliumAparine a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "goosegrass"@en, "coachweed"@en, "catchweed"@en, "stickywilly"@en .
+:GaliumAparine 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "The sap of the plant can cause contact dermatitis in sensitive people. Can cause severe skin irritation ."@en ;
+  :plant_habitat "Hedgerows and as a weed of cultivated land. Moist and grassy places on most types of soil."@en ;
+  :plant_country_range "Europe, including Britain, from Scandanavia south and east to Spain, N. and W. Asia."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Galium Aparine is a ANNUAL growing to 1.2 m (4ft) by 3 m (9ft 10in).  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from June to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Flies, beetles. The plant is self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_use :CoffeeAndSubstitute, :TeaAndSubstitute ;
+  :plant_edible_text "The tender young shoot tips - raw or cooked as a pot-herb. A rather bitter flavour that some people find unpalatable, they are best used in the spring. They make a useful addition to vegetable soups. It is said that using this plant as a vegetable has a slimming effect on the body. The roasted seed is a coffee substitute. One of the best substitutes, it merely needs to be dried and lightly roasted and has much the flavour of coffee. A decoction of the whole dried plant gives a drink equal to tea."@en ;
+  :plant_medicinal_use :Alterative, :Tonic, :Vulnerary, :Diaphoretic, :Astringent, :Antiinflammatory, :Anticancer, :Diuretic, :Antipyretic, :Depurative, :Laxative, :SkinTreatment ;
+  :plant_medicinal_text "Goosegrass has a long history of domestic medicinal use and is also used widely by modern herbalists. A valuable diuretic, it is often taken to treat skin problems such as seborrhoea, eczema and psoriasis, and as a general detoxifying agent in serious illnesses such as cancer. The whole plant, excluding the root, is alterative, antiphlogistic, aperient, astringent, depurative, diaphoretic, diuretic, febrifuge, tonic and vulnerary. It is harvested in May and June as it comes into flower and can be used fresh or dried for later use. It is used both internally and externally in the treatment of a wide range of ailments, including as a poultice for wounds, ulcers and many other skin problems, and as a decoction for insomnia and cases where a strong diuretic is beneficial. It has been shown of benefit in the treatment of glandular fever, ME, tonsillitis, hepatitis, cystitis etc. The plant is often used as part of a spring tonic drink with other herbs. A tea made from the plant has traditionally been used internally and externally in the treatment of cancer. One report says that it is better to use a juice of the plant rather than a tea. The effectiveness of this treatment has never been proved or disproved. Both Asperuloside (a terpenoid) and Coumarin (a benzopyrone) occur in some species of Galium. Asperuloside can be converted into prostaglandins (hormone-like compounds that stimulate the uterus and affect blood vessels), making the genus of great interest to the pharmaceutical industry. A homeopathic remedy has been made from the plant."@en ;
+  :plant_other_use :DyeInkAndPaint, :Cleanser, :Kindling, :Filter ;
+  :plant_other_use_text "A red dye is obtained from a decoction of the root. When ingested it can dye the bones red. The dried plant is used as a tinder. The plant can be rubbed on the hands to remove pitch (tar). The stems are placed in a layer 8cm or more thick and then used as a sieve for filtering liquids."@en .
+
+:GaliumOdoratum a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "sweet woodruff"@en, "sweetscented bedstraw"@en, "bedstraw"@en .
+:GaliumOdoratum 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Woodland and shady areas on damp calcareous and base rich soils. Often found in beech woods."@en ;
+  :plant_country_range "Northern and central Europe, including Britain, south and east to N. Africa and Siberia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Galium Odoratum is a PERENNIAL growing to 0.2 m (0ft 8in) by 0.5 m (1ft 8in) at a medium rate.  It is hardy to zone (UK) 5 and is not frost tender.  It is in flower from May to July, and the seeds ripen from July to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Flies, bees. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers dry or  moist soil. It can tolerate atmospheric pollution."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_use :TeaAndSubstitute, :CondimentAndSeasoning, :Beverage ;
+  :plant_edible_text "Leaves - raw or cooked. The leaves are coumarin-scented (like freshly mown hay), they are used as a flavouring in cooling drinks and are also added to fruit salads etc. The leaves are soaked in white wine to make 'Maitrank', an aromatic tonic drink that is made in Alsace. A fragrant and delicious tea is made from the green-dried leaves and flowers. Slightly wilted leaves are used, the tea has a fresh, grassy flavour. The sweet-scented flowers are eaten or used as a garnish."@en ;
+  :plant_medicinal_use :Antispasmodic, :HeartTreatment, :SedativeAndHypnotic, :Diaphoretic, :Diuretic ;
+  :plant_medicinal_text "Sweet woodruff was widely used in herbal medicine during the Middle Ages, gaining a reputation as an external application to wounds and cuts and also taken internally in the treatment of digestive and liver problems. In current day herbalism it is valued mainly for its tonic, diuretic and anti-inflammatory affect. The leaves are antispasmodic, cardiac, diaphoretic, diuretic, sedative. An infusion is used in the treatment of insomnia and nervous tension, varicose veins, biliary obstruction, hepatitis and jaundice. The plant is harvested just before or as it comes into flower and can be dried for later use. One report says that it should be used with caution whilst another says that it is entirely safe. Excessive doses can produce dizziness and symptoms of poisoning. The dried plant contains coumarins and these act to prevent the clotting of blood - though in excessive doses it can cause internal bleeding. The plant is grown commercially as a source of coumarin, used to make an anticoagulant drug. Do not use this remedy if you are taking conventional medicine for circulatory problems or if you are pregnant. Both Asperuloside (a terpenoid) and Coumarin (a benzopyrone) occur in some species of Galium. Asperuloside can be converted into prostaglandins (hormone-like compounds that stimulate the uterus and affect blood vessels), making the genus of great interest to the pharmaceutical industry. A homeopathic remedy made from the plant is used in the treatment of inflammation of the uterus."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :Pot-Pourri, :Strewing ;
+  :plant_other_use_text "A red dye is obtained from the root. Soft-tan and grey-green dyes are obtained from the stems and leaves. A good ground-cover plant for growing on woodland edges or in the cool shade of shrubs. It spreads rapidly at the roots. It is an ideal carpeting plant for bulbs to grow through. Although the fresh plant has very little aroma, as it dries it becomes very aromatic with the scent of newly-mown grass and then retains this aroma for years. It is used in the linen cupboard to protect from moths etc. It was also formerly used as a strewing herb and is an ingredient of pot-pourri. It was also hung up in bunches in the home in order to keep the rooms cool and fragrant during the summertime."@en .
+
+:GaliumVerum a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "lady's bedstraw"@en, "yellow spring bedstraw"@en, "wirtgen's bedstraw"@en .
+:GaliumVerum 
+  :plant_hardiness_zones "3-7" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Waste ground, roadsides etc, mainly near the sea, on all but the most acid soils."@en ;
+  :plant_country_range "Most of Europe, including Britain, to W. Asia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Galium Verum is a PERENNIAL growing to 0.6 m (2ft) by 1 m (3ft 3in).  It is hardy to zone (UK) 3 and is not frost tender.  It is in flower from July to August, and the seeds ripen from August to September. The species is hermaphrodite (has both male and female organs) and is pollinated by Flies, beetles. The plant is self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantSeed, :PlantLeaf ;
+  :plant_edible_use :CoffeeAndSubstitute, :Coloring, :CurdlingAgent, :Beverage ;
+  :plant_edible_text "Leaves - raw or cooked. A yellow dye from the flowering stems is used as a food colouring. The roasted seed is a coffee substitute. The seed is also said to be edible. The chopped up plant can be used as a rennet to coagulate plant milks. The flowering tops are distilled in water to make a refreshing acid beverage."@en ;
+  :plant_medicinal_use :Vulnerary, :Antispasmodic, :Astringent, :Diuretic, :Lithontripic ;
+  :plant_medicinal_text "Lady's bedstraw has a long history of use as a herbal medicine, though it is little used in modern medicine. Its main application is as a diuretic and as a treatment for skin complaints. The leaves, stems and flowering shoots are antispasmodic, astringent, diuretic, foot care, lithontripic and vulnerary. The plant is used as a remedy in gravel, stone or urinary disorders and is believed to be a remedy for epilepsy. A powder made from the fresh plant is used to soothe reddened skin and reduce inflammation whilst the plant is also used as a poultice on cuts, skin infections, slow-healing wounds etc. The plant is harvested as it comes into flower and is dried for later use. Both Asperuloside (a terpenoid) and Coumarin (a benzopyrone) occur in some species of Galium. Asperuloside can be converted into prostaglandins (hormone-like compounds that stimulate the uterus and affect blood vessels), making the genus of great interest to the pharmaceutical industry."@en ;
+  :plant_other_use :Repellent, :DyeInkAndPaint, :StuffingAndLining, :Strewing ;
+  :plant_other_use_text "A red dye is obtained from the root. It is rather fiddly to utilize. A yellow dye is obtained from the flowering tops. The dye is obtained from the foliage when it is boiled with alum. The dried plant has the scent of newly mown hay, it was formerly used as a strewing herb and for stuffing mattresses etc. It is said to keep fleas away. A sprig in a shoe is said to prevent blisters."@en .
+
+:HoustoniaCaerulea a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "azure bluet or quaker ladies"@en .
+:HoustoniaCaerulea 
+  :plant_hardiness_zones "3-8" ;
+  :plant_hazards "None Known"@en ;
+  :plant_habitat "Fields and open woods on moist acidic soils in shady areas, growing especially well among grasses."@en ;
+  :plant_country_range "Native to eastern Canada (Ontario to Newfoundland) and the eastern United States (Maine to Wisconsin, south to Florida and Louisiana, with scattered populations in Oklahoma)."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Houstonia Caerulea is a PERENNIAL growing to 0.1 m (0ft 4in) by 0.1 m (0ft 4in) at a fast rate. It is hardy to zone (UK) 4. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFlower, :PlantLeaf ;
+  :plant_edible_text "Raw; Leaves. Flowers in salads. No further information found."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Groundcover. This plant is attractive to bees, butterflies and/or birds. Uses:  Alpine & Rock gardens, Containers, Edging, Waterside, Wild Flower, Woodland."@en .
+
+:MitchellaRepens a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "partridge berry"@en .
+:MitchellaRepens 
+  :plant_hardiness_zones "4-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry or moist knolls in woods, on sandy sub-strates."@en ;
+  :plant_country_range "N. America - Newfoundland to Florida, west to Texas and Minnesota."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Mitchella Repens is an evergreen Shrub growing to 0.1 m (0ft 4in) by 0.5 m (1ft 8in) at a slow rate. It is hardy to zone (UK) 3. It is in leaf all year, in flower from June to July. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_use :TeaAndSubstitute ;
+  :plant_edible_text "Fruit - raw. Pleasant and slightly aromatic. Dry and tasteless, with lots of seeds according to another report. The fruit hangs on well on the bush. The fruit is about 8mm in diameter. A tea is made from the leaves."@en ;
+  :plant_medicinal_use :Tonic, :SedativeAndHypnotic, :Oxytoxic, :Astringent, :Diuretic ;
+  :plant_medicinal_text "Partridge berry was commonly used by several native North American Indian tribes as a parturient to hasten childbirth. It was also occasionally used to treat a variety of other complaints including insomnia, rheumatic pain and fluid retention. It is still used in modern herbalism as an aid to childbirth and is also considered to have a tonic effect upon the uterus and the ovaries. The herb is astringent, diuretic, hypnotic and tonic. Frequent doses of a tea made from the fresh or dried leaves were used by N. American Indian women in the weeks preceding childbirth in order to promote easy delivery. This tea should not be used during the first six months of labour, however, since it can induce a miscarriage. The tea is also used to treat delayed, painful or irregular menses. The tea was also used externally as a wash for hives, swellings, sore nipples, rheumatism etc. The leaves are harvested in the summer and dried for later use. A tea made from the berries has a very definite sedating effect on the nervous system."@en ;
+  :plant_other_use_text "Can be used as a ground cover plant in a shady position. Plants form a spreading carpet, rooting along the stems, and are best spaced about 30cm apart each way."@en .
+
+:MorindaCitrifolia a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "noni"@en, "indian mulberry"@en, "great morinda"@en, "beach mulberry"@en, "cheese fruit"@en .
+:MorindaCitrifolia 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Evergreen, (semi-)deciduous to more or less xerophytic formations, often typically littoral vegetations. Also in pioneer and secondary vegetation after cultivation and bush fires."@en ;
+  :plant_country_range "E. Asia - China, India, Sri Lanka, Myanmar, Thailand, Vietnam, Malaysia, Indonesia, Philippines, New Guinea to Australia."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Morinda Citrifolia is an evergreen Tree growing to 6 m (19ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 10 and is frost tender. The flowers are pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: neutral soils and can grow in saline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed, :PlantLeaf ;
+  :plant_edible_text "The unripe fruit is used in Indian cooking in sambals and curries. Despite the smell of putrid cheese when ripe, the fruits are eaten raw or are prepared in some way. The ripe fruit is made into a beverage with sugar or syrup. The ovoid fruit is 3 - 10cm long and 2 - 3cm wide. The juice of the fruit is used in Australian bushfoods for dressings, sauces and marinades. Young leaves and blanched shoots - raw or steamed, added to curries etc. They contain 4.5 - 6% protein. The leaves are a rich source of vitamin A. The seeds of some forms are roasted and eaten."@en ;
+  :plant_medicinal_text "Most parts of noni have been widely used medicinally since ancient times. It was first mentioned in literature in China during the han dynasty (206BC - 23AD). Nowadays, single trees are encouraged or cultivated in gardens mainly for medicinal purposes. The curative properties of the plant parts are ascribed to the presence of medicinally active anthraquinone derivates. The fruit contains rancid smelling capric acid and unpleasant tasting caprylic acid. It is thought that antibiotically active compounds are present. The roots are febrifuge, tonic and antiseptic. They are used to treat stiffness and tetanus and have been proven to combat arterial tension. An infusion of the root is used in treating urinary disorders. The bark is used in a treatment to aid childbirth. Externally, the root is crushed and mixed with oil and is used as a smallpox salve. An infusion of the root bark is used to treat skin diseases. The roots are harvested as required and used in decoctions. The wilted or heated leaf is applied as a poultice to painful swellings in order to bring relief. A poultice of the leaves is applied to wounds or to the head in order to relieve headaches. The crushed leaves, mixed with oil, are applied to the face for the treatment of neuralgia. The leaves are harvested as required during the growing season. The fruits are used as a diuretic, a laxative, an emollient and as an emmenagogue, for treating asthma and other respiratory problems, as a treatment for arthritic and comparable inflammations, in cases of leucorrhoea and sapraemia and for maladies of the inner organs. Liquid pressed from young fruit is snuffed into each nostril to treat bad breath and raspy voice. It is also used in the treatment of mouth ulcers, haemorrhoids, hernia or swollen testicles, headaches, pain caused by barb of poisonous fish, removal of a splinter, childbirth, diabetes, diarrhoea and dysentery, fever, intestinal worms, filariasis, leprosy, and tuberculosis. Young fruits are used to treat high blood pressure. The fruits can be harvested ripe or unripe and are sometimes charred and mixed with salt for medicinal use. The roots, leaves and fruits may have anthelmintic properties. In traditional medicine the parts used are administered raw or as juices and infusions or in ointments and poultices."@en ;
+  :plant_other_use_text "Seaside tree. Backyard tree. Accent. Container. Large planter. Screening. Conservatory. Xerophytic. Agroforestry Uses: The plant is a natural pioneer species, rapidly appearing in cultivated ground, after bush fires, deforestation or volcanic activity. It can be used in reforestation projects and, with its wide range of uses, would make a good pioneer species when establishing a woodland garden. It tends to persist, so should only be used within its native range if restoring native woodland. Other Uses A red dye is obtained from the root bark. The basis of the morindone dyeing matter, called Turkish red, is the hydrolysed (red) form of the glycoside morindin. This is the most abundant anthraquinone which is mainly found in the root bark which reaches a concentration of 0.25 - 0.55% in fresh bark in 3 - 5 years. It is similar to that found in Rubia tinctorum. High-yielding bark may be expected after 3 - 5 years. Yield of bark is reported to be 500 - 1,000 kg/ha, containing about 0.25% morindin. Traditionally, Symplocos racemosa (a plant that accumulates aluminium) was used as the mordant to fix the red dye. The fruit pulp can be used to cleanse hair, iron and steel. The yellow-brown wood is soft and splits excessively in drying. Its uses are restricted to fuel and poles."@en .
+
+:NaucleaLatifolia a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "african peach"@en .
+:NaucleaLatifolia 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Dry savannah and thickets. A savannah shrub sometimes found in undisturbed fringing forest and closed savannah woodland."@en ;
+  :plant_country_range "West tropical Africa - Ghana to Gabon and DR Congo."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Nauclea Latifolia is a deciduous Tree growing to 10 m (32ft) by 10 m (32ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Bees, Butterflies.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_text "Fruit - raw. The pulp is deep red, watery, sweet with a taste of ripe apple. The fruit is said to resemble a strawberry in taste and texture. The globose fruit is about 8cm in diameter. Flower heads - cooked and eaten as a vegetable."@en ;
+  :plant_medicinal_text "Used in the treatment of diabetes. The root is febrifuge and tonic. It is used in the treatment of fevers, indigestion. The fruit is eaten as a cure for coughs. The bark and roots of the plant contain more than 1% of an opioid that is clinically identical to the analgesic drug 'tramadol'. It can be extracted in a cost-effective way to provide an economical source of this widely used analgesic. Extracts of the plant have exhibited activity against Escherichia coli, Shigella flexneri, Salmonella typhi and Staphylococcus aureus (which are responsible for gastroenteritis in children). The alkaloid strictosamine is obtained from the roots, leaves and stem bark."@en ;
+  :plant_other_use_text "Agroforestry Uses: A suitable species for planting schemes for conservation and soil stabilization. The tree offers shade and acts as a windbreak. It is used as a live stake to provide barriers in farms. The leaves are used as a mulch. Other Uses Small twigs are used as chewing sticks. The bark is a source of tannins. A yellow dye is obtained from the roots. The heartwood is dark red-brown, hard and moderately heavy. The wood is resistant to termites. It is used for inlay work. The wood is used for fuel."@en .
+
+:NeolamarckiaCadamba a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "amboina"@en, "kadam"@en, "snake-needle grass"@en .
+:NeolamarckiaCadamba 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "An early-succession species, it grows best on deep, moist, alluvial sites, often in secondary forests along riverbanks and in the transitional zone between swampy, permanently flooded and periodically flooded areas."@en ;
+  :plant_country_range "E. Asia - Indian subcontinent, China, Malaysia through Indo-China to Australia."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Neolamarckia Cadamba is an evergreen Tree growing to 45 m (147ft) by 30 m (98ft) at a fast rate. It is hardy to zone (UK) 10. The flowers are pollinated by Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower ;
+  :plant_edible_text "The fruit and inflorescences are reportedly edible."@en ;
+  :plant_medicinal_text "The dried bark is used to relieve fever and as a tonic. An extract of the leaves serves as a mouth gargle."@en ;
+  :plant_other_use_text "Agroforestry Uses: Amboina is a typical pioneer species in its natural range and is suitable for reforestation programmes. It is fast growing and suitable for reforestation in watersheds and eroded areas and for windbreaks in agroforestry systems. It is also excellent as a shade tree for dipterocarp line planting Trees shed large amounts of leaf and non-leaf litter, which on decomposition improve some physical and chemical properties of the soil under their canopy. This reflects in increases in the level of soil organic carbon, cation exchange capacity, available plant nutrients and exchangeable bases. Other Uses: The fresh leaves are sometimes used as serviettes or plates. A yellow dye can be obtained from the root bark. The flowers are the source of an essential oil. They are an important raw material in the production of 'attar', which are Indian perfumes with sandalwood (Santalum spp.) base in which one of the essences is absorbed through hydro-distillation. Extracts of the flowers exhibit nematicidal effects on Meloidogyne incognita. The wood is white with a light yellow tinge becoming creamy yellow on exposure; the sapwood is not clearly differentiated from the heartwood. The wood has a density of 290-560 kg/cu m at 15% moisture content, a fine to medium texture; straight grain; low lustre and has no characteristic odour or taste. It is easy to work with hand and machine tools, cuts cleanly, gives a very good surface and is easy to nail. However, the wood is rated as non-durable, graveyard tests in Indonesia show an average life in contact with the ground of less than 1.5 years. The timber air dries rapidly with little or no degrade. The wood is very easy to preserve using either open tank or pressure-vacuum systems. The timber is used for plywood, light construction, pulp and paper, boxes and crates, dug-out canoes, and furniture components. The tree yields a pulp of satisfactory brightness and performance as a handsheet. The wood can be easily impregnated with synthetic resins to increase its density and compressive strength."@en .
+
+:PaederiaFoetida a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "skunk vine"@en .
+:PaederiaFoetida 
+  :plant_hardiness_zones "6-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A ruderal in thickets and woodland, also along forest edges, in secondary evergreen to deciduous forest and clearings in primary forest. Also grows in montane vegetation up to 3,000 m, on steep, forested slopes, or on sandy or rocky sea coasts."@en ;
+  :plant_country_range "E. Asia - China, Japan, Korea, Indian subcontinent, Myanmar, Thailand, Cambodia, Laos, Vietnam, Malaysia, Indonesia, Philippines."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Paederia Foetida is a CLIMBER growing to 4 m (13ft) by 0.3 m (1ft in) at a fast rate. It is hardy to zone (UK) 7. The flowers are pollinated by Bees, Butterflies. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantStem, :PlantLeaf ;
+  :plant_edible_text "Leaves - raw or cooked. Although they have a strong flavour, the leaves are sometimes mixed with grated coconut and spices, and then eaten raw as a side-dish with rice. The minced leaves are steamed and eaten; they can be added to soups; or are mixed with various vegetables and spices, then wrapped in a banana leaf and cooked over a fire. Any offensive smell disappears as the leaves are cooked. The leaves are valued more for their medicinal virtues than for their flavour!. The sweet stem juice is sucked in Taiwan."@en ;
+  :plant_medicinal_text "The leaves are widely used in Asia and South-East Asia, where they are especially valued for treating digestive problems. Considerable research has been carried out into the medicinal benefits of the plants, with several active compounds having been recorded. Several iridoid glucosides such as asperuloside, scandoside and paederoside have been isolated from the aerial parts of the plant. These glucosides have displayed antitumor activity with paederoside displaying the highest degree of antitumor-promoting activity. Scandoside has been shown to promote the growth of lettuce seedlings. Paederoside showed a similar inhibitory activity to that of asperuloside and daecetyl-asperulosidic acid in a plant growth inhibition test and in an antimicroorganism activity test. The bruised aerial parts of the plant have the fetid odour of indole (methyl-mercaptan). Damage to the tissue releases an enzyme which splits off this sulphur-containing group from paederoside, and is therefore responsible for the unpleasant odour. The most abundant sulphur-containing compound was dimethyl disulphide. The presence of alkaloids and an essential oil have also been recorded. Monoterpenes such as linalol constitute the major components in the oil. In older investigations, decoctions of the plant showed significant anti-inflammatory action against arthritis. The decoction also exhibited marked activity against degenerative osteo-arthritis. The water soluble fraction of the aerial parts displayed anti-inflammatory activity in oedema. It failed to exhibit any analgesic or antipyretic action and showed no ulcerogenic potential. An ethanolic extract of the leaves has shown anticancer activity against human epidermoid carcinoma of the nasopharynx. A methanol extract of the leaves has shown hepatoprotective potential, being effective in reversing 6 out of 12 common biochemical (enzymatic) parameters assessed. Another study has shown that the plant has antidiarrhoeal activity, acting by inhibiting intestinal motility - thus supporting its use in traditional medicine. The leaves are anodyne, antirheumatic, antivinous, astringent, carminative, depurative, diuretic, restorative and vermifuge. They are commonly used for the treatment of intestinal complaints such as abdominal pain, colic, cramps, flatulence and dysentery; and are also used for treating rheumatism and gout. The leaves are also used to treat infertility and paralysis. The leaves and stems are also used as a diuretic for inflammation of the urethra. For treating intestinal problems, the fresh leaves are pounded, water added, and the filtered infusion is drunk regularly till convalescence. The plant is considered to have great restorative powers, and the leaves may thus be mixed with food, boiled and eaten - in India, they are often boiled in soup to lessen their smell. Applied externally, the leaves are used to treat swellings and bruises in general, and are mashed then applied for earache, ulcerations of the nose and swollen eyes. They are used as a poultice for treating a swollen belly, distension, herpes or ringworm; and are used in antirheumatic baths. They are applied to the abdomen as a diuretic, and also as a solvent for vesical stones. The juice of the leaves is considered astringent, and is used to treat diarrhoea in children. The bark and the root are considered to be emetic. The juice of the root is prescribed in cases of indigestion, piles, inflammation of the spleen, and pain in the chest and liver. It may help to eliminate poisons collected in the system. In some parts of India, the fruit is used to blacken teeth, and it is also considered a medicine to prevent and treat toothache."@en ;
+  :plant_other_use_text "Other Uses The stem yields a strong and silky fibre, but it is not commercially exploited. An ethanolic extract of the leaves and stem has been shown to be significantly toxic against the aphid Myzus persicae infesting cabbage in India"@en .
+
+:PausinystaliaJohimbe a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "yohimbe"@en .
+:PausinystaliaJohimbe 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The bark contains alkaloids that have medical applications at low doses but are toxic at larger doses. Poisonous doses of the bark are reported to paralyze respiration and the drug can cause severe hypotension, abdominal distress and weakness. The bark can also be used as a fish poison"@en ;
+  :plant_habitat "A middle-storey tree of forests. Occurs mainly in closed canopy forest, most commonly in coastal forest, although not widespread throughout its range."@en ;
+  :plant_country_range "West tropical Africa - Nigeria, Cameroon, Equatorial Guinea, Gabon, Congo, DR Congo.."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Pausinystalia Johimbe is an evergreen Tree growing to 25 m (82ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10. Suitable for: medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The bark contains up to 6% of a mixture of indole alkaloids, the principle one being yohimbine (which is also known as aphrodine), plus pigments and tannins. The alkaloids have a cerebral stimulant action at low doses, but are highly toxic in large doses. Yohimbine has been shown to block the release of adrenalin and, in the correct dose, act as a sexual stimulant. It is the source of the only clinically-proven cure for impotence and has long been used as a traditional stimulant in Africa. Yohimbe is a bitter, warming, anti-diuretic, hypotensive and vasodilating herb with reputedly aphrodisiac effects. It has a stimulant effect upon the heart, increasing heart rate and blood pressure; has a locally anaesthetic action similar to that of cocaine but without being mydriatic; is a mild stimulant that can help to prevent drowsiness; and is hallucinogenic. The vasodilating action of yohimbe is particularly strong on the sex organs, hence its aphrodisiac action. The bark is taken internally, either as a powder or as a decoction. It is used particularly in the treatment of impotence, frigidity and angina. It is also used as a performance enhancer for athletes, and as a remedy to increase the clarity of the voices of singers during long festivals. The bark can be harvested at any time of the year. The use of this herb is subject to legal restrictions in some countries."@en ;
+  :plant_other_use_text "Other Uses The bark is a source of tannins. The inner bark is utilized as straps for panniers. The tree produces very little sap-wood, the major fraction being an ocreous-yellow heart-wood. The wood is flexible, so is widely used as a snare-trap mechanism, whilst the young poles are used for construction purposes in traditional buildings. The wood is used as fuel."@en .
+
+:PausinystaliaMacroceras a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "false johimbe"@en .
+:PausinystaliaMacroceras 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "An understorey tree in forests."@en ;
+  :plant_country_range "West tropical Africa - southern Nigeria, Cameroon, Central African Republic, Equatorial Guinea, Gabon, Congo, DR Congo, northern Angola."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Pausinystalia Macroceras is an evergreen Tree growing to 18 m (59ft) by 15 m (49ft) at a slow rate. It is hardy to zone (UK) 10. Suitable for: medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "The bark is very widely used as an aphrodisiac and anti-hypnotic. The bark sap is applied topically to treat cutaneous and subcutaneous parasitic infections. This species is closely related to Pausinystalia johimbe, and is said to have the same medicinal properties and uses. These are:- The bark contains up to 6% of a mixture of indole alkaloids, the principle one being yohimbine (which is also known as aphrodine), plus pigments and tannins. The alkaloids have a cerebral stimulant action at low doses, but are highly toxic in large doses. Yohimbine has been shown to block the release of adrenalin and, in the correct dose, act as a sexual stimulant. It is the source of the only clinically-proven cure for impotence and has long been used as a traditional stimulant in Africa. Yohimbe is a bitter, warming, anti-diuretic, hypotensive and vasodilating herb with reputedly aphrodisiac effects. It has a stimulant effect upon the heart, increasing heart rate and blood pressure; has a locally anaesthetic action similar to that of cocaine but without being mydriatic; is a mild stimulant that can help to prevent drowsiness; and is hallucinogenic. The vasodilating action of yohimbe is particularly strong on the sex organs, hence its aphrodisiac action. The bark is taken internally, either as a powder or as a decoction. It is used particularly in the treatment of impotence, frigidity and angina. It is also used as a performance enhancer for athletes, and as a remedy to increase the clarity of the voices of singers during long festivals. The bark can be harvested at any time of the year. The use of this herb is subject to legal restrictions in some countries."@en ;
+  :plant_other_use_text "Other Uses This species is closely related to Pausinystalia johimbe, and is said to have the same uses. These are:- The bark is a source of tannins. The inner bark is utilized as straps for panniers. The tree produces very little sap-wood, the major fraction being an ocreous-yellow heart-wood. The wood is flexible so iswidely used as a snare-trap mechanism, whilst the young poles are used for construction purposes in traditional buildings. The wood is used as fuel."@en .
+
+:RubiaCordifolia a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "indian madder"@en .
+:RubiaCordifolia 
+  :plant_hardiness_zones "5-9" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Amongst scrub in the Himalayas. To 2400 metres in Dehra Dun. Damp wet upland forests in China."@en ;
+  :plant_country_range "S. Europe to Africa and Asia."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Rubia Cordifolia is a PERENNIAL CLIMBER growing to 6 m (19ft) by 3 m (9ft).  It is hardy to zone (UK) 6.  It is in flower from July to September. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland). It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantLeaf ;
+  :plant_edible_text "Leaves - cooked. Used as a side dish with rice. It is much esteemed as a lab-lab by the Javanese. Fruit - raw. The fruit is about 8mm in diameter."@en ;
+  :plant_medicinal_use :Analgesic, :Alterative, :Tonic, :Antitussive, :ExpectorantAndMucoactiveAgent, :Vulnerary, :Astringent, :Emmenagogue, :Antiinflammatory, :Diuretic, :Styptic, :Antipyretic ;
+  :plant_medicinal_text "The roots are alterative, anodyne, antiphlogistic, antitussive, astringent, diuretic, emmenagogue, expectorant, styptic, tonic and vulnerary. They have an antibacterial action, inhibiting the growth of Staphylococcus aureus, S. epidermidis, Pneumococci etc. They are used to lower the blood pressure. The roots are used internally in the treatment of abnormal uterine bleeding, internal and external haemorrhage, bronchitis, rheumatism, stones in the kidney, bladder and gall, dysentery etc. The roots are harvested in the autumn from plants that are at least 3 years old. They are peeled and then dried. The stems are used in Tibetan medicine, where they are considered to have a bitter taste and a cooling potency. Febrifuge, they are used in the treatment of blood disorders and spreading fever of kidneys and intestines."@en ;
+  :plant_other_use :DyeInkAndPaint ;
+  :plant_other_use_text "A red dye is obtained from the stems and the root. It is inferior to R. tinctoria, the madder plant."@en .
+
+:UncariaGuianensis a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "cat's claw"@en .
+:UncariaGuianensis 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Found mainly in secondary forest."@en ;
+  :plant_country_range "S. America - Paraguay, Brazil, Bolivia, Peru, Ecuador, Colombia, Venezuela, the Guyanas; north to Tr"@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Uncaria Guianensis is an evergreen Climber growing to 30 m (98ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantStem ;
+  :plant_edible_text "The stems are a source of a potable sap that is used to quench thirst and as a restorative drink. A watery, astringent taste."@en ;
+  :plant_medicinal_text "Cat's claw has a long history of traditional use, being employed in the treatment of a range of conditions including inflammations (especially rheumatism), arthritis, urinary tract infections and gastric ulcers. It has also been used as a blood purifier; to cleanse the kidneys; to recover from childbirth or treat menstrual irregularities; as a treatment for asthma Applied externally, it is used as a wash for wounds in order to promote healing, to cleanse the skin of impurities etc. The plant is widely used in modern herbal medicine, where it is primarily valued for its stimulatory effect upon the immune system. The part most commonly used is the stem bark. Cat's claw has many modern applications, which is a common trait of herbs with immune stimulatory activity, and includes: disease prevention, cancer, recovery from chemotherapy side effects, recovery from childbirth, urinary tract infections, wounds, fevers, haemorrhages, and weakness. Applications for cat?s claw which have had some clinical research include viral infections, pain and symptoms of Herpes infections, and for inflammatory conditions, such as Rheumatoid arthritis. Research has shown that the plant is anti-inflammatory, immune system stimulant, cytoprotective and antioxidant. The plant is astringent. An infusion of the whole plant is drunk to remedy dysentery. The plant is burned and powdered, then used on wounds. It is made into a gargle to remedy mouth ulcers. The leaves are used in the treatment of tuberculosis, coughs and colds. The plant contains tannins."@en ;
+  :plant_other_use_text "Other Uses: The wood is a pale pinkish brown; straight-grained; coarse-textured; light in weight.The stems are used in making furniture."@en .
+
+:UncariaTomentosa a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "cat's claw"@en .
+:UncariaTomentosa 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Typical of primary forest, but also found in disturbed forest and rarely in secondary forest."@en ;
+  :plant_country_range "S. America - Brazil, Bolivia, Peru, Ecuador, Colombia, Venezuela, the Guyanas; Caribbean - Trinidad;"@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "4"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Uncaria Tomentosa is an evergreen Climber growing to 25 m (82ft) by 0.5 m (1ft 8in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSapAndManna, :PlantStem ;
+  :plant_edible_text "The stems are a source of a potable sap that is used to quench thirst and as a restorative drink. A watery, astringent taste."@en ;
+  :plant_medicinal_text "Cat's claw has a long history of traditional use, being employed in the treatment of a range of conditions including inflammations (especially rheumatism), arthritis, urinary tract infections and gastric ulcers. It has also been used as a blood purifier; to cleanse the kidneys; to recover from childbirth or treat menstrual irregularities; as a treatment for asthma. Applied externally, it is used as a wash for wounds in order to promote healing, to cleanse the skin of impurities etc. The plant is widely used in modern herbal medicine, where it is primarily valued for its stimulatory effect upon the immune system. The part most commonly used is the stem bark. Cat's claw has many modern applications, which is a common trait of herbs with immune stimulatory activity, and includes: disease prevention, cancer, recovery from chemotherapy side effects, recovery from childbirth, urinary tract infections, wounds, fevers, haemorrhages, and weakness. Applications for cat?s claw which have had some clinical research include viral infections, pain and symptoms of Herpes infections, and for inflammatory conditions, such as Rheumatoid arthritis. Research has shown that the plant is anti-inflammatory, immune system stimulant, cytoprotective and antioxidant. The whole plant is used in a gargle to remedy mouth ulcers."@en ;
+  :plant_other_use_text "Other Uses: The stems are used in making furniture."@en .
+
+:VangueriaInfausta a owl:Class ;
+  rdfs:subClassOf :Rubiaceae ;
+  :synonym "african medlar"@en .
+:VangueriaInfausta 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Grassland, thicket and open woodlands, often on termite mounds, in rocky places and even dunes at elevations from near sea level to 1,500 metres."@en ;
+  :plant_country_range "Tropical Africa - Cameroon to Kenya, south to Namibia, Zambia, Zimbabwe, Mozambique and northern S."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Vangueria Infausta is a deciduous Shrub growing to 5 m (16ft) by 5 m (16ft) at a slow rate. It is hardy to zone (UK) 10. The flowers are pollinated by Bees, Insects.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. A soft, fleshy pulp. An acid, somewhat sweetish-sour flavour. The brown pulp round the seeds tastes somewhat like stewed dried, apple-rings. The pulp is sometimes soaked in water and then dried for later use. The green fruit usually ripens to a dull orange-brown or purplish colour. It is 15 - 47mm in diameter. Seeds - raw. They can also be made into a relish."@en ;
+  :plant_medicinal_text "The root is anthelmintic, antidote and purgative. A popular snake-bite remedy, it is also used to treat a variety of complaints such as malaria, pneumonia, coughs and other chest troubles. A warm decoction of the roots is considered to be an effective remedy for heart ailments in Namibia. The leaves are applied externally as a treatment for swellings on the legs; inflammation of the navel in children; abdominal pain; and for the relief of dental pain."@en ;
+  :plant_other_use_text "Other Uses The wood can be used as poles for houses, tool handles and agricultural implements. The wood is considered a good fuel in some areas, though in others it is said to bring bad luck if burnt."@en .
+

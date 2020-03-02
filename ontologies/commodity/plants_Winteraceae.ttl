@@ -1,0 +1,56 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Winteraceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:DrimysLanceolata a owl:Class ;
+  rdfs:subClassOf :Winteraceae ;
+  :synonym "Tasmannia lanceolata", "tasmanian pepperberry"@en, "mountain pepper"@en, "cornish pepper leaf"@en .
+:DrimysLanceolata 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist places in mountain forests and also in alpine zones to 1500 metres."@en ;
+  :plant_country_range "Australia - New South Wales, Tasmania and Victoria."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "1"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Drimys Lanceolata is an evergreen Shrub growing to 4.5 m (14ft) by 2.5 m (8ft) at a slow rate. It is hardy to zone (UK) 8. It is in leaf all year, in flower from April to May, and the seeds ripen from September to October. The species is dioecious (individual flowers are either male or female, but only one sex is to be found on any one plant so both male and female plants must be grown if seed is required). . The plant is not self-fertile.  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland). It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "The fruit and seed are used as a pepper and allspice substitute. A pungent flavour. The aromatic berries are edible according to one report, whilst another says that they taste somewhat like cinnamon."@en ;
+  :plant_medicinal_use :Antiscorbutic, :Stomachic ;
+  :plant_medicinal_text "Antiscorbutic, stomachic."@en ;
+  :plant_other_use :WoodCorkAndSubstitute, :Hedge ;
+  :plant_other_use_text "This species makes an excellent windbreak in woodland, it is widely grown as a hedge in mild temperate regions. Wood - soft, only moderate strength."@en .
+
+:DrimysWinteri a owl:Class ;
+  rdfs:subClassOf :Winteraceae ;
+  :synonym "winter's bark"@en, "canelo"@en .
+:DrimysWinteri 
+  :plant_hardiness_zones "7-10" ;
+  :plant_hazards "The sap of this plant can cause serious inflammation if it comes into contact with the eyes."@en ;
+  :plant_habitat "The dominant tree in moister lowland sites to Tierra Del Fuego. Boggy sites by streams etc in rich soils."@en ;
+  :plant_country_range "Southern S. America - Chile, Argentina."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Drimys Winteri is an evergreen Shrub growing to 7.5 m (24ft) by 6 m (19ft) at a medium rate.  It is hardy to zone (UK) 8. It is in leaf all year, in flower from January to June. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy) and medium (loamy) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland). It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_use :CondimentAndSeasoning ;
+  :plant_edible_text "The aromatic pungent bark is powdered and used as a pepper substitute in Brazil, Chile and Argentina. It is rich in vitamin C."@en ;
+  :plant_medicinal_use :Antiparasitic, :Antiseborrheic, :Antiscorbutic, :Stimulant, :SkinTreatment, :Stomachic, :Antipyretic, :AromaticAndAromatherapy ;
+  :plant_medicinal_text "The bark is a pungent bitter tonic herb that relieves indigestion. It is antiscorbutic, aromatic, febrifuge, skin, stimulant and stomachic. An infusion of the bark is used in the treatment of indigestion, colic, dandruff and scurvy. It is also used as a parasiticide. The bark is harvested in the autumn and winter and is dried for later use."@en ;
+  :plant_other_use :EssentialOil, :Parasiticide, :WoodCorkAndSubstitute ;
+  :plant_other_use_text "The powerfully aromatic bark contains resinous matter and 0.64% of aromatic essential oil. Wood - not durable, heavy (it sinks in water) - interior of houses, boxes etc. It burns badly with a smell."@en .
+

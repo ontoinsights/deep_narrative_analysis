@@ -1,0 +1,404 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Sapotaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:ArganiaSpinosa a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "argan tree"@en, "spiny argania"@en, "morocco ironwood"@en .
+:ArganiaSpinosa 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Plant has spines or sharp edges; use extreme caution when handling"@en ;
+  :plant_habitat "Slopes of rough hills, seeming to thrive between the rocks on poor soil, at elevations up to 1,500 metres."@en ;
+  :plant_country_range "Northwest Africa - Algeria, Morocco, Western Sahara, Mauritania."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Argania Spinosa is an evergreen Tree growing to 7 m (23ft) by 12 m (39ft).  It is hardy to zone (UK) 10. The flowers are pollinated by Bees, Butterflies. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed, :PlantLeaf ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Edible portion: Nut - oil, Leaves, Fruit. An edible oil is obtained from the seed . The white seeds contain up to 50% of a light brown oil. This oil is an excellent source of vitamin E, and has a high nutritional value in the human diet. The locals mix oil with almonds and honey to make an almond butter; it also mixed with wheat germ and honey to make gruel. The residue from the kernels, after oil extraction, is a thick chocolate-coloured paste called 'amlou' which is sweetened and served as a dip for bread at breakfast time in Berber households. Its flavour is similar to that of peanut butter . The fruit are pressed for the oil which has an aroma and is used in cooking. The oil is cold pressed from the fruit. The oil is used like olive oil for cooking, frying and salad dressing."@en ;
+  :plant_medicinal_text "The oil from the seeds is rich in vitamin E and has properties which lower blood-cholesterol levels, stimulate circulation of the blood, facilitate digestion and strengthen the body's natural defences. It is used as a cure for chicken pox, to treat juvenile acne and help remove stretch marks on pregnant woman."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other uses rating: Medium (3/5). Agroforestry Uses: Argania spinosa shields thin soils from erosion, especially in overgrazed lands. Its deep roots help to bind the soil, facilitate water infiltration and replenish ground water, thus helping to stabilise environmental conditions. The tree provides valuable shade for humans and livestock as well protecting pasture grasses from the extreme evapotranspiration that would result from direct exposure to sunlight. Argan woodlands form a green belt that functions as a buffer against desert advancement in southern Morocco. The plant is used for fencing and windbreaks Other Uses An oil obtained from the seed is used for lighting and to make soap. The wood is very hard, heavy and durable. It is very resistant to damage from wood-eating organisms. It is used in carpentry, for making agricultural implements and building poles. The wood is a goof fuel and makes a very good charcoal. The seed shells are also burnt as a fuel. Suitable for xeriscaping"@en .
+
+:BaillonellaToxisperma a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "african pearwood"@en, "false shea butternut"@en .
+:BaillonellaToxisperma 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The residues of oil extraction are sometimes used as fish poison. Sawdust from the wood can irritate mucous membrances."@en ;
+  :plant_habitat "Usually scattered in primary rainforest on all soil types except marshy soil."@en ;
+  :plant_country_range "Western tropical Africa - southern Nigeria to Gabon, Congo and south-western DR Congo."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "3"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Baillonella Toxisperma is a deciduous Tree growing to 50 m (164ft) by 40 m (131ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and very alkaline soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "Edible portion: Nut, Seeds - oil, Fruit. The fruit pulp is eaten fresh although it contains latex. The seed kernel contains a fatty oil that is used in cooking. The residue after extracting the oil is toxic."@en ;
+  :plant_medicinal_text "The seed kernel contains a fatty oil that is used in traditional medicine. It is applied externally to treat rheumatic pains. Bark decoctions are used to treat kidney problems, toothache, rickets, vaginal infections and affections of the respiratory and digestive tracts."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other uses rating: High (4/5). Other Uses The seed kernel contains a fatty oil that is used as a pomade to the hair and also in soap manufacture. The allelopathic compound 3-hydroxyuridine has been isolated from the leaves, stems and roots of the tree. It inhibited the growth of seedlings of some test plants. The heartwood has a uniform reddish brown colour, more or less dark and finely veined; it is clearly demarcated from the 4 - 6cm wide band of sapwood. The texture is fine; the grain straight or interlocked. The wood is heavy, hard, elastic, very durable, with a resistance to fungi, Lyctus beetles, termites and marine borers. It is difficult to work due to the presence of silica (0.2 - 0.3%) - power tools that are stellite-tipped and tungsten carbide are recommended; it glues correct, though care needs to be taken because of the density of the wood; it takes nails and screws well, but pre-boring is required; it finishes well; and has good steam-bending properties. Painting and varnishing with the principal industrial products do not cause problems. It is used for many purposes including high class cabinetwork, joinery and carpentry in both interior and exterior applications, marine construction, flooring, turnery, railway sleepers, decorative uses and veneer."@en .
+
+:ChrysophyllumCainito a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "star apple"@en, "caimito"@en .
+:ChrysophyllumCainito 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The seeds contain a cyanogenic glucoside."@en ;
+  :plant_habitat "Humid woodlands at low to medium elevations."@en ;
+  :plant_country_range "Central America - Belize; Caribbean - Cayman Islands, Jamaica."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Chrysophyllum Cainito is an evergreen Tree growing to 25 m (82ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10 and is frost tender. The plant is self-fertile. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and saline soils. It cannot grow in the shade. It prefers  moist soil. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_text "Fruit - raw or made into preserves. A sweet flavour. The pleasantly acidic flesh is high in carbohydrate and is eaten fresh. The fruit is about 10cm in diameter. The fruit is not good unless allowed to remain on the tree until fully ripe; if picked when immature it is astringent and contains a sticky, white latex. The skin needs to be removed since biting into it leaves a horrible stickiness in the mouth. When opening a star apple fruit, one should not allow any of the bitter latex of the skin to contact the edible fresh. The ripe fruit, preferably chilled, is cut in half and the flesh spooned out, leaving the seed cells and core. A better way of serving the fruit is to cut around the middle completely through the rind and then, holding the fruit stem-end down, twisting the top gently back and forth. As this is done, the flesh will be felt to free itself from the downward half of the rind, and the latter will pull away, taking with it the greater part of the core. An emulsion of the slightly bitter seed kernels is used to make imitation milk-of-almonds or nougat and other confections."@en ;
+  :plant_medicinal_text "The ripe fruit is eaten to sooth inflammation in laryngitis and pneumonia. It is given as a treatment for diabetes mellitus, and as a decoction is gargled to relieve angina. The fruit is used in treating haemorrhage or is cooked and used for fever. A decoction of the rind, or of the leaves, is taken as a pectoral. The undersides of the leaves are grated and applied as a poultice to wounds. A decoction of the leaves is taken orally to treat hypoglycaemia. A decoction of the tannin-rich, astringent bark is drunk as a tonic and stimulant, and is taken to halt diarrhoea, dysentery and haemorrhages, and as a treatment for gonorrhoea and catarrh of the bladder. The bitter, pulverized seed is taken as a tonic, diuretic and febrifuge. The latex of the tree is applied on abscesses and, when dried and powdered, it is given as a potent vermifuge. It is also taken as a diuretic, febrifuge and remedy for dysentery."@en ;
+  :plant_other_use_text "Other uses rating: Low (2/5). Large shade tree, Street tree, Screening, Specimen, Backyard tree, Large planter, Conservatory. Grown as an ornamental for the attractive golden underside to the leaves. Agroforestry Uses: The branches are used as an orchid-growing medium. Other Uses: A good quality paper can be obtained from the wood pulp. Tannins are extracted from the bark. The sapwood and heartwood are reddish-brown to dark brown, strong, hard but not durable, with fine to medium texture, fairly straight grain; specific gravity of 0.70. The wood is used for general indoor construction, such as planking, light framing, flooring, interior trim, lining, shelving, cladding, panelling and partitioning. It is also suitable for mouldings, light tool handles, inlaying, carving, joinery, furniture and cabinet making. Good-quality veneer and plywood can be obtained from it. The wood is sometimes used for fuel."@en .
+
+:LetestuaDurissima a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "kong-afane"@en, "congotali"@en .
+:LetestuaDurissima 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The sawdust can have an irritant effect."@en ;
+  :plant_habitat "Primary rainforest."@en ;
+  :plant_country_range "West tropical Africa - Gabon, Congo."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Letestua Durissima is an evergreen Tree growing to 40 m (131ft) by 30 m (98ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "A bark decoction is a component of a traditional medicine against leprosy."@en ;
+  :plant_other_use_text "Other Uses The heartwood is fairly dark red-brown, turning chestnut brown with age; it is distinctly demarcated from the 5 - 9cm wide band of pale brown sapwood. The grain is usually straight, but sometimes interlocked; the texture fine to medium. The wood is very heavy; very hard; strong; resilient; stiff; very durable, it is rarely attacked by termites, but must be treated to prevent marine borer attack; the sapwood is not susceptible to Lyctus borers. Shrinkage rates are high; drying is slow, with high risks of distortion and checking; the dried wood is fairly stable. The wood is slow and difficult to saw due to the high silica content, which leads to severe blunting, and an irritating dust is produced; it should be sawn as fresh as possible and stellite-tipped sawteeth are recommended; planing is relatively easy and gives a smooth surface; pre-boring for nailing and screwing is recommended to avoid splitting, but the wood holds nails well; it glues well, when done carefully. The wood is considered suitable for heavy construction and flooring, mine props, ship and boat building, vehicle bodies, sporting goods, agricultural implements, musical instruments, precision equipment, joinery, sleepers, poles and piles, toys and novelties, and pattern making. The low saturation point makes the wood suitable for use in humid conditions such as mine work.."@en .
+
+:MadhucaLongifolia a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "butter tree"@en, "mahua"@en, "illipe"@en, "mahuwa"@en, "mahwa"@en, "mohulo"@en, "iluppai"@en, "vippa chettu"@en .
+:MadhucaLongifolia 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Margins of tropical and subtropical forests at elevations up to 200 metres in Nepal. Deciduous forests and dry sal plain forests. The tree is usually found scattered in pastures and cultivated fields in central India."@en ;
+  :plant_country_range "E. Asia - India, Sri Lanka, Nepal, Myanmar."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Madhuca Longifolia is a deciduous Tree growing to 16 m (52ft) by 14 m (46ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Bats.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantLeaf ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The fragrant fleshy flowers can be eaten raw or cooked. Rich in nectar, they are used as a sweetener and a source of sugar. They can also be dried for later use. The dried flowers can be powdered and added to flour. Excessive amounts can be intoxicating. Both the ripe and the unripe fruit can be eaten. The outer fruit coat is eaten as a vegetable, whilst the fleshy cotyledons are dried and ground into a meal. The yellow fruit is about 5cm long. An oil expressed from the seed is used both as a substitute for and an adulterant of ghee. The seeds are a source of illipe butter, used in making margarine and chocolate. The oil is of low quality. The leaves are edible."@en ;
+  :plant_medicinal_text "The flowers are regarded as cooling, tonic and demulcent. They are used in the treatment of coughs, colds and bronchitis. The bark is used medicinally in the treatment of leprosy. A decoction of the bark is given to diabetic patients in Nepal. It is also used externally to treat itchy skin and bleeding gums. The oil from the seeds is used in the treatment of skin diseases."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Agroforestry Uses: The tree has a large spreading superficial root system that holds soil together. It is planted on wasteland with hard lateritic soils in India. The seed cake has been used as fertilizer. Other Uses: The seed residue, after the oil has been extracted, is used for ridding lawns of worms. The de-fatted seed kernels contain 26 - 50 % saponin. The oil from the seeds is used to treat other seeds against pest infestation. A low quality of oil is extracted form the seeds. Consisting principally of palmitic and stearic acids, it is mainly used in making soap and candles. Tannin is obtained from the bark. The heartwood is reddish brown. The wood is strong, very hard, very heavy and durable. It takes a fine finish. It is used for house construction, furniture, naves and felloes of cartwheels, door and window frames. The wood is used as a fuel."@en .
+
+:ManilkaraBidentata a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "balata"@en, "bulletwood"@en, "bully tree"@en .
+:ManilkaraBidentata 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist coastal and limestone forests to lower mountain forests at elevations from near sea level up to 600 metres."@en ;
+  :plant_country_range "S. America - Brazil, Peru, Ecuador, Colombia, Venezuela, the Guyanas; C. America - Panama; Caribbean."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Manilkara Bidentata is an evergreen Tree growing to 30 m (98ft) by 25 m (82ft) at a medium rate.  It is hardy to zone (UK) 10. Suitable for: medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna ;
+  :plant_edible_text "Fruit - raw. The globose berries about 25mm in diameter, and usually contain a single, shiny, black seed, surrounded by a sweet, gummy pulp. Although no specific information has been seen for this species, the sap from some of the other species within the genus can be used as a substitute for cow's milk. The latex has the consistency and taste of cream, but overindulgence in it can result in severe constipation."@en ;
+  :plant_medicinal_text "A latex obtained from the stems is used as an effective cure for dysentery. The bark is emetic. A decoction of the bark, combined with the barks of Hymenaea sp. and Humiria sp., is used as an effective cure for dysentery. The leaves are used for treating paralysis of the limbs."@en ;
+  :plant_other_use_text "Other Uses The tree is tapped for its milky latex, the source of balata gum - a non-elastic rubber which is similar to gutta-percha. In some areas, trees have yielded sap for more than 25 years. The latex is coagulated by fire or dried in the sun, and souvenirs or novelties are then fabricated from it. Gutta-percha is a natural latex obtained from the sap of the tree. Allowing this fluid to evaporate and coagulate in the sun produces a hard and durable latex which can be made flexible again with hot water, but which does not become brittle. Prior to the advent of synthetic materials, gutta-percha had a wide range of uses - most particularly as an insulating material for electricity wiring and for underwater telegraph wires, a purpose for which it is very well suited since it is bio-inert and so is not attacked by marine plants or animals. Gutta-percha can be moulded into any shape and has been used to make items such as ornate furniture, pistol grips, acid-resistant receptacles and ‘mourning’ jewellery, where its dark colour was an advantage. It has been widely used as the core of golf balls and is still used in modern dentistry where its bio-inertness makes it ideal as a temporary filling for teeth and as a filling material inside tooth fillings. The heartwood is light red when cut and turns to dark reddish brown with purplish shades when dry; it is distinct, but not sharply demarcated from the 4 - 6cm wide band of whitish to pale brown sapwood. It is finely and uniformly textured; usually straight-grained, though sometimes interlocked; sometimes with a characteristic odour when fresh, though this disappears upon drying. The wood is very hard, very heavy, tough, strong, elastic; very durable, even in contact with the soil, being very resistant to fungi, dry wood borers and termites, but susceptible to marine borers. It seasons slowly, with a high risk of checking and distortion; once dry it is poorly stable in service. The wood has a fairly high blunting effect, stellite-tipped and tungsten carbide tools are recommended; it rates excellent for boring, fair for planing, and poor for turning; it finishes very well; nailing and screwing are good, but require pre-boring; gluing is correct for internal purposes only, and needs to be done with care because of the density of the wood. A strong and attractive wood that resembles mahogany, it is highly valued commercially and is widely used in the tropics for railway sleepers, bridging, heavy construction, furniture, turnery, flooring, violin bows, and billiard cues. Its strength, high wear resistance, and durability qualify the timber for use in textile and pulp mill equipment. Its excellent steam-bending properties make it suitable for boat frames and other bent work."@en .
+
+:ManilkaraDiscolor a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "red milkwood"@en, "silvery milkwood"@en .
+:ManilkaraDiscolor 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Lowland and upland dry evergreen forest and well-drained sites in upland rainforest, at elevations from sea level to 2,100 metres."@en ;
+  :plant_country_range "East tropical Africa - Kenya, Tanzania, Malawi, Mozambique, Zimbabwe, S. Africa."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Manilkara Discolor is an evergreen Tree growing to 20 m (65ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. The juicy, fleshy pulp is very tasty. Eaten as a snack, especially by children and travellers, the seeds are discarded. The yellow to red, fleshy, oval berries are up to 13mm in diameter, enclosing an oval flattened pale-coloured seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Agroforestry Uses: The tree is good for shade. Other Uses The plant exudes a white latex. The wood is hard. It is used for poles, tool handles, carvings and spoons. The wood is used for fuel."@en .
+
+:ManilkaraHuberi a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "cow tree"@en, "massaranduba"@en, "black balata"@en, "nispero"@en, "sapotilla"@en .
+:ManilkaraHuberi 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Rainforests, in areas that do not become inundated."@en ;
+  :plant_country_range "Northern S. America - Brazil, Venezuela, French Guiana, Surinam, Guyana."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Manilkara Huberi is an evergreen Tree growing to 40 m (131ft) by 30 m (98ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna ;
+  :plant_edible_text "Fruit - raw. A juicy, aromatic pulp with a sweet flavour. A drinkable milk exudes from the cut bark."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "The latex is a source of an inferior balata in Guyana. Balata is a gum, resembling rubber, used to make gaskets, chewing gum etc. The heartwood is dark red brown with purplish shade; it is clearly demarcated from the 4 - 6cm wide band of whitish to pale brown sapwood. It is finely and uniformly textured; usually straight-grained. The wood is very hard, very heavy, tough, strong, elastic; very durable, even in contact with the soil, being very resistant to fungi, dry wood borers and termites, but susceptible to marine borers. It seasons slowly, with a high risk of checking and distortion; once dry it is poorly stable in service. The wood has a fairly high blunting effect, stellite-tipped and tungsten carbide tools are recommended; nailing and screwing are good, but require pre-boring; gluing is correct for internal purposes only, and needs to be done with care because of the density of the wood. The wood is used for several purposes, both internal and external. It is used for purposes such as sculpture, tool handles, industrial or heavy flooring, sliced veneer, stairs, furniture , ship building, wood frame house, bridges, posts, stakes, sleepers, heavy carpentry."@en .
+
+:ManilkaraZapota a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "sapodilla"@en, "nispero"@en .
+:ManilkaraZapota 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Older leaves contain a poisonous alkaloid. Seeds contain hydrocyanic acid and should be removed before eating the fruit."@en ;
+  :plant_habitat "Lowland and coastal forests."@en ;
+  :plant_country_range "C. America - Panama to Mexico."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Manilkara Zapota is an evergreen Tree growing to 25 m (82ft) by 25 m (82ft) at a slow rate. It is hardy to zone (UK) 10 and is frost tender. The flowers are pollinated by Insects. It is noted for attracting wildlife.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid and neutral soils and  can grow in very acid and saline soils. It cannot grow in the shade. It prefers dry or  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantSapAndManna, :PlantLeaf, :PlantShoot ;
+  :plant_edible_text "The fruit can be eaten raw, or used in making sherbets, custard, ice cream, pies, jams, jellies etc. Slightly larger than a plum, when fully ripe, the flesh is soft, very sweet, slightly acid and totally delicious, with the flavour of pears, cinnamon and brown sugar combined. The fruit contains tannin, which is astringent. In order to be at its best, the fruit needs to be eaten when it is absolutely ripe and has lost that astringency, and so it is difficult to grow commercially. The globose fruit is about 10cm in diameter. The stems are a source of a milky latex called balata or chicle. This inelastic polymer can be coagulated when it becomes hard and brittle until chewed. It has long been used as the base for chewing gum. The very young leaves and shoots can be eaten raw or cooked. Some caution is advised since older leaves contain poisonous alkaloids."@en ;
+  :plant_medicinal_text "A leaf decoction is taken for fever, haemorrhage, wounds and ulcers. For neuralgia, leaf with tallow is applied as a compress on the temples. The flowers are used as one of the ingredients of a powder that is rubbed on the body of a woman after childbirth. The bark is astringent, febrifuge and tonic. Tannin from the bark is used to cure diarrhoea and fever. The fruit is eaten as a remedy for indigestion and diarrhoea. Seeds are antipyretic, and when ground with water they act as a diuretic. They are used to expel urinary and gall bladder stones. The pulverized roots are used to treat thrush in babies. The plant is a source of sapotin, a glucoside used in medicine as a febrifuge."@en ;
+  :plant_other_use_text "Seaside backyard tree. Shade tree. Coastal street tree. Public open space. Xerophytic. Other Uses Wild and cultivated trees in America are tapped for their milky latex, which coagulates into chicle, the principal constituent of chewing gum before the advent of synthetic alternatives. The gum is also used in transmission belts, dental surgery, and as a substitute for gutta-percha, a coagulum of the latex of Palaquium spp. Chicle gum is obtained from oblique cuts or slashes made in the trunk of the tree during the rainy months. From these cuts there issues a milky latex which must be coagulated by heat, and formed into solid blocks for export. Tannin from the bark is used to tan ship sails and fishing tackle. The heartwood is dark reddish or reddish brown, the sapwood pinkish. It is without distinctive odour or taste, of rather low lustre, rather fine-textured and with fairly straight grain. The wood is noted for its strength and durability, it is also very hard, tough, dense, and resistant to insects. It is not easy to work and has a tendency to splinter, but can be finished smoothly. It is suitable for heavy construction, railway ties, furniture, joinery and tool handles."@en .
+
+:MimusopsElengi a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "spanish cherry"@en, "bakul"@en .
+:MimusopsElengi 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The sawdust is irritating to nose and throat."@en ;
+  :plant_habitat "Humid lowland forests. Fairly common near the sea, but may also be found in rocky locations and inland forest at elevations up to 600 metres."@en ;
+  :plant_country_range "E. Asia - India, Sri Lanka, Thailand, Malaysia, Indonesia, Philippines, New Guinea, northern Australia, New Caledonia, Vanuatu."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Mimusops Elengi is an evergreen Tree growing to 15 m (49ft) by 16 m (52ft) at a medium rate.  It is hardy to zone (UK) 10 and is frost tender. The flowers are pollinated by Wind. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The fruit can be eaten raw, preserved or pickled. Yellow when ripe, they have a sweet flavour. The pulp is starchy with a floury texture. The fruit is insipid and/or astringent. They are said to taste like dates but to be more dry. The ovoid to oblong fruit is up to 35mm long and 16mm wide. An oil is obtained from the seed. Used for cooking. The seed kernel contains about 22% oil. The fatty acid composition of the refined oil is: oleic acid 64%, linoleic acid 14.5%, palmitic acid 11%, stearic acid 10% and behenic acid 0.5%. The nutritional quality of the refined oil is considered to be comparable with that of groundnut oil."@en ;
+  :plant_medicinal_text "The bark is astringent, bitter and tonic. It is used in the treatment of diarrhoea and dysentery. A decoction of the bark, sometimes mixed with the flowers, is used as a gargle to treat gum inflammation, toothache etc. It is also used to treat gonorrhoea, snakebites, fevers, wounds, scabies and eczema. It is often combined with tamarind bark (Tamarindus indica) then used as a lotion on skin complaints. The leaves are used to treat headache, toothache, wounds and sore eyes, and are smoked to cure infections of the nose and mouth. The flowers have been used as a remedy against diarrhoea. The young fruits have been employed in a gargle for treating sprue. The pounded seeds are used to cure obstinate constipation. Several triterpenes have been isolated from the plant, as well as steroidal glycosides. The major chemical compounds in the flowers are aromatic alcohols and esters. The ethyl-acetate-soluble fraction of an alcoholic extract of the bark showed anti-ulcer activity against experimental gastric ulcers; this activity was attributed to a decrease in gastric acid secretory activity along with strengthening of mucosal defensive mechanisms. A methanolic extract caused hypotensive activity; it may possess calcium-blocking activity."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Small shade tree. Street tree. Public open space. Civic centre. Screening. Other Uses: The flowers are very aromatic and retain their fragrance for a long time after being dried. They are used as a filling in pillows, strung in garlands or necklaces for decoration, or placed in linen-cupboards. An essential oil used in perfumery can be distilled from them. The leaves contain an essential oil. The bark contains an essential oil. The seeds are used for making necklaces . The saponins from the seeds are effective against the plant pathogens Phytophthora palmivora and Colletotrichum capsici, and field trials in India showed that they can be used for control of these pathogens in betel pepper (Piper betle) plantations. An oil obtained from the seeds is used to make paint and for lighting. The bark has been used for tanning, but the tannin content is low. A brown dye is obtained from the bark. The heartwood is deep red or dark red-brown, often with darker streaks; it is not sharply demarcated from the paler, 5 - 7cm wide band of sapwood. The grain is straight, wavy or slightly interlocked; texture very fine to fine and even, occasionally with watered-silk figure on the tangential face of the sapwood; the taste is bitter and the wood contains saponin and lathers when rubbed with water. The wood is heavy; very hard; very strong and tough; very durable, even when exposed to the weather or in contact with the ground. It is reportedly resistant to marine borer attack and to dry-wood termites. The sapwood is susceptible to Lyctus. It is liable to end-splitting, warping and surface checking if not carefully seasoned. It is generally considered difficult to work, especially in sawing, due to the presence of silica, but is easier to work when still green; stellite-tipped saws are recommended; it finishes very well using sharp tools. The wood is used for heavy general construction, building purposes, boat and shipbuilding, piles, bridges, agricultural implements and oil mills. It is also used for flooring, bearings, doors and framing, poles and piles, foundation sills, railway sleepers, paving blocks, mine timber, furniture and cabinet work, vehicle bodies and wheels, turnery, tool handles, walking sticks, weaving shuttles, toys, sporting goods and musical instruments. A good-quality veneer and plywood can be manufactured from the wood. The tree also yields a good fuelwood. The energy value of the heartwood is 21,340 kJ/kg, that of the sapwood 21,090 kJ/kg."@en .
+
+:PalaquiumGutta a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "gutta-percha"@en .
+:PalaquiumGutta 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Lowland and hill forest. Usually occurs scattered in lowland forest, but can be found at elevations up to 1,600 metres."@en ;
+  :plant_country_range "Southeast Asia - Malaysia, Indonesia."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Palaquium Gutta is an evergreen Tree growing to 20 m (65ft) by 20 m (65ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_text "The seeds contain a fat that is sometimes used for cooking."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses This species is the main source of gutta-percha. Gutta-percha is a natural latex obtained from the sap of the tree. Allowing this fluid to evaporate and coagulate in the sun produces a hard, durable, non-brittle but non-elastic latex which can be made flexible again when heated to temperatures over 50°c, and then retains any form given while cooling. Prior to the advent of synthetic materials, gutta-percha had a wide range of uses - most particularly as an insulating material for electricity wiring and for underwater telegraph wires, a purpose for which it is very well suited since it is bio-inert and so is not attacked by marine plants or animals. Gutta-percha can be moulded into any shape and has been used to make items such as ornate furniture, pistol grips, acid-resistant receptacles and 'mourning' jewellery, where its dark colour was an advantage. It has been widely used as the core of golf balls and is still used in modern dentistry where its bio-inertness makes it ideal as a temporary filling for teeth and as a filling material inside tooth fillings. It is used locally for fixing tools into their handles. Leaves of about 10 months of age are considered to be the source of the best quality latex. The seeds contain 58 - 63% fat used for the manufacture of soaps and candles. The timber is used for planks that are not exposed to the weather or ground; for panelling; and for the manufacture of fine furniture, decorative doors and veneers. We do not have any more specific information on the wood of this species, but it belongs to a group of timbers collectively called 'Nyatoh'. The general description of nyatoh wood is as follows:- The heartwood is a dark pink to a red-brown; it is clearly demarcated from the 4 - 9cm wide band of sapwood. The texture is medium; the grain straight or interlocked, sometimes wavy. The wood is light in weight, soft to moderately hard; somewhat durable, being resistant to dry wood borers, moderately resistant to fungi but susceptible to termites. It seasons somewhat slowly, with a high risk of checking and distortion; once dry it is stable in service. There is a very variable content of silica according to the species, but in general the wood has a high blunting effect so stellite-tipped and tungsten-carbide tools are recommended; nailing and screwing are good, but require pre-boring; gluing is correct. The wood has a range of applications, including for highclass furniture and cabinet making, panelling, joinery, flooring, light carpentry, turnery, moulding and veneer."@en .
+
+:PayenaLeeri a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "balam suntei tree"@en, "getah sundek"@en .
+:PayenaLeeri 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Lowland forest."@en ;
+  :plant_country_range "Southeast Asia - Myanmar, Malaysia, Indonesia, Philippines."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Payena Leeri is an evergreen Tree growing to 30 m (98ft) by 25 m (82ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. A sweet flavour."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A gutta-percha of good quality is obtained from the plant. Gutta-percha is a natural latex obtained from the sap of the tree. Allowing this fluid to evaporate and coagulate in the sun produces a hard and durable latex which can be made flexible again with hot water, but which does not become brittle. Prior to the advent of synthetic materials, gutta-percha had a wide range of uses - most particularly as an insulating material for electricity wiring and for underwater telegraph wires, a purpose for which it is very well suited since it is bio-inert and so is not attacked by marine plants or animals. Gutta-percha can be moulded into any shape and has been used to make items such as ornate furniture, pistol grips, acid-resistant receptacles and ‘mourning’ jewellery, where its dark colour was an advantage. It has been widely used as the core of golf balls and is still used in modern dentistry where its bio-inertness makes it ideal as a temporary filling for teeth and as a filling material inside tooth fillings. The wood is used for house building."@en .
+
+:PlanchonellaAustralis a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "black apple"@en .
+:PlanchonellaAustralis 
+  :plant_hardiness_zones "11-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Along the coast and in gullies in adjacent plateaux."@en ;
+  :plant_country_range "Australia - New South Wales, Queensland."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Planchonella Australis is a TREE. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. Some forms are quit sweet. The purplish or black, obovoid or globose fruit is 20 - 60mm long, containing 2 - 5 seeds that are each around 20mm long."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: The wood is hard and handsomely marked. It is used for high quality cabinet making."@en .
+
+:PouteriaAltissima a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "abam"@en, "apotro"@en, "gomu"@en .
+:PouteriaAltissima 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A canopy tree in the driest types of semi-deciduous forest in west Africa; it can be common, locally even dominant, in rainforest in east Africa; found at elevations from 1,000 - 1,700 metres."@en ;
+  :plant_country_range "Tropical Africa - Guinea, through Cameroon to Sudan and Ethiopia, south to DR Congo, Zambia and Tanzania."@en ;
+  :plant_edibility_rating "0"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Pouteria Altissima is a TREE growing to 35 m (114ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10. The flowers are pollinated by Bees.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_text "None known"@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Agroforestry Uses: In Ethiopia and Uganda the tree is used as a shade tree in coffee, banana and cocoa plantations. The tree is considered useful as a bee plant. Other Uses A latex exudes from the bark. No uses are recorded. The heartwood is creamy white to reddish brown; it is indistinctly demarcated from the 3 - 6cm wide band of sapwood. The grain is straight, sometimes interlocked; texture fine to moderately coarse. The wood is moderately light, it is not durable and is liable to attacks by fungi, termites, dry-wood borers and marine borers. Drying usually does not cause problems, but there is a slight risk of distortion and checking and a tendency to blue stain, especially in early stages of air drying. The shrinkage rates are moderate. Once dry, the wood is moderately stable in service. The wood contains about 0.3% silica and consequently the blunting effect on saws and cutting tools is high - stellite-tipped sawteeth and tungsten-carbide tools are recommended. It sometimes finishes poorly after planing or sawing; nailing, screwing and slicing properties are good; and the wood stains, paints and glues well. The wood is especially recommended for high-quality sliced and peeled veneer. It is also used for light carpentry, interior joinery, high-class furniture, moulding, light construction, vehicle bodies, musical instruments, boxes and crates, railway sleepers, toys and novelties, turnery, and pulpwood for paper production. The wood is used for fuel and for the production of charcoal."@en .
+
+:PouteriaCaimito a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "abiu"@en, "yellow star apple"@en .
+:PouteriaCaimito 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Forests, especially in areas that are seasonally flooded, and by the coast, at elevations from sea level to 1,500 metres."@en ;
+  :plant_country_range "S. America - Brazil, Bolivia and Peru, north to the Caribbean and through C. America to Costa Rica."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Pouteria Caimito is an evergreen Tree growing to 15 m (49ft) by 15 m (49ft) at a medium rate.  It is hardy to zone (UK) 10. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "The fully ripe fruit has a delicious flavour - it is eaten raw or used in sherbets and ice cream. It goes particularly well in fruit salads, especially if they contain orange slices to add acidity. A lovely bright yellow fruit with a whitish, translucent flesh that has a jelly-like consistency and a sweetish flavour. The fruit has a flavour somewhat like a rambutan. It is up to 10cm in diameter. Fruit that is not fully ripe can contain a milky latex that sticks to the lips. The fruit has a thin skin that bruises easily, so the fruit will not store for more than a few days."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: The wood is heavy, hard, straight-grained, of medium texture. It is moderately resistant to insect attack, and moderately durable. It is used for construction and external work."@en .
+
+:PouteriaCampechiana a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "canistel"@en, "eggfruit"@en .
+:PouteriaCampechiana 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Moist or wet mixed forest, sometimes in pine forests, often on limestone, at elevations that are mostly below 1,400 metres."@en ;
+  :plant_country_range "Central America - Panama, north to Mexico."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Pouteria Campechiana is an evergreen Tree growing to 15 m (49ft) by 15 m (49ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and can grow in saline soils. It cannot grow in the shade. It prefers dry moist or  wet soil and can tolerate drought. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "The fruit is excellent when eaten raw, it can also be used in cakes, pies, ice creams, puddings etc. It has a yellow to orange pulp that is soft and mealy in texture with a very rich, sweet flavour that is somewhat reminiscent of a baked sweet potato. The fruit somewhat resembles the yolk of a hard-boiled egg. It is not highly regarded by many people because it is not crispy and juicy like so many other fruits. The fruit is extremely variable in form and size, ranging from almost round to oval or spindle shaped. It ranges in size from 7 - 12cm long and 5 - 7.5cm wide, though there is a shrubby form (var palmeri) where the fruits are only 2.5cm long."@en ;
+  :plant_medicinal_text "A decoction of the astringent bark is taken as a febrifuge and is applied on skin eruptions. A preparation of the seeds has been employed as a remedy for ulcers."@en ;
+  :plant_other_use_text "Other Uses: The tree produces an abundant latex. It is extracted from the tree and has been used to adulterate chicle. The fine-grained, compact, strong, moderate to very heavy and hard timber is valued especially for planks and rafters in construction. The heartwood is greyish-brown to reddish-brown and blends into the sapwood, which is somewhat lighter in colour. The darker the colour, the more resistant to decay."@en .
+
+:PouteriaPierrei a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "aningeria"@en .
+:PouteriaPierrei 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Occupational asthma and contact urticaria caused by the wood dust have been recorded in sawmill workers."@en ;
+  :plant_habitat "Semi-deciduous forest and the transition zone to humid evergreen forest."@en ;
+  :plant_country_range "West tropical Africa - Sierra Leone to Cameroon and Central African Republic."@en ;
+  :plant_edibility_rating "2"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Pouteria Pierrei is a deciduous Tree growing to 30 m (98ft) by 20 m (65ft) at a medium rate.  It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. The pulp is eaten. The red fruit is a globose berry 15 - 20mm lcontaining a single large seed."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: A latex exudes from the bark. No uses are recorded. The heartwood is creamy white to pale pinkish brown; it is indistinctly demarcated from the 3 - 6cm wide band of sapwood. The grain is straight, sometimes slightly interlocked; texture fine; the wood lustrous. It is moderately light, not durable and liable to attacks by fungi, termites and dry-wood borers. Drying usually does not cause problems, but there is a slight risk of distortion and checking and a tendency to blue stain, especially in early stages of air drying. Once dry, the wood is moderately stable in service. The wood contains about 0.3% silica and consequently the blunting effect on saws and cutting tools is high. Stellite-tipped sawteeth and tungsten-carbide tools are recommended. Nailing and screwing properties are good; the wood stains, paints and glues well; slicing properties are good, and excellent veneer can be produced. The wood is especially recommended for high-quality sliced veneer. It is also used for light carpentry, interior joinery, high-class furniture and moulding."@en .
+
+:PouteriaSapota a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "sapote"@en, "mamey sapote"@en .
+:PouteriaSapota 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The seed has stupefying properties, and this may be due to its HCN content. One is cautioned not to rub the eyes after handling the green fruit because of the sap exuding from the cut or broken stalk. The milky sap of the tree is highly irritant to the eyes and caustic and vesicant on the skin. The leaves are reportedly poisonous.(Seed is poisonous if ingested Parts of plant are poisonous if ingested Handling plant may cause skin irritation or allergic reaction )"@en ;
+  :plant_habitat "Humid lowland woodland."@en ;
+  :plant_country_range "C. America - Panama to Mexico."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Pouteria Sapota is an evergreen Tree growing to 25 m (82ft) by 25 m (82ft) at a medium rate.  It is hardy to zone (UK) 10 and is frost tender. It is noted for attracting wildlife. Suitable for: medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils and  can grow in very acid and saline soils. It cannot grow in the shade. It prefers  moist soil. The plant can tolerate maritime exposure."@en ;
+  :plant_edible_part :PlantFruit, :PlantSeed ;
+  :plant_edible_text "The ripe fruit is eaten raw, made into sherbets, ice cream, drinks etc and can also be dried. Unripe fruits are cooked as a vegetable. The pulp of the ripe fruit is salmon-red to reddish-brown in colour, it has a firm, finely granular texture and a rich, sweet almond-like flavour. The ovoid fruit varies in size from 8 - 20cm long. The fruit of most cultivars tends to weigh within the range of 500 - 1,000g, though they can weigh up to 2.7 kilos. Seeds. They have a flavour similar to bitter almonds. The ground up seeds are added to texate, made into a confection or mixed with cornmeal, sugar and cinnamon to make a nutritious beverage called pozol. The seed can be milled to prepare a bitter chocolate. The seed kernel yields 45 to 60% of a white, semi-solid, vaseline-like oil which is edible when freshly extracted and refined."@en ;
+  :plant_medicinal_text "The seed kernel oil is used as a skin ointment and as a hair dressing that is believed to stop falling hair. In 1970, clinical tests at the University of California at Los Angeles failed to reveal any hair-growth promoting activity but confirmed that the oil of sapote seed is effective in stopping hair-fall caused by seborrhoeic dermatitis. The oil is said to be diuretic and is also employed as a sedative in eye and ear ailments. The seed residue, after oil extraction, is applied as a poultice on painful skin afflictions. The seed kernel is regarded as a digestive. A seed infusion is used as an eyewash. The pulverized seed coat is reported to be a remedy for coronary trouble and, taken with wine, is said to be helpful against kidney stones and rheumatism. The Aztecs employed it against epilepsy. The bark is bitter and astringent and contains lucumin, a cyanogenic glycoside. A decoction of the bark is taken as a pectoral. A tea of the bark and leaves is administered in arteriosclerosis and hypertension. The milky sap is emetic and anthelmintic and has been used to remove warts and fungal growths on the skin"@en ;
+  :plant_other_use_text "Large shade tree. Public open space. Specimen. Backyard tree. Other Uses: It has been used to fix the colours on painted gourds and other articles of handicraft. (The part used is not specified.) The seed kernel yields 45 to 60% of a white, semi-solid, vaseline-like oil which is edible when freshly extracted and refined. It is sometimes used in soap and considered to have a greater potential in the soap industry, in cosmetics and pharmaceutical products. It is also used as a hair dressing, and is said to promote the growth of the hair and prevent it falling out. The very smooth seeds were formerly much used in Central America for smoothing starched linen, like an iron, and it is stated that they are still used for this purpose in Guatemala. The trees are seldom cut for timber, unless they bear poor quality fruit. There is very little sapwood. The heartwood is buff or brown when fresh, becoming reddish with age; sometimes resembles mahogany but is redder and more or less mottled with darker tones. It is fine-grained, compact, generally hard and fairly heavy, strong, easy to work and fairly durable. It is rated as suitable for cabinetwork and is made into furniture, but mostly serves for building carts, and for shelving and house frames."@en .
+
+:SynsepalumDulciferum a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "miracle berry"@en, "miracle fruit"@en .
+:SynsepalumDulciferum 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Fringing forest, preferring damp localities."@en ;
+  :plant_country_range "Western and Central Tropical Africa."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Synsepalum Dulciferum is an evergreen Shrub growing to 4 m (13ft) by 4 m (13ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It cannot grow in the shade. It prefers  moist or  wet soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw. The thin-skinned fruit has a sweet, fleshy pulp. The ripe fruit, although not itself that sweet to taste, has the ability to modify the taste receptors in the mouth, causing foods to taste sweeter. The effect lasts for up to an hour after consuming the fruit and will, for example, make lemons, vinegar and other acid foods taste sweet. Sweet foods, such as ice cream, will taste cloyingly sweet. The oblong fruit is about 20mm x 10mm. The berries contain miraculin which is the active principle that makes bitter, sour and salty food taste sweet by affecting the taste-buds. In this manner used for 'sweetening' palm wine, sour fruits and other drinks or food. Additionally a glucoprotein is present that depresses the appetite."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Other Uses: The twigs are used as chew sticks to clean the teeth. The wood is used for fuel."@en .
+
+:TieghemellaAfricana a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "douka"@en .
+:TieghemellaAfricana 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Dust from sawn wood may cause irritation to skin and mucous membranes. It has been suggested that this is caused by the presence of saponins or the contact allergen 2,6-dimethoxy-1,4-benzoquinone. A highly haemolytic saponin has been isolated from the wood; on hydrolysis it gave d-glucose, l-rhamnose and d-xylose."@en ;
+  :plant_habitat "An emergent tree of primary rain forest, most common in coastal lowland and diminishing towards the eastern parts of its range. It occurs scattered in the forest, but may locally be more abundant."@en ;
+  :plant_country_range "West tropical Africa - Cote D'Ivoire, Cameroon, Equatorial Guinea, Gabon, Congo, DR Congo."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Tieghemella Africana is an evergreen Tree growing to 45 m (147ft) by 30 m (98ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The seed kernels are rich in an edible fat, which is locally popular as a cooking or seasoning oil. The fatty oil from the seed kernel is yellowish and semi-fluid, has a pronounced flavour and taste, and consists of about 55% oleic acid, 21.5% stearic acid, 16.5% palmitic acid and 5% linoleic acid. The kernel comprises about 50% of fat."@en ;
+  :plant_medicinal_text "The fat obtained from the seeds is used externally to treat rheumatism."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other Uses: The wood resembles African mahogany (Khaya and Entandrophragma spp.), but the texture is finer. The heartwood is pinkish-, purplish- or reddish-brown with a silky lustre, often with a decorative figure in the form of flames or stripes; it is very distinctly demarcated from the up to 8 cm wide band of pinkish white to greyish brown sapwood. The grain is straight or interlocked, texture fine and even. The wood is medium-weight; moderately hard; it is rated as one of the most durable African timbers, being resistant to termites and fungi although damage by pinhole borers and powder-post beetles has been recorded occasionally. Although it is resistant to marine borers in temperate waters, the wood is not very durable in tropical (especially brackish) waters. The wood is somewhat difficult to work due to the presence of silica - blunting effects are moderately severe when sawing, and stellite-tipped sawteeth are recommended; it finishes well, staining and polishing give good results; pre-boring for nailing and screwing is recommended to avoid splitting; gluing properties are good; the timber can be peeled satisfactorily. The heartwood is very difficult to impregnate, the sapwood moderately easy. Traded as makore or cherry mahogany, the wood is used for furniture, exterior and interior construction, flooring, doors, vehicle frames, sports goods, railway sleepers, turnery and sculptures. It makes a good and decorative veneer, often used to face plywood, especially for marine uses."@en .
+
+:TieghemellaHeckelii a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "baku"@en .
+:TieghemellaHeckelii 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "Dust produced from sawing the wood may cause irritation to the skin and mucous membranes. It has been suggested that this is caused by the presence of saponins or the contact allergen 2,6-dimethoxy-1,4-benzoquinone. A highly haemolytic saponin has been isolated from the wood."@en ;
+  :plant_habitat "Often an emergent tree of the high forest, it is found in moist evergreen and semi-deciduous forests. There is a strong preference for undisturbed forest."@en ;
+  :plant_country_range "Western tropical Africa - Sierra Leone to Ghana."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Tieghemella Heckelii is an evergreen Tree growing to 50 m (164ft) by 40 m (131ft) at a medium rate.  It is hardy to zone (UK) 10. Suitable for: medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in heavy clay soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantSeed ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The seed kernels (cotyledons, known as 'baco') are rich in an edible fat known as 'dumori butter' or 'makore butter'. It is locally popular as a cooking or seasoning oil and often preferred to palm oil. The seeds are 60 - 75mm long, 1 - 3 being contained in each large, pulpy fruit. The kernel comprises about 60% oil by weight. The oil is yellowish and semi-fluid, has no distinct flavour or taste (occasionally slightly spicy), and consists of about 51% oleic acid, 43% stearic acid, 3.5% palmitic acid and 2.5% linoleic acid."@en ;
+  :plant_medicinal_text "The bark is reportedly effective for treating blennorrhoea and toothache. Young buds are used to treat snake bites."@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Other Uses: The fat from the seed is applied as a pomade to the body and hair, and used in soap production. The wood resembles African mahogany (Khaya and Entandrophragma spp.), but the texture is finer. The heartwood is pinkish-, purplish- or reddish-brown with a silky lustre, often with a decorative figure in the form of flames or stripes; it is very distinctly demarcated from the up to 8 cm wide band of pinkish white to greyish brown sapwood. The grain is straight or interlocked, texture fine and even. The wood is medium-weight; moderately hard; it is rated as one of the most durable African timbers, being resistant to termites and fungi although damage by pinhole borers and powder-post beetles has been recorded occasionally. Although it is resistant to marine borers in temperate waters, the wood is not very durable in tropical (especially brackish) waters. The wood is somewhat difficult to work due to the presence of silica - blunting effects are moderately severe when sawing, and stellite-tipped sawteeth are recommended; it finishes well, staining and polishing give good results; pre-boring for nailing and screwing is recommended to avoid splitting; gluing properties are good; the timber can be peeled satisfactorily. The heartwood is very difficult to impregnate, the sapwood moderately easy. Traded as makore or cherry mahogany, the wood is used for furniture, exterior and interior construction, flooring, doors, vehicle frames, sports goods, railway sleepers, turnery and sculptures. It makes a good and decorative veneer, often used to face plywood, especially for marine uses."@en .
+
+:VitellariaParadoxa a owl:Class ;
+  rdfs:subClassOf :Sapotaceae ;
+  :synonym "shea butter tree"@en, "shi"@en .
+:VitellariaParadoxa 
+  :plant_hardiness_zones "11-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Open sites and parkland savannah. A characteristic of the West African savannah, though it is also present in the southern Sahel."@en ;
+  :plant_country_range "Tropical Africa - Senegal to Sudan, and to western Ethiopia and Uganda."@en ;
+  :plant_edibility_rating "4"^^xsd:integer ;
+  :plant_medicinal_rating "5"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Vitellaria Paradoxa is a deciduous Tree growing to 15 m (49ft) by 15 m (49ft) at a slow rate. It is hardy to zone (UK) 10. The flowers are pollinated by Bees. The plant is self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantInnerBark, :PlantFlower, :PlantFruit, :PlantSeed, :PlantSapAndManna ;
+  :plant_edible_use :VegetableOil ;
+  :plant_edible_text "The kernel of the seed (often incorrectly called 'nut') contains a vegetable fat known as shea butter. Shea butter from fresh seeds is white, odourless and of high quality, while that from stale seeds is dark, and tastes bitter. High quality shea butter is consumed throughout West Africa as a cooking fat. Refined fat has been marketed as margarine and baking fat. It is used for pastries and confectionery because it makes the dough pliable. It is a useful cocoa butter substitute because it has a similar melting point (32 - 45?C) and high amounts of di-stearin (30%) and some stearo-palmitine (6.5%) which make it blend with cocoa butter without altering flow properties. In rural areas, seeds are traditionally processed by hot water extraction, usually the job of women. The fruit pulp is first removed for food, or by fermentation or boiling. The seeds are then boiled and later sun- or kiln-dried. Sun-drying may take 5 - 10 days. Seeds are cracked using mortar and pestle, or stones; the kernels are removed by trampling and redried before being crushed, ground and kneaded to form a paste; the paste is put in water, heated or boiled and the boiling mass is churned until a grey, oily fat separates from the emulsion. The fat is skimmed off from the surface and washed to remove impurities. The congealed fat may subsequently undergo further refining before being moulded in to various forms. This traditional method of processing is inefficient and labour intensive. Mechanization of the various operations, in particular the use of hydraulic or continuous screw expellers or application of solvent extraction, will improve oil extraction efficiency considerably. Pre-treatment of the kernel paste with enzymes (e.g. proteases and cellulases) may also result in higher extraction rates. In spite of their slightly laxative properties, mature fresh fruits are considered an important local food. They are commonly eaten in savannah regions because they ripen during the land preparation and planting season.The pulp has a sweet flavour. The flowers are also considered an important local foods They are sometimes made into fritters. The reddish latex which exudes from deep cuts in the bark is used as a chewing gum."@en ;
+  :plant_medicinal_text "Shea butter is a suitable base for topical medicines. Its application relieves rheumatic and joint pains and heals wounds, swellings, dermatitis, bruises and other skin problems. The high proportion of unsaponifiable matter, consisting of 60 - 70% triterpene alcohols, gives shea butter creams good penetrative properties. Allantoin, another unsaponifiable compound, is responsible for the anti-inflammatory and healing effect on the skin. The fat is used traditionally to relieve inflammation of the nostrils. Clinical tests with patients suffering from rhinitis, and having moderate to severe nasal congestion, showed that shea butter may relieve nasal congestion better than conventional nasal drops. The leaves are used to treat stomach-ache. They are also added to vapour baths to treat headache and as an eye bath. Ground roots and bark are used to treat diarrhoea, jaundice and stomach-ache. Bark infusions have medicinal and antimicrobial properties, e.g. against dysentery. They are applied as an eyewash to counteract spitting-cobra venom. A bark decoction has been used in baths to facilitate childbirth and stimulate lactation among feeding mothers"@en ;
+  :plant_other_use :VegetableOil ;
+  :plant_other_use_text "Agroforestry Uses: The tree regenerates well, and is traditionally favoured and protected by farmers. As a result, it has played a significant role in soil and water conservation and environmental protection in semi-arid West Africa. The husks of the seeds make a good mulch and fertilizer. Studies on the by-products of shea-butter processing have shown that heavy-metal ions can be removed from aqueous solutions, for example waste water, using Vitellaria seed husks. The tree combines well with many cereal crops. Other Uses Shea butter is a vegetable fat obtained from the seed. Many cosmetic products, especially moisturizers, lotions and lipsticks, use it as a base because its high unsaponifiable matter content imparts excellent moisturizing characteristics. The high proportion of unsaponifiable matter, consisting of 60 - 70% triterpene alcohols, gives shea butter creams good penetrative properties that are particularly useful in cosmetics. Allantoin, another unsaponifiable compound, is responsible for the anti-inflammatory and healing effect on the skin. It is used in toothpastes and other oral hygiene products, in shampoos, lipsticks, cosmetic lotions and creams, and other cosmetic and pharmaceutical products. Low-quality shea butter, often mixed with other oils, is a base material for soap. Shea butter is also very suitable for making candles because of its high melting point. As a waterproofing agent, shea butter is used as daubing for earthen walls, doors and windows. The black sticky residue, left after oil extraction, is used to fill cracks in walls and also as a waterproofing material. Waste water from shea butter production has pesticidal properties. The press cake and the husks remaining after oil extraction are potential fertilizers and fuels. The leaves, soaked in water, produce a good lather for washing. The reddish latex (gutta shea or red kano rubber) which exudes from deep cuts in the bark is made into glue, chewing gum and balls for children?s games. Musicians use it to repair drums. Only unproductive and unhealthy trees are cut for timber. The wood is moderately heavy and hard. It is liable to crack on drying and needs to be seasoned slowly. It is difficult to work and tends to split on sawing, but it polishes well. It glues, nails and screws well, but pre-boring is recommended to avoid splitting. It is durable and resistant to termites. Both sapwood and heartwood are resistant to impregnation with preservatives. The wood is used for poles, house posts, rafters, flooring, domestic utensils and furniture. It is an excellent fuel wood, burning with great heat, and a source of charcoal."@en .
+

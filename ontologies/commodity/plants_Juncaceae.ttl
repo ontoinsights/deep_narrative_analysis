@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Juncaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:JuncusEffusus a owl:Class ;
+  rdfs:subClassOf :Juncaceae ;
+  :synonym "soft rush"@en, "common rush"@en, "lamp rush"@en, "pacific rush"@en .
+:JuncusEffusus 
+  :plant_hardiness_zones "4-8" ;
+  :plant_hazards "Possibly toxic to mammals."@en ;
+  :plant_habitat "Wet pastures, bogs, damp woods etc, usually on acid soils."@en ;
+  :plant_country_range "Throughout the northern temperate zone, including Britain, east and south Africa, Australasia."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Juncus Effusus is a PERENNIAL growing to 1.5 m (5ft) by 0.5 m (1ft 8in).  It is hardy to zone (UK) 4.  It is in flower from June to August. The species is hermaphrodite (has both male and female organs) and is pollinated by Wind.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and can grow in heavy clay soil. Suitable pH: acid and neutral soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist or  wet soil and can grow in water. The plant can tolerates strong winds but not maritime exposure."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_text "Young shoots - raw. Some caution is advised, see the notes above on toxicity."@en ;
+  :plant_medicinal_use :SedativeAndHypnotic, :Pectoral, :Diuretic, :Antiinflammatory, :Lithontripic, :Antipyretic, :Depurative ;
+  :plant_medicinal_text "The pith of the stem is antiphlogistic, depurative, discutient, diuretic, febrifuge, lenitive, lithontripic, pectoral and sedative. It is used in the treatment of sore throats, jaundice, oedema, acute urinary tract infection and morbid crying of babies."@en ;
+  :plant_other_use :Basketry, :Fibre, :PlantWeaving, :Thatching, :Paper, :Strewing ;
+  :plant_other_use_text "Stems are used in basket making, thatching, weaving mats etc. The stems can also be dried then twisted or braided into ropes for tying or binding. Stems can be peeled (except for a small spine which is left to keep them upright) and soaked in oil then used as a candle. A fibre obtained from the stems is used for making paper. The stems are harvested in late summer or autumn, they are split and cut into usable pieces and then soaked for 24 hours in clear water. They are then cooked for 2 hours with lye and beaten in a blender. The fibres make an off-white paper. When mixed with mulberry fibres they can be used for making stencil paper. The whole plant was formerly used as a strewing herb."@en .
+

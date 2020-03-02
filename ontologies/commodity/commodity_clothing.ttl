@@ -1,0 +1,119 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics related to clothing, jewelry and accessories
+# The classes also reference entities in codes 61, 62, 64-65, 7113
+#    and 7117 of the UN Commodities list
+#    (https://comtrade.un.org/db/mr/rfCommoditiesList.aspx)
+# 
+# Created: February 9, 2020
+# Last modified: February 9, 2020
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:BabyClothes a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Garments and clothing accessories for babies."@en ;
+  rdfs:comment "UN Harmonized System codes 6111 and 6209"@en ;
+  :synonym "onesie"@en, "swaddle"@en, "crib blanket"@en .
+
+:Boot a owl:Class ;
+  rdfs:subClassOf :Footwear ;
+  :definition "Sturdy footwear that covers the ankle and possibly higher on the leg."@en ;
+  :synonym "brogan"@en, "galoshes"@en, "waders"@en, "waters"@en, "mukluk"@en, "snow shoe"@en .
+
+:ClothingAccessory a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Any clothing worn to accent or formalize."@en ;
+  rdfs:comment "UN Harmonized System codes 6117, 6213, 6215 and 6217"@en ;
+  :synonym "cummerbund"@en, "waistband"@en, "handkerchief"@en, "scarf"@en, "bandana"@en, "neckerchief"@en, "hankie"@en, "tie"@en, "bow tie"@en, "cravat"@en, "ascot"@en .
+
+:Footwear a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Clothing worn on the feet."@en ;
+  rdfs:comment "UN Harmonized System code 64"@en ;
+  :synonym "footgear"@en, "shoe"@en, "cleat"@en, "sneaker"@en, "hightop"@en, "loafer"@en, "oxford"@en, "pump"@en, "slipper"@en, "clog"@en, "moccasin"@en, "high heel"@en, "wing-tip"@en .
+
+:HatAndHeadpiece a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Clothing worn on the head."@en ;
+  rdfs:comment "UN Harmonized System codes 6214 (mantilla and veil) and 65"@en ;
+  :synonym "hat"@en, "headband"@en, "fedora"@en, "helmet"@en, "Stetson"@en, "bonnet"@en, "bowler"@en, "chapeau"@fr, "headpiece"@en, "mantilla"@en, "veil"@en, "millinery"@en, "sombrero"@en, "tam o'shanter"@en, "ten-gallon"@en, "tiara"@en, "cap"@en .
+
+:Hosiery a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Hosiery, panty hose, tights, stockings, socks, etc., including graduated compression hosiery (for example, stockings for varicose veins) and footwear without applied soles."@en ;
+  rdfs:comment "UN Harmonized System code 6115"@en ;
+  :synonym "hosiery"@en, "tights"@en, "pantihose"@en, "panty hose"@en, "stockings"@en, "socks"@en, "slipper socks"@en .
+
+:Jewelry a owl:Class ;
+  rdfs:subClassOf :ClothingAccessory ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Jewellery&oldid=932741930), Jewelry 'consists of decorative items worn for personal adornment, such as brooches, rings, necklaces, earrings, pendants, bracelets, and cufflinks. Jewellery may be attached to the body or the clothes.' It may be made of precious metals and stones or imitations."@en ;
+  rdfs:comment "UN Harmonized System codes 7113 and 7117"@en ;
+  :synonym "jewelry"@en, "jewellery"@en, "bracelet"@en, "brooch"@en, "earring"@en, "ring"@en, "necklace"@en, "pendant"@en, "adornment"@en, "anklet"@en, "bangle"@en, "cameo"@en, "charm"@en, "choker"@en, "locket"@en, "pin"@en, "stickpin"@en, "solitaire"@en, "cufflink"@en .
+  
+:Loungewear a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Clothing for sleeping or lounging such as nightshirts, pyjamas, lingerie, etc."@en ;
+  rdfs:comment "UN Harmonized System codes 6107-6108 (nightwear) and 6207-6208 (nightwear)"@en ;
+  :synonym "pyjamas"@en, "nightshirt"@en, "bathrobe"@en, "dressing gown"@en, "negligee"@en, "nightdress"@en, "pjs"@en, "lingerie"@en, "intimate things"@en .
+
+:Outerwear a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Any of the following: Coats, capes, cloaks, shawls, anoraks, ski-jackets, wind-cheaters, wind-jackets, etc., as well as scarves, gloves and mittens."@en ;
+  rdfs:comment "UN Harmonized System codes 6101, 6102, 6116, 6201, 6202, 6214 and 6216"@en ;
+  :synonym "coat"@en, "overcoat"@en, "car-coat"@en, "cape"@en, "cloak"@en, "anorak"@en, "jacket"@en, "windbreaker"@en, "wind-cheater"@en, "wind breaker"@en, "gloves"@en, "mittens"@en, "mitts"@en, "scarf"@en, "scarves"@en, "shawl"@en .
+
+:Sandal a owl:Class ;
+  rdfs:subClassOf :Footwear ;
+  :definition "Light footwear that has openings above the sole and/or has straps that attach to the sole."@en ;
+  :synonym "espadrille"@en, "huarache"@en, "talaria"@en, "zori"@en, "flipflop"@en, "flip-flop"@en .
+
+:ShirtSweaterAndBlouse a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Shirts and blouses."@en ;
+  rdfs:comment "UN Harmonized System codes 6105, 6106, 6109, 6110, 6205, 6206 and 6207-6208 (singlet)"@en ;
+  :synonym "shirt"@en, "blouse"@en, "jersey"@en, "pullover"@en, "turtleneck"@en, "polo"@en, "tank top"@en, "singlet"@en, "t-shirt"@en, "tank"@en, "sweater"@en, "cardigan"@en .
+
+:Sportswear a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Track suits, ski suits and swimwear."@en ;
+  rdfs:comment "UN Harmonized System codes 6112 and 6211"@en ;
+  :synonym "activewear"@en, "athletic clothes"@en, "playwear"@en, "sports clothes"@en, "sports apparel"@en, "track suit"@en, "ski suit"@en, "swimwear"@en, "bikini"@en, "swimsuit"@en, "one-piece"@en, "two-piece"@en, "swimming trunks"@en .
+
+:SuitDressAndComponent a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Suits, ensembles, jackets, blazers, trousers, dresses, skirts, bib and brace overalls, breeches and shorts."@en ;
+  rdfs:comment "UN Harmonized System codes 6103, 6104, 6109 (vest), 6110 (waistcoat), 6203, 6204 and 6207/6208 (vest)"@en ;
+  :synonym "suit"@en, "jacket"@en, "blazer"@en, "trousers"@en, "pants"@en, "dress"@en, "skirt"@en, "overall"@en, "breeches"@en, "shorts"@en, "slacks"@en, "bermudas"@en, "britches"@en, "chaps"@en, "chinos"@en, "jeans"@en, "corduroys"@en, "denims"@en, "dungarees"@en, "vest"@en, "waistcoat"@en .
+
+:SuspenderBeltAndGarter  a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Article of clothing designed to hold up pants, stockings, etc."@en ;
+  rdfs:comment "UN Harmonized System codes 6212"@en ;
+  :synonym "suspenders"@en, "garter"@en, "braces"@en, "belt"@en .
+
+:Undergarment a owl:Class ;
+  rdfs:subClassOf :ClothingAndAccessory ;
+  :definition "Underpants, briefs, slips, petticoats, briefs, panties and similar articles."@en ;
+  rdfs:comment "UN Harmonized System codes 6107-6108 (underwear), 6207-6208 (underwear) and 6212 (brassieres, girdles, corsets)"@en ;
+  :synonym "underwear"@en, "underpants"@en, "briefs"@en, "slip"@en, "petticoat"@en, "panty"@en, "panties"@en, "bra"@en, "brassiere"@en, "corset"@en,  "undershirt"@en, "bvd"@en, "boxers"@en, "drawers"@en, "skivvies"@en, "undies"@en, "underclothes"@en, "underclothing"@en, "long johns"@en, "underthings"@en, "girdle"@en, "thong"@en .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+
+########################################################################
+# Object Properties
+########################################################################

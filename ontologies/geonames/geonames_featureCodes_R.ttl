@@ -1,0 +1,131 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics of road/railroad/transportation features
+#    (GeoNames' 'R' feature codes)
+# 
+# Created: February 14, 2020
+# Last modified: February 14, 2020
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:R_CSWY a owl:Class ; 
+  rdfs:subClassOf :R_RD ; 
+  rdfs:label "causeway"@en ; 
+  :definition "A raised roadway across wet ground or shallow water"@en . 
+
+:R_OILP a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "oil pipeline"@en ; 
+  :definition "A pipeline used for transporting oil"@en . 
+
+:R_PRMN a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "promenade"@en ; 
+  :definition "A place for public walking, usually along a beach front"@en ;
+  :synonym "boardwalk"@en .
+
+:R_PTGE a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "portage"@en ; 
+  :definition "A place where boats, goods, etc., are carried overland between navigable waters"@en . 
+
+:R_RD a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "road"@en ; 
+  :definition "An open way with improved surface for transportation of animals, people and vehicles"@en ;
+  :synonym "expressway"@en, "highway"@en, "roadway"@en, "motorway"@en, "transportation corridor"@en .
+
+:R_RDA a owl:Class ; 
+  rdfs:subClassOf :R_RD ; 
+  rdfs:label "ancient road"@en ; 
+  :definition "The remains of a road used by ancient cultures"@en . 
+
+:R_RDB a owl:Class ; 
+  rdfs:subClassOf :R_RD ; 
+  rdfs:label "road bend"@en ; 
+  :definition "A conspicuously curved or bent section of a road"@en ;
+  :synonym "curve in the road"@en, "jog in the road"@en, "bend in the road"@en .
+
+:R_RDCUT a owl:Class ; 
+  rdfs:subClassOf :R_RD ; 
+  rdfs:label "road cut"@en ; 
+  :definition "An excavation cut through a hill or ridge for a road"@en . 
+
+:R_RDJCT a owl:Class ; 
+  rdfs:subClassOf :R_RD, :Junction ; 
+  rdfs:label "road junction"@en ; 
+  :definition "A place where two or more roads join"@en ;
+  :synonym "carrefour"@en, "crossroad"@en, "highway interchange"@en, "crossway"@en .
+
+:R_RJCT a owl:Class ; 
+  rdfs:subClassOf :R_RR, :Junction ; 
+  rdfs:label "railroad junction"@en ; 
+  :definition "A place where two or more railroad tracks join"@en ;
+  :synonym "railroad frog"@en, "railroad switch"@en .
+
+:R_RR a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "railroad"@en ; 
+  :definition "A permanent twin steel-rail track on which freight and passenger cars move long distances"@en ;
+  :synonym "railway"@en, "dragoon"@en, "trackage"@en .
+
+:R_RRQ a owl:Class ; 
+  rdfs:subClassOf :R_RR ; 
+  rdfs:label "abandoned railroad"@en ; 
+  :definition "An abandoned railroad"@en . 
+
+:R_RTE a owl:Class ; 
+  rdfs:subClassOf :R_TRL ; 
+  rdfs:label "caravan route"@en ; 
+  :definition "The route taken by caravans"@en . 
+
+:R_RYD a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure, :AreaFeature ; 
+  rdfs:label "railroad yard"@en ; 
+  :definition "A system of tracks used for the making up of trains, and switching and storing freight cars"@en ;
+  :synonym "switchyard"@en .
+
+:R_ST a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "street"@en ; 
+  :definition "A paved urban thoroughfare"@en ;
+  :synonym "avenue"@en, "boulevard"@en, "thoroughfare"@en .
+
+:R_STKR a owl:Class ; 
+  rdfs:subClassOf :R_TRL ; 
+  rdfs:label "stock route"@en ; 
+  :definition "A route taken by livestock herds"@en . 
+
+:R_TNL a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "tunnel"@en ; 
+  :definition "A subterranean passageway for transportation"@en ;
+  :synonym "underground passageway"@en .
+
+:R_TNLRD a owl:Class ; 
+  rdfs:subClassOf :R_TNL, :R_RD ; 
+  rdfs:label "road tunnel"@en ; 
+  :definition "A tunnel through which a road passes"@en ;
+  :synonym "underpass"@en .
+
+:R_TNLRR a owl:Class ; 
+  rdfs:subClassOf :R_TNL, :R_RR ; 
+  rdfs:label "railroad tunnel"@en ; 
+  :definition "A tunnel through which a railroad passes"@en ;
+  :synonym "subway"@en, "channel tunnel"@en .
+
+:R_TRL a owl:Class ; 
+  rdfs:subClassOf :TravelTransportRouteAndInfrastructure ; 
+  rdfs:label "trail"@en ; 
+  :definition "A path, track, or route used by pedestrians, animals, or off-road vehicles"@en ;
+  :synonym "track"@en, "route"@en, "path"@en, "piste"@en, "footpath"@en, "pathway"@en .

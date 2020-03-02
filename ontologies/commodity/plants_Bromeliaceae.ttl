@@ -1,0 +1,139 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining plants in the family, Bromeliaceae
+# 
+# Created: February 13, 2020
+# Last modified: February 13, 2020
+########################################################################
+
+########################################################################
+# Classes and Punned Individuals
+########################################################################
+
+:AechmeaMagdalenae a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "pingwing"@en, "ixtle"@en, "pita plant"@en .
+:AechmeaMagdalenae 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Abundant throughout the forest, often forming dense stands. Forests and thickets, usually found at elevations below 500 metres in Guatemala."@en ;
+  :plant_country_range "Northwestern S. America - Ecuador, Colombia, Venezuela; C. America - Panama to Mexico."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "3"^^xsd:integer ;
+  :plant_physical_characteristics "Aechmea Magdalenae is an evergreen Perennial growing to 2.5 m (8ft) by 2.5 m (8ft) at a slow rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in full shade (deep woodland) or  semi-shade (light woodland). It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit - raw or cooked. The fleshy fruits are sweet and very tasty. An acid flavour, they are said to be better when made into beverages. The elliptic to ovate fruits are 5 - 6 cm long, to ca 2 cm. diameter. The yellow fruit becomes orange and soft at maturity."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A fibre of excellent quality is obtained from the leaves. It is used for making rope and twine. The leaves are retted in water, and fibre is usually extracted by pounding them on stones in running water. It is a very fine and tough fibre, much used for hammocks, bags and string."@en .
+
+:AnanasComosus a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  rdfs:comment "UN Harmonized System code 0804 (pineapple)"@en ;
+  :synonym "pineapple"@en .
+:AnanasComosus 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "Parts of plant are poisonous if ingested"@en ;
+  :plant_habitat "Savannahs."@en ;
+  :plant_country_range "S. America - Brazil."@en ;
+  :plant_edibility_rating "5"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "4"^^xsd:integer ;
+  :plant_physical_characteristics "Ananas Comosus is an evergreen Perennial growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 10. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantFruit, :PlantStem, :PlantShoot ;
+  :plant_edible_text "Fruit - raw, cooked or preserved. A very succulent, aromatic, sweet, acidic pulp. It can be eaten fresh or canned as dessert, cooked in dishes, and is also commonly used for making juice. The core of the fruit is made into candies. The fruit is a good source of vitamins A and C. The fruit is a multiple fruit formed by the almost complete fusion of 100 - 200 berry-like fruitlets. It can weigh between 0.5 and 2.5 kilos. The fruits are about 30 - 60 cm long. A sugar-syrup is obtained from the pressed juice. Terminal buds - raw or cooked. They can be cooked as a vegetable or added to soups. Flowering stem - cooked. Peeled and sliced, they are used as a cooked vegetable or are added to stews. Young shoots are eaten in salads or curries."@en ;
+  :plant_medicinal_text "Pineapple fruits contain bromelain, a protein-splitting enzyme that aids digestion. The sour, unripe fruit improves digestion, increases appetite and relieves dyspepsia. In Indian herbal medicine it is also thought to act as a uterine tonic. It is used as a treatment to ease sore throats. It is eaten in some areas, either on its own or cooked with Citrus aurantiifolia) to procure an abortion. The ripe fruit cools and soothes - it is used to settle wind and reduce excessive gastric acid. Its significant fibre content make it a useful laxative for relieving constipation. The juice of the ripe fruit is both diuretic and a digestive tonic. The leaves are anthelmintic and purgative. They considered useful in encouraging the onset of menstruation and easing painful periods. The leaves are used to treat fractures. The juice of the plant is applied to burns, itches and boils."@en ;
+  :plant_other_use_text "Other uses rating: Medium (3/5). Agroforestry Uses: The plants can be grouped as a groundcover in a mass planting. Other Uses: A hard fibre is obtained from the leaves. Strong and silky. Both the wild and cultivated plants yield fibres which, when spun, surpass in strength, fineness and lustre those obtained from flax (Linum usitatissimum). The fibre is white, soft, silky, flexible, and long in staple; it is remarkably durable, and unaffected by immersion in water. It can be employed as a substitute for silk, and as a material for mixing with wool or cotton. It is also useful for cordage, textile fabrics, sewing silk or twist, laces, as a material for stringing necklaces etc. It produces the celebrated pina cloth of the Philippine Islands. Indoor Plant."@en .
+
+:BromeliaKaratas a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "ananas pingouin"@en, "karatas"@en, "camburito"@en .
+:BromeliaKaratas 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "The fruits have thin stinging hairs."@en ;
+  :plant_habitat "Marginal forests bordering savannahs and in deciduous forests, at elevations of 1,300 - 1,500 metres."@en ;
+  :plant_country_range "S. America - Brazil and Ecuador north through Central America to Mexico and the West Indies."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "2"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Bromelia Karatas is an evergreen Perennial growing to 3 m (9ft) by 3 m (9ft) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It cannot grow in the shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantLeaf, :PlantShoot ;
+  :plant_edible_text "The very young inflorescences are eaten as a vegetable. The fruit is edible. A pleasant flavour. It is used in the preparation of a refreshing drink called 'Atol de Pina'. The fruit is up to 8cm long. The fruits are edible after removal of thin stinging hairs. Similarly to pineapple, eating too much may cause blisters. Tender leaf bases of young shoots - blanched and eaten as a vegetable or added to soups."@en ;
+  :plant_medicinal_text "The juice of the plant is used to cicatrize recent sores and wounds. An alcoholic tincture of the juice is used for a detersive on ulcers."@en ;
+  :plant_other_use_text "The juice (of the whole plant?) is said to be used as a saponin-containing soap substitute."@en .
+
+:BromeliaPinguin a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "pinuela"@en, "pinguin"@en .
+:BromeliaPinguin 
+  :plant_hardiness_zones "9-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Common and widely distributed in the lowlands of Guatemala, forming wide and dense thickets on the plains. Rocky hills in the West Indies."@en ;
+  :plant_country_range "Northern South America - Venezuela north to Central America and the West Indies."@en ;
+  :plant_edibility_rating "3"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Bromelia Pinguin is an evergreen Perennial growing to 1 m (3ft 3in) by 1 m (3ft 3in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils, prefers  well-drained soil and can grow in nutritionally poor soil. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers dry or  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantFlower, :PlantShoot ;
+  :plant_edible_text "The fruits are edible but very acid. The fruit is intensely sour and acrid, it is sometimes used for making vinegar. It makes an excellent, refreshing drink. The young shoots at the base of the plant can be eaten raw or cooked. They are much used as food in all the dryer regions of Guatemala. They can be had when ordinary vegetables are scarce or unobtainable, as at the end of the dry season. The inflorescence is fried and eaten. In El Salvador, it is used to make gruel."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "Much planted for hedges and fences in central America and the West Indies. Other Uses: A fibre obtained from the leaves has been used locally for cordage, ropes etc. Rather weak. It is stripped of its pulp, soaked in water, and beaten with a wooden mallet to yield the fiber."@en .
+
+:BromeliaSerra a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "bayonet bromeliad"@en .
+:BromeliaSerra 
+  :plant_hardiness_zones "10-12" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "A terrestrial herb that grows in the understory of Chaco and Cerrado woodlands and often forms the ground layer together with other bromeliads and cacti such as: the firecracker cactus or scarlet bugler (Cleistocactus baumanii) and Aechmea distichantha,"@en ;
+  :plant_country_range "S. America - central Brazil and Bolivia to Paraguay and northern Argentina."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "2"^^xsd:integer ;
+  :plant_physical_characteristics "Bromelia Serra is an evergreen Perennial growing to 0.4 m (1ft 4in) by 0.4 m (1ft 4in) at a fast rate. It is hardy to zone (UK) 10.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils and  can grow in very acid soils. It can grow in full shade (deep woodland) semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit, :PlantStem, :PlantShoot ;
+  :plant_edible_text "Very young shoots. The stem is roasted and eaten, and the fruit is boiled to obtain a thick syrup."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "A fibre called 'Caraguata fibre' is obtained from the leaves. It is used in S. America for making hammocks, sacks, sails etc, and has been recommended as a source of fibre for making paper. Useful in an ornamental border or as a groundcover. A good ground cover in xeric gardens"@en .
+
+:GreigiaSphacelata a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "chupone"@en .
+:GreigiaSphacelata 
+  :plant_hardiness_zones "9-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Not known"@en ;
+  :plant_country_range "S. America - Chile."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Greigia Sphacelata is a PERENNIAL growing to 0.9 m (3ft).  It is hardy to zone (UK) 10. The species is hermaphrodite (has both male and female organs).  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils. Suitable pH: acid, neutral and basic (alkaline) soils. It can grow in  semi-shade (light woodland) or no shade. It prefers  moist soil."@en ;
+  :plant_edible_part :PlantFruit ;
+  :plant_edible_text "Fruit."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use_text "None known"@en .
+
+:PuyaChilensis a owl:Class ;
+  rdfs:subClassOf :Bromeliaceae ;
+  :synonym "chilean puya"@en .
+:PuyaChilensis 
+  :plant_hardiness_zones "8-11" ;
+  :plant_hazards "None known"@en ;
+  :plant_habitat "Arid hillsides in the Andes, often spreading across large areas."@en ;
+  :plant_country_range "S. America - Chile."@en ;
+  :plant_edibility_rating "1"^^xsd:integer ;
+  :plant_medicinal_rating "0"^^xsd:integer ;
+  :plant_other_use_rating "0"^^xsd:integer ;
+  :plant_physical_characteristics "Puya Chilensis is an evergreen Perennial growing to 2 m (6ft) by 2 m (6ft).  It is hardy to zone (UK) 9. It is in leaf all year, in flower in July. The species is hermaphrodite (has both male and female organs) and is pollinated by Birds. The plant is not self-fertile.  Suitable for: light (sandy), medium (loamy) and heavy (clay) soils and prefers  well-drained soil. Suitable pH: acid and neutral soils. It cannot grow in the shade. It prefers dry soil and can tolerate drought."@en ;
+  :plant_edible_part :PlantLeaf ;
+  :plant_edible_text "Very young shoots are eaten in salads."@en ;
+  :plant_medicinal_text "None known"@en ;
+  :plant_other_use :GumAndAdhesive, :WoodCorkAndSubstitute, :Fibre ;
+  :plant_other_use_text "A fibre from the leaves is used in making nets. A soft material obtained from the stems is used to make corks and bungs. A gum is obtained from the plant as a result of insect damage."@en .
+

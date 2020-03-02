@@ -1,0 +1,106 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics of populated places
+#    (GeoNames' 'P' feature codes)
+# 
+# Created: February 14, 2020
+# Last modified: February 14, 2020
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:InnerCity a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "inner city"@en ; 
+  :definition "An area of a city with a majority of low-income residents, which suffers from increased crime and other social and economic issues"@en .
+
+:P_PPLA a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "seat of a first-order administrative division"@en ; 
+  :definition "A seat of a first-order administrative division (PPLC takes precedence over PPLA)"@en . 
+
+:P_PPLA2 a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "seat of a second-order administrative division"@en ; 
+  :definition "A seat of a second-order administrative division"@en . 
+
+:P_PPLA3 a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "seat of a third-order administrative division"@en ; 
+  :definition "A seat of a third-order administrative division"@en . 
+
+:P_PPLA4 a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "seat of a fourth-order administrative division"@en ; 
+  :definition "A seat of a fourth-order administrative division"@en . 
+
+:P_PPLA5 a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "seat of a fifth-order administrative division"@en ; 
+  :definition "A seat of a fifth-order administrative division"@en . 
+
+:P_PPLC a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "capital of a political entity"@en ; 
+  :definition "A capital or seat of government of a political entity"@en ;
+  :synonym "seat of government"@en .
+
+:P_PPLCH a owl:Class ; 
+  rdfs:subClassOf :P_PPLG ; 
+  rdfs:label "historical capital of a political entity"@en ; 
+  :definition "A former capital of a political entity"@en . 
+
+:P_PPLF a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "farm village"@en ; 
+  :definition "A populated place where the population is largely engaged in agricultural activities"@en ;
+  :synonym "rural village"@en, "kibbutz"@en .
+
+:P_PPLG a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "seat of government of a political entity"@en ; 
+  :definition "A seat of government of a political entity"@en . 
+
+:P_PPLH a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "historical populated place"@en ; 
+  :definition "A populated place that no longer exists"@en . 
+
+:P_PPLL a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "populated locality"@en ; 
+  :definition "An area similar to a locality but with a small group of dwellings or other buildings"@en . 
+
+:P_PPLQ a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "abandoned populated place"@en ; 
+  :definition "An abandoned populated place"@en . 
+
+:P_PPLR a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "religious populated place"@en ; 
+  :definition "A populated place whose population is largely engaged in religious occupations"@en . 
+
+:P_PPLW a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "destroyed populated place"@en ; 
+  :definition "A village, town or city destroyed by a natural disaster, or by war"@en . 
+
+:P_PPLX a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "section of populated place"@en ; 
+  :definition "A section of a populated place"@en . 
+
+:P_STLMT a owl:Class ; 
+  rdfs:subClassOf :PopulatedPlace ; 
+  rdfs:label "Israeli settlement"@en ; 
+  :definition "An Israeli settlement"@en . 
