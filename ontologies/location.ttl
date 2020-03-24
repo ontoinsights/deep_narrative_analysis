@@ -12,6 +12,8 @@
 # 
 # Created: February 9, 2020
 # Last modified: March 23 2020
+# Changes:
+#   * Added _meters to longest/shortest_distance properties (Mar 23 20)
 # 
 # Copyright (c) 2020 OntoInsights
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -201,7 +203,7 @@
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
-:longest_distance a owl:DatatypeProperty, owl:FunctionalProperty ;
+:longest_distance_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :distance_meters ;
   :definition "The largest amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the shorter distance is defined using the :shortest_distance_meters property."@en ;
   rdfs:domain :RelativeDistanceLocation ;
@@ -230,7 +232,7 @@
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
-:shortest_distance a owl:DatatypeProperty, owl:FunctionalProperty ;
+:shortest_distance_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :distance_meters ;
   :definition "The least amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the longer distance is defined using the :longest_distance_meters property."@en ;
   rdfs:domain :RelativeDistanceLocation ;
