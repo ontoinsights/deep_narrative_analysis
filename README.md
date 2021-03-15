@@ -1,5 +1,10 @@
 # Deep Narrative Analysis (DNA)
 
+# License
+Creative Commons 
+Atribution 4.0 International 
+CC BY 4.0
+
 ## Overview 
 
 Deep Narrative Analysis (DNA) is a toolset for analyzing narratives. It combines semantic and Python technologies with machine learning to 1) create knowledge graphs encoding the details of the narratives, 2) create knowledge graphs encoding background/contextual knowledge from online and structured data sources, and 3) perform inference, reasoning and statistical analyses. 
