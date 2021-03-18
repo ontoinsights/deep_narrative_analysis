@@ -1,6 +1,6 @@
 # Deep Narrative Analysis (DNA)
 
-# License
+## License
 Creative Commons 
 Atribution 4.0 International 
 CC BY 4.0
