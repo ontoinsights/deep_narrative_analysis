@@ -7,13 +7,11 @@
 
 ########################################################################
 # File defining semantics related to location 
-# Many of the concepts are defined based on the GeoNames Feature  
-#    Classes and Codes (https://www.geonames.org/export/codes.html).
+# Many concepts are inspired by the GeoNames Feature Classes and 
+# Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: March 23 2020
-# Changes:
-#   * Added _meters to longest/shortest_distance properties (Mar 23 20)
+# Last modified: March 18 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -22,6 +20,9 @@
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied.
+# 
+# Changes:
+#  Updated to the Mar 2021 semantics
 ########################################################################
 
 
@@ -29,135 +30,150 @@
 # Classes
 ########################################################################
 
+:AdministrativeDivision a owl:Class ;
+  rdfs:subClassOf :GeopoliticalEntity ;
+  rdfs:label "Administrative Division" ;
+  :definition "A subnational level of government, operating over some region. The first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc. The level of an AdministrativeDivision is given by the property, :admin_level. Note that :admin_level is an optional property and may not be known, or applicable." ;
+  :synonym "county", "district", "govenorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" .
+
 :AnthropogenicFeature a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "A point or site on/in the Earth which is a human-created structure that is used for a particular industry or purpose. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of AnthropogenicFeature are defined in the file, geonames_featureCodes_S.ttl."@en .
-
-:AreaFeature a owl:Class ;
-  rdfs:subClassOf :PhysicalLocation ;
-  :definition "Any type of land area of importance to people, or designated for some use by people (such as a park, grazing area for livestock, coast, etc.). The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of AreaFeature are defined in the file, geonames_featureCodes_L.ttl."@en ;
-  :synonym "designated area"@en .
+  rdfs:label "Anthropogenic (Human-Created) Feature" ;
+  :definition "A point or site on/in the Earth which is a human-created structure that is used for a particular industry or purpose. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
 
 :Border a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "A boundary between two political, social or geographic entities."@en ;
-  rdfs:comment "Note that a Border may be identified by name, by the names of the bordering entities (using the :border_with property) or by a set of latitudes/longitudes (using the :has_location property to reference a set of PhysicalLocations with corresponding :latitutde/longitude properties)."@en ;
-  :synonym "perimeter"@en, "boundary"@en .
+  rdfs:label "Border" ;
+  :definition "A boundary between two political, social or geographic entities. A Border may be identified by name, by the names of the bordering entities (using the :border_with property) or by a set of latitudes/longitudes (using the :has_location property to reference a set of PhysicalLocations with corresponding :latitutde/longitude properties)." ;
+  :synonym "perimeter", "boundary" .
 
-:BoundingBox a owl:Class ;
+:BoundingRegion a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "At least three sets of latitude/longitude coordinates (instances of PhysicalLocation with :latitude/longitude properties) which define an enclosed region. The PhysicalLocations that define the points are referenced using the :has_bounding_coordinate property."@en .
+  rdfs:label "Bounding Region" ;
+  :definition "A BoundingRegion is defined by at least three sets of latitude/longitude coordinates (instances of PhysicalLocation with :latitude/longitude properties) which enclose the region. The PhysicalLocations that define the points are referenced using the :has_bounding_coordinate property." .
+
+:BuildingAndDwelling a owl:Class ;
+  rdfs:subClassOf :AnthropogenicFeature ;
+  rdfs:label "Building and Dwelling" ;
+  :definition "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
+  :example "Examples of BuildingAndDwelling include a house, factory, hospital, school, etc." .
 
 :Country a owl:Class ;
   rdfs:subClassOf :GeopoliticalEntity ;
-  :definition "Describes the government of a nation, the people living in the nation and the land area that is governed by a nation."@en ;
-  rdfs:comment "Note that instances of Country are defined in the file, geonames_countries.ttl."@en ;
-  :synonym "nation"@en, "commonwealth"@en, "nationality"@en .
+  rdfs:label "Country" ;
+  :definition "Describes the government of a nation, the people living in the nation and the land area that is governed." ;
+  :synonym "nation", "commonwealth", "nationality" .
 
 :Currency a owl:Class ;
-  :definition "A metal or paper medium of exchange that is used as money in a country."@en .
+  rdfs:subClassOf :FinancialInstrument ;
+  rdfs:label "Currency" ;
+  :definition "A metal or paper medium of exchange that is used as money in a country." .
 
 :Direction a owl:Class ;
-  :definition "An enumeration of the values, :North, :South, :East, :West, :NorthEast, :NorthWest, :SouthEast and :SouthWest."@en ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Direction" ;
+  :definition "An enumeration of the values, :North, :South, :East, :West, :NorthEast, :NorthWest, :SouthEast and :SouthWest." ;
   owl:equivalentClass [ a owl:Class ;
                         owl:oneOf ( :East :North :NorthEast :NorthWest :South :SouthEast :SouthWest :West ) ] ;
-  :synonym "compass direction"@en, "compass orientation"@en .
+  :synonym "compass direction", "compass orientation" .
 
 :GeopoliticalEntity a owl:Class ;
-  rdfs:subClassOf :Actor, :PhysicalLocation ;
-  :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Actor. This is due to its usage in text and conversation. For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Actor) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary. Hence, GeopoliticalEntity is defined by multiple inheritance. Note also that sub-classes of GeopolticalEntity are defined in the file, geonames_featureCodes_A.ttl."@en ;
-  :synonym "political region"@en, "body politic"@en .
-
-:HypsographicFeature a owl:Class ;
-  rdfs:subClassOf :PhysicalLocation ;
-  :definition "A topographic/physical feature on the Earth's surface (such as a mountain, island or desert). It is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of HysographicFeature are defined in the file, geonames_featureCodes_T.ttl."@en ;
-  :synonym "typographical feature"@en .
-
-:Junction a owl:Class ;
-  rdfs:subClassOf :PhysicalLocation ;
-  :definition "A location where two or more entities join (such as road or pipeline junctions). It is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  :synonym "juncture"@en, "joint"@en .
-
-:Location a owl:Class ;
-  :definition "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An individual's Location is specified using the :has_location property."@en ;
-  :synonym "locale"@en, "position"@en, "site"@en, "venue"@en, "situating"@en, "placement"@en .
+  rdfs:subClassOf :Agent, :PhysicalLocation ;
+  :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation." ;
+  :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
+  :synonym "political region", "body politic" .
 
 :OnlineLocation a owl:Class ;
   rdfs:subClassOf :Location ;
-  :definition "A location defined in/on a network, such as a wireless network (a mobile phone number) or the Internet (an IP address, email adress or URL)."@en ;
-  rdfs:comment "Note that the properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others."@en ;
-  :synonym "internet location"@en, "internet address"@en, "computer address"@en, "web address"@en .
+  rdfs:label "Online Location" ;
+  :definition "A location defined in/on a network, such as a wireless network (e.g., a mobile phone number), the Internet (such an IP address, email adress or URL) or a wired network. The properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others." ;
+  :synonym "internet location", "internet address", "computer address", "web address" .
 
 :PhysicalLocation a owl:Class ;
   rdfs:subClassOf :Location ;
-  :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en .
+  rdfs:label "Physical Location" ;
+  :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
 
 :PopulatedPlace a owl:Class ;
-  rdfs:subClassOf :AreaFeature ;
-  :definition "A city, town, village, etc. where people live and work. The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of PopulatedPlace are defined in the file, geonames_featureCodes_P.ttl."@en .
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Populated Place" ;
+  :definition "A city, town, village, etc. where people live and work. The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
+  :synonym "city", "town", "village", "settlement" .
 
 :PostalAddress a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "A point or site on/in the Earth as identified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code."@en ;
-  rdfs:comment "Note that the details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified."@en ;
-  :synonym "street address"@en, "mailing address"@en .
+  rdfs:label "Postal Address" ;
+  :definition "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified." ;
+  :synonym "street address", "mailing address" .
 
 :RelativeDistanceLocation a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "A point or site on/in the Earth defined relative to an 'established' location. The 'established' location is referenced using the :near property. The distance from the 'established' location is defined using the property, :distance_meters (or one of its sub-properties if an exact distance is not known). The direction from the 'established' location is specified using the :has_direction property."@en.
+  rdfs:label "Relative Distance Location" ;
+  :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or one of its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known.".
 
-:TravelTransportRouteAndInfrastructure a owl:Class ;
+:TransportationFeeature owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
-  :definition "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Examples include roads, bridges, railroads, railroad yards, etc."@en ;
-  rdfs:comment "Note that sub-classes of TravelTransportRouteAndInfrastructure are defined in the file, geonames_featureCodes_R.ttl."@en .
-
-:VegetationFeature a owl:Class ;
-  rdfs:subClassOf :PhysicalLocation ;
-  :definition "An area of land designated by its vegetation (such as a forest or orchard). Its location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of VegetationFeature are defined in the file, geonames_featureCodes_V.ttl."@en .
+  rdfs:label "Transportation Feature" ;
+  :definition "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
+  :example "Examples include water ports, airports, heliports, roads, bridges, railroads, railroad yards, etc." .
 
 :WaterFeature a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  :definition "A body of water (such as a river or ocean) as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
-  rdfs:comment "Note that sub-classes of WaterFeature are defined in the file, geonames_featureCodes_H.ttl."@en .
+  rdfs:label "Water Feature" ;
+  :definition "A body of water as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
+  :example "Examples include oceans, rivers, streams, bays, lakes, channels, etc." .
 
 
 ########################################################################
 # Datatype Properties
 ########################################################################
 
+:admin_level a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "administrative level (1-5)" ;
+  :definition "Integer (1-5) indicating a first-, second-, third-, fourth- or fifth-order administrative division." ;
+  :example "A first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc." ;
+  rdfs:domain :AdministrativeDivision ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:integer ;
+               owl:withRestrictions ( [ xsd:minInclusive "1"^^xsd:integer ]
+                                      [ xsd:maxInclusive "5"^^xsd:integer ] ) ] .
+
 :altitude_meters a owl:DatatypeProperty ;
-  :definition "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties."@en ;
+  rdfs:label "altitude in meters" ;
+  :definition "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
 :city_name a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress holding the city/town name."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "city name" ;
+  :definition "A part of a PostalAddress holding the city/town name." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :city_part_name a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress identifying a particular part of a city or town."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "name of a part of the city" ;
+  :definition "A part of a PostalAddress identifying a particular part of a city or town." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :country_name a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress identifying the country."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "country name" ;
+  :definition "A part of a PostalAddress identifying the country." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :distance_meters a owl:DatatypeProperty ;
-  :definition "The amount of space between entities, in meters. If an exact distance is not known, or a range of distances is needed, use the :shortest/longest_distance_meters properties."@en ;
+  rdfs:label "distance in meters" ;
+  :definition "The amount of space between entities, in meters. If an exact distance is not known, or a range of distances is needed, use the :shortest/longest_distance_meters properties." ;
   rdfs:domain :RelativeDistanceLocation ;
   rdfs:range xsd:decimal .
 
 :email_address a owl:DatatypeProperty ;
-  :definition "A unique identifier for an account on an email communications system."@en ;
+  rdfs:label "email address" ;
+  :definition "A unique identifier for an account on an email communications system." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
@@ -165,97 +181,124 @@
 
 :highest_altitude_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :altitude_meters ;
-  :definition "Highest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the lower part of the range is defined using the :lowest_altitude_meters property."@en ;
+  rdfs:label "highest altitude in meters" ;
+  :definition "Highest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the lower part of the range is defined using the :lowest_altitude_meters property." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
 :ip_v4_address a owl:DatatypeProperty ;
-  :definition "A string defining an OnlineLocation using a IPV4 address in dotted decimal format (e.g., 169.23.24.00)."@en ;
+  rdfs:label "IP V4 address" ;
+  :definition "A string defining an OnlineLocation using a IPV4 address in dotted decimal format (e.g., 169.23.24.00)." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:withRestrictions ( [ xsd:pattern "^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$" ] ) ] .
 
 :ip_v6_address a owl:DatatypeProperty ;
-  :definition "A string defining an OnlineLocation as an IPV6 address using hexadecimals (e.g., ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff)."@en ;
+  rdfs:label "IP V6 address" ;
+  :definition "A string defining an OnlineLocation as an IPV6 address using hexadecimals (e.g., ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff)." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:withRestrictions ( [ xsd:pattern "^([A-Fa-f0-9]{4}:|0:|:){7}([A-Fa-f0-9]{4}|0)$" ] ) ] .
 
 :iso_alpha2 a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A string specifying the 2 character ISO code of a country."@en ;
+  rdfs:label "ISO 2-character alpha code" ;
+  :definition "A string specifying the 2 character ISO 3166 code of a country." ;
   rdfs:domain :Country ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:withRestrictions ( [ xsd:pattern "^[A-Z]{2}$" ] ) ] .
 
 :iso_alpha3 a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A string specifying the 3 character ISO code of a country."@en ;
+  rdfs:label "ISO 3-character alpha code" ;
+  :definition "A string specifying the 3 character ISO 3166 code of a country." ;
   rdfs:domain :Country ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:withRestrictions ( [ xsd:pattern "^[A-Z]{3}$" ] ) ] .
 
 :latitude a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "The angular distance north or south of the equator. Latitude is specified in decimal degrees."@en ;
+  rdfs:label "latitude" ;
+  :definition "The angular distance north or south of the equator. Latitude is specified in decimal degrees." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
 :longest_distance_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :distance_meters ;
-  :definition "The largest amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the shorter distance is defined using the :shortest_distance_meters property."@en ;
+  rdfs:label "longest distance in meters" ;
+  :definition "The largest amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the shorter distance is defined using the :shortest_distance_meters property." ;
   rdfs:domain :RelativeDistanceLocation ;
   rdfs:range xsd:decimal .
 
 :longitude a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "The angular distance east or west of the prime meridian at Greenwich, England. Longitude is specified in decimal degrees."@en ;
+  rdfs:label "longitude" ;
+  :definition "The angular distance east or west of the prime meridian at Greenwich, England. Longitude is specified in decimal degrees." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
 :lowest_altitude_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :altitude_meters ;
-  :definition "Lowest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the higher part of the range is defined using the :highest_altitude_meters property."@en ;
+  rdfs:label "lowest altitude in meters" ;
+  :definition "Lowest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the higher part of the range is defined using the :highest_altitude_meters property." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 
 :phone_number a owl:DatatypeProperty ;
-  :definition "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'."@en ;
+  rdfs:label "phone number" ;
+  :definition "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:withRestrictions ( [ xsd:pattern "^(\\(?\\+?[0-9]*\\)?)?[ \\.\\-])?(\\(?[0-9]*\\)?)?[0-9A-Z \\.\\-\\(\\)]*((x|ext|extension)? ?[0-9]*)?$" ] ) ] .
 
+:postal_address_detail a owl:DatatypeProperty ;
+  rdfs:label "postal address detail" ;
+  :definition "A property whose subproperties specify all the parts of a PostalAddress. The subproperties are :street_address1/2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code." ;
+  rdfs:domain :PostalAddress ;
+  rdfs:range xsd:string .
+
 :postal_code a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress identifying a section of a city, state or country consisting of a group of numbers and/or letters, used to aid in the sorting of mail."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "postal code" ;
+  :definition "A part of a PostalAddress identifying a section of a city, state or country consisting of a group of numbers and/or letters, used to aid in the sorting of mail." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :shortest_distance_meters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :distance_meters ;
-  :definition "The least amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the longer distance is defined using the :longest_distance_meters property."@en ;
+  rdfs:label "shortest distance in meters" ;
+  :definition "The least amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the longer distance is defined using the :longest_distance_meters property." ;
   rdfs:domain :RelativeDistanceLocation ;
   rdfs:range xsd:decimal .
 
 :state_or_region_name a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress identifying a first order administrative region, such as a state or district of a countrty."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "state, province or region name" ;
+  :definition "A part of a PostalAddress identifying a first order administrative region, such as a state, province or district of a countrty." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :street_address1 a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a PostalAddress specifying a house number and street name, post office box information or similar information."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "street address, line 1" ;
+  :definition "A part of a PostalAddress specifying a house number and street name, post office box information or similar information." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :street_address2 a owl:DatatypeProperty, owl:FunctionalProperty ;
-  :definition "A part of a Postal Address further clarifying the information in :street_address1."@en ;
+  rdfs:subPropertyOf :postal_address_detail ;
+  rdfs:label "street address, line 2" ;
+  :definition "A part of a Postal Address further clarifying the information in :street_address1." ;
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
 :url a owl:DatatypeProperty ;
-  :definition "A string defining a web address, using the HTTP or HTTPS protocols."@en ;
+  rdfs:label "Uniform Resource Locator (URL)" ;
+  :definition "A string defining a web address, using the HTTP or HTTPS protocols." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range xsd:string .
+
 
 ########################################################################
 # Object Properties
@@ -263,53 +306,63 @@
 
 :border_with a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
-  :definition "References an Actor whose location/property/... is separated by the Border entity from another Actor."@en ;
+  rdfs:label "border with" ;
+  :definition "References an Agent whose location/property/... is separated by the Border entity from another Agent." ;
   rdfs:domain :Border ;
-  rdfs:range :Actor .
+  rdfs:range :Agent .
 
 :has_bounding_coordinate a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
-  :definition "References a PhysicalLocation (specifying latitude/longitude properties) that defines one of the points of a BoundingBox."@en ;
-  rdfs:domain :BoundingBox ;
+  rdfs:label "has bounding coordinate" ;
+  :definition "References a PhysicalLocation (specifying latitude/longitude properties) that defines one of at least three points of a BoundingRegion." ;
+  rdfs:domain :BoundingRegion ;
   rdfs:range :PhysicalLocation .
 
 :has_currency a owl:ObjectProperty, owl:FunctionalProperty ;
-  :definition "References the currency unit of a Country."@en ;
+  rdfs:label "has currency" ;
+  :definition "References the currency unit of a Country." ;
   rdfs:domain :Country ;
   rdfs:range :Currency .
 
 :has_direction a owl:ObjectProperty, owl:FunctionalProperty ;
-  :definition "References one of the enumerated values of Direction for a RelativeDirectionLocation."@en ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
+  rdfs:label "has direction" ;
+  :definition "References one of the enumerated values of Direction for a RelativeDirectionLocation." ;
   rdfs:domain :RelativeDirectionLocation ;
   rdfs:range :Direction .
 
-:has_location a owl:ObjectProperty ;
-  :definition "A reference to a Location, positioning an entity."@en ;
-  rdfs:range :Location .
-
 :near a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
-  :definition "Indicates that the location of an entity is 'close to' the referenced PhysicalLocation. If a direction and/or distance from the referenced PhysicalLocation is known, instead relate the entity to an instance of RelativeDirectionLocation (using the :has_location property) and relate the RelativeDirectionLocation to the 'established' PhysicalLocation (using the :near property)."@en ;
+  rdfs:label "near" ;
+  :definition "Indicates that a RelativeDistanceLocation is 'close to' another, 'established' PhysicalLocation." ;
+  rdfs:domain :RelativeDistanceLocation .
   rdfs:range :PhysicalLocation .
+
 
 ########################################################################
 # Individuals
 ########################################################################
 
-:East a :Direction .
+:East a :Direction ;
+  rdfs:label "East" .
 
-:North a :Direction .
+:North a :Direction ;
+  rdfs:label "North" .
 
-:NorthEast a :Direction .
+:NorthEast a :Direction ;
+  rdfs:label "North-East" .
 
-:NorthWest a :Direction .
+:NorthWest a :Direction ;
+  rdfs:label "North-West" .
 
-:South a :Direction .
+:South a :Direction ;
+  rdfs:label "South" .
 
-:SouthEast a :Direction .
+:SouthEast a :Direction ;
+  rdfs:label "South-East" .
 
-:SouthWest a :Direction .
+:SouthWest a :Direction ;
+  rdfs:label "South-West" .
 
-:West a :Direction .
-
-
+:West a :Direction ;
+  rdfs:label "West" .
