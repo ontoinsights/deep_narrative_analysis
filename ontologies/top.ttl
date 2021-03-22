@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9, 2020
-# Last modified: March 18 2021
+# Last modified: March 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,21 +30,27 @@
 ########################################################################
 
 :antonym a owl:AnnotationProperty ;
+  rdfs:label "antonym" ;
   :definition "A word which has an opposite/inverse meaning." .
 
 :definition a owl:AnnotationProperty ;
+  rdfs:label "definition" ;
   :definition "Text providing an exact meaning for the semantics of a concept." .
 
 :example a owl:AnnotationProperty ;
+  rdfs:label "example" ;
   :definition "Words/text that illustrate the concept/semantic being defined or whose instances would be specified as types of the concept/semantic." .
 
 :negative_example a owl:AnnotationProperty ;
+  rdfs:label "negative example" ;
   :definition "Words/text whose whose definitions do not support or whose instances should be excluded from the concept/semantic being defined." .
 
 :sentence_structure a owl:AnnotationProperty ;
+  rdfs:label "sentence structure" ;
   :definition "A sentence using a specific verb and identifying its arguments. For example, for the word, 'buy', a possible sentence_structure is '[[Someone]] buys [[something]].' The definition of a sentence_structure aids in the extraction of meaning from text, since it defines what other information should/could be mined from the text. Note that the arguments in a sentence structure are indicated by square brackets ('[[' and ']]')." .
 
 :synonym a owl:AnnotationProperty ;
+  rdfs:label "synonym" ;
   :definition "A word which has a similar meaning." .
 
 
@@ -114,7 +120,7 @@
 
 :Time a owl:Class ;
   rdfs:label "Time" ;
-  :definition "Superclass defining the shared semantics of specific points in time, intervals of time or durations. An individual's time-related information is specified using the :has_time property or one of its sub-properties." ;
+  :definition "Superclass defining the shared semantics of specific points in time, intervals of time or durations. An individual's time-related information is specified using the :has_time property or its sub-properties." ;
   :synonym "fourth dimension" .
 
 :UnifyingCollection a owl:Class ;

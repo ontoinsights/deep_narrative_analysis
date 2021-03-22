@@ -1,0 +1,190 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics related to participants/actors/agents in events 
+# and states/situations
+# 
+# Created: February 9, 2020
+# Last modified: March 22 2021
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  Updated to the Mar 2021 semantics
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:Affiliation a owl:Class ;
+  rdfs:subClassOf :State ;
+  rdfs:label "Affiliation"@en ;
+  rdfs:comment "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property." ;
+  :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." .
+
+:Characteristic a owl:Class ;
+  rdfs:label "Characteristic" ;
+  :definition "Some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization." .
+
+:EducationLevel a owl:Class ;
+  rdfs:subClassOf :Characteristic ;
+  rdfs:label "Education Level" ;
+  :definition "An enumeration defining a Person's/Group's education. It consists of the values, :NoEducation, :CompletedPrimaryEducation, :CompletedSecondaryEducation, :CompletedUndergraduateEducation, :CompletedGraduateEducation, :CompletedDoctoralEducation and :PostDoctoralEducation, as well as partially completed levels, :SomePrimaryEducation, :SomeSecondaryEducation, :SomeUndergraduateEducation, :SomeGraduateEducation and :SomeDoctoralEducation." ;
+  :example "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :NoEducation :CompletedPrimaryEducation :CompletedSecondaryEducation :CompletedUndergraduateEducation :CompletedGraduateEducation :CompletedDoctoralEducation :PostDoctoralEducation :SomePrimaryEducation :SomeSecondaryEducation :SomeUndergraduateEducation :SomeGraduateEducation :SomeDoctoralEducation ) ] .
+
+:Ethnicity a owl:Class ;
+  rdfs:subClassOf :Characteristic ;
+  rdfs:label "Ethnicity" ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
+  :synonym "race" .
+
+:Family a owl:Class ;
+  rdfs:subClassOf :GroupOfAgents ;
+  rdfs:label "Family" ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another." ;
+  :synonym "household" .
+  
+:Gender a owl:Class ;
+  rdfs:subClassOf :Characteristic ;
+  rdfs:label "Gender" ;
+  :definition "An enumeration of the values, :Female, :Male, :Agender and :Bigender. Note that individuals of the Gender class describe how Agents identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :Female :Male :Agender :Bigender ) ] .
+
+:GroupOfAgents a owl:Class ;
+  rdfs:subClassOf :Agent, :Collection ;
+  rdfs:label "Group/Collection of Agents" ;
+  :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
+  :example "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or be the holders of State." .
+
+:MedicalOrPsychologicalCondition a owl:Class ;
+  rdfs:subClassOf :Characteristic ;
+  rdfs:label "Medical or Psychological Condition" ;
+  :definition "Indicates various types of physical and mental conditions that characterize a Person or Group and/or impact their ability to carry out activities. These conditions may be related to genetic or emotional disorders, the severity of an illness, etc." .
+
+:Organization a owl:Class ;
+  rdfs:subClassOf :GroupOfAgents ;
+  rdfs:label "Organization" ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
+  :synonym "organisation", "association", "corporation", "institution", "company" .
+
+:Person a owl:Class ;
+  rdfs:subClassOf :Agent ;
+  rdfs:label "Person" ;
+  :definition "A human being." ;
+  :synonym "human", "human being", "man", "woman", "child" .
+
+:Role a owl:Class ;
+  rdfs:label "Role" ;
+  :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics." ;
+  :example "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:affiliated_agent a owl:ObjectProperty ;
+  rdfs:subPropertyOf :has_holder ;
+  rdfs:label "affiliated agent" ;
+  rdfs:domain :Affiliation ;
+  rdfs:range :Agent ;
+  :definition "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property." .
+
+:affiliated_with a owl:ObjectProperty ;
+  rdfs:label "affiliated with" ;
+  rdfs:domain :Affiliation ;
+  :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
+
+:has_citizenship a owl:ObjectProperty ;
+  rdfs:label "has citizenship" ;
+  rdfs:domain :Person ;
+  rdfs:range :Country ;
+  :definition "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship." .
+
+:has_characteristic a owl:ObjectProperty ;
+  rdfs:label "has characteristic" ;
+  rdfs:domain :Agent ;
+  rdfs:range :Characteristic ;
+  :definition "Indicates some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them." .
+
+:has_role a owl:ObjectProperty ;
+  rdfs:label "has role" ;
+  rdfs:domain :Affiliation ;
+  rdfs:range :Role ;
+  :definition "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property." .
+
+
+########################################################################
+# Individuals
+########################################################################
+
+:Agender a :Gender ;
+  rdfs:label "Agender, Gender Neutral or Lack of Gender" .
+
+:Bigender a :Gender ;
+  rdfs:label "Bigender" .
+
+:CompletedDoctoralEducation a :EducationLevel ;
+  rdfs:label "Completed Doctoral Education" .
+
+:CompletedGraduateEducation a :EducationLevel ;
+  rdfs:label "Completed Graduate Education" .
+
+:CompletedPrimaryEducation a :EducationLevel ;
+  rdfs:label "Completed Primary Education" .
+
+:CompletedSecondaryEducation a :EducationLevel ;
+  rdfs:label "Completed Secondary Education" .
+
+:CompletedUndergraduateEducation a :EducationLevel ;
+  rdfs:label "Completed Undergraduate Education" .
+
+:Female a :Gender ;
+  rdfs:label "Female" ;
+  :synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
+
+:Male a :Gender ;
+  rdfs:label "Male" ;
+  :synonym "boy", "man", "mister", "Mr." .
+
+:NoEducation a :EducationLevel ;
+  rdfs:label "No Education" .
+
+:PostDoctoralEducation a :EducationLevel ;
+  rdfs:label "Post-Doctoral Education" .
+
+:SomeDoctoralEducation a :EducationLevel ;
+  rdfs:label "Some Doctoral Education" .
+
+:SomeGraduateEducation a :EducationLevel ;
+  rdfs:label "Some Graduate Education" .
+
+:SomePrimaryEducation a :EducationLevel ;
+  rdfs:label "Some Primary Education" .
+
+:SomeSecondaryEducation a :EducationLevel ;
+  rdfs:label "Some Secondary Education" .
+
+:SomeUndergraduateEducation a :EducationLevel ;
+  rdfs:label "Some Undergraduate Education" .

@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: March 18 2021
+# Last modified: March 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -79,6 +79,7 @@
 
 :GeopoliticalEntity a owl:Class ;
   rdfs:subClassOf :Agent, :PhysicalLocation ;
+  rdfs:label "Geopolitical Entity" ;
   :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation." ;
   :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
   :synonym "political region", "body politic" .
@@ -106,12 +107,12 @@
   :definition "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified." ;
   :synonym "street address", "mailing address" .
 
-:RelativeDistanceLocation a owl:Class ;
+:RelativeDirectionLocation a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
-  rdfs:label "Relative Distance Location" ;
-  :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or one of its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known.".
+  rdfs:label "Relative Direction Location" ;
+  :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known." .
 
-:TransportationFeeature owl:Class ;
+:TransportationFeeature a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
   rdfs:label "Transportation Feature" ;
   :definition "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
@@ -168,7 +169,7 @@
 :distance_meters a owl:DatatypeProperty ;
   rdfs:label "distance in meters" ;
   :definition "The amount of space between entities, in meters. If an exact distance is not known, or a range of distances is needed, use the :shortest/longest_distance_meters properties." ;
-  rdfs:domain :RelativeDistanceLocation ;
+  rdfs:domain :RelativeDirectionLocation ;
   rdfs:range xsd:decimal .
 
 :email_address a owl:DatatypeProperty ;
@@ -228,7 +229,7 @@
   rdfs:subPropertyOf :distance_meters ;
   rdfs:label "longest distance in meters" ;
   :definition "The largest amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the shorter distance is defined using the :shortest_distance_meters property." ;
-  rdfs:domain :RelativeDistanceLocation ;
+  rdfs:domain :RelativeDirectionLocation ;
   rdfs:range xsd:decimal .
 
 :longitude a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -269,7 +270,7 @@
   rdfs:subPropertyOf :distance_meters ;
   rdfs:label "shortest distance in meters" ;
   :definition "The least amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the longer distance is defined using the :longest_distance_meters property." ;
-  rdfs:domain :RelativeDistanceLocation ;
+  rdfs:domain :RelativeDirectionLocation ;
   rdfs:range xsd:decimal .
 
 :state_or_region_name a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -332,10 +333,9 @@
   rdfs:range :Direction .
 
 :near a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_location ;
   rdfs:label "near" ;
-  :definition "Indicates that a RelativeDistanceLocation is 'close to' another, 'established' PhysicalLocation." ;
-  rdfs:domain :RelativeDistanceLocation .
+  :definition "Indicates that a RelativeDirectionLocation is 'close to' another, 'established' PhysicalLocation." ;
+  rdfs:domain :RelativeDirectionLocation ;
   rdfs:range :PhysicalLocation .
 
 

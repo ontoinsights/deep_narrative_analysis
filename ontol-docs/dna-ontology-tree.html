@@ -1,0 +1,3427 @@
+<head>
+	<!-- Bootstrap CSS -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<!-- Lodash -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.6.1/lodash.js"></script>
+	<!-- Inspire Tree -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/inspire-tree/6.0.1/inspire-tree.min.js"></script>
+	<!-- Inspire Tree DOM -->
+	<script src="https://cdn.jsdelivr.net/npm/inspire-tree-dom@4.0.6/dist/inspire-tree-dom.min.js"></script>
+	<!-- Style for main DIVs -->
+	<style>
+#scroll {
+	position: fixed;
+	top: 40px;
+	right: -20px;
+}
+
+#stay {
+	padding-top: 40px;
+	margin-left: 30px;
+  padding-bottom: 100px;
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+p {
+  margin-bottom: 0.3rem !important;
+}
+
+.text-input-wrapper {
+  display:inline-block;
+}
+.text-input-wrapper span {
+  cursor:pointer;
+  color:#007bff;
+  font-weight:bold;
+}
+
+/* Inspire Tree CSS (no CDN) */
+.inspire-tree .btn {
+  background-color: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  display: inline-block;
+  height: 20px;
+  transition: all 150ms linear;
+  width: 20px; }
+  .inspire-tree .btn:hover {
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1); }
+  .inspire-tree .btn + .btn {
+    margin-left: 5px; }
+  .inspire-tree .btn.icon {
+    position: relative; }
+    .inspire-tree .btn.icon::before {
+      display: block;
+      height: 14px;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%);
+      width: 14px; }
+
+.inspire-tree .btn-group {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px; }
+
+/* ~~@@@~~~~~ Context Menu ~~~~~@@@~~ */
+.itree-menu {
+  background: #ddd;
+  border: 1px solid #c4c4c4;
+  border-radius: 3px;
+  font-family: sans-serif;
+  list-style: none;
+  margin: 0;
+  min-width: 150px;
+  padding: 0;
+  position: absolute;
+  z-index: 10; }
+  .itree-menu a {
+    display: block;
+    padding: 3px 8px; }
+    .itree-menu a:hover {
+      background: rgba(218, 250, 255, 0.5);
+      color: rgba(164, 234, 245, 0.5); }
+
+.inspire-tree {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  /* ~~@@@~~~~~ Lists ~~~~~@@@~~ */
+  /* ~~@@@~~~~~ Node Content ~~~~~@@@~~ */ }
+  .inspire-tree:focus {
+    outline: none; }
+  .inspire-tree, .inspire-tree * {
+    box-sizing: border-box; }
+  .inspire-tree ol {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+    .inspire-tree ol ol {
+      padding-left: 20px; }
+  .inspire-tree .collapsed > ol, .inspire-tree .hidden {
+    display: none; }
+  .inspire-tree li > .title-wrap {
+    min-height: 25px;
+    position: relative;
+    z-index: 2; }
+  .inspire-tree .toggle {
+    height: 25px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 25px;
+    z-index: 2; }
+    .inspire-tree .toggle::before {
+      display: block;
+      left: 50%;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+              transform: translate(-50%, -50%); }
+  .inspire-tree [type="checkbox"] {
+    left: 18px;
+    position: absolute;
+    top: 4px;
+    vertical-align: middle;
+    width: 20px;
+    z-index: 2; }
+  .inspire-tree .title {
+    cursor: default;
+    display: block;
+    height: 25px;
+    line-height: 25px;
+    overflow: visible;
+    padding-left: 42px;
+    position: relative;
+    vertical-align: middle;
+    white-space: nowrap;
+    z-index: 1; }
+    .inspire-tree .title.load-more {
+      color: #476cb8;
+      cursor: pointer; }
+      .inspire-tree .title.load-more:hover {
+        text-decoration: underline; }
+    .inspire-tree .title::before {
+      left: 24px;
+      position: absolute;
+      top: 50%;
+      -webkit-transform: translateY(-50%);
+              transform: translateY(-50%);
+      vertical-align: top; }
+    .inspire-tree .title:focus {
+      outline: none; }
+
+.inspire-tree.drag-and-drop li:not(.drop-target) {
+  opacity: .5; }
+
+.drag-targeting.drag-targeting-insert.inspire-tree,
+.drag-targeting.drag-targeting-insert > .title-wrap > .title {
+  border: 1px solid #2dadc5; }
+
+.drag-targeting.drag-targeting-above > .title-wrap > .title {
+  border-top: 3px solid #2dadc5; }
+
+.drag-targeting.drag-targeting-below > .title-wrap > .title {
+  border-bottom: 3px solid #2dadc5; }
+
+.inspire-tree .editable form {
+  display: inline-block;
+  height: 25px;
+  line-height: 25px;
+  padding-top: 2px; }
+  .inspire-tree .editable form input {
+    height: 20px; }
+  .inspire-tree .editable form input, .inspire-tree .editable form .btn {
+    vertical-align: top; }
+
+.inspire-tree .editable > .btn-group {
+  display: none;
+  padding-top: 2px;
+  position: absolute;
+  right: 10px;
+  z-index: 3; }
+
+.inspire-tree .editable:hover > .btn-group {
+  display: block; }
+
+.inspire-tree input + .btn-group {
+  margin-left: 10px; }
+
+.inspire-tree > .btn.icon {
+  margin-left: 2px; }
+
+.inspire-tree > ol > .folder:first-child:not(:only-child) {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAMCAYAAACji9dXAAAAFUlEQVQIW2M8d+HSf0YGBgYGRpJZAJ2uFKcp4HfpAAAAAElFTkSuQmCC");
+  background-position: 11px 13px;
+  background-repeat: no-repeat; }
+
+.inspire-tree .folder:last-child:not(:only-child), .inspire-tree li .folder:last-child {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAMCAYAAACji9dXAAAAFUlEQVQIW2M8d+HSf0YGBgYGRpJZAJ2uFKcp4HfpAAAAAElFTkSuQmCC");
+  background-position: 11px 0;
+  background-repeat: no-repeat; }
+
+.inspire-tree.editable-add > ol > .folder:last-child:not(:only-child) {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAYCAYAAAA7zJfaAAAAFUlEQVQIW2M8d+HSf0YGBgYGRrqyABKeKU0SV+t2AAAAAElFTkSuQmCC");
+  background-repeat: repeat-y; }
+
+.inspire-tree > ol .expanded:not(:last-child):not(:first-child), .inspire-tree li:not(:last-child) {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAYCAYAAAA7zJfaAAAAFUlEQVQIW2M8d+HSf0YGBgYGRrqyABKeKU0SV+t2AAAAAElFTkSuQmCC");
+  background-position: 11px 0;
+  background-repeat: no-repeat; }
+
+.inspire-tree li.expanded:not(:last-child) > ol {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAYCAYAAAA7zJfaAAAAFUlEQVQIW2M8d+HSf0YGBgYGRrqyABKeKU0SV+t2AAAAAElFTkSuQmCC");
+  background-position: 11px 0;
+  background-repeat: repeat-y; }
+
+.inspire-tree li.expanded.folder:not(.loading) > .title-wrap {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAMCAYAAACji9dXAAAAFUlEQVQIW2M8d+HSf0YGBgYGRpJZAJ2uFKcp4HfpAAAAAElFTkSuQmCC");
+  background-position: 31px 13px;
+  background-repeat: no-repeat; }
+
+.inspire-tree .leaf:not(:last-child):not(.detached) {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAAN0lEQVQ4T2M8d+HSfyMDPUYGEgBJimHmMo7aBAmK0dCDJgl4ioClDGLo0dBDDz0SMu5o2oMFFgBXbEeI0XwYIwAAAABJRU5ErkJgggAA");
+  background-position: 11px 0;
+  background-repeat: no-repeat; }
+
+.inspire-tree .leaf:last-child {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAYAAABy6+R8AAAAKklEQVQoU2M8d+HSfyMDPUYGEgBJimHmMo7aBAmK0dCDJgl4ioClDGJoAGUZM32Z0U8tAAAAAElFTkSuQmCC");
+  background-position: 11px 0;
+  background-repeat: no-repeat; }
+
+.inspire-tree .leaf.detached:last-child {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAMCAYAAACji9dXAAAAFUlEQVQIW2M8d+HSf0YGBgYGRpJZAJ2uFKcp4HfpAAAAAElFTkSuQmCC");
+  background-position: 11px 0;
+  background-repeat: no-repeat; }
+
+.inspire-tree.editable-add > ol > .leaf:last-child {
+  background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAAYCAYAAAAh8HdUAAAAN0lEQVQ4T2M8d+HSfyMDPUYGEgBJimHmMo7aBAmK0dCDJgl4ioClDGLo0dBDDz0SMu5o2oMFFgBXbEeI0XwYIwAAAABJRU5ErkJgggAA"); }
+
+.inspire-tree .icon::before {
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  content: '';
+  display: inline-block;
+  height: 14px;
+  width: 14px; }
+
+.inspire-tree .icon-check::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M27%204l-15%2015-7-7-5%205%2012%2012%2020-20z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-check:hover::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%230ccc0a%22%20d%3D%22M27%204l-15%2015-7-7-5%205%2012%2012%2020-20z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-collapse::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23aaa%22%20d%3D%22M4%201h16q1.242%200%202.121%200.879t0.879%202.121v16q0%201.242-0.879%202.121t-2.121%200.879h-16q-1.242%200-2.121-0.879t-0.879-2.121v-16q0-1.242%200.879-2.121t2.121-0.879zM20%203h-16q-0.414%200-0.707%200.293t-0.293%200.707v16q0%200.414%200.293%200.707t0.707%200.293h16q0.414%200%200.707-0.293t0.293-0.707v-16q0-0.414-0.293-0.707t-0.707-0.293zM8%2011h8q0.414%200%200.707%200.293t0.293%200.707-0.293%200.707-0.707%200.293h-8q-0.414%200-0.707-0.293t-0.293-0.707%200.293-0.707%200.707-0.293z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+  background-color: white;
+  border-radius: 3px;
+  margin-left: -1px; }
+
+.inspire-tree .icon-cross::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M31.708%2025.708c-0-0-0-0-0-0l-9.708-9.708%209.708-9.708c0-0%200-0%200-0%200.105-0.105%200.18-0.227%200.229-0.357%200.133-0.356%200.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13%200.048-0.252%200.124-0.357%200.228%200%200-0%200-0%200l-9.708%209.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057%200.229l-4.586%204.586c-0.286%200.286-0.361%200.702-0.229%201.057%200.049%200.13%200.124%200.252%200.229%200.357%200%200%200%200%200%200l9.708%209.708-9.708%209.708c-0%200-0%200-0%200-0.104%200.105-0.18%200.227-0.229%200.357-0.133%200.355-0.057%200.771%200.229%201.057l4.586%204.586c0.286%200.286%200.702%200.361%201.057%200.229%200.13-0.049%200.252-0.124%200.357-0.229%200-0%200-0%200-0l9.708-9.708%209.708%209.708c0%200%200%200%200%200%200.105%200.105%200.227%200.18%200.357%200.229%200.356%200.133%200.771%200.057%201.057-0.229l4.586-4.586c0.286-0.286%200.362-0.702%200.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-cross:hover::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23c00%22%20d%3D%22M31.708%2025.708c-0-0-0-0-0-0l-9.708-9.708%209.708-9.708c0-0%200-0%200-0%200.105-0.105%200.18-0.227%200.229-0.357%200.133-0.356%200.057-0.771-0.229-1.057l-4.586-4.586c-0.286-0.286-0.702-0.361-1.057-0.229-0.13%200.048-0.252%200.124-0.357%200.228%200%200-0%200-0%200l-9.708%209.708-9.708-9.708c-0-0-0-0-0-0-0.105-0.104-0.227-0.18-0.357-0.228-0.356-0.133-0.771-0.057-1.057%200.229l-4.586%204.586c-0.286%200.286-0.361%200.702-0.229%201.057%200.049%200.13%200.124%200.252%200.229%200.357%200%200%200%200%200%200l9.708%209.708-9.708%209.708c-0%200-0%200-0%200-0.104%200.105-0.18%200.227-0.229%200.357-0.133%200.355-0.057%200.771%200.229%201.057l4.586%204.586c0.286%200.286%200.702%200.361%201.057%200.229%200.13-0.049%200.252-0.124%200.357-0.229%200-0%200-0%200-0l9.708-9.708%209.708%209.708c0%200%200%200%200%200%200.105%200.105%200.227%200.18%200.357%200.229%200.356%200.133%200.771%200.057%201.057-0.229l4.586-4.586c0.286-0.286%200.362-0.702%200.229-1.057-0.049-0.13-0.124-0.252-0.229-0.357z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-expand::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%23aaa%22%20d%3D%22M4%201h16q1.242%200%202.121%200.879t0.879%202.121v16q0%201.242-0.879%202.121t-2.121%200.879h-16q-1.242%200-2.121-0.879t-0.879-2.121v-16q0-1.242%200.879-2.121t2.121-0.879zM20%203h-16q-0.414%200-0.707%200.293t-0.293%200.707v16q0%200.414%200.293%200.707t0.707%200.293h16q0.414%200%200.707-0.293t0.293-0.707v-16q0-0.414-0.293-0.707t-0.707-0.293zM12%207q0.414%200%200.707%200.293t0.293%200.707v3h3q0.414%200%200.707%200.293t0.293%200.707-0.293%200.707-0.707%200.293h-3v3q0%200.414-0.293%200.707t-0.707%200.293-0.707-0.293-0.293-0.707v-3h-3q-0.414%200-0.707-0.293t-0.293-0.707%200.293-0.707%200.707-0.293h3v-3q0-0.414%200.293-0.707t0.707-0.293z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+  background-color: white;
+  border-radius: 3px;
+  margin-left: -1px; }
+
+.inspire-tree .icon-file-empty::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23a5a5a5%22%20d%3D%22M28.681%207.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378%200-2.5%201.121-2.5%202.5v27c0%201.378%201.122%202.5%202.5%202.5h23c1.378%200%202.5-1.122%202.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543%205.457c0.959%200.959%201.712%201.825%202.268%202.543h-4.811v-4.811c0.718%200.556%201.584%201.309%202.543%202.268zM28%2029.5c0%200.271-0.229%200.5-0.5%200.5h-23c-0.271%200-0.5-0.229-0.5-0.5v-27c0-0.271%200.229-0.5%200.5-0.5%200%200%2015.499-0%2015.5%200v7c0%200.552%200.448%201%201%201h7v19.5z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-folder::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M14%204l4%204h14v22h-32v-26z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-folder-open::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M26%2030l6-16h-26l-6%2016zM4%2012l-4%2018v-26h9l4%204h13v4z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E%0A"); }
+
+.inspire-tree .icon-minus::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M0%2013v6c0%200.552%200.448%201%201%201h30c0.552%200%201-0.448%201-1v-6c0-0.552-0.448-1-1-1h-30c-0.552%200-1%200.448-1%201z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-minus:hover::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23c00%22%20d%3D%22M0%2013v6c0%200.552%200.448%201%201%201h30c0.552%200%201-0.448%201-1v-6c0-0.552-0.448-1-1-1h-30c-0.552%200-1%200.448-1%201z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-more::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M12%209.984c1.078%200%202.016%200.938%202.016%202.016s-0.938%202.016-2.016%202.016-2.016-0.938-2.016-2.016%200.938-2.016%202.016-2.016zM18%209.984c1.078%200%202.016%200.938%202.016%202.016s-0.938%202.016-2.016%202.016-2.016-0.938-2.016-2.016%200.938-2.016%202.016-2.016zM6%209.984c1.078%200%202.016%200.938%202.016%202.016s-0.938%202.016-2.016%202.016-2.016-0.938-2.016-2.016%200.938-2.016%202.016-2.016z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-pencil::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M27%200c2.761%200%205%202.239%205%205%200%201.126-0.372%202.164-1%203l-2%202-7-7%202-2c0.836-0.628%201.874-1%203-1zM2%2023l-2%209%209-2%2018.5-18.5-7-7-18.5%2018.5zM22.362%2011.362l-14%2014-1.724-1.724%2014-14%201.724%201.724z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E%0A"); }
+
+.inspire-tree .icon-pencil:hover::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%230ccc0a%22%20d%3D%22M27%200c2.761%200%205%202.239%205%205%200%201.126-0.372%202.164-1%203l-2%202-7-7%202-2c0.836-0.628%201.874-1%203-1zM2%2023l-2%209%209-2%2018.5-18.5-7-7-18.5%2018.5zM22.362%2011.362l-14%2014-1.724-1.724%2014-14%201.724%201.724z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E%0A"); }
+
+.inspire-tree .icon-plus::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%236a6a6a%22%20d%3D%22M31%2012h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552%200-1%200.448-1%201v11h-11c-0.552%200-1%200.448-1%201v6c0%200.552%200.448%201%201%201h11v11c0%200.552%200.448%201%201%201h6c0.552%200%201-0.448%201-1v-11h11c0.552%200%201-0.448%201-1v-6c0-0.552-0.448-1-1-1z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .icon-plus:hover::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%230ccc0a%22%20d%3D%22M31%2012h-11v-11c0-0.552-0.448-1-1-1h-6c-0.552%200-1%200.448-1%201v11h-11c-0.552%200-1%200.448-1%201v6c0%200.552%200.448%201%201%201h11v11c0%200.552%200.448%201%201%201h6c0.552%200%201-0.448%201-1v-11h11c0.552%200%201-0.448%201-1v-6c0-0.552-0.448-1-1-1z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .selected > .title-wrap .icon-folder::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23179bb9%22%20d%3D%22M14%204l4%204h14v22h-32v-26z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .selected > .title-wrap .icon-folder-open::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23179bb9%22%20d%3D%22M26%2030l6-16h-26l-6%2016zM4%2012l-4%2018v-26h9l4%204h13v4z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E%0A"); }
+
+.inspire-tree .selected > .title-wrap .icon-file-empty::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2032%2032%22%3E%3Cpath%20fill%3D%22%23179bb9%22%20d%3D%22M28.681%207.159c-0.694-0.947-1.662-2.053-2.724-3.116s-2.169-2.030-3.116-2.724c-1.612-1.182-2.393-1.319-2.841-1.319h-15.5c-1.378%200-2.5%201.121-2.5%202.5v27c0%201.378%201.122%202.5%202.5%202.5h23c1.378%200%202.5-1.122%202.5-2.5v-19.5c0-0.448-0.137-1.23-1.319-2.841zM24.543%205.457c0.959%200.959%201.712%201.825%202.268%202.543h-4.811v-4.811c0.718%200.556%201.584%201.309%202.543%202.268zM28%2029.5c0%200.271-0.229%200.5-0.5%200.5h-23c-0.271%200-0.5-0.229-0.5-0.5v-27c0-0.271%200.229-0.5%200.5-0.5%200%200%2015.499-0%2015.5%200v7c0%200.552%200.448%201%201%201h7v19.5z%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E"); }
+
+.inspire-tree .loading > .title-wrap input {
+  display: none; }
+
+.inspire-tree .loading > .title-wrap .title::before {
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2714px%27%20height%3D%2714px%27%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%20preserveAspectRatio%3D%22xMidYMid%22%20class%3D%22uil-ring%22%3E%3Crect%20x%3D%220%22%20y%3D%220%22%20width%3D%22100%22%20height%3D%22100%22%20fill%3D%22none%22%20class%3D%22bk%22%3E%3C%2Frect%3E%3Cdefs%3E%3Cfilter%20id%3D%22uil-ring-shadow%22%20x%3D%22-100%25%22%20y%3D%22-100%25%22%20width%3D%22300%25%22%20height%3D%22300%25%22%3E%3CfeOffset%20result%3D%22offOut%22%20in%3D%22SourceGraphic%22%20dx%3D%220%22%20dy%3D%220%22%3E%3C%2FfeOffset%3E%3CfeGaussianBlur%20result%3D%22blurOut%22%20in%3D%22offOut%22%20stdDeviation%3D%220%22%3E%3C%2FfeGaussianBlur%3E%3CfeBlend%20in%3D%22SourceGraphic%22%20in2%3D%22blurOut%22%20mode%3D%22normal%22%3E%3C%2FfeBlend%3E%3C%2Ffilter%3E%3C%2Fdefs%3E%3Cpath%20d%3D%22M10%2C50c0%2C0%2C0%2C0.5%2C0.1%2C1.4c0%2C0.5%2C0.1%2C1%2C0.2%2C1.7c0%2C0.3%2C0.1%2C0.7%2C0.1%2C1.1c0.1%2C0.4%2C0.1%2C0.8%2C0.2%2C1.2c0.2%2C0.8%2C0.3%2C1.8%2C0.5%2C2.8%20c0.3%2C1%2C0.6%2C2.1%2C0.9%2C3.2c0.3%2C1.1%2C0.9%2C2.3%2C1.4%2C3.5c0.5%2C1.2%2C1.2%2C2.4%2C1.8%2C3.7c0.3%2C0.6%2C0.8%2C1.2%2C1.2%2C1.9c0.4%2C0.6%2C0.8%2C1.3%2C1.3%2C1.9%20c1%2C1.2%2C1.9%2C2.6%2C3.1%2C3.7c2.2%2C2.5%2C5%2C4.7%2C7.9%2C6.7c3%2C2%2C6.5%2C3.4%2C10.1%2C4.6c3.6%2C1.1%2C7.5%2C1.5%2C11.2%2C1.6c4-0.1%2C7.7-0.6%2C11.3-1.6%20c3.6-1.2%2C7-2.6%2C10-4.6c3-2%2C5.8-4.2%2C7.9-6.7c1.2-1.2%2C2.1-2.5%2C3.1-3.7c0.5-0.6%2C0.9-1.3%2C1.3-1.9c0.4-0.6%2C0.8-1.3%2C1.2-1.9%20c0.6-1.3%2C1.3-2.5%2C1.8-3.7c0.5-1.2%2C1-2.4%2C1.4-3.5c0.3-1.1%2C0.6-2.2%2C0.9-3.2c0.2-1%2C0.4-1.9%2C0.5-2.8c0.1-0.4%2C0.1-0.8%2C0.2-1.2%20c0-0.4%2C0.1-0.7%2C0.1-1.1c0.1-0.7%2C0.1-1.2%2C0.2-1.7C90%2C50.5%2C90%2C50%2C90%2C50s0%2C0.5%2C0%2C1.4c0%2C0.5%2C0%2C1%2C0%2C1.7c0%2C0.3%2C0%2C0.7%2C0%2C1.1%20c0%2C0.4-0.1%2C0.8-0.1%2C1.2c-0.1%2C0.9-0.2%2C1.8-0.4%2C2.8c-0.2%2C1-0.5%2C2.1-0.7%2C3.3c-0.3%2C1.2-0.8%2C2.4-1.2%2C3.7c-0.2%2C0.7-0.5%2C1.3-0.8%2C1.9%20c-0.3%2C0.7-0.6%2C1.3-0.9%2C2c-0.3%2C0.7-0.7%2C1.3-1.1%2C2c-0.4%2C0.7-0.7%2C1.4-1.2%2C2c-1%2C1.3-1.9%2C2.7-3.1%2C4c-2.2%2C2.7-5%2C5-8.1%2C7.1%20c-0.8%2C0.5-1.6%2C1-2.4%2C1.5c-0.8%2C0.5-1.7%2C0.9-2.6%2C1.3L66%2C87.7l-1.4%2C0.5c-0.9%2C0.3-1.8%2C0.7-2.8%2C1c-3.8%2C1.1-7.9%2C1.7-11.8%2C1.8L47%2C90.8%20c-1%2C0-2-0.2-3-0.3l-1.5-0.2l-0.7-0.1L41.1%2C90c-1-0.3-1.9-0.5-2.9-0.7c-0.9-0.3-1.9-0.7-2.8-1L34%2C87.7l-1.3-0.6%20c-0.9-0.4-1.8-0.8-2.6-1.3c-0.8-0.5-1.6-1-2.4-1.5c-3.1-2.1-5.9-4.5-8.1-7.1c-1.2-1.2-2.1-2.7-3.1-4c-0.5-0.6-0.8-1.4-1.2-2%20c-0.4-0.7-0.8-1.3-1.1-2c-0.3-0.7-0.6-1.3-0.9-2c-0.3-0.7-0.6-1.3-0.8-1.9c-0.4-1.3-0.9-2.5-1.2-3.7c-0.3-1.2-0.5-2.3-0.7-3.3%20c-0.2-1-0.3-2-0.4-2.8c-0.1-0.4-0.1-0.8-0.1-1.2c0-0.4%2C0-0.7%2C0-1.1c0-0.7%2C0-1.2%2C0-1.7C10%2C50.5%2C10%2C50%2C10%2C50z%22%20fill%3D%22%23013138%22%20filter%3D%22url(%23uil-ring-shadow)%22%3E%3CanimateTransform%20attributeName%3D%22transform%22%20type%3D%22rotate%22%20from%3D%220%2050%2050%22%20to%3D%22360%2050%2050%22%20repeatCount%3D%22indefinite%22%20dur%3D%221s%22%3E%3C%2FanimateTransform%3E%3C%2Fpath%3E%3C%2Fsvg%3E");
+  content: '';
+  height: 14px;
+  width: 14px; }
+
+.inspire-tree > ol {
+  position: relative; }
+
+.inspire-tree .wholerow {
+  height: 25px;
+  left: 0;
+  margin-top: -25px;
+  position: absolute;
+  width: 100%;
+  z-index: 1; }
+
+.inspire-tree .focused > .wholerow {
+  border: 1px dotted black; }
+
+.inspire-tree .wholerow:hover,
+.inspire-tree .title-wrap:hover + .wholerow {
+  background-color: rgba(218, 250, 255, 0.5); }
+
+.inspire-tree .selected > .wholerow,
+.inspire-tree .selected > .wholerow:hover,
+.inspire-tree .selected > .title-wrap:hover + .wholerow {
+  background-color: rgba(164, 234, 245, 0.5); }
+
+.inspire-tree .matched > .wholerow,
+.inspire-tree .matched > .wholerow:hover,
+.inspire-tree .matched > .title-wrap:hover + .wholerow {
+  background-color: rgba(247, 255, 170, 0.5); }
+
+
+	</style>
+</head>
+<body>
+  <!-- Search and info box -->
+  <div class="col-md-7" id="scroll">
+    <div class="row">
+      Search: &nbsp;
+      <span class="text-input-wrapper">
+        <input type="text" id="search" name="searchInput" value="">
+        <span id="clear" title="Clear">&times;</span>
+      </span>
+    </div>
+    <div class="row" style="padding-top:10px;">
+      <a href="javascript:collapseTree()">Collapse Tree</a>
+    </div>
+    <hr>
+    <div class="row" style="height:500px;position:relative;padding-right:50px;">
+      <div id="info" style="max-height:100%;overflow:auto;"></div>
+    </div>
+  </div>
+  <!-- The tree browser -->
+  <div class="row">
+    <div class="col-md-5" id="stay">
+      <div class="tree"></div>
+    </div>
+  </div>
+</body>
+<script>
+  // ----------- Functions -----------
+
+  // Function to collapse tree up to selected node
+  function collapseTree() {
+    tree.collapse();
+    tree.selected(true).collapseDeep();
+    tree.selected(true).expandParents();
+  }
+
+  // Function to display info box on right side
+  function displayInfo(text) {
+    var attrs = attributes[text];
+    var iri = attrs.iri
+    var innerHTML = '<h3>' + text + '</h3>';
+    innerHTML += '<p><b>IRI:</b> <a href="' + iri + '" target="_blank"/>' + iri + '</a></p>';
+
+    // Generate one or more attributes
+    for (let [prop, vals] of Object.entries(attrs)) {
+      if (prop == 'iri') {
+        // Skip IRI property as we already add it first
+        continue;
+      }
+      if (vals.length > 1) {
+        innerHTML += '<p><b>' + prop + ':</b><br><ul>'
+        for (v in vals) {
+          var val = vals[v]
+          innerHTML += '<li>' + val + '</li>'
+        }
+        innerHTML += '</ul></p>'
+      } else {
+        for (v in vals) {
+          var val = vals[v];
+          innerHTML += '<p><b>' + prop + ':</b> ' + val + '</p>';
+        }
+      }
+    }
+
+    document.getElementById('info').innerHTML = innerHTML;
+  }
+
+  // Function to click an existing link to display its info box
+  function jumpTo(text) {
+    if (attributes.hasOwnProperty(text)) {
+      history.pushState(null, null, '?text=' + text);
+      loadNode();
+    } else {
+      // If the node doesn't exist, open IRI in a new tab
+      var win = window.open(text, '_blank');
+      win.focus();
+    }
+  }
+
+  // Function to load node from query string
+  function loadNode() {
+    const params = new URLSearchParams(window.location.search);
+    const text = params.get('text');
+    if (text != null && text != '') {
+      // Select the correct node
+      selectNode(text);
+      // And display the info box
+      displayInfo(text);
+    }
+  }
+
+  // Function to select the correct node
+  function selectNode(text) {
+    // Deselect the current node
+    var last = tree.lastSelectedNode();
+    if (last && last != null) {
+      last.deselect();
+    }
+    // Select the node that matches text
+    var n = tree.node(text);
+    // Make sure the node is visible and then select it
+    n.expandParents();
+    n.select();
+  }
+
+  // Function to update tree nodes to have text displays
+  function update(node) {
+    var id = node.id;
+    // Appending {OWLClass} to IDs for individuals by types prevents collision
+    // Remove it for the text display
+    if (id.endsWith('{OWLClass}')) {
+      id = id.replace('{OWLClass}', '');
+    }
+    // Some nodes might have text different than their ID
+    // Do not override these
+    var t = node.text;
+    if (t == null) {
+      node.set('text', id);
+    }
+    // Update child nodes
+    if (node.hasChildren()) {
+      var c = node.getChildren();
+      for (var i = 0, len = c.length; i < len; i++ ) {
+        update(c[i]);
+      }
+    }
+  }
+
+  // ---------- Variables ----------
+
+  // Label for owl:deprecated
+  var owl_deprecated = 'deprecated';
+
+	// attributes for each class
+	var attributes = {
+  "urn:logx:ontology": {},
+  "Administrative Division": {
+    "iri": "urn:ontoinsights:ontology:dna:AdministrativeDivision",
+    "synonym": [
+      "prefecture",
+      "govenorate",
+      "oblast",
+      "territory",
+      "county",
+      "municipality",
+      "parish",
+      "district",
+      "province",
+      "principality",
+      "state"
+    ],
+    "definition": [
+      "A subnational level of government, operating over some region. The first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc. The level of an AdministrativeDivision is given by the property, :admin_level. Note that :admin_level is an optional property and may not be known, or applicable."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Geopolitical Entity')\">'Geopolitical Entity'</a>"
+    ]
+  },
+  "Country": {
+    "iri": "urn:ontoinsights:ontology:dna:Country",
+    "synonym": [
+      "nation",
+      "commonwealth",
+      "nationality"
+    ],
+    "definition": [
+      "Describes the government of a nation, the people living in the nation and the land area that is governed."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Geopolitical Entity')\">'Geopolitical Entity'</a>"
+    ]
+  },
+  "Geopolitical Entity": {
+    "iri": "urn:ontoinsights:ontology:dna:GeopoliticalEntity",
+    "example": [
+      "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary."
+    ],
+    "synonym": [
+      "body politic",
+      "political region"
+    ],
+    "definition": [
+      "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Family": {
+    "iri": "urn:ontoinsights:ontology:dna:Family",
+    "synonym": [
+      "household"
+    ],
+    "definition": [
+      "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Group/Collection of Agents')\">'Group/Collection of Agents'</a>"
+    ]
+  },
+  "Organization": {
+    "iri": "urn:ontoinsights:ontology:dna:Organization",
+    "synonym": [
+      "institution",
+      "corporation",
+      "organisation",
+      "company",
+      "association"
+    ],
+    "definition": [
+      "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Group/Collection of Agents')\">'Group/Collection of Agents'</a>"
+    ]
+  },
+  "Group/Collection of Agents": {
+    "iri": "urn:ontoinsights:ontology:dna:GroupOfAgents",
+    "example": [
+      "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or be the holders of State."
+    ],
+    "definition": [
+      "A sub-class of both Agent and Collection defining a set/grouping of Agents."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
+    ]
+  },
+  "Person": {
+    "iri": "urn:ontoinsights:ontology:dna:Person",
+    "synonym": [
+      "woman",
+      "man",
+      "child",
+      "human being",
+      "human"
+    ],
+    "definition": [
+      "A human being."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "Agent/Actor": {
+    "iri": "urn:ontoinsights:ontology:dna:Agent",
+    "synonym": [
+      "participant",
+      "actor",
+      "doer",
+      "character",
+      "legal entity",
+      "role player",
+      "performer"
+    ],
+    "definition": [
+      "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in Events, and they are affected by or are the holders of State."
+    ]
+  },
+  "Education Level": {
+    "iri": "urn:ontoinsights:ontology:dna:EducationLevel",
+    "example": [
+      "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms."
+    ],
+    "definition": [
+      "An enumeration defining a Person's/Group's education. It consists of the values, :NoEducation, :CompletedPrimaryEducation, :CompletedSecondaryEducation, :CompletedUndergraduateEducation, :CompletedGraduateEducation, :CompletedDoctoralEducation and :PostDoctoralEducation, as well as partially completed levels, :SomePrimaryEducation, :SomeSecondaryEducation, :SomeUndergraduateEducation, :SomeGraduateEducation and :SomeDoctoralEducation."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('Completed Doctoral Education')\">'Completed Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Completed Graduate Education')\">'Completed Graduate Education'</a> ,  <a href=\"javascript:jumpTo('Completed Primary Education')\">'Completed Primary Education'</a> ,  <a href=\"javascript:jumpTo('Completed Secondary Education')\">'Completed Secondary Education'</a> ,  <a href=\"javascript:jumpTo('Completed Undergraduate Education')\">'Completed Undergraduate Education'</a> ,  <a href=\"javascript:jumpTo('No Education')\">'No Education'</a> ,  <a href=\"javascript:jumpTo('Post-Doctoral Education')\">'Post-Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Some Doctoral Education')\">'Some Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Some Graduate Education')\">'Some Graduate Education'</a> ,  <a href=\"javascript:jumpTo('Some Primary Education')\">'Some Primary Education'</a> ,  <a href=\"javascript:jumpTo('Some Secondary Education')\">'Some Secondary Education'</a> ,  <a href=\"javascript:jumpTo('Some Undergraduate Education')\">'Some Undergraduate Education'</a>}"
+    ]
+  },
+  "Ethnicity": {
+    "iri": "urn:ontoinsights:ontology:dna:Ethnicity",
+    "synonym": [
+      "race"
+    ],
+    "definition": [
+      "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+    ]
+  },
+  "Gender": {
+    "iri": "urn:ontoinsights:ontology:dna:Gender",
+    "definition": [
+      "An enumeration of the values, :Female, :Male, :Agender and :Bigender. Note that individuals of the Gender class describe how Agents identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('Agender, Gender Neutral or Lack of Gender')\">'Agender, Gender Neutral or Lack of Gender'</a> ,  <a href=\"javascript:jumpTo('Bigender')\">Bigender</a> ,  <a href=\"javascript:jumpTo('Female')\">Female</a> ,  <a href=\"javascript:jumpTo('Male')\">Male</a>}"
+    ]
+  },
+  "Medical or Psychological Condition": {
+    "iri": "urn:ontoinsights:ontology:dna:MedicalOrPsychologicalCondition",
+    "definition": [
+      "Indicates various types of physical and mental conditions that characterize a Person or Group and/or impact their ability to carry out activities. These conditions may be related to genetic or emotional disorders, the severity of an illness, etc."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+    ]
+  },
+  "Characteristic": {
+    "iri": "urn:ontoinsights:ontology:dna:Characteristic",
+    "definition": [
+      "Some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization."
+    ]
+  },
+  "Collection/Group": {
+    "iri": "urn:ontoinsights:ontology:dna:Collection",
+    "synonym": [
+      "set",
+      "aggregation",
+      "compilation",
+      "compendium",
+      "accumulation",
+      "assemblage",
+      "assortment"
+    ],
+    "definition": [
+      "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property."
+    ]
+  },
+  "Direction": {
+    "iri": "urn:ontoinsights:ontology:dna:Direction",
+    "synonym": [
+      "compass orientation",
+      "compass direction"
+    ],
+    "definition": [
+      "An enumeration of the values, :North, :South, :East, :West, :NorthEast, :NorthWest, :SouthEast and :SouthWest."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('East')\">East</a> ,  <a href=\"javascript:jumpTo('North')\">North</a> ,  <a href=\"javascript:jumpTo('North-East')\">North-East</a> ,  <a href=\"javascript:jumpTo('North-West')\">North-West</a> ,  <a href=\"javascript:jumpTo('South')\">South</a> ,  <a href=\"javascript:jumpTo('South-East')\">South-East</a> ,  <a href=\"javascript:jumpTo('South-West')\">South-West</a> ,  <a href=\"javascript:jumpTo('West')\">West</a>}"
+    ]
+  },
+  "Temporal Unit": {
+    "iri": "urn:ontoinsights:ontology:dna:TemporalUnit",
+    "definition": [
+      "An enumeration of the values, :Seconds, :Minutes, :Hours, :Days, :Weeks, :Months, :Years or :Seasonal."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('Days')\">Days</a> ,  <a href=\"javascript:jumpTo('Hours')\">Hours</a> ,  <a href=\"javascript:jumpTo('Minutes')\">Minutes</a> ,  <a href=\"javascript:jumpTo('Months')\">Months</a> ,  <a href=\"javascript:jumpTo('Seasonal')\">Seasonal</a> ,  <a href=\"javascript:jumpTo('Seconds')\">Seconds</a> ,  <a href=\"javascript:jumpTo('Weeks')\">Weeks</a> ,  <a href=\"javascript:jumpTo('Years')\">Years</a>}"
+    ]
+  },
+  "Enumeration": {
+    "iri": "urn:ontoinsights:ontology:dna:Enumeration",
+    "definition": [
+      "Superclass for any enumerated set of values. This is defined to improve semantic understanding of the class hierarchy when visualized as a tree."
+    ]
+  },
+  "Event": {
+    "iri": "urn:ontoinsights:ontology:dna:Event",
+    "synonym": [
+      "act",
+      "incident",
+      "happening",
+      "occurrence"
+    ],
+    "definition": [
+      "An occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "Affiliation": {
+    "iri": "urn:ontoinsights:ontology:dna:Affiliation",
+    "example": [
+      "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group."
+    ],
+    "comment": [
+      "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('State/Condition')\">State/Condition</a>"
+    ]
+  },
+  "State/Condition": {
+    "iri": "urn:ontoinsights:ontology:dna:State",
+    "synonym": [
+      "status",
+      "environment",
+      "condition",
+      "situation",
+      "factor",
+      "circumstance"
+    ],
+    "definition": [
+      "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "Eventuality/Event and State": {
+    "iri": "urn:ontoinsights:ontology:dna:EventAndState",
+    "synonym": [
+      "eventuality"
+    ],
+    "definition": [
+      "Superclass for any occurrence/event, factor or condition/state."
+    ]
+  },
+  "Information Source": {
+    "iri": "urn:ontoinsights:ontology:dna:InformationSource",
+    "definition": [
+      "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content."
+    ]
+  },
+  "Online Location": {
+    "iri": "urn:ontoinsights:ontology:dna:OnlineLocation",
+    "synonym": [
+      "internet location",
+      "internet address",
+      "web address",
+      "computer address"
+    ],
+    "definition": [
+      "A location defined in/on a network, such as a wireless network (e.g., a mobile phone number), the Internet (such an IP address, email adress or URL) or a wired network. The properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "Building and Dwelling": {
+    "iri": "urn:ontoinsights:ontology:dna:BuildingAndDwelling",
+    "example": [
+      "Examples of BuildingAndDwelling include a house, factory, hospital, school, etc."
+    ],
+    "definition": [
+      "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Anthropogenic (Human-Created) Feature')\">'Anthropogenic (Human-Created) Feature'</a>"
+    ]
+  },
+  "Transportation Feature": {
+    "iri": "urn:ontoinsights:ontology:dna:TransportationFeeature",
+    "example": [
+      "Examples include water ports, airports, heliports, roads, bridges, railroads, railroad yards, etc."
+    ],
+    "definition": [
+      "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Anthropogenic (Human-Created) Feature')\">'Anthropogenic (Human-Created) Feature'</a>"
+    ]
+  },
+  "Anthropogenic (Human-Created) Feature": {
+    "iri": "urn:ontoinsights:ontology:dna:AnthropogenicFeature",
+    "definition": [
+      "A point or site on/in the Earth which is a human-created structure that is used for a particular industry or purpose. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Border": {
+    "iri": "urn:ontoinsights:ontology:dna:Border",
+    "synonym": [
+      "boundary",
+      "perimeter"
+    ],
+    "definition": [
+      "A boundary between two political, social or geographic entities. A Border may be identified by name, by the names of the bordering entities (using the :border_with property) or by a set of latitudes/longitudes (using the :has_location property to reference a set of PhysicalLocations with corresponding :latitutde/longitude properties)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Bounding Region": {
+    "iri": "urn:ontoinsights:ontology:dna:BoundingRegion",
+    "definition": [
+      "A BoundingRegion is defined by at least three sets of latitude/longitude coordinates (instances of PhysicalLocation with :latitude/longitude properties) which enclose the region. The PhysicalLocations that define the points are referenced using the :has_bounding_coordinate property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Populated Place": {
+    "iri": "urn:ontoinsights:ontology:dna:PopulatedPlace",
+    "synonym": [
+      "town",
+      "settlement",
+      "city",
+      "village"
+    ],
+    "definition": [
+      "A city, town, village, etc. where people live and work. The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Postal Address": {
+    "iri": "urn:ontoinsights:ontology:dna:PostalAddress",
+    "synonym": [
+      "street address",
+      "mailing address"
+    ],
+    "definition": [
+      "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Relative Direction Location": {
+    "iri": "urn:ontoinsights:ontology:dna:RelativeDirectionLocation",
+    "definition": [
+      "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Water Feature": {
+    "iri": "urn:ontoinsights:ontology:dna:WaterFeature",
+    "example": [
+      "Examples include oceans, rivers, streams, bays, lakes, channels, etc."
+    ],
+    "definition": [
+      "A body of water as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "Physical Location": {
+    "iri": "urn:ontoinsights:ontology:dna:PhysicalLocation",
+    "definition": [
+      "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "Location": {
+    "iri": "urn:ontoinsights:ontology:dna:Location",
+    "synonym": [
+      "placement",
+      "site",
+      "situating",
+      "position",
+      "locale",
+      "venue"
+    ],
+    "definition": [
+      "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's Location is specified using the :has_location property."
+    ]
+  },
+  "Mention": {
+    "iri": "urn:ontoinsights:ontology:dna:Mention",
+    "synonym": [
+      "citation",
+      "reference"
+    ],
+    "definition": [
+      "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity."
+    ]
+  },
+  "Goal-Directed Process": {
+    "iri": "urn:ontoinsights:ontology:dna:GoalDirectedProcess",
+    "example": [
+      "Examples are a business process or procedure designed to achieve a specific end state."
+    ],
+    "synonym": [
+      "procedure"
+    ],
+    "definition": [
+      "A series of interrelated/interdependent events or states that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ]
+  },
+  "Natural Process": {
+    "iri": "urn:ontoinsights:ontology:dna:NaturalProcess",
+    "definition": [
+      "A series of interrelated/interdependent events or states that progress along a timeline. Examples are the aging process, climate change or a chemical process."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ]
+  },
+  "Script": {
+    "iri": "urn:ontoinsights:ontology:dna:Script",
+    "synonym": [
+      "narrative",
+      "story",
+      "tale",
+      "timeline",
+      "plot"
+    ],
+    "definition": [
+      "A 'prototypical' sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ]
+  },
+  "Process/Sequence": {
+    "iri": "urn:ontoinsights:ontology:dna:Process",
+    "definition": [
+      "A series of interrelated and/or interdependent events or states that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)."
+    ]
+  },
+  "Currency": {
+    "iri": "urn:ontoinsights:ontology:dna:Currency",
+    "definition": [
+      "A metal or paper medium of exchange that is used as money in a country."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Financial Instrument')\">'Financial Instrument'</a>"
+    ]
+  },
+  "Financial Instrument": {
+    "iri": "urn:ontoinsights:ontology:dna:FinancialInstrument",
+    "definition": [
+      "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), a FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.'"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
+  "Resource": {
+    "iri": "urn:ontoinsights:ontology:dna:Resource",
+    "synonym": [
+      "instrument",
+      "tool",
+      "commodity",
+      "supply",
+      "asset"
+    ],
+    "definition": [
+      "Superclass defining any inanimate entity (such as a food, tools, cement, ...) which can be used, harvested, mined, made/manufactured, bought and sold."
+    ]
+  },
+  "Role": {
+    "iri": "urn:ontoinsights:ontology:dna:Role",
+    "example": [
+      "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads."
+    ],
+    "definition": [
+      "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics."
+    ]
+  },
+  "Duration of Time": {
+    "iri": "urn:ontoinsights:ontology:dna:Duration",
+    "synonym": [
+      "temporal distance",
+      "lifespan"
+    ],
+    "definition": [
+      "A length of time (such as '2 days') as defined by the :numeric_duration and :has_temporal_unit properties."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ]
+  },
+  "Interval of Time": {
+    "iri": "urn:ontoinsights:ontology:dna:Interval",
+    "synonym": [
+      "timeframe",
+      "period"
+    ],
+    "definition": [
+      "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ]
+  },
+  "Point in Time": {
+    "iri": "urn:ontoinsights:ontology:dna:PointInTime",
+    "example": [
+      "For example, April 1 2016 at noon can be specified by a PointInTime instance with the following properties and values: :year 2016, :month_of_year 4, :day_of_month 1 and :hour_of_day 12 or by the xsd:timestamp, '2016-04-01T12:00:00."
+    ],
+    "synonym": [
+      "moment",
+      "instant"
+    ],
+    "definition": [
+      "A point in time as specified by the properties, :year, :day_of_month, :day_of_week, :hour_of_day, :minute_of_hour, :month_of_year, :second_of_minute and :week_of_month, or by a specific :date_time timestamp."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ]
+  },
+  "Season": {
+    "iri": "urn:ontoinsights:ontology:dna:Season",
+    "example": [
+      "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various subclasses of Season may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world."
+    ],
+    "definition": [
+      "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains. For this reason, a subclass hierarchy specific to the domain should be defined."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Recurrence Pattern')\">'Recurrence Pattern'</a>"
+    ]
+  },
+  "Recurrence Pattern": {
+    "iri": "urn:ontoinsights:ontology:dna:RecurrencePattern",
+    "example": [
+      "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :has_recurrence_unit property would be set to :Months. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :has_recurrence_unit would be :Weekly and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :has_recurrence_unit of :Seasonal and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)"
+    ],
+    "synonym": [
+      "cycle",
+      "rhythm",
+      "repetition",
+      "cadence"
+    ],
+    "definition": [
+      "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ]
+  },
+  "Time": {
+    "iri": "urn:ontoinsights:ontology:dna:Time",
+    "synonym": [
+      "fourth dimension"
+    ],
+    "definition": [
+      "Superclass defining the shared semantics of specific points in time, intervals of time or durations. An individual's time-related information is specified using the :has_time property or its sub-properties."
+    ]
+  },
+  "Unifying Collection": {
+    "iri": "urn:ontoinsights:ontology:dna:UnifyingCollection",
+    "example": [
+      "A company, ABC, may be referenced as 'A Better Company', 'ABC, Limited' or 'ABC', in different InformationSources. Later analysis may reveal that these references all indicate the same company and can therefore be unified. This is an alternate mechanism to the semantics of owl:sameAs."
+    ],
+    "definition": [
+      "A Collection whose members are considered the 'same' thing."
+    ]
+  },
+  "East": {
+    "iri": "urn:ontoinsights:ontology:dna:East",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "North": {
+    "iri": "urn:ontoinsights:ontology:dna:North",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "North-East": {
+    "iri": "urn:ontoinsights:ontology:dna:NorthEast",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "North-West": {
+    "iri": "urn:ontoinsights:ontology:dna:NorthWest",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "South": {
+    "iri": "urn:ontoinsights:ontology:dna:South",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "South-East": {
+    "iri": "urn:ontoinsights:ontology:dna:SouthEast",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "South-West": {
+    "iri": "urn:ontoinsights:ontology:dna:SouthWest",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "West": {
+    "iri": "urn:ontoinsights:ontology:dna:West",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ]
+  },
+  "Completed Doctoral Education": {
+    "iri": "urn:ontoinsights:ontology:dna:CompletedDoctoralEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Completed Graduate Education": {
+    "iri": "urn:ontoinsights:ontology:dna:CompletedGraduateEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Completed Primary Education": {
+    "iri": "urn:ontoinsights:ontology:dna:CompletedPrimaryEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Completed Secondary Education": {
+    "iri": "urn:ontoinsights:ontology:dna:CompletedSecondaryEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Completed Undergraduate Education": {
+    "iri": "urn:ontoinsights:ontology:dna:CompletedUndergraduateEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "No Education": {
+    "iri": "urn:ontoinsights:ontology:dna:NoEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Post-Doctoral Education": {
+    "iri": "urn:ontoinsights:ontology:dna:PostDoctoralEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Some Doctoral Education": {
+    "iri": "urn:ontoinsights:ontology:dna:SomeDoctoralEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Some Graduate Education": {
+    "iri": "urn:ontoinsights:ontology:dna:SomeGraduateEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Some Primary Education": {
+    "iri": "urn:ontoinsights:ontology:dna:SomePrimaryEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Some Secondary Education": {
+    "iri": "urn:ontoinsights:ontology:dna:SomeSecondaryEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Some Undergraduate Education": {
+    "iri": "urn:ontoinsights:ontology:dna:SomeUndergraduateEducation",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
+    ]
+  },
+  "Agender, Gender Neutral or Lack of Gender": {
+    "iri": "urn:ontoinsights:ontology:dna:Agender",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
+    ]
+  },
+  "Bigender": {
+    "iri": "urn:ontoinsights:ontology:dna:Bigender",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
+    ]
+  },
+  "Female": {
+    "iri": "urn:ontoinsights:ontology:dna:Female",
+    "synonym": [
+      "woman",
+      "Ms.",
+      "lady",
+      "miss",
+      "girl",
+      "Mrs.",
+      "matron"
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
+    ]
+  },
+  "Male": {
+    "iri": "urn:ontoinsights:ontology:dna:Male",
+    "synonym": [
+      "Mr.",
+      "man",
+      "mister",
+      "boy"
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
+    ]
+  },
+  "Days": {
+    "iri": "urn:ontoinsights:ontology:dna:Days",
+    "definition": [
+      "A 24-hour interval of time."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Hours": {
+    "iri": "urn:ontoinsights:ontology:dna:Hours",
+    "definition": [
+      "A 60-minute interval of time."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Minutes": {
+    "iri": "urn:ontoinsights:ontology:dna:Minutes",
+    "definition": [
+      "A 60-second interval of time."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Months": {
+    "iri": "urn:ontoinsights:ontology:dna:Months",
+    "definition": [
+      "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Seasonal": {
+    "iri": "urn:ontoinsights:ontology:dna:Seasonal",
+    "definition": [
+      "A period of time characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc., and which is defined differently in various localities and domains of interest."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Seconds": {
+    "iri": "urn:ontoinsights:ontology:dna:Seconds",
+    "definition": [
+      "A period of time that is one of the base units in the International System of Units (SI)."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Weeks": {
+    "iri": "urn:ontoinsights:ontology:dna:Weeks",
+    "definition": [
+      "A 7-day interval of time."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "Years": {
+    "iri": "urn:ontoinsights:ontology:dna:Years",
+    "definition": [
+      "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ]
+  },
+  "antonym": {
+    "iri": "urn:ontoinsights:ontology:dna:antonym",
+    "definition": [
+      "A word which has an opposite/inverse meaning."
+    ]
+  },
+  "definition": {
+    "iri": "urn:ontoinsights:ontology:dna:definition",
+    "definition": [
+      "Text providing an exact meaning for the semantics of a concept."
+    ]
+  },
+  "example": {
+    "iri": "urn:ontoinsights:ontology:dna:example",
+    "definition": [
+      "Words/text that illustrate the concept/semantic being defined or whose instances would be specified as types of the concept/semantic."
+    ]
+  },
+  "negative example": {
+    "iri": "urn:ontoinsights:ontology:dna:negative_example",
+    "definition": [
+      "Words/text whose whose definitions do not support or whose instances should be excluded from the concept/semantic being defined."
+    ]
+  },
+  "sentence structure": {
+    "iri": "urn:ontoinsights:ontology:dna:sentence_structure",
+    "definition": [
+      "A sentence using a specific verb and identifying its arguments. For example, for the word, 'buy', a possible sentence_structure is '[[Someone]] buys [[something]].' The definition of a sentence_structure aids in the extraction of meaning from text, since it defines what other information should/could be mined from the text. Note that the arguments in a sentence structure are indicated by square brackets ('[[' and ']]')."
+    ]
+  },
+  "synonym": {
+    "iri": "urn:ontoinsights:ontology:dna:synonym",
+    "definition": [
+      "A word which has a similar meaning."
+    ]
+  },
+  "administrative level (1-5)": {
+    "iri": "urn:ontoinsights:ontology:dna:admin_level",
+    "example": [
+      "A first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc."
+    ],
+    "definition": [
+      "Integer (1-5) indicating a first-, second-, third-, fourth- or fifth-order administrative division."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Administrative Division')\">'Administrative Division'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> 1 , <= 5]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "highest altitude in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:highest_altitude_meters",
+    "definition": [
+      "Highest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the lower part of the range is defined using the :lowest_altitude_meters property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('altitude in meters')\">'altitude in meters'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "lowest altitude in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:lowest_altitude_meters",
+    "definition": [
+      "Lowest height in meters, relative to sea level, when an exact altitude is not known or when a range of altitudes is needed. When a range is specified, the higher part of the range is defined using the :highest_altitude_meters property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('altitude in meters')\">'altitude in meters'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "altitude in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:altitude_meters",
+    "definition": [
+      "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ]
+  },
+  "confidence": {
+    "iri": "urn:ontoinsights:ontology:dna:confidence",
+    "definition": [
+      "Decimal from 0.0 to 1.0 defining the certainty that the referencing entity or a subject-predicate-object statement is correctly defined defined, based on its InformationSource(s). When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal[=')\">decimal[=</a> 0.00 , <= 1.00]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "count/number": {
+    "iri": "urn:ontoinsights:ontology:dna:count",
+    "definition": [
+      "The number of some entity. For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ]
+  },
+  "database record identifier": {
+    "iri": "urn:ontoinsights:ontology:dna:record_identifier",
+    "definition": [
+      "Defines a particular record (key) in a database InformationSource, where a Mention is extracted."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
+  "date time": {
+    "iri": "urn:ontoinsights:ontology:dna:date_time",
+    "definition": [
+      "A dateTime value defined using an ISO 8601 format with an optional timezone."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('dateTime')\">dateTime</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "day of month": {
+    "iri": "urn:ontoinsights:ontology:dna:day_of_month",
+    "definition": [
+      "An integer value indicating a specific day in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a day is specified that does not exist in the month (for example, the 31st/-31st day of February), then the last/first day of the month is assumed. If a value of 0 is used, then the first day of the month is assumed."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> -31 , <= 31]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "day of week": {
+    "iri": "urn:ontoinsights:ontology:dna:day_of_week",
+    "definition": [
+      "An integer value indicating a specific day of the week, where Sunday is represented by 1, Monday by 2, ... through Saturday which is represented by 7."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> 1 , <= 7]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "longest distance in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:longest_distance_meters",
+    "definition": [
+      "The largest amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the shorter distance is defined using the :shortest_distance_meters property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('distance in meters')\">'distance in meters'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Relative Direction Location')\">'Relative Direction Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "shortest distance in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:shortest_distance_meters",
+    "definition": [
+      "The least amount of space between entities, in meters. This property is used when an exact distance is not known, or a range of distances is needed. If a range is specified, the longer distance is defined using the :longest_distance_meters property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('distance in meters')\">'distance in meters'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Relative Direction Location')\">'Relative Direction Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "distance in meters": {
+    "iri": "urn:ontoinsights:ontology:dna:distance_meters",
+    "definition": [
+      "The amount of space between entities, in meters. If an exact distance is not known, or a range of distances is needed, use the :shortest/longest_distance_meters properties."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Relative Direction Location')\">'Relative Direction Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ]
+  },
+  "email address": {
+    "iri": "urn:ontoinsights:ontology:dna:email_address",
+    "definition": [
+      "A unique identifier for an account on an email communications system."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^([^@\\.].*@.*[^@\\.])$\"]"
+    ]
+  },
+  "future (boolean)": {
+    "iri": "urn:ontoinsights:ontology:dna:future",
+    "definition": [
+      "Boolean indicating that the individual describes somthing possible in, or planned for, a 'future' time."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('boolean')\">boolean</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has season": {
+    "iri": "urn:ontoinsights:ontology:dna:has_season",
+    "definition": [
+      "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal."
+    ]
+  },
+  "hour of day": {
+    "iri": "urn:ontoinsights:ontology:dna:hour_of_day",
+    "definition": [
+      "An integer value indicating a specific hour of the day, where midnight is represented by 0 and 11pm is represented by 23."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> 0 , <= 23]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "IP V4 address": {
+    "iri": "urn:ontoinsights:ontology:dna:ip_v4_address",
+    "definition": [
+      "A string defining an OnlineLocation using a IPV4 address in dotted decimal format (e.g., 169.23.24.00)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^(([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])\\.){3}([0-9]|[1-9][0-9]|1[0-9]{2}|2[0-4][0-9]|25[0-5])$\"]"
+    ]
+  },
+  "IP V6 address": {
+    "iri": "urn:ontoinsights:ontology:dna:ip_v6_address",
+    "definition": [
+      "A string defining an OnlineLocation as an IPV6 address using hexadecimals (e.g., ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^([A-Fa-f0-9]{4}:|0:|:){7}([A-Fa-f0-9]{4}|0)$\"]"
+    ]
+  },
+  "ISO 2-character alpha code": {
+    "iri": "urn:ontoinsights:ontology:dna:iso_alpha2",
+    "definition": [
+      "A string specifying the 2 character ISO 3166 code of a country."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^[A-Z]{2}$\"]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "ISO 3-character alpha code": {
+    "iri": "urn:ontoinsights:ontology:dna:iso_alpha3",
+    "definition": [
+      "A string specifying the 3 character ISO 3166 code of a country."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^[A-Z]{3}$\"]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "latitude": {
+    "iri": "urn:ontoinsights:ontology:dna:latitude",
+    "definition": [
+      "The angular distance north or south of the equator. Latitude is specified in decimal degrees."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "longitude": {
+    "iri": "urn:ontoinsights:ontology:dna:longitude",
+    "definition": [
+      "The angular distance east or west of the prime meridian at Greenwich, England. Longitude is specified in decimal degrees."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "maximum count/number": {
+    "iri": "urn:ontoinsights:ontology:dna:maximum_count",
+    "definition": [
+      "The maximum number of some entity when an exact count is not known. For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "minimum count/number": {
+    "iri": "urn:ontoinsights:ontology:dna:minimum_count",
+    "definition": [
+      "The minimum number of some entity when an exact count is not known. For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "minute of hour": {
+    "iri": "urn:ontoinsights:ontology:dna:minute_of_hour",
+    "definition": [
+      "An integer value indicating a specific minute of an hour. The range of possible values is 0 to 59."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> 0 , <= 59]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "month of year": {
+    "iri": "urn:ontoinsights:ontology:dna:month_of_year",
+    "definition": [
+      "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> 1 , <= 12]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "numeric duration": {
+    "iri": "urn:ontoinsights:ontology:dna:numeric_duration",
+    "definition": [
+      "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :has_temporal_unit property value."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Duration of Time')\">'Duration of Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal[=')\">decimal[=</a> 0.00]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "phone number": {
+    "iri": "urn:ontoinsights:ontology:dna:phone_number",
+    "definition": [
+      "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^(\\(?\\+?[0-9]*\\)?)?[ \\.\\-])?(\\(?[0-9]*\\)?)?[0-9A-Z \\.\\-\\(\\)]*((x|ext|extension)? ?[0-9]*)?$\"]"
+    ]
+  },
+  "city name": {
+    "iri": "urn:ontoinsights:ontology:dna:city_name",
+    "definition": [
+      "A part of a PostalAddress holding the city/town name."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "country name": {
+    "iri": "urn:ontoinsights:ontology:dna:country_name",
+    "definition": [
+      "A part of a PostalAddress identifying the country."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "name of a part of the city": {
+    "iri": "urn:ontoinsights:ontology:dna:city_part_name",
+    "definition": [
+      "A part of a PostalAddress identifying a particular part of a city or town."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "postal code": {
+    "iri": "urn:ontoinsights:ontology:dna:postal_code",
+    "definition": [
+      "A part of a PostalAddress identifying a section of a city, state or country consisting of a group of numbers and/or letters, used to aid in the sorting of mail."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "state, province or region name": {
+    "iri": "urn:ontoinsights:ontology:dna:state_or_region_name",
+    "definition": [
+      "A part of a PostalAddress identifying a first order administrative region, such as a state, province or district of a countrty."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "street address, line 1": {
+    "iri": "urn:ontoinsights:ontology:dna:street_address1",
+    "definition": [
+      "A part of a PostalAddress specifying a house number and street name, post office box information or similar information."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "street address, line 2": {
+    "iri": "urn:ontoinsights:ontology:dna:street_address2",
+    "definition": [
+      "A part of a Postal Address further clarifying the information in :street_address1."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('postal address detail')\">'postal address detail'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "postal address detail": {
+    "iri": "urn:ontoinsights:ontology:dna:postal_address_detail",
+    "definition": [
+      "A property whose subproperties specify all the parts of a PostalAddress. The subproperties are :street_address1/2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Postal Address')\">'Postal Address'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
+  "probability/likelihood": {
+    "iri": "urn:ontoinsights:ontology:dna:probability",
+    "synonym": [
+      "likelihood"
+    ],
+    "definition": [
+      "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing."
+    ],
+    "comment": [
+      "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal[=')\">decimal[=</a> 0.00 , <= 1.00]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "prototypical (boolean)": {
+    "iri": "urn:ontoinsights:ontology:dna:prototypical",
+    "definition": [
+      "Boolean indicating that the individual describes a 'typical' (and not a specific) instance."
+    ],
+    "comment": [
+      "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('boolean')\">boolean</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "second of minute": {
+    "iri": "urn:ontoinsights:ontology:dna:second_of_minute",
+    "definition": [
+      "A decimal value indicating a specific second or sub-second of a minute. The range of possible values is 0.00 through 59.9999..."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal[=')\">decimal[=</a> 0.00 , < 60.00]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "sentence offset": {
+    "iri": "urn:ontoinsights:ontology:dna:sentence_offset",
+    "definition": [
+      "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ]
+  },
+  "separation interval": {
+    "iri": "urn:ontoinsights:ontology:dna:separation_interval",
+    "example": [
+      "For example, to indicate an occurrence every day, :has_recurrence_unit would be set to :Days and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed."
+    ],
+    "definition": [
+      "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :has_recurrence_unit property value."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Recurrence Pattern')\">'Recurrence Pattern'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "spreadsheet or database column label": {
+    "iri": "urn:ontoinsights:ontology:dna:column_label",
+    "definition": [
+      "Defines a particular column in a spreadsheet-like InformationSource, where a Mention is extracted."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
+  "spreadsheet row number": {
+    "iri": "urn:ontoinsights:ontology:dna:row_number",
+    "definition": [
+      "Defines a particular row in a spreadsheet-like InformationSource, where a Mention is extracted."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ]
+  },
+  "Uniform Resource Locator (URL)": {
+    "iri": "urn:ontoinsights:ontology:dna:url",
+    "definition": [
+      "A string defining a web address, using the HTTP or HTTPS protocols."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
+  "week of month": {
+    "iri": "urn:ontoinsights:ontology:dna:week_of_month",
+    "definition": [
+      "An integer value indicating a specific week in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a week is specified that does not exist in the month (for example, the 5th/-5th week of February), then the last/first week of the month is assumed. If a value of 0 is used, then the first week of the month is assumed."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer[=')\">integer[=</a> -5 , <= 5]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "year": {
+    "iri": "urn:ontoinsights:ontology:dna:year",
+    "definition": [
+      "An integer value indicating a year using the conventions of Common Era. Note that negative values indicate BCE."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('integer')\">integer</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "affiliated with": {
+    "iri": "urn:ontoinsights:ontology:dna:affiliated_with",
+    "definition": [
+      "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
+    ]
+  },
+  "before": {
+    "iri": "urn:ontoinsights:ontology:dna:before",
+    "definition": [
+      "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity."
+    ],
+    "Characteristics": [
+      "Transitive"
+    ]
+  },
+  "causes": {
+    "iri": "urn:ontoinsights:ontology:dna:causes",
+    "comment": [
+      "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "during": {
+    "iri": "urn:ontoinsights:ontology:dna:during",
+    "definition": [
+      "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity."
+    ]
+  },
+  "enables/allows": {
+    "iri": "urn:ontoinsights:ontology:dna:enables",
+    "comment": [
+      "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "excluded member": {
+    "iri": "urn:ontoinsights:ontology:dna:excluded_member",
+    "definition": [
+      "Defines an entity that is specifically NOT in a grouping/Collection."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
+    ]
+  },
+  "has active agent": {
+    "iri": "urn:ontoinsights:ontology:dna:has_active_agent",
+    "definition": [
+      "References an Agent who is an active participant (carries out some action) in an Event."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has affected agent": {
+    "iri": "urn:ontoinsights:ontology:dna:has_affected_agent",
+    "example": [
+      "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of Event) where the mob (a GroupOfAgents) is referenced using the :has_active_agent property and the attacked Person is identified using the :has_affected_agent property."
+    ],
+    "definition": [
+      "References an Agent who is affected by an Event but does not actively participate in it."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "affiliated agent": {
+    "iri": "urn:ontoinsights:ontology:dna:affiliated_agent",
+    "definition": [
+      "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has holder')\">'has holder'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has holder": {
+    "iri": "urn:ontoinsights:ontology:dna:has_holder",
+    "example": [
+      "For example, Fame may be defined as a subclass of State. An instance of Fame would reference a famous Person using the :has_holder property."
+    ],
+    "definition": [
+      "References an Agent who experiences some State/situation/condition."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('State/Condition')\">State/Condition</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has providing agent": {
+    "iri": "urn:ontoinsights:ontology:dna:has_provider",
+    "definition": [
+      "References the Agent that provides goods, information, ... when an Event involves movement of persons, cargos, etc."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has receiving agent": {
+    "iri": "urn:ontoinsights:ontology:dna:has_recipient",
+    "definition": [
+      "References the Actor that receives goods, information, ... when an Event involves movement of persons, cargos, etc."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has agent": {
+    "iri": "urn:ontoinsights:ontology:dna:has_agent",
+    "definition": [
+      "References an Agent who participates in or who experiences an Event or State. Whether the Agent is active in the Event or experiences/is affected by an Event or State can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has characteristic": {
+    "iri": "urn:ontoinsights:ontology:dna:has_characteristic",
+    "definition": [
+      "Indicates some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+    ]
+  },
+  "has citizenship": {
+    "iri": "urn:ontoinsights:ontology:dna:has_citizenship",
+    "definition": [
+      "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Person')\">Person</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "has first": {
+    "iri": "urn:ontoinsights:ontology:dna:has_first",
+    "definition": [
+      "References the first individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may initiate a Process."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "has goal": {
+    "iri": "urn:ontoinsights:ontology:dna:has_goal",
+    "definition": [
+      "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of a :GoalDirectedProcess. Note that this is synonymous with the final step in that process - and hence is a subproperty of :has_last."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has last')\">'has last'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Goal-Directed Process')\">'Goal-Directed Process'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "has last": {
+    "iri": "urn:ontoinsights:ontology:dna:has_last",
+    "definition": [
+      "References the last individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may terminate a Process."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "has component": {
+    "iri": "urn:ontoinsights:ontology:dna:has_component",
+    "definition": [
+      "Defines a whole-part relationship."
+    ]
+  },
+  "has currency": {
+    "iri": "urn:ontoinsights:ontology:dna:has_currency",
+    "definition": [
+      "References the currency unit of a Country."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Currency')\">Currency</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has instrument": {
+    "iri": "urn:ontoinsights:ontology:dna:has_instrument",
+    "definition": [
+      "References an inanimate entity (weapon, tool, etc.) that is/was used in an Event."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
+  "border with": {
+    "iri": "urn:ontoinsights:ontology:dna:border_with",
+    "definition": [
+      "References an Agent whose location/property/... is separated by the Border entity from another Agent."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has location')\">'has location'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Border')\">Border</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ]
+  },
+  "has bounding coordinate": {
+    "iri": "urn:ontoinsights:ontology:dna:has_bounding_coordinate",
+    "definition": [
+      "References a PhysicalLocation (specifying latitude/longitude properties) that defines one of at least three points of a BoundingRegion."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has location')\">'has location'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Bounding Region')\">'Bounding Region'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "has destination location": {
+    "iri": "urn:ontoinsights:ontology:dna:has_destination",
+    "definition": [
+      "References the final location when an Event involves movement of persons, goods, information, etc."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has location')\">'has location'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "has origin location": {
+    "iri": "urn:ontoinsights:ontology:dna:has_origin",
+    "definition": [
+      "References the original location when an Event involves movement of persons, goods, information, etc."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has location')\">'has location'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "has location": {
+    "iri": "urn:ontoinsights:ontology:dna:has_location",
+    "definition": [
+      "References where an Event or State/condition occurs/occurred."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "has member": {
+    "iri": "urn:ontoinsights:ontology:dna:has_member",
+    "definition": [
+      "Defines an entity that is in a (is a member of a) grouping/Collection."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
+    ]
+  },
+  "has next": {
+    "iri": "urn:ontoinsights:ontology:dna:has_next",
+    "definition": [
+      "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and States."
+    ]
+  },
+  "has recurrence time": {
+    "iri": "urn:ontoinsights:ontology:dna:has_recurrence_time",
+    "example": [
+      "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also reference the instance, :Years, using the :has_recurrence_unit property."
+    ],
+    "definition": [
+      "References a PointInTime indicating that a RecurrencePattern repeats at that particular time."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Recurrence Pattern')\">'Recurrence Pattern'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has role": {
+    "iri": "urn:ontoinsights:ontology:dna:has_role",
+    "definition": [
+      "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Role')\">Role</a>"
+    ]
+  },
+  "has beginning": {
+    "iri": "urn:ontoinsights:ontology:dna:has_beginning",
+    "definition": [
+      "References a Time that is the start of the existence/time frame of some entity, or that is the beginning of an Interval or Duration."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has time')\">'has time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has end": {
+    "iri": "urn:ontoinsights:ontology:dna:has_end",
+    "definition": [
+      "References a point in time that is the end of the existence/time frame of some entity, or that is the end of an Interval or Duration."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has time')\">'has time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has time": {
+    "iri": "urn:ontoinsights:ontology:dna:has_time",
+    "definition": [
+      "A reference to a Time for a entity, occurrence, factor or condition."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Time')\">Time</a>"
+    ]
+  },
+  "has topic": {
+    "iri": "urn:ontoinsights:ontology:dna:has_topic",
+    "example": [
+      "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of State (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property."
+    ],
+    "definition": [
+      "References the subject/topic of an Event or State."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "meets": {
+    "iri": "urn:ontoinsights:ontology:dna:meets",
+    "definition": [
+      "Indicates that the boundaries of an entity touch/join with another."
+    ]
+  },
+  "mentioned in": {
+    "iri": "urn:ontoinsights:ontology:dna:mentioned_in",
+    "definition": [
+      "A reference to the InformationSource from which the Mention is extracted."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Information Source')\">'Information Source'</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "near": {
+    "iri": "urn:ontoinsights:ontology:dna:near",
+    "definition": [
+      "Indicates that a RelativeDirectionLocation is 'close to' another, 'established' PhysicalLocation."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Relative Direction Location')\">'Relative Direction Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
+    ]
+  },
+  "omitted/cancelled/ignored time": {
+    "iri": "urn:ontoinsights:ontology:dna:omit_time",
+    "definition": [
+      "A reference to a PointInTime that would typically be included in RecurrencePattern but should be omitted/ignored."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Recurrence Pattern')\">'Recurrence Pattern'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Point in Time')\">'Point in Time'</a>"
+    ]
+  },
+  "overlaps": {
+    "iri": "urn:ontoinsights:ontology:dna:overlaps",
+    "definition": [
+      "Indicates that the boundaries of an entity extend over/cover another."
+    ]
+  },
+  "prevents": {
+    "iri": "urn:ontoinsights:ontology:dna:prevents",
+    "comment": [
+      "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+    ]
+  },
+  "has direction": {
+    "iri": "urn:ontoinsights:ontology:dna:has_direction",
+    "definition": [
+      "References one of the enumerated values of Direction for a RelativeDirectionLocation."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('reference to enumerated value')\">'reference to enumerated value'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Relative Direction Location')\">'Relative Direction Location'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has recurrence unit": {
+    "iri": "urn:ontoinsights:ontology:dna:has_recurrence_unit",
+    "definition": [
+      "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('reference to enumerated value')\">'reference to enumerated value'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Recurrence Pattern')\">'Recurrence Pattern'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "has temporal unit": {
+    "iri": "urn:ontoinsights:ontology:dna:has_temporal_unit",
+    "definition": [
+      "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('reference to enumerated value')\">'reference to enumerated value'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Duration of Time')\">'Duration of Time'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Temporal Unit')\">'Temporal Unit'</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "reference to enumerated value": {
+    "iri": "urn:ontoinsights:ontology:dna:reference_to_enumerated_value",
+    "comment": [
+      "Relationship between an individual and a value of an Enumeration. This is defined to improve semantic understanding of the property hierarchy when visualized as a tree."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
+    ]
+  },
+  "sourced from": {
+    "iri": "urn:ontoinsights:ontology:dna:sourced_from",
+    "definition": [
+      "A reference to the Mention (with its provenance information, such as sentence_offset) that resulted in the instantiation of an entity."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Mention')\">Mention</a>"
+    ]
+  },
+  "boolean": {
+    "iri": "http://www.w3.org/2001/XMLSchema#boolean"
+  },
+  "dateTime": {
+    "iri": "http://www.w3.org/2001/XMLSchema#dateTime"
+  },
+  "decimal": {
+    "iri": "http://www.w3.org/2001/XMLSchema#decimal"
+  },
+  "integer": {
+    "iri": "http://www.w3.org/2001/XMLSchema#integer"
+  },
+  "PlainLiteral": {
+    "iri": "http://www.w3.org/1999/02/22-rdf-syntax-ns#PlainLiteral"
+  },
+  "string": {
+    "iri": "http://www.w3.org/2001/XMLSchema#string"
+  }
+}
+
+	// init a new Inspire Tree
+	var tree = new InspireTree({
+		// Class ID, text (label), and children
+		data: [
+  {
+    "id": "urn:logx:ontology",
+    "text": "urn:logx:ontology"
+  },
+  {
+    "id": "http://www.w3.org/2002/07/owl#Thing",
+    "text": "Classes",
+    "children": [
+      {
+        "id": "Agent/Actor",
+        "children": [
+          {
+            "id": "Geopolitical Entity",
+            "children": [
+              {
+                "id": "Administrative Division"
+              },
+              {
+                "id": "Country"
+              }
+            ]
+          },
+          {
+            "id": "Group/Collection of Agents",
+            "children": [
+              {
+                "id": "Family"
+              },
+              {
+                "id": "Organization"
+              }
+            ]
+          },
+          {
+            "id": "Person"
+          }
+        ]
+      },
+      {
+        "id": "Characteristic",
+        "children": [
+          {
+            "id": "Education Level"
+          },
+          {
+            "id": "Ethnicity"
+          },
+          {
+            "id": "Gender"
+          },
+          {
+            "id": "Medical or Psychological Condition"
+          }
+        ]
+      },
+      {
+        "id": "Collection/Group",
+        "children": [
+          {
+            "id": "Group/Collection of Agents",
+            "children": [
+              {
+                "id": "Family"
+              },
+              {
+                "id": "Organization"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Enumeration",
+        "children": [
+          {
+            "id": "Direction"
+          },
+          {
+            "id": "Temporal Unit"
+          }
+        ]
+      },
+      {
+        "id": "Eventuality/Event and State",
+        "children": [
+          {
+            "id": "Event"
+          },
+          {
+            "id": "State/Condition",
+            "children": [
+              {
+                "id": "Affiliation"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Information Source"
+      },
+      {
+        "id": "Location",
+        "children": [
+          {
+            "id": "Online Location"
+          },
+          {
+            "id": "Physical Location",
+            "children": [
+              {
+                "id": "Anthropogenic (Human-Created) Feature",
+                "children": [
+                  {
+                    "id": "Building and Dwelling"
+                  },
+                  {
+                    "id": "Transportation Feature"
+                  }
+                ]
+              },
+              {
+                "id": "Border"
+              },
+              {
+                "id": "Bounding Region"
+              },
+              {
+                "id": "Geopolitical Entity",
+                "children": [
+                  {
+                    "id": "Administrative Division"
+                  },
+                  {
+                    "id": "Country"
+                  }
+                ]
+              },
+              {
+                "id": "Populated Place"
+              },
+              {
+                "id": "Postal Address"
+              },
+              {
+                "id": "Relative Direction Location"
+              },
+              {
+                "id": "Water Feature"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Mention"
+      },
+      {
+        "id": "Process/Sequence",
+        "children": [
+          {
+            "id": "Goal-Directed Process"
+          },
+          {
+            "id": "Natural Process"
+          },
+          {
+            "id": "Script"
+          }
+        ]
+      },
+      {
+        "id": "Resource",
+        "children": [
+          {
+            "id": "Financial Instrument",
+            "children": [
+              {
+                "id": "Currency"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Role"
+      },
+      {
+        "id": "Time",
+        "children": [
+          {
+            "id": "Duration of Time"
+          },
+          {
+            "id": "Interval of Time"
+          },
+          {
+            "id": "Point in Time"
+          },
+          {
+            "id": "Recurrence Pattern",
+            "children": [
+              {
+                "id": "Season"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "Unifying Collection"
+      }
+    ]
+  },
+  {
+    "id": "http://www.w3.org/2002/07/owl#NamedIndividual",
+    "text": "Individuals by Type",
+    "children": [
+      {
+        "id": "Direction{OWLClass}",
+        "children": [
+          {
+            "id": "East"
+          },
+          {
+            "id": "North"
+          },
+          {
+            "id": "North-East"
+          },
+          {
+            "id": "North-West"
+          },
+          {
+            "id": "South"
+          },
+          {
+            "id": "South-East"
+          },
+          {
+            "id": "South-West"
+          },
+          {
+            "id": "West"
+          }
+        ]
+      },
+      {
+        "id": "Education Level{OWLClass}",
+        "children": [
+          {
+            "id": "Completed Doctoral Education"
+          },
+          {
+            "id": "Completed Graduate Education"
+          },
+          {
+            "id": "Completed Primary Education"
+          },
+          {
+            "id": "Completed Secondary Education"
+          },
+          {
+            "id": "Completed Undergraduate Education"
+          },
+          {
+            "id": "No Education"
+          },
+          {
+            "id": "Post-Doctoral Education"
+          },
+          {
+            "id": "Some Doctoral Education"
+          },
+          {
+            "id": "Some Graduate Education"
+          },
+          {
+            "id": "Some Primary Education"
+          },
+          {
+            "id": "Some Secondary Education"
+          },
+          {
+            "id": "Some Undergraduate Education"
+          }
+        ]
+      },
+      {
+        "id": "Gender{OWLClass}",
+        "children": [
+          {
+            "id": "Agender, Gender Neutral or Lack of Gender"
+          },
+          {
+            "id": "Bigender"
+          },
+          {
+            "id": "Female"
+          },
+          {
+            "id": "Male"
+          }
+        ]
+      },
+      {
+        "id": "Temporal Unit{OWLClass}",
+        "children": [
+          {
+            "id": "Days"
+          },
+          {
+            "id": "Hours"
+          },
+          {
+            "id": "Minutes"
+          },
+          {
+            "id": "Months"
+          },
+          {
+            "id": "Seasonal"
+          },
+          {
+            "id": "Seconds"
+          },
+          {
+            "id": "Weeks"
+          },
+          {
+            "id": "Years"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "http://www.w3.org/2002/07/owl#AnnotationProperty",
+    "text": "Annotation Properties",
+    "children": [
+      {
+        "id": "antonym"
+      },
+      {
+        "id": "definition"
+      },
+      {
+        "id": "example"
+      },
+      {
+        "id": "negative example"
+      },
+      {
+        "id": "sentence structure"
+      },
+      {
+        "id": "synonym"
+      }
+    ]
+  },
+  {
+    "id": "http://www.w3.org/2002/07/owl#topDataProperty",
+    "text": "Data Properties",
+    "children": [
+      {
+        "id": "administrative level (1-5)"
+      },
+      {
+        "id": "altitude in meters",
+        "children": [
+          {
+            "id": "highest altitude in meters"
+          },
+          {
+            "id": "lowest altitude in meters"
+          }
+        ]
+      },
+      {
+        "id": "confidence"
+      },
+      {
+        "id": "count/number"
+      },
+      {
+        "id": "database record identifier"
+      },
+      {
+        "id": "date time"
+      },
+      {
+        "id": "day of month"
+      },
+      {
+        "id": "day of week"
+      },
+      {
+        "id": "distance in meters",
+        "children": [
+          {
+            "id": "longest distance in meters"
+          },
+          {
+            "id": "shortest distance in meters"
+          }
+        ]
+      },
+      {
+        "id": "email address"
+      },
+      {
+        "id": "future (boolean)"
+      },
+      {
+        "id": "has season"
+      },
+      {
+        "id": "hour of day"
+      },
+      {
+        "id": "IP V4 address"
+      },
+      {
+        "id": "IP V6 address"
+      },
+      {
+        "id": "ISO 2-character alpha code"
+      },
+      {
+        "id": "ISO 3-character alpha code"
+      },
+      {
+        "id": "latitude"
+      },
+      {
+        "id": "longitude"
+      },
+      {
+        "id": "maximum count/number"
+      },
+      {
+        "id": "minimum count/number"
+      },
+      {
+        "id": "minute of hour"
+      },
+      {
+        "id": "month of year"
+      },
+      {
+        "id": "numeric duration"
+      },
+      {
+        "id": "phone number"
+      },
+      {
+        "id": "postal address detail",
+        "children": [
+          {
+            "id": "city name"
+          },
+          {
+            "id": "country name"
+          },
+          {
+            "id": "name of a part of the city"
+          },
+          {
+            "id": "postal code"
+          },
+          {
+            "id": "state, province or region name"
+          },
+          {
+            "id": "street address, line 1"
+          },
+          {
+            "id": "street address, line 2"
+          }
+        ]
+      },
+      {
+        "id": "probability/likelihood"
+      },
+      {
+        "id": "prototypical (boolean)"
+      },
+      {
+        "id": "second of minute"
+      },
+      {
+        "id": "sentence offset"
+      },
+      {
+        "id": "separation interval"
+      },
+      {
+        "id": "spreadsheet or database column label"
+      },
+      {
+        "id": "spreadsheet row number"
+      },
+      {
+        "id": "Uniform Resource Locator (URL)"
+      },
+      {
+        "id": "week of month"
+      },
+      {
+        "id": "year"
+      }
+    ]
+  },
+  {
+    "id": "http://www.w3.org/2002/07/owl#topObjectProperty",
+    "text": "Object Properties",
+    "children": [
+      {
+        "id": "affiliated with"
+      },
+      {
+        "id": "before"
+      },
+      {
+        "id": "causes"
+      },
+      {
+        "id": "during"
+      },
+      {
+        "id": "enables/allows"
+      },
+      {
+        "id": "excluded member"
+      },
+      {
+        "id": "has agent",
+        "children": [
+          {
+            "id": "has active agent"
+          },
+          {
+            "id": "has affected agent"
+          },
+          {
+            "id": "has holder",
+            "children": [
+              {
+                "id": "affiliated agent"
+              }
+            ]
+          },
+          {
+            "id": "has providing agent"
+          },
+          {
+            "id": "has receiving agent"
+          }
+        ]
+      },
+      {
+        "id": "has characteristic"
+      },
+      {
+        "id": "has citizenship"
+      },
+      {
+        "id": "has component",
+        "children": [
+          {
+            "id": "has first"
+          },
+          {
+            "id": "has last",
+            "children": [
+              {
+                "id": "has goal"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "has currency"
+      },
+      {
+        "id": "has instrument"
+      },
+      {
+        "id": "has location",
+        "children": [
+          {
+            "id": "border with"
+          },
+          {
+            "id": "has bounding coordinate"
+          },
+          {
+            "id": "has destination location"
+          },
+          {
+            "id": "has origin location"
+          }
+        ]
+      },
+      {
+        "id": "has member"
+      },
+      {
+        "id": "has next"
+      },
+      {
+        "id": "has recurrence time"
+      },
+      {
+        "id": "has role"
+      },
+      {
+        "id": "has season"
+      },
+      {
+        "id": "has time",
+        "children": [
+          {
+            "id": "has beginning"
+          },
+          {
+            "id": "has end"
+          }
+        ]
+      },
+      {
+        "id": "has topic"
+      },
+      {
+        "id": "meets"
+      },
+      {
+        "id": "mentioned in"
+      },
+      {
+        "id": "near"
+      },
+      {
+        "id": "omitted/cancelled/ignored time"
+      },
+      {
+        "id": "overlaps"
+      },
+      {
+        "id": "prevents"
+      },
+      {
+        "id": "reference to enumerated value",
+        "children": [
+          {
+            "id": "has direction"
+          },
+          {
+            "id": "has recurrence unit"
+          },
+          {
+            "id": "has temporal unit"
+          }
+        ]
+      },
+      {
+        "id": "sourced from"
+      }
+    ]
+  },
+  {
+    "id": "http://www.w3.org/2000/01/rdf-schema#Literal",
+    "text": "Datatypes",
+    "children": [
+      {
+        "id": "boolean"
+      },
+      {
+        "id": "dateTime"
+      },
+      {
+        "id": "decimal"
+      },
+      {
+        "id": "integer"
+      },
+      {
+        "id": "PlainLiteral"
+      },
+      {
+        "id": "string"
+      }
+    ]
+  }
+]
+	});
+
+  // ---------- On init ----------
+
+  // Add text displays for all nodes
+  var nodes = tree.nodes();
+  for (var i = 0, len = nodes.length; i < len; i++ ) {
+    var n = nodes[i];
+    update(n);
+  } 
+  // Remove nodes var from memory
+  delete nodes;
+
+  // Init Inspire Tree DOM
+  new InspireTreeDOM(tree, {
+    target: '.tree'
+  });
+
+  // Document elements
+  var li_elements = document.getElementsByTagName("li");
+  var textInput = document.getElementById('search');
+  var clearBtn = document.getElementById('clear');
+
+  // Strike out deprecated terms
+  for (var i = 0, len = li_elements.length; i < len; i++ ) {
+    elem = li_elements[ i ];
+    var id = elem.id;
+    if (elem.hasAttribute('data-uid')) {
+      if (attributes.hasOwnProperty(id)) {
+        attrs = attributes[id];
+        if (attrs.hasOwnProperty(owl_deprecated)) {
+          if (attrs.deprecated == 'true') {
+            // Only add line-through style to deprecated 'true' nodes
+            li_elements[i].style.textDecoration = 'line-through';
+          }
+        }
+      }
+    }
+  }
+  // Remove var from memory
+  delete li_elements;
+
+  // ---------- Event listeners ----------
+
+  // On back or forward button
+  window.addEventListener('popstate', function(e) {
+    loadNode();
+  });
+
+  // On loading the page
+  $(function() {
+    loadNode();
+  });
+
+  // Reset text, clear searchsk
+  clearBtn.onclick = function() {
+    var textInput = document.getElementById('search');
+    var clearBtn = document.getElementById('clear');
+    textInput.value = "";
+    tree.matched(false).stateDeep('matched', false);
+  };
+
+  // Show info box on click
+  tree.on('node.click', function(event, node) {
+    var text = node.text;
+    history.pushState(null, null, '?text=' + text);
+    displayInfo(text);
+  });
+
+  // Search functionality
+  $('input').on('keyup', _.debounce(function(event) {
+    var val = this.value;
+    // Escape parentheses
+    if (val.includes('(') || val.includes(')')) {
+      val = val.replace('(', '\\(')
+      val = val.replace(')', '\\)')
+    }
+    tree.search(val);
+  }, 500));
+</script>
