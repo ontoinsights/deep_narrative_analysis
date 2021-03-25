@@ -48,6 +48,10 @@
                                         <urn:ontoinsights:ontology:dna:definition> "A word which has a similar meaning." .
 
 
+###  urn:ontoinsights:ontology:dna:synonyn
+<urn:ontoinsights:ontology:dna:synonyn> rdf:type owl:AnnotationProperty .
+
+
 #################################################################
 #    Object Properties
 #################################################################
@@ -994,11 +998,32 @@
                                                                               "role player" .
 
 
+###  urn:ontoinsights:ontology:dna:Animal
+<urn:ontoinsights:ontology:dna:Animal> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                       rdfs:label "Animal" ;
+                                       <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
+                                       <urn:ontoinsights:ontology:dna:synonym> "beast" ,
+                                                                               "bug" ,
+                                                                               "creature" ,
+                                                                               "fauna" ,
+                                                                               "insect" .
+
+
 ###  urn:ontoinsights:ontology:dna:AnthropogenicFeature
 <urn:ontoinsights:ontology:dna:AnthropogenicFeature> rdf:type owl:Class ;
                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:PhysicalLocation> ;
                                                      rdfs:label "Anthropogenic (Human-Created) Feature" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "A point or site on/in the Earth which is a human-created structure that is used for a particular industry or purpose. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
+
+
+###  urn:ontoinsights:ontology:dna:ArtAndCollectible
+<urn:ontoinsights:ontology:dna:ArtAndCollectible> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                  rdfs:label "Art and Collectible" ;
+                                                  <urn:ontoinsights:ontology:dna:definition> "Something valued above its original worth, since it is rare, prized, popular, etc." ;
+                                                  <urn:ontoinsights:ontology:dna:example> "Examples of collectibles are pieces of art and sculpture, books, stamps and antiques." ;
+                                                  <urn:ontoinsights:ontology:dna:synonym> "rarity" .
 
 
 ###  urn:ontoinsights:ontology:dna:Border
@@ -1025,10 +1050,35 @@
                                                     <urn:ontoinsights:ontology:dna:example> "Examples of BuildingAndDwelling include a house, factory, hospital, school, etc." .
 
 
+###  urn:ontoinsights:ontology:dna:BuildingMaterialAndStone
+<urn:ontoinsights:ontology:dna:BuildingMaterialAndStone> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                                         rdfs:label "Building Material and Stone" ;
+                                                         <urn:ontoinsights:ontology:dna:definition> "Any substance used for construction/building (such as rebar, brick, clay, concrete, wood boards or stones). Note that individuals may be of more than one class - as for example, wood boards would be of types, BuildingMaterialAndStone and WoodAndSubstitute." .
+
+
 ###  urn:ontoinsights:ontology:dna:Characteristic
 <urn:ontoinsights:ontology:dna:Characteristic> rdf:type owl:Class ;
                                                rdfs:label "Characteristic" ;
                                                <urn:ontoinsights:ontology:dna:definition> "Some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization." .
+
+
+###  urn:ontoinsights:ontology:dna:ChemicalElementAndCompound
+<urn:ontoinsights:ontology:dna:ChemicalElementAndCompound> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                                           rdfs:label "Chemical Element and Compound" ;
+                                                           <urn:ontoinsights:ontology:dna:definition> "A ChemicalElement is any is substance consisting only of atoms from a single entry in the Periodic Table. Alternately, a chemical compound is a 'substance composed of many identical molecules (or molecular entities) composed of atoms from more than one element [in the Periodic Table] held together by chemical bonds. Two atoms of the same element bonded in a molecule do not form a chemical compound, since this would require two different elements. There are four types of compounds, depending on how the constituent atoms are held together: (1) molecules held together by covalent bonds; (2) ionic compounds held together by ionic bonds; (3) intermetallic compounds held together by metallic bonds; and, (4) certain complexes held together by coordinate covalent bonds.' (https://en.wikipedia.org/w/index.php?title=Chemical_compound&oldid=935156698)" .
+
+
+###  urn:ontoinsights:ontology:dna:ClothingAndAccessory
+<urn:ontoinsights:ontology:dna:ClothingAndAccessory> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                     rdfs:label "Clothing and Accessory" ;
+                                                     <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
+                                                     <urn:ontoinsights:ontology:dna:example> "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
+                                                     <urn:ontoinsights:ontology:dna:synonyn> "apparel" ,
+                                                                                             "attire" ,
+                                                                                             "clothes" .
 
 
 ###  urn:ontoinsights:ontology:dna:Collection
@@ -1042,6 +1092,30 @@
                                                                                    "compendium" ,
                                                                                    "compilation" ,
                                                                                    "set" .
+
+
+###  urn:ontoinsights:ontology:dna:ComponentPart
+<urn:ontoinsights:ontology:dna:ComponentPart> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                              rdfs:label "Component Part (not used for single inheritance)" ;
+                                              <urn:ontoinsights:ontology:dna:definition> "A ComponentPart is a simple construct to indicate that a piece/part of a whole is referenced - and that it is important to track the origin of that part. When used, the type that classifies the 'whole' should also be specified." ;
+                                              <urn:ontoinsights:ontology:dna:example> "For example, an organ such as a heart is a ComponentPart of an Animal - and would be designated using both classes. A tire that is/was part of a Vehicle could be defined using the types, ComponentPart, Vehicle and RubberAndSubstitute." ;
+                                              <urn:ontoinsights:ontology:dna:synonym> "piece" .
+
+
+###  urn:ontoinsights:ontology:dna:ComputingAndTelecommunicationDevice
+<urn:ontoinsights:ontology:dna:ComputingAndTelecommunicationDevice> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Machine> ;
+                                                                    rdfs:label "Computing and Telecommunication Device" ;
+                                                                    <urn:ontoinsights:ontology:dna:definition> "A Machine that can 'execute' sequences of arithmetic and logical operations, and/or transmits information either over wires, radio waves, optics and other means. At this time, the use of computers is fairly ubiquitous in the telecommunications industry." .
+
+
+###  urn:ontoinsights:ontology:dna:Container
+<urn:ontoinsights:ontology:dna:Container> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                          rdfs:label "Container" ;
+                                          <urn:ontoinsights:ontology:dna:definition> "A receptacle or enclosure for holding a solid, liquid or gas." ;
+                                          <urn:ontoinsights:ontology:dna:synonym> "receptacle" .
 
 
 ###  urn:ontoinsights:ontology:dna:Country
@@ -1090,6 +1164,13 @@
                                                                                  "temporal distance" .
 
 
+###  urn:ontoinsights:ontology:dna:DyeAndInk
+<urn:ontoinsights:ontology:dna:DyeAndInk> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                          rdfs:label "Dye, Pigment and Ink" ;
+                                          <urn:ontoinsights:ontology:dna:definition> "A substance that is used to color (or change the color of) somthing to which is it applied. A dye chemically bonds to the applied material, whereas a pigment does not. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Ink&oldid=1008461908), an ink 'is a gel, sol, or solution that contains at least one colourant, such as a dye or pigment, and is used to color a surface to produce an image, text, or design ... Ink can be a complex medium, composed of solvents, pigments, dyes, resins, lubricants, solubilizers, surfactants, particulate matter, fluorescents, and other materials.'" .
+
+
 ###  urn:ontoinsights:ontology:dna:EducationLevel
 <urn:ontoinsights:ontology:dna:EducationLevel> rdf:type owl:Class ;
                                                owl:equivalentClass [ rdf:type owl:Class ;
@@ -1111,6 +1192,13 @@
                                                rdfs:label "Education Level" ;
                                                <urn:ontoinsights:ontology:dna:definition> "An enumeration defining a Person's/Group's education. It consists of the values, :NoEducation, :CompletedPrimaryEducation, :CompletedSecondaryEducation, :CompletedUndergraduateEducation, :CompletedGraduateEducation, :CompletedDoctoralEducation and :PostDoctoralEducation, as well as partially completed levels, :SomePrimaryEducation, :SomeSecondaryEducation, :SomeUndergraduateEducation, :SomeGraduateEducation and :SomeDoctoralEducation." ;
                                                <urn:ontoinsights:ontology:dna:example> "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." .
+
+
+###  urn:ontoinsights:ontology:dna:EngineAndGenerator
+<urn:ontoinsights:ontology:dna:EngineAndGenerator> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <urn:ontoinsights:ontology:dna:Machine> ;
+                                                   rdfs:label "Engine, Motor and Generator" ;
+                                                   <urn:ontoinsights:ontology:dna:definition> "A Machine that converts different types of energy into mechanical or electrical energy. An engine/motor generates mechanical energy for motion, while generators typically create electricity/electrical energy." .
 
 
 ###  urn:ontoinsights:ontology:dna:Enumeration
@@ -1154,10 +1242,45 @@
 
 
 ###  urn:ontoinsights:ontology:dna:FinancialInstrument
-<urn:ontoinsights:ontology:dna:FinancialInstrument> rdf:type owl:Class ;
-                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
-                                                    rdfs:label "Financial Instrument" ;
-                                                    <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), a FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.'" .
+<urn:ontoinsights:ontology:dna:FinancialInstrument> rdf:type owl:Class .
+
+
+###  urn:ontoinsights:ontology:dna:FoodAndDrink
+<urn:ontoinsights:ontology:dna:FoodAndDrink> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                             rdfs:label "Food and Drink" ;
+                                             <urn:ontoinsights:ontology:dna:definition> "An entity that is consumed to satisfy hunger and/or thirst, or for nutritional or recreational reasons." ;
+                                             <urn:ontoinsights:ontology:dna:synonym> "beverage" ,
+                                                                                     "drink" ,
+                                                                                     "nourishment" ,
+                                                                                     "sustenance" ,
+                                                                                     "water" .
+
+
+###  urn:ontoinsights:ontology:dna:Fuel
+<urn:ontoinsights:ontology:dna:Fuel> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                     rdfs:label "Fuel" ;
+                                     <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451), a fuel 'is any material that can be made to react with other substances so that it releases energy as heat energy or to be used for work [to provide power]. The concept was originally applied solely to those materials capable of releasing chemical energy but has since also been applied to other sources of heat energy such as nuclear energy (via nuclear fission and nuclear fusion). The heat energy released by reactions of fuels is converted into mechanical energy via a heat engine. Other times the heat itself is valued for warmth, cooking, or industrial processes, as well as the illumination that comes with combustion.'" ;
+                                     <urn:ontoinsights:ontology:dna:example> "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are other examples of fuels." .
+
+
+###  urn:ontoinsights:ontology:dna:FungusAndPlant
+<urn:ontoinsights:ontology:dna:FungusAndPlant> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                               rdfs:label "Fungus and Plant" ;
+                                               <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
+                                               <urn:ontoinsights:ontology:dna:synonym> "flora" ,
+                                                                                       "mold" ,
+                                                                                       "mushroom" ,
+                                                                                       "vegetation" .
+
+
+###  urn:ontoinsights:ontology:dna:FurnitureAndHouseholdGoods
+<urn:ontoinsights:ontology:dna:FurnitureAndHouseholdGoods> rdf:type owl:Class ;
+                                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                           rdfs:label "Furniture and Household Goods" ;
+                                                           <urn:ontoinsights:ontology:dna:definition> "Household goods are intended for personal and family use within a home or residence. They include furniture, appliances, plates and utensils, etc. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Furniture&oldid=1013958576), furniture 'refers to movable objects intended to support various human activities such as seating (e.g., chairs, stools, and sofas), eating (tables), and sleeping (e.g., beds). Furniture is also used to hold objects at a convenient height for work (as horizontal surfaces above the ground, such as tables and desks), or to store things (e.g., cupboards and shelves). Furniture can be a product of design and is considered a form of decorative art. In addition to furniture's functional role, it can serve a symbolic or religious purpose. It can be made from many materials'." .
 
 
 ###  urn:ontoinsights:ontology:dna:Gender
@@ -1203,6 +1326,13 @@
                                               <urn:ontoinsights:ontology:dna:example> "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or be the holders of State." .
 
 
+###  urn:ontoinsights:ontology:dna:HVACEquipment
+<urn:ontoinsights:ontology:dna:HVACEquipment> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:Machine> ;
+                                              rdfs:label "Heating, Ventilation, Air Conditioning and Refrigeration Machine and Equipment" ;
+                                              <urn:ontoinsights:ontology:dna:definition> "Any Resource that provides capabilities for heating/cooling, ventilation/air movement, air cleaning or refrigeration." .
+
+
 ###  urn:ontoinsights:ontology:dna:InformationSource
 <urn:ontoinsights:ontology:dna:InformationSource> rdf:type owl:Class ;
                                                   rdfs:label "Information Source" ;
@@ -1218,6 +1348,22 @@
                                                                                  "timeframe" .
 
 
+###  urn:ontoinsights:ontology:dna:Jewelry
+<urn:ontoinsights:ontology:dna:Jewelry> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:ClothingAndAccessory> ;
+                                        rdfs:label "Jewelry" ;
+                                        <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Jewellery&oldid=932741930), Jewelry 'consists of decorative items worn for personal adornment, such as brooches, rings, necklaces, earrings, pendants, bracelets, and cufflinks. Jewellery may be attached to the body or the clothes.' It may be made of precious metals and stones or imitations." ;
+                                        <urn:ontoinsights:ontology:dna:example> "Examples are a bracelet, brooch, earrings, rings, a necklace or pendant, anklet, cameo, charm, choker, locket or cufflink." ;
+                                        <urn:ontoinsights:ontology:dna:synonym> "jewellery" .
+
+
+###  urn:ontoinsights:ontology:dna:LegalInstrument
+<urn:ontoinsights:ontology:dna:LegalInstrument> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                rdfs:label "Legal Instrument" ;
+                                                <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+
+
 ###  urn:ontoinsights:ontology:dna:Location
 <urn:ontoinsights:ontology:dna:Location> rdf:type owl:Class ;
                                          rdfs:label "Location" ;
@@ -1228,6 +1374,16 @@
                                                                                  "site" ,
                                                                                  "situating" ,
                                                                                  "venue" .
+
+
+###  urn:ontoinsights:ontology:dna:Machine
+<urn:ontoinsights:ontology:dna:Machine> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                        rdfs:label "Machine or Mechanical Device" ;
+                                        <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667), a Machine '(or mechanical device) is a mechanical structure that uses power to apply forces and control movement to perform an intended action. Machines can be driven by animals and people, by natural forces such as wind and water, and by chemical, thermal, or electrical power, and include a system of mechanisms that shape the actuator input to achieve a specific application of output forces and movement ... Modern machines are complex systems that consist of structural elements, mechanisms and control components and include interfaces for convenient use." ;
+                                        <urn:ontoinsights:ontology:dna:example> "Examples include: a wide range of vehicles, such as automobiles, boats and airplanes; appliances in the home and office, including computers, building air handling and water handling systems; as well as farm machinery, machine tools and factory automation systems and robots. (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667)" ;
+                                        <urn:ontoinsights:ontology:dna:synonym> "appliance" ,
+                                                                                "device" .
 
 
 ###  urn:ontoinsights:ontology:dna:MedicalOrPsychologicalCondition
@@ -1243,6 +1399,21 @@
                                         <urn:ontoinsights:ontology:dna:definition> "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity." ;
                                         <urn:ontoinsights:ontology:dna:synonym> "citation" ,
                                                                                 "reference" .
+
+
+###  urn:ontoinsights:ontology:dna:MonetaryAndFinancialInstrument
+<urn:ontoinsights:ontology:dna:MonetaryAndFinancialInstrument> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                               rdfs:label "Financial Instrument" ;
+                                                               <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+
+
+###  urn:ontoinsights:ontology:dna:MusicalInstrument
+<urn:ontoinsights:ontology:dna:MusicalInstrument> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                  rdfs:label "Musical Instrument" ;
+                                                  <urn:ontoinsights:ontology:dna:definition> "A Resource that is found, built or adapted to produce 'music'. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Music&oldid=1012822353), music 'is the art of arranging sounds in time to produce a composition through the elements of melody, harmony, rhythm, and timbre'." ;
+                                                  <urn:ontoinsights:ontology:dna:example> "Examples of MusicalInstruments include string instruments such as guitars, percussion instruments such as drums and wind instruments such as flutes and oboes." .
 
 
 ###  urn:ontoinsights:ontology:dna:NaturalProcess
@@ -1287,6 +1458,23 @@
                                                                                "woman" .
 
 
+###  urn:ontoinsights:ontology:dna:PersonalAndBabyCare
+<urn:ontoinsights:ontology:dna:PersonalAndBabyCare> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                    rdfs:label "Personal and Baby Care" ;
+                                                    <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Personal_care&oldid=1010023799), 'personal care or toiletries are consumer products used in personal hygiene and for beautification.'" ;
+                                                    <urn:ontoinsights:ontology:dna:example> "Personal care includes products as diverse as ... cleansing pads, colognes, cotton swabs, cotton pads, deodorant, eye liner, facial tissue, hair clippers, lip gloss, lipstick, lip balm, lotion, makeup, hand soap, facial cleanser, body wash, nail files, pomade, perfumes, razors, shaving cream, moisturizer, baby powder, toilet paper, toothpaste, facial treatments, wet wipes, and shampoo. (https://en.wikipedia.org/w/index.php?title=Personal_care&oldid=1010023799)" .
+
+
+###  urn:ontoinsights:ontology:dna:PharamaceuticalAndMedicinal
+<urn:ontoinsights:ontology:dna:PharamaceuticalAndMedicinal> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                            rdfs:label "Pharmaceutical and Medicinal Entity" ;
+                                                            <urn:ontoinsights:ontology:dna:definition> "A Resource (naturally occurring or manufactured) that is used to cure/heal, relieve pain and/or administer to injuries or illnesses." ;
+                                                            <urn:ontoinsights:ontology:dna:synonym> "healing" ,
+                                                                                                    "therapeutic" .
+
+
 ###  urn:ontoinsights:ontology:dna:PhysicalLocation
 <urn:ontoinsights:ontology:dna:PhysicalLocation> rdf:type owl:Class ;
                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Location> ;
@@ -1324,6 +1512,14 @@
                                                                                       "street address" .
 
 
+###  urn:ontoinsights:ontology:dna:PreciousMetalPearlAndGemstone
+<urn:ontoinsights:ontology:dna:PreciousMetalPearlAndGemstone> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                              rdfs:label "Precious Metal, Pearl and Gemstone" ;
+                                                              <urn:ontoinsights:ontology:dna:definition> "Entities that are naturally occurring, of high economic value and (usually) rare (due to scarcity or controlled release)." ;
+                                                              <urn:ontoinsights:ontology:dna:example> "Examples of precious metals are gold and silver. Examples of gemstones include diamonds, rubies and sapphires." .
+
+
 ###  urn:ontoinsights:ontology:dna:Process
 <urn:ontoinsights:ontology:dna:Process> rdf:type owl:Class ;
                                         rdfs:label "Process/Sequence" ;
@@ -1352,7 +1548,7 @@
 ###  urn:ontoinsights:ontology:dna:Resource
 <urn:ontoinsights:ontology:dna:Resource> rdf:type owl:Class ;
                                          rdfs:label "Resource" ;
-                                         <urn:ontoinsights:ontology:dna:definition> "Superclass defining any inanimate entity (such as a food, tools, cement, ...) which can be used, harvested, mined, made/manufactured, bought and sold." ;
+                                         <urn:ontoinsights:ontology:dna:definition> "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold." ;
                                          <urn:ontoinsights:ontology:dna:synonym> "asset" ,
                                                                                  "commodity" ,
                                                                                  "instrument" ,
@@ -1387,6 +1583,22 @@
                                        <urn:ontoinsights:ontology:dna:example> "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various subclasses of Season may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
 
 
+###  urn:ontoinsights:ontology:dna:SoapAndCleaningSubstance
+<urn:ontoinsights:ontology:dna:SoapAndCleaningSubstance> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                                         rdfs:label "Soap and Cleaning Substance" ;
+                                                         <urn:ontoinsights:ontology:dna:definition> "An entity used to separate dirt, grime, particulates, pathogens, etc. from various articles and environments." ;
+                                                         <urn:ontoinsights:ontology:dna:example> "Examples are soaps, detergents, solvents, sands and chemicals such as carbon dioxide." .
+
+
+###  urn:ontoinsights:ontology:dna:Software
+<urn:ontoinsights:ontology:dna:Software> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                         rdfs:label "Software and Data" ;
+                                         <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579), Software 'is a collection of instructions and data that tell [a] computer how to work ... In computer science and software engineering, computer software is all information processed by computer systems, including programs and data." ;
+                                         <urn:ontoinsights:ontology:dna:example> "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" .
+
+
 ###  urn:ontoinsights:ontology:dna:State
 <urn:ontoinsights:ontology:dna:State> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:EventAndState> ;
@@ -1398,6 +1610,14 @@
                                                                               "factor" ,
                                                                               "situation" ,
                                                                               "status" .
+
+
+###  urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial
+<urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                        rdfs:label "Substance and Raw Material" ;
+                                                        <urn:ontoinsights:ontology:dna:definition> "Raw materials are the basic constituents/matter which make up something or from which something is made. This semantic is aligned with WordNet 3.1's definition of 'substance'." ;
+                                                        <urn:ontoinsights:ontology:dna:example> "Examples of raw materials are chemical elements and compounds, wood, rubber, cement, gemstones, soap, etc." .
 
 
 ###  urn:ontoinsights:ontology:dna:TemporalUnit
@@ -1425,6 +1645,21 @@
                                      <urn:ontoinsights:ontology:dna:synonym> "fourth dimension" .
 
 
+###  urn:ontoinsights:ontology:dna:ToolAndImplement
+<urn:ontoinsights:ontology:dna:ToolAndImplement> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                 rdfs:label "Tool, Instrument and Implement" ;
+                                                 <urn:ontoinsights:ontology:dna:definition> "An object/device that can carry out a particular function (such as a hammer or lathe), and/or expand a Person's ability (e.g., a scientific instrument such as a microscope or telescope)." .
+
+
+###  urn:ontoinsights:ontology:dna:ToyAndGamingItem
+<urn:ontoinsights:ontology:dna:ToyAndGamingItem> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                 rdfs:label "Toy and Gaming Item" ;
+                                                 <urn:ontoinsights:ontology:dna:definition> "An object used in play or in a game (for recreation or competition)." ;
+                                                 <urn:ontoinsights:ontology:dna:example> "Examples of toys are dolls, gaming boards, playing cards, balls, etc." .
+
+
 ###  urn:ontoinsights:ontology:dna:TransportationFeeature
 <urn:ontoinsights:ontology:dna:TransportationFeeature> rdf:type owl:Class ;
                                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:AnthropogenicFeature> ;
@@ -1440,12 +1675,42 @@
                                                    <urn:ontoinsights:ontology:dna:example> "A company, ABC, may be referenced as 'A Better Company', 'ABC, Limited' or 'ABC', in different InformationSources. Later analysis may reveal that these references all indicate the same company and can therefore be unified. This is an alternate mechanism to the semantics of owl:sameAs." .
 
 
+###  urn:ontoinsights:ontology:dna:Vehicle
+<urn:ontoinsights:ontology:dna:Vehicle> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Machine> ;
+                                        rdfs:label "Vehicle" ;
+                                        <urn:ontoinsights:ontology:dna:definition> "A Machine used for transporting people and/or goods. Vehicles operate on land or sea, and in the air or space." ;
+                                        <urn:ontoinsights:ontology:dna:synonym> "conveyance" .
+
+
+###  urn:ontoinsights:ontology:dna:WasteAndResidue
+<urn:ontoinsights:ontology:dna:WasteAndResidue> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                rdfs:label "Waste and Residue" ;
+                                                <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), waste and residue 'are unwanted or unusable materials. Waste is any substance which is discarded after primary use, or is worthless, defective and of no use. A by-product by contrast is a joint product of relatively minor economic value. A waste product may become a by-product, joint product or resource through an invention that raises a waste product's value above zero.'" ;
+                                                <urn:ontoinsights:ontology:dna:example> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" .
+
+
 ###  urn:ontoinsights:ontology:dna:WaterFeature
 <urn:ontoinsights:ontology:dna:WaterFeature> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:PhysicalLocation> ;
                                              rdfs:label "Water Feature" ;
                                              <urn:ontoinsights:ontology:dna:definition> "A body of water as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
                                              <urn:ontoinsights:ontology:dna:example> "Examples include oceans, rivers, streams, bays, lakes, channels, etc." .
+
+
+###  urn:ontoinsights:ontology:dna:WeaponAndAmmunition
+<urn:ontoinsights:ontology:dna:WeaponAndAmmunition> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
+                                                    rdfs:label "Weapon and Ammunition" ;
+                                                    <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Weapon&oldid=1011762825), a 'weapon, arm or armament is any implement or device that can be used with the intent to inflict damage or harm. Weapons are used to increase the efficacy and efficiency of activities such as hunting, crime, law enforcement, self-defense, and warfare. In broader context, weapons may be construed to include anything used to gain a tactical, strategic, material or mental advantage over an adversary or enemy target. While ordinary objects – sticks, rocks, bottles, chairs, vehicles – can be used as weapons, many are expressly designed for the purpose; these range from simple implements such as clubs, axes and swords, to complicated modern firearms, tanks, intercontinental ballistic missiles, biological weapons, and cyberweapons. Something that has been re-purposed, converted, or enhanced to become a weapon of war is termed weaponized, such as a weaponized virus or weaponized laser.' On the other hand, ammunition '(informally ammo) is the material fired, scattered, dropped or detonated from any weapon. Ammunition is both expendable weapons (e.g., bombs, missiles, grenades, land mines) and the component parts of other weapons that create the effect on a target (e.g., bullets and warheads).[1] Nearly all mechanical weapons require some form of ammunition to operate.'(https://en.wikipedia.org/w/index.php?title=Ammunition&oldid=1012849062)" .
+
+
+###  urn:ontoinsights:ontology:dna:WoodAndSubstitue
+<urn:ontoinsights:ontology:dna:WoodAndSubstitue> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:SubstanceAndRawMaterial> ;
+                                                 rdfs:label "Wood and Substitute" ;
+                                                 <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wood&oldid=1009092813), Wood 'is a porous and fibrous structural tissue found in the stems and roots of trees and other woody plants. It is an organic material – a natural composite of cellulose fibers that are strong in tension and embedded in a matrix of lignin that resists compression ... Wood may also refer to other plant materials with comparable properties, and to material engineered from wood, or wood chips or fiber. Wood has been used for thousands of years for fuel, as a construction material, for making tools and weapons, furniture and paper. More recently it emerged as a feedstock for the production of purified cellulose and its derivatives, such as cellophane and cellulose acetate.' Wood substitutes include hump, bamboo, composites and plastics." .
 
 
 #################################################################
@@ -1667,8 +1932,8 @@
 #    Annotations
 #################################################################
 
-<urn:ontoinsights:ontology:dna:has_season> rdfs:label "has season" ;
-                                           <urn:ontoinsights:ontology:dna:definition> "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." .
+<urn:ontoinsights:ontology:dna:has_season> <urn:ontoinsights:ontology:dna:definition> "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." ;
+                                           rdfs:label "has season" .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi
