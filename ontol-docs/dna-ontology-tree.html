@@ -489,6 +489,74 @@ p {
 	// attributes for each class
 	var attributes = {
   "urn:logx:ontology": {},
+  "Abduction": {
+    "iri": "urn:ontoinsights:ontology:dna:Abduction",
+    "synonym": [
+      "hijacking",
+      "kidnapping"
+    ],
+    "definition": [
+      "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>"
+    ]
+  },
+  "Recovery and Rescue": {
+    "iri": "urn:ontoinsights:ontology:dna:RecoveryAndRescue",
+    "synonym": [
+      "retrieval",
+      "saving"
+    ],
+    "definition": [
+      "An act of returning something or someone who/which was lost, taken or in a perilous situation."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>"
+    ]
+  },
+  "Acquisition": {
+    "iri": "urn:ontoinsights:ontology:dna:Acquisition",
+    "definition": [
+      "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>"
+    ]
+  },
+  "Animal": {
+    "iri": "urn:ontoinsights:ontology:dna:Animal",
+    "synonym": [
+      "bug",
+      "insect",
+      "fauna",
+      "beast",
+      "creature"
+    ],
+    "definition": [
+      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
+  "Fungus and Plant": {
+    "iri": "urn:ontoinsights:ontology:dna:FungusAndPlant",
+    "synonym": [
+      "flora",
+      "mushroom",
+      "mold",
+      "vegetation"
+    ],
+    "definition": [
+      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
   "Administrative Division": {
     "iri": "urn:ontoinsights:ontology:dna:AdministrativeDivision",
     "synonym": [
@@ -573,7 +641,7 @@ p {
   "Group/Collection of Agents": {
     "iri": "urn:ontoinsights:ontology:dna:GroupOfAgents",
     "example": [
-      "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or be the holders of State."
+      "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State."
     ],
     "definition": [
       "A sub-class of both Agent and Collection defining a set/grouping of Agents."
@@ -611,7 +679,157 @@ p {
       "performer"
     ],
     "definition": [
-      "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in Events, and they are affected by or are the holders of State."
+      "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in Events, and they are affected by or are the holders of StateAndConditions."
+    ]
+  },
+  "Aggressive or Hostile Act": {
+    "iri": "urn:ontoinsights:ontology:dna:AggresiveOrHostileAct",
+    "definition": [
+      "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ]
+  },
+  "Agreement": {
+    "iri": "urn:ontoinsights:ontology:dna:Agreement",
+    "definition": [
+      "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Violation of Agreement')\">'Violation of Agreement'</a>",
+      "<a href=\"javascript:jumpTo('Disagreement or Dispute')\">'Disagreement or Dispute'</a>"
+    ]
+  },
+  "Agriculture, Apiculture and Aquaculture": {
+    "iri": "urn:ontoinsights:ontology:dna:AgricultureApicultureAndAquaculture",
+    "definition": [
+      "Events dealing with farming, ranching, breeding, beekeeping, etc."
+    ]
+  },
+  "Art and Entertainment Event": {
+    "iri": "urn:ontoinsights:ontology:dna:ArtAndEntertainmentEvent",
+    "definition": [
+      "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."
+    ]
+  },
+  "Attack, Damage and Assault": {
+    "iri": "urn:ontoinsights:ontology:dna:AttackDamageAndAssault",
+    "definition": [
+      "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Repair')\">Repair</a>"
+    ]
+  },
+  "Attempt": {
+    "iri": "urn:ontoinsights:ontology:dna:Attempt",
+    "synonym": [
+      "endeavor",
+      "strive to",
+      "seek out to",
+      "try"
+    ],
+    "definition": [
+      "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished."
+    ]
+  },
+  "Attention and Focus": {
+    "iri": "urn:ontoinsights:ontology:dna:AttentionAndFocus",
+    "definition": [
+      "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property."
+    ]
+  },
+  "Escape and Evasion": {
+    "iri": "urn:ontoinsights:ontology:dna:EscapeAndEvasion",
+    "definition": [
+      "An act of avoiding/getting away from something, someone or some Event, or of breaking free from captivity or oppression."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>"
+    ]
+  },
+  "Ignoring and Overlooking": {
+    "iri": "urn:ontoinsights:ontology:dna:IgnoringAndOverlooking",
+    "synonym": [
+      "disregarding"
+    ],
+    "definition": [
+      "An act of purposefully disregarding, not noticing or not acknowledging something or someone."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>",
+      "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('urn:ontoinsights:ontology:dna:InvestigationAndObservation')\">urn:ontoinsights:ontology:dna:InvestigationAndObservation</a>"
+    ]
+  },
+  "Prevention": {
+    "iri": "urn:ontoinsights:ontology:dna:Prevention",
+    "synonym": [
+      "precaution",
+      "safeguarding"
+    ],
+    "definition": [
+      "An act of stopping some Event or StateAndCondition from occurring. Note that the event/state/condition is identified using the :has_topic property"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>"
+    ]
+  },
+  "Avoidance": {
+    "iri": "urn:ontoinsights:ontology:dna:Avoidance",
+    "definition": [
+      "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>"
+    ]
+  },
+  "Belief": {
+    "iri": "urn:ontoinsights:ontology:dna:Belief",
+    "synonym": [
+      "trust",
+      "confidence"
+    ],
+    "definition": [
+      "An 'attitude that something is the case, or that some proposition about the world is true' (https://en.wikipedia.org/w/index.php?title=Belief&oldid=1013662709)."
+    ]
+  },
+  "Capacity": {
+    "iri": "urn:ontoinsights:ontology:dna:Capacity",
+    "synonym": [
+      "maximum amount",
+      "volume",
+      "magnitude"
+    ],
+    "definition": [
+      "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate."
+    ]
+  },
+  "Captivity and Detention": {
+    "iri": "urn:ontoinsights:ontology:dna:CaptivityAndDetention",
+    "synonym": [
+      "incarceration",
+      "confinement",
+      "imprisonment",
+      "internment"
+    ],
+    "definition": [
+      "The condition of an Agent being held captive and confined to a certain location."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Freedom')\">Freedom</a>"
+    ]
+  },
+  "Change": {
+    "iri": "urn:ontoinsights:ontology:dna:Change",
+    "example": [
+      "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc."
+    ],
+    "definition": [
+      "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease."
     ]
   },
   "Education Level": {
@@ -620,10 +838,11 @@ p {
       "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms."
     ],
     "definition": [
-      "An enumeration defining a Person's/Group's education. It consists of the values, :NoEducation, :CompletedPrimaryEducation, :CompletedSecondaryEducation, :CompletedUndergraduateEducation, :CompletedGraduateEducation, :CompletedDoctoralEducation and :PostDoctoralEducation, as well as partially completed levels, :SomePrimaryEducation, :SomeSecondaryEducation, :SomeUndergraduateEducation, :SomeGraduateEducation and :SomeDoctoralEducation."
+      "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>",
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
     ],
     "Equivalent Classes": [
       "{<a href=\"javascript:jumpTo('Completed Doctoral Education')\">'Completed Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Completed Graduate Education')\">'Completed Graduate Education'</a> ,  <a href=\"javascript:jumpTo('Completed Primary Education')\">'Completed Primary Education'</a> ,  <a href=\"javascript:jumpTo('Completed Secondary Education')\">'Completed Secondary Education'</a> ,  <a href=\"javascript:jumpTo('Completed Undergraduate Education')\">'Completed Undergraduate Education'</a> ,  <a href=\"javascript:jumpTo('No Education')\">'No Education'</a> ,  <a href=\"javascript:jumpTo('Post-Doctoral Education')\">'Post-Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Some Doctoral Education')\">'Some Doctoral Education'</a> ,  <a href=\"javascript:jumpTo('Some Graduate Education')\">'Some Graduate Education'</a> ,  <a href=\"javascript:jumpTo('Some Primary Education')\">'Some Primary Education'</a> ,  <a href=\"javascript:jumpTo('Some Secondary Education')\">'Some Secondary Education'</a> ,  <a href=\"javascript:jumpTo('Some Undergraduate Education')\">'Some Undergraduate Education'</a>}"
@@ -644,10 +863,11 @@ p {
   "Gender": {
     "iri": "urn:ontoinsights:ontology:dna:Gender",
     "definition": [
-      "An enumeration of the values, :Female, :Male, :Agender and :Bigender. Note that individuals of the Gender class describe how Agents identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender."
+      "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
+      "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>",
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
     ],
     "Equivalent Classes": [
       "{<a href=\"javascript:jumpTo('Agender, Gender Neutral or Lack of Gender')\">'Agender, Gender Neutral or Lack of Gender'</a> ,  <a href=\"javascript:jumpTo('Bigender')\">Bigender</a> ,  <a href=\"javascript:jumpTo('Female')\">Female</a> ,  <a href=\"javascript:jumpTo('Male')\">Male</a>}"
@@ -665,22 +885,223 @@ p {
   "Characteristic": {
     "iri": "urn:ontoinsights:ontology:dna:Characteristic",
     "definition": [
-      "Some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization."
+      "Some aspect of a Person that serves to distinguish and/or describe them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization."
+    ]
+  },
+  "Coercion and Intimidation": {
+    "iri": "urn:ontoinsights:ontology:dna:CoercionAndIntimidation",
+    "definition": [
+      "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear."
+    ]
+  },
+  "Cognition": {
+    "iri": "urn:ontoinsights:ontology:dna:Cognition",
+    "definition": [
+      "The 'mental action or process of acquiring knowledge and understanding through thought, experience, and the senses' (https://www.lexico.com/definition/cognition). Note that the Person who is acquiring this knowledge and understanding is defined using the :has_active_agent property. And, details about what is learned/known/understood is indicated using the :has_topic predicate."
+    ]
+  },
+  "Evidence": {
+    "iri": "urn:ontoinsights:ontology:dna:Evidence",
+    "synonym": [
+      "affirmation",
+      "proof",
+      "confirmation",
+      "validation",
+      "verification"
+    ],
+    "definition": [
+      "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
     ]
   },
   "Collection/Group": {
     "iri": "urn:ontoinsights:ontology:dna:Collection",
     "synonym": [
-      "set",
       "aggregation",
+      "set",
       "compilation",
-      "accumulation",
       "compendium",
+      "accumulation",
       "assemblage",
       "assortment"
     ],
     "definition": [
       "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property."
+    ]
+  },
+  "Command": {
+    "iri": "urn:ontoinsights:ontology:dna:Command",
+    "definition": [
+      "A communication that issues orders, instructions, etc."
+    ]
+  },
+  "Communication and Speech Act": {
+    "iri": "urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct",
+    "definition": [
+      "Any act of conveying information via written or spoken word, or non-verbal means."
+    ]
+  },
+  "Compatibility": {
+    "iri": "urn:ontoinsights:ontology:dna:Compatibility",
+    "definition": [
+      "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate."
+    ]
+  },
+  "Competition": {
+    "iri": "urn:ontoinsights:ontology:dna:Competition",
+    "synonym": [
+      "rivalry"
+    ],
+    "definition": [
+      "The condition where two or more Agents are striving for a similar goal or using scarce Resources, and want to be more successful than or to outlive the others. This class refers to the general situation of Competition, as opposed to a specific Event (:CompetitiveEvent). The latter would be Evidence for the former. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property. The overall competitive situation can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Cooperation')\">Cooperation</a>"
+    ]
+  },
+  "Competitive Event": {
+    "iri": "urn:ontoinsights:ontology:dna:CompetitiveEvent",
+    "definition": [
+      "An Event where two or more Agents are striving for a similar goal, and want to be better/more successful than the others. This class refers to a specific competitive Event, as opposed to a general condition (:Competition). The former would be Evidence for the latter."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Cooperative Event')\">'Cooperative Event'</a>"
+    ]
+  },
+  "Compliance": {
+    "iri": "urn:ontoinsights:ontology:dna:Compliance",
+    "definition": [
+      "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate."
+    ]
+  },
+  "Concealment": {
+    "iri": "urn:ontoinsights:ontology:dna:Concealment",
+    "synonym": [
+      "hiding"
+    ],
+    "definition": [
+      "An act of preventing something/someone from being known/found."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Revelation')\">Revelation</a>"
+    ]
+  },
+  "Consumer Confidence": {
+    "iri": "urn:ontoinsights:ontology:dna:ConsumerConfidence",
+    "definition": [
+      "An economic indicator that is defined 'as the degree of optimism on the state of [an] economy that consumers are expressing through their activities of savings and spending ... In an interconnected global economy, tracking international consumer confidence is a lead indicator of economic trends.' (https://en.wikipedia.org/w/index.php?title=Consumer_confidence_index&oldid=1009942282) The overall  situation regarding ConsumerConfidence can be described using the :has_assessment predicate."
+    ]
+  },
+  "Cooperation": {
+    "iri": "urn:ontoinsights:ontology:dna:Cooperation",
+    "synonym": [
+      "collaboration",
+      "teamwork"
+    ],
+    "definition": [
+      "The condition where two or more Agents are striving for a similar goal or for similar Resources, and are mutually assisting/supporting one another. This class refers to the general situation of Cooperation, as opposed to a specific Event (:CooperativeEvent). The latter would be Evidence for the former. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property.  The overall cooperative situation can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Competition')\">Competition</a>"
+    ]
+  },
+  "Cooperative Event": {
+    "iri": "urn:ontoinsights:ontology:dna:CooperativeEvent",
+    "definition": [
+      "An Event where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to a specific coooperative Event, as opposed to a general condition (:Cooperation). The former would be Evidence for the latter."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Competitive Event')\">'Competitive Event'</a>"
+    ]
+  },
+  "Decision Making": {
+    "iri": "urn:ontoinsights:ontology:dna:DecisionMaking",
+    "definition": [
+      "An act of concluding or resolving some issue or question."
+    ]
+  },
+  "Decrease": {
+    "iri": "urn:ontoinsights:ontology:dna:Decrease",
+    "synonym": [
+      "reduction",
+      "decline",
+      "drop",
+      "lessening",
+      "lowering"
+    ],
+    "definition": [
+      "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent."
+    ]
+  },
+  "Deflation": {
+    "iri": "urn:ontoinsights:ontology:dna:Deflation",
+    "definition": [
+      "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Inflation')\">Inflation</a>"
+    ]
+  },
+  "Demand": {
+    "iri": "urn:ontoinsights:ontology:dna:Demand",
+    "definition": [
+      "A communication insisting on immediate attention."
+    ]
+  },
+  "Desire": {
+    "iri": "urn:ontoinsights:ontology:dna:Desire",
+    "definition": [
+      "Wanting something, someone or some Event or StateAndCondition to occur. The thing, EventAndState or Agent that is 'wanted' is specified using the :has_topic property."
+    ]
+  },
+  "Disagreement or Dispute": {
+    "iri": "urn:ontoinsights:ontology:dna:DisagreementOrDispute",
+    "definition": [
+      "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Agreement')\">Agreement</a>"
+    ]
+  },
+  "Drinkable Water": {
+    "iri": "urn:ontoinsights:ontology:dna:DrinkableWater",
+    "definition": [
+      "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate."
+    ]
+  },
+  "Economic Environment": {
+    "iri": "urn:ontoinsights:ontology:dna:EconomicEnvironment",
+    "definition": [
+      "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive."
+    ]
+  },
+  "Education": {
+    "iri": "urn:ontoinsights:ontology:dna:Education",
+    "definition": [
+      "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."
+    ]
+  },
+  "Employment": {
+    "iri": "urn:ontoinsights:ontology:dna:Employment",
+    "definition": [
+      "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Unemployment')\">Unemployment</a>"
+    ]
+  },
+  "Assessment": {
+    "iri": "urn:ontoinsights:ontology:dna:Assessment",
+    "definition": [
+      "An enumeration of values describing a StateAndCondition/situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('High')\">High</a> ,  <a href=\"javascript:jumpTo('Low')\">Low</a> ,  <a href=\"javascript:jumpTo('Medium')\">Medium</a> ,  <a href=\"javascript:jumpTo('Negligible or None')\">'Negligible or None'</a> ,  <a href=\"javascript:jumpTo('Very High')\">'Very High'</a>}"
     ]
   },
   "Direction": {
@@ -690,13 +1111,25 @@ p {
       "compass direction"
     ],
     "definition": [
-      "An enumeration of the values, :North, :South, :East, :West, :NorthEast, :NorthWest, :SouthEast and :SouthWest."
+      "An enumeration of values such as :enum:North, :enum:South and :enum:SouthEast."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
     ],
     "Equivalent Classes": [
       "{<a href=\"javascript:jumpTo('East')\">East</a> ,  <a href=\"javascript:jumpTo('North')\">North</a> ,  <a href=\"javascript:jumpTo('North-East')\">North-East</a> ,  <a href=\"javascript:jumpTo('North-West')\">North-West</a> ,  <a href=\"javascript:jumpTo('South')\">South</a> ,  <a href=\"javascript:jumpTo('South-East')\">South-East</a> ,  <a href=\"javascript:jumpTo('South-West')\">South-West</a> ,  <a href=\"javascript:jumpTo('West')\">West</a>}"
+    ]
+  },
+  "Line/Type of Business": {
+    "iri": "urn:ontoinsights:ontology:dna:LineOfBusiness",
+    "definition": [
+      "An enumeration indicating different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that an Agent may also specify this using the free-form text property, :line_of_business."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Enumeration')\">Enumeration</a>"
+    ],
+    "Equivalent Classes": [
+      "{<a href=\"javascript:jumpTo('Agriculture, Apiculture and Aquaculture')\">'Agriculture, Apiculture and Aquaculture'</a> ,  <a href=\"javascript:jumpTo('Banking, Finance and Investment')\">'Banking, Finance and Investment'</a> ,  <a href=\"javascript:jumpTo('Construction')\">Construction</a> ,  <a href=\"javascript:jumpTo('Criminal Activities')\">'Criminal Activities'</a> ,  <a href=\"javascript:jumpTo('Education')\">Education</a> ,  <a href=\"javascript:jumpTo('Electronics and Computers')\">'Electronics and Computers'</a> ,  <a href=\"javascript:jumpTo('Energy and Utilities')\">'Energy and Utilities'</a> ,  <a href=\"javascript:jumpTo('Entertainment')\">Entertainment</a> ,  <a href=\"javascript:jumpTo('Environmental or Ecological Activities')\">'Environmental or Ecological Activities'</a> ,  <a href=\"javascript:jumpTo('Fashion')\">Fashion</a> ,  <a href=\"javascript:jumpTo('Food Processing and Preparation')\">'Food Processing and Preparation'</a> ,  <a href=\"javascript:jumpTo('Government and Politics')\">'Government and Politics'</a> ,  <a href=\"javascript:jumpTo('Healthcare')\">Healthcare</a> ,  <a href=\"javascript:jumpTo('Hospitality')\">Hospitality</a> ,  <a href=\"javascript:jumpTo('Humanitarian Activities')\">'Humanitarian Activities'</a> ,  <a href=\"javascript:jumpTo('Information Technology Services')\">'Information Technology Services'</a> ,  <a href=\"javascript:jumpTo('Insurance')\">Insurance</a> ,  <a href=\"javascript:jumpTo('Labor and Staffing')\">'Labor and Staffing'</a> ,  <a href=\"javascript:jumpTo('Legal and Judicial Activities')\">'Legal and Judicial Activities'</a> ,  <a href=\"javascript:jumpTo('Manufacturing')\">Manufacturing</a> ,  <a href=\"javascript:jumpTo('Military')\">Military</a> ,  <a href=\"javascript:jumpTo('Not Applicable')\">'Not Applicable'</a> ,  <a href=\"javascript:jumpTo('Publishing and Media')\">'Publishing and Media'</a> ,  <a href=\"javascript:jumpTo('Raw Material Processing and Preparation')\">'Raw Material Processing and Preparation'</a> ,  <a href=\"javascript:jumpTo('Raw Material Processing and Preparation')\">'Raw Material Processing and Preparation'</a> ,  <a href=\"javascript:jumpTo('Religious Activities')\">'Religious Activities'</a> ,  <a href=\"javascript:jumpTo('Religious Activities')\">'Religious Activities'</a> ,  <a href=\"javascript:jumpTo('Security')\">Security</a> ,  <a href=\"javascript:jumpTo('Transport')\">Transport</a>}"
     ]
   },
   "Temporal Unit": {
@@ -717,6 +1150,296 @@ p {
       "Superclass for any enumerated set of values. This is defined to improve semantic understanding of the class hierarchy when visualized as a tree."
     ]
   },
+  "Delay and Wait": {
+    "iri": "urn:ontoinsights:ontology:dna:DelayAndWait",
+    "definition": [
+      "A lack of action."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Disaster": {
+    "iri": "urn:ontoinsights:ontology:dna:Disaster",
+    "synonym": [
+      "catastrophe",
+      "calamity",
+      "cataclysm",
+      "act of God"
+    ],
+    "definition": [
+      "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Education Event": {
+    "iri": "urn:ontoinsights:ontology:dna:EducationEvent",
+    "definition": [
+      "An Event involved with teaching such as the hiring of teachers or a new approach to testing."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Negative Emotion": {
+    "iri": "urn:ontoinsights:ontology:dna:NegativeEmotion",
+    "example": [
+      "Examples are unhappiness, fear, frustration, loneliness, disgust, hatred, etc."
+    ],
+    "definition": [
+      "Any EmotionalResponse related to unpleasant, pessimistic or insecure feelings."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Emotional Response')\">'Emotional Response'</a>"
+    ]
+  },
+  "Positive Emotion": {
+    "iri": "urn:ontoinsights:ontology:dna:PositiveEmotion",
+    "example": [
+      "Examples are happiness, love, forgiveness, hope, gratitude, etc."
+    ],
+    "definition": [
+      "Any EmotionalResponse related to constructive, optimistic or confident feelings."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Emotional Response')\">'Emotional Response'</a>"
+    ]
+  },
+  "Emotional Response": {
+    "iri": "urn:ontoinsights:ontology:dna:EmotionalResponse",
+    "definition": [
+      "A state of mind associated with positive/pleasurable or negative/displeasurable feelings, thoughts and moods."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Employment Event": {
+    "iri": "urn:ontoinsights:ontology:dna:EmploymentEvent",
+    "definition": [
+      "An Event associated with a business and its workers. Note that EmploymentEvent is not the specific affiliation of an Agent in a business/organization, but is about occurrences related to hiring, firing, lay offs, increase/decrease in pay, etc."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Enforcement": {
+    "iri": "urn:ontoinsights:ontology:dna:Enforcement",
+    "definition": [
+      "An act that compels/insists on obedience or compliance to a law or obligation."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Weather Event": {
+    "iri": "urn:ontoinsights:ontology:dna:WeatherEvent",
+    "example": [
+      "Examples include high/low temperatures, high winds, precipitation, etc."
+    ],
+    "definition": [
+      "Any environmental occurrence related to atmospheric conditions in an area."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Environmental or Ecological Event')\">'Environmental or Ecological Event'</a>"
+    ]
+  },
+  "Environmental or Ecological Event": {
+    "iri": "urn:ontoinsights:ontology:dna:EnvironmentalOrEcologicalEvent",
+    "definition": [
+      "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Financial Event": {
+    "iri": "urn:ontoinsights:ontology:dna:FinancialEvent",
+    "definition": [
+      "Events dealing with monies/currencies and funds and other capital."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Defensive or Protective Act": {
+    "iri": "urn:ontoinsights:ontology:dna:DefensiveOrProtectiveAct",
+    "synonym": [
+      "preservation",
+      "conservation",
+      "prevention"
+    ],
+    "definition": [
+      "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ]
+  },
+  "Friendly or Supportive Act": {
+    "iri": "urn:ontoinsights:ontology:dna:FriendlyOrSupportiveAct",
+    "definition": [
+      "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Aggressive or Hostile Act')\">'Aggressive or Hostile Act'</a>"
+    ]
+  },
+  "Health and Disease Related": {
+    "iri": "urn:ontoinsights:ontology:dna:HealthAndDiseaseRelated",
+    "synonym": [
+      "injury",
+      "illness"
+    ],
+    "definition": [
+      "Events related to the occurrence/observation of disease and illness, and recovery from such, by humans, plants and animals."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Imitation and Counterfeit": {
+    "iri": "urn:ontoinsights:ontology:dna:ImitationAndCounterfeit",
+    "synonym": [
+      "copy",
+      "simulation",
+      "duplicate",
+      "reproduction"
+    ],
+    "definition": [
+      "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Inclusion, Attachment and Unification": {
+    "iri": "urn:ontoinsights:ontology:dna:InclusionAttachmentAndUnification",
+    "definition": [
+      "An act of fastening, joining, grouping or bringing together, etc."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Separation')\">Separation</a>"
+    ]
+  },
+  "Legal Event": {
+    "iri": "urn:ontoinsights:ontology:dna:LegalEvent",
+    "definition": [
+      "Any activity based on following legal practices, or related to or allowed by laws or the legal system."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Measurement": {
+    "iri": "urn:ontoinsights:ontology:dna:Measurement",
+    "synonym": [
+      "quantification"
+    ],
+    "definition": [
+      "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Ceremony": {
+    "iri": "urn:ontoinsights:ontology:dna:Ceremony",
+    "definition": [
+      "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Meeting and Encounter')\">'Meeting and Encounter'</a>"
+    ]
+  },
+  "Meeting and Encounter": {
+    "iri": "urn:ontoinsights:ontology:dna:MeetingAndEncounter",
+    "synonym": [
+      "assembly",
+      "gathering",
+      "social event",
+      "conference"
+    ],
+    "definition": [
+      "Any Event that is a formal, informal or coincidental gathering or assembly of people."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Movement, Travel and Transportation": {
+    "iri": "urn:ontoinsights:ontology:dna:MovementTravelAndTransportation",
+    "definition": [
+      "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "PersonalLifeEvent": {
+    "iri": "urn:ontoinsights:ontology:dna:PersonalLifeEvent",
+    "definition": [
+      "Any occurrence in a Person's life, such as birth, death, marriage, divorce, etc."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Physical Sensation": {
+    "iri": "urn:ontoinsights:ontology:dna:PhysicalSensation",
+    "example": [
+      "Examples are burns and pains due to hunger or injury."
+    ],
+    "definition": [
+      "The reaction of a body to something that happens to it, comes in contact with it or that is lacking."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Election": {
+    "iri": "urn:ontoinsights:ontology:dna:Election",
+    "example": [
+      "Examples are the election of a Person to political office, or to serve in a role such as a jury foreman or chairman of a committee."
+    ],
+    "definition": [
+      "The act of choosing an Agent to play a role or to hold a position within a GroupOfAgents."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Political Event')\">'Political Event'</a>"
+    ]
+  },
+  "Political Event": {
+    "iri": "urn:ontoinsights:ontology:dna:PoliticalEvent",
+    "definition": [
+      "Any Event related to the governance, government and public affairs of a community or country."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
+  "Production, Manufacture and Creation": {
+    "iri": "urn:ontoinsights:ontology:dna:ProductionManufactureAndCreation",
+    "synonym": [
+      "building",
+      "assembling",
+      "construction"
+    ],
+    "definition": [
+      "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ]
+  },
   "Event": {
     "iri": "urn:ontoinsights:ontology:dna:Event",
     "synonym": [
@@ -729,7 +1452,7 @@ p {
       "An occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties)."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "Affiliation": {
@@ -737,43 +1460,193 @@ p {
     "example": [
       "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group."
     ],
-    "comment": [
-      "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property."
+    "definition": [
+      "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('State/Condition')\">State/Condition</a>"
+      "<a href=\"javascript:jumpTo('State and Condition')\">'State and Condition'</a>"
     ]
   },
-  "State/Condition": {
-    "iri": "urn:ontoinsights:ontology:dna:State",
+  "State and Condition": {
+    "iri": "urn:ontoinsights:ontology:dna:StateAndCondition",
     "synonym": [
       "status",
       "environment",
-      "condition",
       "situation",
-      "factor",
-      "circumstance"
+      "circumstance",
+      "factor"
     ],
     "definition": [
       "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
-  "Eventuality/Event and State": {
+  "Event, State and Condition": {
     "iri": "urn:ontoinsights:ontology:dna:EventAndState",
-    "synonym": [
-      "eventuality"
-    ],
     "definition": [
       "Superclass for any occurrence/event, factor or condition/state."
+    ]
+  },
+  "Expansion": {
+    "iri": "urn:ontoinsights:ontology:dna:Expansion",
+    "definition": [
+      "A condition describing an ongoing Trend of increasing, broadening, enlarging, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Expansion can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Reduction')\">Reduction</a>"
+    ]
+  },
+  "Expenses": {
+    "iri": "urn:ontoinsights:ontology:dna:Expenses",
+    "example": [
+      "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc."
+    ],
+    "definition": [
+      "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Income')\">Income</a>"
+    ]
+  },
+  "Food": {
+    "iri": "urn:ontoinsights:ontology:dna:Food",
+    "definition": [
+      "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate."
+    ]
+  },
+  "Freedom": {
+    "iri": "urn:ontoinsights:ontology:dna:Freedom",
+    "definition": [
+      "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Captivity and Detention')\">'Captivity and Detention'</a>"
+    ]
+  },
+  "Gambling and Wagering": {
+    "iri": "urn:ontoinsights:ontology:dna:GamblingAndWagering",
+    "synonym": [
+      "betting"
+    ],
+    "definition": [
+      "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result."
+    ]
+  },
+  "Gift and Donation": {
+    "iri": "urn:ontoinsights:ontology:dna:GiftAndDonation",
+    "synonym": [
+      "present",
+      "contribution"
+    ],
+    "definition": [
+      "An act of giving with no expectation of payment."
+    ]
+  },
+  "Healthcare": {
+    "iri": "urn:ontoinsights:ontology:dna:Healthcare",
+    "definition": [
+      "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."
+    ]
+  },
+  "Impossibility": {
+    "iri": "urn:ontoinsights:ontology:dna:Impossibility",
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Opportunity and Possibility')\">'Opportunity and Possibility'</a>"
+    ]
+  },
+  "Income": {
+    "iri": "urn:ontoinsights:ontology:dna:Income",
+    "example": [
+      "Examples of incomes are salaries, received payments for sales of crops, etc."
+    ],
+    "definition": [
+      "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Expenses')\">Expenses</a>"
+    ]
+  },
+  "Increase": {
+    "iri": "urn:ontoinsights:ontology:dna:Increase",
+    "synonym": [
+      "escalation",
+      "growth",
+      "rise",
+      "expansion"
+    ],
+    "definition": [
+      "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent."
+    ]
+  },
+  "Inflation": {
+    "iri": "urn:ontoinsights:ontology:dna:Inflation",
+    "definition": [
+      "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Deflation')\">Deflation</a>"
+    ]
+  },
+  "Information Handling": {
+    "iri": "urn:ontoinsights:ontology:dna:InformationHandling",
+    "definition": [
+      "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities."
     ]
   },
   "Information Source": {
     "iri": "urn:ontoinsights:ontology:dna:InformationSource",
     "definition": [
       "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content."
+    ]
+  },
+  "Inquiry": {
+    "iri": "urn:ontoinsights:ontology:dna:Inquiry",
+    "definition": [
+      "A CommunicationAndSpeechAct involving asking questions/for information."
+    ]
+  },
+  "Intention": {
+    "iri": "urn:ontoinsights:ontology:dna:Intention",
+    "synonym": [
+      "goal",
+      "aim",
+      "objective"
+    ],
+    "definition": [
+      "The Event or StateAndCondition that an Agent hopes to attain/accomplish."
+    ]
+  },
+  "Knowledge and Skill": {
+    "iri": "urn:ontoinsights:ontology:dna:KnowledgeAndSkill",
+    "synonym": [
+      "understanding",
+      "comprehension",
+      "awareness"
+    ],
+    "definition": [
+      "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"
+    ]
+  },
+  "Law and Policy": {
+    "iri": "urn:ontoinsights:ontology:dna:LawAndPolicy"
+  },
+  "Learning": {
+    "iri": "urn:ontoinsights:ontology:dna:Learning",
+    "synonym": [
+      "education",
+      "study",
+      "schooling"
+    ],
+    "definition": [
+      "An act of acquiring knowledge and skills through study, repetition, experience, instruction, etc."
+    ]
+  },
+  "Living Conditions": {
+    "iri": "urn:ontoinsights:ontology:dna:LivingConditions",
+    "definition": [
+      "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive."
     ]
   },
   "Online Location": {
@@ -915,7 +1788,24 @@ p {
       "venue"
     ],
     "definition": [
-      "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's Location is specified using the :has_location property."
+      "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property."
+    ]
+  },
+  "Loss": {
+    "iri": "urn:ontoinsights:ontology:dna:Loss",
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Possession')\">Possession</a>"
+    ]
+  },
+  "Memory": {
+    "iri": "urn:ontoinsights:ontology:dna:Memory",
+    "synonym": [
+      "reminiscence",
+      "recollection",
+      "remembrance"
+    ],
+    "definition": [
+      "An act of Cognition dealing with the recollection/retrieval of past occurrences, learning and insights."
     ]
   },
   "Mention": {
@@ -928,6 +1818,27 @@ p {
       "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity."
     ]
   },
+  "Opportunity and Possibility": {
+    "iri": "urn:ontoinsights:ontology:dna:OpportunityAndPossibility",
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Impossibility')\">Impossibility</a>"
+    ]
+  },
+  "Political Environment": {
+    "iri": "urn:ontoinsights:ontology:dna:PoliticalEnvironment",
+    "definition": [
+      "A superclass for a variety of characterizations related governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the StateAndConditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive."
+    ]
+  },
+  "Possession": {
+    "iri": "urn:ontoinsights:ontology:dna:Possession",
+    "definition": [
+      "A condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Loss')\">Loss</a>"
+    ]
+  },
   "Goal-Directed Process": {
     "iri": "urn:ontoinsights:ontology:dna:GoalDirectedProcess",
     "example": [
@@ -937,7 +1848,7 @@ p {
       "procedure"
     ],
     "definition": [
-      "A series of interrelated/interdependent events or states that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_."
+      "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -946,7 +1857,7 @@ p {
   "Natural Process": {
     "iri": "urn:ontoinsights:ontology:dna:NaturalProcess",
     "definition": [
-      "A series of interrelated/interdependent events or states that progress along a timeline. Examples are the aging process, climate change or a chemical process."
+      "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -962,7 +1873,7 @@ p {
       "plot"
     ],
     "definition": [
-      "A 'prototypical' sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
+      "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -971,23 +1882,141 @@ p {
   "Process/Sequence": {
     "iri": "urn:ontoinsights:ontology:dna:Process",
     "definition": [
-      "A series of interrelated and/or interdependent events or states that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)."
+      "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)."
     ]
   },
-  "Animal": {
-    "iri": "urn:ontoinsights:ontology:dna:Animal",
+  "Protest": {
+    "iri": "urn:ontoinsights:ontology:dna:Protest",
     "synonym": [
-      "bug",
-      "insect",
-      "fauna",
-      "creature",
-      "beast"
+      "objection",
+      "complaint",
+      "disapproval"
     ],
     "definition": [
-      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'"
+      "An act (such as a CommunicationAndSpeechAct, or gathering/MeetingAndEncounter) indicating disapproval or objection to something or someone. Other Event subclasses (such as MeetingAndEncounter) should be added to more fully define the Event. The entity which is disapproved of/object to is defined using the :has_topic property."
+    ]
+  },
+  "Punishment": {
+    "iri": "urn:ontoinsights:ontology:dna:Punishment",
+    "synonym": [
+      "disciplining",
+      "retribution"
     ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    "definition": [
+      "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Reward')\">Reward</a>"
+    ]
+  },
+  "Purchase and Sale": {
+    "iri": "urn:ontoinsights:ontology:dna:PurchaseAndSale",
+    "synonym": [
+      "buying",
+      "vending",
+      "procurement",
+      "selling"
+    ],
+    "definition": [
+      "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."
+    ]
+  },
+  "Recession": {
+    "iri": "urn:ontoinsights:ontology:dna:Recession",
+    "definition": [
+      "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate."
+    ]
+  },
+  "Recreation Event": {
+    "iri": "urn:ontoinsights:ontology:dna:RecreationEvent",
+    "synonym": [
+      "leisure",
+      "relaxation"
+    ],
+    "definition": [
+      "Any activity done for relaxation and enjoyment (not an Agent's job or business)."
+    ]
+  },
+  "Reduction": {
+    "iri": "urn:ontoinsights:ontology:dna:Reduction",
+    "definition": [
+      "A condition describing an ongoing Trend of decreasing, shrinking, narrowing, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Reduction can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Expansion')\">Expansion</a>"
+    ]
+  },
+  "Refusal and Rejection": {
+    "iri": "urn:ontoinsights:ontology:dna:RefusalAndRejection",
+    "synonym": [
+      "declining",
+      "nonacceptance",
+      "denial"
+    ],
+    "definition": [
+      "An act related to not accepting or acknowledging something, someone, or some Event or StateAndCondition. The entity that is not acknowledged/accepted is identified using the :has_topic predicate."
+    ]
+  },
+  "Removal and Restriction": {
+    "iri": "urn:ontoinsights:ontology:dna:RemovalAndRestriction",
+    "synonym": [
+      "sanction",
+      "cutback",
+      "limitation"
+    ],
+    "definition": [
+      "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Return and Release')\">'Return and Release'</a>"
+    ]
+  },
+  "Removal of Raw Materials (Mining, Drilling, Logging, ...)": {
+    "iri": "urn:ontoinsights:ontology:dna:RemovalOfRawMaterials",
+    "definition": [
+      "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities"
+    ]
+  },
+  "Repair": {
+    "iri": "urn:ontoinsights:ontology:dna:Repair",
+    "synonym": [
+      "renovation",
+      "mending",
+      "fixing",
+      "restoration"
+    ],
+    "definition": [
+      "Any act that fixes/mends/adjusts/restores an entity that is broken, damaged or faulty."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Attack, Damage and Assault')\">'Attack, Damage and Assault'</a>"
+    ]
+  },
+  "Request and Appeal": {
+    "iri": "urn:ontoinsights:ontology:dna:RequestAndAppeal",
+    "synonym": [
+      "asking for",
+      "plea",
+      "entreaty",
+      "petition",
+      "solicitation",
+      "supplication"
+    ],
+    "definition": [
+      "A CommunicationAndSpeechAct that expresses a need or desire for something or someone, or that some Event occur. Note that who/what is requested is identified using the :has_topic predicate."
+    ]
+  },
+  "Requirement and Dependence": {
+    "iri": "urn:ontoinsights:ontology:dna:RequirementAndDependence"
+  },
+  "Resistance": {
+    "iri": "urn:ontoinsights:ontology:dna:Resistance",
+    "synonym": [
+      "refusal to accept",
+      "opposition"
+    ],
+    "definition": [
+      "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate."
     ]
   },
   "Art and Collectible": {
@@ -1089,21 +2118,6 @@ p {
       "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
     ]
   },
-  "Fungus and Plant": {
-    "iri": "urn:ontoinsights:ontology:dna:FungusAndPlant",
-    "synonym": [
-      "flora",
-      "mushroom",
-      "mold",
-      "vegetation"
-    ],
-    "definition": [
-      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
-    ]
-  },
   "Furniture and Household Goods": {
     "iri": "urn:ontoinsights:ontology:dna:FurnitureAndHouseholdGoods",
     "definition": [
@@ -1116,7 +2130,7 @@ p {
   "Legal Instrument": {
     "iri": "urn:ontoinsights:ontology:dna:LegalInstrument",
     "definition": [
-      "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments."
+      "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
@@ -1365,6 +2379,58 @@ p {
       "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold."
     ]
   },
+  "Return and Release": {
+    "iri": "urn:ontoinsights:ontology:dna:ReturnAndRelease",
+    "definition": [
+      "An act of restoring something or someone to their original owner or location, granting freedom to someone or something, or letting something or someone fall/spill/drop. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Removal and Restriction')\">'Removal and Restriction'</a>"
+    ]
+  },
+  "Revelation": {
+    "iri": "urn:ontoinsights:ontology:dna:Revelation",
+    "synonym": [
+      "divulging",
+      "disclosure"
+    ],
+    "definition": [
+      "An act of exposing/making something/someone known."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Concealment')\">Concealment</a>"
+    ]
+  },
+  "Reward": {
+    "iri": "urn:ontoinsights:ontology:dna:Reward",
+    "synonym": [
+      "prize",
+      "winnings",
+      "recompense",
+      "award"
+    ],
+    "definition": [
+      "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific Event or StateAndCondition (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Punishment')\">Punishment</a>"
+    ]
+  },
+  "Risk": {
+    "iri": "urn:ontoinsights:ontology:dna:Risk"
+  },
+  "Robbery and Theft": {
+    "iri": "urn:ontoinsights:ontology:dna:RobberyAndTheft",
+    "synonym": [
+      "stealing",
+      "burglary",
+      "thievery",
+      "breaking and entering"
+    ],
+    "definition": [
+      "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."
+    ]
+  },
   "Role": {
     "iri": "urn:ontoinsights:ontology:dna:Role",
     "example": [
@@ -1372,6 +2438,140 @@ p {
     ],
     "definition": [
       "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics."
+    ]
+  },
+  "Safe Conditions": {
+    "iri": "urn:ontoinsights:ontology:dna:SafeConditions",
+    "definition": [
+      "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding SafeConditions can be described using the :has_assessment predicate."
+    ]
+  },
+  "Sanitary Conditions": {
+    "iri": "urn:ontoinsights:ontology:dna:SanitaryConditions",
+    "definition": [
+      "A condition describing that sewage is managed and hygiene is maintained for a population/GroupOfAgents. The overall availability and accessibility regarding SanitaryConditions can be described using the :has_assessment predicate."
+    ]
+  },
+  "Savings and Investment": {
+    "iri": "urn:ontoinsights:ontology:dna:SavingsAndInvestment",
+    "synonym": [
+      "capital",
+      "nest egg"
+    ],
+    "definition": [
+      "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate."
+    ]
+  },
+  "Searching": {
+    "iri": "urn:ontoinsights:ontology:dna:Searching",
+    "synonym": [
+      "foraging",
+      "exploration",
+      "looking for",
+      "hunting"
+    ],
+    "definition": [
+      "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property."
+    ]
+  },
+  "Sensory Perception": {
+    "iri": "urn:ontoinsights:ontology:dna:SensoryPerception",
+    "definition": [
+      "An act involving one of the senses - sight, hearing, touch, taste and smell."
+    ]
+  },
+  "Separation": {
+    "iri": "urn:ontoinsights:ontology:dna:Separation",
+    "synonym": [
+      "dissociation",
+      "uncoupling",
+      "disconnection",
+      "severance",
+      "detachment"
+    ],
+    "definition": [
+      "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Inclusion, Attachment and Unification')\">'Inclusion, Attachment and Unification'</a>"
+    ]
+  },
+  "Space Event": {
+    "iri": "urn:ontoinsights:ontology:dna:SpaceEvent",
+    "example": [
+      "Examples are comet, asteroid or meteoroid impacts, meteor showers, burn-up of space debris in the atmosphere, solar flares, eclipses, etc."
+    ],
+    "definition": [
+      "Any event that occurs beyond the Earth."
+    ]
+  },
+  "Storage": {
+    "iri": "urn:ontoinsights:ontology:dna:Storage",
+    "synonym": [
+      "retention",
+      "warehousing"
+    ],
+    "definition": [
+      "Any act of keeping something for future delivery, sale or use."
+    ]
+  },
+  "Substitution": {
+    "iri": "urn:ontoinsights:ontology:dna:Substitution",
+    "synonym": [
+      "replacement",
+      "swap",
+      "exchange",
+      "interchange"
+    ],
+    "definition": [
+      "An act of replacing something or someone with another."
+    ]
+  },
+  "Support for Government": {
+    "iri": "urn:ontoinsights:ontology:dna:SupportForGovernment",
+    "definition": [
+      "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably. The overall situation is described using the :has_assessment property."
+    ]
+  },
+  "Support for Human Rights": {
+    "iri": "urn:ontoinsights:ontology:dna:SupportForHumanRights",
+    "definition": [
+      "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)"
+    ]
+  },
+  "Surrender and Yielding": {
+    "iri": "urn:ontoinsights:ontology:dna:SurrenderAndYielding",
+    "synonym": [
+      "giving in",
+      "succombing",
+      "capitulation"
+    ],
+    "definition": [
+      "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct."
+    ]
+  },
+  "Taxes": {
+    "iri": "urn:ontoinsights:ontology:dna:Taxes",
+    "synonym": [
+      "tariff",
+      "duty",
+      "tax",
+      "toll",
+      "levy"
+    ],
+    "definition": [
+      "A situation describing and assessing (via the :has_assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863)"
+    ]
+  },
+  "Threat": {
+    "iri": "urn:ontoinsights:ontology:dna:Threat",
+    "synonym": [
+      "menacing",
+      "ultimatum",
+      "warning"
+    ],
+    "definition": [
+      "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_agent, while the threatened Agent is identified using :has_affected_agent."
     ]
   },
   "Duration of Time": {
@@ -1455,6 +2655,26 @@ p {
       "Superclass defining the shared semantics of specific points in time, intervals of time or durations. An individual's time-related information is specified using the :has_time property or its sub-properties."
     ]
   },
+  "Trend": {
+    "iri": "urn:ontoinsights:ontology:dna:Trend",
+    "synonym": [
+      "inclination",
+      "tendency",
+      "course"
+    ],
+    "definition": [
+      "A condition describing the general direction or tendency in which some Agent or Resource is moving/changing/developing. The pace of change of the Trend can be described using the :has_assessment predicate."
+    ]
+  },
+  "Unemployment": {
+    "iri": "urn:ontoinsights:ontology:dna:Unemployment",
+    "definition": [
+      "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Employment')\">Employment</a>"
+    ]
+  },
   "Unifying Collection": {
     "iri": "urn:ontoinsights:ontology:dna:UnifyingCollection",
     "example": [
@@ -1463,6 +2683,9 @@ p {
     "definition": [
       "A Collection whose members are considered the 'same' thing."
     ]
+  },
+  "urn:ontoinsights:ontology:dna:boolean": {
+    "iri": "urn:ontoinsights:ontology:dna:boolean"
   },
   "Currency": {
     "iri": "urn:ontoinsights:ontology:dna:Currency",
@@ -1476,146 +2699,203 @@ p {
   "urn:ontoinsights:ontology:dna:FinancialInstrument": {
     "iri": "urn:ontoinsights:ontology:dna:FinancialInstrument"
   },
+  "urn:ontoinsights:ontology:dna:InvestigationAndObservation": {
+    "iri": "urn:ontoinsights:ontology:dna:InvestigationAndObservation",
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Ignoring and Overlooking')\">'Ignoring and Overlooking'</a>"
+    ]
+  },
+  "UtilizationAndConsumption": {
+    "iri": "urn:ontoinsights:ontology:dna:UtilizationAndConsumption",
+    "definition": [
+      "Any act that uses something or someone."
+    ]
+  },
+  "Violation of Agreement": {
+    "iri": "urn:ontoinsights:ontology:dna:ViolationOfAgreement",
+    "definition": [
+      "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Agreement')\">Agreement</a>"
+    ]
+  },
+  "Violence and Fighting": {
+    "iri": "urn:ontoinsights:ontology:dna:ViolenceAndFighting",
+    "definition": [
+      "Any act of aggression involving the use of physical force and/or weapons, and intended to injure, damage or cause harm."
+    ]
+  },
+  "High": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:High",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ]
+  },
+  "Low": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Low",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ]
+  },
+  "Medium": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Medium",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ]
+  },
+  "Negligible or None": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:NegligibleOrNone",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ]
+  },
+  "Very High": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:VeryHigh",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ]
+  },
   "East": {
-    "iri": "urn:ontoinsights:ontology:dna:East",
+    "iri": "urn:ontoinsights:ontology:dna:enum:East",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "North": {
-    "iri": "urn:ontoinsights:ontology:dna:North",
+    "iri": "urn:ontoinsights:ontology:dna:enum:North",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "North-East": {
-    "iri": "urn:ontoinsights:ontology:dna:NorthEast",
+    "iri": "urn:ontoinsights:ontology:dna:enum:NorthEast",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "North-West": {
-    "iri": "urn:ontoinsights:ontology:dna:NorthWest",
+    "iri": "urn:ontoinsights:ontology:dna:enum:NorthWest",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "South": {
-    "iri": "urn:ontoinsights:ontology:dna:South",
+    "iri": "urn:ontoinsights:ontology:dna:enum:South",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "South-East": {
-    "iri": "urn:ontoinsights:ontology:dna:SouthEast",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SouthEast",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "South-West": {
-    "iri": "urn:ontoinsights:ontology:dna:SouthWest",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SouthWest",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "West": {
-    "iri": "urn:ontoinsights:ontology:dna:West",
+    "iri": "urn:ontoinsights:ontology:dna:enum:West",
     "Type": [
       "<a href=\"javascript:jumpTo('Direction')\">Direction</a>"
     ]
   },
   "Completed Doctoral Education": {
-    "iri": "urn:ontoinsights:ontology:dna:CompletedDoctoralEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:CompletedDoctoralEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Completed Graduate Education": {
-    "iri": "urn:ontoinsights:ontology:dna:CompletedGraduateEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:CompletedGraduateEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Completed Primary Education": {
-    "iri": "urn:ontoinsights:ontology:dna:CompletedPrimaryEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:CompletedPrimaryEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Completed Secondary Education": {
-    "iri": "urn:ontoinsights:ontology:dna:CompletedSecondaryEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:CompletedSecondaryEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Completed Undergraduate Education": {
-    "iri": "urn:ontoinsights:ontology:dna:CompletedUndergraduateEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:CompletedUndergraduateEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "No Education": {
-    "iri": "urn:ontoinsights:ontology:dna:NoEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:NoEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Post-Doctoral Education": {
-    "iri": "urn:ontoinsights:ontology:dna:PostDoctoralEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:PostDoctoralEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Some Doctoral Education": {
-    "iri": "urn:ontoinsights:ontology:dna:SomeDoctoralEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SomeDoctoralEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Some Graduate Education": {
-    "iri": "urn:ontoinsights:ontology:dna:SomeGraduateEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SomeGraduateEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Some Primary Education": {
-    "iri": "urn:ontoinsights:ontology:dna:SomePrimaryEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SomePrimaryEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Some Secondary Education": {
-    "iri": "urn:ontoinsights:ontology:dna:SomeSecondaryEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SomeSecondaryEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Some Undergraduate Education": {
-    "iri": "urn:ontoinsights:ontology:dna:SomeUndergraduateEducation",
+    "iri": "urn:ontoinsights:ontology:dna:enum:SomeUndergraduateEducation",
     "Type": [
       "<a href=\"javascript:jumpTo('Education Level')\">'Education Level'</a>"
     ]
   },
   "Agender, Gender Neutral or Lack of Gender": {
-    "iri": "urn:ontoinsights:ontology:dna:Agender",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Agender",
     "Type": [
       "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
     ]
   },
   "Bigender": {
-    "iri": "urn:ontoinsights:ontology:dna:Bigender",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Bigender",
     "Type": [
       "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
     ]
   },
   "Female": {
-    "iri": "urn:ontoinsights:ontology:dna:Female",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Female",
     "synonym": [
       "woman",
       "Ms.",
       "lady",
-      "miss",
       "girl",
+      "miss",
       "Mrs.",
       "matron"
     ],
@@ -1624,19 +2904,259 @@ p {
     ]
   },
   "Male": {
-    "iri": "urn:ontoinsights:ontology:dna:Male",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Male",
     "synonym": [
       "Mr.",
-      "mister",
       "man",
+      "mister",
       "boy"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Gender')\">Gender</a>"
     ]
   },
+  "Banking, Finance and Investment": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:BankingAndFinance",
+    "definition": [
+      "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock trading activities, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Construction": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Construction",
+    "example": [
+      "Examples include architectural firms, trades people, landscape and interior design firms, etc."
+    ],
+    "definition": [
+      "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Criminal Activities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:CriminalActivities",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Electronics and Computers": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:ElectronicsAndComputers",
+    "example": [
+      "Examples include both the engineering and fabrication aspects of electronics and computer hardware."
+    ],
+    "definition": [
+      "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Energy and Utilities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:EnergyAndUtilities",
+    "example": [
+      "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc."
+    ],
+    "definition": [
+      "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Entertainment": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Entertainment",
+    "example": [
+      "Entertainment businesses include museums, theaters, any type of performance acts, etc."
+    ],
+    "definition": [
+      "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Environmental or Ecological Activities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:EnvironmentalOrEcologicalActivities",
+    "definition": [
+      "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Fashion": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Fashion",
+    "example": [
+      "Examples include beauty salons and workers, alteration activities, jewelry and clothing design and sales, etc."
+    ],
+    "definition": [
+      "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Food Processing and Preparation": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:FoodProcessingAndPreparation",
+    "example": [
+      "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc."
+    ],
+    "definition": [
+      "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)"
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Government and Politics": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:GovernmentAndPolitics",
+    "definition": [
+      "Involved with governing bodies and agencies, parliaments and law making, political parties, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Hospitality": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Hospitality",
+    "definition": [
+      "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Humanitarian Activities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:HumanitarianActivities",
+    "definition": [
+      "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Information Technology Services": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:InformationTechnologyServices",
+    "example": [
+      "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc."
+    ],
+    "definition": [
+      "Involved with the collection, analysis, storage and communication of data."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Insurance": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Insurance",
+    "example": [
+      "Examples include insurance agencies, underwriters, etc."
+    ],
+    "definition": [
+      "Involved with protecting against financial loss related to damage to an asset or person."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Labor and Staffing": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:LaborAndStaffing",
+    "definition": [
+      "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Legal and Judicial Activities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:LegalAndJudicialActivities",
+    "definition": [
+      "Involved with courts and trials, attorneys and litigations, etc."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Manufacturing": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Manufacturing",
+    "definition": [
+      "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)"
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Military": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Military",
+    "definition": [
+      "Involved with armed forces, troops, equipment and research/consulting related to these."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Not Applicable": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:NotApplicable",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Publishing and Media": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:PublishingAndMedia",
+    "example": [
+      "Examples are activities related to books, journals, magazines, periodicals, blogs, newspapers, etc."
+    ],
+    "definition": [
+      "Involved with the creation, production, marketing and distribution of written and visual material."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Raw Material Processing and Preparation": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:RealEstate",
+    "definition": [
+      "Involved with the maintenance and sale of property/land and buildings."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Religious Activities": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Retail",
+    "example": [
+      "Examples are stores, malls, groceries, etc."
+    ],
+    "definition": [
+      "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Security": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Security",
+    "definition": [
+      "Involved with the protection of (online and physical) locations, goods or persons via services and personnel."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
+  "Transport": {
+    "iri": "urn:ontoinsights:ontology:dna:enum:Transport",
+    "definition": [
+      "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations."
+    ],
+    "Type": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
+    ]
+  },
   "Days": {
-    "iri": "urn:ontoinsights:ontology:dna:Days",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Days",
     "definition": [
       "A 24-hour interval of time."
     ],
@@ -1645,7 +3165,7 @@ p {
     ]
   },
   "Hours": {
-    "iri": "urn:ontoinsights:ontology:dna:Hours",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Hours",
     "definition": [
       "A 60-minute interval of time."
     ],
@@ -1654,7 +3174,7 @@ p {
     ]
   },
   "Minutes": {
-    "iri": "urn:ontoinsights:ontology:dna:Minutes",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Minutes",
     "definition": [
       "A 60-second interval of time."
     ],
@@ -1663,7 +3183,7 @@ p {
     ]
   },
   "Months": {
-    "iri": "urn:ontoinsights:ontology:dna:Months",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Months",
     "definition": [
       "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon."
     ],
@@ -1672,7 +3192,7 @@ p {
     ]
   },
   "Seasonal": {
-    "iri": "urn:ontoinsights:ontology:dna:Seasonal",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Seasonal",
     "definition": [
       "A period of time characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc., and which is defined differently in various localities and domains of interest."
     ],
@@ -1681,7 +3201,7 @@ p {
     ]
   },
   "Seconds": {
-    "iri": "urn:ontoinsights:ontology:dna:Seconds",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Seconds",
     "definition": [
       "A period of time that is one of the base units in the International System of Units (SI)."
     ],
@@ -1690,7 +3210,7 @@ p {
     ]
   },
   "Weeks": {
-    "iri": "urn:ontoinsights:ontology:dna:Weeks",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Weeks",
     "definition": [
       "A 7-day interval of time."
     ],
@@ -1699,7 +3219,7 @@ p {
     ]
   },
   "Years": {
-    "iri": "urn:ontoinsights:ontology:dna:Years",
+    "iri": "urn:ontoinsights:ontology:dna:enum:Years",
     "definition": [
       "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention."
     ],
@@ -1742,6 +3262,9 @@ p {
     "definition": [
       "A word which has a similar meaning."
     ]
+  },
+  "urn:ontoinsights:ontology:dna:examples": {
+    "iri": "urn:ontoinsights:ontology:dna:examples"
   },
   "urn:ontoinsights:ontology:dna:synonyn": {
     "iri": "urn:ontoinsights:ontology:dna:synonyn"
@@ -2052,6 +3575,18 @@ p {
       "Functional"
     ]
   },
+  "line of business": {
+    "iri": "urn:ontoinsights:ontology:dna:line_of_business",
+    "definition": [
+      "Specifies a particular a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or Organization). Note that the :has_line_of_business property may also be specified, which maps the text to a set of enumerated values."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
   "longitude": {
     "iri": "urn:ontoinsights:ontology:dna:longitude",
     "definition": [
@@ -2292,9 +3827,7 @@ p {
       "likelihood"
     ],
     "definition": [
-      "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing."
-    ],
-    "comment": [
+      "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing.",
       "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean."
     ],
     "Ranges": [
@@ -2307,9 +3840,7 @@ p {
   "prototypical (boolean)": {
     "iri": "urn:ontoinsights:ontology:dna:prototypical",
     "definition": [
-      "Boolean indicating that the individual describes a 'typical' (and not a specific) instance."
-    ],
-    "comment": [
+      "Boolean indicating that the individual describes a 'typical' (and not a specific) instance.",
       "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)."
     ],
     "Ranges": [
@@ -2317,6 +3848,18 @@ p {
     ],
     "Characteristics": [
       "Functional"
+    ]
+  },
+  "role": {
+    "iri": "urn:ontoinsights:ontology:dna:role",
+    "definition": [
+      "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
     ]
   },
   "second of minute": {
@@ -2388,6 +3931,15 @@ p {
       "<a href=\"javascript:jumpTo('integer')\">integer</a>"
     ]
   },
+  "supporting Evidence (boolean)": {
+    "iri": "urn:ontoinsights:ontology:dna:supporting",
+    "definition": [
+      "Indicates that the referenced Evidence 'supports' the existence and definition of the referencing entity/individual. When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate."
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
   "Uniform Resource Locator (URL)": {
     "iri": "urn:ontoinsights:ontology:dna:url",
     "definition": [
@@ -2450,14 +4002,14 @@ p {
   },
   "causes": {
     "iri": "urn:ontoinsights:ontology:dna:causes",
-    "comment": [
+    "definition": [
       "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "during": {
@@ -2468,14 +4020,14 @@ p {
   },
   "enables/allows": {
     "iri": "urn:ontoinsights:ontology:dna:enables",
-    "comment": [
+    "definition": [
       "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "excluded member": {
@@ -2485,6 +4037,21 @@ p {
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
+    ]
+  },
+  "has affected resource": {
+    "iri": "urn:ontoinsights:ontology:dna:has_affected_resource",
+    "example": [
+      "For example, if a building is defaced, then that Resource (a BuildingAndDwelling individual) would be identified in an AttackDamageAndAssault Event using the :has_affected_resource predicate."
+    ],
+    "definition": [
+      "References a Resource which is affected by an Event. This property is similar to the predicate, :has_affected_agent."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event')\">Event</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
     ]
   },
   "has active agent": {
@@ -2538,16 +4105,16 @@ p {
   "has holder": {
     "iri": "urn:ontoinsights:ontology:dna:has_holder",
     "example": [
-      "For example, Fame may be defined as a subclass of State. An instance of Fame would reference a famous Person using the :has_holder property."
+      "For example, the general situation regarding Employment in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment individual using the property, :has_holder."
     ],
     "definition": [
-      "References an Agent who experiences some State/situation/condition."
+      "References an Agent who experiences some StateAndCondition/situation."
     ],
     "SubProperty Of": [
       "<a href=\"javascript:jumpTo('has agent')\">'has agent'</a>"
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('State/Condition')\">State/Condition</a>"
+      "<a href=\"javascript:jumpTo('State and Condition')\">'State and Condition'</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
@@ -2586,22 +4153,37 @@ p {
   "has agent": {
     "iri": "urn:ontoinsights:ontology:dna:has_agent",
     "definition": [
-      "References an Agent who participates in or who experiences an Event or State. Whether the Agent is active in the Event or experiences/is affected by an Event or State can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder."
+      "References an Agent who participates in or who experiences an Event or StateAndCondition. Whether the Agent is active in the event/state/condition or experiences/is affected by it can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
     ]
   },
+  "has assessment": {
+    "iri": "urn:ontoinsights:ontology:dna:has_assessment",
+    "definition": [
+      "Used to indicate how a StateAndCondition ((such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('State and Condition')\">'State and Condition'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Assessment')\">Assessment</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
   "has characteristic": {
     "iri": "urn:ontoinsights:ontology:dna:has_characteristic",
     "definition": [
-      "Indicates some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them."
+      "Indicates some aspect of a Person that serves to distinguish and/or describe them."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+      "<a href=\"javascript:jumpTo('Person')\">Person</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Characteristic')\">Characteristic</a>"
@@ -2622,7 +4204,7 @@ p {
   "has first": {
     "iri": "urn:ontoinsights:ontology:dna:has_first",
     "definition": [
-      "References the first individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may initiate a Process."
+      "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one Event or StateAndCondition may initiate a Process."
     ],
     "SubProperty Of": [
       "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
@@ -2631,7 +4213,7 @@ p {
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "has goal": {
@@ -2646,13 +4228,13 @@ p {
       "<a href=\"javascript:jumpTo('Goal-Directed Process')\">'Goal-Directed Process'</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "has last": {
     "iri": "urn:ontoinsights:ontology:dna:has_last",
     "definition": [
-      "References the last individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may terminate a Process."
+      "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one Event or StateAndCondition may terminate a Process."
     ],
     "SubProperty Of": [
       "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
@@ -2661,7 +4243,7 @@ p {
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "has component": {
@@ -2685,6 +4267,30 @@ p {
       "Functional"
     ]
   },
+  "has evidence": {
+    "iri": "urn:ontoinsights:ontology:dna:has_evidence",
+    "definition": [
+      "References supporting or refuting Evidence for the subject or subject-predicate-object triple. Supporting or refuting Evidence is indicated by the Evidence individual's :supporting property."
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Evidence')\">Evidence</a>"
+    ]
+  },
+  "has holding resource": {
+    "iri": "urn:ontoinsights:ontology:dna:has_holding_resource",
+    "example": [
+      "For example, if a storage facility can hold x cubic feet of materials, then that Resource (a BuildingAndDwelling individual) would be identified as the 'holding resource' for an instance of the Capacity StateAndCondition."
+    ],
+    "definition": [
+      "References a Resource which is described by a StateAndCondition. This property is similar to the predicate, :has_holder."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('State and Condition')\">'State and Condition'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
   "has instrument": {
     "iri": "urn:ontoinsights:ontology:dna:has_instrument",
     "definition": [
@@ -2695,6 +4301,18 @@ p {
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Resource')\">Resource</a>"
+    ]
+  },
+  "has line of business": {
+    "iri": "urn:ontoinsights:ontology:dna:has_line_of_business",
+    "definition": [
+      "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
     ]
   },
   "border with": {
@@ -2760,10 +4378,10 @@ p {
   "has location": {
     "iri": "urn:ontoinsights:ontology:dna:has_location",
     "definition": [
-      "References where an Event or State/condition occurs/occurred."
+      "References where an Event or StateAndCondition occurs/occurred."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Location')\">Location</a>"
@@ -2781,7 +4399,7 @@ p {
   "has next": {
     "iri": "urn:ontoinsights:ontology:dna:has_next",
     "definition": [
-      "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and States."
+      "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and StateAndConditions."
     ]
   },
   "has recurrence time": {
@@ -2805,7 +4423,7 @@ p {
   "has role": {
     "iri": "urn:ontoinsights:ontology:dna:has_role",
     "definition": [
-      "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property."
+      "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative"
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
@@ -2856,13 +4474,13 @@ p {
   "has topic": {
     "iri": "urn:ontoinsights:ontology:dna:has_topic",
     "example": [
-      "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of State (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property."
+      "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of StateAndCondition (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property."
     ],
     "definition": [
-      "References the subject/topic of an Event or State."
+      "References the subject/topic of an Event or StateAndCondition."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "meets": {
@@ -2918,14 +4536,14 @@ p {
   },
   "prevents": {
     "iri": "urn:ontoinsights:ontology:dna:prevents",
-    "comment": [
+    "definition": [
       "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)."
     ],
     "Domains": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ],
     "Ranges": [
-      "<a href=\"javascript:jumpTo('Eventuality/Event and State')\">'Eventuality/Event and State'</a>"
+      "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
     ]
   },
   "has direction": {
@@ -2984,7 +4602,7 @@ p {
   },
   "reference to enumerated value": {
     "iri": "urn:ontoinsights:ontology:dna:reference_to_enumerated_value",
-    "comment": [
+    "definition": [
       "Relationship between an individual and a value of an Enumeration. This is defined to improve semantic understanding of the property hierarchy when visualized as a tree."
     ],
     "Ranges": [
@@ -3033,8 +4651,25 @@ p {
     "text": "Classes",
     "children": [
       {
+        "id": "Acquisition",
+        "children": [
+          {
+            "id": "Abduction"
+          },
+          {
+            "id": "Recovery and Rescue"
+          }
+        ]
+      },
+      {
         "id": "Agent/Actor",
         "children": [
+          {
+            "id": "Animal"
+          },
+          {
+            "id": "Fungus and Plant"
+          },
           {
             "id": "Geopolitical Entity",
             "children": [
@@ -3063,6 +4698,53 @@ p {
         ]
       },
       {
+        "id": "Aggressive or Hostile Act"
+      },
+      {
+        "id": "Agreement"
+      },
+      {
+        "id": "Agriculture, Apiculture and Aquaculture"
+      },
+      {
+        "id": "Art and Entertainment Event"
+      },
+      {
+        "id": "Attack, Damage and Assault"
+      },
+      {
+        "id": "Attempt"
+      },
+      {
+        "id": "Attention and Focus"
+      },
+      {
+        "id": "Avoidance",
+        "children": [
+          {
+            "id": "Escape and Evasion"
+          },
+          {
+            "id": "Ignoring and Overlooking"
+          },
+          {
+            "id": "Prevention"
+          }
+        ]
+      },
+      {
+        "id": "Belief"
+      },
+      {
+        "id": "Capacity"
+      },
+      {
+        "id": "Captivity and Detention"
+      },
+      {
+        "id": "Change"
+      },
+      {
         "id": "Characteristic",
         "children": [
           {
@@ -3080,8 +4762,22 @@ p {
         ]
       },
       {
+        "id": "Coercion and Intimidation"
+      },
+      {
+        "id": "Cognition",
+        "children": [
+          {
+            "id": "Ignoring and Overlooking"
+          }
+        ]
+      },
+      {
         "id": "Collection/Group",
         "children": [
+          {
+            "id": "Evidence"
+          },
           {
             "id": "Group/Collection of Agents",
             "children": [
@@ -3096,10 +4792,82 @@ p {
         ]
       },
       {
+        "id": "Command"
+      },
+      {
+        "id": "Communication and Speech Act"
+      },
+      {
+        "id": "Compatibility"
+      },
+      {
+        "id": "Competition"
+      },
+      {
+        "id": "Competitive Event"
+      },
+      {
+        "id": "Compliance"
+      },
+      {
+        "id": "Concealment"
+      },
+      {
+        "id": "Consumer Confidence"
+      },
+      {
+        "id": "Cooperation"
+      },
+      {
+        "id": "Cooperative Event"
+      },
+      {
+        "id": "Decision Making"
+      },
+      {
+        "id": "Decrease"
+      },
+      {
+        "id": "Deflation"
+      },
+      {
+        "id": "Demand"
+      },
+      {
+        "id": "Desire"
+      },
+      {
+        "id": "Disagreement or Dispute"
+      },
+      {
+        "id": "Drinkable Water"
+      },
+      {
+        "id": "Economic Environment"
+      },
+      {
+        "id": "Education"
+      },
+      {
+        "id": "Employment"
+      },
+      {
         "id": "Enumeration",
         "children": [
           {
+            "id": "Assessment"
+          },
+          {
             "id": "Direction"
+          },
+          {
+            "id": "Education Level"
+          },
+          {
+            "id": "Gender"
+          },
+          {
+            "id": "Line/Type of Business"
           },
           {
             "id": "Temporal Unit"
@@ -3107,13 +4875,103 @@ p {
         ]
       },
       {
-        "id": "Eventuality/Event and State",
+        "id": "Event, State and Condition",
         "children": [
           {
-            "id": "Event"
+            "id": "Event",
+            "children": [
+              {
+                "id": "Delay and Wait"
+              },
+              {
+                "id": "Disaster"
+              },
+              {
+                "id": "Education Event"
+              },
+              {
+                "id": "Emotional Response",
+                "children": [
+                  {
+                    "id": "Negative Emotion"
+                  },
+                  {
+                    "id": "Positive Emotion"
+                  }
+                ]
+              },
+              {
+                "id": "Employment Event"
+              },
+              {
+                "id": "Enforcement"
+              },
+              {
+                "id": "Environmental or Ecological Event",
+                "children": [
+                  {
+                    "id": "Weather Event"
+                  }
+                ]
+              },
+              {
+                "id": "Financial Event"
+              },
+              {
+                "id": "Friendly or Supportive Act",
+                "children": [
+                  {
+                    "id": "Defensive or Protective Act"
+                  }
+                ]
+              },
+              {
+                "id": "Health and Disease Related"
+              },
+              {
+                "id": "Imitation and Counterfeit"
+              },
+              {
+                "id": "Inclusion, Attachment and Unification"
+              },
+              {
+                "id": "Legal Event"
+              },
+              {
+                "id": "Measurement"
+              },
+              {
+                "id": "Meeting and Encounter",
+                "children": [
+                  {
+                    "id": "Ceremony"
+                  }
+                ]
+              },
+              {
+                "id": "Movement, Travel and Transportation"
+              },
+              {
+                "id": "PersonalLifeEvent"
+              },
+              {
+                "id": "Physical Sensation"
+              },
+              {
+                "id": "Political Event",
+                "children": [
+                  {
+                    "id": "Election"
+                  }
+                ]
+              },
+              {
+                "id": "Production, Manufacture and Creation"
+              }
+            ]
           },
           {
-            "id": "State/Condition",
+            "id": "State and Condition",
             "children": [
               {
                 "id": "Affiliation"
@@ -3123,7 +4981,61 @@ p {
         ]
       },
       {
+        "id": "Expansion"
+      },
+      {
+        "id": "Expenses"
+      },
+      {
+        "id": "Food"
+      },
+      {
+        "id": "Freedom"
+      },
+      {
+        "id": "Gambling and Wagering"
+      },
+      {
+        "id": "Gift and Donation"
+      },
+      {
+        "id": "Healthcare"
+      },
+      {
+        "id": "Impossibility"
+      },
+      {
+        "id": "Income"
+      },
+      {
+        "id": "Increase"
+      },
+      {
+        "id": "Inflation"
+      },
+      {
+        "id": "Information Handling"
+      },
+      {
         "id": "Information Source"
+      },
+      {
+        "id": "Inquiry"
+      },
+      {
+        "id": "Intention"
+      },
+      {
+        "id": "Knowledge and Skill"
+      },
+      {
+        "id": "Law and Policy"
+      },
+      {
+        "id": "Learning"
+      },
+      {
+        "id": "Living Conditions"
       },
       {
         "id": "Location",
@@ -3179,7 +5091,22 @@ p {
         ]
       },
       {
+        "id": "Loss"
+      },
+      {
+        "id": "Memory"
+      },
+      {
         "id": "Mention"
+      },
+      {
+        "id": "Opportunity and Possibility"
+      },
+      {
+        "id": "Political Environment"
+      },
+      {
+        "id": "Possession"
       },
       {
         "id": "Process/Sequence",
@@ -3194,6 +5121,45 @@ p {
             "id": "Script"
           }
         ]
+      },
+      {
+        "id": "Protest"
+      },
+      {
+        "id": "Punishment"
+      },
+      {
+        "id": "Purchase and Sale"
+      },
+      {
+        "id": "Recession"
+      },
+      {
+        "id": "Recreation Event"
+      },
+      {
+        "id": "Reduction"
+      },
+      {
+        "id": "Refusal and Rejection"
+      },
+      {
+        "id": "Removal and Restriction"
+      },
+      {
+        "id": "Removal of Raw Materials (Mining, Drilling, Logging, ...)"
+      },
+      {
+        "id": "Repair"
+      },
+      {
+        "id": "Request and Appeal"
+      },
+      {
+        "id": "Requirement and Dependence"
+      },
+      {
+        "id": "Resistance"
       },
       {
         "id": "Resource",
@@ -3303,7 +5269,64 @@ p {
         ]
       },
       {
+        "id": "Return and Release"
+      },
+      {
+        "id": "Revelation"
+      },
+      {
+        "id": "Reward"
+      },
+      {
+        "id": "Risk"
+      },
+      {
+        "id": "Robbery and Theft"
+      },
+      {
         "id": "Role"
+      },
+      {
+        "id": "Safe Conditions"
+      },
+      {
+        "id": "Sanitary Conditions"
+      },
+      {
+        "id": "Savings and Investment"
+      },
+      {
+        "id": "Searching"
+      },
+      {
+        "id": "Sensory Perception"
+      },
+      {
+        "id": "Separation"
+      },
+      {
+        "id": "Space Event"
+      },
+      {
+        "id": "Storage"
+      },
+      {
+        "id": "Substitution"
+      },
+      {
+        "id": "Support for Government"
+      },
+      {
+        "id": "Support for Human Rights"
+      },
+      {
+        "id": "Surrender and Yielding"
+      },
+      {
+        "id": "Taxes"
+      },
+      {
+        "id": "Threat"
       },
       {
         "id": "Time",
@@ -3328,7 +5351,16 @@ p {
         ]
       },
       {
+        "id": "Trend"
+      },
+      {
+        "id": "Unemployment"
+      },
+      {
         "id": "Unifying Collection"
+      },
+      {
+        "id": "urn:ontoinsights:ontology:dna:boolean"
       },
       {
         "id": "urn:ontoinsights:ontology:dna:FinancialInstrument",
@@ -3337,6 +5369,18 @@ p {
             "id": "Currency"
           }
         ]
+      },
+      {
+        "id": "urn:ontoinsights:ontology:dna:InvestigationAndObservation"
+      },
+      {
+        "id": "UtilizationAndConsumption"
+      },
+      {
+        "id": "Violation of Agreement"
+      },
+      {
+        "id": "Violence and Fighting"
       }
     ]
   },
@@ -3344,6 +5388,26 @@ p {
     "id": "http://www.w3.org/2002/07/owl#NamedIndividual",
     "text": "Individuals by Type",
     "children": [
+      {
+        "id": "Assessment{OWLClass}",
+        "children": [
+          {
+            "id": "High"
+          },
+          {
+            "id": "Low"
+          },
+          {
+            "id": "Medium"
+          },
+          {
+            "id": "Negligible or None"
+          },
+          {
+            "id": "Very High"
+          }
+        ]
+      },
       {
         "id": "Direction{OWLClass}",
         "children": [
@@ -3432,6 +5496,98 @@ p {
         ]
       },
       {
+        "id": "Line/Type of Business{OWLClass}",
+        "children": [
+          {
+            "id": "Agriculture, Apiculture and Aquaculture"
+          },
+          {
+            "id": "Banking, Finance and Investment"
+          },
+          {
+            "id": "Construction"
+          },
+          {
+            "id": "Criminal Activities"
+          },
+          {
+            "id": "Education"
+          },
+          {
+            "id": "Electronics and Computers"
+          },
+          {
+            "id": "Energy and Utilities"
+          },
+          {
+            "id": "Entertainment"
+          },
+          {
+            "id": "Environmental or Ecological Activities"
+          },
+          {
+            "id": "Fashion"
+          },
+          {
+            "id": "Food Processing and Preparation"
+          },
+          {
+            "id": "Government and Politics"
+          },
+          {
+            "id": "Healthcare"
+          },
+          {
+            "id": "Hospitality"
+          },
+          {
+            "id": "Humanitarian Activities"
+          },
+          {
+            "id": "Information Technology Services"
+          },
+          {
+            "id": "Insurance"
+          },
+          {
+            "id": "Labor and Staffing"
+          },
+          {
+            "id": "Legal and Judicial Activities"
+          },
+          {
+            "id": "Manufacturing"
+          },
+          {
+            "id": "Military"
+          },
+          {
+            "id": "Not Applicable"
+          },
+          {
+            "id": "Publishing and Media"
+          },
+          {
+            "id": "Raw Material Processing and Preparation"
+          },
+          {
+            "id": "Raw Material Processing and Preparation"
+          },
+          {
+            "id": "Religious Activities"
+          },
+          {
+            "id": "Religious Activities"
+          },
+          {
+            "id": "Security"
+          },
+          {
+            "id": "Transport"
+          }
+        ]
+      },
+      {
         "id": "Temporal Unit{OWLClass}",
         "children": [
           {
@@ -3483,6 +5639,9 @@ p {
       },
       {
         "id": "synonym"
+      },
+      {
+        "id": "urn:ontoinsights:ontology:dna:examples"
       },
       {
         "id": "urn:ontoinsights:ontology:dna:synonyn"
@@ -3564,6 +5723,9 @@ p {
         "id": "latitude"
       },
       {
+        "id": "line of business"
+      },
+      {
         "id": "longitude"
       },
       {
@@ -3617,6 +5779,9 @@ p {
         "id": "prototypical (boolean)"
       },
       {
+        "id": "role"
+      },
+      {
         "id": "second of minute"
       },
       {
@@ -3630,6 +5795,9 @@ p {
       },
       {
         "id": "spreadsheet row number"
+      },
+      {
+        "id": "supporting Evidence (boolean)"
       },
       {
         "id": "Uniform Resource Locator (URL)"
@@ -3665,6 +5833,9 @@ p {
         "id": "excluded member"
       },
       {
+        "id": "has affected resource"
+      },
+      {
         "id": "has agent",
         "children": [
           {
@@ -3688,6 +5859,9 @@ p {
             "id": "has receiving agent"
           }
         ]
+      },
+      {
+        "id": "has assessment"
       },
       {
         "id": "has characteristic"
@@ -3715,7 +5889,16 @@ p {
         "id": "has currency"
       },
       {
+        "id": "has evidence"
+      },
+      {
+        "id": "has holding resource"
+      },
+      {
         "id": "has instrument"
+      },
+      {
+        "id": "has line of business"
       },
       {
         "id": "has location",
@@ -3797,6 +5980,9 @@ p {
       },
       {
         "id": "sourced from"
+      },
+      {
+        "id": "supporting Evidence (boolean)"
       }
     ]
   },

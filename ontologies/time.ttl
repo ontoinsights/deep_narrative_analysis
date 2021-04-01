@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: March 22 2021
+# Last modified: March 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -61,11 +61,12 @@
   :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various subclasses of Season may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
 
 :TemporalUnit a owl:Class ;
-  rdfs:label "Temporal Unit" ;
   rdfs:subClassOf :Enumeration ;
+  rdfs:label "Temporal Unit" ;
   :definition "An enumeration of the values, :Seconds, :Minutes, :Hours, :Days, :Weeks, :Months, :Years or :Seasonal." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :Seconds :Minutes :Hours :Days :Weeks :Months :Years :Seasonal ) ] .
+                        owl:oneOf ( :enum:Seconds :enum:Minutes :enum:Hours :enum:Days :enum:Weeks :enum:Months 
+                                    :enum:Years :enum:Seasonal ) ] .
 
 
 ########################################################################
@@ -205,34 +206,34 @@
 # Individuals
 ########################################################################
 
-:Days a :TemporalUnit ;
+:enum:Days a :TemporalUnit ;
   rdfs:label "Days" ;
   :definition "A 24-hour interval of time." .
 
-:Hours a :TemporalUnit ;
+:enum:Hours a :TemporalUnit ;
   rdfs:label "Hours" ;
   :definition "A 60-minute interval of time." .
 
-:Minutes a :TemporalUnit ;
+:enum:Minutes a :TemporalUnit ;
   rdfs:label "Minutes" ;
   :definition "A 60-second interval of time." .
 
-:Months a :TemporalUnit ;
+:enum:Months a :TemporalUnit ;
   rdfs:label "Months" ;
   :definition "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon." .
 
-:Seasonal a :TemporalUnit ;
+:enum:Seasonal a :TemporalUnit ;
   rdfs:label "Seasonal" ;
   :definition "A period of time characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc., and which is defined differently in various localities and domains of interest." .
 
-:Seconds a :TemporalUnit ;
+:enum:Seconds a :TemporalUnit ;
   rdfs:label "Seconds" ;
   :definition "A period of time that is one of the base units in the International System of Units (SI)." .
 
-:Weeks a :TemporalUnit ;
+:enum:Weeks a :TemporalUnit ;
   rdfs:label "Weeks" ;
   :definition "A 7-day interval of time." .
 
-:Years a :TemporalUnit ;
+:enum:Years a :TemporalUnit ;
   rdfs:label "Years" ;
   :definition "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention." .

@@ -9,8 +9,8 @@
 # File defining semantics related to participants/actors/agents in events 
 # and states/situations
 # 
-# Created: February 9, 2020
-# Last modified: March 22 2021
+# Created: February 9 2020
+# Last modified: March 31 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,22 +30,26 @@
 ########################################################################
 
 :Affiliation a owl:Class ;
-  rdfs:subClassOf :State ;
-  rdfs:label "Affiliation"@en ;
-  rdfs:comment "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property." ;
+  rdfs:subClassOf :StateAndCondition ;
+  rdfs:label "Affiliation" ;
+  :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
   :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." .
 
 :Characteristic a owl:Class ;
   rdfs:label "Characteristic" ;
-  :definition "Some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization." .
+  :definition "Some aspect of a Person that serves to distinguish and/or describe them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization." .
 
 :EducationLevel a owl:Class ;
-  rdfs:subClassOf :Characteristic ;
+  rdfs:subClassOf :Characteristic, :Enumeration ;
   rdfs:label "Education Level" ;
-  :definition "An enumeration defining a Person's/Group's education. It consists of the values, :NoEducation, :CompletedPrimaryEducation, :CompletedSecondaryEducation, :CompletedUndergraduateEducation, :CompletedGraduateEducation, :CompletedDoctoralEducation and :PostDoctoralEducation, as well as partially completed levels, :SomePrimaryEducation, :SomeSecondaryEducation, :SomeUndergraduateEducation, :SomeGraduateEducation and :SomeDoctoralEducation." ;
+  :definition "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation." ;
   :example "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :NoEducation :CompletedPrimaryEducation :CompletedSecondaryEducation :CompletedUndergraduateEducation :CompletedGraduateEducation :CompletedDoctoralEducation :PostDoctoralEducation :SomePrimaryEducation :SomeSecondaryEducation :SomeUndergraduateEducation :SomeGraduateEducation :SomeDoctoralEducation ) ] .
+                        owl:oneOf ( :enum:NoEducation :enum:CompletedPrimaryEducation :enum:CompletedSecondaryEducation 
+                                    :enum:CompletedUndergraduateEducation :enum:CompletedGraduateEducation 
+                                    :enum:CompletedDoctoralEducation :enum:PostDoctoralEducation :enum:SomePrimaryEducation 
+                                    :enum:SomeSecondaryEducation :enum:SomeUndergraduateEducation :enum:SomeGraduateEducation 
+                                    :enum:SomeDoctoralEducation ) ] .
 
 :Ethnicity a owl:Class ;
   rdfs:subClassOf :Characteristic ;
@@ -60,17 +64,32 @@
   :synonym "household" .
   
 :Gender a owl:Class ;
-  rdfs:subClassOf :Characteristic ;
+  rdfs:subClassOf :Characteristic, :Enumeration ;
   rdfs:label "Gender" ;
-  :definition "An enumeration of the values, :Female, :Male, :Agender and :Bigender. Note that individuals of the Gender class describe how Agents identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender." ;
+  :definition "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :Female :Male :Agender :Bigender ) ] .
+                        owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] .
 
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
   rdfs:label "Group/Collection of Agents" ;
   :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
-  :example "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or be the holders of State." .
+  :example "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." .
+
+:LineOfBusiness a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Line/Type of Business" ;
+  :definition "An enumeration indicating different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that an Agent may also specify this using the free-form text property, :line_of_business." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:Agriculture :enum:BankingAndFinance :enum:Construction :enum:CriminalActivities 
+                                    :enum:Education :enum:ElectronicsAndComputers :enum:EnergyAndUtilities 
+                                    :enum:Entertainment :enum:EnvironmentalOrEcologicalActivities :enum:Fashion 
+                                    :enum:FoodProcessingAndPreparation :enum:GovernmentAndPolitics :enum:Healthcare 
+                                    :enum:Hospitality :enum:HumanitarianActivities :enum:InformationTechnologyServices 
+                                    :enum:Insurance :enum:LaborAndStaffing :enum:LegalAndJudicialActivities :enum:Manufacturing 
+                                    :enum:Military :enum:NotApplicable :enum:PublishingAndMedia 
+                                    :enum:RawMaterialProcessingAndPreparation :enum:RealEstate :enum:ReligiousActivities 
+                                    :enum:Retail :enum:Security :enum:Transport ) ] .
 
 :MedicalOrPsychologicalCondition a owl:Class ;
   rdfs:subClassOf :Characteristic ;
@@ -99,6 +118,18 @@
 # Datatype Properties
 ########################################################################
 
+:line_of_business a owl:DatatypeProperty ;
+  rdfs:label "line of business" ;
+  rdfs:domain :Agent ;
+  rdfs:range xsd:string ;
+  :definition "Specifies a particular a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or Organization). Note that the :has_line_of_business property may also be specified, which maps the text to a set of enumerated values." .
+
+:role a owl:DatatypeProperty ;
+  rdfs:label "role" ;
+  rdfs:domain :Affiliation ;
+  rdfs:range xsd:string ;
+  :definition "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
+
 
 ########################################################################
 # Object Properties
@@ -124,67 +155,202 @@
 
 :has_characteristic a owl:ObjectProperty ;
   rdfs:label "has characteristic" ;
-  rdfs:domain :Agent ;
+  rdfs:domain :Person ;
   rdfs:range :Characteristic ;
-  :definition "Indicates some aspect of an Agent (typically a Person or Group of Persons) that serves to distinguish and/or describes them." .
+  :definition "Indicates some aspect of a Person that serves to distinguish and/or describe them." .
+
+:has_line_of_business a owl:ObjectProperty ;
+  rdfs:label "has line of business" ;
+  rdfs:domain :Agent ;
+  rdfs:range :LineOfBusiness ;
+  :definition "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" .
 
 :has_role a owl:ObjectProperty ;
   rdfs:label "has role" ;
   rdfs:domain :Affiliation ;
   rdfs:range :Role ;
-  :definition "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property." .
+  :definition "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative" .
 
 
 ########################################################################
 # Individuals
 ########################################################################
 
-:Agender a :Gender ;
+:enum:Agender a :Gender ;
   rdfs:label "Agender, Gender Neutral or Lack of Gender" .
 
-:Bigender a :Gender ;
+:enum:Agriculture a :LineOfBusiness ;
+  rdfs:label "Agriculture, Apiculture and Aquaculture" ;
+  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
+  :example "Examples are farms, dairies, ranches, api- and aquaculture businesses, seed companies and nurseries." .
+
+:enum:BankingAndFinance a :LineOfBusiness ;
+  rdfs:label "Banking, Finance and Investment" ;
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock trading activities, etc." .
+
+:enum:Bigender a :Gender ;
   rdfs:label "Bigender" .
 
-:CompletedDoctoralEducation a :EducationLevel ;
+:enum:CompletedDoctoralEducation a :EducationLevel ;
   rdfs:label "Completed Doctoral Education" .
 
-:CompletedGraduateEducation a :EducationLevel ;
+:enum:CompletedGraduateEducation a :EducationLevel ;
   rdfs:label "Completed Graduate Education" .
 
-:CompletedPrimaryEducation a :EducationLevel ;
+:enum:CompletedPrimaryEducation a :EducationLevel ;
   rdfs:label "Completed Primary Education" .
 
-:CompletedSecondaryEducation a :EducationLevel ;
+:enum:CompletedSecondaryEducation a :EducationLevel ;
   rdfs:label "Completed Secondary Education" .
 
-:CompletedUndergraduateEducation a :EducationLevel ;
+:enum:CompletedUndergraduateEducation a :EducationLevel ;
   rdfs:label "Completed Undergraduate Education" .
 
-:Female a :Gender ;
+:enum:Construction a :LineOfBusiness ;
+  rdfs:label "Construction" ;
+  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
+  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
+
+:enum:CriminalActivities a :LineOfBusiness ;
+  rdfs:label "Criminal Activities" .
+
+:enum:Education a :LineOfBusiness ;
+  rdfs:label "Education" ;
+  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
+  :example "Examples are schools, universities, tutoring, etc." .
+
+:enum:ElectronicsAndComputers a :LineOfBusiness ;
+  rdfs:label "Electronics and Computers" ;
+  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
+  :example "Examples include both the engineering and fabrication aspects of electronics and computer hardware." .
+
+:enum:EnergyAndUtilities a :LineOfBusiness ;
+  rdfs:label "Energy and Utilities" ;
+  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
+  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
+
+:enum:Entertainment a :LineOfBusiness ;
+  rdfs:label "Entertainment" ;
+  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
+  :example "Entertainment businesses include museums, theaters, any type of performance acts, etc." .
+
+:enum:EnvironmentalOrEcologicalActivities a :LineOfBusiness ;
+  rdfs:label "Environmental or Ecological Activities" ;
+  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
+
+:enum:Fashion a :LineOfBusiness ;
+  rdfs:label "Fashion" ;
+  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
+  :example "Examples include beauty salons and workers, alteration activities, jewelry and clothing design and sales, etc." .
+
+:enum:Female a :Gender ;
   rdfs:label "Female" ;
   :synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
 
-:Male a :Gender ;
+:enum:FoodProcessingAndPreparation a :LineOfBusiness ;
+  rdfs:label "Food Processing and Preparation" ;
+  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
+  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc." .
+
+:enum:GovernmentAndPolitics a :LineOfBusiness ;
+  rdfs:label "Government and Politics" ;
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, etc." .
+
+:enum:Healthcare a :LineOfBusiness ;
+  rdfs:label "Healthcare" ;
+  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" .
+
+:enum:Hospitality a :LineOfBusiness ;
+  rdfs:label "Hospitality" ;
+  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+
+:enum:HumanitarianActivities a :LineOfBusiness ;
+  rdfs:label "Humanitarian Activities" ;
+  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+
+:enum:InformationTechnologyServices a :LineOfBusiness ;
+  rdfs:label "Information Technology Services" ;
+  :definition "Involved with the collection, analysis, storage and communication of data." ;
+  :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+
+:enum:Insurance a :LineOfBusiness ;
+  rdfs:label "Insurance" ;
+  :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
+  :example "Examples include insurance agencies, underwriters, etc." .
+
+:enum:LaborAndStaffing a :LineOfBusiness ;
+  rdfs:label "Labor and Staffing" ;
+  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
+
+:enum:LegalAndJudicialActivities a :LineOfBusiness ;
+  rdfs:label "Legal and Judicial Activities" ;
+  :definition "Involved with courts and trials, attorneys and litigations, etc." .
+
+:enum:Male a :Gender ;
   rdfs:label "Male" ;
   :synonym "boy", "man", "mister", "Mr." .
 
-:NoEducation a :EducationLevel ;
+:enum:Manufacturing a :LineOfBusiness ;
+  rdfs:label "Manufacturing" ;
+  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
+
+:enum:Military a :LineOfBusiness ;
+  rdfs:label "Military" ;
+  :definition "Involved with armed forces, troops, equipment and research/consulting related to these." .
+
+:enum:NoEducation a :EducationLevel ;
   rdfs:label "No Education" .
 
-:PostDoctoralEducation a :EducationLevel ;
+:enum:NotApplicable a :LineOfBusiness ;
+  rdfs:label "Not Applicable" .
+
+:enum:PostDoctoralEducation a :EducationLevel ;
   rdfs:label "Post-Doctoral Education" .
 
-:SomeDoctoralEducation a :EducationLevel ;
+:enum:PublishingAndMedia a :LineOfBusiness ;
+  rdfs:label "Publishing and Media" ;
+  :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
+  :example "Examples are activities related to books, journals, magazines, periodicals, blogs, newspapers, etc." .
+
+:enum:RawMaterialProcessingAndPreparation a :LineOfBusiness ;
+  rdfs:label "Raw Material Processing and Preparation" ;
+  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
+  :example "Examples are mining, drilling and logging and processing such as distillation and refinery." .
+
+:enum:RealEstate a :LineOfBusiness ;
+  rdfs:label "Raw Material Processing and Preparation" ;
+  :definition "Involved with the maintenance and sale of property/land and buildings." .
+
+:enum:ReligiousActivities a :LineOfBusiness ;
+  rdfs:label "Religious Activities" ;
+  :definition "Involved with activities related to spirituality, faith and worship." ;
+  :examples "Examples include churches and similar organizations, clergy and shaman, etc." .
+
+:enum:Retail a :LineOfBusiness ;
+  rdfs:label "Religious Activities" ;
+  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
+  :example "Examples are stores, malls, groceries, etc." .
+
+:enum:Security a :LineOfBusiness ;
+  rdfs:label "Security" ;
+  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
+
+:enum:SomeDoctoralEducation a :EducationLevel ;
   rdfs:label "Some Doctoral Education" .
 
-:SomeGraduateEducation a :EducationLevel ;
+:enum:SomeGraduateEducation a :EducationLevel ;
   rdfs:label "Some Graduate Education" .
 
-:SomePrimaryEducation a :EducationLevel ;
+:enum:SomePrimaryEducation a :EducationLevel ;
   rdfs:label "Some Primary Education" .
 
-:SomeSecondaryEducation a :EducationLevel ;
+:enum:SomeSecondaryEducation a :EducationLevel ;
   rdfs:label "Some Secondary Education" .
 
-:SomeUndergraduateEducation a :EducationLevel ;
+:enum:SomeUndergraduateEducation a :EducationLevel ;
   rdfs:label "Some Undergraduate Education" .
+
+:enum:Transport  a :LineOfBusiness ;
+  rdfs:label "Transport" ;
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations." .

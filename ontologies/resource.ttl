@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: March 24 2021
+# Last modified: March 31 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,7 +34,7 @@
 ########################################################################
 
 :Animal a owl:Class ;
-  rdfs:subClassOf :Resource ;
+  rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Animal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
   :synonym "beast", "creature", "insect", "bug", "fauna" .
@@ -104,7 +104,7 @@
   :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are other examples of fuels." .
 
 :FungusAndPlant a owl:Class ;
-  rdfs:subClassOf :Resource ;
+  rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Fungus and Plant" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
   :synonym "flora", "vegetation", "mold", "mushroom" .
@@ -129,7 +129,7 @@
 :LegalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Legal Instrument" ;
-  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
 
 :Machine a owl:Class ;
   rdfs:subClassOf :Resource ;

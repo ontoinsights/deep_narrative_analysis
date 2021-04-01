@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: March 22 2021
+# Last modified: March 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -72,9 +72,10 @@
 :Direction a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Direction" ;
-  :definition "An enumeration of the values, :North, :South, :East, :West, :NorthEast, :NorthWest, :SouthEast and :SouthWest." ;
+  :definition "An enumeration of values such as :enum:North, :enum:South and :enum:SouthEast." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :East :North :NorthEast :NorthWest :South :SouthEast :SouthWest :West ) ] ;
+                        owl:oneOf ( :enum:East :enum:North :enum:NorthEast :enum:NorthWest :enum:South :enum:SouthEast 
+                                    :enum:SouthWest :enum:West ) ] ;
   :synonym "compass direction", "compass orientation" .
 
 :GeopoliticalEntity a owl:Class ;
@@ -343,26 +344,26 @@
 # Individuals
 ########################################################################
 
-:East a :Direction ;
+:enum:East a :Direction ;
   rdfs:label "East" .
 
-:North a :Direction ;
+:enum:North a :Direction ;
   rdfs:label "North" .
 
-:NorthEast a :Direction ;
+:enum:NorthEast a :Direction ;
   rdfs:label "North-East" .
 
-:NorthWest a :Direction ;
+:enum:NorthWest a :Direction ;
   rdfs:label "North-West" .
 
-:South a :Direction ;
+:enum:South a :Direction ;
   rdfs:label "South" .
 
-:SouthEast a :Direction ;
+:enum:SouthEast a :Direction ;
   rdfs:label "South-East" .
 
-:SouthWest a :Direction ;
+:enum:SouthWest a :Direction ;
   rdfs:label "South-West" .
 
-:West a :Direction ;
+:enum:West a :Direction ;
   rdfs:label "West" .

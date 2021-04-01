@@ -9,8 +9,8 @@
 # File defining general concepts used throughout the DNA and 'Event' 
 # ontologies
 # 
-# Created: February 9, 2020
-# Last modified: March 22 2021
+# Created: February 9 2020
+# Last modified: March 31 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -60,7 +60,7 @@
 
 :Agent a owl:Class ;
   rdfs:label "Agent/Actor" ;
-  :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in Events, and they are affected by or are the holders of State." ;
+  :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in Events, and they are affected by or are the holders of StateAndConditions." ;
   :synonym "legal entity", "doer", "actor", "performer", "participant", "role player", "character" .
 
 :Collection a owl:Class ;
@@ -72,15 +72,20 @@
   rdfs:label "Enumeration" ;
   :definition "Superclass for any enumerated set of values. This is defined to improve semantic understanding of the class hierarchy when visualized as a tree." .
 
+:Evidence a owl:Class ;
+  rdfs:subClassOf :Collection ;
+  rdfs:label "Evidence" ;
+  :definition "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting." ;
+  :synonym "proof", "confirmation", "verification", "validation", "affirmation" .
+
 :EventAndState a owl:Class ;
-  rdfs:label "Eventuality/Event and State" ;
-  :definition "Superclass for any occurrence/event, factor or condition/state." ;
-  :synonym "eventuality" .
+  rdfs:label "Event, State and Condition" ;
+  :definition "Superclass for any occurrence/event, factor or condition/state." .
 
 :GoalDirectedProcess a owl:Class ;
   rdfs:label "Goal-Directed Process" ;
   rdfs:subClassOf :Process ;
-  :definition "A series of interrelated/interdependent events or states that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_." ;
+  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_." ;
   :example "Examples are a business process or procedure designed to achieve a specific end state." ;
   :synonym "procedure" .
 
@@ -90,7 +95,7 @@
 
 :Location a owl:Class ;
   rdfs:label "Location" ;
-  :definition "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's Location is specified using the :has_location property." ;
+  :definition "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
   :synonym "locale", "position", "site", "venue", "situating", "placement" .
 
 :Mention a owl:Class ;
@@ -101,11 +106,11 @@
 :NaturalProcess a owl:Class ;
   rdfs:label "Natural Process" ;
   rdfs:subClassOf :Process ;
-  :definition "A series of interrelated/interdependent events or states that progress along a timeline. Examples are the aging process, climate change or a chemical process." .
+  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process." .
 
 :Process a owl:Class ;
   rdfs:label "Process/Sequence" ;
-  :definition "A series of interrelated and/or interdependent events or states that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)." .
+  :definition "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)." .
 
 :Resource a owl:Class ;
   rdfs:label "Resource" ;
@@ -115,7 +120,7 @@
 :Script a owl:Class ;
   rdfs:label "Script" ;
   rdfs:subClassOf :Process ;
-  :definition "A 'prototypical' sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story." ;
+  :definition "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story." ;
   :synonym "story", "tale", "timeline", "narrative", "plot" .
 
 :Time a owl:Class ;
@@ -170,7 +175,7 @@
 :probability a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "probability/likelihood" ;
   :definition "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing." ;
-  rdfs:comment "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean." ;
+  :definition "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean." ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
@@ -180,7 +185,7 @@
 :prototypical a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "prototypical (boolean)" ;
   :definition "Boolean indicating that the individual describes a 'typical' (and not a specific) instance." ;
-  rdfs:comment "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)." ;
+  :definition "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)." ;
   rdfs:range xsd:boolean .
 
 :record_identifier a owl:DatatypeProperty ;
@@ -201,6 +206,12 @@
   rdfs:domain :Mention ;
   rdfs:range xsd:integer .
 
+:supporting a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "supporting Evidence (boolean)" ;
+  :definition "Indicates that the referenced Evidence 'supports' the existence and definition of the referencing entity/individual. When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate." ;
+  rdfs:domain :Evidence ;
+  rdfs:range :boolean .
+
 
 ########################################################################
 # Object Properties
@@ -211,8 +222,8 @@
   :definition "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity." .
 
 :causes a owl:ObjectProperty ;
-    rdfs:label "causes"@en ;
-    rdfs:comment "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object."@en ;
+    rdfs:label "causes" ;
+    :definition "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object." ;
     rdfs:domain :EventAndState ;
     rdfs:range :EventAndState .
 
@@ -221,8 +232,8 @@
   :definition "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity." .
 
 :enables a owl:ObjectProperty ;
-    rdfs:label "enables/allows"@en ;
-    rdfs:comment "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)."@en ;
+    rdfs:label "enables/allows" ;
+    :definition "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)." ;
     rdfs:domain :EventAndState ;
     rdfs:range :EventAndState .
 
@@ -247,12 +258,17 @@
   rdfs:range :Time ;
   :definition "References a point in time that is the end of the existence/time frame of some entity, or that is the end of an Interval or Duration." .
 
+:has_evidence a owl:ObjectProperty ;
+  rdfs:label "has evidence" ;
+  :definition "References supporting or refuting Evidence for the subject or subject-predicate-object triple. Supporting or refuting Evidence is indicated by the Evidence individual's :supporting property." ;
+  rdfs:range :Evidence .
+
 :has_first a owl:ObjectProperty ;
   rdfs:label "has first" ;
   rdfs:subPropertyOf :has_component ;
   rdfs:domain :Process ;
   rdfs:range :EventAndState ;
-  :definition "References the first individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may initiate a Process." .
+  :definition "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one Event or StateAndCondition may initiate a Process." .
 
 :has_goal a owl:ObjectProperty ;
   rdfs:label "has goal" ;
@@ -266,7 +282,7 @@
   rdfs:subPropertyOf :has_component ;
   rdfs:domain :Process ;
   rdfs:range :EventAndState ;
-  :definition "References the last individual in a series of interrelated and/or interdependent events or states. Note that this is NOT a functional property, and more than one Event or State may terminate a Process." .
+  :definition "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one Event or StateAndCondition may terminate a Process." .
 
 :has_member a owl:ObjectProperty ;
   rdfs:label "has member" ;
@@ -275,7 +291,7 @@
 
 :has_next a owl:ObjectProperty ;
   rdfs:label "has next" ;
-  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and States." .
+  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and StateAndConditions." .
 
 :has_time a owl:ObjectProperty ;
   rdfs:label "has time" ;
@@ -297,14 +313,14 @@
   :definition "Indicates that the boundaries of an entity extend over/cover another." .
 
 :prevents a owl:ObjectProperty ;
-    rdfs:label "prevents"@en ;
-    rdfs:comment "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)."@en ;
+    rdfs:label "prevents" ;
+    :definition "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)." ;
     rdfs:domain :EventAndState ;
     rdfs:range :EventAndState .
 
 :reference_to_enumerated_value a owl:ObjectProperty ;
-    rdfs:label "reference to enumerated value"@en ;
-    rdfs:comment "Relationship between an individual and a value of an Enumeration. This is defined to improve semantic understanding of the property hierarchy when visualized as a tree."@en ;
+    rdfs:label "reference to enumerated value" ;
+    :definition "Relationship between an individual and a value of an Enumeration. This is defined to improve semantic understanding of the property hierarchy when visualized as a tree." ;
     rdfs:range :Enumeration .
 
 :sourced_from a owl:ObjectProperty ;

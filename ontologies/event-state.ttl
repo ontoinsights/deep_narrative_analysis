@@ -6,10 +6,10 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ########################################################################
-# File defining semantics related to events and states/situations
+# File defining semantics related to events and states/conditions/situations
 # 
-# Created: February 9, 2020
-# Last modified: March 22 2021
+# Created: February 9 2020
+# Last modified: March 31 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -32,13 +32,13 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Event" ;
   :definition "An occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties)." ;
-  :synonym "occurrence", "happening", "act", "incident".
+  :synonym "occurrence", "happening", "act", "incident" .
 
-:State a owl:Class ;
+:StateAndCondition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "State/Condition" ;
+  rdfs:label "State and Condition" ;
   :definition "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
-  :synonym "circumstance", "factor", "situation", "environment", "status", "condition" .
+  :synonym "circumstance", "factor", "situation", "environment", "status" .
 
 
 ########################################################################
@@ -61,7 +61,7 @@
   rdfs:label "has agent" ;
   rdfs:domain :EventAndState ;
   rdfs:range :Agent ;
-  :definition "References an Agent who participates in or who experiences an Event or State. Whether the Agent is active in the Event or experiences/is affected by an Event or State can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder." .
+  :definition "References an Agent who participates in or who experiences an Event or StateAndCondition. Whether the Agent is active in the event/state/condition or experiences/is affected by it can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder." .
 
 :has_affected_agent a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_agent ;
@@ -70,6 +70,13 @@
   rdfs:range :Agent ;
   :definition "References an Agent who is affected by an Event but does not actively participate in it." ;
   :example "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of Event) where the mob (a GroupOfAgents) is referenced using the :has_active_agent property and the attacked Person is identified using the :has_affected_agent property." .
+
+:has_affected_resource a owl:ObjectProperty ;
+  rdfs:label "has affected resource" ;
+  rdfs:domain :Event ;
+  rdfs:range :Resource ;
+  :definition "References a Resource which is affected by an Event. This property is similar to the predicate, :has_affected_agent." ;
+  :example "For example, if a building is defaced, then that Resource (a BuildingAndDwelling individual) would be identified in an AttackDamageAndAssault Event using the :has_affected_resource predicate." .
 
 :has_destination a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
@@ -81,10 +88,17 @@
 :has_holder a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_agent ;
   rdfs:label "has holder" ;
-  rdfs:domain :State ;
+  rdfs:domain :StateAndCondition ;
   rdfs:range :Agent ;
-  :definition "References an Agent who experiences some State/situation/condition." ;
-  :example "For example, Fame may be defined as a subclass of State. An instance of Fame would reference a famous Person using the :has_holder property." .
+  :definition "References an Agent who experiences some StateAndCondition/situation." ;
+  :example "For example, the general situation regarding Employment in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment individual using the property, :has_holder." .
+
+:has_holding_resource a owl:ObjectProperty ;
+  rdfs:label "has holding resource" ;
+  rdfs:domain :StateAndCondition ;
+  rdfs:range :Resource ;
+  :definition "References a Resource which is described by a StateAndCondition. This property is similar to the predicate, :has_holder." ;
+  :example "For example, if a storage facility can hold x cubic feet of materials, then that Resource (a BuildingAndDwelling individual) would be identified as the 'holding resource' for an instance of the Capacity StateAndCondition." .
 
 :has_instrument a owl:ObjectProperty ;
   rdfs:label "has instrument" ;
@@ -96,7 +110,7 @@
   rdfs:label "has location" ;
   rdfs:domain :EventAndState ;
   rdfs:range :Location ;
-  :definition "References where an Event or State/condition occurs/occurred." .
+  :definition "References where an Event or StateAndCondition occurs/occurred." .
 
 :has_origin a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
@@ -122,5 +136,5 @@
 :has_topic a owl:ObjectProperty ;
   rdfs:label "has topic" ;
   rdfs:domain :EventAndState ;
-  :definition "References the subject/topic of an Event or State." ;
-  :example "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of State (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property." .
+  :definition "References the subject/topic of an Event or StateAndCondition." ;
+  :example "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of StateAndCondition (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property." .

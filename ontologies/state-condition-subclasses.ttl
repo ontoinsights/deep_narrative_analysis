@@ -1,0 +1,294 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics related to specific states/conditions/
+# circumstances/environments.
+# 
+# The subclasses of StateAndCondition should be extended as needed for 
+# a domain of interest.
+# 
+# Created: March 31 2021
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:Assessment a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Assessment" ;
+  :definition "An enumeration of values describing a StateAndCondition/situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:High :enum:Low :enum:Medium :enum:NegligibleOrNone :enum:VeryHigh ) ] .
+
+:Capacity a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Capacity" ;
+  :definition "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate." ;
+  :synonym "volume", "magnitude", "maximum amount" .
+
+:CaptivityAndDetention a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Captivity and Detention" ;
+  :definition "The condition of an Agent being held captive and confined to a certain location." ;
+  :synonym "incarceration", "internment", "confinement", "imprisonment" .
+
+:Compatibility a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Compatibility" ;
+  :definition "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate." .
+
+:Compliance a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Compliance" ;
+  :definition "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." .
+
+:Competition a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Competition" ;
+  :definition "The condition where two or more Agents are striving for a similar goal or using scarce Resources, and want to be more successful than or to outlive the others. This class refers to the general situation of Competition, as opposed to a specific Event (:CompetitiveEvent). The latter would be Evidence for the former. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property. The overall competitive situation can be described using the :has_assessment predicate." ;
+  :synonym "rivalry" .
+
+:ConsumerConfidence a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Consumer Confidence" ;
+  :definition "An economic indicator that is defined 'as the degree of optimism on the state of [an] economy that consumers are expressing through their activities of savings and spending ... In an interconnected global economy, tracking international consumer confidence is a lead indicator of economic trends.' (https://en.wikipedia.org/w/index.php?title=Consumer_confidence_index&oldid=1009942282) The overall  situation regarding ConsumerConfidence can be described using the :has_assessment predicate." .
+
+:Cooperation a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Cooperation" ;
+  :definition "The condition where two or more Agents are striving for a similar goal or for similar Resources, and are mutually assisting/supporting one another. This class refers to the general situation of Cooperation, as opposed to a specific Event (:CooperativeEvent). The latter would be Evidence for the former. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property.  The overall cooperative situation can be described using the :has_assessment predicate." ;
+  :synonym "collaboration", "teamwork" .
+
+:Deflation a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Deflation" ;
+  :definition "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate." .
+
+:DrinkableWater a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Drinkable Water" ;
+  :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate." .
+
+:EconomicEnvironment a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Economic Environment" ;
+  :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+
+:Education a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Education" ;
+  :definition "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
+
+:Employment a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Employment" ;
+  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." .
+
+:Expansion a owl:Class ;
+  owl:subClassOf :Trend ;
+  rdfs:label "Expansion" ;
+  :definition "A condition describing an ongoing Trend of increasing, broadening, enlarging, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Expansion can be described using the :has_assessment predicate." .
+
+:Expenses a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Expenses" ;
+  :definition "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate." ;
+  :example "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc." .
+
+:Food a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Food" ;
+  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
+
+:Freedom a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Freedom" ;
+  :definition "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." .
+
+:Healthcare a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Healthcare" ;
+  :definition "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
+
+:Impossibility  a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Impossibility" .
+
+:Income a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Income" ;
+  :definition "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate." ;
+  :example "Examples of incomes are salaries, received payments for sales of crops, etc." .
+
+:Inflation a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Inflation" ;
+  :definition "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate." .
+
+:LawAndPolicy a owl:Class ;
+  owl:subClassOf :PoliticalEnvironment ;
+  rdfs:label "Law and Policy" .
+
+:LivingConditions a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Living Conditions" ;
+  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+
+:Loss a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Loss" .
+
+:OpportunityAndPossibility  a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Opportunity and Possibility" .
+
+:PoliticalEnvironment a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Political Environment" ;
+  :definition "A superclass for a variety of characterizations related governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the StateAndConditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+
+:Possession a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Possession" ;
+  :definition "A condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." .
+
+:Recession a owl:Class ;
+  owl:subClassOf :Reduction, :EconomicEnvironment ;
+  rdfs:label "Recession" ;
+  :definition "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate." .
+
+:Reduction a owl:Class ;
+  owl:subClassOf :Trend ;
+  rdfs:label "Reduction" ;
+  :definition "A condition describing an ongoing Trend of decreasing, shrinking, narrowing, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Reduction can be described using the :has_assessment predicate." .
+
+:RequirementAndDependence  a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Requirement and Dependence" .
+
+:Risk  a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Risk" .
+
+:SafeConditions a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Safe Conditions" ;
+  :definition "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding SafeConditions can be described using the :has_assessment predicate." .
+
+:SanitaryConditions a owl:Class ;
+  owl:subClassOf :LivingConditions ;
+  rdfs:label "Sanitary Conditions" ;
+  :definition "A condition describing that sewage is managed and hygiene is maintained for a population/GroupOfAgents. The overall availability and accessibility regarding SanitaryConditions can be described using the :has_assessment predicate." .
+
+:SavingsAndInvestment a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Savings and Investment" ;
+  :definition "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate." ;
+  :synonym "capital", "nest egg" .
+
+:SupportForGovernment a owl:Class ;
+  owl:subClassOf :PoliticalEnvironment ;
+  rdfs:label "Support for Government" ;
+  :definition "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably. The overall situation is described using the :has_assessment property." .
+
+:SupportForHumanRights a owl:Class ;
+  owl:subClassOf :PoliticalEnvironment, :LivingConditions ;
+  rdfs:label "Support for Human Rights" ;
+  :definition "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)" .
+
+:Taxes a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Taxes" ;
+  :definition "A situation describing and assessing (via the :has_assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863)" ;
+  :synonym "levy", "tariff", "duty", "toll", "tax" .
+
+:Trend a owl:Class ;
+  owl:subClassOf :StateAndCondition ;
+  rdfs:label "Trend" ;
+  :definition "A condition describing the general direction or tendency in which some Agent or Resource is moving/changing/developing. The pace of change of the Trend can be described using the :has_assessment predicate." ;
+  :synonym "tendency", "course", "inclination" .
+
+:Unemployment a owl:Class ;
+  owl:subClassOf :EconomicEnvironment ;
+  rdfs:label "Unemployment" ;
+  :definition "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
+
+
+########################################################################
+# Disjointness
+########################################################################
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :CaptivityAndDetention :Freedom ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Cooperation :Competition ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Deflation :Inflation ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Employment :Unemployment ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Expansion :Reduction ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Income :Expenses ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :OpportunityAndPossibility :Impossibility ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Possession :Loss ) .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:has_assessment a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has assessment" ;
+  :definition "Used to indicate how a StateAndCondition ((such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
+  rdfs:domain :StateAndCondition ;
+  rdfs:range :Assessment .
+
+
+########################################################################
+# Individuals
+########################################################################
+
+:enum:High a :Assessment ;
+  rdfs:label "High" .
+
+:enum:Low a :Assessment ;
+  rdfs:label "Low" .
+
+:enum:Medium a :Assessment ;
+  rdfs:label "Medium" .
+
+:enum:NegligibleOrNone a :Assessment ;
+  rdfs:label "Negligible or None" .
+
+:enum:VeryHigh a :Assessment ;
+  rdfs:label "Very High" .
