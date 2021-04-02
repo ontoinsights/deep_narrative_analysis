@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: April 1 2021
+# Last modified: April 2 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -37,7 +37,7 @@
 :StateAndCondition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "State and Condition" ;
-  :definition "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
+  :definition "A factor, situation or condition that an Agent (defined using the :has_holder property) or Resouce (defined using the :has_holding_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
   :synonym "circumstance", "factor", "situation", "environment", "status" .
 
 

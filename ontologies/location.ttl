@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: April 1 2021
+# Last modified: April 2 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -257,7 +257,8 @@
 
 :phone_number a owl:DatatypeProperty ;
   rdfs:label "phone number" ;
-  :definition "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." ;
+  :definition "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number.";
+  :example "For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." ;
   rdfs:domain :OnlineLocation ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;

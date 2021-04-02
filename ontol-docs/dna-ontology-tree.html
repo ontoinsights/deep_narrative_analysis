@@ -495,8 +495,8 @@ p {
       "bug",
       "insect",
       "fauna",
-      "beast",
-      "creature"
+      "creature",
+      "beast"
     ],
     "definition": [
       "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'"
@@ -590,8 +590,8 @@ p {
   "Organization": {
     "iri": "urn:ontoinsights:ontology:dna:Organization",
     "synonym": [
-      "corporation",
       "institution",
+      "corporation",
       "organisation",
       "company",
       "association"
@@ -845,8 +845,8 @@ p {
     "synonym": [
       "buying",
       "vending",
-      "procurement",
-      "selling"
+      "selling",
+      "procurement"
     ],
     "definition": [
       "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."
@@ -1207,8 +1207,8 @@ p {
   "Knowledge and Skill": {
     "iri": "urn:ontoinsights:ontology:dna:KnowledgeAndSkill",
     "synonym": [
-      "understanding",
       "comprehension",
+      "understanding",
       "awareness"
     ],
     "definition": [
@@ -1768,8 +1768,8 @@ p {
     "synonym": [
       "prize",
       "winnings",
-      "recompense",
-      "award"
+      "award",
+      "recompense"
     ],
     "definition": [
       "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific Event or StateAndCondition (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property."
@@ -1893,8 +1893,8 @@ p {
   "Event": {
     "iri": "urn:ontoinsights:ontology:dna:Event",
     "synonym": [
-      "act",
       "incident",
+      "act",
       "happening",
       "occurrence"
     ],
@@ -2101,8 +2101,8 @@ p {
     "synonym": [
       "tariff",
       "duty",
-      "tax",
       "toll",
+      "tax",
       "levy"
     ],
     "definition": [
@@ -2372,7 +2372,7 @@ p {
       "circumstance"
     ],
     "definition": [
-      "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)."
+      "A factor, situation or condition that an Agent (defined using the :has_holder property) or Resouce (defined using the :has_holding_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event, State and Condition')\">'Event, State and Condition'</a>"
@@ -2534,12 +2534,15 @@ p {
   },
   "Mention": {
     "iri": "urn:ontoinsights:ontology:dna:Mention",
+    "example": [
+      "For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'."
+    ],
     "synonym": [
       "citation",
       "reference"
     ],
     "definition": [
-      "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity."
+      "A reference to an entity or concept that appears in an InformationSource."
     ]
   },
   "Goal-Directed Process": {
@@ -2551,7 +2554,7 @@ p {
       "procedure"
     ],
     "definition": [
-      "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_."
+      "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -2572,8 +2575,8 @@ p {
       "narrative",
       "story",
       "tale",
-      "timeline",
-      "plot"
+      "plot",
+      "timeline"
     ],
     "definition": [
       "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
@@ -3233,8 +3236,8 @@ p {
       "woman",
       "Ms.",
       "lady",
-      "miss",
       "girl",
+      "miss",
       "Mrs.",
       "matron"
     ],
@@ -3766,8 +3769,14 @@ p {
   },
   "count/number": {
     "iri": "urn:ontoinsights:ontology:dna:count",
+    "example": [
+      "For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3."
+    ],
     "definition": [
-      "The number of some entity. For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3."
+      "The number of some entity/in a Collection."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('integer')\">integer</a>"
@@ -4021,8 +4030,14 @@ p {
   },
   "maximum count/number": {
     "iri": "urn:ontoinsights:ontology:dna:maximum_count",
+    "example": [
+      "For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10."
+    ],
     "definition": [
-      "The maximum number of some entity when an exact count is not known. For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10."
+      "The maximum number of some entity when an exact count is not known."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('integer')\">integer</a>"
@@ -4033,8 +4048,14 @@ p {
   },
   "minimum count/number": {
     "iri": "urn:ontoinsights:ontology:dna:minimum_count",
+    "example": [
+      "For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5."
+    ],
     "definition": [
-      "The minimum number of some entity when an exact count is not known. For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5."
+      "The minimum number of some entity when an exact count is not known."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Collection/Group')\">Collection/Group</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('integer')\">integer</a>"
@@ -4090,8 +4111,11 @@ p {
   },
   "phone number": {
     "iri": "urn:ontoinsights:ontology:dna:phone_number",
+    "example": [
+      "For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'."
+    ],
     "definition": [
-      "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'."
+      "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number."
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Online Location')\">'Online Location'</a>"

@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: April 1 2021
+# Last modified: April 2 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -85,7 +85,7 @@
 :GoalDirectedProcess a owl:Class ;
   rdfs:label "Goal-Directed Process" ;
   rdfs:subClassOf :Process ;
-  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_." ;
+  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)." ;
   :example "Examples are a business process or procedure designed to achieve a specific end state." ;
   :synonym "procedure" .
 
@@ -100,7 +100,8 @@
 
 :Mention a owl:Class ;
   rdfs:label "Mention" ;
-  :definition "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity." ;
+  :definition "A reference to an entity or concept that appears in an InformationSource." ;
+  :example "For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'." ;
   :synonym "reference", "citation" .
 
 :NaturalProcess a owl:Class ;
@@ -154,7 +155,9 @@
 
 :count a owl:DatatypeProperty ;
   rdfs:label "count/number" ;
-  :definition "The number of some entity. For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3." ;
+  :definition "The number of some entity/in a Collection." ;
+  :example "For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3." ;
+  rdfs:domain :Collection ;
   rdfs:range xsd:integer .
   
 :future a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -164,12 +167,16 @@
 
 :maximum_count a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "maximum count/number" ;
-  :definition "The maximum number of some entity when an exact count is not known. For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10." ;
+  :definition "The maximum number of some entity when an exact count is not known." ;
+  :example "For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10." ;
+  rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
 :minimum_count a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "minimum count/number" ;
-  :definition "The minimum number of some entity when an exact count is not known. For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5." ;
+  :definition "The minimum number of some entity when an exact count is not known." ;
+  :example "For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5." ;
+  rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
 :probability a owl:DatatypeProperty, owl:FunctionalProperty ;

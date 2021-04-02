@@ -572,9 +572,11 @@
 
 ###  urn:ontoinsights:ontology:dna:count
 <urn:ontoinsights:ontology:dna:count> rdf:type owl:DatatypeProperty ;
+                                      rdfs:domain <urn:ontoinsights:ontology:dna:Collection> ;
                                       rdfs:range xsd:integer ;
                                       rdfs:label "count/number" ;
-                                      <urn:ontoinsights:ontology:dna:definition> "The number of some entity. For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3." .
+                                      <urn:ontoinsights:ontology:dna:definition> "The number of some entity/in a Collection." ;
+                                      <urn:ontoinsights:ontology:dna:example> "For example, for the sentence, 'Three motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :count of 3." .
 
 
 ###  urn:ontoinsights:ontology:dna:country_name
@@ -790,17 +792,21 @@
 ###  urn:ontoinsights:ontology:dna:maximum_count
 <urn:ontoinsights:ontology:dna:maximum_count> rdf:type owl:DatatypeProperty ,
                                                        owl:FunctionalProperty ;
+                                              rdfs:domain <urn:ontoinsights:ontology:dna:Collection> ;
                                               rdfs:range xsd:integer ;
                                               rdfs:label "maximum count/number" ;
-                                              <urn:ontoinsights:ontology:dna:definition> "The maximum number of some entity when an exact count is not known. For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10." .
+                                              <urn:ontoinsights:ontology:dna:definition> "The maximum number of some entity when an exact count is not known." ;
+                                              <urn:ontoinsights:ontology:dna:example> "For example, for the sentence, 'No more than ten motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :maximum_count of 10." .
 
 
 ###  urn:ontoinsights:ontology:dna:minimum_count
 <urn:ontoinsights:ontology:dna:minimum_count> rdf:type owl:DatatypeProperty ,
                                                        owl:FunctionalProperty ;
+                                              rdfs:domain <urn:ontoinsights:ontology:dna:Collection> ;
                                               rdfs:range xsd:integer ;
                                               rdfs:label "minimum count/number" ;
-                                              <urn:ontoinsights:ontology:dna:definition> "The minimum number of some entity when an exact count is not known. For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5." .
+                                              <urn:ontoinsights:ontology:dna:definition> "The minimum number of some entity when an exact count is not known." ;
+                                              <urn:ontoinsights:ontology:dna:example> "For example, for the sentence, 'At least five motorcyclists rode down the street.', a Collection (of motorcyclists) would be instantiated with a :minimum_count of 5." .
 
 
 ###  urn:ontoinsights:ontology:dna:minute_of_hour
@@ -859,7 +865,8 @@
                                                                                )
                                                         ] ;
                                              rdfs:label "phone number" ;
-                                             <urn:ontoinsights:ontology:dna:definition> "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number. For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." .
+                                             <urn:ontoinsights:ontology:dna:definition> "A string of numbers and/or letters identifying a telephone or mobile phone. A country code may be specified, as well as an extension number." ;
+                                             <urn:ontoinsights:ontology:dna:example> "For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." .
 
 
 ###  urn:ontoinsights:ontology:dna:postal_address_detail
@@ -1885,7 +1892,7 @@
 <urn:ontoinsights:ontology:dna:GoalDirectedProcess> rdf:type owl:Class ;
                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:Process> ;
                                                     rdfs:label "Goal-Directed Process" ;
-                                                    <urn:ontoinsights:ontology:dna:definition> "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal_." ;
+                                                    <urn:ontoinsights:ontology:dna:definition> "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)." ;
                                                     <urn:ontoinsights:ontology:dna:example> "Examples are a business process or procedure designed to achieve a specific end state." ;
                                                     <urn:ontoinsights:ontology:dna:synonym> "procedure" .
 
@@ -2193,7 +2200,8 @@
 ###  urn:ontoinsights:ontology:dna:Mention
 <urn:ontoinsights:ontology:dna:Mention> rdf:type owl:Class ;
                                         rdfs:label "Mention" ;
-                                        <urn:ontoinsights:ontology:dna:definition> "A reference to an entity or concept that appears in an InformationSource. For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'. Both refer to the same person/entity." ;
+                                        <urn:ontoinsights:ontology:dna:definition> "A reference to an entity or concept that appears in an InformationSource." ;
+                                        <urn:ontoinsights:ontology:dna:example> "For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'." ;
                                         <urn:ontoinsights:ontology:dna:synonym> "citation" ,
                                                                                 "reference" .
 
@@ -2731,7 +2739,7 @@
 <urn:ontoinsights:ontology:dna:StateAndCondition> rdf:type owl:Class ;
                                                   rdfs:subClassOf <urn:ontoinsights:ontology:dna:EventAndState> ;
                                                   rdfs:label "State and Condition" ;
-                                                  <urn:ontoinsights:ontology:dna:definition> "A factor, situation or condition that an Agent (defined using the :has_holder property) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
+                                                  <urn:ontoinsights:ontology:dna:definition> "A factor, situation or condition that an Agent (defined using the :has_holder property) or Resouce (defined using the :has_holding_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
                                                   <urn:ontoinsights:ontology:dna:synonym> "circumstance" ,
                                                                                           "environment" ,
                                                                                           "factor" ,
@@ -3526,8 +3534,8 @@
 #    Annotations
 #################################################################
 
-<urn:ontoinsights:ontology:dna:has_season> <urn:ontoinsights:ontology:dna:definition> "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." ;
-                                           rdfs:label "has season" .
+<urn:ontoinsights:ontology:dna:has_season> rdfs:label "has season" ;
+                                           <urn:ontoinsights:ontology:dna:definition> "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi
