@@ -14,7 +14,7 @@ Deep Narrative Analysis (DNA) is a toolset for analyzing narratives. It combines
 The semantics (ontologies) and processing (initially, Jupyter notebooks) are captured in the directories of this project. The following folder structure is used:
 
 * _ontologies_ holds the definitions of the concepts and relationships that will be extracted from the narratives and online/structured data
-  * All of the posted ontology files are written in Turtle (OWL2) and have been updated to align with March 2021 redesign
+  * All of the posted ontology files are written in Turtle (OWL2) and have been updated to align with the March 2021 redesign
   * In addition, a Protege-ready merge of all the component files is available in the file, dna-ontology.ttl, in the top-level directory
 * _ontol-docs_ contains documentation explaining the ontologies and their usage
   * The _graphs_ sub-directory contains PNGs of the main ontology concepts
