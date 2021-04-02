@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: March 31 2021
+# Last modified: April 1 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -38,6 +38,11 @@
 :Characteristic a owl:Class ;
   rdfs:label "Characteristic" ;
   :definition "Some aspect of a Person that serves to distinguish and/or describe them. Note that Characteristic is intended to be an abstract super-class (i.e., it should not be instantiated). Its sub-classes (such as EducationLevel and Gender) define the specific semantics of the characterization." .
+
+:DisplacedPerson a owl:Class ;
+  rdfs:subClassOf :Person ;
+  rdfs:label "Displaced Person or Refugee" ;
+  :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." .
 
 :EducationLevel a owl:Class ;
   rdfs:subClassOf :Characteristic, :Enumeration ;
@@ -325,7 +330,7 @@
 :enum:ReligiousActivities a :LineOfBusiness ;
   rdfs:label "Religious Activities" ;
   :definition "Involved with activities related to spirituality, faith and worship." ;
-  :examples "Examples include churches and similar organizations, clergy and shaman, etc." .
+  :example "Examples include churches and similar organizations, clergy and shaman, etc." .
 
 :enum:Retail a :LineOfBusiness ;
   rdfs:label "Religious Activities" ;

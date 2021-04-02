@@ -30,10 +30,6 @@
                                         <urn:ontoinsights:ontology:dna:definition> "Words/text that illustrate the concept/semantic being defined or whose instances would be specified as types of the concept/semantic." .
 
 
-###  urn:ontoinsights:ontology:dna:examples
-<urn:ontoinsights:ontology:dna:examples> rdf:type owl:AnnotationProperty .
-
-
 ###  urn:ontoinsights:ontology:dna:negative_example
 <urn:ontoinsights:ontology:dna:negative_example> rdf:type owl:AnnotationProperty ;
                                                  rdfs:label "negative example" ;
@@ -50,10 +46,6 @@
 <urn:ontoinsights:ontology:dna:synonym> rdf:type owl:AnnotationProperty ;
                                         rdfs:label "synonym" ;
                                         <urn:ontoinsights:ontology:dna:definition> "A word which has a similar meaning." .
-
-
-###  urn:ontoinsights:ontology:dna:synonyn
-<urn:ontoinsights:ontology:dna:synonyn> rdf:type owl:AnnotationProperty .
 
 
 #################################################################
@@ -380,6 +372,15 @@
                                                     <urn:ontoinsights:ontology:dna:definition> "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
 
 
+###  urn:ontoinsights:ontology:dna:has_reported_value
+<urn:ontoinsights:ontology:dna:has_reported_value> rdf:type owl:ObjectProperty ,
+                                                            owl:FunctionalProperty ;
+                                                   rdfs:domain <urn:ontoinsights:ontology:dna:Measurement> ;
+                                                   rdfs:range <urn:ontoinsights:ontology:dna:ReportedValue> ;
+                                                   rdfs:label "has reported value" ;
+                                                   <urn:ontoinsights:ontology:dna:definition> "Associates a value and its units with a Measurement Event which defines its Location, Time and similar information." .
+
+
 ###  urn:ontoinsights:ontology:dna:has_role
 <urn:ontoinsights:ontology:dna:has_role> rdf:type owl:ObjectProperty ;
                                          rdfs:domain <urn:ontoinsights:ontology:dna:Affiliation> ;
@@ -404,6 +405,16 @@
                                                   <urn:ontoinsights:ontology:dna:definition> "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
 
 
+###  urn:ontoinsights:ontology:dna:has_terrain
+<urn:ontoinsights:ontology:dna:has_terrain> rdf:type owl:ObjectProperty ;
+                                            rdfs:subPropertyOf <urn:ontoinsights:ontology:dna:reference_to_enumerated_value> ;
+                                            rdf:type owl:FunctionalProperty ;
+                                            rdfs:domain <urn:ontoinsights:ontology:dna:PhysicalLocation> ;
+                                            rdfs:range <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "has terrain" ;
+                                            <urn:ontoinsights:ontology:dna:definition> "References one of the enumerated values of Terrain for a PhysicalLocation." .
+
+
 ###  urn:ontoinsights:ontology:dna:has_time
 <urn:ontoinsights:ontology:dna:has_time> rdf:type owl:ObjectProperty ;
                                          rdfs:range <urn:ontoinsights:ontology:dna:Time> ;
@@ -417,6 +428,15 @@
                                           rdfs:label "has topic" ;
                                           <urn:ontoinsights:ontology:dna:definition> "References the subject/topic of an Event or StateAndCondition." ;
                                           <urn:ontoinsights:ontology:dna:example> "For example, if there is an investigation of a crime, then the crime would be some subclass of Event (such as an Attack), and the Investigation event would reference that Attack using the :has_topic property. As another example, if a farmer has a large fruit crop that condition/situation would be described using an instance of a subclass of StateAndCondition (such as SupplyAndAvailability) with the :has_holder property referencing the farmer and the fruit (a sub-class of Resource) defined using the :has_topic property." .
+
+
+###  urn:ontoinsights:ontology:dna:has_unit
+<urn:ontoinsights:ontology:dna:has_unit> rdf:type owl:ObjectProperty ,
+                                                  owl:FunctionalProperty ;
+                                         rdfs:domain <urn:ontoinsights:ontology:dna:ReportedValue> ;
+                                         rdfs:range <http://qudt.org/schema/qudt/Unit> ;
+                                         rdfs:label "has unit of measure" ;
+                                         <urn:ontoinsights:ontology:dna:definition> "Associates the units of measure with a Measurement's value/ReportedValue. Units are defined by QUDT.org and can be found at http://qudt.org/2.1/vocab/unit." .
 
 
 ###  urn:ontoinsights:ontology:dna:meets
@@ -476,13 +496,6 @@
                                              rdfs:range <urn:ontoinsights:ontology:dna:Mention> ;
                                              rdfs:label "sourced from" ;
                                              <urn:ontoinsights:ontology:dna:definition> "A reference to the Mention (with its provenance information, such as sentence_offset) that resulted in the instantiation of an entity." .
-
-
-###  urn:ontoinsights:ontology:dna:supporting
-<urn:ontoinsights:ontology:dna:supporting> rdf:type owl:ObjectProperty ,
-                                                    owl:FunctionalProperty ;
-                                           rdfs:domain <urn:ontoinsights:ontology:dna:Evidence> ;
-                                           rdfs:range <urn:ontoinsights:ontology:dna:boolean> .
 
 
 #################################################################
@@ -993,7 +1006,11 @@
 
 ###  urn:ontoinsights:ontology:dna:supporting
 <urn:ontoinsights:ontology:dna:supporting> rdf:type owl:DatatypeProperty ,
-                                                    owl:FunctionalProperty .
+                                                    owl:FunctionalProperty ;
+                                           rdfs:domain <urn:ontoinsights:ontology:dna:Evidence> ;
+                                           rdfs:range xsd:boolean ;
+                                           rdfs:label "supporting evidence (boolean)" ;
+                                           <urn:ontoinsights:ontology:dna:definition> "Indicates that the referenced Evidence 'supports' the existence and definition of the referencing entity/individual. When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:url
@@ -1002,6 +1019,15 @@
                                     rdfs:range xsd:string ;
                                     rdfs:label "Uniform Resource Locator (URL)" ;
                                     <urn:ontoinsights:ontology:dna:definition> "A string defining a web address, using the HTTP or HTTPS protocols." .
+
+
+###  urn:ontoinsights:ontology:dna:value
+<urn:ontoinsights:ontology:dna:value> rdf:type owl:DatatypeProperty ,
+                                               owl:FunctionalProperty ;
+                                      rdfs:domain <urn:ontoinsights:ontology:dna:ReportedValue> ;
+                                      rdfs:range xsd:decimal ;
+                                      rdfs:label "value" ;
+                                      <urn:ontoinsights:ontology:dna:definition> "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
 
 
 ###  urn:ontoinsights:ontology:dna:week_of_month
@@ -1033,9 +1059,13 @@
 #    Classes
 #################################################################
 
+###  http://qudt.org/schema/qudt/Unit
+<http://qudt.org/schema/qudt/Unit> rdf:type owl:Class .
+
+
 ###  urn:ontoinsights:ontology:dna:Abduction
 <urn:ontoinsights:ontology:dna:Abduction> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                           rdfs:label "Abduction" ;
                                           <urn:ontoinsights:ontology:dna:definition> "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will." ;
                                           <urn:ontoinsights:ontology:dna:synonym> "hijacking" ,
@@ -1044,6 +1074,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Acquisition
 <urn:ontoinsights:ontology:dna:Acquisition> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                             owl:disjointWith <urn:ontoinsights:ontology:dna:Avoidance> ;
                                             rdfs:label "Acquisition" ;
                                             <urn:ontoinsights:ontology:dna:definition> "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." .
@@ -1088,15 +1119,17 @@
                                                                               "role player" .
 
 
-###  urn:ontoinsights:ontology:dna:AggresiveOrHostileAct
-<urn:ontoinsights:ontology:dna:AggresiveOrHostileAct> rdf:type owl:Class ;
-                                                      owl:disjointWith <urn:ontoinsights:ontology:dna:FriendlyOrSupportiveAct> ;
-                                                      rdfs:label "Aggressive or Hostile Act" ;
-                                                      <urn:ontoinsights:ontology:dna:definition> "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." .
+###  urn:ontoinsights:ontology:dna:AggressiveOrHostileAct
+<urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> rdf:type owl:Class ;
+                                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
+                                                       owl:disjointWith <urn:ontoinsights:ontology:dna:FriendlyOrSupportiveAct> ;
+                                                       rdfs:label "Aggressive or Hostile Act" ;
+                                                       <urn:ontoinsights:ontology:dna:definition> "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." .
 
 
 ###  urn:ontoinsights:ontology:dna:Agreement
 <urn:ontoinsights:ontology:dna:Agreement> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                           owl:disjointWith <urn:ontoinsights:ontology:dna:DisagreementOrDispute> ,
                                                            <urn:ontoinsights:ontology:dna:ViolationOfAgreement> ;
                                           rdfs:label "Agreement" ;
@@ -1105,6 +1138,7 @@
 
 ###  urn:ontoinsights:ontology:dna:AgricultureApicultureAndAquaculture
 <urn:ontoinsights:ontology:dna:AgricultureApicultureAndAquaculture> rdf:type owl:Class ;
+                                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                                     rdfs:label "Agriculture, Apiculture and Aquaculture" ;
                                                                     <urn:ontoinsights:ontology:dna:definition> "Events dealing with farming, ranching, breeding, beekeeping, etc." .
 
@@ -1140,6 +1174,7 @@
 
 ###  urn:ontoinsights:ontology:dna:ArtAndEntertainmentEvent
 <urn:ontoinsights:ontology:dna:ArtAndEntertainmentEvent> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                          rdfs:label "Art and Entertainment Event" ;
                                                          <urn:ontoinsights:ontology:dna:definition> "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)." .
 
@@ -1161,6 +1196,7 @@
 
 ###  urn:ontoinsights:ontology:dna:AttackDamageAndAssault
 <urn:ontoinsights:ontology:dna:AttackDamageAndAssault> rdf:type owl:Class ;
+                                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                                        owl:disjointWith <urn:ontoinsights:ontology:dna:Repair> ;
                                                        rdfs:label "Attack, Damage and Assault" ;
                                                        <urn:ontoinsights:ontology:dna:definition> "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." .
@@ -1168,6 +1204,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Attempt
 <urn:ontoinsights:ontology:dna:Attempt> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                         rdfs:label "Attempt" ;
                                         <urn:ontoinsights:ontology:dna:definition> "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
                                         <urn:ontoinsights:ontology:dna:synonym> "endeavor" ,
@@ -1178,18 +1215,22 @@
 
 ###  urn:ontoinsights:ontology:dna:AttentionAndFocus
 <urn:ontoinsights:ontology:dna:AttentionAndFocus> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
+                                                  owl:disjointWith <urn:ontoinsights:ontology:dna:IgnoringAndOverlooking> ;
                                                   rdfs:label "Attention and Focus" ;
                                                   <urn:ontoinsights:ontology:dna:definition> "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." .
 
 
 ###  urn:ontoinsights:ontology:dna:Avoidance
 <urn:ontoinsights:ontology:dna:Avoidance> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                           rdfs:label "Avoidance" ;
                                           <urn:ontoinsights:ontology:dna:definition> "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring." .
 
 
 ###  urn:ontoinsights:ontology:dna:Belief
 <urn:ontoinsights:ontology:dna:Belief> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                        rdfs:label "Belief" ;
                                        <urn:ontoinsights:ontology:dna:definition> "An 'attitude that something is the case, or that some proposition about the world is true' (https://en.wikipedia.org/w/index.php?title=Belief&oldid=1013662709)." ;
                                        <urn:ontoinsights:ontology:dna:synonym> "confidence" ,
@@ -1229,6 +1270,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Capacity
 <urn:ontoinsights:ontology:dna:Capacity> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                          rdfs:label "Capacity" ;
                                          <urn:ontoinsights:ontology:dna:definition> "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate." ;
                                          <urn:ontoinsights:ontology:dna:synonym> "magnitude" ,
@@ -1238,6 +1280,7 @@
 
 ###  urn:ontoinsights:ontology:dna:CaptivityAndDetention
 <urn:ontoinsights:ontology:dna:CaptivityAndDetention> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                                       owl:disjointWith <urn:ontoinsights:ontology:dna:Freedom> ;
                                                       rdfs:label "Captivity and Detention" ;
                                                       <urn:ontoinsights:ontology:dna:definition> "The condition of an Agent being held captive and confined to a certain location." ;
@@ -1256,6 +1299,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Change
 <urn:ontoinsights:ontology:dna:Change> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                        rdfs:label "Change" ;
                                        <urn:ontoinsights:ontology:dna:definition> "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease." ;
                                        <urn:ontoinsights:ontology:dna:example> "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." .
@@ -1280,19 +1324,21 @@
                                                      rdfs:label "Clothing and Accessory" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
                                                      <urn:ontoinsights:ontology:dna:example> "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
-                                                     <urn:ontoinsights:ontology:dna:synonyn> "apparel" ,
+                                                     <urn:ontoinsights:ontology:dna:synonym> "apparel" ,
                                                                                              "attire" ,
                                                                                              "clothes" .
 
 
 ###  urn:ontoinsights:ontology:dna:CoercionAndIntimidation
 <urn:ontoinsights:ontology:dna:CoercionAndIntimidation> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                                         rdfs:label "Coercion and Intimidation" ;
                                                         <urn:ontoinsights:ontology:dna:definition> "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear." .
 
 
 ###  urn:ontoinsights:ontology:dna:Cognition
 <urn:ontoinsights:ontology:dna:Cognition> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                           rdfs:label "Cognition" ;
                                           <urn:ontoinsights:ontology:dna:definition> "The 'mental action or process of acquiring knowledge and understanding through thought, experience, and the senses' (https://www.lexico.com/definition/cognition). Note that the Person who is acquiring this knowledge and understanding is defined using the :has_active_agent property. And, details about what is learned/known/understood is indicated using the :has_topic predicate." .
 
@@ -1312,24 +1358,28 @@
 
 ###  urn:ontoinsights:ontology:dna:Command
 <urn:ontoinsights:ontology:dna:Command> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:RequestAndAppeal> ;
                                         rdfs:label "Command" ;
                                         <urn:ontoinsights:ontology:dna:definition> "A communication that issues orders, instructions, etc." .
 
 
 ###  urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct
 <urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                           rdfs:label "Communication and Speech Act" ;
                                                           <urn:ontoinsights:ontology:dna:definition> "Any act of conveying information via written or spoken word, or non-verbal means." .
 
 
 ###  urn:ontoinsights:ontology:dna:Compatibility
 <urn:ontoinsights:ontology:dna:Compatibility> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                               rdfs:label "Compatibility" ;
                                               <urn:ontoinsights:ontology:dna:definition> "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:Competition
 <urn:ontoinsights:ontology:dna:Competition> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                             owl:disjointWith <urn:ontoinsights:ontology:dna:Cooperation> ;
                                             rdfs:label "Competition" ;
                                             <urn:ontoinsights:ontology:dna:definition> "The condition where two or more Agents are striving for a similar goal or using scarce Resources, and want to be more successful than or to outlive the others. This class refers to the general situation of Competition, as opposed to a specific Event (:CompetitiveEvent). The latter would be Evidence for the former. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property. The overall competitive situation can be described using the :has_assessment predicate." ;
@@ -1338,6 +1388,7 @@
 
 ###  urn:ontoinsights:ontology:dna:CompetitiveEvent
 <urn:ontoinsights:ontology:dna:CompetitiveEvent> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                  owl:disjointWith <urn:ontoinsights:ontology:dna:CooperativeEvent> ;
                                                  rdfs:label "Competitive Event" ;
                                                  <urn:ontoinsights:ontology:dna:definition> "An Event where two or more Agents are striving for a similar goal, and want to be better/more successful than the others. This class refers to a specific competitive Event, as opposed to a general condition (:Competition). The former would be Evidence for the latter." .
@@ -1345,6 +1396,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Compliance
 <urn:ontoinsights:ontology:dna:Compliance> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                            rdfs:label "Compliance" ;
                                            <urn:ontoinsights:ontology:dna:definition> "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." .
 
@@ -1367,6 +1419,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Concealment
 <urn:ontoinsights:ontology:dna:Concealment> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:ontology:dna:Prevention> ;
                                             owl:disjointWith <urn:ontoinsights:ontology:dna:Revelation> ;
                                             rdfs:label "Concealment" ;
                                             <urn:ontoinsights:ontology:dna:definition> "An act of preventing something/someone from being known/found." ;
@@ -1375,6 +1428,7 @@
 
 ###  urn:ontoinsights:ontology:dna:ConsumerConfidence
 <urn:ontoinsights:ontology:dna:ConsumerConfidence> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                                    rdfs:label "Consumer Confidence" ;
                                                    <urn:ontoinsights:ontology:dna:definition> "An economic indicator that is defined 'as the degree of optimism on the state of [an] economy that consumers are expressing through their activities of savings and spending ... In an interconnected global economy, tracking international consumer confidence is a lead indicator of economic trends.' (https://en.wikipedia.org/w/index.php?title=Consumer_confidence_index&oldid=1009942282) The overall  situation regarding ConsumerConfidence can be described using the :has_assessment predicate." .
 
@@ -1389,6 +1443,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Cooperation
 <urn:ontoinsights:ontology:dna:Cooperation> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                             rdfs:label "Cooperation" ;
                                             <urn:ontoinsights:ontology:dna:definition> "The condition where two or more Agents are striving for a similar goal or for similar Resources, and are mutually assisting/supporting one another. This class refers to the general situation of Cooperation, as opposed to a specific Event (:CooperativeEvent). The latter would be Evidence for the former. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property.  The overall cooperative situation can be described using the :has_assessment predicate." ;
                                             <urn:ontoinsights:ontology:dna:synonym> "collaboration" ,
@@ -1397,6 +1452,7 @@
 
 ###  urn:ontoinsights:ontology:dna:CooperativeEvent
 <urn:ontoinsights:ontology:dna:CooperativeEvent> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                  rdfs:label "Cooperative Event" ;
                                                  <urn:ontoinsights:ontology:dna:definition> "An Event where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to a specific coooperative Event, as opposed to a general condition (:Cooperation). The former would be Evidence for the latter." .
 
@@ -1413,19 +1469,21 @@
 
 ###  urn:ontoinsights:ontology:dna:Currency
 <urn:ontoinsights:ontology:dna:Currency> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:FinancialInstrument> ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:MonetaryAndFinancialInstrument> ;
                                          rdfs:label "Currency" ;
                                          <urn:ontoinsights:ontology:dna:definition> "A metal or paper medium of exchange that is used as money in a country." .
 
 
 ###  urn:ontoinsights:ontology:dna:DecisionMaking
 <urn:ontoinsights:ontology:dna:DecisionMaking> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                                rdfs:label "Decision Making" ;
                                                <urn:ontoinsights:ontology:dna:definition> "An act of concluding or resolving some issue or question." .
 
 
 ###  urn:ontoinsights:ontology:dna:Decrease
 <urn:ontoinsights:ontology:dna:Decrease> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:Change> ;
                                          rdfs:label "Decrease" ;
                                          <urn:ontoinsights:ontology:dna:definition> "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent." ;
                                          <urn:ontoinsights:ontology:dna:synonym> "decline" ,
@@ -1447,6 +1505,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Deflation
 <urn:ontoinsights:ontology:dna:Deflation> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                           owl:disjointWith <urn:ontoinsights:ontology:dna:Inflation> ;
                                           rdfs:label "Deflation" ;
                                           <urn:ontoinsights:ontology:dna:definition> "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate." .
@@ -1461,12 +1520,14 @@
 
 ###  urn:ontoinsights:ontology:dna:Demand
 <urn:ontoinsights:ontology:dna:Demand> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:RequestAndAppeal> ;
                                        rdfs:label "Demand" ;
                                        <urn:ontoinsights:ontology:dna:definition> "A communication insisting on immediate attention." .
 
 
 ###  urn:ontoinsights:ontology:dna:Desire
 <urn:ontoinsights:ontology:dna:Desire> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                        rdfs:label "Desire" ;
                                        <urn:ontoinsights:ontology:dna:definition> "Wanting something, someone or some Event or StateAndCondition to occur. The thing, EventAndState or Agent that is 'wanted' is specified using the :has_topic property." .
 
@@ -1493,6 +1554,7 @@
 
 ###  urn:ontoinsights:ontology:dna:DisagreementOrDispute
 <urn:ontoinsights:ontology:dna:DisagreementOrDispute> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                       rdfs:label "Disagreement or Dispute" ;
                                                       <urn:ontoinsights:ontology:dna:definition> "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate." .
 
@@ -1508,8 +1570,16 @@
                                                                                  "catastrophe" .
 
 
+###  urn:ontoinsights:ontology:dna:DisplacedPerson
+<urn:ontoinsights:ontology:dna:DisplacedPerson> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Person> ;
+                                                rdfs:label "Displaced Person or Refugee" ;
+                                                <urn:ontoinsights:ontology:dna:definition> "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." .
+
+
 ###  urn:ontoinsights:ontology:dna:DrinkableWater
 <urn:ontoinsights:ontology:dna:DrinkableWater> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                                rdfs:label "Drinkable Water" ;
                                                <urn:ontoinsights:ontology:dna:definition> "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate." .
 
@@ -1532,12 +1602,14 @@
 
 ###  urn:ontoinsights:ontology:dna:EconomicEnvironment
 <urn:ontoinsights:ontology:dna:EconomicEnvironment> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                                     rdfs:label "Economic Environment" ;
                                                     <urn:ontoinsights:ontology:dna:definition> "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
 
 
 ###  urn:ontoinsights:ontology:dna:Education
 <urn:ontoinsights:ontology:dna:Education> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                           rdfs:label "Education" ;
                                           <urn:ontoinsights:ontology:dna:definition> "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
@@ -1590,6 +1662,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Employment
 <urn:ontoinsights:ontology:dna:Employment> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                            owl:disjointWith <urn:ontoinsights:ontology:dna:Unemployment> ;
                                            rdfs:label "Employment" ;
                                            <urn:ontoinsights:ontology:dna:definition> "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." .
@@ -1675,6 +1748,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Expansion
 <urn:ontoinsights:ontology:dna:Expansion> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Trend> ;
                                           owl:disjointWith <urn:ontoinsights:ontology:dna:Reduction> ;
                                           rdfs:label "Expansion" ;
                                           <urn:ontoinsights:ontology:dna:definition> "A condition describing an ongoing Trend of increasing, broadening, enlarging, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Expansion can be described using the :has_assessment predicate." .
@@ -1682,6 +1756,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Expenses
 <urn:ontoinsights:ontology:dna:Expenses> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                          owl:disjointWith <urn:ontoinsights:ontology:dna:Income> ;
                                          rdfs:label "Expenses" ;
                                          <urn:ontoinsights:ontology:dna:definition> "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate." ;
@@ -1703,12 +1778,9 @@
                                                <urn:ontoinsights:ontology:dna:definition> "Events dealing with monies/currencies and funds and other capital." .
 
 
-###  urn:ontoinsights:ontology:dna:FinancialInstrument
-<urn:ontoinsights:ontology:dna:FinancialInstrument> rdf:type owl:Class .
-
-
 ###  urn:ontoinsights:ontology:dna:Food
 <urn:ontoinsights:ontology:dna:Food> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                      rdfs:label "Food" ;
                                      <urn:ontoinsights:ontology:dna:definition> "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
 
@@ -1727,6 +1799,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Freedom
 <urn:ontoinsights:ontology:dna:Freedom> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                         rdfs:label "Freedom" ;
                                         <urn:ontoinsights:ontology:dna:definition> "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." .
 
@@ -1767,6 +1840,7 @@
 
 ###  urn:ontoinsights:ontology:dna:GamblingAndWagering
 <urn:ontoinsights:ontology:dna:GamblingAndWagering> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                     rdfs:label "Gambling and Wagering" ;
                                                     <urn:ontoinsights:ontology:dna:definition> "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result." ;
                                                     <urn:ontoinsights:ontology:dna:synonym> "betting" .
@@ -1800,6 +1874,7 @@
 
 ###  urn:ontoinsights:ontology:dna:GiftAndDonation
 <urn:ontoinsights:ontology:dna:GiftAndDonation> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
                                                 rdfs:label "Gift and Donation" ;
                                                 <urn:ontoinsights:ontology:dna:definition> "An act of giving with no expectation of payment." ;
                                                 <urn:ontoinsights:ontology:dna:synonym> "contribution" ,
@@ -1842,6 +1917,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Healthcare
 <urn:ontoinsights:ontology:dna:Healthcare> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                            rdfs:label "Healthcare" ;
                                            <urn:ontoinsights:ontology:dna:definition> "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
@@ -1850,7 +1926,6 @@
 <urn:ontoinsights:ontology:dna:IgnoringAndOverlooking> rdf:type owl:Class ;
                                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Avoidance> ,
                                                                        <urn:ontoinsights:ontology:dna:Cognition> ;
-                                                       owl:disjointWith <urn:ontoinsights:ontology:dna:InvestigationAndObservation> ;
                                                        rdfs:label "Ignoring and Overlooking" ;
                                                        <urn:ontoinsights:ontology:dna:definition> "An act of purposefully disregarding, not noticing or not acknowledging something or someone." ;
                                                        <urn:ontoinsights:ontology:dna:synonym> "disregarding" .
@@ -1869,8 +1944,10 @@
 
 ###  urn:ontoinsights:ontology:dna:Impossibility
 <urn:ontoinsights:ontology:dna:Impossibility> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                               owl:disjointWith <urn:ontoinsights:ontology:dna:OpportunityAndPossibility> ;
-                                              rdfs:label "Impossibility" .
+                                              rdfs:label "Impossibility" ;
+                                              <urn:ontoinsights:ontology:dna:definition> "Some entity (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing that is impossible is specified using the :has_topic property." .
 
 
 ###  urn:ontoinsights:ontology:dna:InclusionAttachmentAndUnification
@@ -1883,6 +1960,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Income
 <urn:ontoinsights:ontology:dna:Income> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                        rdfs:label "Income" ;
                                        <urn:ontoinsights:ontology:dna:definition> "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate." ;
                                        <urn:ontoinsights:ontology:dna:example> "Examples of incomes are salaries, received payments for sales of crops, etc." .
@@ -1890,6 +1968,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Increase
 <urn:ontoinsights:ontology:dna:Increase> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:Change> ;
                                          rdfs:label "Increase" ;
                                          <urn:ontoinsights:ontology:dna:definition> "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent." ;
                                          <urn:ontoinsights:ontology:dna:synonym> "escalation" ,
@@ -1900,12 +1979,14 @@
 
 ###  urn:ontoinsights:ontology:dna:Inflation
 <urn:ontoinsights:ontology:dna:Inflation> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                           rdfs:label "Inflation" ;
                                           <urn:ontoinsights:ontology:dna:definition> "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:InformationHandling
 <urn:ontoinsights:ontology:dna:InformationHandling> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                     rdfs:label "Information Handling" ;
                                                     <urn:ontoinsights:ontology:dna:definition> "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." .
 
@@ -1918,12 +1999,14 @@
 
 ###  urn:ontoinsights:ontology:dna:Inquiry
 <urn:ontoinsights:ontology:dna:Inquiry> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct> ;
                                         rdfs:label "Inquiry" ;
                                         <urn:ontoinsights:ontology:dna:definition> "A CommunicationAndSpeechAct involving asking questions/for information." .
 
 
 ###  urn:ontoinsights:ontology:dna:Intention
 <urn:ontoinsights:ontology:dna:Intention> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                           rdfs:label "Intention" ;
                                           <urn:ontoinsights:ontology:dna:definition> "The Event or StateAndCondition that an Agent hopes to attain/accomplish." ;
                                           <urn:ontoinsights:ontology:dna:synonym> "aim" ,
@@ -1940,10 +2023,6 @@
                                                                                  "timeframe" .
 
 
-###  urn:ontoinsights:ontology:dna:InvestigationAndObservation
-<urn:ontoinsights:ontology:dna:InvestigationAndObservation> rdf:type owl:Class .
-
-
 ###  urn:ontoinsights:ontology:dna:Jewelry
 <urn:ontoinsights:ontology:dna:Jewelry> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:ClothingAndAccessory> ;
@@ -1955,6 +2034,7 @@
 
 ###  urn:ontoinsights:ontology:dna:KnowledgeAndSkill
 <urn:ontoinsights:ontology:dna:KnowledgeAndSkill> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                                   rdfs:label "Knowledge and Skill" ;
                                                   <urn:ontoinsights:ontology:dna:definition> "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)" ;
                                                   <urn:ontoinsights:ontology:dna:synonym> "awareness" ,
@@ -1964,11 +2044,16 @@
 
 ###  urn:ontoinsights:ontology:dna:LawAndPolicy
 <urn:ontoinsights:ontology:dna:LawAndPolicy> rdf:type owl:Class ;
-                                             rdfs:label "Law and Policy" .
+                                             rdfs:subClassOf <urn:ontoinsights:ontology:dna:PoliticalEnvironment> ;
+                                             rdfs:label "Law and Policy" ;
+                                             <urn:ontoinsights:ontology:dna:definition> "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents." ;
+                                             <urn:ontoinsights:ontology:dna:synonym> "directive" ,
+                                                                                     "legislation" .
 
 
 ###  urn:ontoinsights:ontology:dna:Learning
 <urn:ontoinsights:ontology:dna:Learning> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
                                          rdfs:label "Learning" ;
                                          <urn:ontoinsights:ontology:dna:definition> "An act of acquiring knowledge and skills through study, repetition, experience, instruction, etc." ;
                                          <urn:ontoinsights:ontology:dna:synonym> "education" ,
@@ -2031,6 +2116,7 @@
 
 ###  urn:ontoinsights:ontology:dna:LivingConditions
 <urn:ontoinsights:ontology:dna:LivingConditions> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                                  rdfs:label "Living Conditions" ;
                                                  <urn:ontoinsights:ontology:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
 
@@ -2049,8 +2135,13 @@
 
 ###  urn:ontoinsights:ontology:dna:Loss
 <urn:ontoinsights:ontology:dna:Loss> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                      owl:disjointWith <urn:ontoinsights:ontology:dna:Possession> ;
-                                     rdfs:label "Loss" .
+                                     rdfs:label "Loss" ;
+                                     <urn:ontoinsights:ontology:dna:definition> "A condition describing NOT having some goods or property, which previously were in an Agent's Possession." ;
+                                     <urn:ontoinsights:ontology:dna:synonym> "losing" ,
+                                                                             "mislaying" ,
+                                                                             "misplacing" .
 
 
 ###  urn:ontoinsights:ontology:dna:Machine
@@ -2091,6 +2182,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Memory
 <urn:ontoinsights:ontology:dna:Memory> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                        rdfs:label "Memory" ;
                                        <urn:ontoinsights:ontology:dna:definition> "An act of Cognition dealing with the recollection/retrieval of past occurrences, learning and insights." ;
                                        <urn:ontoinsights:ontology:dna:synonym> "recollection" ,
@@ -2109,7 +2201,7 @@
 ###  urn:ontoinsights:ontology:dna:MonetaryAndFinancialInstrument
 <urn:ontoinsights:ontology:dna:MonetaryAndFinancialInstrument> rdf:type owl:Class ;
                                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Resource> ;
-                                                               rdfs:label "Financial Instrument" ;
+                                                               rdfs:label "Monetary and Financial Instrument" ;
                                                                <urn:ontoinsights:ontology:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
 
 
@@ -2156,7 +2248,9 @@
 
 ###  urn:ontoinsights:ontology:dna:OpportunityAndPossibility
 <urn:ontoinsights:ontology:dna:OpportunityAndPossibility> rdf:type owl:Class ;
-                                                          rdfs:label "Opportunity and Possibility" .
+                                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
+                                                          rdfs:label "Opportunity and Possibility" ;
+                                                          <urn:ontoinsights:ontology:dna:definition> "Some entity (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing that is possible is specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:Organization
@@ -2234,6 +2328,7 @@
 
 ###  urn:ontoinsights:ontology:dna:PoliticalEnvironment
 <urn:ontoinsights:ontology:dna:PoliticalEnvironment> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                                      rdfs:label "Political Environment" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "A superclass for a variety of characterizations related governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the StateAndConditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
 
@@ -2266,6 +2361,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Possession
 <urn:ontoinsights:ontology:dna:Possession> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                            rdfs:label "Possession" ;
                                            <urn:ontoinsights:ontology:dna:definition> "A condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." .
 
@@ -2314,6 +2410,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Protest
 <urn:ontoinsights:ontology:dna:Protest> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                         rdfs:label "Protest" ;
                                         <urn:ontoinsights:ontology:dna:definition> "An act (such as a CommunicationAndSpeechAct, or gathering/MeetingAndEncounter) indicating disapproval or objection to something or someone. Other Event subclasses (such as MeetingAndEncounter) should be added to more fully define the Event. The entity which is disapproved of/object to is defined using the :has_topic property." ;
                                         <urn:ontoinsights:ontology:dna:synonym> "complaint" ,
@@ -2323,6 +2420,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Punishment
 <urn:ontoinsights:ontology:dna:Punishment> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                            owl:disjointWith <urn:ontoinsights:ontology:dna:Reward> ;
                                            rdfs:label "Punishment" ;
                                            <urn:ontoinsights:ontology:dna:definition> "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property." ;
@@ -2332,6 +2430,7 @@
 
 ###  urn:ontoinsights:ontology:dna:PurchaseAndSale
 <urn:ontoinsights:ontology:dna:PurchaseAndSale> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
                                                 rdfs:label "Purchase and Sale" ;
                                                 <urn:ontoinsights:ontology:dna:definition> "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property." ;
                                                 <urn:ontoinsights:ontology:dna:synonym> "buying" ,
@@ -2342,6 +2441,8 @@
 
 ###  urn:ontoinsights:ontology:dna:Recession
 <urn:ontoinsights:ontology:dna:Recession> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ,
+                                                          <urn:ontoinsights:ontology:dna:Reduction> ;
                                           rdfs:label "Recession" ;
                                           <urn:ontoinsights:ontology:dna:definition> "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate." .
 
@@ -2357,6 +2458,7 @@
 
 ###  urn:ontoinsights:ontology:dna:RecreationEvent
 <urn:ontoinsights:ontology:dna:RecreationEvent> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                 rdfs:label "Recreation Event" ;
                                                 <urn:ontoinsights:ontology:dna:definition> "Any activity done for relaxation and enjoyment (not an Agent's job or business)." ;
                                                 <urn:ontoinsights:ontology:dna:synonym> "leisure" ,
@@ -2377,12 +2479,14 @@
 
 ###  urn:ontoinsights:ontology:dna:Reduction
 <urn:ontoinsights:ontology:dna:Reduction> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Trend> ;
                                           rdfs:label "Reduction" ;
                                           <urn:ontoinsights:ontology:dna:definition> "A condition describing an ongoing Trend of decreasing, shrinking, narrowing, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Reduction can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:RefusalAndRejection
 <urn:ontoinsights:ontology:dna:RefusalAndRejection> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct> ;
                                                     rdfs:label "Refusal and Rejection" ;
                                                     <urn:ontoinsights:ontology:dna:definition> "An act related to not accepting or acknowledging something, someone, or some Event or StateAndCondition. The entity that is not acknowledged/accepted is identified using the :has_topic predicate." ;
                                                     <urn:ontoinsights:ontology:dna:synonym> "declining" ,
@@ -2399,6 +2503,7 @@
 
 ###  urn:ontoinsights:ontology:dna:RemovalAndRestriction
 <urn:ontoinsights:ontology:dna:RemovalAndRestriction> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                       owl:disjointWith <urn:ontoinsights:ontology:dna:ReturnAndRelease> ;
                                                       rdfs:label "Removal and Restriction" ;
                                                       <urn:ontoinsights:ontology:dna:definition> "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)." ;
@@ -2409,12 +2514,14 @@
 
 ###  urn:ontoinsights:ontology:dna:RemovalOfRawMaterials
 <urn:ontoinsights:ontology:dna:RemovalOfRawMaterials> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:RemovalAndRestriction> ;
                                                       rdfs:label "Removal of Raw Materials (Mining, Drilling, Logging, ...)" ;
                                                       <urn:ontoinsights:ontology:dna:definition> "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities" .
 
 
 ###  urn:ontoinsights:ontology:dna:Repair
 <urn:ontoinsights:ontology:dna:Repair> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:FriendlyOrSupportiveAct> ;
                                        rdfs:label "Repair" ;
                                        <urn:ontoinsights:ontology:dna:definition> "Any act that fixes/mends/adjusts/restores an entity that is broken, damaged or faulty." ;
                                        <urn:ontoinsights:ontology:dna:synonym> "fixing" ,
@@ -2423,8 +2530,15 @@
                                                                                "restoration" .
 
 
+###  urn:ontoinsights:ontology:dna:ReportedValue
+<urn:ontoinsights:ontology:dna:ReportedValue> rdf:type owl:Class ;
+                                              rdfs:label "Reported Value" ;
+                                              <urn:ontoinsights:ontology:dna:definition> "A reification of a measurement/measured quantity - where its property, :value, holds the decimal value, and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
+
+
 ###  urn:ontoinsights:ontology:dna:RequestAndAppeal
 <urn:ontoinsights:ontology:dna:RequestAndAppeal> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct> ;
                                                  rdfs:label "Request and Appeal" ;
                                                  <urn:ontoinsights:ontology:dna:definition> "A CommunicationAndSpeechAct that expresses a need or desire for something or someone, or that some Event occur. Note that who/what is requested is identified using the :has_topic predicate." ;
                                                  <urn:ontoinsights:ontology:dna:synonym> "asking for" ,
@@ -2437,11 +2551,16 @@
 
 ###  urn:ontoinsights:ontology:dna:RequirementAndDependence
 <urn:ontoinsights:ontology:dna:RequirementAndDependence> rdf:type owl:Class ;
-                                                         rdfs:label "Requirement and Dependence" .
+                                                         rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
+                                                         rdfs:label "Requirement and Dependence" ;
+                                                         <urn:ontoinsights:ontology:dna:definition> "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_holding_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate." ;
+                                                         <urn:ontoinsights:ontology:dna:synonym> "need" ,
+                                                                                                 "reliance" .
 
 
 ###  urn:ontoinsights:ontology:dna:Resistance
 <urn:ontoinsights:ontology:dna:Resistance> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                            rdfs:label "Resistance" ;
                                            <urn:ontoinsights:ontology:dna:definition> "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate." ;
                                            <urn:ontoinsights:ontology:dna:synonym> "opposition" ,
@@ -2461,12 +2580,14 @@
 
 ###  urn:ontoinsights:ontology:dna:ReturnAndRelease
 <urn:ontoinsights:ontology:dna:ReturnAndRelease> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                  rdfs:label "Return and Release" ;
                                                  <urn:ontoinsights:ontology:dna:definition> "An act of restoring something or someone to their original owner or location, granting freedom to someone or something, or letting something or someone fall/spill/drop. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." .
 
 
 ###  urn:ontoinsights:ontology:dna:Revelation
 <urn:ontoinsights:ontology:dna:Revelation> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
                                            rdfs:label "Revelation" ;
                                            <urn:ontoinsights:ontology:dna:definition> "An act of exposing/making something/someone known." ;
                                            <urn:ontoinsights:ontology:dna:synonym> "disclosure" ,
@@ -2475,6 +2596,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Reward
 <urn:ontoinsights:ontology:dna:Reward> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                        rdfs:label "Reward" ;
                                        <urn:ontoinsights:ontology:dna:definition> "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific Event or StateAndCondition (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property." ;
                                        <urn:ontoinsights:ontology:dna:synonym> "award" ,
@@ -2485,11 +2607,14 @@
 
 ###  urn:ontoinsights:ontology:dna:Risk
 <urn:ontoinsights:ontology:dna:Risk> rdf:type owl:Class ;
-                                     rdfs:label "Risk" .
+                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
+                                     rdfs:label "Risk" ;
+                                     <urn:ontoinsights:ontology:dna:definition> "The 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity [or occurrence] with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings. Note that the activity or occurrence that is 'risky' is identified using the :has_topic property, while an overall assessment of Risk can be defined using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:RobberyAndTheft
 <urn:ontoinsights:ontology:dna:RobberyAndTheft> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:ontology:dna:Acquisition> ;
                                                 rdfs:label "Robbery and Theft" ;
                                                 <urn:ontoinsights:ontology:dna:definition> "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate." ;
                                                 <urn:ontoinsights:ontology:dna:synonym> "breaking and entering" ,
@@ -2507,18 +2632,21 @@
 
 ###  urn:ontoinsights:ontology:dna:SafeConditions
 <urn:ontoinsights:ontology:dna:SafeConditions> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                                rdfs:label "Safe Conditions" ;
                                                <urn:ontoinsights:ontology:dna:definition> "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding SafeConditions can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:SanitaryConditions
 <urn:ontoinsights:ontology:dna:SanitaryConditions> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ;
                                                    rdfs:label "Sanitary Conditions" ;
                                                    <urn:ontoinsights:ontology:dna:definition> "A condition describing that sewage is managed and hygiene is maintained for a population/GroupOfAgents. The overall availability and accessibility regarding SanitaryConditions can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:ontology:dna:SavingsAndInvestment
 <urn:ontoinsights:ontology:dna:SavingsAndInvestment> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                                      rdfs:label "Savings and Investment" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate." ;
                                                      <urn:ontoinsights:ontology:dna:synonym> "capital" ,
@@ -2539,6 +2667,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Searching
 <urn:ontoinsights:ontology:dna:Searching> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                           rdfs:label "Searching" ;
                                           <urn:ontoinsights:ontology:dna:definition> "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property." ;
                                           <urn:ontoinsights:ontology:dna:synonym> "exploration" ,
@@ -2557,12 +2686,14 @@
 
 ###  urn:ontoinsights:ontology:dna:SensoryPerception
 <urn:ontoinsights:ontology:dna:SensoryPerception> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:ontology:dna:Cognition> ;
                                                   rdfs:label "Sensory Perception" ;
                                                   <urn:ontoinsights:ontology:dna:definition> "An act involving one of the senses - sight, hearing, touch, taste and smell." .
 
 
 ###  urn:ontoinsights:ontology:dna:Separation
 <urn:ontoinsights:ontology:dna:Separation> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                            rdfs:label "Separation" ;
                                            <urn:ontoinsights:ontology:dna:definition> "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts." ;
                                            <urn:ontoinsights:ontology:dna:synonym> "detachment" ,
@@ -2590,6 +2721,7 @@
 
 ###  urn:ontoinsights:ontology:dna:SpaceEvent
 <urn:ontoinsights:ontology:dna:SpaceEvent> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                            rdfs:label "Space Event" ;
                                            <urn:ontoinsights:ontology:dna:definition> "Any event that occurs beyond the Earth." ;
                                            <urn:ontoinsights:ontology:dna:example> "Examples are comet, asteroid or meteoroid impacts, meteor showers, burn-up of space debris in the atmosphere, solar flares, eclipses, etc." .
@@ -2609,6 +2741,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Storage
 <urn:ontoinsights:ontology:dna:Storage> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                         rdfs:label "Storage" ;
                                         <urn:ontoinsights:ontology:dna:definition> "Any act of keeping something for future delivery, sale or use." ;
                                         <urn:ontoinsights:ontology:dna:synonym> "retention" ,
@@ -2625,6 +2758,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Substitution
 <urn:ontoinsights:ontology:dna:Substitution> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                              rdfs:label "Substitution" ;
                                              <urn:ontoinsights:ontology:dna:definition> "An act of replacing something or someone with another." ;
                                              <urn:ontoinsights:ontology:dna:synonym> "exchange" ,
@@ -2635,18 +2769,22 @@
 
 ###  urn:ontoinsights:ontology:dna:SupportForGovernment
 <urn:ontoinsights:ontology:dna:SupportForGovernment> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:PoliticalEnvironment> ;
                                                      rdfs:label "Support for Government" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably. The overall situation is described using the :has_assessment property." .
 
 
 ###  urn:ontoinsights:ontology:dna:SupportForHumanRights
 <urn:ontoinsights:ontology:dna:SupportForHumanRights> rdf:type owl:Class ;
+                                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:LivingConditions> ,
+                                                                      <urn:ontoinsights:ontology:dna:PoliticalEnvironment> ;
                                                       rdfs:label "Support for Human Rights" ;
                                                       <urn:ontoinsights:ontology:dna:definition> "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)" .
 
 
 ###  urn:ontoinsights:ontology:dna:SurrenderAndYielding
 <urn:ontoinsights:ontology:dna:SurrenderAndYielding> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                      rdfs:label "Surrender and Yielding" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct." ;
                                                      <urn:ontoinsights:ontology:dna:synonym> "capitulation" ,
@@ -2656,6 +2794,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Taxes
 <urn:ontoinsights:ontology:dna:Taxes> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                       rdfs:label "Taxes" ;
                                       <urn:ontoinsights:ontology:dna:definition> "A situation describing and assessing (via the :has_assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863)" ;
                                       <urn:ontoinsights:ontology:dna:synonym> "duty" ,
@@ -2683,8 +2822,33 @@
                                              <urn:ontoinsights:ontology:dna:definition> "An enumeration of the values, :Seconds, :Minutes, :Hours, :Days, :Weeks, :Months, :Years or :Seasonal." .
 
 
+###  urn:ontoinsights:ontology:dna:Terrain
+<urn:ontoinsights:ontology:dna:Terrain> rdf:type owl:Class ;
+                                        owl:equivalentClass [ rdf:type owl:Class ;
+                                                              owl:oneOf ( <urn:ontoinsights:ontology:dna:enum:Canyon>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Desert>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Forest>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Glacier>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Grassland>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Hilly>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Marsh>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Mountainous>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Oasis>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Ocean>
+                                                                          <urn:ontoinsights:ontology:dna:enum:River>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Swamp>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Tundra>
+                                                                          <urn:ontoinsights:ontology:dna:enum:Valley>
+                                                                        )
+                                                            ] ;
+                                        rdfs:subClassOf <urn:ontoinsights:ontology:dna:Enumeration> ;
+                                        rdfs:label "Terrain" ;
+                                        <urn:ontoinsights:ontology:dna:definition> "An enumeration describing the physical characteristics of a Location - whether mountainous, a river, grasslands, etc." .
+
+
 ###  urn:ontoinsights:ontology:dna:Threat
 <urn:ontoinsights:ontology:dna:Threat> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:ontology:dna:CommunicationAndSpeechAct> ;
                                        rdfs:label "Threat" ;
                                        <urn:ontoinsights:ontology:dna:definition> "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_agent, while the threatened Agent is identified using :has_affected_agent." ;
                                        <urn:ontoinsights:ontology:dna:synonym> "menacing" ,
@@ -2724,6 +2888,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Trend
 <urn:ontoinsights:ontology:dna:Trend> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:ontology:dna:StateAndCondition> ;
                                       rdfs:label "Trend" ;
                                       <urn:ontoinsights:ontology:dna:definition> "A condition describing the general direction or tendency in which some Agent or Resource is moving/changing/developing. The pace of change of the Trend can be described using the :has_assessment predicate." ;
                                       <urn:ontoinsights:ontology:dna:synonym> "course" ,
@@ -2733,6 +2898,7 @@
 
 ###  urn:ontoinsights:ontology:dna:Unemployment
 <urn:ontoinsights:ontology:dna:Unemployment> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:ontology:dna:EconomicEnvironment> ;
                                              rdfs:label "Unemployment" ;
                                              <urn:ontoinsights:ontology:dna:definition> "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
 
@@ -2746,6 +2912,7 @@
 
 ###  urn:ontoinsights:ontology:dna:UtilizationAndConsumption
 <urn:ontoinsights:ontology:dna:UtilizationAndConsumption> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                           rdfs:label "UtilizationAndConsumption" ;
                                                           <urn:ontoinsights:ontology:dna:definition> "Any act that uses something or someone." .
 
@@ -2760,12 +2927,14 @@
 
 ###  urn:ontoinsights:ontology:dna:ViolationOfAgreement
 <urn:ontoinsights:ontology:dna:ViolationOfAgreement> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:ontology:dna:Event> ;
                                                      rdfs:label "Violation of Agreement" ;
                                                      <urn:ontoinsights:ontology:dna:definition> "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." .
 
 
 ###  urn:ontoinsights:ontology:dna:ViolenceAndFighting
 <urn:ontoinsights:ontology:dna:ViolenceAndFighting> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:ontology:dna:AggressiveOrHostileAct> ;
                                                     rdfs:label "Violence and Fighting" ;
                                                     <urn:ontoinsights:ontology:dna:definition> "Any act of aggression involving the use of physical force and/or weapons, and intended to injure, damage or cause harm." .
 
@@ -2808,10 +2977,6 @@
                                                  <urn:ontoinsights:ontology:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wood&oldid=1009092813), Wood 'is a porous and fibrous structural tissue found in the stems and roots of trees and other woody plants. It is an organic material – a natural composite of cellulose fibers that are strong in tension and embedded in a matrix of lignin that resists compression ... Wood may also refer to other plant materials with comparable properties, and to material engineered from wood, or wood chips or fiber. Wood has been used for thousands of years for fuel, as a construction material, for making tools and weapons, furniture and paper. More recently it emerged as a feedstock for the production of purified cellulose and its derivatives, such as cellophane and cellulose acetate.' Wood substitutes include hump, bamboo, composites and plastics." .
 
 
-###  urn:ontoinsights:ontology:dna:boolean
-<urn:ontoinsights:ontology:dna:boolean> rdf:type owl:Class .
-
-
 #################################################################
 #    Individuals
 #################################################################
@@ -2841,6 +3006,12 @@
 <urn:ontoinsights:ontology:dna:enum:Bigender> rdf:type owl:NamedIndividual ,
                                                        <urn:ontoinsights:ontology:dna:Gender> ;
                                               rdfs:label "Bigender" .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Canyon
+<urn:ontoinsights:ontology:dna:enum:Canyon> rdf:type owl:NamedIndividual ,
+                                                     <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "Canyon and deep gorge" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:CompletedDoctoralEducation
@@ -2892,6 +3063,12 @@
                                                    <urn:ontoinsights:ontology:dna:TemporalUnit> ;
                                           rdfs:label "Days" ;
                                           <urn:ontoinsights:ontology:dna:definition> "A 24-hour interval of time." .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Desert
+<urn:ontoinsights:ontology:dna:enum:Desert> rdf:type owl:NamedIndividual ,
+                                                     <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "Desert" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:East
@@ -2968,11 +3145,29 @@
                                                                   <urn:ontoinsights:ontology:dna:example> "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc." .
 
 
+###  urn:ontoinsights:ontology:dna:enum:Forest
+<urn:ontoinsights:ontology:dna:enum:Forest> rdf:type owl:NamedIndividual ,
+                                                     <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "Forest and Woods" .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Glacier
+<urn:ontoinsights:ontology:dna:enum:Glacier> rdf:type owl:NamedIndividual ,
+                                                      <urn:ontoinsights:ontology:dna:Terrain> ;
+                                             rdfs:label "Glacier" .
+
+
 ###  urn:ontoinsights:ontology:dna:enum:GovernmentAndPolitics
 <urn:ontoinsights:ontology:dna:enum:GovernmentAndPolitics> rdf:type owl:NamedIndividual ,
                                                                     <urn:ontoinsights:ontology:dna:LineOfBusiness> ;
                                                            rdfs:label "Government and Politics" ;
                                                            <urn:ontoinsights:ontology:dna:definition> "Involved with governing bodies and agencies, parliaments and law making, political parties, etc." .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Grassland
+<urn:ontoinsights:ontology:dna:enum:Grassland> rdf:type owl:NamedIndividual ,
+                                                        <urn:ontoinsights:ontology:dna:Terrain> ;
+                                               rdfs:label "Grassland and Prairie" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:Healthcare
@@ -2987,6 +3182,12 @@
 <urn:ontoinsights:ontology:dna:enum:High> rdf:type owl:NamedIndividual ,
                                                    <urn:ontoinsights:ontology:dna:Assessment> ;
                                           rdfs:label "High" .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Hilly
+<urn:ontoinsights:ontology:dna:enum:Hilly> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "Hilly" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:Hospitality
@@ -3063,6 +3264,12 @@
                                                    <urn:ontoinsights:ontology:dna:definition> "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
 
 
+###  urn:ontoinsights:ontology:dna:enum:Marsh
+<urn:ontoinsights:ontology:dna:enum:Marsh> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "Marsh" .
+
+
 ###  urn:ontoinsights:ontology:dna:enum:Medium
 <urn:ontoinsights:ontology:dna:enum:Medium> rdf:type owl:NamedIndividual ,
                                                      <urn:ontoinsights:ontology:dna:Assessment> ;
@@ -3088,6 +3295,12 @@
                                                      <urn:ontoinsights:ontology:dna:TemporalUnit> ;
                                             rdfs:label "Months" ;
                                             <urn:ontoinsights:ontology:dna:definition> "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon." .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Mountainous
+<urn:ontoinsights:ontology:dna:enum:Mountainous> rdf:type owl:NamedIndividual ,
+                                                          <urn:ontoinsights:ontology:dna:Terrain> ;
+                                                 rdfs:label "Mountainous" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:NegligibleOrNone
@@ -3126,6 +3339,18 @@
                                                    rdfs:label "Not Applicable" .
 
 
+###  urn:ontoinsights:ontology:dna:enum:Oasis
+<urn:ontoinsights:ontology:dna:enum:Oasis> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "Oasis" .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Ocean
+<urn:ontoinsights:ontology:dna:enum:Ocean> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "Ocean" .
+
+
 ###  urn:ontoinsights:ontology:dna:enum:PostDoctoralEducation
 <urn:ontoinsights:ontology:dna:enum:PostDoctoralEducation> rdf:type owl:NamedIndividual ,
                                                                     <urn:ontoinsights:ontology:dna:EducationLevel> ;
@@ -3160,7 +3385,7 @@
                                                                   <urn:ontoinsights:ontology:dna:LineOfBusiness> ;
                                                          rdfs:label "Religious Activities" ;
                                                          <urn:ontoinsights:ontology:dna:definition> "Involved with activities related to spirituality, faith and worship." ;
-                                                         <urn:ontoinsights:ontology:dna:examples> "Examples include churches and similar organizations, clergy and shaman, etc." .
+                                                         <urn:ontoinsights:ontology:dna:example> "Examples include churches and similar organizations, clergy and shaman, etc." .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:Retail
@@ -3169,6 +3394,12 @@
                                             rdfs:label "Religious Activities" ;
                                             <urn:ontoinsights:ontology:dna:definition> "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
                                             <urn:ontoinsights:ontology:dna:example> "Examples are stores, malls, groceries, etc." .
+
+
+###  urn:ontoinsights:ontology:dna:enum:River
+<urn:ontoinsights:ontology:dna:enum:River> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "River" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:Seasonal
@@ -3240,11 +3471,29 @@
                                                rdfs:label "South-West" .
 
 
+###  urn:ontoinsights:ontology:dna:enum:Swamp
+<urn:ontoinsights:ontology:dna:enum:Swamp> rdf:type owl:NamedIndividual ,
+                                                    <urn:ontoinsights:ontology:dna:Terrain> ;
+                                           rdfs:label "Swamp" .
+
+
 ###  urn:ontoinsights:ontology:dna:enum:Transport
 <urn:ontoinsights:ontology:dna:enum:Transport> rdf:type owl:NamedIndividual ,
                                                         <urn:ontoinsights:ontology:dna:LineOfBusiness> ;
                                                rdfs:label "Transport" ;
                                                <urn:ontoinsights:ontology:dna:definition> "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations." .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Tundra
+<urn:ontoinsights:ontology:dna:enum:Tundra> rdf:type owl:NamedIndividual ,
+                                                     <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "Tundra" .
+
+
+###  urn:ontoinsights:ontology:dna:enum:Valley
+<urn:ontoinsights:ontology:dna:enum:Valley> rdf:type owl:NamedIndividual ,
+                                                     <urn:ontoinsights:ontology:dna:Terrain> ;
+                                            rdfs:label "Valley" .
 
 
 ###  urn:ontoinsights:ontology:dna:enum:VeryHigh
@@ -3279,10 +3528,6 @@
 
 <urn:ontoinsights:ontology:dna:has_season> <urn:ontoinsights:ontology:dna:definition> "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." ;
                                            rdfs:label "has season" .
-
-
-<urn:ontoinsights:ontology:dna:supporting> <urn:ontoinsights:ontology:dna:definition> "Indicates that the referenced Evidence 'supports' the existence and definition of the referencing entity/individual. When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate." ;
-                                           rdfs:label "supporting Evidence (boolean)" .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi

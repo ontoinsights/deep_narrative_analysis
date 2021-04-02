@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: March 28 2021
+# Last modified: April 1 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -65,7 +65,7 @@
   :synonym "nation", "commonwealth", "nationality" .
 
 :Currency a owl:Class ;
-  rdfs:subClassOf :FinancialInstrument ;
+  rdfs:subClassOf :MonetaryAndFinancialInstrument ;
   rdfs:label "Currency" ;
   :definition "A metal or paper medium of exchange that is used as money in a country." .
 
@@ -112,6 +112,15 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Relative Direction Location" ;
   :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known." .
+
+:Terrain a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Terrain" ;
+  :definition "An enumeration describing the physical characteristics of a Location - whether mountainous, a river, grasslands, etc." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:Canyon :enum:Desert :enum:Forest :enum:Grassland :enum:Glacier :enum:Hilly 
+                                    :enum:Marsh :enum:Mountainous :enum:Oasis :enum:Ocean :enum:River :enum:Swamp 
+                                    :enum:Tundra :enum:Valley ) ] .
 
 :TransportationFeeature a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
@@ -333,6 +342,13 @@
   rdfs:domain :RelativeDirectionLocation ;
   rdfs:range :Direction .
 
+:has_terrain a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
+  rdfs:label "has terrain" ;
+  :definition "References one of the enumerated values of Terrain for a PhysicalLocation." ;
+  rdfs:domain :PhysicalLocation ;
+  rdfs:range :Terrain .
+
 :near a owl:ObjectProperty ;
   rdfs:label "near" ;
   :definition "Indicates that a RelativeDirectionLocation is 'close to' another, 'established' PhysicalLocation." ;
@@ -344,8 +360,32 @@
 # Individuals
 ########################################################################
 
+:enum:Canyon a :Terrain ;
+  rdfs:label "Canyon and deep gorge" .
+
+:enum:Desert a :Terrain ;
+  rdfs:label "Desert" .
+
 :enum:East a :Direction ;
   rdfs:label "East" .
+
+:enum:Forest a :Terrain ;
+  rdfs:label "Forest and Woods" .
+
+:enum:Grassland a :Terrain ;
+  rdfs:label "Grassland and Prairie" .
+
+:enum:Glacier a :Terrain ;
+  rdfs:label "Glacier" .
+
+:enum:Hilly a :Terrain ;
+  rdfs:label "Hilly" .
+
+:enum:Marsh a :Terrain ;
+  rdfs:label "Marsh" .
+
+:enum:Mountainous a :Terrain ;
+  rdfs:label "Mountainous" .
 
 :enum:North a :Direction ;
   rdfs:label "North" .
@@ -356,6 +396,15 @@
 :enum:NorthWest a :Direction ;
   rdfs:label "North-West" .
 
+:enum:Oasis a :Terrain ;
+  rdfs:label "Oasis" .
+
+:enum:Ocean a :Terrain ;
+  rdfs:label "Ocean" .
+
+:enum:River a :Terrain ;
+  rdfs:label "River" .
+
 :enum:South a :Direction ;
   rdfs:label "South" .
 
@@ -364,6 +413,15 @@
 
 :enum:SouthWest a :Direction ;
   rdfs:label "South-West" .
+
+:enum:Swamp a :Terrain ;
+  rdfs:label "Swamp" .
+
+:enum:Tundra a :Terrain ;
+  rdfs:label "Tundra" .
+
+:enum:Valley a :Terrain ;
+  rdfs:label "Valley" .
 
 :enum:West a :Direction ;
   rdfs:label "West" .
