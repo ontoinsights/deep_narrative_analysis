@@ -22,6 +22,7 @@
 # 
 # Changes:
 #  Updated to the Mar 2021 semantics
+#  Added :trigger_text
 ########################################################################
 
 
@@ -219,6 +220,12 @@
   rdfs:domain :Evidence ;
   rdfs:range xsd:boolean .
 
+:trigger_text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "trigger text" ;
+  :definition "The parsed text of the narrative that generated the individual or subject-predicate-object triple." ;
+  :example "For example, the text 'I met Barack Obama' would result in the creation of a Person, Barack_Obama, and a MeetingAndEncounter Event, where the :trigger_text for these two instances would be 'Barack Obama' and 'met', respectively." ;
+  rdfs:domain :Mention ;
+  rdfs:range xsd:string .
 
 ########################################################################
 # Object Properties

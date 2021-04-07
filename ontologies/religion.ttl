@@ -1,0 +1,4673 @@
+@prefix : <urn:ontoinsights:ontology:dna:> .
+@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+########################################################################
+# File defining religions based on/extracted from the categories in 
+# the GDELT/CAMEO documentation (Chapter 8, Table 8.1) at 
+# https://www.gdeltproject.org/data/documentation/CAMEO.Manual.1.1b3.pdf.
+# 
+# Created: April 7 2020
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+########################################################################
+
+
+########################################################################
+# Individuals (identified by CAMEO Religion Code)
+########################################################################
+
+:CameoReligion_ATH a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Agnostic", "Atheist" .
+
+:CameoReligion_ATH010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ATH ;
+  rdfs:label "Freethought" .
+
+:CameoReligion_BAH a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Bahai Faith" .
+
+:CameoReligion_BAH010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Baha'Is Under The Provisions Of The Covenant" .
+
+:CameoReligion_BAH020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Faith Of God", "The House Of Mankind", "The Universal Palace Of Order" .
+
+:CameoReligion_BAH030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Free Baha'I Faith" .
+
+:CameoReligion_BAH040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Orthodox Baha'I Faith", "Mother Baha'I Council" .
+
+:CameoReligion_BAH050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Orthodox Baha'I Faith Under The Regency" .
+
+:CameoReligion_BAH060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "Charles Mason Remey Society" .
+
+:CameoReligion_BAH070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BAH ;
+  rdfs:label "The Friends Newsletter" .
+
+:CameoReligion_BUD a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Buddhism" .
+
+:CameoReligion_BUDMAH a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "Mahayana Buddhism" .
+
+:CameoReligion_BUDMAH100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH ;
+  rdfs:label "Pure Land Buddhism", "Amidism" .
+
+:CameoReligion_BUDMAH110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH100 ;
+  rdfs:label "Jodo Shinshu", "Shin Buddhism" .
+
+:CameoReligion_BUDMAH111 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Hongan-Ji School", "Jodo Shinshu Hompa Hongwanji-Ha", "Nishi Hongan-Ji" .
+
+:CameoReligion_BUDMAH112 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Otani School", "Jodo Shinshu Otani-Ha", "Higashi Hongan-Ji" .
+
+:CameoReligion_BUDMAH113 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Takada School" .
+
+:CameoReligion_BUDMAH114 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Bukkoji School" .
+
+:CameoReligion_BUDMAH115 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Kosho School" .
+
+:CameoReligion_BUDMAH116 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Kibe School" .
+
+:CameoReligion_BUDMAH117 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Izumoji School" .
+
+:CameoReligion_BUDMAH118 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH110 ;
+  rdfs:label "Joshoji School" .
+
+:CameoReligion_BUDMAH120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH100 ;
+  rdfs:label "Jodo Shu", "Chinzei Branch" .
+
+:CameoReligion_BUDMAH121 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH120 ;
+  rdfs:label "Seizan Branch" .
+
+:CameoReligion_BUDMAH130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH100 ;
+  rdfs:label "Vietnamese Pure Land Buddhism", "Vietnamese Pure Land Buddhism Association" .
+
+:CameoReligion_BUDMAH140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH100 ;
+  rdfs:label "Yuzu Nembutsu" .
+
+:CameoReligion_BUDMAH200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH ;
+  rdfs:label "Zen Buddhism", "Chan Buddhism" .
+
+:CameoReligion_BUDMAH210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH200 ;
+  rdfs:label "Classic Zen" .
+
+:CameoReligion_BUDMAH211 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH210 ;
+  rdfs:label "Caodong School", "Soto Sect" .
+
+:CameoReligion_BUDMAH212 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH210 ;
+  rdfs:label "Fayan School" .
+
+:CameoReligion_BUDMAH213 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH210 ;
+  rdfs:label "Guiyang School" .
+
+:CameoReligion_BUDMAH214 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH210 ;
+  rdfs:label "Linji School", "Rinzai School" .
+
+:CameoReligion_BUDMAH215 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH210 ;
+  rdfs:label "Yunmen School" .
+
+:CameoReligion_BUDMAH220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH200 ;
+  rdfs:label "Japanese Zen" .
+
+:CameoReligion_BUDMAH221 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH220 ;
+  rdfs:label "Obaku" .
+
+:CameoReligion_BUDMAH223 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH220 ;
+  rdfs:label "Soto" .
+
+:CameoReligion_BUDMAH230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH200 ;
+  rdfs:label "Seon Buddhism", "Korean Zen" .
+
+:CameoReligion_BUDMAH231 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH230 ;
+  rdfs:label "Jogye Order" .
+
+:CameoReligion_BUDMAH240 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH200 ;
+  rdfs:label "Thien Tong", "Thien Buddhism", "Vietnamese Zen" .
+
+:CameoReligion_BUDMAH300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH ;
+  rdfs:label "Nichiren Buddhism" .
+
+:CameoReligion_BUDMAH301 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Fuji Taisekiji Kenshokai" .
+
+:CameoReligion_BUDMAH302 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Fuju-Fuse Nichiren Komon Shu" .
+
+:CameoReligion_BUDMAH303 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Hokke Nichiren Shu" .
+
+:CameoReligion_BUDMAH304 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Hokkeshu" .
+
+:CameoReligion_BUDMAH305 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Hompa Nichiren Shu" .
+
+:CameoReligion_BUDMAH306 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Honke Nichiren Shu" .
+
+:CameoReligion_BUDMAH307 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Honmon Butsuryu Shu Ja" .
+
+:CameoReligion_BUDMAH308 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Honmon Hokke Shu" .
+
+:CameoReligion_BUDMAH309 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Honmon Kyoo Shu" .
+
+:CameoReligion_BUDMAH310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Honmon Shoshu" .
+
+:CameoReligion_BUDMAH311 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Kempon Hokke Shu" .
+
+:CameoReligion_BUDMAH312 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Kokuchukai", "Kokuchukai Ja" .
+
+:CameoReligion_BUDMAH313 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Hokke Shu" .
+
+:CameoReligion_BUDMAH314 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Honshu" .
+
+:CameoReligion_BUDMAH315 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Komon Shu" .
+
+:CameoReligion_BUDMAH316 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Shoshu" .
+
+:CameoReligion_BUDMAH317 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Shu" .
+
+:CameoReligion_BUDMAH318 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nichiren Shu Fuju-Fuse-Ha", "Nichirenshu Fuju-Fuse-Ha" .
+
+:CameoReligion_BUDMAH319 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Nipponzan Myohoji" .
+
+:CameoReligion_BUDMAH320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Reiyukai", "Spiritual Friendship Association" .
+
+:CameoReligion_BUDMAH321 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Rissho Kosei Kai" .
+
+:CameoReligion_BUDMAH322 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Shobo Hokke Shu" .
+
+:CameoReligion_BUDMAH323 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Shoshinkai" .
+
+:CameoReligion_BUDMAH324 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH300 ;
+  rdfs:label "Soka Gakkai" .
+
+:CameoReligion_BUDMAH400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH ;
+  rdfs:label "Tiantai" .
+
+:CameoReligion_BUDMAH410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH400 ;
+  rdfs:label "Cheontae" .
+
+:CameoReligion_BUDMAH420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH400 ;
+  rdfs:label "Tendai" .
+
+:CameoReligion_BUDMAH500 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMAH ;
+  rdfs:label "Shinnyo-En" .
+
+:CameoReligion_BUDMLN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "Millenarian Buddhist Movements" .
+
+:CameoReligion_BUDMLN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMLN ;
+  rdfs:label "Aum Shinrikyo", "Aleph" .
+
+:CameoReligion_BUDMLN011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDMLN010 ;
+  rdfs:label "Hikari No Wa" .
+
+:CameoReligion_BUDNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "New Buddhist Movements" .
+
+:CameoReligion_BUDNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDNRM ;
+  rdfs:label "Santi Asoke" .
+
+:CameoReligion_BUDSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "Syncretic Buddhism" .
+
+:CameoReligion_BUDSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDSYN ;
+  rdfs:label "Tara Center" .
+
+:CameoReligion_BUDTHR a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "Therevada Buddhism" .
+
+:CameoReligion_BUDTHR400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR ;
+  rdfs:label "Therevada Monastic Orders" .
+
+:CameoReligion_BUDTHR410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Amarapura Nikaya" .
+
+:CameoReligion_BUDTHR420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Dhammayuttika Nikaya" .
+
+:CameoReligion_BUDTHR430 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Dvara Nikaya" .
+
+:CameoReligion_BUDTHR440 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Maha Nikaya" .
+
+:CameoReligion_BUDTHR441 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR440 ;
+  rdfs:label "Dhammakaya Movement" .
+
+:CameoReligion_BUDTHR450 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Mahasthabir Nikaya" .
+
+:CameoReligion_BUDTHR460 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Ramanna Nikaya" .
+
+:CameoReligion_BUDTHR470 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Sangharaj Nikaya" .
+
+:CameoReligion_BUDTHR480 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Shwekyin Nikaya" .
+
+:CameoReligion_BUDTHR490 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Siam Nikaya" .
+
+:CameoReligion_BUDTHR500 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDTHR400 ;
+  rdfs:label "Thudhamma Nikaya" .
+
+:CameoReligion_BUDVAJ a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUD ;
+  rdfs:label "Vajrayana Buddhism", "Tantra", "Diamond Vehicle", "Esoteric Buddhism" .
+
+:CameoReligion_BUDVAJ100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ ;
+  rdfs:label "Newar Buddhism" .
+
+:CameoReligion_BUDVAJ200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ ;
+  rdfs:label "Shingon Buddhism", "Orthodox Esoteric Buddhism", "Japanese Esoteric Buddhism" .
+
+:CameoReligion_BUDVAJ210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ200 ;
+  rdfs:label "Kogi Shingon School", "Ancient Shingon School" .
+
+:CameoReligion_BUDVAJ220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ200 ;
+  rdfs:label "Shingi Shingon School", "Reformed Shingon School" .
+
+:CameoReligion_BUDVAJ300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ ;
+  rdfs:label "Shugendo" .
+
+:CameoReligion_BUDVAJ400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ ;
+  rdfs:label "Tibetan Buddhism", "Red Hat Sects" .
+
+:CameoReligion_BUDVAJ410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ400 ;
+  rdfs:label "Gelug", "Gelug-Pa", "Dge Lugs Pa", "Dge-Lugs-Pa", "Dgelugspa", "Yellow Hat Sect", "Dalai Lama" .
+
+:CameoReligion_BUDVAJ420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ400 ;
+  rdfs:label "Kagyu", "Kagyupa", "Kagyud" .
+
+:CameoReligion_BUDVAJ421 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Barom Kagyu" .
+
+:CameoReligion_BUDVAJ422 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Drubgyu Karma Kamtsang", "Karma Kagyu", "Karma Kamtsang", "Karmapa Sect" .
+
+:CameoReligion_BUDVAJ423 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Drikung Kagyu" .
+
+:CameoReligion_BUDVAJ424 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Drukpa Kagyu" .
+
+:CameoReligion_BUDVAJ425 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Shangpa Kagyu" .
+
+:CameoReligion_BUDVAJ426 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ420 ;
+  rdfs:label "Taklung Kagyu" .
+
+:CameoReligion_BUDVAJ430 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ400 ;
+  rdfs:label "Nyingma", "Nyingmapa" .
+
+:CameoReligion_BUDVAJ440 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ400 ;
+  rdfs:label "Rime Movement" .
+
+:CameoReligion_BUDVAJ450 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ400 ;
+  rdfs:label "Sakya", "Sakyapa" .
+
+:CameoReligion_BUDVAJ451 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ450 ;
+  rdfs:label "Ngor" .
+
+:CameoReligion_BUDVAJ452 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_BUDVAJ450 ;
+  rdfs:label "Tshar" .
+
+:CameoReligion_CHR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Christianity" .
+
+:CameoReligion_CHR001 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Charismatic Christianity" .
+
+:CameoReligion_CHR002 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Conservative Christianity" .
+
+:CameoReligion_CHR003 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Evangelical Christianity" .
+
+:CameoReligion_CHR004 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Liberal Christianity" .
+
+:CameoReligion_CHR005 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Prosperity Theology" .
+
+:CameoReligion_CHR100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Ecumenical Christian Movements" .
+
+:CameoReligion_CHR101 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR100 ;
+  rdfs:label "World Council Of Churches" .
+
+:CameoReligion_CHRANG a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Anglican Communion" .
+
+:CameoReligion_CHRANG001 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Anglican" .
+
+:CameoReligion_CHRANG002 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Episcopalian" .
+
+:CameoReligion_CHRANG011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Conservative Anglican" .
+
+:CameoReligion_CHRANG012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Liberal Anglican" .
+
+:CameoReligion_CHRANG013 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "High Anglican" .
+
+:CameoReligion_CHRANG014 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Low Anglican" .
+
+:CameoReligion_CHRANG015 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Catholic Anglican" .
+
+:CameoReligion_CHRANG900 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG ;
+  rdfs:label "Schismatic Catholics Within The Anglican Communion" .
+
+:CameoReligion_CHRANG901 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG900 ;
+  rdfs:label "Philippine Independent Church" .
+
+:CameoReligion_CHRANG902 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRANG900 ;
+  rdfs:label "Old Catholic Church", "Union Of Utrech", "Other Old Catholic Members Of The Anglican Communion" .
+
+:CameoReligion_CHRCTH a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Roman Catholic" .
+
+:CameoReligion_CHRCTH001 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Liberation Theology" .
+
+:CameoReligion_CHRCTH200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Roman Catholic Laity" .
+
+:CameoReligion_CHRCTH201 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Apostolate For Family Consecration" .
+
+:CameoReligion_CHRCTH202 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Catholic Charismatic Renewal" .
+
+:CameoReligion_CHRCTH203 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Catholic Worker Movement" .
+
+:CameoReligion_CHRCTH204 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Communion And Liberation" .
+
+:CameoReligion_CHRCTH205 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Community Of Sant'Egidio" .
+
+:CameoReligion_CHRCTH206 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Cursillo Movement" .
+
+:CameoReligion_CHRCTH207 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Focolare Movement" .
+
+:CameoReligion_CHRCTH208 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "L'Arche" .
+
+:CameoReligion_CHRCTH209 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Legion Of Mary" .
+
+:CameoReligion_CHRCTH210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Madonna House Apostolate" .
+
+:CameoReligion_CHRCTH211 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Neocatechumenal Way" .
+
+:CameoReligion_CHRCTH212 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Regnum Christi" .
+
+:CameoReligion_CHRCTH213 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Schoenstatt Movement" .
+
+:CameoReligion_CHRCTH214 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH200 ;
+  rdfs:label "Worldwide Marriage" .
+
+:CameoReligion_CHRCTH400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Roman Catholic Monastic Orders" .
+
+:CameoReligion_CHRCTH401 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Adorers", "Adorers Of The Blood Of Christ" .
+
+:CameoReligion_CHRCTH402 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Adornos", "Clerics Regular Minor" .
+
+:CameoReligion_CHRCTH403 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Assumptionists", "Augustinians Of The Assumption" .
+
+:CameoReligion_CHRCTH404 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Society Of The Atonement", "Atonement Friars", "Graymoor Friars", "Graymoor Sisters" .
+
+:CameoReligion_CHRCTH405 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Augustinians", "Order Of Saint Augustine" .
+
+:CameoReligion_CHRCTH406 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Baladites", "Order Of Lebanese Maronite" .
+
+:CameoReligion_CHRCTH407 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Barnabites", "Clerics Regular Of Saint Paul" .
+
+:CameoReligion_CHRCTH408 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Basilians", "Congregation Of St. Basil" .
+
+:CameoReligion_CHRCTH409 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Benedictines", "Order Of Saint Benedict" .
+
+:CameoReligion_CHRCTH410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Bridgettines", "Order Of Our Savior" .
+
+:CameoReligion_CHRCTH411 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Brothers Of Christian Instruction Of St Gabriel" .
+
+:CameoReligion_CHRCTH412 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Brothers Of The Christian Schools", "Lasallian Brothers", "Christian Brothers" .
+
+:CameoReligion_CHRCTH413 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Brothers Of Mercy Of Our Lady Of Perpetual Help" .
+
+:CameoReligion_CHRCTH414 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Camaldolese", "Camaldolese Benedictines" .
+
+:CameoReligion_CHRCTH415 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Camillians", "Order Of Saint Camillus" .
+
+:CameoReligion_CHRCTH416 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Canossians", "Canossian Daughters And Sons Of Charity" .
+
+:CameoReligion_CHRCTH417 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Canons Regular Of The New Jerusalem" .
+
+:CameoReligion_CHRCTH418 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Capuchins", "Order Of Friars Minor Capuchin" .
+
+:CameoReligion_CHRCTH419 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Carmelites", "Order Of Our Lady Of Mt. Carmel" .
+
+:CameoReligion_CHRCTH420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Carmelites Of Mary Immaculate" .
+
+:CameoReligion_CHRCTH421 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Carthusians" .
+
+:CameoReligion_CHRCTH422 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Celestines Defunct" .
+
+:CameoReligion_CHRCTH423 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Cistercians" .
+
+:CameoReligion_CHRCTH424 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Claretians", "Claretian Missionaries" .
+
+:CameoReligion_CHRCTH425 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Columbans", "Missionary Society Of St. Columban" .
+
+:CameoReligion_CHRCTH426 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Congregatio Immaculatae Cordis Mariae", "Scheutfathers", "Scheutists", "Missionhurst" .
+
+:CameoReligion_CHRCTH427 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Congregation Of The Disciples Of The Lord" .
+
+:CameoReligion_CHRCTH428 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Congregation Of Holy Cross" .
+
+:CameoReligion_CHRCTH429 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Congregation Of Notre Dame" .
+
+:CameoReligion_CHRCTH430 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Congregation Of The Sacred Hearts Of Jesus And Mary" .
+
+:CameoReligion_CHRCTH431 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Conventual Franciscans", "Conventuals", "Order Of Friars Minor Conventual" .
+
+:CameoReligion_CHRCTH432 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Crosiers", "Canons Regular Of The Holy Cross" .
+
+:CameoReligion_CHRCTH433 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Daughters Of Charity Of St. Vincent De Paul" .
+
+:CameoReligion_CHRCTH434 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Dehonians", "Priests Of The Sacred Heart Of Jesus" .
+
+:CameoReligion_CHRCTH435 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Divine Word Missionaries" .
+
+:CameoReligion_CHRCTH436 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Discalced Carmelites" .
+
+:CameoReligion_CHRCTH437 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Dominicans", "Order Of Friars Preachers" .
+
+:CameoReligion_CHRCTH438 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Dottrinari", "Congregazione Dei Preti Della Dottrina Cristiana" .
+
+:CameoReligion_CHRCTH439 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Eudists", "Congregation Of Jesus And Mary" .
+
+:CameoReligion_CHRCTH440 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Franciscan Brothers Of Brooklyn" .
+
+:CameoReligion_CHRCTH441 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Franciscans", "Order Of Friars Minor" .
+
+:CameoReligion_CHRCTH442 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Franciscan Missionaries Of Divine Motherhood" .
+
+:CameoReligion_CHRCTH443 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Franciscan Missionaries Of Mary" .
+
+:CameoReligion_CHRCTH444 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Franciscan Friars Of The Third Order Regular" .
+
+:CameoReligion_CHRCTH445 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Fransalians", "Missionaries Of St. Francis De Sales" .
+
+:CameoReligion_CHRCTH446 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Grey Nuns Of The Sacred Heart" .
+
+:CameoReligion_CHRCTH447 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Good Shepherd Sisters" .
+
+:CameoReligion_CHRCTH448 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Handmaids Of The Blessed Sacrament And Of Charity" .
+
+:CameoReligion_CHRCTH449 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Handmaids Of The Sacred Heart Of Jesus" .
+
+:CameoReligion_CHRCTH450 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Holy Cross Fathers", "Congregation Of Holy Cross" .
+
+:CameoReligion_CHRCTH451 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Order Of Hospitalers", "Hospitaler Brothers Of St. John Of God" .
+
+:CameoReligion_CHRCTH452 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Infant Jesus Sisters", "Nicolas Barre" .
+
+:CameoReligion_CHRCTH453 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Institute Of Christ The King Sovereign Priest" .
+
+:CameoReligion_CHRCTH454 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Jesuits", "Society Of Jesus" .
+
+:CameoReligion_CHRCTH455 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Josephines Of Asti", "Oblates Of St. Joseph" .
+
+:CameoReligion_CHRCTH456 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Josephite Fathers And Brothers", "St. Joseph'S Society Of The Sacred Heart" .
+
+:CameoReligion_CHRCTH457 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Lazarists", "Vincentians", "Congregation Of The Mission" .
+
+:CameoReligion_CHRCTH458 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Legionaries Of Christ" .
+
+:CameoReligion_CHRCTH459 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Little Sisters Of The Poor" .
+
+:CameoReligion_CHRCTH460 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Loreto Sisters", "Institute Of The Blessed Virgin Mary" .
+
+:CameoReligion_CHRCTH461 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Marian Fathers" .
+
+:CameoReligion_CHRCTH462 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Marianists", "Marists", "Daughters Of Mary Immaculate", "Society Of Mary" .
+
+:CameoReligion_CHRCTH465 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Marist Brothers" .
+
+:CameoReligion_CHRCTH466 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Maryknoll", "Catholic Foreign Mission Society Of America" .
+
+:CameoReligion_CHRCTH467 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Mercedarians", "Order Of Our Lady Of Mercy" .
+
+:CameoReligion_CHRCTH468 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Missionaries Of Charity" .
+
+:CameoReligion_CHRCTH469 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Missionaries Of The Sacred Heart" .
+
+:CameoReligion_CHRCTH470 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Missionary Contemplative Movement 'P. De Foucauld'", "Centro Missionario 'P. De Foucauld'" .
+
+:CameoReligion_CHRCTH471 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Norbertines", "Premonstratensians", "Canons Regular Of Prmontr" .
+
+:CameoReligion_CHRCTH472 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Olivetans", "Order Of Our Lady Of Mount Olivet" .
+
+:CameoReligion_CHRCTH473 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Oblates Of Mary Immaculate" .
+
+:CameoReligion_CHRCTH474 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Oblate Sisters Of Providence" .
+
+:CameoReligion_CHRCTH475 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Oratorians", "Oratory Of St. Philip Neri" .
+
+:CameoReligion_CHRCTH476 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Order Of St. Elisabeth" .
+
+:CameoReligion_CHRCTH477 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Pallottines", "Society Of The Catholic Apostolate" .
+
+:CameoReligion_CHRCTH478 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Paris Foreign Missions Society", "Missions Etrangres De Paris" .
+
+:CameoReligion_CHRCTH479 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Passionists", "Congregation Of The Passion" .
+
+:CameoReligion_CHRCTH480 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Paulists", "Congregation Of St. Paul" .
+
+:CameoReligion_CHRCTH481 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Piarists", "Clerics Regulars Poors Of The Mother Of God Of The Pious Schools" .
+
+:CameoReligion_CHRCTH482 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Poor Clares", "Nuns Of The Order Of St. Clare", "Order Of Poor Ladies" .
+
+:CameoReligion_CHRCTH483 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Presentation Brothers" .
+
+:CameoReligion_CHRCTH484 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Presentation Sisters", "Sisters Of The Presentation Of The Blessed Virgin Mary" .
+
+:CameoReligion_CHRCTH485 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Priestly Fraternity Of St. Peter" .
+
+:CameoReligion_CHRCTH486 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Redemptorists", "Congregation Of The Most Holy Redeemer" .
+
+:CameoReligion_CHRCTH487 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Religious Of The Cenacle" .
+
+:CameoReligion_CHRCTH488 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Resurrectionists" .
+
+:CameoReligion_CHRCTH489 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Rogationists Of The Heart Of Jesus" .
+
+:CameoReligion_CHRCTH490 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Rosminians", "Institute Of Charity" .
+
+:CameoReligion_CHRCTH491 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sacramentines", "Congregation Of The Blessed Sacrament" .
+
+:CameoReligion_CHRCTH492 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Salesians Of St. John Bosco", "Salesian Society", "Salesians Of John Bosco", "Society Of St. Francis De Sales" .
+
+:CameoReligion_CHRCTH493 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Salesian Sisters", "Daughters Of Mary Help Of Christian", "Daughters Of St. Francis De Sales" .
+
+:CameoReligion_CHRCTH494 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Salvatorians", "Society Of The Divine Savior" .
+
+:CameoReligion_CHRCTH495 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Scalabrians", "Congregation Of The Missionaries Of St. Charles Borromeo" .
+
+:CameoReligion_CHRCTH496 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "School Sisters Of Notre Dame" .
+
+:CameoReligion_CHRCTH497 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Servites", "Order Of Friars", "Servants Of Mary" .
+
+:CameoReligion_CHRCTH498 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of Charity" .
+
+:CameoReligion_CHRCTH499 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of Charity Of The Blessed Virgin Mary" .
+
+:CameoReligion_CHRCTH500 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of The Holy Names Of Jesus And Mary" .
+
+:CameoReligion_CHRCTH501 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of Mercy", "Religious Sisters Of Mercy" .
+
+:CameoReligion_CHRCTH502 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of Notre Dame De Namur" .
+
+:CameoReligion_CHRCTH503 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of Our Lady Of Mercy" .
+
+:CameoReligion_CHRCTH504 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of St Joseph" .
+
+:CameoReligion_CHRCTH505 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sisters Of St Joseph Of The Sacred Heart" .
+
+:CameoReligion_CHRCTH506 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Society Of The Precious Blood", "Precious Blood Fathers" .
+
+:CameoReligion_CHRCTH507 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Spiritans", "Holy Ghost Fathers", "Congregation Of The Holy Ghost" .
+
+:CameoReligion_CHRCTH508 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Stigmatines", "Congregation Of The Sacred Stigmata" .
+
+:CameoReligion_CHRCTH509 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Sulpician Fathers", "Society Of Saint Sulpice" .
+
+:CameoReligion_CHRCTH510 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Theatines", "Congregation Of Clerics Regular" .
+
+:CameoReligion_CHRCTH511 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Trappists", "Order Of Cistercians Of The Strict Observance" .
+
+:CameoReligion_CHRCTH512 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Trinitarians", "Order Of The Most Holy Trinity" .
+
+:CameoReligion_CHRCTH513 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Ursulines", "Ursuline Nuns Of The Roman Union", "Ursuline Sisters Of Tildonck" .
+
+:CameoReligion_CHRCTH514 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Verbum Dei Missionary Fraternity" .
+
+:CameoReligion_CHRCTH515 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Viatorians", "Clerics Of Saint Viator" .
+
+:CameoReligion_CHRCTH517 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Vocationists", "Clerics Of The Divine Vocation" .
+
+:CameoReligion_CHRCTH518 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH400 ;
+  rdfs:label "Xaverians", "Xaverian Brothers.", "Missionary Society Of St. Francis Xavier" .
+
+:CameoReligion_CHRCTH600 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Miscellaneous Roman Catholic Organizations" .
+
+:CameoReligion_CHRCTH601 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH600 ;
+  rdfs:label "Opus Dei" .
+
+:CameoReligion_CHRCTH602 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH600 ;
+  rdfs:label "Personal Ordinariates Of Former Anglicans" .
+
+:CameoReligion_CHRCTH603 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH600 ;
+  rdfs:label "Sovereign Military Hospitaller Order Of Saint John Of Jerusalem Of Rhodes And Of Malta", "Order Of Malta" .
+
+:CameoReligion_CHRCTH800 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Eastern Catholic Church" .
+
+:CameoReligion_CHRCTH810 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH800 ;
+  rdfs:label "Alexandrian Liturgical Tradition" .
+
+:CameoReligion_CHRCTH811 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH810 ;
+  rdfs:label "Coptic Catholic Church" .
+
+:CameoReligion_CHRCTH812 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH810 ;
+  rdfs:label "Ethiopian Catholic Church" .
+
+:CameoReligion_CHRCTH820 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH800 ;
+  rdfs:label "Antiochan Liturgical Tradition" .
+
+:CameoReligion_CHRCTH821 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH820 ;
+  rdfs:label "Maronite Church" .
+
+:CameoReligion_CHRCTH822 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH820 ;
+  rdfs:label "Syriac Catholic Church" .
+
+:CameoReligion_CHRCTH823 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH820 ;
+  rdfs:label "Syro-Malankara Catholic Church" .
+
+:CameoReligion_CHRCTH830 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH800 ;
+  rdfs:label "Armenian Liturgical Tradition" .
+
+:CameoReligion_CHRCTH831 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH830 ;
+  rdfs:label "Armenian Catholic Church" .
+
+:CameoReligion_CHRCTH840 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH800 ;
+  rdfs:label "Chaldean Liturgical Tradition", "East Syrian Liturgical Tradition" .
+
+:CameoReligion_CHRCTH841 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH840 ;
+  rdfs:label "Chaldean Catholic Church" .
+
+:CameoReligion_CHRCTH842 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH840 ;
+  rdfs:label "Syro-Malabar Church" .
+
+:CameoReligion_CHRCTH850 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH800 ;
+  rdfs:label "Byzantine Liturgical Tradition" .
+
+:CameoReligion_CHRCTH851 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Albanian Catholic Church" .
+
+:CameoReligion_CHRCTH852 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Belarusian Catholic Church" .
+
+:CameoReligion_CHRCTH853 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Bulgarian Catholic Church" .
+
+:CameoReligion_CHRCTH854 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Eparchy Of Krizevci" .
+
+:CameoReligion_CHRCTH855 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Eucharistic Catholic Church" .
+
+:CameoReligion_CHRCTH856 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Greek Byzantine Catholic Church" .
+
+:CameoReligion_CHRCTH857 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Hungarian Catholic Church" .
+
+:CameoReligion_CHRCTH858 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Italo-Albanian Catholic Church" .
+
+:CameoReligion_CHRCTH859 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Macedonian Catholic Church" .
+
+:CameoReligion_CHRCTH860 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Melkite Greek Catholic Church" .
+
+:CameoReligion_CHRCTH861 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Romanian Church United With Rome" .
+
+:CameoReligion_CHRCTH862 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Russian Catholic Church" .
+
+:CameoReligion_CHRCTH863 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Ruthenian Catholic Church" .
+
+:CameoReligion_CHRCTH864 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Slovak Catholic Church" .
+
+:CameoReligion_CHRCTH865 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH850 ;
+  rdfs:label "Ukrainian Catholic Church" .
+
+:CameoReligion_CHRCTH900 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH ;
+  rdfs:label "Schismatic Catholics" .
+
+:CameoReligion_CHRCTH901 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "African Church Incorporated" .
+
+:CameoReligion_CHRCTH902 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Antiochian Catholic Church In America" .
+
+:CameoReligion_CHRCTH903 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Worldwide Communion Of Catholic Apostolic Churches", "Brazilian Catholic Apostolic Church" .
+
+:CameoReligion_CHRCTH904 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Chinese Patriotic Catholic Association" .
+
+:CameoReligion_CHRCTH905 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Heenum Catholic Church" .
+
+:CameoReligion_CHRCTH906 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Independent Catholic Churches" .
+
+:CameoReligion_CHRCTH907 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Liberal Catholic Church" .
+
+:CameoReligion_CHRCTH908 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Mariavite Church" .
+
+:CameoReligion_CHRCTH909 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Polish National Catholic Church", "Polish Catholic Church" .
+
+:CameoReligion_CHRCTH910 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRCTH900 ;
+  rdfs:label "Society Of Saint Pius X" .
+
+:CameoReligion_CHRDOX a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Orthodox Christian", "Eastern Christianity" .
+
+:CameoReligion_CHRDOX100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Orthodox Communion" .
+
+:CameoReligion_CHRDOX101 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Ecumenical Patriarchate Of Constantinople" .
+
+:CameoReligion_CHRDOX102 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Alexandria" .
+
+:CameoReligion_CHRDOX103 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Antioch" .
+
+:CameoReligion_CHRDOX104 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Jerusalem" .
+
+:CameoReligion_CHRDOX105 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Russia" .
+
+:CameoReligion_CHRDOX106 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Serbia" .
+
+:CameoReligion_CHRDOX107 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Romania" .
+
+:CameoReligion_CHRDOX108 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Bulgaria" .
+
+:CameoReligion_CHRDOX109 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Georgia" .
+
+:CameoReligion_CHRDOX110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Cyprus" .
+
+:CameoReligion_CHRDOX111 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Greece" .
+
+:CameoReligion_CHRDOX112 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Poland" .
+
+:CameoReligion_CHRDOX113 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of Albania" .
+
+:CameoReligion_CHRDOX114 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church Of The Czech Lands And Slovakia" .
+
+:CameoReligion_CHRDOX115 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX100 ;
+  rdfs:label "Orthodox Church In America" .
+
+:CameoReligion_CHRDOX200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Autonomous And Unrecognized Orthodox" .
+
+:CameoReligion_CHRDOX201 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "American World Patriarchs" .
+
+:CameoReligion_CHRDOX202 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Belarusian Autocephalous Orthodox Church" .
+
+:CameoReligion_CHRDOX203 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Chinese Orthodox Church" .
+
+:CameoReligion_CHRDOX204 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Croatian Orthodox Church" .
+
+:CameoReligion_CHRDOX205 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Estonian Orthodox Church" .
+
+:CameoReligion_CHRDOX206 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Finnish Orthodox Church" .
+
+:CameoReligion_CHRDOX207 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Greek Old Calendarists" .
+
+:CameoReligion_CHRDOX208 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Japanese Orthodox Church" .
+
+:CameoReligion_CHRDOX209 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Latvian Orthodox Church" .
+
+:CameoReligion_CHRDOX210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Macedonian Orthodox Church" .
+
+:CameoReligion_CHRDOX211 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Metropolitan Church Of Bessarabia" .
+
+:CameoReligion_CHRDOX212 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Moldovan Orthodox Church" .
+
+:CameoReligion_CHRDOX213 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Montenegrin Orthodox Church" .
+
+:CameoReligion_CHRDOX214 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Old Believers" .
+
+:CameoReligion_CHRDOX215 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Old Calendar Bulgarian Orthodox Church" .
+
+:CameoReligion_CHRDOX216 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Old Calendar Romanian Orthodox Church" .
+
+:CameoReligion_CHRDOX217 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Orthodox Church In Italy" .
+
+:CameoReligion_CHRDOX218 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Orthodox Church Of Greece", "Holy Synod In Resistance" .
+
+:CameoReligion_CHRDOX219 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Orthodox Ohrid Archbishopric" .
+
+:CameoReligion_CHRDOX220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Patriarchal Exarchate In Western Europe" .
+
+:CameoReligion_CHRDOX221 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Russian Orthodox Church Outside Russia" .
+
+:CameoReligion_CHRDOX222 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Russian True Orthodox Church" .
+
+:CameoReligion_CHRDOX223 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Ukrainian Orthodox Church", "Kyiv Patriarchate" .
+
+:CameoReligion_CHRDOX224 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX200 ;
+  rdfs:label "Ukrainian Orthodox Church", "Moscow Patriarchate" .
+
+:CameoReligion_CHRDOX300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Oriental Orthodox Oriental Orthodox" .
+
+:CameoReligion_CHRDOX301 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Armenian Apostolic Church" .
+
+:CameoReligion_CHRDOX302 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Coptic Orthodox" .
+
+:CameoReligion_CHRDOX303 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Eritrean Orthodox" .
+
+:CameoReligion_CHRDOX304 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Ethiopian Orthodox" .
+
+:CameoReligion_CHRDOX305 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Malankara Orthodox Syrian Church", "Indian Orthodox" .
+
+:CameoReligion_CHRDOX306 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX300 ;
+  rdfs:label "Syriac Orthodox" .
+
+:CameoReligion_CHRDOX400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Assyrian Church Of The East" .
+
+:CameoReligion_CHRDOX500 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Ancient Church Of The East" .
+
+:CameoReligion_CHRDOX900 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX ;
+  rdfs:label "Schismatic Orthodox" .
+
+:CameoReligion_CHRDOX910 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX900 ;
+  rdfs:label "Old Believers - Bespopovtsy" .
+
+:CameoReligion_CHRDOX911 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Pomortsy", "Danilovtsy" .
+
+:CameoReligion_CHRDOX912 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Novopomortsy", "New Pomortsy" .
+
+:CameoReligion_CHRDOX913 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Staropomortsy", "Old Pomortsy" .
+
+:CameoReligion_CHRDOX914 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Fedoseevtsy", "Society Of Christian Old Believers Of The Old Pomortsy Unmarried Confession" .
+
+:CameoReligion_CHRDOX915 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Fillipovtsy" .
+
+:CameoReligion_CHRDOX916 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX910 ;
+  rdfs:label "Chasovennye", "Semeyskie" .
+
+:CameoReligion_CHRDOX920 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX900 ;
+  rdfs:label "Old Believers - Popovtsy" .
+
+:CameoReligion_CHRDOX921 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX920 ;
+  rdfs:label "Belokrinitskaya Hierarchy", "Russian Orthodox Old-Rite Church" .
+
+:CameoReligion_CHRDOX922 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRDOX920 ;
+  rdfs:label "Novozybkovskaya Hierarchy", "Russian Old-Orthodox Church" .
+
+:CameoReligion_CHRGNO a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Gnostic Christianity" .
+
+:CameoReligion_CHRGNO010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO ;
+  rdfs:label "Anthroposophy" .
+
+:CameoReligion_CHRGNO020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO ;
+  rdfs:label "Foundation For Inner Peace I.E. A Course In Miracles" .
+
+:CameoReligion_CHRGNO030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO ;
+  rdfs:label "Order Of The Solar Temple" .
+
+:CameoReligion_CHRGNO040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO ;
+  rdfs:label "Rosecrucianism" .
+
+:CameoReligion_CHRGNO041 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Ancient Mystical Order Rosae Crucis" .
+
+:CameoReligion_CHRGNO042 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Antiquus Ordo Rosicrucianis", "Ancient Order Of The Rosicrucians" .
+
+:CameoReligion_CHRGNO043 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Fraternitas Rosae Crucis" .
+
+:CameoReligion_CHRGNO044 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Lectorium Rosicrucianum" .
+
+:CameoReligion_CHRGNO045 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Rosicrucian Fellowship" .
+
+:CameoReligion_CHRGNO046 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO040 ;
+  rdfs:label "Societas Rosicruciana" .
+
+:CameoReligion_CHRGNO060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRGNO ;
+  rdfs:label "Summum" .
+
+:CameoReligion_CHRJHW a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Bible Student Movement", "Jehovah'S Witnesses" .
+
+:CameoReligion_CHRJHW010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Chicago Bible Students" .
+
+:CameoReligion_CHRJHW020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Christian Millennial Fellowship" .
+
+:CameoReligion_CHRJHW030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Dawn Bible Students" .
+
+:CameoReligion_CHRJHW040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Free Bible Students" .
+
+:CameoReligion_CHRJHW041 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW040 ;
+  rdfs:label "Berean Bible Students Church" .
+
+:CameoReligion_CHRJHW042 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW040 ;
+  rdfs:label "Christian Millennial Fellowship", "Free Bible Students" .
+
+:CameoReligion_CHRJHW050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Friends Of Man", "Philanthropic Assembly Of The Friends Of Man", "The Church Of The Kingdom Of God" .
+
+:CameoReligion_CHRJHW070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Goshen Fellowship" .
+
+:CameoReligion_CHRJHW080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Independent Bible Students" .
+
+:CameoReligion_CHRJHW090 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "Laymen'S Home Missionary Movement" .
+
+:CameoReligion_CHRJHW100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRJHW ;
+  rdfs:label "True Faith Jehovah'S Witnesses Association" .
+
+:CameoReligion_CHRLDS a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Latter Day Saints", "Mormonism" .
+
+:CameoReligion_CHRLDS010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Aaronic Order" .
+
+:CameoReligion_CHRLDS020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Church Of Christ", "Temple Lot" .
+
+:CameoReligion_CHRLDS030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Church Of Christ With The Elijah Message" .
+
+:CameoReligion_CHRLDS040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Church Of The Firstborn Of The Fulness Of Times" .
+
+:CameoReligion_CHRLDS050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Church Of The Lamb Of God" .
+
+:CameoReligion_CHRLDS060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Community Of Christ", "Reorganized Church Of Jesus Christ Of Latter Day Saints" .
+
+:CameoReligion_CHRLDS061 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS060 ;
+  rdfs:label "Restoration Branches" .
+
+:CameoReligion_CHRLDS070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Confederate Nations Of Israel" .
+
+:CameoReligion_CHRLDS080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Fundamentalist Church Of Jesus Christ Of Latter Day Saints", "Flds" .
+
+:CameoReligion_CHRLDS090 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Latter-Day Church Of Christ", "Kingston Clan", "Kingston Group", "Davis County Cooperative", "The Co-Op Society" .
+
+:CameoReligion_CHRLDS100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Rigdonites" .
+
+:CameoReligion_CHRLDS110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Righteous Branch Of The Church Of Jesus Christ Of Latter-Day Saints" .
+
+:CameoReligion_CHRLDS120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "The Church Of Jesus Christ", "Bickertonite" .
+
+:CameoReligion_CHRLDS130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "The Church Of Jesus Christ Of Latter Day Saints", "Strangite" .
+
+:CameoReligion_CHRLDS140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRLDS ;
+  rdfs:label "Zion'S Order" .
+
+:CameoReligion_CHRMAY a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Christian Churches Of Controversial Status" .
+
+:CameoReligion_CHRMAY001 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Esoteric Christianity" .
+
+:CameoReligion_CHRMAY110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Armstrongism", "Grace Communion International" .
+
+:CameoReligion_CHRMAY111 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Christian Churches Of God" .
+
+:CameoReligion_CHRMAY112 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Christian Educational Ministries" .
+
+:CameoReligion_CHRMAY113 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "21St Century Church Of God" .
+
+:CameoReligion_CHRMAY114 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of God (International Community)" .
+
+:CameoReligion_CHRMAY115 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of God International" .
+
+:CameoReligion_CHRMAY116 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "The Eternal Church Of God" .
+
+:CameoReligion_CHRMAY117 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of God Preparing For The Kingdom Of God" .
+
+:CameoReligion_CHRMAY118 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of The Eternal God" .
+
+:CameoReligion_CHRMAY119 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of The Great God" .
+
+:CameoReligion_CHRMAY120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Global Church Of God" .
+
+:CameoReligion_CHRMAY121 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Intercontinental Church Of God" .
+
+:CameoReligion_CHRMAY122 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Living Church Of God" .
+
+:CameoReligion_CHRMAY123 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Philadelphia Church Of God" .
+
+:CameoReligion_CHRMAY124 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Restored Church Of God" .
+
+:CameoReligion_CHRMAY125 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of God Fellowship" .
+
+:CameoReligion_CHRMAY126 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Church Of The Great God" .
+
+:CameoReligion_CHRMAY127 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "Sabbath Church Of God" .
+
+:CameoReligion_CHRMAY128 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY110 ;
+  rdfs:label "United Church Of God" .
+
+:CameoReligion_CHRMAY120x a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Assemblies Of Yahweh" .
+
+:CameoReligion_CHRMAY130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Bethel Ministerial Association" .
+
+:CameoReligion_CHRMAY140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Christadelphianism", "Thomasites" .
+
+:CameoReligion_CHRMAY150 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Christian Conventions", "Two-By-Twos", "The Workers And Friends" .
+
+:CameoReligion_CHRMAY151 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY150 ;
+  rdfs:label "Cooneyites" .
+
+:CameoReligion_CHRMAY160 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Christian Science", "Church Of Christ", "Scientist" .
+
+:CameoReligion_CHRMAY170 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Church Of The Blessed Hope" .
+
+:CameoReligion_CHRMAY180 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Friends Of Man" .
+
+:CameoReligion_CHRMAY190 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Iglesia Ni Cristo" .
+
+:CameoReligion_CHRMAY200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "The Local Church", "Little Flock" .
+
+:CameoReligion_CHRMAY210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Members Church Of God International" .
+
+:CameoReligion_CHRMAY220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Mita Congregation" .
+
+:CameoReligion_CHRMAY230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "New Thought Movement" .
+
+:CameoReligion_CHRMAY231 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY230 ;
+  rdfs:label "Church Of Divine Science" .
+
+:CameoReligion_CHRMAY232 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY230 ;
+  rdfs:label "Religious Science" .
+
+:CameoReligion_CHRMAY233 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY230 ;
+  rdfs:label "Unity School Of Christianity", "Unity Church" .
+
+:CameoReligion_CHRMAY240 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Oneness Pentecostalism" .
+
+:CameoReligion_CHRMAY241 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY240 ;
+  rdfs:label "United Pentecostal Church International" .
+
+:CameoReligion_CHRMAY242 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY240 ;
+  rdfs:label "Pentecostal Assemblies Of The World" .
+
+:CameoReligion_CHRMAY250 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Spiritual Christianity" .
+
+:CameoReligion_CHRMAY251 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY250 ;
+  rdfs:label "Molokans" .
+
+:CameoReligion_CHRMAY252 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY250 ;
+  rdfs:label "Dukhobors", "Doukhobors" .
+
+:CameoReligion_CHRMAY253 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY250 ;
+  rdfs:label "Khlysts" .
+
+:CameoReligion_CHRMAY254 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY250 ;
+  rdfs:label "Skoptsy" .
+
+:CameoReligion_CHRMAY255 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY250 ;
+  rdfs:label "Ikonobortsy" .
+
+:CameoReligion_CHRMAY260 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Swedenborgianism", "The Lord'S New Church", "Church Of The New Jerusalem" .
+
+:CameoReligion_CHRMAY270 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "The Way International" .
+
+:CameoReligion_CHRMAY271 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY270 ;
+  rdfs:label "American Fellowship Services" .
+
+:CameoReligion_CHRMAY272 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY270 ;
+  rdfs:label "Great Lakes Fellowship" .
+
+:CameoReligion_CHRMAY273 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY270 ;
+  rdfs:label "Pacific West Fellowship" .
+
+:CameoReligion_CHRMAY280 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMAY ;
+  rdfs:label "Unification Church", "Moonies" .
+
+:CameoReligion_CHRMLN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Millenarian Christianity" .
+
+:CameoReligion_CHRMLN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMLN ;
+  rdfs:label "Branch Davidians" .
+
+:CameoReligion_CHRMLN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMLN ;
+  rdfs:label "The Brethren", "The Body Of Christ", "The Garbage Eaters" .
+
+:CameoReligion_CHRMLN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRMLN ;
+  rdfs:label "Concerned Christians" .
+
+:CameoReligion_CHRNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "New Christian Movements" .
+
+:CameoReligion_CHRNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "The Body Of Christ" .
+
+:CameoReligion_CHRNRM020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "Church Of The Living Word", "The Walk" .
+
+:CameoReligion_CHRNRM030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "The Family International" .
+
+:CameoReligion_CHRNRM040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "Foundation Of Human Understanding" .
+
+:CameoReligion_CHRNRM050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "International Community Of Christ" .
+
+:CameoReligion_CHRNRM060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRNRM ;
+  rdfs:label "Shepherding Movement" .
+
+:CameoReligion_CHROFF a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Offshoots Of Christianity" .
+
+:CameoReligion_CHROFF010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF ;
+  rdfs:label "National Spiritualist Association Of Churches" .
+
+:CameoReligion_CHROFF020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF ;
+  rdfs:label "Spiritualism" .
+
+:CameoReligion_CHROFF030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF ;
+  rdfs:label "Unitarian-Universalism" .
+
+:CameoReligion_CHROFF031 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF030 ;
+  rdfs:label "Covenant Of Unitarian Universalist Pagans" .
+
+:CameoReligion_CHROFF032 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF030 ;
+  rdfs:label "Unitarianism" .
+
+:CameoReligion_CHROFF033 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF030 ;
+  rdfs:label "Universalism" .
+
+:CameoReligion_CHROFF040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHROFF ;
+  rdfs:label "Urantia Foundation" .
+
+:CameoReligion_CHRPRO a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Protestant" .
+
+:CameoReligion_CHRPRO011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Charismatic Protestantism" .
+
+:CameoReligion_CHRPRO012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Cyberchurch" .
+
+:CameoReligion_CHRPRO013 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Dispensationalism" .
+
+:CameoReligion_CHRPRO014 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Evangelical Protestantism" .
+
+:CameoReligion_CHRPRO015 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Pietism" .
+
+:CameoReligion_CHRPRO110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Adventism" .
+
+:CameoReligion_CHRPRO111 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Advent Christian Church" .
+
+:CameoReligion_CHRPRO112 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Seventh Day Church Of God" .
+
+:CameoReligion_CHRPRO113 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Church Of God And Saints Of Christ" .
+
+:CameoReligion_CHRPRO114 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Church Of God General Conference" .
+
+:CameoReligion_CHRPRO115 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Davidian Seventh-Day Adventist Association" .
+
+:CameoReligion_CHRPRO116 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Seventh Day Adventist Reform Movement" .
+
+:CameoReligion_CHRPRO117 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Seventh-Day Adventist Church" .
+
+:CameoReligion_CHRPRO118 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "United Church Of God" .
+
+:CameoReligion_CHRPRO119 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Worldwide Church Of God" .
+
+:CameoReligion_CHRPRO120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Assembly Of Yahweh" .
+
+:CameoReligion_CHRPRO121 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "Primitive Advent Christian Church" .
+
+:CameoReligion_CHRPRO122 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "United Seventh-Day Brethren" .
+
+:CameoReligion_CHRPRO123 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "True And Free Adventists" .
+
+:CameoReligion_CHRPRO124 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO110 ;
+  rdfs:label "United Sabbath-Day Adventist Church" .
+
+:CameoReligion_CHRPRO140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "African-Initiated Churches And Denominations" .
+
+:CameoReligion_CHRPRO141 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO140 ;
+  rdfs:label "Ethiopian Churches" .
+
+:CameoReligion_CHRPRO142 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO140 ;
+  rdfs:label "Zionist Churches" .
+
+:CameoReligion_CHRPRO143 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO140 ;
+  rdfs:label "Messianic Churches" .
+
+:CameoReligion_CHRPRO144 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO140 ;
+  rdfs:label "Apostolic Churches" .
+
+:CameoReligion_CHRPRO145 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO140 ;
+  rdfs:label "Aladura Pentecostal Churches" .
+
+:CameoReligion_CHRPRO160 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Anabaptism" .
+
+:CameoReligion_CHRPRO161 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Amish" .
+
+:CameoReligion_CHRPRO162 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Nazarean Apostolic Christian Church" .
+
+:CameoReligion_CHRPRO163 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Brethren In Christ" .
+
+:CameoReligion_CHRPRO164 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Bruderhof" .
+
+:CameoReligion_CHRPRO165 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Church Of God In Christ", "Mennonite" .
+
+:CameoReligion_CHRPRO166 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Church Of The Brethren" .
+
+:CameoReligion_CHRPRO167 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Hutterites", "New Baptists" .
+
+:CameoReligion_CHRPRO168 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Mennonites" .
+
+:CameoReligion_CHRPRO169 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Old German Baptist Brethren", "Hutterian Brethren", "Hutterian Society Of Brothers" .
+
+:CameoReligion_CHRPRO170 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO160 ;
+  rdfs:label "Schwarzenau Brethren" .
+
+:CameoReligion_CHRPRO180 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Baptist Churches" .
+
+:CameoReligion_CHRPRO181 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO180 ;
+  rdfs:label "Free And General Baptists" .
+
+:CameoReligion_CHRPRO182 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO180 ;
+  rdfs:label "Seventh Day Baptists" .
+
+:CameoReligion_CHRPRO183 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO180 ;
+  rdfs:label "Strict And Particular Baptists" .
+
+:CameoReligion_CHRPRO190 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Congregationalism" .
+
+:CameoReligion_CHRPRO210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Lutheranism" .
+
+:CameoReligion_CHRPRO211 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO210 ;
+  rdfs:label "Confessional Evangelical Lutheran Conference" .
+
+:CameoReligion_CHRPRO212 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO210 ;
+  rdfs:label "Evangelical Catholic Lutheranism", "High Church Lutheranism" .
+
+:CameoReligion_CHRPRO213 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO210 ;
+  rdfs:label "International Lutheran Council" .
+
+:CameoReligion_CHRPRO214 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO210 ;
+  rdfs:label "Lutheran World Federation" .
+
+:CameoReligion_CHRPRO215 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO210 ;
+  rdfs:label "Unaffiliated Lutheran Denominations" .
+
+:CameoReligion_CHRPRO230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Methodism And Wesleyanism" .
+
+:CameoReligion_CHRPRO240 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Nazarene Church" .
+
+:CameoReligion_CHRPRO250 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Pentecostalism" .
+
+:CameoReligion_CHRPRO251 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO250 ;
+  rdfs:label "Independent Pentecostalism" .
+
+:CameoReligion_CHRPRO252 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO250 ;
+  rdfs:label "Reformed Pentecostalism", "Higher Life Pentecostalism", "Assemblies Of God" .
+
+:CameoReligion_CHRPRO253 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO250 ;
+  rdfs:label "Wesleyan Pentecostalism", "Holiness Pentecostalism" .
+
+:CameoReligion_CHRPRO270 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Plymouth Brethren" .
+
+:CameoReligion_CHRPRO280 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Pre-Lutheran Protestants" .
+
+:CameoReligion_CHRPRO281 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO280 ;
+  rdfs:label "Czechoslovak Hussite Church" .
+
+:CameoReligion_CHRPRO282 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO280 ;
+  rdfs:label "Moravian Church" .
+
+:CameoReligion_CHRPRO283 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO280 ;
+  rdfs:label "Unity Of The Brethren" .
+
+:CameoReligion_CHRPRO284 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO280 ;
+  rdfs:label "Waldensian Evangelical Church" .
+
+:CameoReligion_CHRPRO300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Presbyterianism" .
+
+:CameoReligion_CHRPRO310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Quakerism", "Religious Society Of Friends", "Society Of Friends" .
+
+:CameoReligion_CHRPRO320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Reformed Church" .
+
+:CameoReligion_CHRPRO330 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Restoration Movement" .
+
+:CameoReligion_CHRPRO331 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO330 ;
+  rdfs:label "Churches Of Christ" .
+
+:CameoReligion_CHRPRO332 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO330 ;
+  rdfs:label "Disciples Of Christ", "Christian Church" .
+
+:CameoReligion_CHRPRO333 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO330 ;
+  rdfs:label "Independent Christian Churches", "Independent Christian Churches Of Christ" .
+
+:CameoReligion_CHRPRO334 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO330 ;
+  rdfs:label "International Churches Of Christ" .
+
+:CameoReligion_CHRPRO350 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "United And Uniting Churches" .
+
+:CameoReligion_CHRPRO351 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "China Christian Council" .
+
+:CameoReligion_CHRPRO352 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Church Of Christ In Thailand" .
+
+:CameoReligion_CHRPRO353 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Church Of North India" .
+
+:CameoReligion_CHRPRO354 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Church Of Pakistan" .
+
+:CameoReligion_CHRPRO355 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Church Of South India" .
+
+:CameoReligion_CHRPRO356 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Evangelical Church In Germany" .
+
+:CameoReligion_CHRPRO357 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Evangelical Free Church" .
+
+:CameoReligion_CHRPRO358 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Indonesia Christian Church", "Gereja Kristen Indonesia" .
+
+:CameoReligion_CHRPRO359 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "International Council Of Community Churches" .
+
+:CameoReligion_CHRPRO360 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Protestant Church In The Netherlands" .
+
+:CameoReligion_CHRPRO361 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Union Of Waldensian And Methodist Churches" .
+
+:CameoReligion_CHRPRO362 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church In Jamaica And The Cayman Islands" .
+
+:CameoReligion_CHRPRO363 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church In Papua New Guinea And The Solomon Islands" .
+
+:CameoReligion_CHRPRO364 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church Of Canada" .
+
+:CameoReligion_CHRPRO365 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church Of Christ" .
+
+:CameoReligion_CHRPRO366 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church Of Christ In Japan", "Nihon Kirisuto Kyodan" .
+
+:CameoReligion_CHRPRO367 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Church Of Christ In The Philippines" .
+
+:CameoReligion_CHRPRO368 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Free Church Of Scotland" .
+
+:CameoReligion_CHRPRO370 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "United Reformed Church" .
+
+:CameoReligion_CHRPRO371 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO350 ;
+  rdfs:label "Uniting Church In Australia" .
+
+:CameoReligion_CHRPRO900 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO ;
+  rdfs:label "Other Denominations And Movements" .
+
+:CameoReligion_CHRPRO901 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "American Evangelical Christian Churches" .
+
+:CameoReligion_CHRPRO902 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Apostolic Christian Church Of America" .
+
+:CameoReligion_CHRPRO903 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Association Of Vineyard Churches" .
+
+:CameoReligion_CHRPRO904 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Born Again Movement", "Word Of Life Church", "Word Of Life Movement" .
+
+:CameoReligion_CHRPRO905 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "British New Church Movement" .
+
+:CameoReligion_CHRPRO906 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Brunstad Christian Church" .
+
+:CameoReligion_CHRPRO907 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Calvary Chapel" .
+
+:CameoReligion_CHRPRO908 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Charismatic Episcopal Church" .
+
+:CameoReligion_CHRPRO909 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Christian World Liberation Front", "The Spiritual Counterfeits Project" .
+
+:CameoReligion_CHRPRO910 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Community Of Jesus" .
+
+:CameoReligion_CHRPRO911 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Followers Of Christ Church" .
+
+:CameoReligion_CHRPRO912 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Great Commission Church Movement" .
+
+:CameoReligion_CHRPRO913 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Greater Grace World Outreach" .
+
+:CameoReligion_CHRPRO914 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Independent Fundamental Churches Of America" .
+
+:CameoReligion_CHRPRO915 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Jews For Jesus" .
+
+:CameoReligion_CHRPRO916 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Moody Church" .
+
+:CameoReligion_CHRPRO918 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "Most Holy Church Of God In Christ Jesus" .
+
+:CameoReligion_CHRPRO919 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "New Apostolic Church" .
+
+:CameoReligion_CHRPRO920 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "New Life Fellowship" .
+
+:CameoReligion_CHRPRO921 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "The Christian Community", "Christian Community Church", "Christengemeinschaft" .
+
+:CameoReligion_CHRPRO922 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "True Jesus Church" .
+
+:CameoReligion_CHRPRO923 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRPRO900 ;
+  rdfs:label "United Church Of Christ" .
+
+:CameoReligion_CHRRAC a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Christian Groups With Racial Theologies" .
+
+:CameoReligion_CHRRAC010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC ;
+  rdfs:label "British Israelism", "Anglo-Israelism" .
+
+:CameoReligion_CHRRAC011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC010 ;
+  rdfs:label "Anglo-Saxon Federation Of America" .
+
+:CameoReligion_CHRRAC020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC ;
+  rdfs:label "Christian Identity" .
+
+:CameoReligion_CHRRAC021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC020 ;
+  rdfs:label "Aryan Nations Church" .
+
+:CameoReligion_CHRRAC022 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC020 ;
+  rdfs:label "Assembly Of Christian Soldiers" .
+
+:CameoReligion_CHRRAC023 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC020 ;
+  rdfs:label "Christian Identity Church" .
+
+:CameoReligion_CHRRAC024 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC020 ;
+  rdfs:label "Church Of Israel" .
+
+:CameoReligion_CHRRAC025 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRRAC020 ;
+  rdfs:label "The Covenant The Sword And The Arm Of The Lord" .
+
+:CameoReligion_CHRRAD a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Fundamentalist Christian" .
+
+:CameoReligion_CHRSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHR ;
+  rdfs:label "Syncretic Christianity" .
+
+:CameoReligion_CHRSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN ;
+  rdfs:label "Messianic Jews" .
+
+:CameoReligion_CHRSYN011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN010 ;
+  rdfs:label "Union Of Messianic Jewish Congregations" .
+
+:CameoReligion_CHRSYN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN ;
+  rdfs:label "Native American Church" .
+
+:CameoReligion_CHRSYN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN ;
+  rdfs:label "Sacred Name Movement", "Yahwehism" .
+
+:CameoReligion_CHRSYN031 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Assemblies Of The Called Out Ones Of Yah" .
+
+:CameoReligion_CHRSYN032 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Assemblies Of Yahweh" .
+
+:CameoReligion_CHRSYN033 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Yahwehs Assembly In Messiah" .
+
+:CameoReligion_CHRSYN034 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Yahweh'S Assembly In Yahshua" .
+
+:CameoReligion_CHRSYN035 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Yahweh'S Restoration Ministry" .
+
+:CameoReligion_CHRSYN036 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN030 ;
+  rdfs:label "Yahweh'S Philadelphia Truth Congregation" .
+
+:CameoReligion_CHRSYN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN ;
+  rdfs:label "Spiritual Baptist" .
+
+:CameoReligion_CHRSYN050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CHRSYN ;
+  rdfs:label "Uniao Do Vegetal" .
+
+:CameoReligion_CON a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Confucianism" .
+
+:CameoReligion_CONSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CON ;
+  rdfs:label "Neo-Confucianism" .
+
+:CameoReligion_CON200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_CON ;
+  rdfs:label "New Confucianism" .
+
+:CameoReligion_HIN a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Hinduism" .
+
+:CameoReligion_HIN100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Ecumenical Hindu Movements" .
+
+:CameoReligion_HIN101 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Hindu Aikya Vedi" .
+
+:CameoReligion_HIN102 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Hindu Forum Of Britain" .
+
+:CameoReligion_HIN103 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Vishva Hindu Parishad" .
+
+:CameoReligion_HIN104 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Malaysia Hindudharma Mamandram" .
+
+:CameoReligion_HIN105 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Rashtriya Swayamsevak Sangh" .
+
+:CameoReligion_HIN106 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Sanatan Sanstha" .
+
+:CameoReligion_HIN108 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Hindu Munnani" .
+
+:CameoReligion_HIN109 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN100 ;
+  rdfs:label "Hindu Youth Network" .
+
+:CameoReligion_HINAST a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Hinduism By School Of Astika Orthodox Philosophies" .
+
+:CameoReligion_HINAST100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST ;
+  rdfs:label "Mimamsa" .
+
+:CameoReligion_HINAST200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST ;
+  rdfs:label "Nyaya-Vaisheshika", "Nyaya", "Vaisheshika" .
+
+:CameoReligion_HINAST300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST ;
+  rdfs:label "Samkhya" .
+
+:CameoReligion_HINAST400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST ;
+  rdfs:label "Vedanta" .
+
+:CameoReligion_HINAST410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Advaita Vedanta" .
+
+:CameoReligion_HINAST420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Vishishtadvaita" .
+
+:CameoReligion_HINAST430 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Dvaita" .
+
+:CameoReligion_HINAST440 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Dvaitadvaita" .
+
+:CameoReligion_HINAST450 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Shuddhadvaita" .
+
+:CameoReligion_HINAST460 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Achintya Bhedabheda" .
+
+:CameoReligion_HINAST470 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST400 ;
+  rdfs:label "Purnadvaita", "Integral Advaita" .
+
+:CameoReligion_HINAST700 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST ;
+  rdfs:label "Yoga" .
+
+:CameoReligion_HINAST710 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Bhakti Yoga" .
+
+:CameoReligion_HINAST711 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST710 ;
+  rdfs:label "Hanuman Foundation" .
+
+:CameoReligion_HINAST720 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Hatha Yoga" .
+
+:CameoReligion_HINAST730 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Jnana Yoga" .
+
+:CameoReligion_HINAST740 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Karma Yoga" .
+
+:CameoReligion_HINAST750 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Kriya Yoga" .
+
+:CameoReligion_HINAST751 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST750 ;
+  rdfs:label "Self-Realization Fellowship" .
+
+:CameoReligion_HINAST752 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST750 ;
+  rdfs:label "Yogoda Satsanga Society Of India" .
+
+:CameoReligion_HINAST760 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Natya Yoga" .
+
+:CameoReligion_HINAST770 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Purna Yoga", "Integral Yoga" .
+
+:CameoReligion_HINAST771 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST770 ;
+  rdfs:label "Aurobindo Ashrama" .
+
+:CameoReligion_HINAST780 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Raja Yoga" .
+
+:CameoReligion_HINAST790 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST700 ;
+  rdfs:label "Named Yogic Organizations" .
+
+:CameoReligion_HINAST791 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST790 ;
+  rdfs:label "Kripalu Yoga Retreat" .
+
+:CameoReligion_HINAST792 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINAST790 ;
+  rdfs:label "Himalayan Institute Of Yoga Science And Philosophy" .
+
+:CameoReligion_HINDEN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Hinduism By Denomination Prioritize This Categorization" .
+
+:CameoReligion_HINDEN100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN ;
+  rdfs:label "Shaivism" .
+
+:CameoReligion_HINDEN110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Kashmir Shaivism" .
+
+:CameoReligion_HINDEN111 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN110 ;
+  rdfs:label "Krana" .
+
+:CameoReligion_HINDEN112 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN110 ;
+  rdfs:label "Kula" .
+
+:CameoReligion_HINDEN113 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN110 ;
+  rdfs:label "Pratyabhijna" .
+
+:CameoReligion_HINDEN114 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN110 ;
+  rdfs:label "Siddha Yoga" .
+
+:CameoReligion_HINDEN115 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN110 ;
+  rdfs:label "Spanda" .
+
+:CameoReligion_HINDEN121 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Shaiva Siddhanta" .
+
+:CameoReligion_HINDEN122 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Lingayatism" .
+
+:CameoReligion_HINDEN123 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Visishtadvaita" .
+
+:CameoReligion_HINDEN124 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Agama Hindu Dharma" .
+
+:CameoReligion_HINDEN125 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Arsha Vidya Gurukulam" .
+
+:CameoReligion_HINDEN126 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN100 ;
+  rdfs:label "Brahma Kumaris World Spiritual University" .
+
+:CameoReligion_HINDEN200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN ;
+  rdfs:label "Shaktism" .
+
+:CameoReligion_HINDEN210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN200 ;
+  rdfs:label "Hindu Tantra" .
+
+:CameoReligion_HINDEN211 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN210 ;
+  rdfs:label "Ananda Marga" .
+
+:CameoReligion_HINDEN300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN ;
+  rdfs:label "Smartism" .
+
+:CameoReligion_HINDEN310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Ramakrishna Movement", "Vedantic Movement" .
+
+:CameoReligion_HINDEN311 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN310 ;
+  rdfs:label "Ramakrishna Mission" .
+
+:CameoReligion_HINDEN312 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN310 ;
+  rdfs:label "Ramakrishna Math" .
+
+:CameoReligion_HINDEN313 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN310 ;
+  rdfs:label "Sri Sarada Math" .
+
+:CameoReligion_HINDEN314 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN310 ;
+  rdfs:label "Ramakrishna Sarada Mission" .
+
+:CameoReligion_HINDEN320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Smarta Advaita Vedanta" .
+
+:CameoReligion_HINDEN321 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN320 ;
+  rdfs:label "Ramachandrapura Math", "Sri Sri Jagadguru Shankaracharya Mahasamstanam Srisamstana Gokarna" .
+
+:CameoReligion_HINDEN322 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN320 ;
+  rdfs:label "Sri Ramana Ashram", "Sri Ramanasramam" .
+
+:CameoReligion_HINDEN331 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Sharada Pitha", "Sringeri Sharada Peetham", "Sringeri Mutt" .
+
+:CameoReligion_HINDEN332 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Jyotirmatha Pitha" .
+
+:CameoReligion_HINDEN333 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Govardhana Pitha" .
+
+:CameoReligion_HINDEN334 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Dwaraka Pitha" .
+
+:CameoReligion_HINDEN335 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Kanchi Kamakoti Pitha" .
+
+:CameoReligion_HINDEN336 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Vivekananda Kendra" .
+
+:CameoReligion_HINDEN337 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Divine Life Society" .
+
+:CameoReligion_HINDEN339 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Transcendental Meditation Movement", "International Meditation Society" .
+
+:CameoReligion_HINDEN340 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Sivananda Yoga" .
+
+:CameoReligion_HINDEN341 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Divine Life Society" .
+
+:CameoReligion_HINDEN342 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Sathya Sai Baba" .
+
+:CameoReligion_HINDEN343 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Art Of Living Foundation" .
+
+:CameoReligion_HINDEN345 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Dwaraka Pitham" .
+
+:CameoReligion_HINDEN346 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Govardhana Matha" .
+
+:CameoReligion_HINDEN347 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Jyotirmath" .
+
+:CameoReligion_HINDEN348 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Swarnavalli Mutt" .
+
+:CameoReligion_HINDEN350 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN300 ;
+  rdfs:label "Kanchi Kamakoti Peetham" .
+
+:CameoReligion_HINDEN400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN ;
+  rdfs:label "Vaishnavism" .
+
+:CameoReligion_HINDEN410 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Brahma Sampradaya", "Gaudiya Vaishnavism" .
+
+:CameoReligion_HINDEN411 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN410 ;
+  rdfs:label "Gaudiya Math" .
+
+:CameoReligion_HINDEN412 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN410 ;
+  rdfs:label "International Society For Krishna Consciousness", "Iskon", "Hare Krishnas" .
+
+:CameoReligion_HINDEN420 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Halumatha" .
+
+:CameoReligion_HINDEN421 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN420 ;
+  rdfs:label "Kaginele Kanaka Guru Peetha" .
+
+:CameoReligion_HINDEN422 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN420 ;
+  rdfs:label "Mata Amritanandamayi Math" .
+
+:CameoReligion_HINDEN430 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Shri Vaishnava", "Sri Sampradaya" .
+
+:CameoReligion_HINDEN431 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN430 ;
+  rdfs:label "Andavan Ashramam" .
+
+:CameoReligion_HINDEN432 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN430 ;
+  rdfs:label "Ahobila Matha" .
+
+:CameoReligion_HINDEN433 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN430 ;
+  rdfs:label "Parakala Matha" .
+
+:CameoReligion_HINDEN434 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN430 ;
+  rdfs:label "Sree Narayana Dharma Paripalana Yogam" .
+
+:CameoReligion_HINDEN435 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN430 ;
+  rdfs:label "Sree Narayana Dharma Sangham" .
+
+:CameoReligion_HINDEN450 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Swaminarayan Hinduism" .
+
+:CameoReligion_HINDEN451 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN450 ;
+  rdfs:label "Bochasanwasi Shri Akshar Purushottam Swaminarayan Sanstha" .
+
+:CameoReligion_HINDEN452 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN450 ;
+  rdfs:label "Swaminarayan Maninagar" .
+
+:CameoReligion_HINDEN453 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN450 ;
+  rdfs:label "Swaminarayan Sampraday" .
+
+:CameoReligion_HINDEN451x a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Astha Mathas" .
+
+:CameoReligion_HINDEN452x a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Kumara Sampradaya" .
+
+:CameoReligion_HINDEN453x a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Mahapuruxiya Dharma" .
+
+:CameoReligion_HINDEN454 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Rudra Sampradaya", "Shree Vallabha Nidhi" .
+
+:CameoReligion_HINDEN456 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Sri Narasingha Caitanya Matha", "Dvaita Philosophy" .
+
+:CameoReligion_HINDEN457 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "The Ramanandi Movement" .
+
+:CameoReligion_HINDEN458 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN400 ;
+  rdfs:label "Vaisnava-Sahajiya" .
+
+:CameoReligion_HINDEN500 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN ;
+  rdfs:label "Other Hindu Denominations" .
+
+:CameoReligion_HINDEN510 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN500 ;
+  rdfs:label "Ganapatya" .
+
+:CameoReligion_HINDEN520 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINDEN500 ;
+  rdfs:label "Saura" .
+
+:CameoReligion_HINMAY a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Hindu Groups Of Controversial Status" .
+
+:CameoReligion_HINMAY010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINMAY ;
+  rdfs:label "Ayyavazhi" .
+
+:CameoReligion_HINNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "New Hindu Movements" .
+
+:CameoReligion_HINNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINNRM ;
+  rdfs:label "Arya Samaj" .
+
+:CameoReligion_HINOFF a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Offshoots Of Hinduism" .
+
+:CameoReligion_HINOFF010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINOFF ;
+  rdfs:label "Brahmoism" .
+
+:CameoReligion_HINOFF011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINOFF010 ;
+  rdfs:label "Sadharan Brahmo Samaj" .
+
+:CameoReligion_HINSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Syncretic Hindu Movements" .
+
+:CameoReligion_HINSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINSYN ;
+  rdfs:label "Sant Mat And Related Movements" .
+
+:CameoReligion_HINSYN011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINSYN010 ;
+  rdfs:label "Radha Soami", "Radhasoami" .
+
+:CameoReligion_HINSYN012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINSYN010 ;
+  rdfs:label "Divine Light Mission" .
+
+:CameoReligion_HINWLB a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HIN ;
+  rdfs:label "Wellbeing-Related Hindu Movements" .
+
+:CameoReligion_HINWLB010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_HINWLB ;
+  rdfs:label "Chopra Center" .
+
+:CameoReligion_JAN a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Jainism" .
+
+:CameoReligion_JAN100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN ;
+  rdfs:label "Digambar" .
+
+:CameoReligion_JAN110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN100 ;
+  rdfs:label "Digambar Terapanthi" .
+
+:CameoReligion_JAN120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN100 ;
+  rdfs:label "Taran Panth" .
+
+:CameoReligion_JAN200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN ;
+  rdfs:label "Svetambara" .
+
+:CameoReligion_JAN210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN200 ;
+  rdfs:label "Baissamprada", "Bastola" .
+
+:CameoReligion_JAN220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN200 ;
+  rdfs:label "Murtipujaka" .
+
+:CameoReligion_JAN230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN200 ;
+  rdfs:label "Sthanakvasi" .
+
+:CameoReligion_JAN240 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JAN200 ;
+  rdfs:label "Svetambar Terapanth" .
+
+:CameoReligion_JEW a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Judaism" .
+
+:CameoReligion_JEW010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Conservative Judaism" .
+
+:CameoReligion_JEW011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW010 ;
+  rdfs:label "Conservadox Judaism" .
+
+:CameoReligion_JEW012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW010 ;
+  rdfs:label "Masorti Judaism" .
+
+:CameoReligion_JEW020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Humanistic Judaism" .
+
+:CameoReligion_JEW030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Jewish Renewal" .
+
+:CameoReligion_JEW050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Liberal Judaism" .
+
+:CameoReligion_JEW060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Neolog Judaism" .
+
+:CameoReligion_JEW070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Orthodox Judaism" .
+
+:CameoReligion_JEW071 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW070 ;
+  rdfs:label "Chief Rabbinate Of Israel" .
+
+:CameoReligion_JEWUDX a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW070 ;
+  rdfs:label "Haredi", "Ultra-Orthodox", "Chareidi", "Charedi" .
+
+:CameoReligion_JEWUDX010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWUDX ;
+  rdfs:label "Central Rabbinical Congress Of The United States And Canada" .
+
+:CameoReligion_JEWHSD a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWUDX ;
+  rdfs:label "Hasidic Judaism" .
+
+:CameoReligion_JEWHSD010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWHSD ;
+  rdfs:label "Chabad", "Chabad-Lubavitch" .
+
+:CameoReligion_JEWHSD020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWHSD ;
+  rdfs:label "Satmar" .
+
+:CameoReligion_JEWUDX030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWUDX ;
+  rdfs:label "Lithuanian Judaism", "Yeshiva Haredi Judaism" .
+
+:CameoReligion_JEW073 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW070 ;
+  rdfs:label "Modern Orthodoxy", "Edah", "Orthodox Union", "Religious Zionist Movement" .
+
+:CameoReligion_JEW074 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW070 ;
+  rdfs:label "Union Of Orthodox Rabbis" .
+
+:CameoReligion_JEW075 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW070 ;
+  rdfs:label "World Agudath Israel", "Orthodox Jew" .
+
+:CameoReligion_JEW080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Reconstructionist Judaism" .
+
+:CameoReligion_JEW090 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Reform Judaism", "Progressive Judaism" .
+
+:CameoReligion_JEW800 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Quasi-Ethnic Divisions Of Judaism" .
+
+:CameoReligion_JEW810 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW800 ;
+  rdfs:label "Ashkenazi Judaism" .
+
+:CameoReligion_JEW820 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW800 ;
+  rdfs:label "Mizrahi Judaism" .
+
+:CameoReligion_JEW830 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW800 ;
+  rdfs:label "Sephardic Judaism" .
+
+:CameoReligion_JEWNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "" .
+
+:CameoReligion_JEWNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWNRM ;
+  rdfs:label "Jewish Science" .
+
+:CameoReligion_JEWOFF a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Offshoots Of Judaism" .
+
+:CameoReligion_JEWOFF010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWOFF ;
+  rdfs:label "Samaritanism" .
+
+:CameoReligion_JEWRAC a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEW ;
+  rdfs:label "Judaism With Racial Theologies" .
+
+:CameoReligion_JEWRAC010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWRAC ;
+  rdfs:label "Black Hebrew Israelites" .
+
+:CameoReligion_JEWRAC011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWRAC010 ;
+  rdfs:label "African Hebrew Israelites Of Jerusalem" .
+
+:CameoReligion_JEWRAC012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWRAC010 ;
+  rdfs:label "Church Of God And Saints Of Christ" .
+
+:CameoReligion_JEWRAC013 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWRAC010 ;
+  rdfs:label "Commandment Keepers", "Holy Church Of The Living God" .
+
+:CameoReligion_JEWRAC014 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_JEWRAC010 ;
+  rdfs:label "Nation Of Yahweh" .
+
+:CameoReligion_MOS a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Islam" .
+
+:CameoReligion_MOSMAY a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Muslims Of Controversial Status" .
+
+:CameoReligion_MOSMAY010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSMAY ;
+  rdfs:label "Ahmadiyya" .
+
+:CameoReligion_MOSMAY011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSMAY010 ;
+  rdfs:label "Lahore Ahmadiyya Movement" .
+
+:CameoReligion_MOSMAY012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSMAY010 ;
+  rdfs:label "Ahmadiyya Muslim Community" .
+
+:CameoReligion_MOSMAY020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSMAY ;
+  rdfs:label "United Submitters International" .
+
+:CameoReligion_MOSMAY030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSMAY ;
+  rdfs:label "Zikri" .
+
+:CameoReligion_MOSOFF a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Offshoots Of Islam" .
+
+:CameoReligion_MOSOFF010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSOFF ;
+  rdfs:label "Bawa Muhaiyaddeen Fellowship" .
+
+:CameoReligion_MOSOFF020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSOFF ;
+  rdfs:label "Universal Sufism" .
+
+:CameoReligion_MOSOFF021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSOFF020 ;
+  rdfs:label "Dances Of Universal Peace" .
+
+:CameoReligion_MOSRAC a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Racialist Islam" .
+
+:CameoReligion_MOSRAC100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC ;
+  rdfs:label "Black Muslim Movements" .
+
+:CameoReligion_MOSRAC110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "American Society Of Muslims" .
+
+:CameoReligion_MOSRAC120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "Moorish Science Temple Of America" .
+
+:CameoReligion_MOSRAC130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "Nation Of Islam" .
+
+:CameoReligion_MOSRAC140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "Nuwaubianism" .
+
+:CameoReligion_MOSRAC141 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC140 ;
+  rdfs:label "United Nuwaubian Nation Of Moors" .
+
+:CameoReligion_MOSRAC142 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC140 ;
+  rdfs:label "Yamassee Native Americans" .
+
+:CameoReligion_MOSRAC150 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "The Nation Of Gods And Earths" .
+
+:CameoReligion_MOSRAC160 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSRAC100 ;
+  rdfs:label "United Nations Of Islam" .
+
+:CameoReligion_MOSRAD a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Fundamentalist Muslim" .
+
+:CameoReligion_MOSSFI a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Sufi" .
+
+:CameoReligion_MOSSFI010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSFI ;
+  rdfs:label "Mawlawi Order", "Whirling Dervishes" .
+
+:CameoReligion_MOSSFI020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSFI ;
+  rdfs:label "Naqshbandi" .
+
+:CameoReligion_MOSSHI a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Shia" .
+
+:CameoReligion_MOSSHI100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI ;
+  rdfs:label "Twelver" .
+
+:CameoReligion_MOSSHISFI a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI100 ;
+  rdfs:label "Bektashi The Twelver Sufis" .
+
+:CameoReligion_MOSSHI200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI ;
+  rdfs:label "Zaidi", "Zaiddiyah" .
+
+:CameoReligion_MOSSHI300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI ;
+  rdfs:label "Ismaili" .
+
+:CameoReligion_MOSSHI310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Alavi Bohra" .
+
+:CameoReligion_MOSSHI320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Dawoodi Bohra" .
+
+:CameoReligion_MOSSHI330 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Mustaali" .
+
+:CameoReligion_MOSSHI331 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI330 ;
+  rdfs:label "Hebtiahs Bohra" .
+
+:CameoReligion_MOSSHI332 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI330 ;
+  rdfs:label "Abta-I-Malak" .
+
+:CameoReligion_MOSSHI340 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Nizari" .
+
+:CameoReligion_MOSSHI350 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Sulaimani Bohra" .
+
+:CameoReligion_MOSDRZ a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSHI300 ;
+  rdfs:label "Druze" .
+
+:CameoReligion_MOSALE a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Alawi", "Alewi" .
+
+:CameoReligion_MOSSUN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Sunni" .
+
+:CameoReligion_MOSSUN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN ;
+  rdfs:label "Hanafi School" .
+
+:CameoReligion_MOSSUN011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN010 ;
+  rdfs:label "Berailvi" .
+
+:CameoReligion_MOSSUN012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN010 ;
+  rdfs:label "Deobandi" .
+
+:CameoReligion_MOSSUN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN ;
+  rdfs:label "Hanbali School" .
+
+:CameoReligion_MOSSUN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN ;
+  rdfs:label "Maliki School" .
+
+:CameoReligion_MOSSUN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOSSUN ;
+  rdfs:label "Shafi'I School" .
+
+:CameoReligion_MOSSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MOS ;
+  rdfs:label "Syncretic Islam" .
+
+:CameoReligion_MSSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_MSSYN0 ;
+  rdfs:label "Moorish Science Temple Of America" .
+
+:CameoReligion_SHN a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Shinto" .
+
+:CameoReligion_SHN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "Folk Shinto", "Ko Shinto" .
+
+:CameoReligion_SHN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "Imperial Shinto" .
+
+:CameoReligion_SHN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "Koshinto" .
+
+:CameoReligion_SHN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "Shrine Shinto" .
+
+:CameoReligion_SHNNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "New Japanese Religions" .
+
+:CameoReligion_SHNNRM100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM ;
+  rdfs:label "Sect Shinto" .
+
+:CameoReligion_SHNNRM110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Fusokyo" .
+
+:CameoReligion_SHNNRM120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Izumo Oyashirokyo" .
+
+:CameoReligion_SHNNRM130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Jikkokyo" .
+
+:CameoReligion_SHNNRM140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Konkokyo" .
+
+:CameoReligion_SHNNRM150 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Kurozumikyo" .
+
+:CameoReligion_SHNNRM160 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Kyoha Shinto Rengokai" .
+
+:CameoReligion_SHNNRM170 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Misogikyo" .
+
+:CameoReligion_SHNNRM180 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Ontakekyo" .
+
+:CameoReligion_SHNNRM190 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Shinrikyo" .
+
+:CameoReligion_SHNNRM200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Shinto Shuseiha" .
+
+:CameoReligion_SHNNRM210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Shinto Taikyo" .
+
+:CameoReligion_SHNNRM220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Shinto Taiseikyo" .
+
+:CameoReligion_SHNNRM230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM100 ;
+  rdfs:label "Tenrikyo" .
+
+:CameoReligion_SHNNRM300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM ;
+  rdfs:label "Shinshukyo" .
+
+:CameoReligion_SHNNRM301 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Ananaikyo" .
+
+:CameoReligion_SHNNRM302 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Byakko Shinkokai" .
+
+:CameoReligion_SHNNRM303 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Chikakusan Minshukyo Kyodan" .
+
+:CameoReligion_SHNNRM304 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Chushinkai" .
+
+:CameoReligion_SHNNRM305 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Daihizenkyo" .
+
+:CameoReligion_SHNNRM306 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Ennokyo" .
+
+:CameoReligion_SHNNRM307 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hachidai Ryuo Daishizen Aishinkyodan" .
+
+:CameoReligion_SHNNRM308 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hachidai Ryuojin Hakko Seidan" .
+
+:CameoReligion_SHNNRM309 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hachirakukai Kyodan" .
+
+:CameoReligion_SHNNRM310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hi No Oshie" .
+
+:CameoReligion_SHNNRM311 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hikari Kyokai" .
+
+:CameoReligion_SHNNRM312 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Hizuki No Miya" .
+
+:CameoReligion_SHNNRM313 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Honbushin" .
+
+:CameoReligion_SHNNRM314 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Honmichi" .
+
+:CameoReligion_SHNNRM315 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Ishinkyo" .
+
+:CameoReligion_SHNNRM316 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Izumo Shinyu Kyokai" .
+
+:CameoReligion_SHNNRM317 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Izumokyo" .
+
+:CameoReligion_SHNNRM318 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Jieido" .
+
+:CameoReligion_SHNNRM319 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Jingukyo" .
+
+:CameoReligion_SHNNRM320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kakushin Shukyo Nipponkyo" .
+
+:CameoReligion_SHNNRM321 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kannagarakyo" .
+
+:CameoReligion_SHNNRM322 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kikueikai Kyodan" .
+
+:CameoReligion_SHNNRM323 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kogi Shinto" .
+
+:CameoReligion_SHNNRM324 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Koshinto Senpokyo" .
+
+:CameoReligion_SHNNRM325 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Koso Kotai Jingu Amatsukyo" .
+
+:CameoReligion_SHNNRM326 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kuzuryu Taisha" .
+
+:CameoReligion_SHNNRM327 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Kyuseishukyo" .
+
+:CameoReligion_SHNNRM328 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Makoto No Michi" .
+
+:CameoReligion_SHNNRM329 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Makoto No Michikyo" .
+
+:CameoReligion_SHNNRM330 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Maruyamakyo" .
+
+:CameoReligion_SHNNRM331 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Misogikyo Shinpa" .
+
+:CameoReligion_SHNNRM332 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Mitamakyo" .
+
+:CameoReligion_SHNNRM333 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Miyaji Shinsendo" .
+
+:CameoReligion_SHNNRM334 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Nihon Jingu Honcho" .
+
+:CameoReligion_SHNNRM335 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Nihon Seido Kyodan" .
+
+:CameoReligion_SHNNRM336 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Nikkokyo" .
+
+:CameoReligion_SHNNRM337 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Okanmichi" .
+
+:CameoReligion_SHNNRM338 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Omiwakyo", "Kojima" .
+
+:CameoReligion_SHNNRM339 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Omiwakyo", "Sako" .
+
+:CameoReligion_SHNNRM340 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Omoto", "Oomoto" .
+
+:CameoReligion_SHNNRM341 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Omoto Hikari No Michi" .
+
+:CameoReligion_SHNNRM342 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Oyamanezu No Mikoto Shinji Kyokai" .
+
+:CameoReligion_SHNNRM343 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Perfect Liberty Kyodan", "Pl Kyodan", "Church Of Perfect Liberty" .
+
+:CameoReligion_SHNNRM344 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Reiha No Hikari Kyokai" .
+
+:CameoReligion_SHNNRM345 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Renmonkyo" .
+
+:CameoReligion_SHNNRM346 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Renshindo Kyodan" .
+
+:CameoReligion_SHNNRM347 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Samuhara Jinja" .
+
+:CameoReligion_SHNNRM348 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Seicho No Ie" .
+
+:CameoReligion_SHNNRM349 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Seikokyo" .
+
+:CameoReligion_SHNNRM350 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Seimeikyo" .
+
+:CameoReligion_SHNNRM351 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Seishin Myojokai" .
+
+:CameoReligion_SHNNRM352 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sekai Kyuseikyo" .
+
+:CameoReligion_SHNNRM353 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sekai Mahikari Bunmei Kyodan" .
+
+:CameoReligion_SHNNRM354 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sekai Shindokyo" .
+
+:CameoReligion_SHNNRM355 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shidaido" .
+
+:CameoReligion_SHNNRM356 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shin Nihon Shukyo Dantai Rengokai" .
+
+:CameoReligion_SHNNRM357 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shindo Tenkokyo" .
+
+:CameoReligion_SHNNRM358 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinji Shumeikai" .
+
+:CameoReligion_SHNNRM359 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinmei Aishinkai" .
+
+:CameoReligion_SHNNRM360 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinreikai Kyodan" .
+
+:CameoReligion_SHNNRM361 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinreikyo" .
+
+:CameoReligion_SHNNRM362 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinri Jikko No Oshie" .
+
+:CameoReligion_SHNNRM363 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinsei Tengan Manaita No Kai" .
+
+:CameoReligion_SHNNRM364 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinto Shinkyo" .
+
+:CameoReligion_SHNNRM365 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shinto Shinshinkyo" .
+
+:CameoReligion_SHNNRM366 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shizensha" .
+
+:CameoReligion_SHNNRM367 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shoroku Shinto Yamatoyama" .
+
+:CameoReligion_SHNNRM368 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shukyo Hojin Shiko Gakuen" .
+
+:CameoReligion_SHNNRM369 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Shuyodan Hoseikai" .
+
+:CameoReligion_SHNNRM370 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Soshindo" .
+
+:CameoReligion_SHNNRM371 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Soshindo Kyodan" .
+
+:CameoReligion_SHNNRM372 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Subikari Koha Sekai Shindan" .
+
+:CameoReligion_SHNNRM373 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sukui No Hikari Kyodan" .
+
+:CameoReligion_SHNNRM374 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sukyo Mahikari" .
+
+:CameoReligion_SHNNRM375 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Sumerakyo" .
+
+:CameoReligion_SHNNRM376 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Taiwa Kyodan" .
+
+:CameoReligion_SHNNRM377 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tamamitsu Jinja" .
+
+:CameoReligion_SHNNRM378 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenchikyo" .
+
+:CameoReligion_SHNNRM379 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tengenkyo" .
+
+:CameoReligion_SHNNRM380 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenjokyo" .
+
+:CameoReligion_SHNNRM381 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenjokyo Hon'In" .
+
+:CameoReligion_SHNNRM382 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenkokyo" .
+
+:CameoReligion_SHNNRM383 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Ten'Onkyo" .
+
+:CameoReligion_SHNNRM384 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tensei Shinbikai" .
+
+:CameoReligion_SHNNRM385 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tensha Tsuchimikado Shinto Honcho" .
+
+:CameoReligion_SHNNRM386 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenshin Seikyo" .
+
+:CameoReligion_SHNNRM387 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenshindo Kyodan" .
+
+:CameoReligion_SHNNRM388 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenshinkyo Shin'Yuden Kyokai" .
+
+:CameoReligion_SHNNRM389 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tensho Kotai Jingukyo" .
+
+:CameoReligion_SHNNRM390 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenshokyo" .
+
+:CameoReligion_SHNNRM391 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tenshukyo" .
+
+:CameoReligion_SHNNRM392 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Tokumitsukyo" .
+
+:CameoReligion_SHNNRM393 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Worldmate", "Cosmomate" .
+
+:CameoReligion_SHNNRM394 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Yamakage Shinto" .
+
+:CameoReligion_SHNNRM395 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Yamatokyo" .
+
+:CameoReligion_SHNNRM396 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNNRM300 ;
+  rdfs:label "Zenrinkyo" .
+
+:CameoReligion_SHNSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHN ;
+  rdfs:label "Syncretic Shinto" .
+
+:CameoReligion_SHNSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SHNSYN ;
+  rdfs:label "Shinbutsu Shugo", "Shinbutsu Konko" .
+
+:CameoReligion_SIK a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Sikh" .
+
+:CameoReligion_SIK000 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK ;
+  rdfs:label "Mainline Sikh" .
+
+:CameoReligion_SIK010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK000 ;
+  rdfs:label "Khalsa" .
+
+:CameoReligion_SIK011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK010 ;
+  rdfs:label "Nihang" .
+
+:CameoReligion_SIK020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK000 ;
+  rdfs:label "Sahajdhari Sikh" .
+
+:CameoReligion_SIK100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK ;
+  rdfs:label "Namdhari", "Kuka Sikhs" .
+
+:CameoReligion_SIKNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIK ;
+  rdfs:label "New Religious Movements Of Sikh Origin" .
+
+:CameoReligion_SIKNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_SIKNRM ;
+  rdfs:label "3Ho", "Healthy Happy Holy Organization" .
+
+:CameoReligion_TAO a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Taoist" .
+
+:CameoReligion_TAO100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_TAO ;
+  rdfs:label "Organized Taoism" .
+
+:CameoReligion_TAO200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_TAO ;
+  rdfs:label "Folk Taoism" .
+
+:CameoReligion_ABR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Other Abrahamic Religions" .
+
+:CameoReligion_ABR010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABR ;
+  rdfs:label "Freemasonry" .
+
+:CameoReligion_ABR011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABR010 ;
+  rdfs:label "Prince Hall Freemasonry" .
+
+:CameoReligion_ABR012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABR010 ;
+  rdfs:label "Ancient Arabic Order Of The Nobles Of The Mystic Shrine", "Shriners" .
+
+:CameoReligion_ABRNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABR ;
+  rdfs:label "New Abrahamic Movements" .
+
+:CameoReligion_ABRNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRNRM ;
+  rdfs:label "Builders Of The Adytum" .
+
+:CameoReligion_ABRNRM020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRNRM ;
+  rdfs:label "House Of Yahweh" .
+
+:CameoReligion_ABRNRM030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRNRM ;
+  rdfs:label "Pilgrims Of Ares" .
+
+:CameoReligion_ABRRAC a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABR ;
+  rdfs:label "Racial Abrahamic Religions" .
+
+:CameoReligion_ABRRAC010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRRAC ;
+  rdfs:label "Rastafarianism" .
+
+:CameoReligion_ABRRAC011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRRAC010 ;
+  rdfs:label "Bobo Shanti" .
+
+:CameoReligion_ABRRAC012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRRAC010 ;
+  rdfs:label "Nyahbinghi Order" .
+
+:CameoReligion_ABRRAC013 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ABRRAC010 ;
+  rdfs:label "Twelve Tribes Of Israel" .
+
+:CameoReligion_INR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Other Indian Religions" .
+
+:CameoReligion_INR010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INR ;
+  rdfs:label "Ravidasi" .
+
+:CameoReligion_INR020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INR ;
+  rdfs:label "Din-I-Ilahi" .
+
+:CameoReligion_INRNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INR ;
+  rdfs:label "Indian Nrms" .
+
+:CameoReligion_INRNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRNRM ;
+  rdfs:label "Adidam" .
+
+:CameoReligion_INRNRM020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRNRM ;
+  rdfs:label "Adventures In Enlightenment" .
+
+:CameoReligion_INRNRM040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRNRM ;
+  rdfs:label "Elan Vital" .
+
+:CameoReligion_INRNRM050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRNRM ;
+  rdfs:label "Meher Baba Followers" .
+
+:CameoReligion_INRNRM060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRNRM ;
+  rdfs:label "Sant Nirankari Mission" .
+
+:CameoReligion_INRSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INR ;
+  rdfs:label "Syncretic Indian Religions" .
+
+:CameoReligion_INRSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_INRSYN ;
+  rdfs:label "Radha Soami Satsang Beas" .
+
+:CameoReligion_EAR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Other East Asian Religions" .
+
+:CameoReligion_EAR010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EAR ;
+  rdfs:label "Chinese Folk Religion" .
+
+:CameoReligion_EARMLN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EAR ;
+  rdfs:label "" .
+
+:CameoReligion_EARMLN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARMLN ;
+  rdfs:label "Jeung San Do" .
+
+:CameoReligion_EARNRM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EAR ;
+  rdfs:label "" .
+
+:CameoReligion_EARNRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARNRM ;
+  rdfs:label "Falun Gong" .
+
+:CameoReligion_EARSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EAR ;
+  rdfs:label "" .
+
+:CameoReligion_EARSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARSYN ;
+  rdfs:label "Caodaism" .
+
+:CameoReligion_EARSYN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARSYN ;
+  rdfs:label "Chondogyo", "Chendogyo", "Chendoism", "Chondoism" .
+
+:CameoReligion_EARSYN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARSYN ;
+  rdfs:label "I-Kuan Tao" .
+
+:CameoReligion_EARSYN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_EARSYN ;
+  rdfs:label "Kejawen", "Kebatinan" .
+
+:CameoReligion_ADR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "African Diasporic Religions" .
+
+:CameoReligion_ADR010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Arara" .
+
+:CameoReligion_ADR020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Candomble", "Animism", "Batuque" .
+
+:CameoReligion_ADR021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR020 ;
+  rdfs:label "Ketu Candomble" .
+
+:CameoReligion_ADR022 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR020 ;
+  rdfs:label "Bantu Candomble", "Angola Candomble" .
+
+:CameoReligion_ADR023 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR020 ;
+  rdfs:label "Jeje Candomble" .
+
+:CameoReligion_ADR030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Kumina" .
+
+:CameoReligion_ADR040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Macumba" .
+
+:CameoReligion_ADR050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Mami Wata" .
+
+:CameoReligion_ADR060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Obeah" .
+
+:CameoReligion_ADR070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Palo De Congo", "Las Reglas De Congo" .
+
+:CameoReligion_ADR080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Winti" .
+
+:CameoReligion_ADRSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADR ;
+  rdfs:label "Syncretic African Diasporic Religions" .
+
+:CameoReligion_ADRSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Hoodoo" .
+
+:CameoReligion_ADRSYN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Quimbanda" .
+
+:CameoReligion_ADRSYN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Santera", "Lukum" .
+
+:CameoReligion_ADRSYN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Santo Daime" .
+
+:CameoReligion_ADRSYN050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Umbanda" .
+
+:CameoReligion_ADRSYN060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ADRSYN ;
+  rdfs:label "Vodou" .
+
+:CameoReligion_Heirarchical a owl:Class ;
+  rdfs:subClassOf :CameoReligion_Hei ;
+  rdfs:label "Code Religion And Comments" .
+
+:CameoReligion_ADRSYN061 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_Heirarchical ;
+  rdfs:label "Louisianan Voodoo" .
+
+:CameoReligion_ADRSYN062 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_Heirarchical ;
+  rdfs:label "Haitian Vodou" .
+
+:CameoReligion_IRR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Other Iranic Religions" .
+
+:CameoReligion_IRR010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_IRR ;
+  rdfs:label "Ahl-E Haqq", "Yarsan" .
+
+:CameoReligion_IRR020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_IRR ;
+  rdfs:label "Yazidism" .
+
+:CameoReligion_IRRGNO a owl:Class ;
+  rdfs:subClassOf :CameoReligion_IRR ;
+  rdfs:label "Gnostic Iranic Religion" .
+
+:CameoReligion_IRRGNO010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_IRRGNO ;
+  rdfs:label "Mandaeanism" .
+
+:CameoReligion_ZRO a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Zoroastrianism" .
+
+:CameoReligion_ITR a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "Indigenous Tribal Religions" .
+
+:CameoReligion_ITRCRB a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITR ;
+  rdfs:label "Indigenous Caribbean Religions" .
+
+:CameoReligion_ITRCRB010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRCRB ;
+  rdfs:label "Espiritismo" .
+
+:CameoReligion_ITRCRB011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRCRB010 ;
+  rdfs:label "Espiritismo De Cordon" .
+
+:CameoReligion_ITRCRB012 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRCRB010 ;
+  rdfs:label "Puerto Rican Espiritismo" .
+
+:CameoReligion_ITRCRB020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRCRB ;
+  rdfs:label "Santerismo" .
+
+:CameoReligion_ITRNAM a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITR ;
+  rdfs:label "North American First Nations Religions" .
+
+:CameoReligion_ITRNAM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRNAM ;
+  rdfs:label "Native American Church", "Peyotism" .
+
+:CameoReligion_ITRWAF a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITR ;
+  rdfs:label "Indigenous West African Religions" .
+
+:CameoReligion_ITRWAF010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_ITRWAF ;
+  rdfs:label "West African Vodun" .
+
+:CameoReligion_NRM a owl:Class ;
+  rdfs:subClassOf :ReligiousActivities ;
+  rdfs:label "New Religious Movements" .
+
+:CameoReligion_NRM010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Agasha Temple Of Wisdom" .
+
+:CameoReligion_NRM020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Amica Temple Of Radiance" .
+
+:CameoReligion_NRM030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Arica School" .
+
+:CameoReligion_NRM040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Arcane School" .
+
+:CameoReligion_NRM050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Association For Research And Enlightenment" .
+
+:CameoReligion_NRM060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Breatharians" .
+
+:CameoReligion_NRM070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Eckankar" .
+
+:CameoReligion_NRM071 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM070 ;
+  rdfs:label "Ancient Teachings Of The Masters" .
+
+:CameoReligion_NRM080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Esalen Institute" .
+
+:CameoReligion_NRM090 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Foundation For Higher Spiritual Learning" .
+
+:CameoReligion_NRM100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Institute Of Noetic Sciences" .
+
+:CameoReligion_NRM110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Kerista" .
+
+:CameoReligion_NRM120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Landmark Education" .
+
+:CameoReligion_NRM130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Lucis Trust", "Lucifer Trust" .
+
+:CameoReligion_NRM140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Philosophical Research Society" .
+
+:CameoReligion_NRM150 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Rainbow Family" .
+
+:CameoReligion_NRM160 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Rama Computer Cult" .
+
+:CameoReligion_NRM170 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Satanism" .
+
+:CameoReligion_NRM171 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Casual Satanism", "Adolescent Satanism" .
+
+:CameoReligion_NRM172 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Laveyan Satanism" .
+
+:CameoReligion_NRM173 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Luciferianism" .
+
+:CameoReligion_NRM174 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Order Of Nine Angels" .
+
+:CameoReligion_NRM175 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Our Lady Of Endor Coven", "Ophite Cultus Satanis" .
+
+:CameoReligion_NRM176 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Palladists" .
+
+:CameoReligion_NRM177 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Symbolic Satanism" .
+
+:CameoReligion_NRM178 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM170 ;
+  rdfs:label "Temple Of Set" .
+
+:CameoReligion_NRM180 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Spiritual Frontiers Fellowship" .
+
+:CameoReligion_NRM190 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Subud" .
+
+:CameoReligion_NRM200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Universal Faithists Of Kosmon" .
+
+:CameoReligion_NRM210 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Universal Great Brotherhood" .
+
+:CameoReligion_NRM220 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Universal Life Church" .
+
+:CameoReligion_NRM230 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "White Eagle Lodge" .
+
+:CameoReligion_NRMGNO a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "New Gnostic Religious Movements" .
+
+:CameoReligion_NRMGNO100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO ;
+  rdfs:label "Fraternity Of The Inner Light" .
+
+:CameoReligion_NRMGNO200 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO ;
+  rdfs:label "Ordo Templi Orientis" .
+
+:CameoReligion_NRMGNO300 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO ;
+  rdfs:label "Theosophy And Offshoots" .
+
+:CameoReligion_NRMGNO310 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO300 ;
+  rdfs:label "Aquarian Christine Church Universal" .
+
+:CameoReligion_NRMGNO320 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO300 ;
+  rdfs:label "Ascended Master Teachings" .
+
+:CameoReligion_NRMGNO321 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO320 ;
+  rdfs:label "I Am Activity", "I Am Movement", "Saint Germain Foundation" .
+
+:CameoReligion_NRMGNO322 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO320 ;
+  rdfs:label "Summit Lighthouse", "Church Universal And Triumphant" .
+
+:CameoReligion_NRMGNO330 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO300 ;
+  rdfs:label "Theosophy Proper", "Theosophical Society" .
+
+:CameoReligion_NRMGNO331 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO330 ;
+  rdfs:label "United Lodge Of Theosophists" .
+
+:CameoReligion_NRMGNO400 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMGNO ;
+  rdfs:label "The Word Foundation" .
+
+:CameoReligion_NRMMLN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "" .
+
+:CameoReligion_NRMMLN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMMLN ;
+  rdfs:label "Adelphi Organization" .
+
+:CameoReligion_NRMPAG a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Modern Paganism", "Neopaganism" .
+
+:CameoReligion_NRMPAG010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Ecumenical Paganism" .
+
+:CameoReligion_NRMPAG011 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG010 ;
+  rdfs:label "Council Of Magickal Arts" .
+
+:CameoReligion_NRMPAG020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Celtic Neopaganism", "Neo-Druidism" .
+
+:CameoReligion_NRMPAG021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Ancient Order Of Druids" .
+
+:CameoReligion_NRMPAG022 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "R Ndraocht Fin", "Ar Ndraiocht Fin" .
+
+:CameoReligion_NRMPAG023 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "British Druid Order" .
+
+:CameoReligion_NRMPAG024 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Celtic Neoshamanism" .
+
+:CameoReligion_NRMPAG025 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Celtic Reconstructionist Paganism" .
+
+:CameoReligion_NRMPAG026 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Celtic Wicca" .
+
+:CameoReligion_NRMPAG027 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Church Of The Universal Bond" .
+
+:CameoReligion_NRMPAG028 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Gorsedd Beirdd Ynys Prydain" .
+
+:CameoReligion_NRMPAG029 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Hermetic Order Of The Golden Dawn" .
+
+:CameoReligion_NRMPAG030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Order Of Bards", "Ovates And Druids" .
+
+:CameoReligion_NRMPAG031 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "Reformed Druids Of North America" .
+
+:CameoReligion_NRMPAG032 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG020 ;
+  rdfs:label "The Druid Order", "An Druidh Uileach Braithreachas" .
+
+:CameoReligion_NRMPAG030x a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Baltic Neopaganism" .
+
+:CameoReligion_NRMPAG040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Eco-Paganism" .
+
+:CameoReligion_NRMPAG041 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG040 ;
+  rdfs:label "Church Of Aphrodite" .
+
+:CameoReligion_NRMPAG050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Finnish Neopaganism" .
+
+:CameoReligion_NRMPAG060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "German Neopaganism", "Asatru", "Heathenism", "Heathenry", "Odinism", "Forn Sior", "Vor Sior", "Theodism" .
+
+:CameoReligion_NRMPAG061 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG060 ;
+  rdfs:label "Asatruarfelagio" .
+
+:CameoReligion_NRMPAG062 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG060 ;
+  rdfs:label "Germanische Glaubens-Gemeinschaft" .
+
+:CameoReligion_NRMPAG070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Hellenic Neopaganism" .
+
+:CameoReligion_NRMPAG071 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG070 ;
+  rdfs:label "Church Of All Worlds" .
+
+:CameoReligion_NRMPAG072 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG070 ;
+  rdfs:label "Feraferia" .
+
+:CameoReligion_NRMPAG073 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG070 ;
+  rdfs:label "Hellenion" .
+
+:CameoReligion_NRMPAG074 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG070 ;
+  rdfs:label "Supreme Council Of Ethnikoi Hellenes" .
+
+:CameoReligion_NRMPAG080 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Kemetism" .
+
+:CameoReligion_NRMPAG081 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Ausar Auset" .
+
+:CameoReligion_NRMPAG082 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Church Of The Eternal Source" .
+
+:CameoReligion_NRMPAG083 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Fellowship Of Isis" .
+
+:CameoReligion_NRMPAG084 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Kemetic Wicca", "Tameran Wicca" .
+
+:CameoReligion_NRMPAG085 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Kemetic Orthodoxy" .
+
+:CameoReligion_NRMPAG086 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Kemetic Reconstructionism", "Kemetic Revivalism" .
+
+:CameoReligion_NRMPAG087 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG080 ;
+  rdfs:label "Neo-Atenism" .
+
+:CameoReligion_NRMPAG090 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Neoshamanism" .
+
+:CameoReligion_NRMPAG100 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Norse Paganism", "Forn Sed", "Nordisk Sed", "Folktro" .
+
+:CameoReligion_NRMPAG101 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG100 ;
+  rdfs:label "Core Shamanism" .
+
+:CameoReligion_NRMPAG110 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Polytheistic Reconstructionism" .
+
+:CameoReligion_NRMPAG120 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Roman Neopaganism" .
+
+:CameoReligion_NRMPAG130 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Slavic Neopaganism" .
+
+:CameoReligion_NRMPAG131 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG130 ;
+  rdfs:label "Native Faith Association Of Ukraine" .
+
+:CameoReligion_NRMPAG132 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG130 ;
+  rdfs:label "Native Polish Church" .
+
+:CameoReligion_NRMPAG133 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG130 ;
+  rdfs:label "Runvira" .
+
+:CameoReligion_NRMPAG140 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG ;
+  rdfs:label "Wicca" .
+
+:CameoReligion_NRMPAG141 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG140 ;
+  rdfs:label "Covenant Of The Goddess" .
+
+:CameoReligion_NRMPAG142 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG140 ;
+  rdfs:label "Dianic Wicca" .
+
+:CameoReligion_NRMPAG143 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMPAG140 ;
+  rdfs:label "New Reformed Orthodox Order Of The Golden Dawn" .
+
+:CameoReligion_NRMRAC a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "New Racial Religious Movements" .
+
+:CameoReligion_NRMRAC010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC ;
+  rdfs:label "Ansaaru Allah Community", "Nuwaubiansm" .
+
+:CameoReligion_NRMRAC020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC ;
+  rdfs:label "Creativity" .
+
+:CameoReligion_NRMRAC021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC020 ;
+  rdfs:label "Creativity Movement" .
+
+:CameoReligion_NRMRAC022 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC020 ;
+  rdfs:label "Creativity Alliance" .
+
+:CameoReligion_NRMRAC030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC ;
+  rdfs:label "Esoteric Nazism" .
+
+:CameoReligion_NRMRAC040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMRAC ;
+  rdfs:label "Wotanism" .
+
+:CameoReligion_NRMSYN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Syncretic Nrms" .
+
+:CameoReligion_NRMSYN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Astara Inc." .
+
+:CameoReligion_NRMSYN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Lucis Trust" .
+
+:CameoReligion_NRMSYN021 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN020 ;
+  rdfs:label "Arcane School" .
+
+:CameoReligion_NRMSYN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Movement Of Spiritual Inner Awareness" .
+
+:CameoReligion_NRMSYN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Oceaniaic Cargo Cult" .
+
+:CameoReligion_NRMSYN041 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN040 ;
+  rdfs:label "John Frum" .
+
+:CameoReligion_NRMSYN042 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN040 ;
+  rdfs:label "Johnson Cult" .
+
+:CameoReligion_NRMSYN050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Thelema" .
+
+:CameoReligion_NRMSYN060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMSYN ;
+  rdfs:label "Vale Do Amanhecer" .
+
+:CameoReligion_NRMUFO a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Ufo Cults" .
+
+:CameoReligion_NRMUFO010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Aetherius Society" .
+
+:CameoReligion_NRMUFO020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Chen Tao", "God'S Salvation Church", "God Saves The Earth Flying Saucer Foundation" .
+
+:CameoReligion_NRMUFO030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Heaven'S Gate" .
+
+:CameoReligion_NRMUFO040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Raelism" .
+
+:CameoReligion_NRMUFO050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Scientology" .
+
+:CameoReligion_NRMUFO051 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO050 ;
+  rdfs:label "Process Church Of The Final Judgement" .
+
+:CameoReligion_NRMUFO060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Unarius Academy Of Science" .
+
+:CameoReligion_NRMUFO070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMUFO ;
+  rdfs:label "Universal Faithists Of Kosmon" .
+
+:CameoReligion_NRMWLN a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRM ;
+  rdfs:label "Wellbeing-Related New Religious Movements" .
+
+:CameoReligion_NRMWLN010 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Alcoholics Anonymous" .
+
+:CameoReligion_NRMWLN020 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Erhard Seminar Training" .
+
+:CameoReligion_NRMWLN030 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Heart Consciousness Church", "New Age Church Of Being" .
+
+:CameoReligion_NRMWLN040 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Human Potential Movement" .
+
+:CameoReligion_NRMWLN041 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN040 ;
+  rdfs:label "Silva Mind Control" .
+
+:CameoReligion_NRMWLN050 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Lifespring" .
+
+:CameoReligion_NRMWLN060 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "Narcotics Anonymous" .
+
+:CameoReligion_NRMWLN070 a owl:Class ;
+  rdfs:subClassOf :CameoReligion_NRMWLN ;
+  rdfs:label "White Dove International" .
