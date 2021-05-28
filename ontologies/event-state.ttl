@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: April 2 2021
+# Last modified: May 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -21,6 +21,8 @@
 # 
 # Changes:
 #  Updated to the Mar 2021 semantics
+#  Updated the default and dna prefixes
+#  Added temporal aspects
 ########################################################################
 
 
@@ -28,11 +30,29 @@
 # Classes
 ########################################################################
 
+:Continuation a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Continuation" ;
+  :definition "Indication that an ongoing Event or StateAndCondition is still occurring - regardless of whether the actual time is known." ;
+  :synonym "carrying on", "continuance" .
+
+:End a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "End" ;
+  :definition "The final point of an ongoing Event or StateAndCondition - regardless of whether the actual end time is known." ;
+  :synonym "finish", "closing", "conclusion", "resolution", "termination", "completion" .
+
 :Event a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Event" ;
   :definition "An occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties)." ;
   :synonym "occurrence", "happening", "act", "incident" .
+
+:StartOrBeginning a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Start or Beginning" ;
+  :definition "The originating point of an ongoing Event or StateAndCondition - regardless of whether the actual start time is known." ;
+  :synonym "kick off", "commencement", "inception", "onset", "emergence" .
 
 :StateAndCondition a owl:Class ;
   rdfs:subClassOf :EventAndState ;

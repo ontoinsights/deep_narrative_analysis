@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: March 28 2021
+# Last modified: May 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -21,6 +21,8 @@
 # 
 # Changes:
 #  Updated to the Mar 2021 semantics
+#  Updated the default and dna prefixes
+#  Added example individuals
 ########################################################################
 
 
@@ -206,6 +208,15 @@
 # Individuals
 ########################################################################
 
+:Autumn a :Season ;
+  rdfs:label "Autumn" ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
+  :synonym "fall" .
+
+:DrySeason a :Season ;
+  rdfs:label "Dry Season" ;
+  :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics." .
+
 :enum:Days a :TemporalUnit ;
   rdfs:label "Days" ;
   :definition "A 24-hour interval of time." .
@@ -237,3 +248,24 @@
 :enum:Years a :TemporalUnit ;
   rdfs:label "Years" ;
   :definition "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention." .
+
+:GrowingSeason a :Season ;
+  rdfs:label "Growing Season" ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'." .
+
+:RainySeason a :Season ;
+  rdfs:label "Rainy Season" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'" ;
+  :synonym "wet season", "green season" .
+
+:Spring a :Season ;
+  rdfs:label "Spring" ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'." .
+
+:Summer a :Season ;
+  rdfs:label "Summer" ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'." .
+
+:Winter a :Season ;
+  rdfs:label "Winter" ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." .

@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -12,6 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
+# Last Modified: May 26 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -20,6 +21,11 @@
 # software distributed under the License is distributed on an
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
 # either express or implied.
+# 
+# Changes:
+#  Added MistakeAndRegret, MurderAndHomicide
+#  Updated the default and dna prefixes
+#  Added multiple new classes and VerbNet synonyms
 ########################################################################
 
 
@@ -31,59 +37,100 @@
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Abduction" ;
   :definition "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will." ;
-  :synonym "kidnapping", "hijacking" .
+  :synonym "kidnap", "hijack" .
 
 :Acquisition a owl:Class ;
   rdfs:subClassOf :Event ;
+  rdfs:label "Acquisition" ;
+  :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
+  :synonym "equip", "obtain", "exchange" .
+
+:AdviceAndRecommendation a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
+  rdfs:label "Advice and Recommendation" ;
+  :definition "An act of recommending or suggesting something. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity being advised is defined using :has_affected_agent." ;
+  :synonym "guidance" .
+
+:Addiction a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Acquisition" ;
   :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." .
 
 :AggressiveOrHostileAct a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Aggressive or Hostile Act" ;
-  :definition "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." .
+  :definition "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
+  :synonym "confrontation" .
+
+:Agreement a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Agreement" ;
+  :definition "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate." ;
+  :synonym "commitment", "acquiescence" .
 
 :AgricultureApicultureAndAquaculture a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Agriculture, Apiculture and Aquaculture" ;
   :definition "Events dealing with farming, ranching, breeding, beekeeping, etc." .
 
-:Agreement a owl:Class ;
-  rdfs:subClassOf :Event ;
-  rdfs:label "Agreement" ;
-  :definition "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate." .
-
 :ArtAndEntertainmentEvent a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Art and Entertainment Event" ;
-  :definition "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)." .
+  :definition "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)." ;
+  :synonym "performance", "rehearsal" .
+
+:AssessmentAndCharacterization a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Assessment and Characterization" ;
+  :definition "Events dealing with evaluating, characterizing or estimating something or someone." ;
+  :synonym "evaluation", "judgment", "estimation", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "deduction" .
 
 :AttackDamageAndAssault a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Attack, Damage and Assault" ;
-  :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." .
+  :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
+  :synonym "destruction" .
 
 :Attempt a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Attempt" ;
   :definition "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
-  :synonym "try", "seek out to", "endeavor", "strive to" .
+  :synonym "try", "seek out to", "endeavor", "strive to".
 
 :AttentionAndFocus a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Attention and Focus" ;
-  :definition "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." .
+  :definition "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
+  :synonym "focus" .
 
 :Avoidance a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Avoidance" ;
-  :definition "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring." .
+  :definition "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring." ;
+  :synonym "restraint", "refraining" .
 
 :Belief a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Belief" ;
   :definition "An 'attitude that something is the case, or that some proposition about the world is true' (https://en.wikipedia.org/w/index.php?title=Belief&oldid=1013662709)." ;
-  :synonym "trust", "confidence" .
+  :synonym "trust", "confidence", "suspicion" .
+
+:Birth a owl:Class ;
+  rdfs:subClassOf :LifeEvent ;
+  rdfs:label "Birth" ;
+  :definition "The act of an individual (animal or Person) being born/beginning life." .
+
+:BodilyAct a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Bodily Act" ;
+  :definition "An activity typically involving the body of an animal or Person (such as coughing, eating or running)." ;
+  :synonym "sleep" .
+
+:BodyMovement a owl:Class ;
+  rdfs:subClassOf :BodilyAct ;
+  rdfs:label "Body Movement" ;
+  :definition "An activity related to the movement of an animal's or Person's body (such as dancing or running)." ;
+  :synonym "breathe", "curtsey", "bow", "flinch" . 
 
 :Ceremony a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter ;
@@ -94,12 +141,14 @@
   rdfs:subClassOf :Event ;
   rdfs:label "Change" ;
   :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease." ;
-  :example "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." .
+  :example "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
+  :synonym "conversion", "adjustment" .
 
 :CoercionAndIntimidation a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Coercion and Intimidation" ;
-  :definition "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear." .
+  :definition "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear." ;
+  :synonym "force" .
 
 :Cognition a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -109,39 +158,66 @@
 :Command a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Command" ;
-  :definition "A communication that issues orders, instructions, etc." .
+  :definition "A communication that issues orders, instructions, etc." ;
+  :synonym "order" .
 
 :CommunicationAndSpeechAct a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Communication and Speech Act" ;
-  :definition "Any act of conveying information via written or spoken word, or non-verbal means." .
+  :definition "Any act of conveying information via written or spoken word, or non-verbal means. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity listening is defined using :has_affected_agent." ;
+  :synonym "declaration", "statement", "tell", "talk", "say", "lecture" .
 
 :CompetitiveEvent a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Competitive Event" ;
   :definition "An Event where two or more Agents are striving for a similar goal, and want to be better/more successful than the others. This class refers to a specific competitive Event, as opposed to a general condition (:Competition). The former would be Evidence for the latter." .
 
+:Complaint a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
+  rdfs:label "Complaint" ;
+  :definition "An expression of displeasure or annoyance about something. The Agent doing the complaining is indicated using the :has_active_agent property, while the thing complained about is defined using :has_topic." ;
+  :synonym "grumble", "whine" .
+
 :Concealment a owl:Class ;
   rdfs:subClassOf :Prevention ;
   rdfs:label "Concealment" ;
   :definition "An act of preventing something/someone from being known/found." ;
-  :synonym "hiding" .
+  :synonym "hide", "conceal" .
+
+:Confession a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
+  rdfs:label "Confession" ;
+  :definition "An admission of guilt or responsibility for some act. The Agent doing the confessing is indicated using the :has_active_agent property, while the thing that is confessed is defined using :has_topic." ;
+  :synonym "admission", "taking responsibility" .
 
 :CooperativeEvent a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Cooperative Event" ;
-  :definition "An Event where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to a specific coooperative Event, as opposed to a general condition (:Cooperation). The former would be Evidence for the latter." .
+  :definition "An Event where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to a specific coooperative Event, as opposed to a general condition (:Cooperation). The former would be Evidence for the latter." ;
+  :synonym "aiding", "helping" .
+
+:Cutting a owl:Class ;
+  rdfs:subClassOf :Separation ;
+  rdfs:label "Cutting" ;
+  :definition "The act of making an opening or incision in something or someone." ;
+  :synonym "laceration", "slit", "slash", "carve", "calve", "cut" .
+
+:Death a owl:Class ;
+  rdfs:subClassOf :LifeEvent ;
+  rdfs:label "Death" ;
+  :definition "The act of an individual (animal or Person) ending life." .
 
 :DecisionMaking a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Decision Making" ;
-  :definition "An act of concluding or resolving some issue or question." .
+  :definition "An act of concluding or resolving some issue or question." ;
+  :synonym "consideration" .
 
 :Decrease a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease" ;
   :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent." ;
-  :synonym "reduction", "drop", "lessening", "lowering", "decline" .
+  :synonym "reduction", "drop", "lessen", "lower", "decline" .
 
 :DefensiveOrProtectiveAct a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
@@ -162,7 +238,8 @@
 :Desire a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Desire" ;
-  :definition "Wanting something, someone or some Event or StateAndCondition to occur. The thing, EventAndState or Agent that is 'wanted' is specified using the :has_topic property." .
+  :definition "Wanting something, someone or some Event or StateAndCondition to occur. The thing, EventAndState or Agent that is 'wanted' is specified using the :has_topic property." ;
+  :synonym "wanting", "longing", "wish" .
 
 :DisagreementOrDispute a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -174,6 +251,12 @@
   rdfs:label "Disaster" ;
   :definition "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)." ;
   :synonym "catastrophe", "cataclysm", "calamity", "act of God" .
+
+:Eating a owl:Class ;
+  rdfs:subClassOf :BodilyAct ;
+  rdfs:label "Eating" ;
+  :definition "An activity related to an animal's or Person's intake of food/nutrients." ;
+  :synonym "chewing", "dining", "feeding" .
 
 :EducationEvent a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -231,19 +314,19 @@
   rdfs:subClassOf :Acquisition ;
   rdfs:label "Gift and Donation" ;
   :definition "An act of giving with no expectation of payment." ;
-  :synonym "contribution", "present" .
+  :synonym "contribution", "present" , "give" .
 
-:HealthAndDiseaseRelated a owl:Class ;
-  rdfs:subClassOf :Event ;
-  rdfs:label "Health and Disease Related" ;
-  :definition "Events related to the occurrence/observation of disease and illness, and recovery from such, by humans, plants and animals." ;
-  :synonym "illness", "injury" .
+:Grooming a owl:Class ;
+  rdfs:subClassOf :BodilyAct ;
+  rdfs:label "Grooming" ;
+  :definition "An activity related to the cleaning, brushing, etc. of an animal's or Person's body." ;
+  :synonym "dressing", "combing", "brushing" .
 
 :IgnoringAndOverlooking a owl:Class ;
   rdfs:subClassOf :Avoidance, :Cognition ;
   rdfs:label "Ignoring and Overlooking" ;
   :definition "An act of purposefully disregarding, not noticing or not acknowledging something or someone." ;
-  :synonym "disregarding" .
+  :synonym "disregard", "neglect" .
 
 :ImitationAndCounterfeit a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -251,10 +334,17 @@
   :definition "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting." ;
   :synonym "copy", "duplicate", "simulation", "reproduction" .
 
+:ImpactAndContact a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Impact and Contact" ;
+  :definition "An act of coming into physical contact/touching, which may be forceful (e.g., an impact)" ;
+  :synonym "touch", "hit", "swat", "bump", "poke" .
+
 :InclusionAttachmentAndUnification a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Inclusion, Attachment and Unification" ;
-  :definition "An act of fastening, joining, grouping or bringing together, etc." .
+  :definition "An act of fastening, joining, grouping or bringing together, etc." ;
+  :synonym "amalgamation", "combination" .
 
 :Increase a owl:Class ;
   rdfs:subClassOf :Change ;
@@ -267,10 +357,17 @@
   rdfs:label "Information Handling" ;
   :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." .
 
+:InProcessPlacement a owl:Class ;
+  rdfs:subClassOf :MovementTravelAndTransportation ;
+  rdfs:label "In-Process Placement" ;
+  :definition "Any act that changes the location of something by incrremental amounts or makes a small change to the placement of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which moves the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are moved are identified using the :has_topic property." ;
+  :synonym "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "slide", "push", "throw", "run", "roll" .
+
 :Inquiry a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Inquiry" ;
-  :definition "A CommunicationAndSpeechAct involving asking questions/for information." .
+  :definition "A CommunicationAndSpeechAct involving asking questions/for information." ;
+  :synonym "interrogation" .
 
 :Intention a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -285,7 +382,7 @@
   :synonym "understanding", "comprehension", "awareness" .
 
 :Learning a owl:Class ;
-  rdfs:subClassOf :Acquisition ;
+  rdfs:subClassOf :Acquisition, :KnowledgeAndSkill;
   rdfs:label "Learning" ;
   :definition "An act of acquiring knowledge and skills through study, repetition, experience, instruction, etc." ;
   :synonym "study", "education", "schooling" .
@@ -294,6 +391,11 @@
   rdfs:subClassOf :Event ;
   rdfs:label "Legal Event" ;
   :definition "Any activity based on following legal practices, or related to or allowed by laws or the legal system." .
+
+:LifeEvent a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Life Event" ;
+  :definition "Any occurrence in a living entity's and Person's life, such as birth, death, marriage, divorce, etc." .
 
 :Measurement a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -305,7 +407,7 @@
   rdfs:subClassOf :Event ;
   rdfs:label "Meeting and Encounter" ;
   :definition "Any Event that is a formal, informal or coincidental gathering or assembly of people." ;
-  :synonym "gathering", "assembly", "conference" , "social event" .
+  :synonym "gathering", "assembly", "conference" , "social event", "herding", "swarming" .
 
 :Memory a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -313,10 +415,23 @@
   :definition "An act of Cognition dealing with the recollection/retrieval of past occurrences, learning and insights." ;
   :synonym "recollection", "remembrance", "reminiscence" .
 
+:MistakeAndRegret a owl:Class ;
+  rdfs:subClassOf :AssessmentAndCharacterization ;
+  rdfs:label "Mistake and Regret" ;
+  :definition "An act of Cognition/judgment indicating that a previous Event is believed to be wrong or faulty." ;
+  :synonym "error", "fault", "inaccuracy", "omission", "miscalculation" .
+
 :MovementTravelAndTransportation a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Movement, Travel and Transportation" ;
-  :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." .
+  :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
+  :synonym "send", "bring", "drive", "leave", "arrival", "departure" .
+
+:MurderAndHomicide a owl:Class ;
+  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:label "Murder and Homicide" ;
+  :definition "Any Event that is related to killing a person or living thing." ;
+  :synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation" .
 
 :NegativeEmotion a owl:Class ;
   rdfs:subClassOf :EmotionalResponse ;
@@ -324,10 +439,17 @@
   :definition "Any EmotionalResponse related to unpleasant, pessimistic or insecure feelings." ;
   :example "Examples are unhappiness, fear, frustration, loneliness, disgust, hatred, etc." .
 
-:PersonalLifeEvent a owl:Class ;
-  rdfs:subClassOf :Event ;
-  rdfs:label "PersonalLifeEvent" ;
-  :definition "Any occurrence in a Person's life, such as birth, death, marriage, divorce, etc." .
+:Pain a owl:Class ;
+  rdfs:subClassOf :PhysicalSensation ;
+  rdfs:label "Pain" ;
+  :definition "A reaction of suffering or discomfort." ;
+  :synonym "agony", "suffering", "soreness", "discomfort", "hurt" .
+
+:Permission a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
+  rdfs:label "Permission" ;
+  :definition "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property." ;
+  :synonym "authorization", "consent", "allowing", "approval" .
 
 :PhysicalSensation a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -344,7 +466,8 @@
   rdfs:subClassOf :EmotionalResponse ;
   rdfs:label "Positive Emotion" ;
   :definition "Any EmotionalResponse related to constructive, optimistic or confident feelings." ;
-  :example "Examples are happiness, love, forgiveness, hope, gratitude, etc." .
+  :example "Examples are happiness, love, forgiveness, hope, gratitude, etc." ;
+  :synonym "admiration", "amusement", "marveling", "caring", "empathy" .
 
 :Prevention a owl:Class ;
   rdfs:subClassOf :Avoidance ;
@@ -356,7 +479,7 @@
   rdfs:subClassOf :Event ;
   rdfs:label "Production, Manufacture and Creation" ;
   :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
-  :synonym "building", "construction", "assembling" .
+  :synonym "build", "construction", "assembly", "construct", "grow" .
 
 :Protest a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
@@ -364,17 +487,22 @@
   :definition "An act (such as a CommunicationAndSpeechAct, or gathering/MeetingAndEncounter) indicating disapproval or objection to something or someone. Other Event subclasses (such as MeetingAndEncounter) should be added to more fully define the Event. The entity which is disapproved of/object to is defined using the :has_topic property." ;
   :synonym "objection", "complaint", "disapproval" .
 
+:Publication a owl:Class ;
+  rdfs:subClassOf :ReturnAndRelease ;
+  rdfs:label "Publication" ;
+  :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." .
+
 :Punishment a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Punishment" ;
   :definition "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property." ;
-  :synonym "disciplining", "retribution" .
+  :synonym "discipline", "retribution" .
 
 :PurchaseAndSale a owl:Class ;
-  rdfs:subClassOf :Acquisition ;
+  rdfs:subClassOf :Acquisition, :FinancialEvent ;
   rdfs:label "Purchase and Sale" ;
   :definition "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property." ;
-  :synonym "buying", "selling", "procurement", "vending" .
+  :synonym "buying", "selling", "procurement", "vending", "paying" .
 
 :RecoveryAndRescue a owl:Class ;
   rdfs:subClassOf :Acquisition ;
@@ -392,24 +520,25 @@
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Refusal and Rejection" ;
   :definition "An act related to not accepting or acknowledging something, someone, or some Event or StateAndCondition. The entity that is not acknowledged/accepted is identified using the :has_topic predicate." ;
-  :synonym "denial", "declining", "nonacceptance" .
+  :synonym "denial", "nonacceptance", "forbidding" .
 
 :RemovalAndRestriction a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Removal and Restriction" ;
   :definition "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)." ;
-  :synonym "limitation", "cutback", "sanction" .
+  :synonym "limitation", "cutback", "sanction" , "banishment", "clear", "wipe", "extraction", "withdrawal" .
 
 :RemovalOfRawMaterials a owl:Class ;
   rdfs:subClassOf :RemovalAndRestriction ;
   rdfs:label "Removal of Raw Materials (Mining, Drilling, Logging, ...)" ;
-  :definition "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities" .
+  :definition "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities" ;
+  :synonym "mining", "logging" .
 
 :Repair a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Repair" ;
   :definition "Any act that fixes/mends/adjusts/restores an entity that is broken, damaged or faulty." ;
-  :synonym "restoration", "mending", "fixing", "renovation" .
+  :synonym "restoration", "mend", "fix", "renovation" .
 
 :ReportedValue a owl:Class ;
   rdfs:label "Reported Value" ;
@@ -419,24 +548,25 @@
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Request and Appeal" ;
   :definition "A CommunicationAndSpeechAct that expresses a need or desire for something or someone, or that some Event occur. Note that who/what is requested is identified using the :has_topic predicate." ;
-  :synonym "entreaty", "asking for", "plea", "petition", "solicitation", "supplication" .
+  :synonym "entreaty", "asking for", "plea", "petition", "solicitation", "supplication", "urge", "beg" .
 
 :Resistance a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Resistance" ;
   :definition "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate." ;
-  :synonym "opposition", "refusal to accept" .
+  :synonym "opposition" .
 
 :ReturnAndRelease a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Return and Release" ;
-  :definition "An act of restoring something or someone to their original owner or location, granting freedom to someone or something, or letting something or someone fall/spill/drop. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." .
+  :definition "An act of restoring something or someone to their original owner or location, granting freedom to someone or something, or letting something or someone fall/spill/drop. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." ;
+  :synonym "free" .
 
 :Revelation a owl:Class ;
   rdfs:subClassOf :Acquisition ;
   rdfs:label "Revelation" ;
   :definition "An act of exposing/making something/someone known." ;
-  :synonym "disclosure", "divulging" .
+  :synonym "disclosure", "divulge" .
 
 :Reward a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -444,8 +574,14 @@
   :definition "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific Event or StateAndCondition (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property." ;
   :synonym "recompense", "prize", "winnings", "award" .
 
+:RiskTaking a owl:Class ;
+  rdfs:subClassOf :Event ;
+  rdfs:label "Risk Taking" ;
+  :definition "Proceeding with an act that is dangerous and/or may result in injury, failure or loss." ;
+  :synonym "audacity", "bravado" .
+
 :RobberyAndTheft a owl:Class ;
-  rdfs:subClassOf :Acquisition ;
+  rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
   rdfs:label "Robbery and Theft" ;
   :definition "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate." ;
   :synonym "stealing", "burglary", "thievery", "breaking and entering" .
@@ -454,18 +590,19 @@
   rdfs:subClassOf :Event ;
   rdfs:label "Searching" ;
   :definition "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property." ;
-  :synonym "hunting", "looking for", "exploration", "foraging" .
+  :synonym "hunt", "look for", "exploration", "forage", "stalk", "rummage" .
 
 :SensoryPerception a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Sensory Perception" ;
-  :definition "An act involving one of the senses - sight, hearing, touch, taste and smell." .
+  :definition "An act involving one of the senses - sight, hearing, touch, taste and smell." ;
+  :synonym "sight", "smell", "taste", "touch", "hearing" .
 
 :Separation a owl:Class ;
   rdfs:subClassOf :Event ;
   rdfs:label "Separation" ;
   :definition "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts." ;
-  :synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation" .
+  :synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation", "splitting", "disassembly", "breakage" .
 
 :SpaceEvent a owl:Class ;
   rdfs:subClassOf :Event ;
@@ -485,8 +622,13 @@
   :definition "An act of replacing something or someone with another." ;
   :synonym "exchange", "interchange", "replacement", "swap" .
 
+:Suicide a owl:Class ;
+  rdfs:subClassOf :Death ;
+  rdfs:label "Suicide" ;
+  :definition "The act of an individual (animal or Person) taking their own life." .
+
 :SurrenderAndYielding a owl:Class ;
-  rdfs:subClassOf :Event ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Surrender and Yielding" ;
   :definition "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct." ;
   :synonym "capitulation", "succombing", "giving in" .
@@ -549,6 +691,9 @@
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :AttentionAndFocus :IgnoringAndOverlooking ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :MurderAndHomicide :Suicide ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :RemovalAndRestriction :ReturnAndRelease ) .

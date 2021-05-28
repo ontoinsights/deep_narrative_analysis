@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: April 2 2021
+# Last modified: May 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -23,6 +23,8 @@
 # 
 # Changes:
 #  Updated to the Mar 2021 semantics
+#  Added Factory, DesignatedArea, OccupiedArea
+#  Updated the default and dna prefixes
 ########################################################################
 
 
@@ -69,6 +71,12 @@
   rdfs:label "Currency" ;
   :definition "A metal or paper medium of exchange that is used as money in a country." .
 
+:DesignatedArea a owl:Class ;
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Designated Area" ;
+  :definition "A portion of land identified for specific use." ;
+  :example "Examples are parks and commons, and even oil fields or demilitarized zones." .
+
 :Direction a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Direction" ;
@@ -78,12 +86,22 @@
                                     :enum:SouthWest :enum:West ) ] ;
   :synonym "compass direction", "compass orientation" .
 
+:Factory a owl:Class ;
+  rdfs:subClassOf :BuildingOrDwelling ;
+  rdfs:label "Factory" ;
+  :definition "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
+
 :GeopoliticalEntity a owl:Class ;
   rdfs:subClassOf :Agent, :PhysicalLocation ;
   rdfs:label "Geopolitical Entity" ;
   :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation." ;
   :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
   :synonym "political region", "body politic" .
+
+:OccupiedArea a owl:Class ;
+  rdfs:subClassOf :GeopoliticalEntity ;
+  rdfs:label "Occupied Area" ;
+  :definition "The land and government of a region which has been taken over/'occupied' by another nation/GPE." .
 
 :OnlineLocation a owl:Class ;
   rdfs:subClassOf :Location ;
@@ -158,8 +176,9 @@
 :city_name a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :postal_address_detail ;
   rdfs:label "city name" ;
-  :definition "A part of a PostalAddress holding the city/town name." ;
-  rdfs:domain :PostalAddress ;
+  :definition "Identification of the city/town for a PopulatedPlace or that is a part of a PostalAddress." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :PostalAddress :PopulatedPlace ) ] ; 
   rdfs:range xsd:string .
 
 :city_part_name a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -172,8 +191,9 @@
 :country_name a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :postal_address_detail ;
   rdfs:label "country name" ;
-  :definition "A part of a PostalAddress identifying the country." ;
-  rdfs:domain :PostalAddress ;
+  :definition "Identification of the country for a PopulatedPlace or that is a part of a PostalAddress." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :PostalAddress :PopulatedPlace ) ] ; 
   rdfs:range xsd:string .
 
 :distance_meters a owl:DatatypeProperty ;
@@ -287,8 +307,9 @@
 :state_or_region_name a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :postal_address_detail ;
   rdfs:label "state, province or region name" ;
-  :definition "A part of a PostalAddress identifying a first order administrative region, such as a state, province or district of a countrty." ;
-  rdfs:domain :PostalAddress ;
+  :definition "Identification of a first order administrative region, such as a state, province or district of a countrty for a PopulatedPlace or a part of a PostalAddress." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :PostalAddress :PopulatedPlace ) ] ; 
   rdfs:range xsd:string .
 
 :street_address1 a owl:DatatypeProperty, owl:FunctionalProperty ;

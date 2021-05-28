@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: April 6 2021
+# Last modified: May 26 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -21,8 +21,15 @@
 # either express or implied.
 # 
 # Changes:
-#  Updated to the Mar 2021 semantics
-#  Changed LineOfBusiness from an enumeration to the top of a class hierarchy
+#   Updated to the Mar 2021 semantics
+#   Changed LineOfBusiness from an enumeration to the top of a class hierarchy
+#   Added PoliceForce, ArmedForce, ParamilitaryForce
+# 
+# Changes:
+#  Added :ArmedForce, :ParamilitaryForce and :PoliceForce
+#  Updated the default and dna prefixes
+#  Clarified the definition of LineOfBusiness
+#  Renamed Characteristic to AgentAspect
 ########################################################################
 
 
@@ -36,9 +43,15 @@
   :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
   :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." .
 
-:Characteristic a owl:Class ;
-  rdfs:label "Characteristic" ;
-  :definition "Some aspect of a Person that serves to distinguish and/or describe them. Note that Characteristic is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Gender) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_characteristic triple, via OWL punning." .
+:AgentAspect a owl:Class ;
+  rdfs:label "Agent Aspect" ;
+  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Gender) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
+
+:ArmedForce a owl:Class ;
+  rdfs:subClassOf :Organization ;
+  rdfs:label "Armed Force" ;
+  :definition "A GPE's military force." ;
+  :example "Examples of ArmedForces are army, navy, marines, air force, etc." .
 
 :DisplacedPerson a owl:Class ;
   rdfs:subClassOf :Person ;
@@ -46,7 +59,7 @@
   :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." .
 
 :EducationLevel a owl:Class ;
-  rdfs:subClassOf :Characteristic, :Enumeration ;
+  rdfs:subClassOf :AgentAspect, :Enumeration ;
   rdfs:label "Education Level" ;
   :definition "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation." ;
   :example "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." ;
@@ -58,7 +71,7 @@
                                     :enum:SomeDoctoralEducation ) ] .
 
 :Ethnicity a owl:Class ;
-  rdfs:subClassOf :Characteristic ;
+  rdfs:subClassOf :AgentAspect ;
   rdfs:label "Ethnicity" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
   :synonym "race" .
@@ -70,9 +83,9 @@
   :synonym "household" .
   
 :Gender a owl:Class ;
-  rdfs:subClassOf :Characteristic, :Enumeration ;
+  rdfs:subClassOf :AgentAspect, :Enumeration ;
   rdfs:label "Gender" ;
-  :definition "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_characteristic property which references the Gender." ;
+  :definition "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_agent_aspect property which references the Gender." ;
   owl:equivalentClass [ a owl:Class ;
                         owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] .
 
@@ -85,12 +98,12 @@
 :LineOfBusiness a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Line/Type of Business" ;
-  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning." .
+  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
 
 :MedicalOrPsychologicalCondition a owl:Class ;
-  rdfs:subClassOf :Characteristic ;
+  rdfs:subClassOf :AgentAspect ;
   rdfs:label "Medical or Psychological Condition" ;
-  :definition "Indicates various types of physical and mental conditions that characterize a Person or Group and/or impact their ability to carry out activities. These conditions may be related to genetic or emotional disorders, the severity of an illness, etc." .
+  :definition "Indicates various types of physical and mental conditions that distinguish a Person or Group and/or impact their ability to carry out activities. These conditions may be related to genetic or emotional disorders, the severity of an illness, etc." .
 
 :Organization a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
@@ -98,16 +111,186 @@
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
   :synonym "organisation", "association", "corporation", "institution", "company" .
 
+:ParamilitaryForce a owl:Class ;
+  rdfs:subClassOf :Organization ;
+  rdfs:label "Paramilitary Force" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'." ;
+  :synonym "quasi military" .
+
 :Person a owl:Class ;
   rdfs:subClassOf :Agent ;
   rdfs:label "Person" ;
   :definition "A human being." ;
   :synonym "human", "human being", "man", "woman", "child" .
 
+:PoliceForce a owl:Class ;
+  rdfs:subClassOf :Organization ;
+  rdfs:label "Police Force" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" .
+
 :Role a owl:Class ;
   rdfs:label "Role" ;
   :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics." ;
   :example "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." .
+
+
+########################################################################
+# Subclasses of LineOfBusiness
+########################################################################
+
+:Agriculture a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Agriculture, Apiculture and Aquaculture" ;
+  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
+  :example "Examples are farms, dairies, ranches, api- and aquaculture businesses, seed companies and nurseries." .
+
+:BankingAndFinance a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Banking, Finance and Investment" ;
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock trading activities, etc." .
+
+:Construction a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Construction" ;
+  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
+  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
+
+:CriminalActivities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Criminal Activities" .
+
+:Education a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Education" ;
+  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
+  :example "Examples are schools, universities, tutoring, etc." .
+
+:ElectronicsAndComputers a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Electronics and Computers" ;
+  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
+  :example "Examples include both the engineering and fabrication aspects of electronics and computer hardware." .
+
+:EnergyAndUtilities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Energy and Utilities" ;
+  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
+  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
+
+:Entertainment a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Entertainment" ;
+  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
+  :example "Entertainment businesses include museums, theaters, any type of performance acts, etc." .
+
+:EnvironmentalOrEcologicalActivities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Environmental or Ecological Activities" ;
+  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
+
+:Fashion a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Fashion" ;
+  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
+  :example "Examples include beauty salons and workers, alteration activities, jewelry and clothing design and sales, etc." .
+
+:FoodProcessingAndPreparation a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Food Processing and Preparation" ;
+  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
+  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc." .
+
+:GovernmentAndPolitics a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Government and Politics" ;
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, etc." .
+
+:Healthcare a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Healthcare" ;
+  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" .
+
+:Hospitality a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Hospitality" ;
+  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+
+:HumanitarianActivities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Humanitarian Activities" ;
+  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+
+:InformationTechnologyServices a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Information Technology Services" ;
+  :definition "Involved with the collection, analysis, storage and communication of data." ;
+  :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+
+:Insurance a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Insurance" ;
+  :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
+  :example "Examples include insurance agencies, underwriters, etc." .
+
+:LaborAndStaffing a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Labor and Staffing" ;
+  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
+
+:LegalAndJudicialActivities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Legal and Judicial Activities" ;
+  :definition "Involved with courts and trials, attorneys and litigations, etc." .
+
+:Manufacturing a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Manufacturing" ;
+  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
+
+:Military a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Military" ;
+  :definition "Involved with armed forces, troops, equipment and research/consulting related to these." .
+
+:PublishingAndMedia a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Publishing and Media" ;
+  :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
+  :example "Examples are activities related to books, journals, magazines, periodicals, blogs, newspapers, etc." .
+
+:RawMaterialProcessingAndPreparation a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Raw Material Processing and Preparation" ;
+  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
+  :example "Examples are mining, drilling and logging and processing such as distillation and refinery." .
+
+:RealEstate a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Raw Material Processing and Preparation" ;
+  :definition "Involved with the maintenance and sale of property/land and buildings." .
+
+:ReligiousActivities a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Religious Activities" ;
+  :definition "Involved with activities related to spirituality, faith and worship." ;
+  :example "Examples include churches and similar organizations, clergy and shaman, etc." .
+
+:Retail a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Religious Activities" ;
+  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
+  :example "Examples are stores, malls, groceries, etc." .
+
+:Security a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Security" ;
+  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
+
+:Transport  a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Transport" ;
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations." .
 
 
 ########################################################################
@@ -143,17 +326,17 @@
   rdfs:domain :Affiliation ;
   :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
 
+:has_agent_aspect a owl:ObjectProperty ;
+  rdfs:label "has agent aspect" ;
+  rdfs:domain :Person ;
+  rdfs:range :AgentAspect ;
+  :definition "Indicates some facet, detail or characteristic of a Person that serves to distinguish and/or describe them." .
+
 :has_citizenship a owl:ObjectProperty ;
   rdfs:label "has citizenship" ;
   rdfs:domain :Person ;
   rdfs:range :Country ;
   :definition "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship." .
-
-:has_characteristic a owl:ObjectProperty ;
-  rdfs:label "has characteristic" ;
-  rdfs:domain :Person ;
-  rdfs:range :Characteristic ;
-  :definition "Indicates some aspect of a Person that serves to distinguish and/or describe them." .
 
 :has_line_of_business a owl:ObjectProperty ;
   rdfs:label "has line of business" ;
@@ -175,17 +358,6 @@
 :enum:Agender a :Gender ;
   rdfs:label "Agender, Gender Neutral or Lack of Gender" .
 
-:enum:Agriculture a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Agriculture, Apiculture and Aquaculture" ;
-  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
-  :example "Examples are farms, dairies, ranches, api- and aquaculture businesses, seed companies and nurseries." .
-
-:enum:BankingAndFinance a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Banking, Finance and Investment" ;
-  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock trading activities, etc." .
-
 :enum:Bigender a :Gender ;
   rdfs:label "Bigender" .
 
@@ -204,161 +376,19 @@
 :enum:CompletedUndergraduateEducation a :EducationLevel ;
   rdfs:label "Completed Undergraduate Education" .
 
-:enum:Construction a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Construction" ;
-  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
-  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
-
-:enum:CriminalActivities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Criminal Activities" .
-
-:enum:Education a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Education" ;
-  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
-  :example "Examples are schools, universities, tutoring, etc." .
-
-:enum:ElectronicsAndComputers a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Electronics and Computers" ;
-  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
-  :example "Examples include both the engineering and fabrication aspects of electronics and computer hardware." .
-
-:enum:EnergyAndUtilities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Energy and Utilities" ;
-  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
-  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
-
-:enum:Entertainment a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Entertainment" ;
-  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
-  :example "Entertainment businesses include museums, theaters, any type of performance acts, etc." .
-
-:enum:EnvironmentalOrEcologicalActivities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Environmental or Ecological Activities" ;
-  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
-
-:enum:Fashion a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Fashion" ;
-  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
-  :example "Examples include beauty salons and workers, alteration activities, jewelry and clothing design and sales, etc." .
-
 :enum:Female a :Gender ;
   rdfs:label "Female" ;
   :synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
-
-:enum:FoodProcessingAndPreparation a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Food Processing and Preparation" ;
-  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
-  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc." .
-
-:enum:GovernmentAndPolitics a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Government and Politics" ;
-  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, etc." .
-
-:enum:Healthcare a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Healthcare" ;
-  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
-  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" .
-
-:enum:Hospitality a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Hospitality" ;
-  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
-
-:enum:HumanitarianActivities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Humanitarian Activities" ;
-  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
-
-:enum:InformationTechnologyServices a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Information Technology Services" ;
-  :definition "Involved with the collection, analysis, storage and communication of data." ;
-  :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
-
-:enum:Insurance a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Insurance" ;
-  :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
-  :example "Examples include insurance agencies, underwriters, etc." .
-
-:enum:LaborAndStaffing a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Labor and Staffing" ;
-  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
-
-:enum:LegalAndJudicialActivities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Legal and Judicial Activities" ;
-  :definition "Involved with courts and trials, attorneys and litigations, etc." .
 
 :enum:Male a :Gender ;
   rdfs:label "Male" ;
   :synonym "boy", "man", "mister", "Mr." .
 
-:enum:Manufacturing a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Manufacturing" ;
-  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
-
-:enum:Military a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Military" ;
-  :definition "Involved with armed forces, troops, equipment and research/consulting related to these." .
-
 :enum:NoEducation a :EducationLevel ;
   rdfs:label "No Education" .
 
-:enum:NotApplicable a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Not Applicable" .
-
 :enum:PostDoctoralEducation a :EducationLevel ;
   rdfs:label "Post-Doctoral Education" .
-
-:enum:PublishingAndMedia a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Publishing and Media" ;
-  :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
-  :example "Examples are activities related to books, journals, magazines, periodicals, blogs, newspapers, etc." .
-
-:enum:RawMaterialProcessingAndPreparation a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Raw Material Processing and Preparation" ;
-  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
-  :example "Examples are mining, drilling and logging and processing such as distillation and refinery." .
-
-:enum:RealEstate a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Raw Material Processing and Preparation" ;
-  :definition "Involved with the maintenance and sale of property/land and buildings." .
-
-:enum:ReligiousActivities a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Religious Activities" ;
-  :definition "Involved with activities related to spirituality, faith and worship." ;
-  :example "Examples include churches and similar organizations, clergy and shaman, etc." .
-
-:enum:Retail a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Religious Activities" ;
-  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
-  :example "Examples are stores, malls, groceries, etc." .
-
-:enum:Security a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Security" ;
-  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
 
 :enum:SomeDoctoralEducation a :EducationLevel ;
   rdfs:label "Some Doctoral Education" .
@@ -374,8 +404,3 @@
 
 :enum:SomeUndergraduateEducation a :EducationLevel ;
   rdfs:label "Some Undergraduate Education" .
-
-:enum:Transport  a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Transport" ;
-  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations." .

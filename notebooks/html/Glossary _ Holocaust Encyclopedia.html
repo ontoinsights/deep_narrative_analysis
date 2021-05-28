@@ -1,0 +1,2654 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/><script type="text/javascript">(window.NREUM||(NREUM={})).loader_config={licenseKey:"83f95c517c",applicationID:"351633534"};window.NREUM||(NREUM={}),__nr_require=function(e,t,n){function r(n){if(!t[n]){var i=t[n]={exports:{}};e[n][0].call(i.exports,function(t){var i=e[n][1][t];return r(i||t)},i,i.exports)}return t[n].exports}if("function"==typeof __nr_require)return __nr_require;for(var i=0;i<n.length;i++)r(n[i]);return r}({1:[function(e,t,n){function r(){}function i(e,t,n){return function(){return o(e,[u.now()].concat(c(arguments)),t?null:this,n),t?void 0:this}}var o=e("handle"),a=e(7),c=e(8),f=e("ee").get("tracer"),u=e("loader"),s=NREUM;"undefined"==typeof window.newrelic&&(newrelic=s);var d=["setPageViewName","setCustomAttribute","setErrorHandler","finished","addToTrace","inlineHit","addRelease"],p="api-",l=p+"ixn-";a(d,function(e,t){s[t]=i(p+t,!0,"api")}),s.addPageAction=i(p+"addPageAction",!0),s.setCurrentRouteName=i(p+"routeName",!0),t.exports=newrelic,s.interaction=function(){return(new r).get()};var m=r.prototype={createTracer:function(e,t){var n={},r=this,i="function"==typeof t;return o(l+"tracer",[u.now(),e,n],r),function(){if(f.emit((i?"":"no-")+"fn-start",[u.now(),r,i],n),i)try{return t.apply(this,arguments)}catch(e){throw f.emit("fn-err",[arguments,this,e],n),e}finally{f.emit("fn-end",[u.now()],n)}}}};a("actionText,setName,setAttribute,save,ignore,onEnd,getContext,end,get".split(","),function(e,t){m[t]=i(l+t)}),newrelic.noticeError=function(e,t){"string"==typeof e&&(e=new Error(e)),o("err",[e,u.now(),!1,t])}},{}],2:[function(e,t,n){function r(){return c.exists&&performance.now?Math.round(performance.now()):(o=Math.max((new Date).getTime(),o))-a}function i(){return o}var o=(new Date).getTime(),a=o,c=e(9);t.exports=r,t.exports.offset=a,t.exports.getLastTimestamp=i},{}],3:[function(e,t,n){function r(e){return!(!e||!e.protocol||"file:"===e.protocol)}t.exports=r},{}],4:[function(e,t,n){function r(e,t){var n=e.getEntries();n.forEach(function(e){"first-paint"===e.name?d("timing",["fp",Math.floor(e.startTime)]):"first-contentful-paint"===e.name&&d("timing",["fcp",Math.floor(e.startTime)])})}function i(e,t){var n=e.getEntries();n.length>0&&d("lcp",[n[n.length-1]])}function o(e){e.getEntries().forEach(function(e){e.hadRecentInput||d("cls",[e])})}function a(e){if(e instanceof m&&!g){var t=Math.round(e.timeStamp),n={type:e.type};t<=p.now()?n.fid=p.now()-t:t>p.offset&&t<=Date.now()?(t-=p.offset,n.fid=p.now()-t):t=p.now(),g=!0,d("timing",["fi",t,n])}}function c(e){d("pageHide",[p.now(),e])}if(!("init"in NREUM&&"page_view_timing"in NREUM.init&&"enabled"in NREUM.init.page_view_timing&&NREUM.init.page_view_timing.enabled===!1)){var f,u,s,d=e("handle"),p=e("loader"),l=e(6),m=NREUM.o.EV;if("PerformanceObserver"in window&&"function"==typeof window.PerformanceObserver){f=new PerformanceObserver(r);try{f.observe({entryTypes:["paint"]})}catch(v){}u=new PerformanceObserver(i);try{u.observe({entryTypes:["largest-contentful-paint"]})}catch(v){}s=new PerformanceObserver(o);try{s.observe({type:"layout-shift",buffered:!0})}catch(v){}}if("addEventListener"in document){var g=!1,w=["click","keydown","mousedown","pointerdown","touchstart"];w.forEach(function(e){document.addEventListener(e,a,!1)})}l(c)}},{}],5:[function(e,t,n){function r(e,t){if(!i)return!1;if(e!==i)return!1;if(!t)return!0;if(!o)return!1;for(var n=o.split("."),r=t.split("."),a=0;a<r.length;a++)if(r[a]!==n[a])return!1;return!0}var i=null,o=null,a=/Version\/(\S+)\s+Safari/;if(navigator.userAgent){var c=navigator.userAgent,f=c.match(a);f&&c.indexOf("Chrome")===-1&&c.indexOf("Chromium")===-1&&(i="Safari",o=f[1])}t.exports={agent:i,version:o,match:r}},{}],6:[function(e,t,n){function r(e){function t(){e(a&&document[a]?document[a]:document[i]?"hidden":"visible")}"addEventListener"in document&&o&&document.addEventListener(o,t,!1)}t.exports=r;var i,o,a;"undefined"!=typeof document.hidden?(i="hidden",o="visibilitychange",a="visibilityState"):"undefined"!=typeof document.msHidden?(i="msHidden",o="msvisibilitychange"):"undefined"!=typeof document.webkitHidden&&(i="webkitHidden",o="webkitvisibilitychange",a="webkitVisibilityState")},{}],7:[function(e,t,n){function r(e,t){var n=[],r="",o=0;for(r in e)i.call(e,r)&&(n[o]=t(r,e[r]),o+=1);return n}var i=Object.prototype.hasOwnProperty;t.exports=r},{}],8:[function(e,t,n){function r(e,t,n){t||(t=0),"undefined"==typeof n&&(n=e?e.length:0);for(var r=-1,i=n-t||0,o=Array(i<0?0:i);++r<i;)o[r]=e[t+r];return o}t.exports=r},{}],9:[function(e,t,n){t.exports={exists:"undefined"!=typeof window.performance&&window.performance.timing&&"undefined"!=typeof window.performance.timing.navigationStart}},{}],ee:[function(e,t,n){function r(){}function i(e){function t(e){return e&&e instanceof r?e:e?u(e,f,a):a()}function n(n,r,i,o,a){if(a!==!1&&(a=!0),!l.aborted||o){e&&a&&e(n,r,i);for(var c=t(i),f=v(n),u=f.length,s=0;s<u;s++)f[s].apply(c,r);var p=d[h[n]];return p&&p.push([b,n,r,c]),c}}function o(e,t){y[e]=v(e).concat(t)}function m(e,t){var n=y[e];if(n)for(var r=0;r<n.length;r++)n[r]===t&&n.splice(r,1)}function v(e){return y[e]||[]}function g(e){return p[e]=p[e]||i(n)}function w(e,t){s(e,function(e,n){t=t||"feature",h[n]=t,t in d||(d[t]=[])})}var y={},h={},b={on:o,addEventListener:o,removeEventListener:m,emit:n,get:g,listeners:v,context:t,buffer:w,abort:c,aborted:!1};return b}function o(e){return u(e,f,a)}function a(){return new r}function c(){(d.api||d.feature)&&(l.aborted=!0,d=l.backlog={})}var f="nr@context",u=e("gos"),s=e(7),d={},p={},l=t.exports=i();t.exports.getOrSetContext=o,l.backlog=d},{}],gos:[function(e,t,n){function r(e,t,n){if(i.call(e,t))return e[t];var r=n();if(Object.defineProperty&&Object.keys)try{return Object.defineProperty(e,t,{value:r,writable:!0,enumerable:!1}),r}catch(o){}return e[t]=r,r}var i=Object.prototype.hasOwnProperty;t.exports=r},{}],handle:[function(e,t,n){function r(e,t,n,r){i.buffer([e],r),i.emit(e,t,n)}var i=e("ee").get("handle");t.exports=r,r.ee=i},{}],id:[function(e,t,n){function r(e){var t=typeof e;return!e||"object"!==t&&"function"!==t?-1:e===window?0:a(e,o,function(){return i++})}var i=1,o="nr@id",a=e("gos");t.exports=r},{}],loader:[function(e,t,n){function r(){if(!E++){var e=x.info=NREUM.info,t=l.getElementsByTagName("script")[0];if(setTimeout(u.abort,3e4),!(e&&e.licenseKey&&e.applicationID&&t))return u.abort();f(h,function(t,n){e[t]||(e[t]=n)});var n=a();c("mark",["onload",n+x.offset],null,"api"),c("timing",["load",n]);var r=l.createElement("script");r.src="https://"+e.agent,t.parentNode.insertBefore(r,t)}}function i(){"complete"===l.readyState&&o()}function o(){c("mark",["domContent",a()+x.offset],null,"api")}var a=e(2),c=e("handle"),f=e(7),u=e("ee"),s=e(5),d=e(3),p=window,l=p.document,m="addEventListener",v="attachEvent",g=p.XMLHttpRequest,w=g&&g.prototype;if(d(p.location)){NREUM.o={ST:setTimeout,SI:p.setImmediate,CT:clearTimeout,XHR:g,REQ:p.Request,EV:p.Event,PR:p.Promise,MO:p.MutationObserver};var y=""+location,h={beacon:"bam.nr-data.net",errorBeacon:"bam.nr-data.net",agent:"js-agent.newrelic.com/nr-1208.min.js"},b=g&&w&&w[m]&&!/CriOS/.test(navigator.userAgent),x=t.exports={offset:a.getLastTimestamp(),now:a,origin:y,features:{},xhrWrappable:b,userAgent:s};e(1),e(4),l[m]?(l[m]("DOMContentLoaded",o,!1),p[m]("load",r,!1)):(l[v]("onreadystatechange",i),p[v]("onload",r)),c("mark",["firstbyte",a.getLastTimestamp()],null,"api");var E=0}},{}],"wrap-function":[function(e,t,n){function r(e,t){function n(t,n,r,f,u){function nrWrapper(){var o,a,s,p;try{a=this,o=d(arguments),s="function"==typeof r?r(o,a):r||{}}catch(l){i([l,"",[o,a,f],s],e)}c(n+"start",[o,a,f],s,u);try{return p=t.apply(a,o)}catch(m){throw c(n+"err",[o,a,m],s,u),m}finally{c(n+"end",[o,a,p],s,u)}}return a(t)?t:(n||(n=""),nrWrapper[p]=t,o(t,nrWrapper,e),nrWrapper)}function r(e,t,r,i,o){r||(r="");var c,f,u,s="-"===r.charAt(0);for(u=0;u<t.length;u++)f=t[u],c=e[f],a(c)||(e[f]=n(c,s?f+r:r,i,f,o))}function c(n,r,o,a){if(!m||t){var c=m;m=!0;try{e.emit(n,r,o,t,a)}catch(f){i([f,n,r,o],e)}m=c}}return e||(e=s),n.inPlace=r,n.flag=p,n}function i(e,t){t||(t=s);try{t.emit("internal-error",e)}catch(n){}}function o(e,t,n){if(Object.defineProperty&&Object.keys)try{var r=Object.keys(e);return r.forEach(function(n){Object.defineProperty(t,n,{get:function(){return e[n]},set:function(t){return e[n]=t,t}})}),t}catch(o){i([o],n)}for(var a in e)l.call(e,a)&&(t[a]=e[a]);return t}function a(e){return!(e&&e instanceof Function&&e.apply&&!e[p])}function c(e,t){var n=t(e);return n[p]=e,o(e,n,s),n}function f(e,t,n){var r=e[t];e[t]=c(r,n)}function u(){for(var e=arguments.length,t=new Array(e),n=0;n<e;++n)t[n]=arguments[n];return t}var s=e("ee"),d=e(8),p="nr@original",l=Object.prototype.hasOwnProperty,m=!1;t.exports=r,t.exports.wrapFunction=c,t.exports.wrapInPlace=f,t.exports.argsToArray=u},{}]},{},["loader"]);</script>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+<meta id="meta_lang" content="en"/>
+<meta id="meta_lang_id" content="6"/>
+<meta id="meta_text_direction" content="ltr"/>
+<meta id="meta_new_data_count" content="0"/>        <link rel="alternate" hreflang="en" href="https://encyclopedia.ushmm.org/content/en/article/glossary"/>
+            <link rel="alternate" hreflang="ar" href="https://encyclopedia.ushmm.org/content/ar/article/glossary"/>
+            <link rel="alternate" hreflang="fa" href="https://encyclopedia.ushmm.org/content/fa/article/glossary"/>
+            <link rel="alternate" hreflang="es" href="https://encyclopedia.ushmm.org/content/es/article/glossary"/>
+        <link rel="canonical" href="https://encyclopedia.ushmm.org/content/en/article/glossary"/>
+            <!-- Google Description Tag -->
+        <meta name="description" content=""/>
+                <!-- Open Graph Sharing Meta -->
+        <meta property="og:url" content="https://encyclopedia.ushmm.org/content/en/article/glossary"/>
+        <meta property="og:title" content="Glossary"/>
+        <meta property="og:description" content=""/>
+        <meta property="og:type" content="article"/>
+                        <!-- Twitter Sharing Meta -->
+
+        <meta name="twitter:title" content="Glossary"/>
+                            <meta name="twitter:card" content="summary"/>
+                <meta name="twitter:site" content="@HolocaustMuseum"/>
+        <meta name="langcode" content="en">
+    <meta name="stemId" content="10705">
+
+    <title>
+                    Glossary | Holocaust Encyclopedia
+            </title>
+        <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KSKHBZV');</script>
+    <!-- End Google Tag Manager -->
+    
+    
+    <link rel="stylesheet" href="/css/A.main.css,,qid==050931783e86390877f9+global-footer.css,,qid==9f2f4b69f6a9ad4831fb+article.css,,qid==89efbf9a68910609ad58+title-area.css,,qid==f5362836a8355267e4bb+tools-bar.css,,qid==9e2c1e6a92e33159090d+related-content.css,,qid==c320a1cc89a7a691659d+series.css,,qid==5277eb9cf7b186b44ad0+critical-thinking-questions.css,,qid==0cdada7a07ad1e1ceaf9,Mcc.NVaWvPacE3.css.pagespeed.cf.RCtrhrtrSq.css"/>
+    
+        
+        
+
+    
+    
+    
+    
+    <link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="//cloud.typography.com/683468/6184392/css/fonts.css"/>
+    
+</head>
+
+<body class="">
+            <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KSKHBZV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        
+    <section id="nav-box" class="">
+    <a aria-label="Close Nav Box" href="#" id="close-nav-box">
+        <i class="fa fa-times" aria-hidden="true"></i>
+    </a>
+
+    <div id="searchBox" title="search" class="nav-box-child">
+        <form method="get" action="https://encyclopedia.ushmm.org/search">
+    <div class="search-bar-filters">
+        <div class="content-inner">
+            <h2 class="optical-shadow-orange pb-5px">Search the Holocaust Encyclopedia</h2>
+            <div class="flex-wrapper search-fields">
+                <div class="input-group filters">
+                    <input type="text" class="form-control" aria-label="..." name="query" placeholder="Enter your search term here">
+                    <div class="input-group-btn content-types-search">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="hidden-xs">Content Types</span>
+                            <span class="visible-xs"><i class="fa fa-filter" aria-hidden="true"></i></span>
+                             - <span class="filters-count" data-all-text="all ">all</span>
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu dropdown-filter">
+                                                            <li><label><input type="checkbox" value="33" name="types[]"> Animated Map</label></li>
+                                                            <li><label><input type="checkbox" value="34" name="types[]"> Article</label></li>
+                                                            <li><label><input type="checkbox" value="35" name="types[]"> Artifact</label></li>
+                                                            <li><label><input type="checkbox" value="36" name="types[]"> Document</label></li>
+                                                            <li><label><input type="checkbox" value="37" name="types[]"> Film</label></li>
+                                                            <li><label><input type="checkbox" value="39" name="types[]"> ID Card</label></li>
+                                                            <li><label><input type="checkbox" value="40" name="types[]"> Map</label></li>
+                                                            <li><label><input type="checkbox" value="42" name="types[]"> Oral History</label></li>
+                                                            <li><label><input type="checkbox" value="43" name="types[]"> Photo</label></li>
+                                                            <li><label><input type="checkbox" value="47" name="types[]"> Song</label></li>
+                                                            <li><label><input type="checkbox" value="48" name="types[]"> Timeline</label></li>
+                                                        <li role="separator" class="divider"></li>
+                            <li><button type="button" class="btn btn-info clear-filter">Clear Selections</button></li>
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <button type="submit" class="btn btn-default input-group-btn hidden-xs">Search</button>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-default input-group-btn visible-xs mobile-submit">Search</button>
+            <div class="language-instruction">You are searching in <strong>English</strong>.
+                <div class="btn-group">
+                    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                        Select another language(s)
+                    </button>
+                    <ul class="dropdown-menu dropdown-filter">
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="ar">
+                                    عربي
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="de">
+                                    Deutsch
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="el">
+                                    Ελληνικά
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="en" checked>
+                                    English
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="es">
+                                    Español
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="fa">
+                                    فارسی
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="fr">
+                                    Français
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="hu">
+                                    Magyar
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="id">
+                                    Bahasa Indonesia
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="it">
+                                    Italiano
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="ja">
+                                    日本語
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="ko">
+                                    한국어
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="pl">
+                                    Polski
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="pt-br">
+                                    Português do Brasil
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="ru">
+                                    русский
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="tr">
+                                    Türkçe
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="uk">
+                                    Українська
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="ur">
+                                    اُردو
+                                </label>
+                            </li>
+                                                    <li>
+                                <label>
+                                    <input type="checkbox" name="languages[]" value="zh">
+                                    简体中文
+                                </label>
+                            </li>
+                                            </ul>
+                </div>
+                .
+            </div>
+        </div>
+    </div>
+</form>
+    </div>
+    <!-- #nav-box-search -->
+    <div id="tagsBox" class="nav-box-child">
+        <h2>Tags</h2>
+                    <h3>Filter Tags:</h3>
+            <ul id="nav-tag-filter-letters" class="pipe-separated">
+                <li><a href="#" id="nav-show-all-tags">Show All</a></li>
+                                    <li><a href="#">A</a></li>
+                                    <li><a href="#">B</a></li>
+                                    <li><a href="#">C</a></li>
+                                    <li><a href="#">D</a></li>
+                                    <li><a href="#">E</a></li>
+                                    <li><a href="#">F</a></li>
+                                    <li><a href="#">G</a></li>
+                                    <li><a href="#">H</a></li>
+                                    <li><a href="#">I</a></li>
+                                    <li><a href="#">J</a></li>
+                                    <li><a href="#">K</a></li>
+                                    <li><a href="#">L</a></li>
+                                    <li><a href="#">M</a></li>
+                                    <li><a href="#">N</a></li>
+                                    <li><a href="#">O</a></li>
+                                    <li><a href="#">P</a></li>
+                                    <li><a href="#">Q</a></li>
+                                    <li><a href="#">R</a></li>
+                                    <li><a href="#">S</a></li>
+                                    <li><a href="#">T</a></li>
+                                    <li><a href="#">U</a></li>
+                                    <li><a href="#">V</a></li>
+                                    <li><a href="#">W</a></li>
+                                    <li><a href="#">X</a></li>
+                                    <li><a href="#">Y</a></li>
+                                    <li><a href="#">Z</a></li>
+                            </ul>
+                <div class="tag-overflow">
+            <ul class="tag-menu-grid">
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/aachen" data-track-gtm="Top Navigation|Tags|Aachen">
+                                Aachen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/abba-kovner" data-track-gtm="Top Navigation|Tags|Abba Kovner">
+                                Abba Kovner
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/adolf-eichmann" data-track-gtm="Top Navigation|Tags|Adolf Eichmann">
+                                Adolf Eichmann
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/adolf-hitler" data-track-gtm="Top Navigation|Tags|Adolf Hitler">
+                                Adolf Hitler
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/african-americans" data-track-gtm="Top Navigation|Tags|African Americans">
+                                African Americans
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/aftermath-of-the-holocaust" data-track-gtm="Top Navigation|Tags|aftermath of the Holocaust">
+                                aftermath of the Holocaust
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/aid" data-track-gtm="Top Navigation|Tags|aid">
+                                aid
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/albert-speer" data-track-gtm="Top Navigation|Tags|Albert Speer">
+                                Albert Speer
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/albums" data-track-gtm="Top Navigation|Tags|albums">
+                                albums
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/alfred-rosenberg" data-track-gtm="Top Navigation|Tags|Alfred Rosenberg">
+                                Alfred Rosenberg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/aliyah-bet" data-track-gtm="Top Navigation|Tags|Aliyah Bet">
+                                Aliyah Bet
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/allied-powers" data-track-gtm="Top Navigation|Tags|Allied powers">
+                                Allied powers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/amsterdam" data-track-gtm="Top Navigation|Tags|Amsterdam">
+                                Amsterdam
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/anne-frank" data-track-gtm="Top Navigation|Tags|Anne Frank">
+                                Anne Frank
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/anti-jewish-legislation" data-track-gtm="Top Navigation|Tags|anti-Jewish legislation">
+                                anti-Jewish legislation
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/anti-nazi-opposition" data-track-gtm="Top Navigation|Tags|anti-Nazi opposition">
+                                anti-Nazi opposition
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/antisemitism" data-track-gtm="Top Navigation|Tags|antisemitism">
+                                antisemitism
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/antwerp" data-track-gtm="Top Navigation|Tags|Antwerp">
+                                Antwerp
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/architecture" data-track-gtm="Top Navigation|Tags|architecture">
+                                architecture
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/armenian-genocide" data-track-gtm="Top Navigation|Tags|Armenian genocide">
+                                Armenian genocide
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/arrow-cross" data-track-gtm="Top Navigation|Tags|Arrow Cross">
+                                Arrow Cross
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/art" data-track-gtm="Top Navigation|Tags|art">
+                                art
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/artists" data-track-gtm="Top Navigation|Tags|artists">
+                                artists
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/aryanization" data-track-gtm="Top Navigation|Tags|Aryanization">
+                                Aryanization
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/assassination-attempts" data-track-gtm="Top Navigation|Tags|assassination attempts">
+                                assassination attempts
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/athletes-and-sports" data-track-gtm="Top Navigation|Tags|athletes and sports">
+                                athletes and sports
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/auschwitz" data-track-gtm="Top Navigation|Tags|Auschwitz">
+                                Auschwitz
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/australia-and-new-zealand" data-track-gtm="Top Navigation|Tags|Australia and New Zealand">
+                                Australia and New Zealand
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/austria" data-track-gtm="Top Navigation|Tags|Austria">
+                                Austria
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/authors" data-track-gtm="Top Navigation|Tags|authors">
+                                authors
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/axis-alliance" data-track-gtm="Top Navigation|Tags|Axis alliance">
+                                Axis alliance
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/babi-yar" data-track-gtm="Top Navigation|Tags|Babi Yar">
+                                Babi Yar
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/badges" data-track-gtm="Top Navigation|Tags|badges">
+                                badges
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/baldur-von-schirach" data-track-gtm="Top Navigation|Tags|Baldur von Schirach">
+                                Baldur von Schirach
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/baltic-countries" data-track-gtm="Top Navigation|Tags|Baltic countries">
+                                Baltic countries
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/beer-hall-putsch" data-track-gtm="Top Navigation|Tags|Beer Hall Putsch">
+                                Beer Hall Putsch
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/belgium" data-track-gtm="Top Navigation|Tags|Belgium">
+                                Belgium
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/belongings" data-track-gtm="Top Navigation|Tags|belongings">
+                                belongings
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/belzec" data-track-gtm="Top Navigation|Tags|Belzec">
+                                Belzec
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/benjamin-ferencz" data-track-gtm="Top Navigation|Tags|Benjamin Ferencz">
+                                Benjamin Ferencz
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/bergen-belsen" data-track-gtm="Top Navigation|Tags|Bergen-Belsen">
+                                Bergen-Belsen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/berlin" data-track-gtm="Top Navigation|Tags|Berlin">
+                                Berlin
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/bialystok" data-track-gtm="Top Navigation|Tags|Bialystok">
+                                Bialystok
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/bielski-partisans" data-track-gtm="Top Navigation|Tags|Bielski partisans">
+                                Bielski partisans
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/boats" data-track-gtm="Top Navigation|Tags|boats">
+                                boats
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/book-burning" data-track-gtm="Top Navigation|Tags|book burning">
+                                book burning
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/bosnia" data-track-gtm="Top Navigation|Tags|Bosnia">
+                                Bosnia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/boycotts" data-track-gtm="Top Navigation|Tags|boycotts">
+                                boycotts
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/breendonk" data-track-gtm="Top Navigation|Tags|Breendonk">
+                                Breendonk
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/brihah" data-track-gtm="Top Navigation|Tags|brihah">
+                                brihah
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/buchenwald" data-track-gtm="Top Navigation|Tags|Buchenwald">
+                                Buchenwald
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/budapest" data-track-gtm="Top Navigation|Tags|Budapest">
+                                Budapest
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/bulgaria" data-track-gtm="Top Navigation|Tags|Bulgaria">
+                                Bulgaria
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/camps" data-track-gtm="Top Navigation|Tags|camps">
+                                camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/canada" data-track-gtm="Top Navigation|Tags|Canada">
+                                Canada
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/chelmno" data-track-gtm="Top Navigation|Tags|Chelmno">
+                                Chelmno
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/children" data-track-gtm="Top Navigation|Tags|children">
+                                children
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/childrens-diaries" data-track-gtm="Top Navigation|Tags|children&#039;s diaries">
+                                children&#039;s diaries
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/china" data-track-gtm="Top Navigation|Tags|China">
+                                China
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/churches" data-track-gtm="Top Navigation|Tags|churches">
+                                churches
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/clergy" data-track-gtm="Top Navigation|Tags|clergy">
+                                clergy
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/collaboration" data-track-gtm="Top Navigation|Tags|collaboration">
+                                collaboration
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/complicity" data-track-gtm="Top Navigation|Tags|complicity">
+                                complicity
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/concentration-camps" data-track-gtm="Top Navigation|Tags|concentration camps">
+                                concentration camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/conferences" data-track-gtm="Top Navigation|Tags|conferences">
+                                conferences
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/cookbooks" data-track-gtm="Top Navigation|Tags|cookbooks">
+                                cookbooks
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/crematoria" data-track-gtm="Top Navigation|Tags|crematoria">
+                                crematoria
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/croatia" data-track-gtm="Top Navigation|Tags|Croatia">
+                                Croatia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/cuba" data-track-gtm="Top Navigation|Tags|Cuba">
+                                Cuba
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/culture" data-track-gtm="Top Navigation|Tags|culture">
+                                culture
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/cyprus" data-track-gtm="Top Navigation|Tags|Cyprus">
+                                Cyprus
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/czechoslovakia" data-track-gtm="Top Navigation|Tags|Czechoslovakia">
+                                Czechoslovakia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/d-day" data-track-gtm="Top Navigation|Tags|D-Day">
+                                D-Day
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/dachau" data-track-gtm="Top Navigation|Tags|Dachau">
+                                Dachau
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/danube-river" data-track-gtm="Top Navigation|Tags|Danube River">
+                                Danube River
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/danzig" data-track-gtm="Top Navigation|Tags|Danzig">
+                                Danzig
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/darfur" data-track-gtm="Top Navigation|Tags|Darfur">
+                                Darfur
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/death-marches" data-track-gtm="Top Navigation|Tags|death marches">
+                                death marches
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/denazification" data-track-gtm="Top Navigation|Tags|denazification">
+                                denazification
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/denial" data-track-gtm="Top Navigation|Tags|denial">
+                                denial
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/denmark" data-track-gtm="Top Navigation|Tags|Denmark">
+                                Denmark
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/denunciation" data-track-gtm="Top Navigation|Tags|denunciation">
+                                denunciation
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/deportations" data-track-gtm="Top Navigation|Tags|deportations">
+                                deportations
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/der-sturmer" data-track-gtm="Top Navigation|Tags|Der Stürmer">
+                                Der Stürmer
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/diaries" data-track-gtm="Top Navigation|Tags|diaries">
+                                diaries
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/diplomats" data-track-gtm="Top Navigation|Tags|diplomats">
+                                diplomats
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/displaced-persons" data-track-gtm="Top Navigation|Tags|displaced persons">
+                                displaced persons
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/displaced-persons-camps" data-track-gtm="Top Navigation|Tags|displaced persons camps">
+                                displaced persons camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/doctors-trial" data-track-gtm="Top Navigation|Tags|Doctors Trial">
+                                Doctors Trial
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/documenting-the-holocaust" data-track-gtm="Top Navigation|Tags|documenting the Holocaust">
+                                documenting the Holocaust
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/dora-mittelbau" data-track-gtm="Top Navigation|Tags|Dora-Mittelbau">
+                                Dora-Mittelbau
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/drancy" data-track-gtm="Top Navigation|Tags|Drancy">
+                                Drancy
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/eastern-front" data-track-gtm="Top Navigation|Tags|eastern front">
+                                eastern front
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ebensee" data-track-gtm="Top Navigation|Tags|Ebensee">
+                                Ebensee
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/einsatzgruppen" data-track-gtm="Top Navigation|Tags|Einsatzgruppen">
+                                Einsatzgruppen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/elections" data-track-gtm="Top Navigation|Tags|elections">
+                                elections
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/elie-wiesel" data-track-gtm="Top Navigation|Tags|Elie Wiesel">
+                                Elie Wiesel
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/emigration" data-track-gtm="Top Navigation|Tags|emigration">
+                                emigration
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ernst-kaltenbrunner" data-track-gtm="Top Navigation|Tags|Ernst Kaltenbrunner">
+                                Ernst Kaltenbrunner
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/escape" data-track-gtm="Top Navigation|Tags|escape">
+                                escape
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/estonia" data-track-gtm="Top Navigation|Tags|Estonia">
+                                Estonia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/eugenics" data-track-gtm="Top Navigation|Tags|eugenics">
+                                eugenics
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/euthanasia-program" data-track-gtm="Top Navigation|Tags|Euthanasia Program">
+                                Euthanasia Program
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/exodus-1947" data-track-gtm="Top Navigation|Tags|Exodus 1947">
+                                Exodus 1947
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/film" data-track-gtm="Top Navigation|Tags|film">
+                                film
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/final-solution" data-track-gtm="Top Navigation|Tags|Final Solution">
+                                Final Solution
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/flossenburg" data-track-gtm="Top Navigation|Tags|Flossenbürg">
+                                Flossenbürg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/forced-labor" data-track-gtm="Top Navigation|Tags|forced labor">
+                                forced labor
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/forced-labor-camps" data-track-gtm="Top Navigation|Tags|forced-labor camps">
+                                forced-labor camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/france" data-track-gtm="Top Navigation|Tags|France">
+                                France
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/franklin-d-roosevelt" data-track-gtm="Top Navigation|Tags|Franklin D. Roosevelt">
+                                Franklin D. Roosevelt
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/freemasonry" data-track-gtm="Top Navigation|Tags|freemasonry">
+                                freemasonry
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gardelegen" data-track-gtm="Top Navigation|Tags|Gardelegen">
+                                Gardelegen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gassing-operations" data-track-gtm="Top Navigation|Tags|gassing operations">
+                                gassing operations
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/genocide" data-track-gtm="Top Navigation|Tags|genocide">
+                                genocide
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/george-kadish" data-track-gtm="Top Navigation|Tags|George Kadish">
+                                George Kadish
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/german-military" data-track-gtm="Top Navigation|Tags|German military">
+                                German military
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/german-soviet-pact" data-track-gtm="Top Navigation|Tags|German-Soviet Pact">
+                                German-Soviet Pact
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/germany" data-track-gtm="Top Navigation|Tags|Germany">
+                                Germany
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gestapo" data-track-gtm="Top Navigation|Tags|Gestapo">
+                                Gestapo
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ghettos" data-track-gtm="Top Navigation|Tags|ghettos">
+                                ghettos
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/great-depression" data-track-gtm="Top Navigation|Tags|Great Depression">
+                                Great Depression
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/greece" data-track-gtm="Top Navigation|Tags|Greece">
+                                Greece
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gross-rosen" data-track-gtm="Top Navigation|Tags|Gross-Rosen">
+                                Gross-Rosen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gunskirchen" data-track-gtm="Top Navigation|Tags|Gunskirchen">
+                                Gunskirchen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gurs" data-track-gtm="Top Navigation|Tags|Gurs">
+                                Gurs
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/gusen" data-track-gtm="Top Navigation|Tags|Gusen">
+                                Gusen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hadamar" data-track-gtm="Top Navigation|Tags|Hadamar">
+                                Hadamar
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/haifa" data-track-gtm="Top Navigation|Tags|Haifa">
+                                Haifa
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hamburg" data-track-gtm="Top Navigation|Tags|Hamburg">
+                                Hamburg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hans-frank" data-track-gtm="Top Navigation|Tags|Hans Frank">
+                                Hans Frank
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hartheim" data-track-gtm="Top Navigation|Tags|Hartheim">
+                                Hartheim
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/heinrich-himmler" data-track-gtm="Top Navigation|Tags|Heinrich Himmler">
+                                Heinrich Himmler
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hermann-goring" data-track-gtm="Top Navigation|Tags|Hermann Göring">
+                                Hermann Göring
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hidden-children" data-track-gtm="Top Navigation|Tags|hidden children">
+                                hidden children
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hiding" data-track-gtm="Top Navigation|Tags|hiding">
+                                hiding
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hitler-youth" data-track-gtm="Top Navigation|Tags|Hitler Youth">
+                                Hitler Youth
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/holocaust" data-track-gtm="Top Navigation|Tags|Holocaust">
+                                Holocaust
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/hungary" data-track-gtm="Top Navigation|Tags|Hungary">
+                                Hungary
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/immigration" data-track-gtm="Top Navigation|Tags|immigration">
+                                immigration
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/industry" data-track-gtm="Top Navigation|Tags|industry">
+                                industry
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/international-military-tribunal" data-track-gtm="Top Navigation|Tags|International Military Tribunal">
+                                International Military Tribunal
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/internment-camps" data-track-gtm="Top Navigation|Tags|internment camps">
+                                internment camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/invasion-of-poland" data-track-gtm="Top Navigation|Tags|invasion of Poland">
+                                invasion of Poland
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/iran" data-track-gtm="Top Navigation|Tags|Iran">
+                                Iran
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/israel" data-track-gtm="Top Navigation|Tags|Israel">
+                                Israel
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/italy" data-track-gtm="Top Navigation|Tags|Italy">
+                                Italy
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jan-karski" data-track-gtm="Top Navigation|Tags|Jan Karski">
+                                Jan Karski
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/janowska" data-track-gtm="Top Navigation|Tags|Janowska">
+                                Janowska
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/japan" data-track-gtm="Top Navigation|Tags|Japan">
+                                Japan
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jasenovac" data-track-gtm="Top Navigation|Tags|Jasenovac">
+                                Jasenovac
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jdc" data-track-gtm="Top Navigation|Tags|JDC">
+                                JDC
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jehovahs-witnesses" data-track-gtm="Top Navigation|Tags|Jehovah&#039;s Witnesses">
+                                Jehovah&#039;s Witnesses
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jewish-brigade-group" data-track-gtm="Top Navigation|Tags|Jewish Brigade Group">
+                                Jewish Brigade Group
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jewish-communities-before-the-war" data-track-gtm="Top Navigation|Tags|Jewish communities before the war">
+                                Jewish communities before the war
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jewish-councils" data-track-gtm="Top Navigation|Tags|Jewish councils">
+                                Jewish councils
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/jewish-resistance" data-track-gtm="Top Navigation|Tags|Jewish resistance">
+                                Jewish resistance
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/joachim-von-ribbentrop" data-track-gtm="Top Navigation|Tags|Joachim von Ribbentrop">
+                                Joachim von Ribbentrop
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/josef-mengele" data-track-gtm="Top Navigation|Tags|Josef Mengele">
+                                Josef Mengele
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/joseph-goebbels" data-track-gtm="Top Navigation|Tags|Joseph Goebbels">
+                                Joseph Goebbels
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/judaism" data-track-gtm="Top Navigation|Tags|Judaism">
+                                Judaism
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/juergen-stroop" data-track-gtm="Top Navigation|Tags|Juergen Stroop">
+                                Juergen Stroop
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/julien-bryan" data-track-gtm="Top Navigation|Tags|Julien Bryan">
+                                Julien Bryan
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/julius-streicher" data-track-gtm="Top Navigation|Tags|Julius Streicher">
+                                Julius Streicher
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kaiserwald" data-track-gtm="Top Navigation|Tags|Kaiserwald">
+                                Kaiserwald
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kalisz" data-track-gtm="Top Navigation|Tags|Kalisz">
+                                Kalisz
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/karl-donitz" data-track-gtm="Top Navigation|Tags|Karl Dönitz">
+                                Karl Dönitz
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kaufering" data-track-gtm="Top Navigation|Tags|Kaufering">
+                                Kaufering
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/key-dates" data-track-gtm="Top Navigation|Tags|key dates">
+                                key dates
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kielce" data-track-gtm="Top Navigation|Tags|Kielce">
+                                Kielce
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kiev" data-track-gtm="Top Navigation|Tags|Kiev">
+                                Kiev
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/killing-centers" data-track-gtm="Top Navigation|Tags|killing centers">
+                                killing centers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kindertransport" data-track-gtm="Top Navigation|Tags|Kindertransport">
+                                Kindertransport
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/klaus-barbie" data-track-gtm="Top Navigation|Tags|Klaus Barbie">
+                                Klaus Barbie
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kovno" data-track-gtm="Top Navigation|Tags|Kovno">
+                                Kovno
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/krakow" data-track-gtm="Top Navigation|Tags|Kraków">
+                                Kraków
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/kristallnacht" data-track-gtm="Top Navigation|Tags|Kristallnacht">
+                                Kristallnacht
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/latin-america" data-track-gtm="Top Navigation|Tags|Latin America">
+                                Latin America
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/latvia" data-track-gtm="Top Navigation|Tags|Latvia">
+                                Latvia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/le-chambon-sur-lignon" data-track-gtm="Top Navigation|Tags|Le Chambon-sur-Lignon">
+                                Le Chambon-sur-Lignon
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lebensraum" data-track-gtm="Top Navigation|Tags|Lebensraum">
+                                Lebensraum
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/legal-professions" data-track-gtm="Top Navigation|Tags|legal professions">
+                                legal professions
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/legislation" data-track-gtm="Top Navigation|Tags|legislation">
+                                legislation
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/letters" data-track-gtm="Top Navigation|Tags|letters">
+                                letters
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/liberating-units" data-track-gtm="Top Navigation|Tags|liberating units">
+                                liberating units
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/liberation" data-track-gtm="Top Navigation|Tags|liberation">
+                                liberation
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lidice" data-track-gtm="Top Navigation|Tags|Lidice">
+                                Lidice
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/life-after-the-holocaust" data-track-gtm="Top Navigation|Tags|life after the Holocaust">
+                                life after the Holocaust
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lisbon" data-track-gtm="Top Navigation|Tags|Lisbon">
+                                Lisbon
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lithuania" data-track-gtm="Top Navigation|Tags|Lithuania">
+                                Lithuania
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lodz" data-track-gtm="Top Navigation|Tags|Lodz">
+                                Lodz
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lom" data-track-gtm="Top Navigation|Tags|Lom">
+                                Lom
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/london" data-track-gtm="Top Navigation|Tags|London">
+                                London
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lublin" data-track-gtm="Top Navigation|Tags|Lublin">
+                                Lublin
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/luxembourg" data-track-gtm="Top Navigation|Tags|Luxembourg">
+                                Luxembourg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/lvov" data-track-gtm="Top Navigation|Tags|Lvov">
+                                Lvov
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/macedonia" data-track-gtm="Top Navigation|Tags|Macedonia">
+                                Macedonia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/majdanek" data-track-gtm="Top Navigation|Tags|Majdanek">
+                                Majdanek
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/malmedy" data-track-gtm="Top Navigation|Tags|Malmedy">
+                                Malmedy
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/marseilles" data-track-gtm="Top Navigation|Tags|Marseilles">
+                                Marseilles
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/mass-atrocities" data-track-gtm="Top Navigation|Tags|mass atrocities">
+                                mass atrocities
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/mass-shootings" data-track-gtm="Top Navigation|Tags|mass shootings">
+                                mass shootings
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/mauthausen" data-track-gtm="Top Navigation|Tags|Mauthausen">
+                                Mauthausen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/medical-experiments" data-track-gtm="Top Navigation|Tags|medical experiments">
+                                medical experiments
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/medical-professions" data-track-gtm="Top Navigation|Tags|medical professions">
+                                medical professions
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/mein-kampf" data-track-gtm="Top Navigation|Tags|Mein Kampf">
+                                Mein Kampf
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/military-campaigns" data-track-gtm="Top Navigation|Tags|military campaigns">
+                                military campaigns
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/minsk" data-track-gtm="Top Navigation|Tags|Minsk">
+                                Minsk
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/mir" data-track-gtm="Top Navigation|Tags|Mir">
+                                Mir
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/monastir-bitola" data-track-gtm="Top Navigation|Tags|Monastir (Bitola)">
+                                Monastir (Bitola)
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/munich" data-track-gtm="Top Navigation|Tags|Munich">
+                                Munich
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/munkacs" data-track-gtm="Top Navigation|Tags|Munkács">
+                                Munkács
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/music" data-track-gtm="Top Navigation|Tags|music">
+                                music
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/musicians" data-track-gtm="Top Navigation|Tags|musicians">
+                                musicians
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/nazi-camps" data-track-gtm="Top Navigation|Tags|Nazi camps">
+                                Nazi camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/nazi-hunting" data-track-gtm="Top Navigation|Tags|Nazi hunting">
+                                Nazi hunting
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/nazi-party" data-track-gtm="Top Navigation|Tags|Nazi Party">
+                                Nazi Party
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/nazi-rise-to-power" data-track-gtm="Top Navigation|Tags|Nazi rise to power">
+                                Nazi rise to power
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/neuengamme" data-track-gtm="Top Navigation|Tags|Neuengamme">
+                                Neuengamme
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/new-york" data-track-gtm="Top Navigation|Tags|New York">
+                                New York
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/north-africa" data-track-gtm="Top Navigation|Tags|North Africa">
+                                North Africa
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/norway" data-track-gtm="Top Navigation|Tags|Norway">
+                                Norway
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/nuremberg" data-track-gtm="Top Navigation|Tags|Nuremberg">
+                                Nuremberg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/occupation" data-track-gtm="Top Navigation|Tags|occupation">
+                                occupation
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/occupied-poland" data-track-gtm="Top Navigation|Tags|occupied Poland">
+                                occupied Poland
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/odessa" data-track-gtm="Top Navigation|Tags|Odessa">
+                                Odessa
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ohrdruf" data-track-gtm="Top Navigation|Tags|Ohrdruf">
+                                Ohrdruf
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/olympics" data-track-gtm="Top Navigation|Tags|Olympics">
+                                Olympics
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/operation-reinhard" data-track-gtm="Top Navigation|Tags|Operation Reinhard">
+                                Operation Reinhard
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/oradour" data-track-gtm="Top Navigation|Tags|Oradour">
+                                Oradour
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ose" data-track-gtm="Top Navigation|Tags|OSE">
+                                OSE
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/oskar-schindler" data-track-gtm="Top Navigation|Tags|Oskar Schindler">
+                                Oskar Schindler
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/pacific-theater" data-track-gtm="Top Navigation|Tags|Pacific theater">
+                                Pacific theater
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/palestine" data-track-gtm="Top Navigation|Tags|Palestine">
+                                Palestine
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/paris" data-track-gtm="Top Navigation|Tags|Paris">
+                                Paris
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/partisans" data-track-gtm="Top Navigation|Tags|partisans">
+                                partisans
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/perpetrators" data-track-gtm="Top Navigation|Tags|perpetrators">
+                                perpetrators
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/persecution-of-gays-and-lesbians" data-track-gtm="Top Navigation|Tags|persecution of gays and lesbians">
+                                persecution of gays and lesbians
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/photographers" data-track-gtm="Top Navigation|Tags|photographers">
+                                photographers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/piotrkow-trybunalski" data-track-gtm="Top Navigation|Tags|Piotrkow Trybunalski">
+                                Piotrkow Trybunalski
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/plaszow" data-track-gtm="Top Navigation|Tags|Płaszów">
+                                Płaszów
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/pogroms" data-track-gtm="Top Navigation|Tags|pogroms">
+                                pogroms
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/poland" data-track-gtm="Top Navigation|Tags|Poland">
+                                Poland
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/police" data-track-gtm="Top Navigation|Tags|police">
+                                police
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/political-prisoners" data-track-gtm="Top Navigation|Tags|political prisoners">
+                                political prisoners
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/poniatowa" data-track-gtm="Top Navigation|Tags|Poniatowa">
+                                Poniatowa
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/portugal" data-track-gtm="Top Navigation|Tags|Portugal">
+                                Portugal
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/postcards" data-track-gtm="Top Navigation|Tags|postcards">
+                                postcards
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/postwar" data-track-gtm="Top Navigation|Tags|postwar">
+                                postwar
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/pows" data-track-gtm="Top Navigation|Tags|POWs">
+                                POWs
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/prague" data-track-gtm="Top Navigation|Tags|Prague">
+                                Prague
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/press" data-track-gtm="Top Navigation|Tags|press">
+                                press
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/professions" data-track-gtm="Top Navigation|Tags|professions">
+                                professions
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/propaganda" data-track-gtm="Top Navigation|Tags|propaganda">
+                                propaganda
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/protocols-of-the-elders-of-zion" data-track-gtm="Top Navigation|Tags|Protocols of the Elders of Zion">
+                                Protocols of the Elders of Zion
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/quakers" data-track-gtm="Top Navigation|Tags|Quakers">
+                                Quakers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/quotations" data-track-gtm="Top Navigation|Tags|quotations">
+                                quotations
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/racism" data-track-gtm="Top Navigation|Tags|racism">
+                                racism
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/radio" data-track-gtm="Top Navigation|Tags|radio">
+                                radio
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/radom" data-track-gtm="Top Navigation|Tags|Radom">
+                                Radom
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/railroads" data-track-gtm="Top Navigation|Tags|railroads">
+                                railroads
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/raoul-wallenberg" data-track-gtm="Top Navigation|Tags|Raoul Wallenberg">
+                                Raoul Wallenberg
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ravensbrueck" data-track-gtm="Top Navigation|Tags|Ravensbrück">
+                                Ravensbrück
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/red-cross" data-track-gtm="Top Navigation|Tags|Red Cross">
+                                Red Cross
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/refugee-ships" data-track-gtm="Top Navigation|Tags|refugee ships">
+                                refugee ships
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/refugees" data-track-gtm="Top Navigation|Tags|refugees">
+                                refugees
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/reichstag" data-track-gtm="Top Navigation|Tags|Reichstag">
+                                Reichstag
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/reinhard-heydrich" data-track-gtm="Top Navigation|Tags|Reinhard Heydrich">
+                                Reinhard Heydrich
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/remembrance" data-track-gtm="Top Navigation|Tags|remembrance">
+                                remembrance
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/reprisals" data-track-gtm="Top Navigation|Tags|reprisals">
+                                reprisals
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rescue" data-track-gtm="Top Navigation|Tags|rescue">
+                                rescue
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rescuers" data-track-gtm="Top Navigation|Tags|rescuers">
+                                rescuers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/resistance" data-track-gtm="Top Navigation|Tags|resistance">
+                                resistance
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rhine" data-track-gtm="Top Navigation|Tags|Rhine">
+                                Rhine
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/riga" data-track-gtm="Top Navigation|Tags|Riga">
+                                Riga
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/righteous-among-the-nations" data-track-gtm="Top Navigation|Tags|Righteous Among the Nations">
+                                Righteous Among the Nations
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/roma" data-track-gtm="Top Navigation|Tags|Roma">
+                                Roma
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/romania" data-track-gtm="Top Navigation|Tags|Romania">
+                                Romania
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rome" data-track-gtm="Top Navigation|Tags|Rome">
+                                Rome
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rudolf-hess" data-track-gtm="Top Navigation|Tags|Rudolf Hess">
+                                Rudolf Hess
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rudolf-hoss" data-track-gtm="Top Navigation|Tags|Rudolf Höss">
+                                Rudolf Höss
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rudolf-kasztner" data-track-gtm="Top Navigation|Tags|Rudolf Kasztner">
+                                Rudolf Kasztner
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/rwanda" data-track-gtm="Top Navigation|Tags|Rwanda">
+                                Rwanda
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sa" data-track-gtm="Top Navigation|Tags|SA">
+                                SA
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sachsenhausen" data-track-gtm="Top Navigation|Tags|Sachsenhausen">
+                                Sachsenhausen
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/salonika" data-track-gtm="Top Navigation|Tags|Salonika">
+                                Salonika
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/schools" data-track-gtm="Top Navigation|Tags|schools">
+                                schools
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sephardic-jews" data-track-gtm="Top Navigation|Tags|Sephardic Jews">
+                                Sephardic Jews
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/serbia" data-track-gtm="Top Navigation|Tags|Serbia">
+                                Serbia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/shanghai" data-track-gtm="Top Navigation|Tags|Shanghai">
+                                Shanghai
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/shoes" data-track-gtm="Top Navigation|Tags|shoes">
+                                shoes
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/siedlce" data-track-gtm="Top Navigation|Tags|Siedlce">
+                                Siedlce
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sighet" data-track-gtm="Top Navigation|Tags|Sighet">
+                                Sighet
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/simon-wiesenthal" data-track-gtm="Top Navigation|Tags|Simon Wiesenthal">
+                                Simon Wiesenthal
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/simone-weil" data-track-gtm="Top Navigation|Tags|Simone Weil">
+                                Simone Weil
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/skopje" data-track-gtm="Top Navigation|Tags|Skopje">
+                                Skopje
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/slonim" data-track-gtm="Top Navigation|Tags|Slonim">
+                                Slonim
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/slovakia" data-track-gtm="Top Navigation|Tags|Slovakia">
+                                Slovakia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sobibor" data-track-gtm="Top Navigation|Tags|Sobibor">
+                                Sobibor
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/soviet-pows" data-track-gtm="Top Navigation|Tags|Soviet POWs">
+                                Soviet POWs
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/soviet-union" data-track-gtm="Top Navigation|Tags|Soviet Union">
+                                Soviet Union
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/spain" data-track-gtm="Top Navigation|Tags|Spain">
+                                Spain
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/spanish-civil-war" data-track-gtm="Top Navigation|Tags|Spanish Civil War">
+                                Spanish Civil War
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ss" data-track-gtm="Top Navigation|Tags|SS">
+                                SS
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/st-louis" data-track-gtm="Top Navigation|Tags|St. Louis">
+                                St. Louis
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/stanislawow" data-track-gtm="Top Navigation|Tags|Stanislawow">
+                                Stanislawow
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/state-department" data-track-gtm="Top Navigation|Tags|State Department">
+                                State Department
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/struma" data-track-gtm="Top Navigation|Tags|Struma">
+                                Struma
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/students" data-track-gtm="Top Navigation|Tags|students">
+                                students
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/stutthof" data-track-gtm="Top Navigation|Tags|Stutthof">
+                                Stutthof
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/subcamps" data-track-gtm="Top Navigation|Tags|subcamps">
+                                subcamps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/subsequent-nuremberg-proceedings" data-track-gtm="Top Navigation|Tags|Subsequent Nuremberg Proceedings">
+                                Subsequent Nuremberg Proceedings
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sudan" data-track-gtm="Top Navigation|Tags|Sudan">
+                                Sudan
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sudetenland" data-track-gtm="Top Navigation|Tags|Sudetenland">
+                                Sudetenland
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/swastika" data-track-gtm="Top Navigation|Tags|swastika">
+                                swastika
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/sweden" data-track-gtm="Top Navigation|Tags|Sweden">
+                                Sweden
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/switzerland" data-track-gtm="Top Navigation|Tags|Switzerland">
+                                Switzerland
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/synagogues" data-track-gtm="Top Navigation|Tags|synagogues">
+                                synagogues
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/synchronization" data-track-gtm="Top Navigation|Tags|synchronization">
+                                synchronization
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/szeged" data-track-gtm="Top Navigation|Tags|Szeged">
+                                Szeged
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/tarnopol" data-track-gtm="Top Navigation|Tags|Tarnopol">
+                                Tarnopol
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/tarnow" data-track-gtm="Top Navigation|Tags|Tarnow">
+                                Tarnow
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/teddy-bears-and-toys" data-track-gtm="Top Navigation|Tags|teddy bears and toys">
+                                teddy bears and toys
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/the-netherlands" data-track-gtm="Top Navigation|Tags|The Netherlands">
+                                The Netherlands
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/theresienstadt" data-track-gtm="Top Navigation|Tags|Theresienstadt">
+                                Theresienstadt
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/third-reich" data-track-gtm="Top Navigation|Tags|Third Reich">
+                                Third Reich
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/transit-camps" data-track-gtm="Top Navigation|Tags|transit camps">
+                                transit camps
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/trawniki" data-track-gtm="Top Navigation|Tags|Trawniki">
+                                Trawniki
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/treaty-of-versailles" data-track-gtm="Top Navigation|Tags|Treaty of Versailles">
+                                Treaty of Versailles
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/treblinka" data-track-gtm="Top Navigation|Tags|Treblinka">
+                                Treblinka
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/trials" data-track-gtm="Top Navigation|Tags|trials">
+                                trials
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/ukraine" data-track-gtm="Top Navigation|Tags|Ukraine">
+                                Ukraine
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/united-kingdom" data-track-gtm="Top Navigation|Tags|United Kingdom">
+                                United Kingdom
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/united-states" data-track-gtm="Top Navigation|Tags|United States">
+                                United States
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/unrra" data-track-gtm="Top Navigation|Tags|UNRRA">
+                                UNRRA
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/uprisings" data-track-gtm="Top Navigation|Tags|uprisings">
+                                uprisings
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/us-army" data-track-gtm="Top Navigation|Tags|US Army">
+                                US Army
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/us-army-trials" data-track-gtm="Top Navigation|Tags|US Army trials">
+                                US Army trials
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/velodrome-dhiver" data-track-gtm="Top Navigation|Tags|Vélodrome d&#039;Hiver">
+                                Vélodrome d&#039;Hiver
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/vienna" data-track-gtm="Top Navigation|Tags|Vienna">
+                                Vienna
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/vilna" data-track-gtm="Top Navigation|Tags|Vilna">
+                                Vilna
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/vittel" data-track-gtm="Top Navigation|Tags|Vittel">
+                                Vittel
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/volary" data-track-gtm="Top Navigation|Tags|Volary">
+                                Volary
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/wannsee-conference" data-track-gtm="Top Navigation|Tags|Wannsee Conference">
+                                Wannsee Conference
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/war" data-track-gtm="Top Navigation|Tags|war">
+                                war
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/war-crimes-trials" data-track-gtm="Top Navigation|Tags|war crimes trials">
+                                war crimes trials
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/war-refugee-board" data-track-gtm="Top Navigation|Tags|War Refugee Board">
+                                War Refugee Board
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/warning-signs" data-track-gtm="Top Navigation|Tags|warning signs">
+                                warning signs
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/warsaw" data-track-gtm="Top Navigation|Tags|Warsaw">
+                                Warsaw
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/warsaw-ghetto-uprising" data-track-gtm="Top Navigation|Tags|Warsaw ghetto uprising">
+                                Warsaw ghetto uprising
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/weimar-germany" data-track-gtm="Top Navigation|Tags|Weimar Germany">
+                                Weimar Germany
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/westerbork" data-track-gtm="Top Navigation|Tags|Westerbork">
+                                Westerbork
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/wilhelm-frick" data-track-gtm="Top Navigation|Tags|Wilhelm Frick">
+                                Wilhelm Frick
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/wilhelm-keitel" data-track-gtm="Top Navigation|Tags|Wilhelm Keitel">
+                                Wilhelm Keitel
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/wobbelin" data-track-gtm="Top Navigation|Tags|Wöbbelin">
+                                Wöbbelin
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/women" data-track-gtm="Top Navigation|Tags|women">
+                                women
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/women-in-the-resistance" data-track-gtm="Top Navigation|Tags|women in the resistance">
+                                women in the resistance
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/world-war-i" data-track-gtm="Top Navigation|Tags|World War I">
+                                World War I
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/world-war-ii" data-track-gtm="Top Navigation|Tags|World War II">
+                                World War II
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/writers" data-track-gtm="Top Navigation|Tags|writers">
+                                writers
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/youth" data-track-gtm="Top Navigation|Tags|youth">
+                                youth
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/yugoslavia" data-track-gtm="Top Navigation|Tags|Yugoslavia">
+                                Yugoslavia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/zdzieciol" data-track-gtm="Top Navigation|Tags|Zdzieciol">
+                                Zdzieciol
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tags/en/tag/zionism" data-track-gtm="Top Navigation|Tags|Zionism">
+                                Zionism
+                        </a>
+                    </li>
+                            </ul>
+        </div> <!--.tag-overflow-->
+    </div>
+    <!-- #tagBox -->
+    <div id="menuBox" class="nav-box-child">
+        <h2>Menu</h2>
+        <!-- Single button -->
+        <div class="btn-group" id="global-lang-switch">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Language (English) <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/ar" data-track-gtm="Top Navigation|Menu|Arabic">
+                            عربي
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/de" data-track-gtm="Top Navigation|Menu|German">
+                            Deutsch
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/el" data-track-gtm="Top Navigation|Menu|Greek">
+                            Ελληνικά
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/en" data-track-gtm="Top Navigation|Menu|English">
+                            English
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/es" data-track-gtm="Top Navigation|Menu|Spanish">
+                            Español
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/fa" data-track-gtm="Top Navigation|Menu|Farsi">
+                            فارسی
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/fr" data-track-gtm="Top Navigation|Menu|French">
+                            Français
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/hu" data-track-gtm="Top Navigation|Menu|Hungarian">
+                            Magyar
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/id" data-track-gtm="Top Navigation|Menu|Indonesian">
+                            Bahasa Indonesia
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/it" data-track-gtm="Top Navigation|Menu|Italian">
+                            Italiano
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/ja" data-track-gtm="Top Navigation|Menu|Japanese">
+                            日本語
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/ko" data-track-gtm="Top Navigation|Menu|Korean">
+                            한국어
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/pl" data-track-gtm="Top Navigation|Menu|Polish">
+                            Polski
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/pt-br" data-track-gtm="Top Navigation|Menu|Portuguese-Brazil">
+                            Português do Brasil
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/ru" data-track-gtm="Top Navigation|Menu|Russian">
+                            русский
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/tr" data-track-gtm="Top Navigation|Menu|Turkish">
+                            Türkçe
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/uk" data-track-gtm="Top Navigation|Menu|Ukrainian">
+                            Українська
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/ur" data-track-gtm="Top Navigation|Menu|Urdu">
+                            اُردو
+                        </a>
+                    </li>
+                                    <li>
+                        <a href="https://encyclopedia.ushmm.org/zh" data-track-gtm="Top Navigation|Menu|Chinese">
+                            简体中文
+                        </a>
+                    </li>
+                            </ul>
+        </div>
+
+        <div class="flex-wrapper menu-cols">
+                            <div id="must-reads" class="hidden-xs">
+                    <h4>Must Reads</h4>
+                    <ul>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/introduction-to-the-holocaust" data-track-gtm="Top Navigation|Menu|Must Read:Introduction to the Holocaust">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Introduction to the Holocaust
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/liberation-of-nazi-camps" data-track-gtm="Top Navigation|Menu|Must Read:Liberation of Nazi Camps">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Liberation of Nazi Camps
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/antisemitism" data-track-gtm="Top Navigation|Menu|Must Read:Antisemitism">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Antisemitism
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/eichmann-trial" data-track-gtm="Top Navigation|Menu|Must Read:Eichmann Trial">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Eichmann Trial
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/warsaw-ghetto-uprising" data-track-gtm="Top Navigation|Menu|Must Read:Warsaw Ghetto Uprising">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Warsaw Ghetto Uprising
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/genocide-timeline" data-track-gtm="Top Navigation|Menu|Must Read:Genocide Timeline">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    Genocide Timeline
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/the-boycott-of-jewish-businesses" data-track-gtm="Top Navigation|Menu|Must Read:The Boycott of Jewish Businesses">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    The Boycott of Jewish Businesses
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/the-rwanda-genocide" data-track-gtm="Top Navigation|Menu|Must Read:The Rwanda Genocide">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    The Rwanda Genocide
+                                </a>
+                            </li>
+                                                    <li>
+                                <a href="https://encyclopedia.ushmm.org/content/en/article/the-nazi-party-1" data-track-gtm="Top Navigation|Menu|Must Read:The Nazi Party">
+                                    <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+                                    The Nazi Party
+                                </a>
+                            </li>
+                                            </ul>
+                </div>
+                        <!-- #must-reads -->
+
+            <div id="projects-pages" class="flex-wrapper">
+                                    <div class="overview-item flex-wrapper">
+                        <figure>
+                            <i class="fa fa-tags" aria-hidden="true"></i>
+                        </figure>
+                        <div>
+                            <a href="https://encyclopedia.ushmm.org/landing/en/tags" data-track-gtm="Top Navigation|Menu|Tags">
+                                <h4>Tags</h4>
+                                <p>Find topics of interest and explore encyclopedia content related to those topics</p>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="overview-item flex-wrapper">
+                        <figure>
+                            <i class="fa fa-sort-alpha-asc" aria-hidden="true"></i>
+                        </figure>
+                        <div>
+                            <a href="https://encyclopedia.ushmm.org/en/a-z/landing" data-track-gtm="Top Navigation|Menu|Browse A-Z">
+                                <h4>Browse A-Z</h4>
+                                <p>Find articles, photos, maps, films, and more listed alphabetically</p>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="overview-item flex-wrapper">
+                        <figure>
+                            <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                        </figure>
+                        <div>
+                            <a href="https://encyclopedia.ushmm.org/content/en/article/an-overview-of-the-holocaust-topics-to-teach" data-track-gtm="Top Navigation|Menu|For Teachers">
+                                <h4>For Teachers</h4>
+                                <p>Recommended resources and topics if you have limited time to teach about the Holocaust</p>
+                            </a>
+                        </div>
+                    </div>
+                                    <div class="overview-item flex-wrapper">
+                        <figure>
+                            <i class="fa fa-id-card" aria-hidden="true"></i>
+                        </figure>
+                        <div>
+                            <a href="https://encyclopedia.ushmm.org/landing/en/id-cards" data-track-gtm="Top Navigation|Menu|ID Cards">
+                                <h4>ID Cards</h4>
+                                <p>Explore the ID Cards to learn more about personal experiences during the Holocaust</p>
+                            </a>
+                        </div>
+                    </div>
+                            </div>
+        </div>
+        <!-- .menu-cols -->
+        <div class="row mt-10">
+            <div class="col-md-8 col-md-offset-4 text-center">
+                <a href="https://encyclopedia.ushmm.org/en/about" class="btn btn-default" data-track-gtm="Top Navigation|Menu|About">About This Site</a>
+            </div>
+        </div>
+    </div>
+    <!-- #menuBox -->
+    <div id="glossaryBox" class="pt-100px nav-box-child">
+        <h2 class="text-center">Glossary</h2>
+        <p class="w-700px max768-w-90pc mx-auto border-top-blue pt-10px fs-1_3em">
+            <strong class="fs-1_1em"><span id="glossaryBox__term"></span>:</strong>
+            <span id="glossaryBox__definition"></span>
+        </p>
+        <div class="row mt-10">
+            <div class="col-md-12 text-center">
+                <a href="https://encyclopedia.ushmm.org/en/glossary" class="btn btn-default">Full Glossary</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+    <header>
+    <div class="content-inner">
+        <div class="logo-box">
+            <a href="https://www.ushmm.org" data-track-gtm="Top Navigation|Main Site">
+                <img alt="United States Holocaust Memorial Museum logo" src="https://encyclopedia.ushmm.org/images/USHMM_WhiteWhite.png.pagespeed.ce.uWP55BMMPv.png">
+            </a>
+        </div>
+        <!-- .logo-box -->
+
+        <div id="he-logo" class="">
+            <a aria-label="Holocaust Encyclopedia logo" data-track-gtm="Top Navigation|Holocaust Encyclopedia" href="https://encyclopedia.ushmm.org/en">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="https://encyclopedia.ushmm.org/images/nav-logos/mobile/en.png">
+                    <source media="(min-width: 768px)" srcset="https://encyclopedia.ushmm.org/images/nav-logos/desktop/en.png">
+                    <img src="https://encyclopedia.ushmm.org/images/nav-logos/mobile/en.png.pagespeed.ce.l-hlQweKte.png" alt="Holocaust Encyclopedia">
+                </picture>
+            </a>
+            <h3>Glossary</h3>
+        </div>
+        <!-- #he-logo -->
+
+        <div id="nav-tools">
+            <a href="#" data-toggle="tooltip" data-placement="bottom" aria-label="Open search box" title="" data-title="searchBox" data-original-title="Search" data-track-gtm="Top Navigation|Search" id="navbar_open_search">
+                <i class="fa fa-search" aria-hidden="true"></i>
+            </a>
+            <a href="#" data-toggle="tooltip" data-placement="bottom" aria-label="Open tags" title="" data-title="tagsBox" data-original-title="Tags" data-track-gtm="Top Navigation|Tags" id="navbar_open_tags" class="hidden-xs">
+                <i class="fa fa-tags" aria-hidden="true"></i>
+            </a>
+            <a href="#" data-toggle="tooltip" data-placement="bottom" aria-label="Open menu" title="" data-title="menuBox" data-original-title="Menu" data-track-gtm="Top Navigation|Menu" id="navbar_open_menu">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </a>
+        </div>
+    </div>
+
+</header>
+    <div class="content-wrapper">
+        <section id="story-body" class="article-contents">
+    <div class="top-section">
+    <div class="title-area">
+                    <div class="title-text w-100pc ">
+                
+                <h1 class="black-text-shadow text-align-center pb-35px mx-auto">Glossary</h1>
+                <div class="overview"></div>
+            </div>
+            </div>
+</div>
+    <div id="extended-story">
+        <div class="content-inner flex-wrapper">
+            <div class="story-flex">
+                <div id="tools-bar">
+    <ul>
+        <li>
+            <a aria-label="Share on Twitter" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fencyclopedia.ushmm.org%2Fcontent%2Fen%2Farticle%2Fglossary&amp;lang=en&amp;related=HolocaustMuseum&amp;via=HolocaustMuseum" target="_blank">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+            <span>Twitter</span>
+        </li>
+        <li>
+            <a aria-label="Share on Facebook" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fencyclopedia.ushmm.org%2Fcontent%2Fen%2Farticle%2Fglossary" target="_blank">
+                <i class="fa fa-facebook" aria-hidden="true"></i>
+            </a>
+            <span>Facebook</span>
+        </li>
+        <li>
+            <a aria-label="How to cite museum materials" href="https://www.ushmm.org/collections/ask-a-research-question/how-to-cite-museum-materials" target="_blank" class="cite">
+                <i class="fa fa-comment" aria-hidden="true"></i>
+            </a>
+            <span>Cite</span>
+        </li>
+        <li>
+            <a aria-label="Print" href="#" class="trigger-print">
+                <i class="fa fa-print" aria-hidden="true"></i>
+            </a>
+            <span>Print</span>
+        </li>
+                    <li class="tag-list">
+                <ul class="list-unstyled">
+                    <li><h4>Tags</h4></li>
+
+                                            <li><a href="https://encyclopedia.ushmm.org/tags/en/tag/holocaust" class="he-tag">Holocaust</a></li>
+                                    </ul>
+            </li>
+                            <li class="language-list popper" data-target="article-lang-box">
+                <a aria-label="Language switcher" href="#" id="language-switcher" data-title="Select a Language">
+                    <i class="fa fa-globe" aria-hidden="true"></i>
+                </a>
+                <span>English</span>
+                <div class="nav-box-child" id="article-lang-box">
+    <h3>This content is available in the following languages</h3>
+    <div class="scroll-lang">
+        <ul class="flex-wrapper">
+                            <li><a href="https://encyclopedia.ushmm.org/content/ar/article/glossary" class="language-link">عربي</a></li>
+                            <li><a href="https://encyclopedia.ushmm.org/content/fa/article/glossary" class="language-link">فارسی</a></li>
+                            <li><a href="https://encyclopedia.ushmm.org/content/es/article/glossary" class="language-link">Español</a></li>
+                    </ul>
+        
+    </div> <!-- .scroll-lang -->
+</div>
+            </li>
+        
+    </ul>
+</div>
+<!-- #tools-bar -->
+            </div>
+            <div class="story-flex">
+                <div id="story-text" class="article-main-text">
+                    <p><strong><a href="/narrative/3225/en">Antisemitism</a>:</strong> hostility toward or hatred of Jews as a religious or ethnic group, often accompanied by social, economic, or political discrimination.</p>
+<p><strong><em>Appellplatz</em>:</strong> German word for roll call square where prisoners were forced to assemble.</p>
+<p><strong><em>Aryan</em>:</strong> Term used in Nazi Germany to refer to non-Jewish and non-Roma (Gypsy) Caucasians. Northern Europeans with especially "Nordic" features such as blonde hair and blue eyes were considered by so-called race scientists to be the most superior of Aryans, members of a "master race."</p>
+<p><strong><a href="/narrative/3673/en">Auschwitz</a>:</strong> the largest Nazi concentration camp complex, located 37 miles west of Krakow, Poland. The Auschwitz main camp (Auschwitz I) was established in 1940. In 1942, a killing center was established at Auschwitz-Birkenau (Auschwitz II). In 1941, Auschwitz-Monowitz (Auschwitz III) was established as a forced-labor camp. More than 100 subcamps and labor detachments were administratively connected to Auschwitz III.</p>
+<p><strong>Birkenau:</strong> Nazi camp also known as Auschwitz II (see Auschwitz above), Birkenau contained systematic mass killing operations. It also housed thousands of concentration camp prisoners deployed at forced labor.</p>
+<p><strong><a href="/narrative/3956/en">Buchenwald</a>:</strong> a large concentration camp established in 1937 by the Nazis. It was located in north-central Germany, near the city of Weimar.</p>
+<p><strong>Buna:</strong> Industrial plant established by the I.G. Farben company on the site of Auschwitz III (Monowitz) in German-occupied Poland. I.G. Farben executives aimed to produce synthetic rubber and synthetic fuel (gasoline), using forced labor. Thousands of prisoners died there.</p>
+<p><strong><a href="/narrative/2689/en">Concentration camp</a>:</strong> Throughout German-occupied Europe, the Nazis established camps to detain and, if necessary, kill so-called enemies of the state, including Jews, Gypsies, political and religious opponents, members of national resistance movements, homosexuals, and others. Imprisonment in a concentration camp was of unlimited duration, was not linked to a specific act, and was not subject to any judicial review. In addition to concentration camps, the Nazi regime ran several other kinds of camps including labor camps, transit camps, prisoner-of-war camps, and killing centers.</p>
+<p><strong>Crematorium:</strong> a facility containing a furnace for reducing dead bodies to ashes by burning.</p>
+<p><a href="/narrative/63226/en"><strong>Criminal Police</strong></a> (Kripo): German police detective force responsible for investigating non-political crimes.</p>
+<p><strong><a href="/narrative/2290/en"><em>Einsatzgruppen</em></a>:</strong> mobile units of the German Security Police and SD augmented by Order Police and Waffen-SS personnel.</p>
+<p>These units followed the German army as it invaded the nations of central and eastern Europe. Their duties included the arrest or murder of political opponents and potential resistance. In Poland in 1939, these units were assigned to shoot Polish intellectuals and to concentrate the Jewish population into large cities. After the German invasion of the Soviet Union in 1941, Einsatzgruppen personnel killed Jews, Soviet political commissars, Gypsies (Roma), mentally disabled persons, and other perceived "racial" and ideological enemies, usually by mass shootings.</p>
+<p><strong><a href="/narrative/4032/en">Euthanasia</a>:</strong> "euthanasia" (literally, "good death") usually refers to the inducement of a painless death for a chronically or terminally ill individual. In Nazi usage, however, "euthanasia" was a euphemistic term for a clandestine program which targeted for systematic killing institutionalized mentally and physically disabled patients, without the consent of themselves or their families.</p>
+<p><strong>Fascism:</strong> a political movement that exalts the collective nation, and often race, above the individual and that advocates: a centralized totalitarian state headed by a charismatic leader; expansion of the nation, preferably by military force; forcible suppression and sometimes physical annihilation of opponents both real and perceived.</p>
+<p><strong><a href="/narrative/2816/en">“Final Solution”</a>:</strong> the Nazi plan to annihilate the European Jews.</p>
+<p><strong><a href="/narrative/4879/en"><em>Generalgouvernement </em>(General Government)</a>:</strong> that part of German-occupied Poland not directly annexed to Germany, attached to German East Prussia, or incorporated into the German-occupied Soviet Union.</p>
+<p><strong><a href="/narrative/11779/en">Gestapo</a>:</strong> the German Secret State Police, which was under SS control. It was responsible for investigating political crimes and opposition activities.</p>
+<p><strong><a href="/narrative/286/en">Ghetto</a>:</strong> a confined area of a city in which members of a minority group are compelled to live.</p>
+<p>The first use of the term “ghetto” for a section of a city in which Jews lived was in Venice, Italy, in 1516.</p>
+<p><strong><a href="/narrative/5123/en">Gypsy</a>:</strong> a traditional term, sometimes perceived as pejorative, for Roma, a nomadic people whose ancestors migrated to Europe from India. Nazi Germany and its Axis partners persecuted and killed large numbers of Roma during the era of the Holocaust.</p>
+<p><a href="/narrative/10812/en"><strong>Heydrich, Reinhard</strong></a>: (1904–1942) SS General and chief of the Security Police and SD. Sometime in December 1940, Heydrich was tasked with developing a "Final Solution" of the Jewish question in Europe.</p>
+<p><strong><a href="/narrative/10813/en">Himmler, Heinrich</a>:</strong> (1900–1945) <em>Reichsführer</em>-SS (Reich Leader of the SS) and Chief of German Police, a position which included supreme command over the Gestapo, the concentration camps, and the Waffen-SS. After 1943, Himmler was Minister of the Interior of Nazi Germany, principal planner for the aim of Nazi Germany to kill all European Jews.</p>
+<p><strong><a href="/narrative/43/en">Hitler, Adolf</a>:</strong> (1889–1945) <em>Führer </em>(leader) of the National Socialist (Nazi) movement (1921–1945); Reich Chancellor of Germany 1933–1945; <em>Führer </em>of the German Nation (1934–1945).</p>
+<p><strong><a href="/narrative/72/en">Holocaust</a>: </strong>The Holocaust was the state-sponsored systematic persecution and annihilation of European Jewry by Nazi Germany and its collaborators between 1933 and 1945. Jews were the primary victims. Six million were murdered.</p>
+<p><strong><em>Kapo</em>:</strong> a concentration camp prisoner selected to oversee other prisoners on labor details. The term is often used generically for any concentration camp prisoner to whom the SS gave authority over other prisoners.</p>
+<p><strong><a href="/narrative/2746/en">Killing centers</a>: </strong>The Nazis established killing centers for efficient mass murder. Unlike concentration camps, which served primarily as detention and labor centers, killing centers (also referred to as "extermination camps" or "death camps") were almost exclusively "death factories." German SS and police murdered nearly 2,700,000 Jews in the killing centers either by asphyxiation with poison gas or by shooting.</p>
+<p><strong><em>Kommando</em>:</strong> German word for detachment, such as a detachment of concentration camp prisoners at forced labor.</p>
+<p><strong><a href="/narrative/4063/en"><em>Kristallnacht</em></a>: </strong>usually referred to as the "Night of Broken Glass." It is the name given to the violent anti-Jewish pogrom of November 9 and 10, 1938. Instigated primarily by Nazi party officials and the SA (Nazi Storm Troopers), the pogrom occurred throughout Germany, annexed Austria, and the Sudetenland region of Czechoslovakia.</p>
+<p><strong><a href="/narrative/135/en">Mengele, Josef</a>:</strong> (1911–1979) SS physician assigned to Auschwitz; notorious for conducting so-called medical experiments on inmates, especially twins and dwarfs.</p>
+<p><strong><em>Ordnungspolizei </em>(Order Police; Orpo):</strong> regular uniformed German police force. Central Headquarters were in Berlin. Municipal Police (Schutzpolizei) served as the urban police forces. Gendarmerie, or rural police, served in the countryside. There were also larger units of Order Police called Police Battalions.</p>
+<p><strong>Preventive Arrest (<em>Vorbeugungshaft</em>):</strong> Instrument of detention that permitted criminal police detectives to take persons suspected of engaging in criminal activities into custody without warrant or judicial review of any kind. Preventive arrest usually meant indefinite internment in a concentration camp.</p>
+<p><strong>Protective Detention (<em>Schutzhaft</em>): </strong>Instrument of detention that permitted secret state police detectives to take persons suspected of pursuing activities hostile to state interests into custody without warrant or judicial review of any kind. Protective custody most often meant indefinite internment in a concentration camp.</p>
+<p><strong>Red Army:</strong> the army of the Soviet Union.</p>
+<p><strong><a href="/narrative/63183/en">Reich Security Main Office</a> (<em>Reichssicherheitshauptamt</em>; RSHA): </strong>Headquarters of the Commander of the Security Police and SD. Included the central offices of the Gestapo, the Kripo, and the SD. Commanded by Reinhard Heydrich and, later, Ernst Kaltenbrunner.</p>
+<p><strong>"Resettlement":</strong> a Nazi euphemism for deportation and murder.</p>
+<p><strong><em>Reich Commissariat Ostland</em>:</strong> a German civilian occupation region that included the Baltic States and most of Belarus.</p>
+<p><strong><a href="/narrative/10800/en">SS</a>:</strong> German abbreviation for <em>Schutzstaffel </em>(literally, protection squads). A paramilitary formation of the Nazi party initially created to serve as bodyguards to Hitler and other Nazi leaders. It later took charge of political intelligence gathering, the German police and the central security apparatus, the concentration camps, and the systematic mass murder of Jews and other victims.</p>
+<p><strong><a href="/narrative/6810/en">Sachsenhausen</a>:</strong> the principal Nazi concentration camp for the Berlin area.</p>
+<p><strong>Security Service (<em>Sicherheitsdienst</em>; SD):</strong> an SS agency which served as the political intelligence service of the Nazi party and, later, of the German Reich. The SD also claimed to be the repository of the intellectual elite of the Nazi SS. The SD played a central role in carrying out the Holocaust. All key departments of the Security Police were commanded by SD officers.</p>
+<p><strong><em>Sonderkommandos</em> (special detachments):</strong> in killing centers, Sonderkommandos consisted of those prisoners selected to remain alive as forced laborers to facilitate the killing process, particularly the disposal of corpses.</p>
+<p><strong>Synagogue:</strong> in Judaism, a house of worship and learning.</p>
+<p><strong>Upper Silesia:</strong> an area that Nazi Germany annexed in 1939 after invading and conquering Poland.</p>
+<p><strong><a href="/narrative/35/en">Weimar Republic</a>: </strong>Name for the parliamentary democracy established in Germany from 1919–1933, following the collapse of Imperial Germany and preceding Nazi rule.</p>
+<p><strong><a href="/narrative/11750/en">Yellow star</a>:</strong> a badge featuring the Star of David (a symbol of Judaism) used by the Nazi regime during the Holocaust as a method of visibly identifying Jews.</p>
+                    <div class="font-italic clear-both article-metadata">
+                                                                            <div>
+                                Author(s):
+                                <span class="comma-separated">
+                                                                                                                        <span>
+                                                                                                                                                    United States Holocaust Memorial Museum, Washington, DC
+                                                
+                                                                                            </span>
+                                                                                                            </span>
+                            </div>
+                                                                    </div>
+                </div>
+            </div>
+            <!-- #story-text -->
+            <div id="relations" class="story-flex">
+                                <div id="related-content">
+            <h4>See Also</h4>
+                                <div class="r-item">
+                <figure>
+                    <a href="https://encyclopedia.ushmm.org/content/en/article/glossary-of-terms-and-individuals-in-the-nazi-judicial-system?parent=en%2F10705" data-track-gtm="Encyclopedia Sidebar|See Also|https://encyclopedia.ushmm.org/content/en/article/glossary-of-terms-and-individuals-in-the-nazi-judicial-system">
+                                                    <h5 class="no-thumb">
+                                <i class="fa fa-file-text-o"></i>
+                                <span class="type">Article</span>
+                                <span class="title">Glossary of Terms and Individuals in the Nazi Judicial System</span>
+                            </h5>
+                                            </a>
+                </figure>
+            </div>
+                                <div class="r-item">
+                <figure>
+                    <a href="https://encyclopedia.ushmm.org/content/en/article/resistance-in-the-smaller-ghettos-of-eastern-europe-glossary?parent=en%2F10705" data-track-gtm="Encyclopedia Sidebar|See Also|https://encyclopedia.ushmm.org/content/en/article/resistance-in-the-smaller-ghettos-of-eastern-europe-glossary">
+                                                    <h5 class="no-thumb">
+                                <i class="fa fa-file-text-o"></i>
+                                <span class="type">Article</span>
+                                <span class="title">Resistance in the Smaller Ghettos of Eastern Europe: Glossary</span>
+                            </h5>
+                                            </a>
+                </figure>
+            </div>
+            </div>
+                <div id="related-websites" class="related-content-list">
+                                            <h4>Related Links</h4>
+                        <ul>
+                                                            <li>
+                                    <a href="https://www.ushmm.org/confront-antisemitism/origins-of-neo-nazi-and-white-supremacist-terms-and-symbols" target="_blank" data-track-gtm="Encyclopedia Sidebar|Related Links|https://www.ushmm.org/confront-antisemitism/origins-of-neo-nazi-and-white-supremacist-terms-and-symbols">
+                                        Origins of Neo-Nazi and White Supremacist Terms and Symbols
+                                    </a>
+                                </li>
+                                                            <li>
+                                    <a href="https://www.ushmm.org/collections/bibliography/nazi-language-and-terminology" target="_blank" data-track-gtm="Encyclopedia Sidebar|Related Links|https://www.ushmm.org/collections/bibliography/nazi-language-and-terminology">
+                                        Bibliography—Nazi Language and Terminology
+                                    </a>
+                                </li>
+                                                    </ul>
+                                    </div> <!-- #related-websites -->
+                                <div id="matched-glossary-terms" class="hidden">
+                    <h4>Glossary Terms</h4>
+                    <ul class="list-unstyled mt-5"></ul>
+                </div>
+            </div>
+            <!-- #relations -->
+        </div>
+
+    </div>
+    <div id="series" class="mx-auto w-90pc">
+            <!-- #other-series -->
+</div>
+            <div id="footnotes" class="hidden">
+            </div>
+    <!-- #further-reading -->
+</section>
+    </div>
+    <div id="open-feedback">
+    <a aria-hidden="true" href="https://docs.google.com/forms/d/e/1FAIpQLSfPMrYmuqQuI04ilh8hT-NMC_DKiRKsbVXkjidOw49P-mK4Cw/viewform" target="_blank">
+        <i class="fa fa-commenting" aria-hidden="true"></i> Feedback
+    </a>
+</div> <!-- #open-feedback -->
+    
+    <div class="donor-strip">
+	<div class="content-inner">
+		<h4>Thank you for supporting our work</h4>
+		<p class="pt-10px">
+			We would like to thank Crown Family Philanthropies and the Abe and Ida Cooper Foundation for supporting the ongoing work to create content and resources for the Holocaust Encyclopedia.
+			<a href="https://encyclopedia.ushmm.org/en/about">View the list of all donors</a>.
+		</p>
+	</div>
+</div>
+    <footer id="main-footer">
+    <div class="content-inner">
+        <div class="footer-left-side">
+            <a name="United States Holocaust Memorial Museum logo" href="//www.ushmm.org" data-track-gtm="Footer Navigation|USHMM">
+                <img alt="United States Holocaust Memorial Museum logo" src="https://encyclopedia.ushmm.org/images/USHMM_WhiteWhite.png.pagespeed.ce.uWP55BMMPv.png" id="site-logo-footer">
+            </a>
+            <!-- G+ verification link -->
+            <a href="//plus.google.com/100561664959124518865?rel=author" style="text-decoration: none; display:none;"></a>
+            <p>
+                100 Raoul Wallenberg Place, SW<br>
+                Washington, DC 20024-2126<br>
+                Main telephone: 202.488.0400<br>
+                TTY: 202.488.0406
+            </p>
+        </div>
+        <form>
+            <label for="get-news2">Get the Latest News</label>
+            <input aria-label="Email address" type="email" name="email" id="get-news2" placeholder="Your e-mail address" class="filled">
+            <input aria-label="Postal Code" type="postalCode" name="postalCode" id="get-news3" placeholder="Postal Code" class="filled">
+            <input aria-label="Submit button" type="button" id="get-news4" name="submit-btn" class="btn" value="Subscribe">
+        </form>
+        <div class="footer-menu-links-group">
+            <div class="footer-menu-links">
+                <a href="//www.ushmm.org/information/visit-the-museum/plan-your-visit" data-track-gtm="Footer Navigation|Plan Your Visit">Plan Your Visit</a>
+                <a href="//www.ushmm.org/information/visit-the-museum/admission-tickets" data-track-gtm="Footer Navigation|Current Exhibitions">Current Exhibitions</a>
+                <a href="//www.ushmm.org/online-calendar" data-track-gtm="Footer Navigation|Calendar of Events">Calendar of Events</a>
+                <a href="//www.ushmm.org/support" data-track-gtm="Footer Navigation|Support the Museum">Support the Museum</a>
+                <a href="//donate.ushmm.org/6hRw6kqugUOvJLNKCIbD1g2" class="donate" data-track-gtm="Footer Navigation|Donate">Donate</a>
+            </div>
+            <div class="footer-menu-links">
+                <a href="//www.ushmm.org/learn" data-track-gtm="Footer Navigation|Learn">Learn</a>
+                <a href="//www.ushmm.org/teach" data-track-gtm="Footer Navigation|Teach">Teach</a>
+                <a href="//www.ushmm.org/collections/the-museums-collections/about" data-track-gtm="Footer Navigation|Collections">Collections</a>
+                <a href="//www.ushmm.org/research" data-track-gtm="Footer Navigation|Academic Research">Academic Research</a>
+                <a href="//www.ushmm.org/remember" data-track-gtm="Footer Navigation|Remember Survivors and Victims">Remember Survivors and Victims</a>
+                <a href="//www.ushmm.org/genocide-prevention" data-track-gtm="Footer Navigation|Genocide Prevention">Genocide Prevention</a>
+                <a href="//www.ushmm.org/antisemitism" data-track-gtm="Footer Navigation|Antisemitism and Holocaust Denial">Antisemitism and Holocaust Denial</a>
+                <a href="//www.ushmm.org/professionals-and-student-leaders" data-track-gtm="Footer Navigation|Outreach">Outreach</a>
+            </div>
+            <div class="footer-menu-links">
+                <a href="//encyclopedia.ushmm.org/" data-track-gtm="Footer Navigation|Holocaust Encyclopedia">Holocaust Encyclopedia</a>
+                <a href="//collections.ushmm.org" data-track-gtm="Footer Navigation|Collections Search">Collections Search</a>
+                <a href="//www.ushmm.org/remember/resources-holocaust-survivors-victims" data-track-gtm="Footer Navigation|Holocaust Survivors and Victims Resource Center">Holocaust Survivors and Victims Resource Center</a>
+                <a href="//newspapers.ushmm.org/" data-track-gtm="Footer Navigation|History Unfolded">History Unfolded</a>
+                <a href="//perspectives.ushmm.org/" data-track-gtm="Footer Navigation|Experiencing History">Experiencing History</a>
+                <a href="//earlywarningproject.ushmm.org/" data-track-gtm="Footer Navigation|Early Warning Project">Early Warning Project</a>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="footer-links">
+            <ul>
+                <li>
+                    <a href="//www.ushmm.org/information/about-the-museum" data-track-gtm="Footer Navigation|ABOUT THE MUSEUM">ABOUT THE MUSEUM</a>
+                </li>
+                <li>
+                    <a href="//www.ushmm.org/information/contact-the-museum" data-track-gtm="Footer Navigation|CONTACT THE MUSEUM">CONTACT THE MUSEUM</a>
+                </li>
+                <li>
+                    <a href="//www.ushmm.org/copyright-and-legal-information/terms-of-use" data-track-gtm="Footer Navigation|TERMS OF USE">TERMS OF USE</a>
+                </li>
+                <li>
+                    <a href="//www.ushmm.org/copyright-and-legal-information/privacy-policy" data-track-gtm="Footer Navigation|PRIVACY">PRIVACY</a>
+                </li>
+                <li>
+                    <a href="//www.ushmm.org/information/visit-the-museum/website-accessibility" data-track-gtm="Footer Navigation|ACCESSIBILITY">ACCESSIBILITY</a>
+                </li>
+                <li>
+                    <a href="//www.ushmm.org/copyright-and-legal-information/legal-and-tax-status-information" data-track-gtm="Footer Navigation|LEGAL">LEGAL</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+    <!-- is section-inner on main site. -->
+</footer>
+    <script type="application/javascript">//<![CDATA[
+!function(e){function r(r){for(var n,i,l=r[0],f=r[1],a=r[2],c=0,s=[];c<l.length;c++)i=l[c],Object.prototype.hasOwnProperty.call(o,i)&&o[i]&&s.push(o[i][0]),o[i]=0;for(n in f)Object.prototype.hasOwnProperty.call(f,n)&&(e[n]=f[n]);for(p&&p(r);s.length;)s.shift()();return u.push.apply(u,a||[]),t()}function t(){for(var e,r=0;r<u.length;r++){for(var t=u[r],n=!0,l=1;l<t.length;l++){var f=t[l];0!==o[f]&&(n=!1)}n&&(u.splice(r--,1),e=i(i.s=t[0]))}return e}var n={},o={0:0},u=[];function i(r){if(n[r])return n[r].exports;var t=n[r]={i:r,l:!1,exports:{}};return e[r].call(t.exports,t,t.exports,i),t.l=!0,t.exports}i.m=e,i.c=n,i.d=function(e,r,t){i.o(e,r)||Object.defineProperty(e,r,{enumerable:!0,get:t})},i.r=function(e){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(e,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(e,"__esModule",{value:!0})},i.t=function(e,r){if(1&r&&(e=i(e)),8&r)return e;if(4&r&&"object"==typeof e&&e&&e.__esModule)return e;var t=Object.create(null);if(i.r(t),Object.defineProperty(t,"default",{enumerable:!0,value:e}),2&r&&"string"!=typeof e)for(var n in e)i.d(t,n,function(r){return e[r]}.bind(null,n));return t},i.n=function(e){var r=e&&e.__esModule?function(){return e.default}:function(){return e};return i.d(r,"a",r),r},i.o=function(e,r){return Object.prototype.hasOwnProperty.call(e,r)},i.p="/";var l=window.mixWebpackJsonp=window.mixWebpackJsonp||[],f=l.push.bind(l);l.push=r,l=l.slice();for(var a=0;a<l.length;a++)r(l[a]);var p=f;t()}([]);
+//]]></script>
+    <script type="application/javascript" src="/js/vendor-common.js?id=3ac695fa1f77a60037e7"></script>
+    <script type="application/javascript" src="/js/main/vendor-main.js?id=32de5cb09887e8525800"></script>
+    <script type="application/javascript" src="/js/main/main.js?id=de3d503d67c101826710"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+<![endif]-->
+        <script src="/js/main/article.js,qid==c43334b3b1be3e7d1a8f+title-area.js,qid==aa6b3e2e50a8e9de476a+series.js,qid==44a5f25602358f395619+navbox.js,qid==c42bcea8284f8c54515b+footer.js,qid==c14ab337caa908ddaa61.pagespeed.jc.QxAUkHstow.js"></script><script>eval(mod_pagespeed_KNuJKYaeV9);</script>
+        <script>eval(mod_pagespeed_W0k0L9cbYK);</script>
+    <script>eval(mod_pagespeed_e7oAcyvdgW);</script>
+    <script>eval(mod_pagespeed_N7$p7bodtx);</script>
+<script>eval(mod_pagespeed_pfscHff2jy);</script>
+<script type="text/javascript">window.NREUM||(NREUM={});NREUM.info={"beacon":"bam.nr-data.net","licenseKey":"83f95c517c","applicationID":"351633534","transactionName":"Z1RSZBZXWRVRARZdDF4ecVMQX1gIHxAHWgdVQx1eBURFB0QLFFE=","queueTime":0,"applicationTime":266,"atts":"SxNREl5NShs=","errorBeacon":"bam.nr-data.net","agent":""}</script></body>
+</html>

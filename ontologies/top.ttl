@@ -1,5 +1,5 @@
-@prefix : <urn:ontoinsights:ontology:dna:> .
-@prefix dna: <urn:ontoinsights:ontology:dna:> .
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: April 2 2021
+# Last modified: May 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -22,7 +22,8 @@
 # 
 # Changes:
 #  Updated to the Mar 2021 semantics
-#  Added :trigger_text
+#  Added :trigger_text, :text and :has_subject
+#  Updated the default and dna prefixes
 ########################################################################
 
 
@@ -45,10 +46,6 @@
 :negative_example a owl:AnnotationProperty ;
   rdfs:label "negative example" ;
   :definition "Words/text whose whose definitions do not support or whose instances should be excluded from the concept/semantic being defined." .
-
-:sentence_structure a owl:AnnotationProperty ;
-  rdfs:label "sentence structure" ;
-  :definition "A sentence using a specific verb and identifying its arguments. For example, for the word, 'buy', a possible sentence_structure is '[[Someone]] buys [[something]].' The definition of a sentence_structure aids in the extraction of meaning from text, since it defines what other information should/could be mined from the text. Note that the arguments in a sentence structure are indicated by square brackets ('[[' and ']]')." .
 
 :synonym a owl:AnnotationProperty ;
   rdfs:label "synonym" ;
@@ -104,6 +101,12 @@
   :definition "A reference to an entity or concept that appears in an InformationSource." ;
   :example "For example, the sentence, 'John Smith is the president of the company.' has Mentions of 'John Smith' and 'the president'." ;
   :synonym "reference", "citation" .
+
+:Narrative a owl:Class ;
+  rdfs:label "Narrative" ;
+  rdfs:subClassOf :InformationSource ;
+  :definition "A sequence of events relating/explaining what occurred in a (real or fictitious) person's life." ;
+  :synonym "story" .
 
 :NaturalProcess a owl:Class ;
   rdfs:label "Natural Process" ;
@@ -220,12 +223,19 @@
   rdfs:domain :Evidence ;
   rdfs:range xsd:boolean .
 
+:text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "text" ;
+  :definition "String holding the contents of an InformationSource." ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
 :trigger_text a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "trigger text" ;
   :definition "The parsed text of the narrative that generated the individual or subject-predicate-object triple." ;
   :example "For example, the text 'I met Barack Obama' would result in the creation of a Person, Barack_Obama, and a MeetingAndEncounter Event, where the :trigger_text for these two instances would be 'Barack Obama' and 'met', respectively." ;
   rdfs:domain :Mention ;
   rdfs:range xsd:string .
+
 
 ########################################################################
 # Object Properties
@@ -306,6 +316,11 @@
 :has_next a owl:ObjectProperty ;
   rdfs:label "has next" ;
   :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to Events and StateAndConditions." .
+
+:has_subject a owl:ObjectProperty ;
+  rdfs:label "has subject" ;
+  :definition "A reference to an entity that is a topic of an InformationSource." ;
+  rdfs:domain :InformationSource .
 
 :has_time a owl:ObjectProperty ;
   rdfs:label "has time" ;
