@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: May 23 2021
+# Last modified: May 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,7 @@
 #  Updated to the Mar 2021 semantics
 #  Added Factory, DesignatedArea, OccupiedArea
 #  Updated the default and dna prefixes
+#  Corrected typos and added a class definition for Continent
 ########################################################################
 
 
@@ -60,6 +61,11 @@
   :definition "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
   :example "Examples of BuildingAndDwelling include a house, factory, hospital, school, etc." .
 
+:Continent a owl:Class ;
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Continent" ;
+  :definition "One of the 7 large landmasses (Africa, Antarctica, Asia, Australia, Europe, North America, South America). The continents are instantiated using their GeoName idenfitiers in the file, geonames_countries.ttl." .
+
 :Country a owl:Class ;
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Country" ;
@@ -87,7 +93,7 @@
   :synonym "compass direction", "compass orientation" .
 
 :Factory a owl:Class ;
-  rdfs:subClassOf :BuildingOrDwelling ;
+  rdfs:subClassOf :BuildingAndDwelling ;
   rdfs:label "Factory" ;
   :definition "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
 

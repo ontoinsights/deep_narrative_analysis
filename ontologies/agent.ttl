@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: May 26 2021
+# Last modified: May 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,6 +30,8 @@
 #  Updated the default and dna prefixes
 #  Clarified the definition of LineOfBusiness
 #  Renamed Characteristic to AgentAspect
+#  Removed subclass definition from LineOfBusiness
+#  Added subProperty definition to :has_agent_aspect
 ########################################################################
 
 
@@ -96,7 +98,6 @@
   :example "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." .
 
 :LineOfBusiness a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
   rdfs:label "Line/Type of Business" ;
   :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
 
@@ -327,6 +328,7 @@
   :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
 
 :has_agent_aspect a owl:ObjectProperty ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
   rdfs:label "has agent aspect" ;
   rdfs:domain :Person ;
   rdfs:range :AgentAspect ;

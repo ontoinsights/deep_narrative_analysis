@@ -9,7 +9,7 @@
 # https://www.gdeltproject.org/data/documentation/CAMEO.Manual.1.1b3.pdf.
 # 
 # Created: April 7 2020
-# Last modified: May 23 2021
+# Last modified: May 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -21,6 +21,7 @@
 # 
 # Changes:
 #  Updated the default and dna prefixes
+#  Corrected typos
 ########################################################################
 
 
@@ -3340,7 +3341,7 @@
   rdfs:label "Syncretic Islam" .
 
 :CameoReligion_MSSYN010 a owl:Class ;
-  rdfs:subClassOf :CameoReligion_MSSYN0 ;
+  rdfs:subClassOf :CameoReligion_MOSSYN ;
   rdfs:label "Moorish Science Temple Of America" .
 
 :CameoReligion_SHN a owl:Class ;
@@ -4076,16 +4077,12 @@
   rdfs:subClassOf :CameoReligion_ADRSYN ;
   rdfs:label "Vodou" .
 
-:CameoReligion_Heirarchical a owl:Class ;
-  rdfs:subClassOf :CameoReligion_Hei ;
-  rdfs:label "Code Religion And Comments" .
-
 :CameoReligion_ADRSYN061 a owl:Class ;
-  rdfs:subClassOf :CameoReligion_Heirarchical ;
+  rdfs:subClassOf :CameoReligion_ADRSYN060 ;
   rdfs:label "Louisianan Voodoo" .
 
 :CameoReligion_ADRSYN062 a owl:Class ;
-  rdfs:subClassOf :CameoReligion_Heirarchical ;
+  rdfs:subClassOf :CameoReligion_ADRSYN060 ;
   rdfs:label "Haitian Vodou" .
 
 :CameoReligion_IRR a owl:Class ;

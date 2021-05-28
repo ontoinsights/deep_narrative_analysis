@@ -153,6 +153,7 @@
 
 ###  urn:ontoinsights:dna:has_agent_aspect
 <urn:ontoinsights:dna:has_agent_aspect> rdf:type owl:ObjectProperty ;
+                                        rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
                                         rdfs:domain <urn:ontoinsights:dna:Person> ;
                                         rdfs:range <urn:ontoinsights:dna:AgentAspect> ;
                                         rdfs:label "has agent aspect" ;
@@ -160,12 +161,13 @@
 
 
 ###  urn:ontoinsights:dna:has_assessment
-<urn:ontoinsights:dna:has_assessment> rdf:type owl:ObjectProperty ,
-                                               owl:FunctionalProperty ;
+<urn:ontoinsights:dna:has_assessment> rdf:type owl:ObjectProperty ;
+                                      rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
+                                      rdf:type owl:FunctionalProperty ;
                                       rdfs:domain <urn:ontoinsights:dna:StateAndCondition> ;
                                       rdfs:range <urn:ontoinsights:dna:Assessment> ;
                                       rdfs:label "has assessment" ;
-                                      <urn:ontoinsights:dna:definition> "Used to indicate how a StateAndCondition ((such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." .
+                                      <urn:ontoinsights:dna:definition> "Used to indicate how a StateAndCondition (such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." .
 
 
 ###  urn:ontoinsights:dna:has_beginning
@@ -330,6 +332,19 @@
                                   rdfs:range <urn:ontoinsights:dna:Location> ;
                                   rdfs:label "has origin location" ;
                                   <urn:ontoinsights:dna:definition> "References the original location when an Event involves movement of persons, goods, information, etc." .
+
+
+###  urn:ontoinsights:dna:has_political_ideology
+<urn:ontoinsights:dna:has_political_ideology> rdf:type owl:ObjectProperty ;
+                                              rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
+                                              rdfs:domain [ rdf:type owl:Class ;
+                                                            owl:unionOf ( <urn:ontoinsights:dna:Agent>
+                                                                          <urn:ontoinsights:dna:PoliticalEnvironment>
+                                                                        )
+                                                          ] ;
+                                              rdfs:range <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                              rdfs:label "has political ideology" ;
+                                              <urn:ontoinsights:dna:definition> "Used to indicate how a StateAndCondition ((such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." .
 
 
 ###  urn:ontoinsights:dna:has_provider
@@ -1408,10 +1423,6 @@
                                                 rdfs:subClassOf <urn:ontoinsights:dna:SubstanceAndRawMaterial> ;
                                                 rdfs:label "Building Material and Stone" ;
                                                 <urn:ontoinsights:dna:definition> "Any substance used for construction/building (such as rebar, brick, clay, concrete, wood boards or stones). Note that individuals may be of more than one class - as for example, wood boards would be of types, BuildingMaterialAndStone and WoodAndSubstitute." .
-
-
-###  urn:ontoinsights:dna:BuildingOrDwelling
-<urn:ontoinsights:dna:BuildingOrDwelling> rdf:type owl:Class .
 
 
 ###  urn:ontoinsights:dna:CameoEthnicity_aar
@@ -5310,13 +5321,13 @@
 
 ###  urn:ontoinsights:dna:CameoReligion_ADRSYN061
 <urn:ontoinsights:dna:CameoReligion_ADRSYN061> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_Heirarchical> ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_ADRSYN060> ;
                                                rdfs:label "Louisianan Voodoo" .
 
 
 ###  urn:ontoinsights:dna:CameoReligion_ADRSYN062
 <urn:ontoinsights:dna:CameoReligion_ADRSYN062> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_Heirarchical> ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_ADRSYN060> ;
                                                rdfs:label "Haitian Vodou" .
 
 
@@ -10025,16 +10036,6 @@
                                                rdfs:label "Chopra Center" .
 
 
-###  urn:ontoinsights:dna:CameoReligion_Hei
-<urn:ontoinsights:dna:CameoReligion_Hei> rdf:type owl:Class .
-
-
-###  urn:ontoinsights:dna:CameoReligion_Heirarchical
-<urn:ontoinsights:dna:CameoReligion_Heirarchical> rdf:type owl:Class ;
-                                                  rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_Hei> ;
-                                                  rdfs:label "Code Religion And Comments" .
-
-
 ###  urn:ontoinsights:dna:CameoReligion_INR
 <urn:ontoinsights:dna:CameoReligion_INR> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:ReligiousActivities> ;
@@ -10754,13 +10755,9 @@
                                             rdfs:label "Syncretic Islam" .
 
 
-###  urn:ontoinsights:dna:CameoReligion_MSSYN0
-<urn:ontoinsights:dna:CameoReligion_MSSYN0> rdf:type owl:Class .
-
-
 ###  urn:ontoinsights:dna:CameoReligion_MSSYN010
 <urn:ontoinsights:dna:CameoReligion_MSSYN010> rdf:type owl:Class ;
-                                              rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_MSSYN0> ;
+                                              rdfs:subClassOf <urn:ontoinsights:dna:CameoReligion_MOSSYN> ;
                                               rdfs:label "Moorish Science Temple Of America" .
 
 
@@ -12573,7 +12570,10 @@
 
 
 ###  urn:ontoinsights:dna:Continent
-<urn:ontoinsights:dna:Continent> rdf:type owl:Class .
+<urn:ontoinsights:dna:Continent> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
+                                 rdfs:label "Continent" ;
+                                 <urn:ontoinsights:dna:definition> "One of the 7 large landmasses (Africa, Antarctica, Asia, Australia, Europe, North America, South America). The continents are instantiated using their GeoName idenfitiers in the file, geonames_countries.ttl." .
 
 
 ###  urn:ontoinsights:dna:Continuation
@@ -13012,7 +13012,7 @@
 
 ###  urn:ontoinsights:dna:Factory
 <urn:ontoinsights:dna:Factory> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:BuildingOrDwelling> ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:BuildingAndDwelling> ;
                                rdfs:label "Factory" ;
                                <urn:ontoinsights:dna:definition> "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
 
@@ -13462,7 +13462,6 @@
 
 ###  urn:ontoinsights:dna:LineOfBusiness
 <urn:ontoinsights:dna:LineOfBusiness> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
                                       rdfs:label "Line/Type of Business" ;
                                       <urn:ontoinsights:dna:definition> "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
 
@@ -13743,10 +13742,6 @@
                                                                                   "therapeutic" .
 
 
-###  urn:ontoinsights:dna:PhysicalEnvironment
-<urn:ontoinsights:dna:PhysicalEnvironment> rdf:type owl:Class .
-
-
 ###  urn:ontoinsights:dna:PhysicalLocation
 <urn:ontoinsights:dna:PhysicalLocation> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:Location> ;
@@ -13819,7 +13814,7 @@
                                                                          )
                                                              ] ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ,
-                                                         <urn:ontoinsights:dna:PhysicalEnvironment> ;
+                                                         <urn:ontoinsights:dna:PoliticalEnvironment> ;
                                          rdfs:label "Political Ideology" ;
                                          <urn:ontoinsights:dna:definition> "An enumeration of values describing how society . From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them. The popularity of an ideology is in part due to the influence of moral entrepreneurs, who sometimes act in their own interests. Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve this goal.'" .
 
@@ -19271,8 +19266,8 @@
                                   rdfs:label "ISO 3-character alpha code" .
 
 
-<urn:ontoinsights:dna:meets> rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." .
+<urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
+                             rdfs:label "meets" .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi
