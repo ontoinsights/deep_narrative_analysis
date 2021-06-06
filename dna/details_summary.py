@@ -2,7 +2,6 @@ import csv
 import logging
 import matplotlib.pyplot as plt
 from matplotlib.ticker import MaxNLocator
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import numpy as np
 import PySimpleGUI as sg
 from wordcloud import WordCloud, STOPWORDS
@@ -10,31 +9,8 @@ from wordcloud import WordCloud, STOPWORDS
 from database import query_database
 from encoded_images import encoded_logo
 from nlp import get_nouns_verbs
-from utilities import resources_root, update_dictionary_count
-
-query_number_narrators = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(distinct ?s) as ?cnt) WHERE ' \
-                         '{ ?narr a :Narrative ; :subject ?narrator . { { ?narrator a :Person . ' \
-                         'FILTER NOT EXISTS { ?unifying a :UnifyingCollection ; :has_member ?narrator } . ' \
-                         'BIND(?narrator as ?s) } UNION { ?unifying a :UnifyingCollection ; :has_member ?narrator . ' \
-                         'BIND(?unifying as ?s) } } }'
-
-query_narrative_text = 'prefix : <urn:ontoinsights:dna:> SELECT ?narr_text WHERE ' \
-                       '{ ?narr a :Narrative ; :text ?narr_text . }'
-
-query_genders = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?gender WHERE ' \
-                '{ VALUES ?gender { :Female :Male :Agender :Bigender } . ' \
-                '?narr a :Narrative ; :subject ?narrator . ?narrator :has_characteristic ?gender . ' \
-                '{ ?narrator a :Person . ' \
-                'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
-                'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
-                'BIND (?unifying2 as ?s) } }'
-
-query_years = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?year WHERE ' \
-              '{ ?narr a :Narrative ; :subject ?narrator . ?event a :Birth ; :has_actor ?narrator ; ' \
-              ':has_time/:year ?year . { ?narrator a :Person . ' \
-              'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
-              'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
-              'BIND (?unifying2 as ?s) } }'
+from utilities import EMPTY_STRING, NEW_LINE, \
+    resources_root, capture_error, draw_figure, update_dictionary_count
 
 query_countries = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?country WHERE ' \
                   '{ ?narr a :Narrative ; :subject ?narrator . ?event a :Birth ; :has_actor ?narrator ; ' \
@@ -43,14 +19,38 @@ query_countries = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?country 
                   'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
                   'BIND (?unifying2 as ?s) } }'
 
+query_genders = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?gender WHERE ' \
+                '{ VALUES ?gender { :Female :Male :Agender :Bigender } . ' \
+                '?narr a :Narrative ; :subject ?narrator . ?narrator :has_agent_aspect ?gender . ' \
+                '{ ?narrator a :Person . ' \
+                'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
+                'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
+                'BIND (?unifying2 as ?s) } }'
+
+query_narrative_text = 'prefix : <urn:ontoinsights:dna:> SELECT ?narr_text WHERE ' \
+                       '{ ?narr a :Narrative ; :text ?narr_text . }'
+
+query_number_narrators = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(distinct ?s) as ?cnt) WHERE ' \
+                         '{ ?narr a :Narrative ; :subject ?narrator . { { ?narrator a :Person . ' \
+                         'FILTER NOT EXISTS { ?unifying a :UnifyingCollection ; :has_member ?narrator } . ' \
+                         'BIND(?narrator as ?s) } UNION { ?unifying a :UnifyingCollection ; :has_member ?narrator . ' \
+                         'BIND(?unifying as ?s) } } }'
+
+query_years = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?year WHERE ' \
+              '{ ?narr a :Narrative ; :subject ?narrator . ?event a :Birth ; :has_actor ?narrator ; ' \
+              ':has_time/:year ?year . { ?narrator a :Person . ' \
+              'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
+              'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
+              'BIND (?unifying2 as ?s) } }'
+
 
 def display_statistics(store_name: str):
     """
     Display a window with buttons to show various graphs and charts, and/or output files with the
-    top xx nouns and verbs.
+    top xx 'unknown to the ontology' nouns and verbs.
 
     :param store_name: The database/data store name
-    :return: None
+    :return: None (Window is displayed)
     """
     logging.info(f'Displaying summary statistics for {store_name}')
     # Setup the PySimpleGUI window
@@ -69,9 +69,9 @@ def display_statistics(store_name: str):
                          pad=((25, 0), 3))],
               [sg.Text()],
               [sg.Text("Narrative Information:", font=('Arial', 16))],
-              [sg.Button('Locations Mentioned', font=('Arial', 14), button_color='blue', size=(20, 1),
+              [sg.Button('Locations Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
                          pad=((25, 0), 3))],
-              [sg.Button('Times Mentioned', font=('Arial', 14), button_color='blue', size=(20, 1),
+              [sg.Button('Years and Events Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
                          pad=((25, 0), 3))],
               [sg.Text()],
               [sg.Text("Frequent Words:", font=('Arial', 16))],
@@ -80,7 +80,7 @@ def display_statistics(store_name: str):
                sg.Text('Number of words:', font=('Arial', 16)),
                sg.InputText(text_color='black', background_color='#ede8e8', size=(5, 1),
                             font=('Arial', 16), key='words_in_cloud', do_not_clear=True)],
-              [sg.Button('Output Top Nouns and Verbs', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Output "Unknown" Nouns/Verbs', font=('Arial', 14), button_color='blue', size=(24, 1),
                          pad=((25, 0), 3)),
                sg.Text('Number of nouns:', font=('Arial', 16)),
                sg.InputText(text_color='black', background_color='#ede8e8', size=(5, 1),
@@ -101,26 +101,28 @@ def display_statistics(store_name: str):
 
     # Create the GUI Window
     try:
-        success, number_narrators_results = query_database('select', query_number_narrators, store_name)
-        if 'results' in number_narrators_results.keys() and \
+        success1, number_narrators_results = query_database('select', query_number_narrators, store_name)
+        if success1 and 'results' in number_narrators_results.keys() and \
                 'bindings' in number_narrators_results['results'].keys():
             number_narrators = int(number_narrators_results['results']['bindings'][0]['cnt']['value'])
         else:
-            logging.error(f'No narrators are defined in {store_name}. '
-                          f'Gender and birth histograms cannot be displayed.')
+            sg.popup_error(f'No narrators are defined in {store_name}. '
+                           f'Gender and birth details cannot be displayed.',
+                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
             number_narrators = 0
-        success, narrative_text_results = query_database('select', query_narrative_text, store_name)
-        if 'results' in narrative_text_results.keys() \
+        success2, narrative_text_results = query_database('select', query_narrative_text, store_name)
+        if success2 and 'results' in narrative_text_results.keys() \
                 and 'bindings' in narrative_text_results['results'].keys():
-            narratives = ''
+            narratives = EMPTY_STRING
             for binding in narrative_text_results['results']['bindings']:
-                narratives += ' ' + binding['narr_text']['value']
+                narratives += f" {binding['narr_text']['value']}"
         else:
-            logging.error(f'No narratives were found in {store_name}. '
-                          f'Word cloud and frequency output cannot be generated.')
-            narratives = ''
+            sg.popup_error(f'No narrators are defined in {store_name}. '
+                           f'Summary graphs, charts and word frequencies cannot be generated.',
+                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+            narratives = EMPTY_STRING
     except Exception as e:
-        logging.error(f'Exception getting initial narrative details from {store_name}: {str(e)}')
+        capture_error(f'Exception getting initial narrative details from {store_name}: {str(e)}', True)
         return
     window_stats_list = sg.Window('Display Summary Statistics', layout, icon=encoded_logo).Finalize()
     window_stats_list.FindElement('directory_name').Update(resources_root[0:len(resources_root) - 1])
@@ -140,7 +142,8 @@ def display_statistics(store_name: str):
                 y_values, x_values = get_y_x_values(number_narrators, 'gender', query_genders, store_name)
                 _display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects', 'Narrator Genders')
             else:
-                sg.popup_error(f'No narrators are defined in {store_name}. The gender histogram cannot be displayed.',
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'The gender histogram cannot be displayed.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
         elif event_stats_list == 'Birth Year Details':
             if number_narrators:
@@ -149,7 +152,8 @@ def display_statistics(store_name: str):
                 _display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects Born in Year',
                                          'Narrator Birth Years')
             else:
-                sg.popup_error(f'No narrators are defined in {store_name}. The birth histograms cannot be displayed.',
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'The birth histograms cannot be displayed.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
         elif event_stats_list == 'Birth Country Details':
             if number_narrators:
@@ -158,8 +162,23 @@ def display_statistics(store_name: str):
                 _display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects Born in Country',
                                          'Narrator Birth Countries')
             else:
-                sg.popup_error(f'No narrators are defined in {store_name}. The birth histograms cannot be displayed.',
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'The birth histograms cannot be displayed.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+        elif event_stats_list == 'Locations Mentioned':
+            if not narratives:
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'A list of locations cannot be extracted.',
+                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                continue
+            _display_locations(narratives)
+        elif event_stats_list == 'Years and Events Mentioned':
+            if not narratives:
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'A list of years and events cannot be extracted.',
+                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                continue
+            _display_years_events(narratives)
         elif event_stats_list == 'Word Cloud':
             if not values['words_in_cloud']:
                 sg.popup_error('A word count MUST be specified to configure the word cloud output. '
@@ -167,18 +186,20 @@ def display_statistics(store_name: str):
                                icon=encoded_logo)
                 continue
             if not narratives:
-                sg.popup_error(f'No narratives were found in {store_name}. The word cloud cannot be displayed.',
+                sg.popup_error(f'No narrators are defined in {store_name}. '
+                               f'The word cloud cannot be displayed.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
             _display_word_cloud(narratives, int(values['words_in_cloud']))
-        elif event_stats_list == 'Output Top Nouns and Verbs':
+        elif event_stats_list == 'Output Top "Unknown" Nouns and Verbs':
             if not values['directory_name'] and not values['nouns_in_csv'] and not values['verbs_in_csv']:
-                sg.popup_error('A directory name and noun/verb word counts MUST be specified to save the frequency '
-                               'counts. Please provide all of these values.', font=('Arial', 14),
-                               button_color='dark blue', icon=encoded_logo)
+                sg.popup_error('A directory name and noun/verb word counts MUST be specified to save '
+                               'the unknown words and their frequency counts. Please provide all of these values.',
+                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
             if not narratives:
-                sg.popup_error(f'No narratives were found in {store_name}. The word frequencies cannot be output.',
+                sg.popup_error(f'No narratives were found in {store_name}. '
+                               f'The word frequencies cannot be output.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
             logging.info(f'Outputting nouns/verbs for {store_name}')
@@ -187,14 +208,6 @@ def display_statistics(store_name: str):
 
     # Done
     window_stats_list.close()
-    return
-
-
-def display_narratives():
-    return
-
-
-def display_similarities():
     return
 
 
@@ -247,25 +260,70 @@ def _display_horiz_histogram(y_values: tuple, x_values: tuple, x_label: str, tit
     :param x_values: The x-axis (vertical) values
     :param x_label: The labels on the x-axis (MUST correspond to the order of the values)
     :param title: The title of the histogram chart
-    :return: None
+    :return: None (Histogram is displayed)
     """
     logging.info('Displaying histogram')
     # Setup the histogram
     plt.rcdefaults()
     fig, ax = plt.subplots()
     y_pos = np.arange(len(y_values))
-    ax.barh(y_pos, x_values, align='center')
+    ax.barh(y_pos, x_values, align='edge')
     ax.set_yticks(y_pos)
     ax.set_yticklabels(y_values)
     ax.invert_yaxis()  # labels read top-to-bottom
     ax.xaxis.set_major_locator(MaxNLocator(integer=True))
     ax.set_xlabel(x_label)
+    plt.tight_layout(pad=2.0)
     # Display in a window
     layout = [[sg.Canvas(key="-CANVAS-")]]
-    window_histogram = sg.Window(title, layout, icon=encoded_logo, element_justification='center').Finalize()
-    _draw_figure(window_histogram["-CANVAS-"].TKCanvas, fig)
+    window_histogram = sg.Window(title, layout, icon=encoded_logo, element_justification='center',
+                                 finalize=True)
+    draw_figure(window_histogram["-CANVAS-"].TKCanvas, fig)
     # Non-blocking window
     window_histogram.read(timeout=0)
+
+
+def _display_locations(narratives: str):
+    """
+    Display a table of locations and counts of their occurrences in the narratives.
+
+    :param narratives: String consisting of all the narratives' texts
+    :return: None (Table of locations and counts is displayed)
+    """
+    logging.info(f'Displaying locations in narratives')
+    # Setup the PySimpleGUI window
+    sg.theme('Material2')
+    layout = [[sg.Text("Not yet implemented.",
+                       font=('Arial', 16))],
+              [sg.Text("To exit, press 'End' or close the window.",
+                       font=('Arial', 16))],
+              [sg.Text()],
+              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+
+    # Get the data for the window
+    # TODO
+    # try:
+    #     success, hypotheses_results = query_database('select', query_hypotheses, store_name)
+    #     number_hypotheses = 0
+    #     if success and 'results' in hypotheses_results.keys() and \
+    #             'bindings' in hypotheses_results['results'].keys():
+    #         number_hypotheses = len(hypotheses_results['results']['bindings'])
+    # except Exception as e:
+    #     capture_error(f'Exception getting hypotheses details from {store_name}: {str(e)}', True)
+    #     return
+    window_locations = sg.Window('Display Locations Mentioned in Narratives',
+                                 layout, icon=encoded_logo).Finalize()
+
+    # Event Loop to process window "events"
+    while True:
+        event_locations, values = window_locations.read()
+        if event_locations in (sg.WIN_CLOSED, 'End'):
+            # If user closes window or clicks 'End'
+            break
+
+    # Done
+    window_locations.close()
+    return
 
 
 def _display_word_cloud(narratives: str, words_in_cloud: int):
@@ -274,7 +332,7 @@ def _display_word_cloud(narratives: str, words_in_cloud: int):
 
     :param narratives: String consisting of all the narratives' texts
     :param words_in_cloud: Integer value indicating the number of words to be displayed
-    :return: None
+    :return: None (Word cloud is displayed)
     """
     logging.info('Displaying word cloud')
     # Size the WordCloud plot
@@ -293,39 +351,70 @@ def _display_word_cloud(narratives: str, words_in_cloud: int):
     layout = [[sg.Canvas(key="-CANVAS-")]]
     window_cloud = sg.Window("Word Cloud Based on Narratives' Texts", layout,
                              icon=encoded_logo, element_justification='center').Finalize()
-    _draw_figure(window_cloud["-CANVAS-"].TKCanvas, fig)
+    draw_figure(window_cloud["-CANVAS-"].TKCanvas, fig)
     # Non-blocking window
     window_cloud.read(timeout=0)
 
 
-def _draw_figure(canvas, figure):
+def _display_years_events(narratives: str):
     """
-    Routine to draw a matplotlib image on a tkinter canvas
+    Display a table of years and counts of their occurrences in the narratives.
 
-    :param canvas: The 'canvas' object in PySimpleGUI
-    :param figure: The matplotlib figure to be drawn
-    :return: The tkinter canvas which will contain the figure
+    :param narratives: String consisting of all the narratives' texts
+    :return: None (Table of locations and counts is displayed)
     """
-    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
-    figure_canvas_agg.draw()
-    figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
-    return figure_canvas_agg
+    logging.info(f'Displaying years and events in narratives')
+    # Setup the PySimpleGUI window
+    sg.theme('Material2')
+    layout = [[sg.Text("Not yet implemented.",
+                       font=('Arial', 16))],
+              [sg.Text("To exit, press 'End' or close the window.",
+                       font=('Arial', 16))],
+              [sg.Text()],
+              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+
+    # Get the data for the window
+    # TODO
+    # try:
+    #     success, hypotheses_results = query_database('select', query_hypotheses, store_name)
+    #     number_hypotheses = 0
+    #     if success and 'results' in hypotheses_results.keys() and \
+    #             'bindings' in hypotheses_results['results'].keys():
+    #         number_hypotheses = len(hypotheses_results['results']['bindings'])
+    # except Exception as e:
+    #     capture_error(f'Exception getting hypotheses details from {store_name}: {str(e)}', True)
+    #     return
+    window_years_events = sg.Window('Display Locations Mentioned in Narratives',
+                                    layout, icon=encoded_logo).Finalize()
+
+    # Event Loop to process window "events"
+    while True:
+        event_years_events, values = window_years_events.read()
+        if event_years_events in (sg.WIN_CLOSED, 'End'):
+            # If user closes window or clicks 'End'
+            break
+
+    # Done
+    window_years_events.close()
+    return
 
 
 def _output_words_in_csv(narratives: str, nouns_in_csv: int, verbs_in_csv: int, directory_name: str):
     """
-    Output the top xx nouns and verbs in the narratives' texts to the files, <directory_name>/Nouns.csv
-    and <directory_name>/Verbs.csv. The nouns, verbs and a count of their occurrences is returned.
+    Output the top xx 'unknown to the ontology' nouns and verbs in the narratives' texts
+    to the files, <directory_name>/Nouns.csv and <directory_name>/Verbs.csv.
+    The nouns, verbs and a count of their occurrences is returned.
 
     :param narratives: String consisting of all the narratives' texts
     :param nouns_in_csv: Integer value indicating the number of nouns to be output
     :param verbs_in_csv: Integer value indicating the number of verbs to be output
     :param directory_name: String indicating the base file name to which the nouns, verbs and
                            their frequencies are output
-    :return: None
+    :return: None (.csv files are generated)
     """
     sorted_nouns, sorted_verbs = get_nouns_verbs(narratives)
-    with open(f'{directory_name}/Nouns.csv', 'w', newline='\n') as noun_file:
+    # TODO: Make words lower case
+    with open(f'{directory_name}/Nouns.csv', 'w', newline=NEW_LINE) as noun_file:
         noun_writer = csv.writer(noun_file, delimiter=',')
         noun_writer.writerow(['Noun', 'Count'])
         count = 0

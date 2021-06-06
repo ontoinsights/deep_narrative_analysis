@@ -1,13 +1,16 @@
 import logging
 import PySimpleGUI as sg
 
+from database import query_database
+from details_narratives import display_narratives
+from details_similarities import display_similarities
+from details_summary import display_statistics
 from encoded_images import encoded_logo, encoded_question
 from help import display_popup_help
-from analyses import display_hypotheses, test_hypothesis
-from details import display_narratives, display_similarities
-from details_summary import display_statistics
+from hypotheses import display_hypotheses
 from load import select_store, ingest_narratives
-from database import query_database
+from test_hypotheses import test_hypothesis
+from utilities import capture_error
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
@@ -18,12 +21,16 @@ query_number_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(distin
 
 # Main
 if __name__ == '__main__':
+    # Application is a minimal GUI that exercises narrative ingest and NLP/NLU components
     logging.info('Opened DNA GUI')
 
     # Setup the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Image(r'resources/DNA2.png'),
                sg.Text('Deep Narrative Analysis', font=('Arial', 24, 'bold'))],
+              [sg.Text()],
+              [sg.Text('Minimal GUI to demo ingest and natural language understanding (NLU)',
+                       font=('Arial', 20, 'bold'))],
               [sg.Text()],
               [sg.Text("Load Narratives:", font=('Arial', 16))],
               [sg.Button('From Existing Store', font=('Arial', 14), button_color='dark blue',
@@ -38,6 +45,9 @@ if __name__ == '__main__':
                          border_width=0, key='csv_question', pad=(1, 1))],
               [sg.Text('No narratives/store currently selected', size=(70, 1),
                        key='text-selected', font=('Arial', 14))],
+              [sg.Text()],
+              [sg.Text('One or more narratives MUST be loaded in order to select any buttons below.',
+                       font=('Arial', 16))],
               [sg.Text()],
               [sg.Text("Display Narrative Details:", font=('Arial', 16))],
               [sg.Button('Summary Statistics', font=('Arial', 14), button_color='blue', size=(20, 1),
@@ -94,8 +104,7 @@ if __name__ == '__main__':
                     window['text-selected'].\
                         update(f'The data store, {store_name}, holds {count} narratives.')
                 else:
-                    sg.popup_error('The query for narrative count failed. Please contact a system administrator.',
-                                   font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                    capture_error('The query for narrative count failed.', True)
         elif event == 'New, From CSV Metadata':
             store_name, count = ingest_narratives()
             if store_name:
@@ -112,17 +121,17 @@ if __name__ == '__main__':
                 sg.popup_error("A narrative store must be loaded before selecting 'Narrative Search'.",
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
             else:
-                display_narratives()
+                display_narratives(store_name)
         elif event == 'Narrative Similarities':
             if not store_name:
                 sg.popup_error("A narrative store must be loaded before selecting 'Narrative Similarities'.",
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
             else:
-                display_similarities()
+                display_similarities(store_name)
         elif event == 'Hypothesis Search/Edit':
-            display_hypotheses()
+            display_hypotheses(store_name)
         elif event == 'Hypothesis Test':
-            test_hypothesis()
+            test_hypothesis(store_name)
 
     # Done
     window.close()

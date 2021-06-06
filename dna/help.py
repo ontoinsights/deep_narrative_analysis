@@ -5,25 +5,32 @@ from encoded_images import encoded_logo
 # Help text, Each line should be 70 chars or less
 scrolled_existing = \
     "Choose the 'Load Narratives From Existing Store' option when narratives have \n" \
-    "already been ingested to a backing store. A list of the currently available stores \n" \
-    "is displayed in a new window, and one can be selected for study and analysis. (In \n" \
-    "addition, a store can be deleted, if no longer needed.) The selected store will be \n" \
-    "noted (directly below the 'Load Narratives' section in the main window) along with \n" \
-    "a count of the contained narratives."
+    "already been ingested to the backing store. A list of the currently available \n" \
+    "databases is displayed in a new window, and one can be selected for study and \n" \
+    "analysis. (In addition, in the future, a database can be deleted, if no longer \n" \
+    "needed.) The selected database will be noted (directly below the 'Load \n" \
+    "Narratives' section in the main window) along with a count of the contained \n" \
+    "narratives."
 
 scrolled_csv = \
     "Choose the 'Load Narratives From CSV Metadata' option when ingesting new narratives \n" \
-    "into a new or existing store. A file browser window is displayed to select the CSV file. \n" \
-    "In addition, a list of the currently available stores is displayed to allow the \n" \
-    "narratives to be added to one of them, or a new store can be defined.\n\n" \
-    "The CSV format is SPECIFIC TO THE DOMAIN being investigated.\n\n" \
+    "into a new or existing database. A file browser window is displayed to select the \n" \
+    "CSV file. In addition, a list of the currently available databases is displayed to \n" \
+    "allow the narratives to be added to one of them, or a new store can be defined.\n\n" \
+    "The CSV fields are SPECIFIC TO THE DOMAIN being investigated, although several items \n" \
+    "(such as narrator identification or header/footer identification in PDFs) will be \n" \
+    "generalized and generically available for reuse. This, however, is not a goal of the \n" \
+    "current work. Note that in the simplest case, the file need only identify a list of \n" \
+    "text files to be ingested.\n\n" \
     "Note that the processing may take SEVERAL MINUTES if many narratives are ingested. \n\n" \
     "For the Holocaust narratives, most are parsed from .PDF files. Therefore, the \n" \
-    "details of the start/end pages (within the PDF), header/footer keywords, ... are \n" \
-    "and used for automated extraction and cleanup of the text. Minimal information \n" \
+    "details of the start/end pages (within the PDF), header/footer keywords, etc. are \n" \
+    "used to automate the extraction and cleanup of the text. Minimal information \n" \
     "on the narrator/subject of the text is also specified (such as the person's name \n" \
-    "and gender. Other information (such as date and location of the person's birth) \n" \
-    "are extracted from the text itself. \n\n" \
+    "and gender). However, metadata is not restricted to what is in the CSV file. To \n" \
+    "illustrate what can be extracted from the text alone, other information (e.g., \n" \
+    "the date and location of the narrator's birth) are extracted from the texts and \n" \
+    "added to the database.\n\n" \
     "For the Holocaust narratives, the format of the CSV Metadata file is: \n" \
     "   Source,Title,Person,Given,Given2,Surname,Maiden,Maiden2,Gender, \n" \
     "   Start,End,Remove,Header,Footer \n" \
@@ -53,51 +60,64 @@ scrolled_csv = \
     "   * Header and Footer are only used when the Source file is PDF and are sets of words \n" \
     "     separated by semi-colons, ;) such that if a line of text contains all the words, \n" \
     "     then that line will be discarded (Note that the words are case sensitive) \n\n" \
-    "After the narratives are ingested, the selected store will be noted (directly below \n" \
+    "After the narratives are ingested, the selected database will be noted (directly below \n" \
     "the 'Load Narratives' section in the main window) along with a count of the contained \n" \
     "narratives."
 
 scrolled_stats = \
-    "After selecting the narrative store, choose 'Summary Statistics' to open a new window \n" \
-    "where various graphs and charts can be selected for display, or a list of the most \n" \
-    "frequent words can be displayed. The charts describe various characteristics of the \n" \
-    "narrators and other information, such as the locations and times mentioned in the \n" \
-    "stories. The graphs display word clouds, clusters of semantically similar narratives, 'n" \
-    "etc. In addition, a list of frequent terms can be downloaded to a CSV file and used \n" \
-    "to extend the ontology, to create a gazetteer, or for other uses.\n\n" \
-    "The statistics can be TAILORED TO THE DOMAIN being investigated. \n\n" \
-    "The number and variety of default graphs and charts will expand based on user feedback."
+    "After selecting the narrative database, choose 'Summary Statistics' to open a new \n" \
+    "window and display a variety of graphs and charts. The output displays are TAILORED \n" \
+    "TO THE DOMAIN being investigated. And, note that the number and variety of graphs \n" \
+    "and charts will expand based on user feedback.\n\n" \
+    "In this demo, the graphs display word clouds, clusters of semantically similar \n" \
+    "narratives, and more. The charts illustrate different characteristics of the \n" \
+    "narrators (such as their genders or birth years), as well as other information \n" \
+    "(such as the locations and times mentioned in the texts).\n\n" \
+    "When INDICATED BY THE DOMAIN, it may be possible to identify if the same narrator \n" \
+    "has provided multiple narratives - and 'unify' the different narrator references. This \n" \
+    "processing is illustrated in this demo (based on the narrator's given name and surname), \n" \
+    "since there are numerous Holocaust-related narratives associated with and provided by \n" \
+    "a single individual.\n\n" \
+    "Lastly, a list of frequent terms whose semantics are not captured in the backing " \
+    "DNA ontology (i.e., are 'unknown') can be output and used to extend the ontology.\n" \
+    "Future releases of the DNA tooling will aid in performing this extension.\n\n" \
+    "Note that the output displays are TAILORED TO THE DOMAIN being investigated. And, the \n" \
+    "number and variety of default graphs and charts will expand based on user feedback."
 
 scrolled_search = \
-    "After selecting the store, choose 'Narrative Search/Display' to open a new window to \n" \
-    "review and search the texts and metadata of all the ingested narratives, and to select \n" \
-    "one or more for display. For each of the selected narratives, its metadata and text are \n" \
-    "available as well as a timeline of its events and conditions."
+    "After selecting the database, choose 'Narrative Search/Display' to open a new window to \n" \
+    "review a list of ingested narratives, and select one for display. The metadata, text and \n" \
+    "a timeline of the selected narrative are displayed.\n\n" \
+    "In a future release, it will be possible to compare timelines (for example, a news \n" \
+    "event timeline, an aid or medical treatment timeline, and the narrative timeline) visually \n" \
+    "and programmatically to understand correlations."
 
 scrolled_similarities = \
-    "After selecting the narrative store, choose 'Narrative Similarities' to open a new window  \n" \
-    "displaying sequences of events and conditions which occur in two or more narratives. A \n" \
-    "list of the sequences is shown with the number of narratives where that sequence occurs."
+    "After selecting the narrative database, choose 'Narrative Similarities' to open a new \n" \
+    "window displaying sequences of events and conditions which occur in two or \n" \
+    "more narratives. A list of the sequences is shown with the number of narratives \n" \
+    "where that sequence occurs."
 
 scrolled_hypothesis = \
-    "Make sure that a narrative store is selected above and then choose 'Hypothesis \n" \
+    "Make sure that a narrative database is selected above and then choose 'Hypothesis \n" \
     "Search/Edit' to open a new window to review and edit existing hypotheses, or to define \n" \
-    "new ones. Hypotheses are lists or series of events and conditions which are investigated \n" \
-    "by 'Hypothesis Test'. The latter searches for evidence of the occurrence of these events, \n" \
-    "conditions or sequences in the narratives."
+    "new ones. Hypotheses are lists or series of events, conditions and requirements (such \n" \
+    "as the gender or education level of the narrator) which are searched for (using by \n" \
+    "'Hypothesis Test'), in the narratives and metadata."
 
 scrolled_test = \
     "Choose 'Hypothesis Test' to select an hypothesis and then search for supporting evidence in \n" \
     "the narratives defined above (in 'Load Narratives'). A list of the currently available \n" \
     "hypotheses is displayed in a new window, and one can be selected for study and analysis. \n" \
-    "Hypotheses are lists or series of events and conditions which are searched for, in the \n" \
-    "narratives. Note that this search allows both querying for the occurrence of events \n" \
-    "and conditions in any order, or for their occurrence in a specific sequence. The \n" \
-    "latter does NOT require, however, that the occurrences are strictly sequential, but \n" \
-    "can be separated by other intervening events and conditions. Results of the search \n" \
-    "detail the specific narratives where the occurrences are found and the ones where \n" \
-    "they are NOT found. Summary statistics are displayed for the positive and negative \n" \
-    "narratives."
+    "Hypotheses are lists or series of events, conditions and requirements (such as the gender \n" \
+    "or education level of the narrator) which are searched for, in the narratives and metadata. \n" \
+    "Note that this search allows both querying for the occurrence of events and conditions in \n" \
+    "any order, or for their occurrence in a specific sequence. The latter does NOT require, \n" \
+    "however, that the occurrences are strictly sequential, but can be separated by other \n" \
+    "intervening events and conditions. Results of the search detail the specific narratives \n" \
+    "where the occurrences are found and the ones where they are NOT found. Summary statistics \n" \
+    "are displayed for the positive and negative narratives to aid in expanding or restricting \n" \
+    "the hypotheses."
 
 # Dictionaries tying help text and popup window title to the event
 text_dict = {'existing_question': scrolled_existing,

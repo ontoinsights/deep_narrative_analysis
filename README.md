@@ -29,3 +29,12 @@ The semantics (ontologies) and processing (initially, Jupyter notebooks) are cap
   * The create_merged_ontol_and_tree script uses a branched version of the robot.jar from the OBO ROBOT GitHub repository (https://github.com/ontodev/robot/tree/tree-view)
 * _notebooks_ holds the Jupyter notebooks used to scrape/parse web pages, create necessary pickle files for processing, and perform initial parsing and analysis experiments on the narratives
   * Note that various .config files are also defined to customize the processing (and should be modified if used in your personal environments)
+
+## Environment
+
+The Stardog triple store must be installed and the following environment variables need to be set for the DNA application:
+
+* PATH needs to specifically include the GitHub project's dna directory (for testing)
+* TOKENIZERS_PARALLELISM = false (to resolve warning from HuggingFace transformers and their use in spaCy)
+
+To run the application, cd to the dna directory and execute python3 app.py.
