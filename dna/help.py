@@ -66,9 +66,11 @@ scrolled_csv = \
 
 scrolled_stats = \
     "After selecting the narrative database, choose 'Summary Statistics' to open a new \n" \
-    "window and display a variety of graphs and charts. The output displays are TAILORED \n" \
-    "TO THE DOMAIN being investigated. And, note that the number and variety of graphs \n" \
-    "and charts will expand based on user feedback.\n\n" \
+    "window and display a variety of graphs and charts. The goal is to allow a researcher \n" \
+    "to understand the demographics of their narrators, and determine if it reflects the\n" \
+    "backing population.\n\n" \
+    "The output displays are TAILORED TO THE DOMAIN being investigated. The number and \n" \
+    "variety of graphs and charts will expand based on user feedback.\n\n" \
     "In this demo, the graphs display word clouds, clusters of semantically similar \n" \
     "narratives, and more. The charts illustrate different characteristics of the \n" \
     "narrators (such as their genders or birth years), as well as other information \n" \
@@ -101,22 +103,23 @@ scrolled_similarities = \
 scrolled_hypothesis = \
     "Make sure that a narrative database is selected above and then choose 'Hypothesis \n" \
     "Search/Edit' to open a new window to review and edit existing hypotheses, or to define \n" \
-    "new ones. Hypotheses are lists or series of events, conditions and requirements (such \n" \
-    "as the gender or education level of the narrator) which are searched for (using by \n" \
+    "new ones. Hypotheses are patterns - lists or series of events, conditions and requirements " \
+    "(such as the gender or education level of the narrator) which are searched for (using \n" \
     "'Hypothesis Test'), in the narratives and metadata."
 
 scrolled_test = \
-    "Choose 'Hypothesis Test' to select an hypothesis and then search for supporting evidence in \n" \
-    "the narratives defined above (in 'Load Narratives'). A list of the currently available \n" \
-    "hypotheses is displayed in a new window, and one can be selected for study and analysis. \n" \
-    "Hypotheses are lists or series of events, conditions and requirements (such as the gender \n" \
-    "or education level of the narrator) which are searched for, in the narratives and metadata. \n" \
-    "Note that this search allows both querying for the occurrence of events and conditions in \n" \
-    "any order, or for their occurrence in a specific sequence. The latter does NOT require, \n" \
-    "however, that the occurrences are strictly sequential, but can be separated by other \n" \
-    "intervening events and conditions. Results of the search detail the specific narratives \n" \
-    "where the occurrences are found and the ones where they are NOT found. Summary statistics \n" \
-    "are displayed for the positive and negative narratives to aid in expanding or restricting \n" \
+    "Choose 'Hypothesis Test' to select an hypothesis and then search for supporting/refuting \n" \
+    "evidence in the narratives defined above (in 'Load Narratives'). A list of the currently \n" \
+    "available hypotheses is displayed in a new window, and one can be selected for study and \n" \
+    "analysis. Hypotheses are patterns - lists or series of events, conditions and requirements " \
+    "(such as the gender or education level of the narrator) which are searched for, in the " \
+    "narratives and metadata.\n\n" \
+    "Search allows both querying for the occurrence of events and conditions in any order, \n" \
+    "or for their occurrence in a specific sequence. The latter does NOT require, however, \n" \
+    "that the occurrences are strictly sequential, but can be separated by other intervening  \n" \
+    "events and conditions. Results of the search detail the specific narratives where the \n" \
+    "occurrences are found and the ones where they are NOT found. Summary statistics are \n" \
+    "displayed for the positive and negative narratives to aid in expanding or restricting \n" \
     "the hypotheses."
 
 # Dictionaries tying help text and popup window title to the event
