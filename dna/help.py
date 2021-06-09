@@ -17,11 +17,11 @@ scrolled_csv = \
     "into a new or existing database. A file browser window is displayed to select the \n" \
     "CSV file. In addition, a list of the currently available databases is displayed to \n" \
     "allow the narratives to be added to one of them, or a new store can be defined.\n\n" \
-    "The CSV fields are SPECIFIC TO THE DOMAIN being investigated, although several items \n" \
-    "(such as narrator identification or header/footer identification in PDFs) will be \n" \
-    "generalized and generically available for reuse. This, however, is not a goal of the \n" \
-    "current work. Note that in the simplest case, the file need only identify a list of \n" \
-    "text files to be ingested.\n\n" \
+    "The CSV fields are SPECIFIC TO THE DOMAIN being investigated, although several  \n" \
+    "items (such as narrator identification or header/footer identification in PDFs) will \n" \
+    "be generalized and generically available for reuse. This, however, is not a goal of \n" \
+    "the current work. Note that in the simplest case, the file need only identify a list \n" \
+    "of text files to be ingested.\n\n" \
     "Note that the processing may take SEVERAL MINUTES if many narratives are ingested. \n\n" \
     "For the Holocaust narratives, most are parsed from .PDF files. Therefore, the \n" \
     "details of the start/end pages (within the PDF), header/footer keywords, etc. are \n" \
@@ -67,7 +67,7 @@ scrolled_csv = \
 scrolled_stats = \
     "After selecting the narrative database, choose 'Summary Statistics' to open a new \n" \
     "window and display a variety of graphs and charts. The goal is to allow a researcher \n" \
-    "to understand the demographics of their narrators, and determine if it reflects the\n" \
+    "to understand the demographics of their narrators, and determine if they reflect the\n" \
     "backing population.\n\n" \
     "The output displays are TAILORED TO THE DOMAIN being investigated. The number and \n" \
     "variety of graphs and charts will expand based on user feedback.\n\n" \
@@ -83,8 +83,9 @@ scrolled_stats = \
     "Lastly, a list of frequent terms whose semantics are not captured in the backing " \
     "DNA ontology (i.e., are 'unknown') can be output and used to extend the ontology.\n" \
     "Future releases of the DNA tooling will aid in performing this extension.\n\n" \
-    "Note that the output displays are TAILORED TO THE DOMAIN being investigated. And, the \n" \
-    "number and variety of default graphs and charts will expand based on user feedback."
+    "Note that the output displays are TAILORED TO THE DOMAIN being investigated. And, \n" \
+    "the number and variety of default graphs and charts will expand based on user \n" \
+    "feedback."
 
 scrolled_search = \
     "After selecting the database, choose 'Narrative Search/Display' to open a new window to \n" \
