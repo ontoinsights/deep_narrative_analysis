@@ -4137,8 +4137,8 @@ p {
     "iri": "urn:ontoinsights:dna:Animal",
     "synonym": [
       "insect",
-      "beast",
       "creature",
+      "beast",
       "fauna",
       "bug"
     ],
@@ -4277,8 +4277,8 @@ p {
     "iri": "urn:ontoinsights:dna:Organization",
     "synonym": [
       "organisation",
-      "corporation",
       "institution",
+      "corporation",
       "company",
       "association"
     ],
@@ -4364,8 +4364,8 @@ p {
       "assortment",
       "assemblage",
       "compilation",
-      "aggregation",
       "set",
+      "aggregation",
       "accumulation",
       "compendium"
     ],
@@ -4444,6 +4444,40 @@ p {
       "Superclass for any enumerated set of values. This is defined to improve semantic understanding of the class hierarchy when visualized as a tree."
     ]
   },
+  "Robbery and Theft": {
+    "iri": "urn:ontoinsights:dna:RobberyAndTheft",
+    "synonym": [
+      "stealing",
+      "breaking and entering",
+      "thievery",
+      "burglary"
+    ],
+    "definition": [
+      "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
+    ]
+  },
+  "Capture and Seizure": {
+    "iri": "urn:ontoinsights:dna:CaptureAndSeizure",
+    "synonym": [
+      "occupation",
+      "takeover",
+      "overrunning",
+      "take captive",
+      "annexation",
+      "arrest",
+      "take control"
+    ],
+    "definition": [
+      "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
+      "<a href=\"javascript:jumpTo('Aggressive or Hostile Act')\">'Aggressive or Hostile Act'</a>"
+    ]
+  },
   "Gift and Donation": {
     "iri": "urn:ontoinsights:dna:GiftAndDonation",
     "synonym": [
@@ -4479,8 +4513,8 @@ p {
       "paying",
       "vending",
       "buying",
-      "procurement",
-      "selling"
+      "selling",
+      "procurement"
     ],
     "definition": [
       "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."
@@ -4519,22 +4553,6 @@ p {
       "<a href=\"javascript:jumpTo('Concealment')\">Concealment</a>"
     ]
   },
-  "Robbery and Theft": {
-    "iri": "urn:ontoinsights:dna:RobberyAndTheft",
-    "synonym": [
-      "stealing",
-      "breaking and entering",
-      "thievery",
-      "burglary"
-    ],
-    "definition": [
-      "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Aggressive or Hostile Act')\">'Aggressive or Hostile Act'</a>"
-    ]
-  },
   "Acquisition": {
     "iri": "urn:ontoinsights:dna:Acquisition",
     "synonym": [
@@ -4568,8 +4586,8 @@ p {
   "Murder and Homicide": {
     "iri": "urn:ontoinsights:dna:MurderAndHomicide",
     "synonym": [
-      "massacre",
       "liquidation",
+      "massacre",
       "execution",
       "slaughter",
       "extermination",
@@ -4911,8 +4929,8 @@ p {
     "synonym": [
       "estimation",
       "conjecture",
-      "gauge",
       "comparison",
+      "gauge",
       "evaluation",
       "judgment",
       "correlation",
@@ -5000,8 +5018,8 @@ p {
     "iri": "urn:ontoinsights:dna:KnowledgeAndSkill",
     "synonym": [
       "awareness",
-      "understanding",
-      "comprehension"
+      "comprehension",
+      "understanding"
     ],
     "definition": [
       "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"
@@ -5013,8 +5031,8 @@ p {
   "Memory": {
     "iri": "urn:ontoinsights:dna:Memory",
     "synonym": [
-      "remembrance",
       "recollection",
+      "remembrance",
       "reminiscence"
     ],
     "definition": [
@@ -5153,8 +5171,8 @@ p {
     "iri": "urn:ontoinsights:dna:RequestAndAppeal",
     "synonym": [
       "urge",
-      "entreaty",
       "plea",
+      "entreaty",
       "petition",
       "asking for",
       "supplication",
@@ -5186,8 +5204,8 @@ p {
     "iri": "urn:ontoinsights:dna:Threat",
     "synonym": [
       "menacing",
-      "warning",
-      "ultimatum"
+      "ultimatum",
+      "warning"
     ],
     "definition": [
       "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_agent, while the threatened Agent is identified using :has_affected_agent."
@@ -5352,8 +5370,8 @@ p {
     "iri": "urn:ontoinsights:dna:End",
     "synonym": [
       "conclusion",
-      "resolution",
       "completion",
+      "resolution",
       "finish",
       "closing",
       "termination"
@@ -5421,8 +5439,8 @@ p {
   "Repair": {
     "iri": "urn:ontoinsights:dna:Repair",
     "synonym": [
-      "mend",
       "restoration",
+      "mend",
       "renovation",
       "fix"
     ],
@@ -5607,8 +5625,8 @@ p {
     "synonym": [
       "run",
       "push",
-      "coil",
       "put",
+      "coil",
       "spray",
       "roll",
       "pour",
@@ -5726,8 +5744,8 @@ p {
   "Recreation Event": {
     "iri": "urn:ontoinsights:dna:RecreationEvent",
     "synonym": [
-      "leisure",
-      "relaxation"
+      "relaxation",
+      "leisure"
     ],
     "definition": [
       "Any activity done for relaxation and enjoyment (not an Agent's job or business)."
@@ -5754,8 +5772,8 @@ p {
     "synonym": [
       "limitation",
       "cutback",
-      "clear",
       "banishment",
+      "clear",
       "sanction",
       "wipe",
       "extraction",
@@ -5798,8 +5816,8 @@ p {
   "Reward": {
     "iri": "urn:ontoinsights:dna:Reward",
     "synonym": [
-      "award",
       "recompense",
+      "award",
       "winnings",
       "prize"
     ],
@@ -5832,8 +5850,8 @@ p {
       "look for",
       "stalk",
       "rummage",
-      "exploration",
       "hunt",
+      "exploration",
       "forage"
     ],
     "definition": [
@@ -5866,8 +5884,8 @@ p {
       "splitting",
       "disconnection",
       "detachment",
-      "breakage",
       "severance",
+      "breakage",
       "uncoupling",
       "dissociation",
       "disassembly"
@@ -5927,8 +5945,8 @@ p {
     "iri": "urn:ontoinsights:dna:Substitution",
     "synonym": [
       "interchange",
-      "exchange",
       "swap",
+      "exchange",
       "replacement"
     ],
     "definition": [
@@ -5962,8 +5980,8 @@ p {
   "Event": {
     "iri": "urn:ontoinsights:dna:Event",
     "synonym": [
-      "act",
       "incident",
+      "act",
       "occurrence",
       "happening"
     ],
@@ -6168,8 +6186,8 @@ p {
   "Taxes": {
     "iri": "urn:ontoinsights:dna:Taxes",
     "synonym": [
-      "toll",
       "tax",
+      "toll",
       "levy",
       "duty",
       "tariff"
@@ -6467,8 +6485,8 @@ p {
     "iri": "urn:ontoinsights:dna:Expansion",
     "synonym": [
       "expanding",
-      "increasing",
       "enlarging",
+      "increasing",
       "broadening"
     ],
     "definition": [
@@ -13893,7 +13911,7 @@ p {
   "Reported Value": {
     "iri": "urn:ontoinsights:dna:ReportedValue",
     "definition": [
-      "A reification of a measurement/measured quantity - where its property, :value, holds the decimal value, and :has_units defines the units (such as seconds or meters) in which the value is expressed."
+      "A reification of a measurement/measured quantity - where its properties, :reported_numeric and :reported_string, hold the decimal or string value that is 'reported', and :has_units defines the units (such as seconds or meters) in which the value is expressed."
     ]
   },
   "Art and Collectible": {
@@ -14520,12 +14538,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "Argentine Nation": {
-    "iri": "urn:ontoinsights:geonames:3865483",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "Aruba": {
     "iri": "urn:ontoinsights:geonames:3577279",
     "Type": [
@@ -14586,6 +14598,12 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
+  "Bohemia": {
+    "iri": "urn:ontoinsights:geonames:3077311",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
   "Bonaire": {
     "iri": "urn:ontoinsights:geonames:7626844",
     "Type": [
@@ -14612,6 +14630,12 @@ p {
   },
   "Brazil": {
     "iri": "urn:ontoinsights:geonames:3469034",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Britain": {
+    "iri": "urn:ontoinsights:geonames:2635167",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -14742,12 +14766,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "Czechia": {
-    "iri": "urn:ontoinsights:geonames:3077311",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "Democratic Kampuchea": {
     "iri": "urn:ontoinsights:geonames:1831722",
     "Type": [
@@ -14756,6 +14774,12 @@ p {
   },
   "Democratic People's Republic of Korea": {
     "iri": "urn:ontoinsights:geonames:1873107",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Democratic Republic of the Congo": {
+    "iri": "urn:ontoinsights:geonames:203312",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -14910,12 +14934,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "French Guinea": {
-    "iri": "urn:ontoinsights:geonames:2420477",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "French Polynesia": {
     "iri": "urn:ontoinsights:geonames:4030656",
     "Type": [
@@ -14984,6 +15002,12 @@ p {
   },
   "Guinea-Bissau": {
     "iri": "urn:ontoinsights:geonames:2372248",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Guinea-Conakry": {
+    "iri": "urn:ontoinsights:geonames:2420477",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -15318,6 +15342,12 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
+  "Netherlands Guiana": {
+    "iri": "urn:ontoinsights:geonames:3382998",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
   "New Caledonia": {
     "iri": "urn:ontoinsights:geonames:2139685",
     "Type": [
@@ -15546,12 +15576,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "Republic of Suriname": {
-    "iri": "urn:ontoinsights:geonames:3382998",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "Republic of the Sudan": {
     "iri": "urn:ontoinsights:geonames:366755",
     "Type": [
@@ -15596,6 +15620,12 @@ p {
   },
   "Rwandese Republic": {
     "iri": "urn:ontoinsights:geonames:49518",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Saint Bartholomew": {
+    "iri": "urn:ontoinsights:geonames:3578476",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -15704,12 +15734,6 @@ p {
   },
   "Sri Lanka": {
     "iri": "urn:ontoinsights:geonames:1227603",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
-  "St Bartholomew": {
-    "iri": "urn:ontoinsights:geonames:3578476",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -15852,6 +15876,12 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
+  "U.S.S.R.": {
+    "iri": "urn:ontoinsights:geonames:2017370",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
   "UAE": {
     "iri": "urn:ontoinsights:geonames:290557",
     "Type": [
@@ -15870,14 +15900,14 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "United Kingdom of Great Britain and Northern Ireland": {
-    "iri": "urn:ontoinsights:geonames:2635167",
+  "United Mexican States": {
+    "iri": "urn:ontoinsights:geonames:3996063",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "United Mexican States": {
-    "iri": "urn:ontoinsights:geonames:3996063",
+  "United Provinces of the Río de la Plata": {
+    "iri": "urn:ontoinsights:geonames:3865483",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -15950,12 +15980,6 @@ p {
   },
   "Yugoslavia": {
     "iri": "urn:ontoinsights:geonames:6290252",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
-  "Zaire": {
-    "iri": "urn:ontoinsights:geonames:203312",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -16578,8 +16602,8 @@ p {
   "Male": {
     "iri": "urn:ontoinsights:dna:enum:Male",
     "synonym": [
-      "man",
       "mister",
+      "man",
       "Mr.",
       "boy"
     ],
@@ -17622,6 +17646,36 @@ p {
       "Functional"
     ]
   },
+  "reported numeric value": {
+    "iri": "urn:ontoinsights:dna:reported_numeric",
+    "definition": [
+      "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Reported Value')\">'Reported Value'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
+  "reported string value": {
+    "iri": "urn:ontoinsights:dna:reported_string",
+    "definition": [
+      "Specifies the (string) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Reported Value')\">'Reported Value'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
   "role": {
     "iri": "urn:ontoinsights:dna:role",
     "definition": [
@@ -17761,21 +17815,6 @@ p {
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('string')\">string</a>"
-    ]
-  },
-  "value": {
-    "iri": "urn:ontoinsights:dna:value",
-    "definition": [
-      "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)."
-    ],
-    "Domains": [
-      "<a href=\"javascript:jumpTo('Reported Value')\">'Reported Value'</a>"
-    ],
-    "Ranges": [
-      "<a href=\"javascript:jumpTo('decimal')\">decimal</a>"
-    ],
-    "Characteristics": [
-      "Functional"
     ]
   },
   "week of month": {
@@ -20494,6 +20533,14 @@ p {
                 "id": "Acquisition",
                 "children": [
                   {
+                    "id": "Capture and Seizure",
+                    "children": [
+                      {
+                        "id": "Robbery and Theft"
+                      }
+                    ]
+                  },
+                  {
                     "id": "Gift and Donation"
                   },
                   {
@@ -20507,9 +20554,6 @@ p {
                   },
                   {
                     "id": "Revelation"
-                  },
-                  {
-                    "id": "Robbery and Theft"
                   }
                 ]
               },
@@ -20528,6 +20572,14 @@ p {
                     ]
                   },
                   {
+                    "id": "Capture and Seizure",
+                    "children": [
+                      {
+                        "id": "Robbery and Theft"
+                      }
+                    ]
+                  },
+                  {
                     "id": "Coercion and Intimidation"
                   },
                   {
@@ -20535,9 +20587,6 @@ p {
                   },
                   {
                     "id": "Resistance"
-                  },
-                  {
-                    "id": "Robbery and Theft"
                   },
                   {
                     "id": "Violence and Fighting"
@@ -25349,9 +25398,6 @@ p {
             "id": "Antigua and Barbuda"
           },
           {
-            "id": "Argentine Nation"
-          },
-          {
             "id": "Aruba"
           },
           {
@@ -25382,6 +25428,9 @@ p {
             "id": "Bermuda"
           },
           {
+            "id": "Bohemia"
+          },
+          {
             "id": "Bonaire"
           },
           {
@@ -25395,6 +25444,9 @@ p {
           },
           {
             "id": "Brazil"
+          },
+          {
+            "id": "Britain"
           },
           {
             "id": "British Indian Ocean Territory"
@@ -25460,13 +25512,13 @@ p {
             "id": "Cyprus"
           },
           {
-            "id": "Czechia"
-          },
-          {
             "id": "Democratic Kampuchea"
           },
           {
             "id": "Democratic People's Republic of Korea"
+          },
+          {
+            "id": "Democratic Republic of the Congo"
           },
           {
             "id": "Denmark"
@@ -25544,9 +25596,6 @@ p {
             "id": "French Guiana"
           },
           {
-            "id": "French Guinea"
-          },
-          {
             "id": "French Polynesia"
           },
           {
@@ -25581,6 +25630,9 @@ p {
           },
           {
             "id": "Guinea-Bissau"
+          },
+          {
+            "id": "Guinea-Conakry"
           },
           {
             "id": "Hashemite Kingdom of Jordan"
@@ -25751,6 +25803,9 @@ p {
             "id": "Netherlands East-Indies"
           },
           {
+            "id": "Netherlands Guiana"
+          },
+          {
             "id": "New Caledonia"
           },
           {
@@ -25865,9 +25920,6 @@ p {
             "id": "Republic of Slovenia"
           },
           {
-            "id": "Republic of Suriname"
-          },
-          {
             "id": "Republic of the Sudan"
           },
           {
@@ -25889,10 +25941,10 @@ p {
             "id": "Romania"
           },
           {
-            "id": "Russia"
+            "id": "Rwandese Republic"
           },
           {
-            "id": "Rwandese Republic"
+            "id": "Saint Bartholomew"
           },
           {
             "id": "Samoa"
@@ -25947,9 +25999,6 @@ p {
           },
           {
             "id": "Sri Lanka"
-          },
-          {
-            "id": "St Bartholomew"
           },
           {
             "id": "St Lucia"
@@ -26021,6 +26070,9 @@ p {
             "id": "Tuvalu"
           },
           {
+            "id": "U.S.S.R."
+          },
+          {
             "id": "UAE"
           },
           {
@@ -26030,10 +26082,10 @@ p {
             "id": "Ukraine"
           },
           {
-            "id": "United Kingdom of Great Britain and Northern Ireland"
+            "id": "United Mexican States"
           },
           {
-            "id": "United Mexican States"
+            "id": "United Provinces of the Río de la Plata"
           },
           {
             "id": "United Republic of Tanganyika and Zanzibar"
@@ -26070,9 +26122,6 @@ p {
           },
           {
             "id": "Yugoslavia"
-          },
-          {
-            "id": "Zaire"
           }
         ]
       },
@@ -26957,6 +27006,12 @@ p {
         "id": "prototypical (boolean)"
       },
       {
+        "id": "reported numeric value"
+      },
+      {
+        "id": "reported string value"
+      },
+      {
         "id": "role"
       },
       {
@@ -26985,9 +27040,6 @@ p {
       },
       {
         "id": "Uniform Resource Locator (URL)"
-      },
-      {
-        "id": "value"
       },
       {
         "id": "week of month"

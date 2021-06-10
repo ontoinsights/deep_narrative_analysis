@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: May 26 2021
+# Last Modified: June 10 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,7 @@
 #  Added MistakeAndRegret, MurderAndHomicide
 #  Updated the default and dna prefixes
 #  Added multiple new classes and VerbNet synonyms
+#  Renamed :value to :reported_numeric and added :reported_string
 ########################################################################
 
 
@@ -131,6 +132,12 @@
   rdfs:label "Body Movement" ;
   :definition "An activity related to the movement of an animal's or Person's body (such as dancing or running)." ;
   :synonym "breathe", "curtsey", "bow", "flinch" . 
+
+:CaptureAndSeizure a owl:Class ;
+  rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
+  rdfs:label "Capture and Seizure" ;
+  :definition "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
+  :synonym "takeover", "annexation", "occupation", "overrunning", "arrest", "take captive", "take control" .
 
 :Ceremony a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter ;
@@ -542,7 +549,7 @@
 
 :ReportedValue a owl:Class ;
   rdfs:label "Reported Value" ;
-  :definition "A reification of a measurement/measured quantity - where its property, :value, holds the decimal value, and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
+  :definition "A reification of a measurement/measured quantity - where its properties, :reported_numeric and :reported_string, hold the decimal or string value that is 'reported', and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
 
 :RequestAndAppeal a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
@@ -581,7 +588,7 @@
   :synonym "audacity", "bravado" .
 
 :RobberyAndTheft a owl:Class ;
-  rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
+  rdfs:subClassOf :CaptureAndSeizure ;
   rdfs:label "Robbery and Theft" ;
   :definition "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate." ;
   :synonym "stealing", "burglary", "thievery", "breaking and entering" .
@@ -706,11 +713,17 @@
 # Datatype Properties
 ########################################################################
 
-:value a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "value" ;
+:reported_numeric a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "reported numeric value" ;
   :definition "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." ;
   rdfs:domain :ReportedValue ;
   rdfs:range xsd:decimal .
+
+:reported_string a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "reported string value" ;
+  :definition "Specifies the (string) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." ;
+  rdfs:domain :ReportedValue ;
+  rdfs:range xsd:string .
 
 
 ########################################################################

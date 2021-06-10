@@ -943,6 +943,24 @@
                                          <urn:ontoinsights:dna:definition> "Defines a particular record (key) in a database InformationSource, where a Mention is extracted." .
 
 
+###  urn:ontoinsights:dna:reported_numeric
+<urn:ontoinsights:dna:reported_numeric> rdf:type owl:DatatypeProperty ,
+                                                 owl:FunctionalProperty ;
+                                        rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
+                                        rdfs:range xsd:decimal ;
+                                        rdfs:label "reported numeric value" ;
+                                        <urn:ontoinsights:dna:definition> "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
+
+
+###  urn:ontoinsights:dna:reported_string
+<urn:ontoinsights:dna:reported_string> rdf:type owl:DatatypeProperty ,
+                                                owl:FunctionalProperty ;
+                                       rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
+                                       rdfs:range xsd:string ;
+                                       rdfs:label "reported string value" ;
+                                       <urn:ontoinsights:dna:definition> "Specifies the (string) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
+
+
 ###  urn:ontoinsights:dna:role
 <urn:ontoinsights:dna:role> rdf:type owl:DatatypeProperty ;
                             rdfs:domain <urn:ontoinsights:dna:Affiliation> ;
@@ -1071,15 +1089,6 @@
                            rdfs:range xsd:string ;
                            rdfs:label "Uniform Resource Locator (URL)" ;
                            <urn:ontoinsights:dna:definition> "A string defining a web address, using the HTTP or HTTPS protocols." .
-
-
-###  urn:ontoinsights:dna:value
-<urn:ontoinsights:dna:value> rdf:type owl:DatatypeProperty ,
-                                      owl:FunctionalProperty ;
-                             rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
-                             rdfs:range xsd:decimal ;
-                             rdfs:label "value" ;
-                             <urn:ontoinsights:dna:definition> "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
 
 
 ###  urn:ontoinsights:dna:week_of_month
@@ -12387,6 +12396,21 @@
                                                                             "internment" .
 
 
+###  urn:ontoinsights:dna:CaptureAndSeizure
+<urn:ontoinsights:dna:CaptureAndSeizure> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
+                                                         <urn:ontoinsights:dna:AggressiveOrHostileAct> ;
+                                         rdfs:label "Capture and Seizure" ;
+                                         <urn:ontoinsights:dna:definition> "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
+                                         <urn:ontoinsights:dna:synonym> "annexation" ,
+                                                                        "arrest" ,
+                                                                        "occupation" ,
+                                                                        "overrunning" ,
+                                                                        "take captive" ,
+                                                                        "take control" ,
+                                                                        "takeover" .
+
+
 ###  urn:ontoinsights:dna:Ceremony
 <urn:ontoinsights:dna:Ceremony> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
@@ -14072,7 +14096,7 @@
 ###  urn:ontoinsights:dna:ReportedValue
 <urn:ontoinsights:dna:ReportedValue> rdf:type owl:Class ;
                                      rdfs:label "Reported Value" ;
-                                     <urn:ontoinsights:dna:definition> "A reification of a measurement/measured quantity - where its property, :value, holds the decimal value, and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
+                                     <urn:ontoinsights:dna:definition> "A reification of a measurement/measured quantity - where its properties, :reported_numeric and :reported_string, hold the decimal or string value that is 'reported', and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
 
 
 ###  urn:ontoinsights:dna:RequestAndAppeal
@@ -14172,8 +14196,7 @@
 
 ###  urn:ontoinsights:dna:RobberyAndTheft
 <urn:ontoinsights:dna:RobberyAndTheft> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                       <urn:ontoinsights:dna:AggressiveOrHostileAct> ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:CaptureAndSeizure> ;
                                        rdfs:label "Robbery and Theft" ;
                                        <urn:ontoinsights:dna:definition> "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate." ;
                                        <urn:ontoinsights:dna:synonym> "breaking and entering" ,
@@ -19266,8 +19289,8 @@
                                   rdfs:label "ISO 3-character alpha code" .
 
 
-<urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
-                             rdfs:label "meets" .
+<urn:ontoinsights:dna:meets> rdfs:label "meets" ;
+                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi
