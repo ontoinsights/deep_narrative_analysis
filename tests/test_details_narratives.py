@@ -13,7 +13,7 @@ def test_create_database():
 
 def test_get_timeline_data():
     # Validates that the results of extracting events from a narrative are complete and correct
-    # TODO
+    # TODO + need multiples
     return
 
 

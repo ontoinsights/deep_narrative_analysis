@@ -122,13 +122,9 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
         elif string_id == 'born_place':
             born_in_place.add(doc[token_ids[2]].text)
         elif string_id == 'family_member_name':
-            member = doc[token_ids[0]].text
-            family_dict[member] = doc[token_ids[1]].text
+            family_dict[doc[token_ids[0]].text] = doc[token_ids[1]].text
     # Verify that dates actually have a year
-    found_year = False
-    for value in born_on_date:
-        if value.isnumeric() and int(value) > 1000:
-            found_year = True
+    found_year = any([value for value in born_on_date if (value.isnumeric() and int(value) > 1000)])
     if not found_year:
         born_on_date = set()
     return list(born_on_date), list(born_in_place), family_dict
@@ -150,9 +146,9 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     for sentence in doc.sents:
         for token in sentence:
             if token.pos_ in ('NOUN', 'PROPN'):
-                update_dictionary_count(noun_dict, token.lemma_)
+                update_dictionary_count(noun_dict, token.lemma_.lower())
             if token.pos_ == 'VERB':
-                update_dictionary_count(verb_dict, token.lemma_)
+                update_dictionary_count(verb_dict, token.lemma_.lower())
     sorted_nouns = dict(sorted(noun_dict.items(), key=lambda item: item[1], reverse=True))
     sorted_verbs = dict(sorted(verb_dict.items(), key=lambda item: item[1], reverse=True))
     return sorted_nouns, sorted_verbs
@@ -227,12 +223,11 @@ def split_by_conjunctions(sentence: Span) -> list:
                         intermed_sents.append(chunk)
                 else:
                     intermed_sents = [orig_sent]
-                # Now check resulting sentences to further split by adverbial clauses
-                # Example: 'I went to the store where I met George.'
-                #          'where I met George' is an adverbial clause
+                # Now check resulting sentences to further split by adverbial clauses and clausal complements
+                # Only split if there is a subject-verb pair in the clause
+                # Example: 'I went to the store where I met George.' ('where ...' is an adverbial clause)
                 for intermed_sent in intermed_sents:
                     chunk_doc2 = nlp(intermed_sent)
-                    new_sents = []
                     for chunk_sent2 in chunk_doc2.sents:
                         advcl_verb = [child for child in chunk_sent2.root.children if child.dep_ == 'advcl']
                         if len(advcl_verb) > 0:

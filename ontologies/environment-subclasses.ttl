@@ -6,14 +6,14 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ########################################################################
-# File defining semantics related to specific states/conditions/
-# circumstances/environments.
+# File defining semantics related to specific factors or situations related
+# to an Agent's or Resource's living conditions, external circumstances or 
+# physical environment (sub-classes of EnvironmentAndCondition).
 # 
-# The subclasses of StateAndCondition should be extended as needed for 
-# a domain of interest.
+# These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: May 28 2021
+# Last Modified: July 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -24,13 +24,8 @@
 # either express or implied.
 # 
 # Changes:
-#  Added PoliticalIdeology and its instances
-#  Updated the default and dna prefixes
-#  Moved HealthAndDiseaseRelated from event-subclasses
-#  Added AddictionAndAlcoholism, Housing and Toleration
-#  Added subProperty definition to :has_assessment
-#  Corrected subclassing of PoliticalIdeology
-#  Added :has_political_ideology
+#  Moved classes to this file from state-condition-subclasses.ttl
+#  Added and clarified noun/verb_synonyms
 ########################################################################
 
 
@@ -38,60 +33,48 @@
 # Classes
 ########################################################################
 
-:Addiction a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Addiction" ;
-  :definition "A condition related to being dependent on (and unable to stop taking/using) a substance such as drugs or alcohol, or an activity (such as being addicted to video gaming or online activity). The substance or activity is indicated using the :has_topic property." ;
-  :synonym "alcoholism", "drug abuse", "alcohol abuse" .
-
 :Assessment a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Assessment" ;
-  :definition "An enumeration of values describing a StateAndCondition/situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'." ;
+  :definition "An enumeration of values describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:High :enum:Low :enum:Medium :enum:NegligibleOrNone :enum:VeryHigh ) ] .
+                        owl:oneOf ( :enum:High :enum:Low :enum:Medium :enum:NegligibleOrNone :enum:VeryHigh ) ] ;
+  :noun_synonym "estimate" .
 
 :Capacity a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Capacity" ;
   :definition "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate." ;
-  :synonym "volume", "magnitude", "maximum amount" .
+  :noun_synonym "capability", "volume", "maximum amount", "capacitance" .
 
 :CaptivityAndDetention a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Captivity and Detention" ;
   :definition "The condition of an Agent being held captive and confined to a certain location." ;
-  :synonym "incarceration", "internment", "confinement", "imprisonment" .
+  :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery" ;
+  :verb_synonym "imprison", "incarcerate", "intern", "confine", "enslave" .
 
 :Compatibility a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Compatibility" ;
-  :definition "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate." .
+  :definition "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate." ;
+  :noun_synonym "coexistence" ;
+  :verb_synonym "coexist", "is compatible with" .
 
 :Compliance a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Compliance" ;
-  :definition "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." .
-
-:Competition a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Competition" ;
-  :definition "The condition where two or more Agents are striving for a similar goal or using scarce Resources, and want to be more successful than or to outlive the others. This class refers to the general situation of Competition, as opposed to a specific Event (:CompetitiveEvent). The latter would be Evidence for the former. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property. The overall competitive situation can be described using the :has_assessment predicate." ;
-  :synonym "rivalry" .
+  :definition "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." ;
+  :noun_synonym "conformity" ;
+  :verb_synonym "is in compliance", "compliant", "conform" .
 
 :ConsumerConfidence a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Consumer Confidence" ;
   :definition "An economic indicator that is defined 'as the degree of optimism on the state of [an] economy that consumers are expressing through their activities of savings and spending ... In an interconnected global economy, tracking international consumer confidence is a lead indicator of economic trends.' (https://en.wikipedia.org/w/index.php?title=Consumer_confidence_index&oldid=1009942282) The overall  situation regarding ConsumerConfidence can be described using the :has_assessment predicate." .
 
-:Cooperation a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Cooperation" ;
-  :definition "The condition where two or more Agents are striving for a similar goal or for similar Resources, and are mutually assisting/supporting one another. This class refers to the general situation of Cooperation, as opposed to a specific Event (:CooperativeEvent). The latter would be Evidence for the former. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_holder property.  The overall cooperative situation can be described using the :has_assessment predicate." ;
-  :synonym "collaboration", "teamwork" .
-
 :Deflation a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:subClassOf :EconomicEnvironment, :Decrease ;
   rdfs:label "Deflation" ;
   :definition "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate." .
 
@@ -99,56 +82,40 @@
   rdfs:subClassOf :LivingConditions ;
   rdfs:label "Drinkable Water" ;
   :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate." ;
-  :synonym "potable water" .
+  :noun_synonym "potable water" .
 
 :EconomicEnvironment a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Economic Environment" ;
-  :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+  :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
 :Education a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
   rdfs:label "Education" ;
-  :definition "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." ;
-  :synonym "schooling" .
+  :definition "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
 :Employment a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Employment" ;
   :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." .
 
-:Expansion a owl:Class ;
-  rdfs:subClassOf :Trend ;
-  rdfs:label "Expansion" ;
-  :definition "A condition describing an ongoing Trend of increasing, broadening, enlarging, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Expansion can be described using the :has_assessment predicate." ;
-  :synonym "increasing", "broadening", "enlarging", "expanding" .
-
 :Expenses a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Expenses" ;
   :definition "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate." ;
-  :example "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc." .
-
-:Food a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Food" ;
-  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
+  :example "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc." ;
+  :noun_synonym "costs" .
 
 :Freedom a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Freedom" ;
-  :definition "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." .
+  :definition "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." ;
+  :noun_synonym "liberty", "independence" .
 
 :Healthcare a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
   rdfs:label "Healthcare" ;
   :definition "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
-
-:HealthAndDiseaseRelated a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Health and Disease Related" ;
-  :definition "Any condition concerning disease or illness (and recovery from such) by humans, plants and animals. The disease, illness, etc. are indicated using the :has_topic property." ;
-  :synonym "illness", "injury" .
 
 :Housing a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
@@ -156,9 +123,9 @@
   :definition "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
 :Impossibility a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Impossibility" ;
-  :definition "Some entity (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing that is impossible is specified using the :has_topic property." .
+  :definition "Some entity or collection of entities (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing(s) that are impossible are specified using the :has_topic property." .
 
 :Income a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
@@ -167,7 +134,7 @@
   :example "Examples of incomes are salaries, received payments for sales of crops, etc." .
 
 :Inflation a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:subClassOf :EconomicEnvironment, :Increase ;
   rdfs:label "Inflation" ;
   :definition "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate." .
 
@@ -175,33 +142,33 @@
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Law and Policy" ;
   :definition "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents." ;
-  :synonym "directive", "legislation" .
+  :noun_synonym "directive", "legislation" .
 
 :LivingConditions a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Living Conditions" ;
-  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
-:Loss a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Loss" ;
-  :definition "A condition describing NOT having some goods or property, which previously were in an Agent's Possession." ;
-  :synonym "mislaying", "losing", "misplacing" .
+:Nutrition a owl:Class ;
+  rdfs:subClassOf :LivingConditions ;
+  rdfs:label "Food" ;
+  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
 
 :OpportunityAndPossibility a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Opportunity and Possibility" ;
-  :definition "Some entity (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing that is possible is specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
+  :definition "Some entity or group of entities (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing(s) that are possible are specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
 
 :PoliticalEnvironment a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Political Environment" ;
-  :definition "A superclass for a variety of characterizations related governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the StateAndConditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive." .
+  :definition "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
 
 :PoliticalIdeology a owl:Class ;
   rdfs:subClassOf :Enumeration, :PoliticalEnvironment ;
   rdfs:label "Political Ideology" ;
-  :definition "An enumeration of values describing how society . From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them. The popularity of an ideology is in part due to the influence of moral entrepreneurs, who sometimes act in their own interests. Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve this goal.'" ;
+  :definition "Used to indicate how a Location or Agent (such as a Person or GeopoliticalEntity) is evaluated. A Location is identified using the :has_location property, while an Agent is indicated using :has_holder. From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].'" ;
+  :example "Examples are Authoritarian, Communism, Socialism, etc." ;
   owl:equivalentClass [ a owl:Class ;
                         owl:oneOf ( :enum:Anarchism :enum:Authoritarianism :enum:ColonialismAndImperialism 
                                     :enum:Communism :enum:Communitarianism :enum:Conservatism :enum:Corporatism 
@@ -210,33 +177,16 @@
                                     :enum:Populism :enum:Progressivism :enum:Reactionist :enum:Socialism 
                                     :enum:Syndicalism ) ] .
 
-:Possession a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Possession" ;
-  :definition "A condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-  :synonym "keeping", "holding" .
-
 :Recession a owl:Class ;
-  rdfs:subClassOf :Reduction, :EconomicEnvironment ;
+  rdfs:subClassOf :Decrease, :EconomicEnvironment ;
   rdfs:label "Recession" ;
   :definition "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate." .
 
-:Reduction a owl:Class ;
-  rdfs:subClassOf :Trend ;
-  rdfs:label "Reduction" ;
-  :definition "A condition describing an ongoing Trend of decreasing, shrinking, narrowing, ... of some Resource or Agent. The latter are identified using the :has_hodling_resource or :has_holder predicates (respectively). The pace of the Reduction can be described using the :has_assessment predicate." ;
-  :synonym "decreasing", "shrinking", "narrowing", "reducing" .
-
 :RequirementAndDependence a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Requirement and Dependence" ;
-  :definition "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_holding_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate." ;
-  :synonym "reliance", "need" .
-
-:Risk a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Risk" ;
-  :definition "The 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity [or occurrence] with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings. Note that the activity or occurrence that is 'risky' is identified using the :has_topic property, while an overall assessment of Risk can be defined using the :has_assessment predicate." .
+  :definition "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate." ;
+  :noun_synonym "reliance", "need" .
 
 :SafeConditions a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
@@ -252,15 +202,15 @@
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Savings and Investment" ;
   :definition "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate." ;
-  :synonym "capital", "nest egg" .
+  :noun_synonym "capital", "nest egg" .
 
 :SupportForGovernment a owl:Class ;
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Support for Government" ;
-  :definition "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably. The overall situation is described using the :has_assessment property." .
+  :definition "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably." .
 
 :SupportForHumanRights a owl:Class ;
-  rdfs:subClassOf :PoliticalEnvironment, :LivingConditions ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Support for Human Rights" ;
   :definition "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)" .
 
@@ -268,19 +218,13 @@
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Taxes" ;
   :definition "A situation describing and assessing (via the :has_assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863)" ;
-  :synonym "levy", "tariff", "duty", "toll", "tax" .
+  :noun_synonym "levy", "tariff", "duty", "toll", "tax" .
 
 :Toleration a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Toleration" ;
   :definition "A condition describing an environment where differences of opinion or behavior are allowed. The overall situation is described using the :has_assessment property." ;
-  :synonym "forbearance", "open-mindedness" .
-
-:Trend a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
-  rdfs:label "Trend" ;
-  :definition "A condition describing the general direction or tendency in which some Agent or Resource is moving/changing/developing. The pace of change of the Trend can be described using the :has_assessment predicate." ;
-  :synonym "tendency", "course", "inclination" .
+  :noun_synonym "forbearance", "open-mindedness" .
 
 :Unemployment a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
@@ -296,25 +240,16 @@
   owl:members  ( :CaptivityAndDetention :Freedom ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Cooperation :Competition ) .
-
-[] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Deflation :Inflation ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Employment :Unemployment ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Expansion :Reduction ) .
-
-[] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Income :Expenses ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :OpportunityAndPossibility :Impossibility ) .
-
-[] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Possession :Loss ) .
 
 
 ########################################################################
@@ -329,17 +264,9 @@
 :has_assessment a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :reference_to_enumerated_value ;
   rdfs:label "has assessment" ;
-  :definition "Used to indicate how a StateAndCondition (such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
-  rdfs:domain :StateAndCondition ;
+  :definition "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
+  rdfs:domain :EventAndState ;
   rdfs:range :Assessment .
-
-:has_political_ideology a owl:ObjectProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has political ideology" ;
-  :definition "Used to indicate how a StateAndCondition ((such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
-  rdfs:domain [ a owl:Class ;
-                owl:unionOf ( :PoliticalEnvironment :Agent ) ] ; 
-  rdfs:range :PoliticalIdeology .
 
 
 ########################################################################
@@ -348,19 +275,19 @@
 
 :enum:Anarchism a :PoliticalIdeology ;
   rdfs:label "Anarchism" ;
-  :defition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" .
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" .
 
 :enum:Authoritarianism a :PoliticalIdeology ;
   rdfs:label "Authoritarianism" ;
-  :defition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" .
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" .
 
 :enum:ColonialismAndImperialism a :PoliticalIdeology ;
   rdfs:label "Colonialism and Imperialism" ;
-  :defition "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
+  :definition "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
 
 :enum:Communism a :PoliticalIdeology ;
   rdfs:label "Communism" ;
-  :defition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" .
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" .
 
 :enum:Communitarianism a :PoliticalIdeology ;
   rdfs:label "Communitarianism" ;

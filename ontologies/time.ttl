@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: May 23 2021
+# Last modified: June 30 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -23,6 +23,7 @@
 #  Updated to the Mar 2021 semantics
 #  Updated the default and dna prefixes
 #  Added example individuals
+#  Changed :synonym to :noun_synonym
 ########################################################################
 
 
@@ -34,27 +35,27 @@
   rdfs:subClassOf :Time ;
   rdfs:label "Duration of Time" ;
   :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :has_temporal_unit properties." ;
-  :synonym "temporal distance", "lifespan" .
+  :noun_synonym "temporal distance", "lifespan" .
 
 :Interval a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Interval of Time" ;
   :definition "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."; 
-  :synonym "timeframe", "period" .
+  :noun_synonym "timeframe", "period" .
 
 :PointInTime a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Point in Time" ;
   :definition "A point in time as specified by the properties, :year, :day_of_month, :day_of_week, :hour_of_day, :minute_of_hour, :month_of_year, :second_of_minute and :week_of_month, or by a specific :date_time timestamp." ;
   :example "For example, April 1 2016 at noon can be specified by a PointInTime instance with the following properties and values: :year 2016, :month_of_year 4, :day_of_month 1 and :hour_of_day 12 or by the xsd:timestamp, '2016-04-01T12:00:00." ;
-  :synonym "moment", "instant" .
+  :noun_synonym "moment", "instant" .
 
 :RecurrencePattern a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Recurrence Pattern" ;
   :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
   :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :has_recurrence_unit property would be set to :Months. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :has_recurrence_unit would be :Weekly and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :has_recurrence_unit of :Seasonal and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
-  :synonym "rhythm", "cadence", "cycle", "repetition" .
+  :noun_synonym "rhythm", "cadence", "cycle", "repetition" .
 
 :Season a owl:Class ;
   rdfs:subClassOf :RecurrencePattern ;
@@ -211,7 +212,7 @@
 :Autumn a :Season ;
   rdfs:label "Autumn" ;
   :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
-  :synonym "fall" .
+  :noun_synonym "fall" .
 
 :DrySeason a :Season ;
   rdfs:label "Dry Season" ;
@@ -256,7 +257,7 @@
 :RainySeason a :Season ;
   rdfs:label "Rainy Season" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'" ;
-  :synonym "wet season", "green season" .
+  :noun_synonym "wet season", "green season" .
 
 :Spring a :Season ;
   rdfs:label "Spring" ;

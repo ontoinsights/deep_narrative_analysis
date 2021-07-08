@@ -1,0 +1,229 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining semantics related to emotions (e.g., sub-classes of
+# EmotionalResponse).
+# 
+# These subclasses should be extended as needed for a domain of interest.
+# 
+# Created: April 1 2021
+# Last Modified: July 7 2021
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  Moved classes to this file from event-subclasses.ttl
+#  Added and clarified noun/verb_synonyms
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+:AdmirationAndRespect a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Admiration and Respect" ;
+  :noun_synonym "regard", "esteem", "reverence", "awe", "entrancement" ;
+  :verb_synonym "admire", "respect", "hold in regard", "hold in esteem", "revere", "entrance", "marvel" .
+
+:AngerAndAnnoyance a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Anger and Annoyance" ;
+  :noun_synonym "rage", "outrage", "fury", "wrath", "hostility", "bitterness", "indignation", "irritation", "irritability", "aggravation", "animosity", "antagonism", "enmity", "exasperation", "impatience", "ire", "miff", "irascibility", "peevishness" ;
+  :verb_synonym "irritate", "aggravate", "anatagonize", "exasperate" . 
+
+:Anxiety a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Anxiety" ;
+  :noun_synonym "restlessness", "worry", "discontent", "discontentment", "fretfulness", "stress", "tension", "agitation", "nervousness", "uneasiness", "apprehension", "pensiveness", "dismay", "angst", "concern", "disquiet", "jitters", "unease" ;
+  :verb_synonym "worry", "fret", "agitate" .
+
+:ApathyAndBoredom a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Apathy and Boredom" ;
+  :noun_synonym "heartlessness", "indifference", "lethargy", "dullness" .
+
+:Appreciation a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Appreciation" ;
+  :noun_synonym "thanksgiving", "thanks", "gratitude", "gratefulness", "thankfulness" ;
+  :verb_synonym "appreciate", "offer thanks", "be grateful", "be thankful" .
+
+:Arrogance a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Arrogance" ;
+  :noun_synonym "boastfulness", "vanity", "aloofness", "egotism", "conceit", "pomposity", "self-importance" .
+
+:AwkwardnessAndShyness a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Awkwardness and Shyness" ;
+  :noun_synonym "gawkiness", "ineptness", "cloddishness", "egotism", "reticence", "timidity", "meekness" .
+
+:CompassionAndEmpathy a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Compassion and Empathy" ;
+  :noun_synonym "humaneness", "tenderheartedness", "sympathy" ;
+  :verb_synonym "empathize", "sympathize" .
+
+:Confidence a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Confidence" ;
+  :noun_synonym "certainty", "poise", "resoluteness", "self-possession" ;
+  :verb_synonym "poise" .
+
+:ConfusionAndDoubt a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Confusion and Doubt" ;
+  :noun_synonym "trepidation", "uncertainty", "bewilderment", "bafflement", "perplexity", "disorientation", "bemusement", "fluster", "puzzlement", "befuddlement" ;
+  :verb_synonym "be confused", "doubt", "bewilder", "baffle", "perplex", "disorient", "fluster", "befuddle" .
+
+:Curiosity a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Curiosity" ;
+  :noun_synonym "interest", "inquisitiveness", "attentiveness" ;
+  :verb_synonym "be curious", "thirst for knowledge", "interest in" .
+
+:DelightAndHappiness a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Delight and happiness" ;
+  :noun_synonym "joy", "elation", "jubilation", "pleasure", "amusement", "enjoyment", "laughter", "cheerfulness", "bliss", "gaiety", "glee", "jolliness", "joviality", "gladness", "ecstacy", "euphoria" ;
+  :verb_synonym "be amused", "enjoy", "delight", "laugh" .
+
+:Envy a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Envy" ;
+  :noun_synonym "jealousy", "ill will", "malice", "rivalry", "coveting", "covetousness", "enviousness" ;
+  :verb_synonym "covet" .
+
+:Excitement a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Excitement" ;
+  :noun_synonym "enthusiasm", "zeal", "thrill", "exhilaration" . 
+
+:FearAndDistrust a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Fear and Distrust" ;
+  :noun_synonym "dread", "alarm", "panic", "horror", "fright", "terror", "hysteria", "suspense", "scare", "suspicion", "mistrust" ; 
+  :verb_synonym "be afraid", "be scared" .
+
+:FriendlinessAndTrust a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Friendliness and Trust" ;
+  :noun_synonym "politeness", "acceptance", "tolerance", "openness", "camaraderie", "cordiality", "neighborliness", "comradery", "conviviality", "geniality", "sociability" ;
+  :verb_synonym "trust", "tolerate" .
+
+:FrustrationAndHelplessness a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Frustration and Helplessness" ;
+  :noun_synonym "exasperation", "powerlessness" ;
+  :verb_synonym "frustrate", "exasperate" .
+
+:GenerosityAndKindness a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Generosity and Kindness" ;
+  :noun_synonym "charity", "largesse", "beneficence", "unselfishness" .
+
+:Greed a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Greed" ;
+  :noun_synonym "avarice", "miserliness", "selfishness" .
+
+:GuiltAndShame a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Guilt and Shame" ;
+  :noun_synonym "regret", "remorse", "humilitation", "mortification", "embarrassment", "self-loathing" .
+
+:HatredAndDigust a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Hatred and Disgust" ;
+  :noun_synonym "scorn", "spite", "resentment", "vengefulness", "hostility", "contempt", "aversion", "revulsion", "loathing" ;
+  :verb_synonym "spite", "loathe" .
+
+:Hope a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Hope" ;
+  :noun_synonym "eagerness", "optimism", "anticipation", "expectancy" .
+
+:Humility a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Humility" ;
+  :noun_synonym "modesty" .
+
+:LongingAndPassion a owl:Class ;
+  rdfs:subClassOf :EmotionalResponse ;
+  rdfs:label "Longing and Passion" ;
+  :noun_synonym "lust", "infatuation", "enthrallment", "rapture", "craving", "arousal", "desire" ;
+  :verb_synonym "enthrall", "crave", "arouse", "desire" .
+
+:Loneliness a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Loneliness" ;
+  :noun_synonym "isolation" .
+
+:Love a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Love" ;
+  :noun_synonym "affection", "fondness", "liking", "attraction", "caring", "tenderness", "sentimentality", "romance" ;
+  :verb_synonym "like", "love", "care", "romance" .
+
+:NegativeEmotion a owl:Class ;
+  rdfs:subClassOf :EmotionalResponse ;
+  rdfs:label "Negative Emotion" ;
+  :definition "Any EmotionalResponse related to unpleasant, pessimistic or insecure feelings." ;
+  :example "Examples are unhappiness, fear, frustration, loneliness, disgust, hatred, etc." .
+
+:Nostalgia a owl:Class ;
+  rdfs:subClassOf :LongingAndPassion, :PositiveEmotion ;
+  rdfs:label "Nostalgia" ;
+  :noun_synonym "homesick", "fond memories" .
+
+:Pessimism a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Pessimism" ;
+  :noun_synonym "fatalism", "cynicism" .
+
+:PositiveEmotion a owl:Class ;
+  rdfs:subClassOf :EmotionalResponse ;
+  rdfs:label "Positive Emotion" ;
+  :definition "Any EmotionalResponse related to constructive, optimistic or confident feelings." ;
+  :example "Examples are happiness, love, forgiveness, hope, gratitude, etc." .
+
+:RelaxationAndSerenity a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Serenity" ;
+  :noun_synonym "contentment", "calmness", "patience", "relief", "composure", "peace of mind", "tranquility" ;
+  :verb_synonym "be content", "be patient", "be calm", "be at peace" .
+
+:SadnessAndDisappointment a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Sadness and Disappointment" ;
+  :noun_synonym "anguishment", "hurt", "sorrow", "grief", "despair", "agony", "anguish", "depression", "gloom", "glumness", "unhappiness", "woe", "misery", "melancholy", "dismay", "displeasure", "dejection", "defeatism", "self-pity" .
+
+:Satisfaction a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Satisfaction" ;
+  :noun_synonym "pride", "triumph", "gratification", "fulfillment" .
+
+:Shock a owl:Class ;
+  rdfs:subClassOf :NegativeEmotion ;
+  rdfs:label "Shock" ;
+  :noun_synonym "upset" ;
+  :verb_synonym "shock", "upset" .
+
+:Surprise a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Surprise" ;
+  :noun_synonym "amazement", "astonishment", "wonder", "marveling" ;
+  :verb_synonym "amaze", "astonish", "marvel" .

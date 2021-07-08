@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: May 28 2021
+# Last modified: July 6 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -32,6 +32,7 @@
 #  Renamed Characteristic to AgentAspect
 #  Removed subclass definition from LineOfBusiness
 #  Added subProperty definition to :has_agent_aspect
+#  Changed :synonym to :noun_synonym and :verb_synonym, and added several
 ########################################################################
 
 
@@ -40,10 +41,12 @@
 ########################################################################
 
 :Affiliation a owl:Class ;
-  rdfs:subClassOf :StateAndCondition ;
+  rdfs:subClassOf :EventAndState ;
   rdfs:label "Affiliation" ;
   :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
-  :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." .
+  :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
+  :noun_synonym "association" ;
+  :verb_synonym "affiliate", "associate with" .
 
 :AgentAspect a owl:Class ;
   rdfs:label "Agent Aspect" ;
@@ -58,7 +61,8 @@
 :DisplacedPerson a owl:Class ;
   rdfs:subClassOf :Person ;
   rdfs:label "Displaced Person or Refugee" ;
-  :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." .
+  :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." ;
+  :noun_synonym "refugee" .
 
 :EducationLevel a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Enumeration ;
@@ -76,20 +80,21 @@
   rdfs:subClassOf :AgentAspect ;
   rdfs:label "Ethnicity" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
-  :synonym "race" .
+  :noun_synonym "race" .
 
 :Family a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Family" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another." ;
-  :synonym "household" .
+  :noun_synonym "household" .
   
 :Gender a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Enumeration ;
   rdfs:label "Gender" ;
   :definition "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_agent_aspect property which references the Gender." ;
   owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] .
+                        owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] ;
+  :noun_synonym "sex" .
 
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
@@ -101,28 +106,23 @@
   rdfs:label "Line/Type of Business" ;
   :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
 
-:MedicalOrPsychologicalCondition a owl:Class ;
-  rdfs:subClassOf :AgentAspect ;
-  rdfs:label "Medical or Psychological Condition" ;
-  :definition "Indicates various types of physical and mental conditions that distinguish a Person or Group and/or impact their ability to carry out activities. These conditions may be related to genetic or emotional disorders, the severity of an illness, etc." .
-
 :Organization a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Organization" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
-  :synonym "organisation", "association", "corporation", "institution", "company" .
+  :noun_synonym "organisation", "association", "corporation", "institution", "company" .
 
 :ParamilitaryForce a owl:Class ;
   rdfs:subClassOf :Organization ;
   rdfs:label "Paramilitary Force" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'." ;
-  :synonym "quasi military" .
+  :noun_synonym "quasi military" .
 
 :Person a owl:Class ;
   rdfs:subClassOf :Agent ;
   rdfs:label "Person" ;
   :definition "A human being." ;
-  :synonym "human", "human being", "man", "woman", "child" .
+  :noun_synonym "human", "human being", "man", "woman", "child" .
 
 :PoliceForce a owl:Class ;
   rdfs:subClassOf :Organization ;
@@ -332,7 +332,7 @@
   rdfs:label "has agent aspect" ;
   rdfs:domain :Person ;
   rdfs:range :AgentAspect ;
-  :definition "Indicates some facet, detail or characteristic of a Person that serves to distinguish and/or describe them." .
+  :definition "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
 
 :has_citizenship a owl:ObjectProperty ;
   rdfs:label "has citizenship" ;
@@ -380,11 +380,11 @@
 
 :enum:Female a :Gender ;
   rdfs:label "Female" ;
-  :synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
+  :noun_synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
 
 :enum:Male a :Gender ;
   rdfs:label "Male" ;
-  :synonym "boy", "man", "mister", "Mr." .
+  :noun_synonym "boy", "man", "mister", "Mr." .
 
 :enum:NoEducation a :EducationLevel ;
   rdfs:label "No Education" .

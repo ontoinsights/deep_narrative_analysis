@@ -259,7 +259,6 @@ def get_birth_family_triples(narrative: str, given_name: str, iri_narrator: str)
     logging.info('Getting birth details')
     new_triples = list()
     birth_date, birth_place, family_dict = get_birth_family_details(narrative)
-    # TODO: Process family_dict
     logging.info(f'birth date: {birth_date}')
     logging.info(f'birth place: {birth_place}')
     if birth_date or birth_place:
@@ -297,10 +296,10 @@ def get_birth_family_triples(narrative: str, given_name: str, iri_narrator: str)
             new_triples.append(f':{iri_narrator}Birth :has_location :{iri_narrator}BirthPlace . '
                                f':{iri_narrator}BirthPlace a :PopulatedPlace ; rdfs:label "{label_text}" .')
         if len(family_dict):
-            new_triples.append(f':{iri_narrator}Family a :Family .')
+            new_triples.append(f':{iri_narrator}Family a :Family ; :has_member :{iri_narrator} .')
             for key, value in family_dict.items():
-                new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key} . '
-                                   f':{iri_narrator}{key} rdfs:label "{value}" .')
+                new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key}{value} . '
+                                   f':{iri_narrator}{key}{value} rdfs:label "{key}", "{value}" .')
     return new_triples
 
 

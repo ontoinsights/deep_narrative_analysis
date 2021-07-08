@@ -13,20 +13,20 @@ def test_create_database():
 
 def test_get_birth_family_triples():
     # Tests if the appropriate (metadata) triples are extracted from the narrative text
-    # TODO
+    # TODO + need multiples
     return
 
 
 def test_parse_narrative():
     # Tests the parsing of a narrative - that the correct triples are created and stored in the db
     # This basically tests most of the functions in the module
-    # TODO
+    # TODO + need multiples
     return
 
 
 def test_sentence_split():
     # Validates that sentence splitting is working correctly
-    # TODO
+    # TODO + need multiples
     return
 
 

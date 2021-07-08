@@ -413,7 +413,7 @@ def _output_words_in_csv(narratives: str, nouns_in_csv: int, verbs_in_csv: int, 
     :return: None (.csv files are generated)
     """
     sorted_nouns, sorted_verbs = get_nouns_verbs(narratives)
-    # TODO: Make words lower case
+    # TODO: Only report words with 'unknown' semantics
     with open(f'{directory_name}/Nouns.csv', 'w', newline=NEW_LINE) as noun_file:
         noun_writer = csv.writer(noun_file, delimiter=',')
         noun_writer.writerow(['Noun', 'Count'])

@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: May 22 2021
+# Last modified: July 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -27,6 +27,7 @@
 # Changes:
 #  Updated to the Mar 2021 semantics
 #  Updated the default and dna prefixes
+#  Changed :synonym to :noun_synonym
 ########################################################################
 
 
@@ -38,14 +39,14 @@
   rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Animal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
-  :synonym "beast", "creature", "insect", "bug", "fauna" .
+  :noun_synonym "beast", "creature", "insect", "bug", "fauna" .
 
 :ArtAndCollectible a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Art and Collectible" ;
   :definition "Something valued above its original worth, since it is rare, prized, popular, etc." ;
   :example "Examples of collectibles are pieces of art and sculpture, books, stamps and antiques." ;
-  :synonym "rarity" .
+  :noun_synonym "rarity" .
 
 :BuildingMaterialAndStone a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
@@ -62,7 +63,7 @@
   rdfs:label "Component Part (not used for single inheritance)" ;
   :definition "A ComponentPart is a simple construct to indicate that a piece/part of a whole is referenced - and that it is important to track the origin of that part. When used, the type that classifies the 'whole' should also be specified." ;
   :example "For example, an organ such as a heart is a ComponentPart of an Animal - and would be designated using both classes. A tire that is/was part of a Vehicle could be defined using the types, ComponentPart, Vehicle and RubberAndSubstitute." ;
-  :synonym "piece" .
+  :noun_synonym "piece" .
 
 :ComputingAndTelecommunicationDevice a owl:Class ;
   rdfs:subClassOf :Machine ;
@@ -73,14 +74,14 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Container" ;
   :definition "A receptacle or enclosure for holding a solid, liquid or gas." ;
-  :synonym "receptacle" .
+  :noun_synonym "receptacle" .
 
 :ClothingAndAccessory a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Clothing and Accessory" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
   :example "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
-  :synonym "clothes", "apparel", "attire" .
+  :noun_synonym "clothes", "apparel", "attire" .
 
 :DyeAndInk a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
@@ -96,7 +97,7 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Food and Drink" ;
   :definition "An entity that is consumed to satisfy hunger and/or thirst, or for nutritional or recreational reasons." ;
-  :synonym "beverage", "drink", "water", "nourishment", "sustenance" .
+  :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance" .
 
 :Fuel a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
@@ -108,7 +109,7 @@
   rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Fungus and Plant" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
-  :synonym "flora", "vegetation", "mold", "mushroom" .
+  :noun_synonym "flora", "vegetation", "mold", "mushroom" .
 
 :FurnitureAndHouseholdGoods a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -125,7 +126,7 @@
   rdfs:label "Jewelry" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Jewellery&oldid=932741930), Jewelry 'consists of decorative items worn for personal adornment, such as brooches, rings, necklaces, earrings, pendants, bracelets, and cufflinks. Jewellery may be attached to the body or the clothes.' It may be made of precious metals and stones or imitations." ;
   :example "Examples are a bracelet, brooch, earrings, rings, a necklace or pendant, anklet, cameo, charm, choker, locket or cufflink." ;
-  :synonym "jewellery" .
+  :noun_synonym "jewelery" .
 
 :LegalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -137,7 +138,7 @@
   rdfs:label "Machine or Mechanical Device" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667), a Machine '(or mechanical device) is a mechanical structure that uses power to apply forces and control movement to perform an intended action. Machines can be driven by animals and people, by natural forces such as wind and water, and by chemical, thermal, or electrical power, and include a system of mechanisms that shape the actuator input to achieve a specific application of output forces and movement ... Modern machines are complex systems that consist of structural elements, mechanisms and control components and include interfaces for convenient use." ;
   :example "Examples include: a wide range of vehicles, such as automobiles, boats and airplanes; appliances in the home and office, including computers, building air handling and water handling systems; as well as farm machinery, machine tools and factory automation systems and robots. (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667)" ;
-  :synonym "appliance", "device" .
+  :noun_synonym "appliance", "device" .
 
 :MonetaryAndFinancialInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -160,7 +161,7 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Pharmaceutical and Medicinal Entity" ;
   :definition "A Resource (naturally occurring or manufactured) that is used to cure/heal, relieve pain and/or administer to injuries or illnesses." ;
-  :synonym "healing", "therapeutic" .
+  :noun_synonym "healing", "therapeutic" .
 
 :PreciousMetalPearlAndGemstone a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -201,7 +202,7 @@
   rdfs:subClassOf :Machine ;
   rdfs:label "Vehicle" ;
   :definition "A Machine used for transporting people and/or goods. Vehicles operate on land or sea, and in the air or space." ;
-  :synonym "conveyance" .
+  :noun_synonym "conveyance" .
 
 :WasteAndResidue a owl:Class ;
   rdfs:subClassOf :Resource ;

@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: May 28 2021
+# Last modified: June 30 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,7 @@
 #  Added Factory, DesignatedArea, OccupiedArea
 #  Updated the default and dna prefixes
 #  Corrected typos and added a class definition for Continent
+#  Changed :synonym to :noun_synonym
 ########################################################################
 
 
@@ -37,7 +38,7 @@
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Administrative Division" ;
   :definition "A subnational level of government, operating over some region. The first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc. The level of an AdministrativeDivision is given by the property, :admin_level. Note that :admin_level is an optional property and may not be known, or applicable." ;
-  :synonym "county", "district", "govenorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" .
+  :noun_synonym "county", "district", "govenorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" .
 
 :AnthropogenicFeature a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -48,7 +49,7 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Border" ;
   :definition "A boundary between two political, social or geographic entities. A Border may be identified by name, by the names of the bordering entities (using the :border_with property) or by a set of latitudes/longitudes (using the :has_location property to reference a set of PhysicalLocations with corresponding :latitutde/longitude properties)." ;
-  :synonym "perimeter", "boundary" .
+  :noun_synonym "perimeter", "boundary" .
 
 :BoundingRegion a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -70,7 +71,7 @@
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Country" ;
   :definition "Describes the government of a nation, the people living in the nation and the land area that is governed." ;
-  :synonym "nation", "commonwealth", "nationality" .
+  :noun_synonym "nation", "commonwealth", "nationality" .
 
 :Currency a owl:Class ;
   rdfs:subClassOf :MonetaryAndFinancialInstrument ;
@@ -90,7 +91,7 @@
   owl:equivalentClass [ a owl:Class ;
                         owl:oneOf ( :enum:East :enum:North :enum:NorthEast :enum:NorthWest :enum:South :enum:SouthEast 
                                     :enum:SouthWest :enum:West ) ] ;
-  :synonym "compass direction", "compass orientation" .
+  :noun_synonym "compass direction", "compass orientation" .
 
 :Factory a owl:Class ;
   rdfs:subClassOf :BuildingAndDwelling ;
@@ -102,7 +103,7 @@
   rdfs:label "Geopolitical Entity" ;
   :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation." ;
   :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
-  :synonym "political region", "body politic" .
+  :noun_synonym "political region", "body politic" .
 
 :OccupiedArea a owl:Class ;
   rdfs:subClassOf :GeopoliticalEntity ;
@@ -113,7 +114,7 @@
   rdfs:subClassOf :Location ;
   rdfs:label "Online Location" ;
   :definition "A location defined in/on a network, such as a wireless network (e.g., a mobile phone number), the Internet (such an IP address, email adress or URL) or a wired network. The properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others." ;
-  :synonym "internet location", "internet address", "computer address", "web address" .
+  :noun_synonym "internet location", "internet address", "computer address", "web address" .
 
 :PhysicalLocation a owl:Class ;
   rdfs:subClassOf :Location ;
@@ -124,13 +125,13 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Populated Place" ;
   :definition "A city, town, village, etc. where people live and work. The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
-  :synonym "city", "town", "village", "settlement" .
+  :noun_synonym "city", "town", "village", "settlement" .
 
 :PostalAddress a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Postal Address" ;
   :definition "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified." ;
-  :synonym "street address", "mailing address" .
+  :noun_synonym "street address", "mailing address" .
 
 :RelativeDirectionLocation a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -378,7 +379,7 @@
   rdfs:range :Terrain .
 
 :near a owl:ObjectProperty ;
-  rdfs:label "near" ;
+  rdfs:label "near", "close" ;
   :definition "Indicates that a RelativeDirectionLocation is 'close to' another, 'established' PhysicalLocation." ;
   rdfs:domain :RelativeDirectionLocation ;
   rdfs:range :PhysicalLocation .
