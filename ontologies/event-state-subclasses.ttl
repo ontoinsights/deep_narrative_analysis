@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 7 2021
+# Last Modified: July 16 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -31,6 +31,7 @@
 #  Moved classes from state-condition-subclasses here (and to 
 #    environment-subclasses.ttl)
 #  Also subclassed HealthAndDiseaseRelated from AgentAspect
+#  Added Marriage and Divorce
 ########################################################################
 
 
@@ -48,7 +49,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Aggressive or Hostile Act" ;
   :definition "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "aggression", "hostility", "confrontation" .
+  :noun_synonym "aggression", "hostility", "confrontation" ;
+  :verb_synonym "confront" .
 
 :Agreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -73,7 +75,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Attempt" ;
   :definition "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
-  :verb_synonym "try", "seek out to", "endeavor", "strive to", "undertake", "attempt" .
+  :verb_synonym "try", "seek to", "endeavor", "strive to", "undertake", "attempt" .
 
 :Avoidance a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -150,14 +152,15 @@
   rdfs:subClassOf :LifeEvent ;
   rdfs:label "Death" ;
   :definition "The act of an individual (animal or Person) ending life." ;
-  :verb_synonym "die", "decease" .
+  :noun_synonym "casualty", "annihilation", "decease", "demise" ;
+  :verb_synonym "die", "drown", "annihilate", "expire" .
 
 :Decrease a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease" ;
   :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :has_assessment predicate." ;
   :noun_synonym "reduction", "drop" ;
-  :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop" .
+  :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop", "decrease" .
 
 :DelayAndWait a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -178,6 +181,13 @@
   :definition "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)." ;
   :noun_synonym "catastrophe", "cataclysm", "calamity", "act of God" .
 
+:Divorce a owl:Class ;
+  rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
+  rdfs:label "Divorce" ;
+  :definition "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage." ;
+  :noun_synonym "annulment", "breakup" ;
+  :verb_synonym "annul", "breakup", "get a divorce", "end a marriage" .
+
 :Eating a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Eating" ;
@@ -190,7 +200,7 @@
   rdfs:label "Educational Event" ;
   :definition "An Event involved with teaching such as a specific class/course, the hiring of teachers or a new approach to testing." ;
   :noun_synonym "education", "class", "course", "test", "teacher", "teaching", "student", "professor", "training", "schooling", "tutoring", "instruction", "coaching" ;
-  :verb_synonym "educate", "teach", "test", "train", "tutor", "instruct", "coach" .
+  :verb_synonym "educate", "teach", "test", "train", "tutor", "instruct", "coach", "take a class", "attend school", "go to school" .
 
 :Election a owl:Class ;
   rdfs:subClassOf :PoliticalEvent ;
@@ -241,7 +251,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Friendly or Supportive Act" ;
   :definition "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
-  :verb_synonym "support", "patronize" .
+  :noun_synonym "encouragement", "neighborliness", "friendliness" ;
+  :verb_synonym "support", "patronize", "encourage" .
 
 :GamblingAndWagering a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -269,21 +280,21 @@
   rdfs:label "Imitation and Counterfeit" ;
   :definition "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting." ;
   :noun_synonym "copy", "duplicate", "simulation", "reproduction", "caricature", "fake", "forgery" ;
-  :verb_synonym "copy", "duplicate", "simulate", "reproduce", "fake", "forge" .
+  :verb_synonym "copy", "duplicate", "simulate", "reproduce", "fake", "forge", "imitate", "counterfeit" .
 
 :ImpactAndContact a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Impact and Contact" ;
   :definition "An act of coming into physical contact/touching, which may be forceful (e.g., an impact)" ;
   :noun_synonym "crash", "impingement", "collision", "bump", "touch" ;
-  :verb_synonym "touch", "hit", "swat", "bump", "poke", "collide", "slam", "strike" .
+  :verb_synonym "touch", "hit", "swat", "bump", "poke", "collide", "slam", "strike", "impact", "contact" .
 
 :InclusionAttachmentAndUnification a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Inclusion, Attachment and Unification" ;
   :definition "An act of fastening, joining, grouping or bringing together, etc." ;
   :noun_synonym "amalgamation", "combination", "insertion", "union", "merger", "fusion", "fusing", "integration", "coalition", "confederation", "federation", "synthesis" ;
-  :verb_synonym "amalgamate", "combine", "insert", "unite", "merge", "fuse", "integrate", "coalesce", "federate", "synthesize", "attach to" .
+  :verb_synonym "amalgamate", "combine", "insert", "unite", "merge", "fuse", "integrate", "coalesce", "federate", "synthesize", "attach to", "include", "attach" .
 
 :Increase a owl:Class ;
   rdfs:subClassOf :Change ;
@@ -295,7 +306,8 @@
 :InformationHandling a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Information Handling" ;
-  :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." .
+  :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." ;
+  :noun_synonym "IT", "information technology" .
 
 :InProcessPlacement a owl:Class ;
   rdfs:subClassOf :MovementTravelAndTransportation ;
@@ -307,8 +319,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Legal Event" ;
   :definition "Any activity based on following legal practices, or related to or allowed by laws or the legal system." ;
-  :noun_synonym "trial", "court case", "hearing", "jury", "justice" ;
-  :verb_synonym "try a case" .
+  :noun_synonym "trial", "court case", "hearing", "jury", "justice", "legal proceedings" ;
+  :verb_synonym "try a case", "go to court" .
 
 :LifeEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -322,6 +334,13 @@
   :noun_synonym "mislaying", "losing", "misplacing", "disappearance", "forfeiture", "squandering" ;
   :verb_synonym "mislay", "lose", "misplace", "forfeit", "squander" .
 
+:Marriage a owl:Class ;
+  rdfs:subClassOf :LifeEvent, :Ceremony, :PromiseAndOath, :LegalEvent ;
+  rdfs:label "Marriage" ;
+  :definition "A formal/legal event and condition describing that two people have committed to a relationship with each other." ;
+  :noun_synonym "wedding", "nuptials", "betrothal" ;
+  :verb_synonym "wed", "betroth", "marry" .
+
 :Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Measurement" ;
@@ -334,14 +353,14 @@
   rdfs:label "Meeting and Encounter" ;
   :definition "Any Event that is a formal, informal or coincidental gathering or assembly of people." ;
   :noun_synonym "gathering", "assembly", "conference" , "social event", "herding", "swarming", "congregation", "convention", "crowd" ;
-  :verb_synonym "gather", "assemble", "herd", "swarm", "congregate" .
+  :verb_synonym "gather", "assemble", "herd", "swarm", "congregate", "meet", "encounter" .
 
 :MovementTravelAndTransportation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Movement, Travel and Transportation" ;
   :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
   :noun_synonym "motion", "move", "moving", "arrival", "departure", "shipment", "trip", "transit", "transport", "haulage", "conveyance", "vacation", "cargo" ;
-  :verb_synonym "send", "bring", "drive", "leave", "arrive", "depart", "carry", "move", "convey", "ship", "take a trip", "take a vacation", "transport", "haul" .
+  :verb_synonym "send", "bring", "drive", "leave", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul" .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -374,7 +393,7 @@
   rdfs:label "Punishment" ;
   :definition "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property." ;
   :noun_synonym "discipline", "retribution", "penalizing" ;
-  :verb_synonym "discipline", "penalize" .
+  :verb_synonym "discipline", "penalize", "punish" .
 
 :RecreationEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -405,8 +424,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Return and Release" ;
   :definition "An act of restoring something or someone to their original owner/location/condition, granting freedom to someone or something, or publishing/releasing something. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." ;
-  :noun_synonym "restitution", "liberation", "rescue" ;
-  :verb_synonym "free", "revert", "give back", "take back", "pay back", "liberate", "rescue", "release", "return" .
+  :noun_synonym "restitution", "liberation", "rescue", "restoration" ;
+  :verb_synonym "free", "revert", "give back", "take back", "pay back", "liberate", "rescue", "release", "return", "restore" .
 
 :Revelation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -435,14 +454,14 @@
   rdfs:label "Searching" ;
   :definition "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property." ;
   :noun_synonym "hunt", "exploration", "forage", "stalking", "rummaging", "seeking", "scavenge" ;
-  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "scavenge", "root around", "fish around", "look high and low" .
+  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "scavenge", "root around", "fish around", "look high and low", "search" .
 
 :Separation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Separation" ;
   :definition "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts." ;
   :noun_synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation", "splitting", "disassembly", "breakage", "partition", "division" ;
-  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide" .
+  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide", "separate" .
 
 :SpaceEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -475,12 +494,13 @@
   rdfs:label "Utilization And Consumption" ;
   :definition "Any act that uses something or someone." ;
   :noun_synonym "usage", "use" ;
-  :verb_synonym "use", "consume", "use up" .
+  :verb_synonym "use", "consume", "use up", "utilize", "consume" .
 
 :ViolationOfAgreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Violation of Agreement" ;
-  :definition "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." .
+  :definition "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." ;
+  :verb_synonym "violate" .
 
 :WeatherEvent a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
@@ -510,6 +530,9 @@
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Decrease :Increase ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Divorce :Marriage ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :InclusionAttachmentAndUnification :Separation ) .

@@ -24,8 +24,20 @@ def test_parse_narrative():
     return
 
 
-def test_sentence_split():
+def test_process_verb():
+    # Validates that verb processing is working correctly
+    # TODO + need multiples
+    return
+
+
+def test_split_clauses():
     # Validates that sentence splitting is working correctly
+    # TODO + need multiples
+    return
+
+
+def test_subject_in_clause():
+    # Validates that code can distinguish dependent clauses that have their own subject
     # TODO + need multiples
     return
 

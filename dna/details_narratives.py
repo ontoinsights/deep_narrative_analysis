@@ -1,15 +1,11 @@
-
-from datetime import datetime
 import logging
 import matplotlib.pyplot as plt
-import numpy as np
-import matplotlib.dates as mdates
+import networkx as nx
 import PySimpleGUI as sg
 
 from encoded_images import encoded_logo
 from database import query_database
-from nlp import parse_narrative
-from utilities import SPACE, add_to_dictionary_values, capture_error, draw_figure
+from utilities import capture_error, draw_figure
 
 query_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT ?name ?narrator WHERE ' \
                    '{ ?narr a :Narrative ; rdfs:label ?name ; :subject ?narrator . }'
@@ -33,7 +29,7 @@ def display_narratives(store_name):
     """
     Display a list of all narratives in the specified store and allow selection of one.
 
-    :param store_name The database/data store name
+    :param store_name: The database/data store name
     :return: None (Narrative timeline is displayed)
     """
     logging.info('Narrative selection')
@@ -106,113 +102,23 @@ def display_narratives(store_name):
                 if narrative_text:
                     _display_metadata(narrative_name, narrative_dict[narrative_name],
                                       narrative_text, store_name)
-                    _display_timeline(narrative_name, narrative_text)
+                    _display_timeline(narrative_name, store_name)
 
     # Done
     window_narrative_list.close()
     return
 
 
-def get_timeline_data(sent_dict: dict, key_date: str, orig_dates: set, current_loc: str,
-                      date_text_dict: dict) -> (str, str):
+def get_timeline_data(narrative_name: str, store_name: str) -> list:
     """
-    Temporary function to assemble timeline data. Will ultimately create RDF triples of events
-    and be moved to another module
+    Get all events in the knowledge graph (in the specified store/db) for the specified narrative title.
+
+    :param narrative_name: String holding the narrative title/label
+    :param store_name: String holding the database/store name from which the knowledge graph will be retrieved
+    :return: An array of event dictionaries, in relative time order
     """
-    # TODO: Code is complicated and not optimized
-    # TODO: Retrieve from DB after ingest adds KG
-    current_date = ''
-    subjects = []
-    for subject_dict in sent_dict['subjects']:
-        subject_text = subject_dict['subject_text']
-        if 'subject_preps' in subject_dict.keys():
-            for subject_prep_dict in subject_dict['subject_preps']:
-                subject_text += f" {subject_prep_dict['subject_prep_text']}"
-                for subject_prep_obj_dict in subject_prep_dict['subject_prep_objects']:
-                    subject_text += f" {subject_prep_obj_dict['subject_prep_object']}"
-        subjects.append(subject_text)
-    for verb_dict in sent_dict['verbs']:
-        verb_text = verb_dict['verb_text']
-        if 'preps' in verb_dict.keys():
-            for prep_dict in verb_dict['preps']:
-                prep_text = prep_dict['prep_text']
-                count = 0
-                for prep_detail_dict in prep_dict['prep_details']:
-                    prep_type = prep_detail_dict['prep_detail_type']
-                    if prep_text.lower() in ('in', 'on') and prep_type == 'DATE':
-                        current_date = prep_detail_dict['prep_detail_text']
-                    elif prep_text.lower() == 'after' and prep_type == 'EVENT' \
-                            and prep_detail_dict['prep_detail_text'] == 'World War II':
-                        # TODO: Look up event date and signal 'After' that date
-                        current_date = '1945'
-                    elif prep_text.lower() in ('in', 'to', 'from') and \
-                            (prep_type in ('GPE', 'LOC') or 'ghetto' in prep_detail_dict['prep_detail_text']):
-                        current_loc = prep_detail_dict['prep_detail_text']
-                    else:
-                        count += 1
-                        if prep_text.lower() in verb_text:
-                            space = SPACE
-                            if count > 1:
-                                space = ', '
-                            verb_text += space + prep_detail_dict['prep_detail_text']
-                        else:
-                            verb_text += f" {prep_text.lower()} {prep_detail_dict['prep_detail_text']}"
-                    # TODO with aid of
-        if 'verb_aux' in verb_dict.keys():
-            for verb_aux_dict in verb_dict['verb_aux']:
-                verb_text = verb_aux_dict['verb_aux_text'] + ' ' + verb_text
-                # TODO: 'verb_aux_preps' in verb_aux_dict.keys() ?
-        if 'verb_xcomp' in verb_dict.keys():
-            for verb_xcomp_dict in verb_dict['verb_xcomp']:
-                verb_text += ' ' + verb_xcomp_dict['verb_xcomp_text']
-                if 'verb_xcomp_preps' in verb_xcomp_dict.keys():
-                    prep_objects = []
-                    for prep_dict in verb_xcomp_dict['verb_xcomp_preps']:
-                        prep_text = prep_dict['verb_xcomp_prep_text']
-                        verb_text += ' ' + prep_text
-                        if 'verb_xcomp_prep_objects' in prep_dict.keys():
-                            for prep_object_dict in prep_dict['verb_xcomp_prep_objects']:
-                                prep_object = prep_object_dict['verb_xcomp_prep_object']
-                                prep_type = prep_object_dict['verb_xcomp_prep_object_type']
-                                if prep_text.lower() in ('in', 'on') and prep_type == 'DATE':
-                                    current_date = prep_object
-                                elif prep_text.lower() == 'after' and prep_type == 'EVENT' \
-                                        and prep_object == 'World War II':
-                                    # TODO Look up event date and signal 'After' that date
-                                    current_date = '1945'
-                                elif prep_text.lower() in ('in', 'to', 'from') and \
-                                        (prep_type in ('GPE', 'LOC') or 'ghetto' in prep_object):
-                                    current_loc = prep_object
-                                else:
-                                    prep_objects.append(prep_object)
-                    if prep_objects:
-                        verb_text += ' ' + ', '.join(prep_objects)
-        objects = []
-        if 'objects' in verb_dict.keys():
-            for object_dict in verb_dict['objects']:
-                object_text = object_dict['object_text']
-                if 'object_preps' in object_dict.keys():
-                    for prep_dict in object_dict['object_preps']:
-                        object_text += ' ' + prep_dict['object_prep_text']
-                        for prep_detail in prep_dict['object_prep_objects']:
-                            object_text += ' ' + prep_detail['object_prep_object']
-                objects.append(object_text)
-        if current_date:
-            date_texts = current_date.split(' ')
-            for date_text in date_texts:
-                if date_text.isnumeric() and int(date_text) > 1000:
-                    orig_dates.add(date_text)
-                key_date = date_text
-        text = f'Loc: {current_loc}\n'
-        if not (len(subjects) == 1 and subjects[0] == 'I'):
-            text += ', '.join(subjects) + ' ' + verb_text
-        else:
-            text += verb_text
-        if objects:
-            text += ' ' + ', '.join(objects)
-        final_text = text + '\n'
-        add_to_dictionary_values(date_text_dict, key_date, final_text, str)
-    return key_date, current_loc
+    # TODO
+    return []
 
 
 # Functions internal to the module
@@ -302,63 +208,22 @@ def _display_metadata(narrative_name: str, narrator: str, narrative_text: str, s
     return
 
 
-def _display_timeline(narrative_name: str, narrative_text: str):
+def _display_timeline(narrative_name: str, store_name: str):
     """
-    Displays a timeline of the narrative events.
+    Displays a timeline of the narrative events using NetworkX
 
-    :param narrative_name The name/label of the narrative
-    :param narrative_text The narrative text (which will not be needed when the event graph is created
-                          in load.py)
-    :return None (Timeline is displayed)
+    :param narrative_name: The name/label of the narrative
+    :param store_name: The database/store that holds the narrative's knowledge graph
+    :return: None (Timeline is displayed)
     """
     logging.info(f'Displaying narrative timeline for {narrative_name}')
-    # TODO: Move following processing to load.py and change to retrieving from DB
-    sentences = parse_narrative(narrative_text)
-    key_date = ''
-    current_loc = ''
-    orig_dates = set()
-    date_text_dict = dict()
-    for sent_dict in sentences:
-        key_date, current_loc = \
-            get_timeline_data(sent_dict, key_date, orig_dates, current_loc, date_text_dict)
-    # TODO: What if there are no dates?
-    # Sort the dates and simplify the text
-    orig_dates = sorted(orig_dates)
-    names = []
-    for orig_date in orig_dates:
-        date_text = ''
-        loc_text = date_text_dict[orig_date][0].split('Loc: ')[1].split('\n')[0]
-        for text in date_text_dict[orig_date]:
-            text = text.replace(f'Loc: {loc_text}\n', '')
-            date_text += text
-        names.append(f'Loc: {loc_text}\n{date_text}')
-    # For matplotlib timeline, need datetime formatting
-    dates = [datetime.strptime(d, "%Y") for d in orig_dates]
-    # Create a stem plot with some variation in levels as to distinguish close-by events.
-    # Add markers on the baseline for visual emphasis
-    # For each event, add a text label via annotate, which is offset in units of points from the tip of the event line
-    levels = np.tile([-5, 5, -3, 3, -1, 1],
-                     int(np.ceil(len(dates) / 6)))[:len(dates)]
-    # Create figure and plot a stem plot with the date
+    event_dicts = get_timeline_data(narrative_name, store_name)
+    # TODO: Display pos/neg events on y axis and relative time on the x-axis
     fig, ax = plt.subplots(figsize=(10, 7))
-    ax.set(title="Narrative Timeline")
-    ax.vlines(dates, 0, levels, color="tab:red")  # The vertical stems
-    ax.plot(dates, np.zeros_like(dates), "-o",
-            color="k", markerfacecolor="w")       # Baseline and markers on it
-    # Annotate lines
-    for d, l, r in zip(dates, levels, names):
-        ax.annotate(r, xy=(d, l),
-                    xytext=(-2, np.sign(l) * 3), textcoords="offset points",
-                    horizontalalignment="right",
-                    verticalalignment="bottom" if l > 0 else "top", fontsize='x-small')
-    # Format x-axis with yearly intervals
-    ax.xaxis.set_major_locator(mdates.YearLocator())
-    ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y"))
-    plt.setp(ax.get_xticklabels(), rotation=30, ha="right", fontsize='small')
-    # Remove y axis and spines
-    ax.yaxis.set_visible(False)
-    ax.spines[["left", "top", "right"]].set_visible(False)
-    ax.margins(y=0.1)
+    dig = nx.DiGraph()
+    dig.add_nodes_from(["a", "b", "c", "d", "e", "f", "g", "h", "x"])
+    dig.add_edges_from([("a", "b"), ("b", "c"), ("c", "d"), ("d", "e"), ("e", "f"), ("f", "g"), ("g", "h"), ("h", "x")])
+    nx.draw(dig, with_labels=True)
     plt.tight_layout()
     # Display in a window
     layout = [[sg.Canvas(key="-CANVAS-")]]

@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: July 6 2021
+# Last modified: July 16 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -21,18 +21,15 @@
 # either express or implied.
 # 
 # Changes:
-#   Updated to the Mar 2021 semantics
-#   Changed LineOfBusiness from an enumeration to the top of a class hierarchy
-#   Added PoliceForce, ArmedForce, ParamilitaryForce
-# 
-# Changes:
+#  Updated to the Mar 2021 semantics
+#  Changed LineOfBusiness from an enumeration to the top of a class hierarchy
+#    and clarified its definition
 #  Added :ArmedForce, :ParamilitaryForce and :PoliceForce
 #  Updated the default and dna prefixes
-#  Clarified the definition of LineOfBusiness
 #  Renamed Characteristic to AgentAspect
-#  Removed subclass definition from LineOfBusiness
 #  Added subProperty definition to :has_agent_aspect
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added several
+#  Added PoliticalParty
 ########################################################################
 
 
@@ -45,8 +42,8 @@
   rdfs:label "Affiliation" ;
   :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
   :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
-  :noun_synonym "association" ;
-  :verb_synonym "affiliate", "associate with" .
+  :noun_synonym "association", "allying", "annexing" ;
+  :verb_synonym "affiliate", "associate", "join", "ally", "annex" .
 
 :AgentAspect a owl:Class ;
   rdfs:label "Agent Aspect" ;
@@ -128,6 +125,11 @@
   rdfs:subClassOf :Organization ;
   rdfs:label "Police Force" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" .
+
+:PoliticalParty a owl:Class ;
+  rdfs:subClassOf :Organization ;
+  rdfs:label "Political Party" ;
+  :definition "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office." .
 
 :Role a owl:Class ;
   rdfs:label "Role" ;

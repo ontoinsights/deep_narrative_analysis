@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 7 2021
+# Last Modified: July 16 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,7 @@
 # Changes:
 #  Moved classes to this file from event-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
+#  Added InvasionAndOccupation
 ########################################################################
 
 
@@ -45,14 +46,14 @@
   rdfs:label "Assessment and Characterization" ;
   :definition "Events dealing with evaluating, characterizing or estimating something or someone." ;
   :noun_synonym "evaluation", "judgment", "estimation", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "deduction", "ranking", "determination", "rating", "valuation", "identification" ; 
-  :verb_synonym "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "deduce", "determine", "rate", "identify", "rank" .
+  :verb_synonym "assess", "characterize", "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "deduce", "determine", "rate", "identify", "rank" .
 
 :AttackDamageAndAssault a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Attack, Damage and Assault" ;
   :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "destruction", "incursion", "invasion", "offensive", "skirmish", "raid", "assailant", "onslaught", "violence", "fighting", "defacement" ;
-  :verb_synonym "destroy", "invade", "take the offensive", "skirmish", "raid", "assail", "fight", "shoot down", "trash", "deface" .
+  :noun_synonym "destruction", "incursion", "offensive", "skirmish", "raid", "assailant", "onslaught", "violence", "fighting", "defacement" ;
+  :verb_synonym "attack", "damage", "assault", "destroy", "take the offensive", "skirmish", "raid", "assail", "fight", "shoot down", "trash", "deface" .
 
 :AttentionAndFocus a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -72,8 +73,8 @@
   rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
   rdfs:label "Capture and Seizure" ;
   :definition "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
-  :noun_synonym "takeover", "annexation", "occupation", "overrunning", "arrest" ;
-  :verb_synonym "apprehend", "arrest", "conquer", "occupy", "annex", "take over", "overrun", "snatch", "take captive", "take control" .
+  :noun_synonym "arrest", "confiscation", "misappropriation" ;
+  :verb_synonym "apprehend", "arrest", "capture", "seize", "snatch", "take captive", "take control", "confiscate", "misappropriate" .
 
 :CoercionAndIntimidation a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
@@ -94,21 +95,21 @@
   rdfs:label "Decision Making" ;
   :definition "An act of concluding or resolving some issue or question." ;
   :noun_synonym "conclusion", "course of action", "resolution", "plan" ;
-  :verb_synonym "plan", "conclude", "decide", "resolve" .
+  :verb_synonym "plan", "conclude", "decide", "resolve", "make a decision" .
 
 :DefensiveOrProtectiveAct a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Defensive or Protective Act" ;
   :definition "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
   :noun_synonym "preservation", "conservation", "protection", "security", "safeguarding" ;
-  :verb_synonym "protect", "conserve", "preserve", "secure", "safeguard" .
+  :verb_synonym "defend", "protect", "conserve", "preserve", "secure", "safeguard" .
 
 :Desire a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Desire" ;
   :definition "Wanting something, someone or some event or condition to occur. The thing, EventAndState, Agent or Resource that is 'wanted' is specified using the :has_topic property." ;
-  :noun_synonym "wanting", "longing", "wish", "craving", "yearning", "passion" ;
-  :verb_synonym "desire", "want", "long for", "wish", "crave", "yearn" .
+  :noun_synonym "wanting", "longing", "wish", "craving", "yearning", "passion", "prayer", "curse" ;
+  :verb_synonym "desire", "want", "long for", "wish", "crave", "yearn", "pray", "curse" .
 
 :EscapeAndEvasion a owl:Class ;
   rdfs:subClassOf :Avoidance ;
@@ -132,11 +133,18 @@
   :verb_synonym "disregard", "neglect", "pay no attention to", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye" .
 
 :IntentionAndGoal a owl:Class ;
-  rdfs:subClassOf :Cognition ;
+  rdfs:subClassOf :Desire ;
   rdfs:label "Intention and Goal" ;
   :definition "An event or condition that an Agent hopes to attain/accomplish. Intentions are often distinguished from goals by being focused on the present moment, while goals are focused on the future." ;
   :noun_synonym "aim", "objective", "motive", "purpose" ;
   :verb_synonym "aim" .
+
+:InvasionAndOccupation a owl:Class ;
+  rdfs:subClassOf :CaptureAndSeizure ;
+  rdfs:label "Invasion and Occupation" ;
+  :definition "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource." ;
+  :noun_synonym "conquering", "annexation", "annexing", "takeover", "overrunning" ;
+  :verb_synonym "invade", "conquer", "occupy", "annex", "take over", "overrun" .
 
 :KnowledgeAndSkill a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -150,7 +158,7 @@
   rdfs:label "Learning" ;
   :definition "An act of acquiring knowledge and skills through study, repetition, experience, instruction, etc." ;
   :noun_synonym "studying", "practicing", "training", "memorization" ;
-  :verb_synonym "study", "practice", "train", "memorize" .
+  :verb_synonym "study", "practice", "train", "memorize", "learn" .
 
 :Memory a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -164,7 +172,7 @@
   rdfs:label "Mistake" ;
   :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property." ;
   :noun_synonym "error", "fault", "inaccuracy", "omission", "miscalculation", "blunder", "gaffe", "misconception", "misinterpretation", "misstatement", "false step", "misjudgment" ;
-  :verb_synonym "lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterprete", "misstate", "misjudge" .
+  :verb_synonym "lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterprete", "misstate", "misjudge", "misunderstand" .
 
 :MurderAndHomicide a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;

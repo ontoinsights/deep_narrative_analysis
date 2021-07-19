@@ -9,6 +9,7 @@ from SPARQLWrapper import SPARQLWrapper, JSON
 
 from database import get_databases, add_remove_data, create_delete_database, query_database
 from encoded_images import encoded_logo
+from knowledge_graph import create_narrative_graph
 from nlp import get_birth_family_details, parse_narrative
 from utilities import EMPTY_STRING, SPACE, NEW_LINE, DOUBLE_NEW_LINE, \
     resources_root, gender_dict, months, countries, capture_error
@@ -238,12 +239,6 @@ def clean_text(narrative: str, narr_metadata: dict) -> str:
     return new_text
 
 
-def create_narrative_graph(narrative: str, title: str, store_name: str):
-    # TODO: Create KG of events using the sentences array
-    sentences = parse_narrative(narrative)
-    return
-
-
 def get_birth_family_triples(narrative: str, given_name: str, iri_narrator: str) -> list:
     """
     Process the narrative text to see if there is information about where and when
@@ -401,6 +396,8 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
                 if 'Title' not in narr_meta.keys() or 'Given' not in narr_meta.keys():
                     capture_error('Expected columns not found in the CSV file. Processing stopped.', False)
                 title = narr_meta['Title']
+                # TODO: Remove
+                print(f'Title: {title}')
                 logging.info(f'Ingesting the document, {title}')
                 source = narr_meta['Source']
                 # Must have at least the Source, Title, Person and Gender values defined
@@ -428,7 +425,8 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
                     text = clean_text(narr_in.read(), narr_meta)
                     narrative = simplify_text(text, narr_meta)
                     add_narr_data_to_store(narrative.replace('"', "'"), narr_meta, store_name)
-                    # create_narrative_graph(narrative, title, store_name)
+                    sentence_dicts = parse_narrative(narrative)
+                    create_narrative_graph(sentence_dicts, title, store_name)
                 if source.endswith('.pdf'):
                     # Cleanup - Delete the text file created by pdftotext
                     os.remove(in_file)

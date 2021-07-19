@@ -4222,8 +4222,8 @@ p {
       "cardiac arrest",
       "arrhythmia",
       "heart failure",
-      "heart disease",
-      "heart attack"
+      "heart attack",
+      "heart disease"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Health and Disease Related')\">'Health and Disease Related'</a>"
@@ -4372,10 +4372,10 @@ p {
     "synonym (noun)": [
       "anxiety disorder",
       "psychiatric disorder",
-      "psychotic disorder",
       "depression",
-      "mood disorder",
+      "psychotic disorder",
       "mental illness",
+      "mood disorder",
       "depressive disorder"
     ],
     "SubClass Of": [
@@ -4522,8 +4522,8 @@ p {
       "A condition in which a Person has problems communicating - either in creating or forming the speech sounds or due to repetitions or disruptions in the speech patterns."
     ],
     "synonym (noun)": [
-      "disfluency",
       "dysfluency",
+      "disfluency",
       "stutter"
     ],
     "synonym (verb)": [
@@ -4719,6 +4719,15 @@ p {
       "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
     ]
   },
+  "Political Party": {
+    "iri": "urn:ontoinsights:dna:PoliticalParty",
+    "definition": [
+      "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
+    ]
+  },
   "Organization": {
     "iri": "urn:ontoinsights:dna:Organization",
     "definition": [
@@ -4818,8 +4827,8 @@ p {
       "compendium",
       "assemblage",
       "assortment",
-      "aggregation",
-      "set"
+      "set",
+      "aggregation"
     ]
   },
   "Assessment": {
@@ -4918,6 +4927,30 @@ p {
       "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
     ]
   },
+  "Invasion and Occupation": {
+    "iri": "urn:ontoinsights:dna:InvasionAndOccupation",
+    "definition": [
+      "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."
+    ],
+    "synonym (noun)": [
+      "takeover",
+      "overrunning",
+      "annexing",
+      "conquering",
+      "annexation"
+    ],
+    "synonym (verb)": [
+      "annex",
+      "conquer",
+      "overrun",
+      "take over",
+      "invade",
+      "occupy"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
+    ]
+  },
   "Robbery and Theft": {
     "iri": "urn:ontoinsights:dna:RobberyAndTheft",
     "definition": [
@@ -4952,22 +4985,19 @@ p {
     ],
     "synonym (noun)": [
       "arrest",
-      "overrunning",
-      "occupation",
-      "takeover",
-      "annexation"
+      "misappropriation",
+      "confiscation"
     ],
     "synonym (verb)": [
+      "capture",
       "arrest",
       "take control",
-      "annex",
       "snatch",
-      "conquer",
-      "overrun",
       "apprehend",
+      "confiscate",
       "take captive",
-      "take over",
-      "occupy"
+      "seize",
+      "misappropriate"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
@@ -5013,6 +5043,7 @@ p {
       "memorization"
     ],
     "synonym (verb)": [
+      "learn",
       "study",
       "train",
       "memorize",
@@ -5034,8 +5065,8 @@ p {
       "paying",
       "buying",
       "vending",
-      "procurement",
-      "selling"
+      "selling",
+      "procurement"
     ],
     "synonym (verb)": [
       "buy",
@@ -5097,10 +5128,15 @@ p {
       "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value."
     ],
     "synonym (noun)": [
+      "allying",
+      "annexing",
       "association"
     ],
     "synonym (verb)": [
-      "associate with",
+      "annex",
+      "join",
+      "ally",
+      "associate",
       "affiliate"
     ],
     "SubClass Of": [
@@ -5120,8 +5156,8 @@ p {
       "liquidation",
       "decapitation",
       "assassination",
-      "casualty",
       "hanging",
+      "casualty",
       "extermination",
       "slaying",
       "killing",
@@ -5131,8 +5167,8 @@ p {
     ],
     "synonym (verb)": [
       "lynch",
-      "knock off",
       "behead",
+      "knock off",
       "massacre",
       "murder",
       "exterminate",
@@ -5179,7 +5215,6 @@ p {
     ],
     "synonym (noun)": [
       "assailant",
-      "invasion",
       "onslaught",
       "raid",
       "violence",
@@ -5192,15 +5227,17 @@ p {
     ],
     "synonym (verb)": [
       "take the offensive",
-      "shoot down",
       "assail",
+      "shoot down",
       "destroy",
       "raid",
+      "attack",
       "trash",
       "deface",
+      "assault",
       "skirmish",
-      "invade",
-      "fight"
+      "fight",
+      "damage"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Aggressive or Hostile Act')\">'Aggressive or Hostile Act'</a>"
@@ -5237,8 +5274,8 @@ p {
     ],
     "synonym (noun)": [
       "sit-in",
-      "boycott",
       "mutiny",
+      "boycott",
       "picket"
     ],
     "synonym (verb)": [
@@ -5283,6 +5320,9 @@ p {
       "aggression",
       "confrontation"
     ],
+    "synonym (verb)": [
+      "confront"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ],
@@ -5302,8 +5342,8 @@ p {
     "synonym (verb)": [
       "acquiesce",
       "commit",
-      "comply",
-      "agree"
+      "agree",
+      "comply"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -5346,8 +5386,8 @@ p {
       "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished."
     ],
     "synonym (verb)": [
-      "seek out to",
       "strive to",
+      "seek to",
       "attempt",
       "try",
       "endeavor",
@@ -5392,8 +5432,8 @@ p {
     ],
     "synonym (verb)": [
       "pay no attention to",
-      "turn blind eye",
       "overlook",
+      "turn blind eye",
       "neglect",
       "pay no mind",
       "disregard",
@@ -5417,8 +5457,8 @@ p {
     "synonym (noun)": [
       "hide-out",
       "camouflage",
-      "obscuration",
       "dissimulation",
+      "obscuration",
       "occultation",
       "secrecy",
       "smoke screen",
@@ -5428,8 +5468,8 @@ p {
     ],
     "synonym (verb)": [
       "obscure",
-      "camouflage",
       "cover up",
+      "camouflage",
       "keep secret",
       "hide",
       "dissimulate",
@@ -5454,8 +5494,8 @@ p {
       "inhibitor",
       "deterence",
       "impediment",
-      "forestalling",
       "determent",
+      "forestalling",
       "thwarting"
     ],
     "synonym (verb)": [
@@ -5466,8 +5506,8 @@ p {
       "prevent",
       "inhibit",
       "avert",
-      "deter",
-      "thwart"
+      "thwart",
+      "deter"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>"
@@ -5525,8 +5565,8 @@ p {
       "swallow",
       "ingest",
       "eat",
-      "devour",
       "chew",
+      "devour",
       "feed",
       "snack",
       "gnaw",
@@ -5601,6 +5641,7 @@ p {
     "synonym (verb)": [
       "decline",
       "subside",
+      "decrease",
       "deflate",
       "lessen",
       "lower",
@@ -5641,9 +5682,9 @@ p {
     ],
     "synonym (verb)": [
       "grow",
+      "expand",
       "extend",
       "add to",
-      "expand",
       "raise",
       "escalate",
       "increase"
@@ -5702,6 +5743,7 @@ p {
       "miscalculation"
     ],
     "synonym (verb)": [
+      "misunderstand",
       "misstate",
       "omit",
       "blunder",
@@ -5730,8 +5772,8 @@ p {
       "judgment",
       "identification",
       "determination",
-      "appraisal",
       "deduction",
+      "appraisal",
       "classification",
       "comparison",
       "evaluation",
@@ -5742,9 +5784,11 @@ p {
     "synonym (verb)": [
       "compare",
       "classify",
+      "assess",
       "estimate",
       "rank",
       "identify",
+      "characterize",
       "appraise",
       "deduce",
       "determine",
@@ -5819,33 +5863,9 @@ p {
     "synonym (verb)": [
       "plan",
       "decide",
+      "make a decision",
       "resolve",
       "conclude"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
-    ]
-  },
-  "Desire": {
-    "iri": "urn:ontoinsights:dna:Desire",
-    "definition": [
-      "Wanting something, someone or some event or condition to occur. The thing, EventAndState, Agent or Resource that is 'wanted' is specified using the :has_topic property."
-    ],
-    "synonym (noun)": [
-      "longing",
-      "wish",
-      "passion",
-      "craving",
-      "yearning",
-      "wanting"
-    ],
-    "synonym (verb)": [
-      "long for",
-      "desire",
-      "wish",
-      "yearn",
-      "crave",
-      "want"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
@@ -5866,6 +5886,35 @@ p {
       "aim"
     ],
     "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Desire')\">Desire</a>"
+    ]
+  },
+  "Desire": {
+    "iri": "urn:ontoinsights:dna:Desire",
+    "definition": [
+      "Wanting something, someone or some event or condition to occur. The thing, EventAndState, Agent or Resource that is 'wanted' is specified using the :has_topic property."
+    ],
+    "synonym (noun)": [
+      "longing",
+      "prayer",
+      "wish",
+      "passion",
+      "craving",
+      "yearning",
+      "wanting",
+      "curse"
+    ],
+    "synonym (verb)": [
+      "long for",
+      "desire",
+      "pray",
+      "wish",
+      "curse",
+      "yearn",
+      "crave",
+      "want"
+    ],
+    "SubClass Of": [
       "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
     ]
   },
@@ -5875,8 +5924,8 @@ p {
       "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"
     ],
     "synonym (noun)": [
-      "understanding",
       "comprehension",
+      "understanding",
       "proficiency",
       "know-how",
       "intelligence",
@@ -5920,14 +5969,14 @@ p {
       "A reaction of suffering or discomfort."
     ],
     "synonym (noun)": [
-      "hurting",
       "first degree burn",
+      "hurting",
       "suffering",
       "agony",
       "second degree burn",
       "hurt",
-      "throb",
       "throbbing",
+      "throb",
       "soreness",
       "third degree burn",
       "aching",
@@ -5990,8 +6039,10 @@ p {
     "synonym (verb)": [
       "counsel",
       "suggest",
+      "advise",
       "provide guidance",
       "guide",
+      "recommend",
       "consult"
     ],
     "SubClass Of": [
@@ -6020,6 +6071,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assertion and Declaration')\">'Assertion and Declaration'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Denial')\">Denial</a>"
     ]
   },
   "Denial": {
@@ -6039,10 +6093,14 @@ p {
       "repudiate",
       "refute",
       "rebut",
+      "deny",
       "retract"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assertion and Declaration')\">'Assertion and Declaration'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Acknowledgment')\">Acknowledgment</a>"
     ]
   },
   "Judicial Declaration": {
@@ -6055,6 +6113,31 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assertion and Declaration')\">'Assertion and Declaration'</a>"
+    ]
+  },
+  "Marriage": {
+    "iri": "urn:ontoinsights:dna:Marriage",
+    "definition": [
+      "A formal/legal event and condition describing that two people have committed to a relationship with each other."
+    ],
+    "synonym (noun)": [
+      "wedding",
+      "nuptials",
+      "betrothal"
+    ],
+    "synonym (verb)": [
+      "wed",
+      "marry",
+      "betroth"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Ceremony')\">Ceremony</a>",
+      "<a href=\"javascript:jumpTo('Legal Event')\">'Legal Event'</a>",
+      "<a href=\"javascript:jumpTo('Life Event')\">'Life Event'</a>",
+      "<a href=\"javascript:jumpTo('Promise and Oath')\">'Promise and Oath'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Divorce')\">Divorce</a>"
     ]
   },
   "Promise and Oath": {
@@ -6075,14 +6158,12 @@ p {
       "contract"
     ],
     "synonym (verb)": [
-      "marry",
       "bond",
       "pledge",
       "guarantee",
       "commit",
       "give one's word",
-      "vow",
-      "bethoth"
+      "vow"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assertion and Declaration')\">'Assertion and Declaration'</a>"
@@ -6105,9 +6186,11 @@ p {
       "resigning"
     ],
     "synonym (verb)": [
+      "surrender",
       "abdicate",
       "give in",
       "capitulate",
+      "yield",
       "relinquish",
       "acquisce",
       "relent",
@@ -6129,8 +6212,8 @@ p {
       "announcement",
       "explanation",
       "deposition",
-      "claim",
       "description",
+      "claim",
       "disclosure",
       "lecture",
       "attestation",
@@ -6167,8 +6250,8 @@ p {
     "synonym (verb)": [
       "gripe",
       "complain",
-      "displease",
       "grumble",
+      "displease",
       "reproach",
       "annoy",
       "criticize",
@@ -6197,29 +6280,12 @@ p {
       "question",
       "interrogate",
       "cross-examination",
+      "inquire",
       "ask",
       "query",
       "probe",
+      "enquire",
       "investigate"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Communication and Speech Act')\">'Communication and Speech Act'</a>"
-    ]
-  },
-  "Optative": {
-    "iri": "urn:ontoinsights:dna:Optative",
-    "definition": [
-      "A statement which expresses a prayer, wish, curse etc. The Agent making the statement is indicated using the :has_active_agent property. The thing that is discussed is indicated using :has_topic."
-    ],
-    "synonym (noun)": [
-      "prayer",
-      "wish",
-      "curse"
-    ],
-    "synonym (verb)": [
-      "pray",
-      "wish",
-      "curse"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Communication and Speech Act')\">'Communication and Speech Act'</a>"
@@ -6241,9 +6307,10 @@ p {
     "synonym (verb)": [
       "consent",
       "assent",
-      "allow",
       "authorize",
+      "allow",
       "approve",
+      "permit",
       "let"
     ],
     "SubClass Of": [
@@ -6282,8 +6349,8 @@ p {
       "nix",
       "brush-off",
       "ban",
-      "prohibit",
       "reject",
+      "prohibit",
       "renounce"
     ],
     "SubClass Of": [
@@ -6317,8 +6384,8 @@ p {
     "synonym (noun)": [
       "mandate",
       "rule",
-      "instruction",
       "order",
+      "instruction",
       "direction",
       "summons"
     ],
@@ -6327,6 +6394,7 @@ p {
       "direct",
       "mandate",
       "rule",
+      "command",
       "summon"
     ],
     "SubClass Of": [
@@ -6358,8 +6426,8 @@ p {
     ],
     "synonym (noun)": [
       "entreaty",
-      "plea",
       "urging",
+      "plea",
       "invitation",
       "petition",
       "begging",
@@ -6402,7 +6470,7 @@ p {
       "warn",
       "blackmail",
       "intimidate",
-      "threat",
+      "threaten",
       "browbeat",
       "menace",
       "bluff"
@@ -6432,9 +6500,10 @@ p {
       "admiration"
     ],
     "synonym (verb)": [
+      "exclaim",
       "greet",
       "give thanks",
-      "express emotion",
+      "express [emotion]",
       "congratulate",
       "admire",
       "apologize",
@@ -6528,8 +6597,8 @@ p {
       "discrepancy"
     ],
     "synonym (verb)": [
-      "quarrel",
       "dispute",
+      "quarrel",
       "disagree",
       "debate"
     ],
@@ -6569,20 +6638,23 @@ p {
       "instruction",
       "professor",
       "test",
-      "coaching",
       "education",
-      "course",
+      "coaching",
       "student",
+      "course",
       "teacher"
     ],
     "synonym (verb)": [
       "tutor",
       "educate",
       "teach",
-      "coach",
+      "attend school",
       "instruct",
+      "coach",
       "train",
-      "test"
+      "test",
+      "go to school",
+      "take a class"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -6605,12 +6677,13 @@ p {
       "infatuation",
       "rapture",
       "arousal",
-      "desire",
       "lust",
+      "desire",
       "enthrallment",
       "craving"
     ],
     "synonym (verb)": [
+      "long for",
       "desire",
       "arouse",
       "enthrall",
@@ -6631,15 +6704,15 @@ p {
       "wrath",
       "bitterness",
       "rage",
-      "aggravation",
       "peevishness",
+      "aggravation",
       "hostility",
       "indignation",
       "enmity",
       "irascibility",
       "outrage",
-      "ire",
       "miff",
+      "ire",
       "exasperation",
       "irritation"
     ],
@@ -6647,10 +6720,15 @@ p {
       "exasperate",
       "irritate",
       "aggravate",
+      "annoy",
       "anatagonize"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Serenity')\">Serenity</a>",
+      "<a href=\"javascript:jumpTo('Appreciation')\">Appreciation</a>"
     ]
   },
   "Anxiety": {
@@ -6663,13 +6741,13 @@ p {
       "discontent",
       "tension",
       "apprehension",
-      "restlessness",
       "agitation",
+      "restlessness",
       "disquiet",
-      "jitters",
       "unease",
-      "nervousness",
+      "jitters",
       "discontentment",
+      "nervousness",
       "angst",
       "concern",
       "worry",
@@ -6677,8 +6755,8 @@ p {
     ],
     "synonym (verb)": [
       "fret",
-      "worry",
-      "agitate"
+      "agitate",
+      "worry"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
@@ -6692,8 +6770,16 @@ p {
       "lethargy",
       "indifference"
     ],
+    "synonym (verb)": [
+      "bore"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Curiosity')\">Curiosity</a>",
+      "<a href=\"javascript:jumpTo('Compassion and Empathy')\">'Compassion and Empathy'</a>",
+      "<a href=\"javascript:jumpTo('Excitement')\">Excitement</a>"
     ]
   },
   "Arrogance": {
@@ -6709,6 +6795,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Humility')\">Humility</a>"
     ]
   },
   "Awkwardness and Shyness": {
@@ -6716,14 +6805,17 @@ p {
     "synonym (noun)": [
       "meekness",
       "reticence",
-      "ineptness",
       "timidity",
+      "ineptness",
       "egotism",
       "cloddishness",
       "gawkiness"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Confidence')\">Confidence</a>"
     ]
   },
   "Confusion and Doubt": {
@@ -6752,6 +6844,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Confidence')\">Confidence</a>"
     ]
   },
   "Envy": {
@@ -6770,6 +6865,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Generosity and Kindness')\">'Generosity and Kindness'</a>"
     ]
   },
   "Fear and Distrust": {
@@ -6778,8 +6876,8 @@ p {
       "terror",
       "scare",
       "fright",
-      "hysteria",
       "panic",
+      "hysteria",
       "suspense",
       "dread",
       "horror",
@@ -6788,11 +6886,16 @@ p {
       "mistrust"
     ],
     "synonym (verb)": [
+      "distrust",
       "be scared",
       "be afraid"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Admiration and Respect')\">'Admiration and Respect'</a>",
+      "<a href=\"javascript:jumpTo('Trust and Tolerance')\">'Trust and Tolerance'</a>"
     ]
   },
   "Frustration and Helplessness": {
@@ -6807,6 +6910,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Satisfaction')\">Satisfaction</a>"
     ]
   },
   "Greed": {
@@ -6818,6 +6924,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Generosity and Kindness')\">'Generosity and Kindness'</a>"
     ]
   },
   "Guilt and Shame": {
@@ -6832,14 +6941,17 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Satisfaction')\">Satisfaction</a>"
     ]
   },
   "Hatred and Disgust": {
-    "iri": "urn:ontoinsights:dna:HatredAndDigust",
+    "iri": "urn:ontoinsights:dna:HatredAndDisgust",
     "synonym (noun)": [
       "hostility",
-      "aversion",
       "vengefulness",
+      "aversion",
       "resentment",
       "scorn",
       "spite",
@@ -6849,19 +6961,29 @@ p {
     ],
     "synonym (verb)": [
       "loathe",
+      "hate",
+      "despise",
       "spite"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Love')\">Love</a>"
     ]
   },
   "Loneliness": {
     "iri": "urn:ontoinsights:dna:Loneliness",
     "synonym (noun)": [
-      "isolation"
+      "lonesomeness",
+      "isolation",
+      "alienation"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Delight and happiness')\">'Delight and happiness'</a>"
     ]
   },
   "Pessimism": {
@@ -6872,13 +6994,16 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Hope')\">Hope</a>"
     ]
   },
   "Sadness and Disappointment": {
     "iri": "urn:ontoinsights:dna:SadnessAndDisappointment",
     "synonym (noun)": [
-      "glumness",
       "agony",
+      "glumness",
       "misery",
       "melancholy",
       "dismay",
@@ -6897,8 +7022,14 @@ p {
       "self-pity",
       "anguishment"
     ],
+    "synonym (verb)": [
+      "disappoint"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Delight and happiness')\">'Delight and happiness'</a>"
     ]
   },
   "Shock": {
@@ -6924,6 +7055,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Emotional Response')\">'Emotional Response'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
     ]
   },
   "Admiration and Respect": {
@@ -6946,6 +7080,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Fear and Distrust')\">'Fear and Distrust'</a>"
     ]
   },
   "Appreciation": {
@@ -6954,8 +7091,8 @@ p {
       "thanksgiving",
       "thanks",
       "thankfulness",
-      "gratefulness",
-      "gratitude"
+      "gratitude",
+      "gratefulness"
     ],
     "synonym (verb)": [
       "be grateful",
@@ -6965,6 +7102,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Anger and Annoyance')\">'Anger and Annoyance'</a>"
     ]
   },
   "Compassion and Empathy": {
@@ -6980,6 +7120,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Apathy and Boredom')\">'Apathy and Boredom'</a>"
     ]
   },
   "Confidence": {
@@ -6990,11 +7133,12 @@ p {
       "poise",
       "resoluteness"
     ],
-    "synonym (verb)": [
-      "poise"
-    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Awkwardness and Shyness')\">'Awkwardness and Shyness'</a>",
+      "<a href=\"javascript:jumpTo('Confusion and Doubt')\">'Confusion and Doubt'</a>"
     ]
   },
   "Curiosity": {
@@ -7011,6 +7155,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Apathy and Boredom')\">'Apathy and Boredom'</a>"
     ]
   },
   "Delight and happiness": {
@@ -7029,8 +7176,8 @@ p {
       "jolliness",
       "gaiety",
       "jubilation",
-      "gladness",
       "bliss",
+      "gladness",
       "laughter"
     ],
     "synonym (verb)": [
@@ -7041,6 +7188,10 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Sadness and Disappointment')\">'Sadness and Disappointment'</a>",
+      "<a href=\"javascript:jumpTo('Loneliness')\">Loneliness</a>"
     ]
   },
   "Excitement": {
@@ -7051,31 +7202,15 @@ p {
       "exhilaration",
       "enthusiasm"
     ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
-    ]
-  },
-  "Friendliness and Trust": {
-    "iri": "urn:ontoinsights:dna:FriendlinessAndTrust",
-    "synonym (noun)": [
-      "politeness",
-      "neighborliness",
-      "acceptance",
-      "sociability",
-      "cordiality",
-      "comradery",
-      "geniality",
-      "conviviality",
-      "camaraderie",
-      "tolerance",
-      "openness"
-    ],
     "synonym (verb)": [
-      "tolerate",
-      "trust"
+      "excite",
+      "thrill"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Apathy and Boredom')\">'Apathy and Boredom'</a>"
     ]
   },
   "Generosity and Kindness": {
@@ -7088,18 +7223,29 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Envy')\">Envy</a>",
+      "<a href=\"javascript:jumpTo('Greed')\">Greed</a>"
     ]
   },
   "Hope": {
     "iri": "urn:ontoinsights:dna:Hope",
     "synonym (noun)": [
-      "expectancy",
       "optimism",
+      "expectancy",
       "anticipation",
       "eagerness"
     ],
+    "synonym (verb)": [
+      "anticipate",
+      "hope"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Pessimism')\">Pessimism</a>"
     ]
   },
   "Humility": {
@@ -7109,6 +7255,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Arrogance')\">Arrogance</a>"
     ]
   },
   "Love": {
@@ -7131,6 +7280,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Hatred and Disgust')\">'Hatred and Disgust'</a>"
     ]
   },
   "Satisfaction": {
@@ -7141,8 +7293,15 @@ p {
       "fulfillment",
       "gratification"
     ],
+    "synonym (verb)": [
+      "satisfy"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Guilt and Shame')\">'Guilt and Shame'</a>",
+      "<a href=\"javascript:jumpTo('Frustration and Helplessness')\">'Frustration and Helplessness'</a>"
     ]
   },
   "Serenity": {
@@ -7160,10 +7319,14 @@ p {
       "be patient",
       "be at peace",
       "be calm",
-      "be content"
+      "be content",
+      "be relaxed"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Anger and Annoyance')\">'Anger and Annoyance'</a>"
     ]
   },
   "Surprise": {
@@ -7183,6 +7346,30 @@ p {
       "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
     ]
   },
+  "Trust and Tolerance": {
+    "iri": "urn:ontoinsights:dna:TrustAndTolerance",
+    "synonym (noun)": [
+      "acceptance",
+      "sociability",
+      "comradery",
+      "cordiality",
+      "geniality",
+      "conviviality",
+      "camaraderie",
+      "openness"
+    ],
+    "synonym (verb)": [
+      "tolerate",
+      "accept",
+      "trust"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Positive Emotion')\">'Positive Emotion'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Fear and Distrust')\">'Fear and Distrust'</a>"
+    ]
+  },
   "Positive Emotion": {
     "iri": "urn:ontoinsights:dna:PositiveEmotion",
     "example": [
@@ -7193,6 +7380,9 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Emotional Response')\">'Emotional Response'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
     ]
   },
   "Emotional Response": {
@@ -7240,8 +7430,8 @@ p {
       "termination",
       "closing",
       "close",
-      "complete",
       "reach resolution",
+      "complete",
       "conclude",
       "completion",
       "resolution",
@@ -7274,8 +7464,8 @@ p {
       "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate."
     ],
     "synonym (noun)": [
-      "maximum amount",
       "capability",
+      "maximum amount",
       "volume",
       "capacitance"
     ],
@@ -7419,8 +7609,8 @@ p {
     "synonym (noun)": [
       "tariff",
       "duty",
-      "toll",
       "tax",
+      "toll",
       "levy"
     ],
     "SubClass Of": [
@@ -7727,6 +7917,7 @@ p {
       "security"
     ],
     "synonym (verb)": [
+      "defend",
       "safeguard",
       "secure",
       "conserve",
@@ -7775,8 +7966,14 @@ p {
     "definition": [
       "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."
     ],
+    "synonym (noun)": [
+      "neighborliness",
+      "encouragement",
+      "friendliness"
+    ],
     "synonym (verb)": [
       "patronize",
+      "encourage",
       "support"
     ],
     "SubClass Of": [
@@ -7802,8 +7999,8 @@ p {
       "wager",
       "place a bet",
       "gamble",
-      "play the horses",
-      "bet"
+      "bet",
+      "play the horses"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -7824,9 +8021,11 @@ p {
       "forgery"
     ],
     "synonym (verb)": [
+      "counterfeit",
       "copy",
       "fake",
       "simulate",
+      "imitate",
       "forge",
       "reproduce",
       "duplicate"
@@ -7849,12 +8048,14 @@ p {
     ],
     "synonym (verb)": [
       "bump",
+      "impact",
       "slam",
       "hit",
       "poke",
       "swat",
       "collide",
       "strike",
+      "contact",
       "touch"
     ],
     "SubClass Of": [
@@ -7869,8 +8070,8 @@ p {
     "synonym (noun)": [
       "federation",
       "fusion",
-      "synthesis",
       "integration",
+      "synthesis",
       "confederation",
       "coalition",
       "amalgamation",
@@ -7881,15 +8082,17 @@ p {
       "insertion"
     ],
     "synonym (verb)": [
-      "amalgamate",
-      "attach to",
+      "attach",
       "synthesize",
+      "include",
+      "coalesce",
+      "integrate",
+      "attach to",
+      "amalgamate",
       "insert",
       "merge",
-      "coalesce",
-      "unite",
       "fuse",
-      "integrate",
+      "unite",
       "federate",
       "combine"
     ],
@@ -7905,8 +8108,36 @@ p {
     "definition": [
       "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities."
     ],
+    "synonym (noun)": [
+      "IT",
+      "information technology"
+    ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Divorce": {
+    "iri": "urn:ontoinsights:dna:Divorce",
+    "definition": [
+      "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."
+    ],
+    "synonym (noun)": [
+      "annulment",
+      "breakup"
+    ],
+    "synonym (verb)": [
+      "breakup",
+      "annul",
+      "end a marriage",
+      "get a divorce"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Legal Event')\">'Legal Event'</a>",
+      "<a href=\"javascript:jumpTo('Life Event')\">'Life Event'</a>",
+      "<a href=\"javascript:jumpTo('Separation')\">Separation</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Marriage')\">Marriage</a>"
     ]
   },
   "Legal Event": {
@@ -7918,11 +8149,13 @@ p {
       "hearing",
       "court case",
       "trial",
+      "legal proceedings",
       "justice",
       "jury"
     ],
     "synonym (verb)": [
-      "try a case"
+      "try a case",
+      "go to court"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -7967,9 +8200,17 @@ p {
     "definition": [
       "The act of an individual (animal or Person) ending life."
     ],
-    "synonym (verb)": [
+    "synonym (noun)": [
+      "demise",
+      "casualty",
       "decease",
-      "die"
+      "annihilation"
+    ],
+    "synonym (verb)": [
+      "drown",
+      "die",
+      "expire",
+      "annihilate"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Life Event')\">'Life Event'</a>"
@@ -7990,8 +8231,8 @@ p {
       "An event or condition describing NOT having some goods or property, which previously were in an Agent's Possession."
     ],
     "synonym (noun)": [
-      "mislaying",
       "squandering",
+      "mislaying",
       "forfeiture",
       "misplacing",
       "disappearance",
@@ -8044,8 +8285,8 @@ p {
     ],
     "synonym (noun)": [
       "herding",
-      "assembly",
       "congregation",
+      "assembly",
       "social event",
       "gathering",
       "swarming",
@@ -8054,8 +8295,10 @@ p {
       "convention"
     ],
     "synonym (verb)": [
+      "encounter",
       "congregate",
       "swarm",
+      "meet",
       "gather",
       "assemble",
       "herd"
@@ -8071,8 +8314,8 @@ p {
     ],
     "synonym (verb)": [
       "throw",
-      "funnel",
       "pocket",
+      "funnel",
       "fill",
       "push",
       "spray",
@@ -8117,6 +8360,7 @@ p {
       "haul",
       "take a vacation",
       "depart",
+      "travel",
       "arrive",
       "leave",
       "take a trip",
@@ -8220,6 +8464,7 @@ p {
       "discipline"
     ],
     "synonym (verb)": [
+      "punish",
       "discipline",
       "penalize"
     ],
@@ -8256,8 +8501,8 @@ p {
       "drilling",
       "deforestation",
       "logging",
-      "excavation",
-      "mining"
+      "mining",
+      "excavation"
     ],
     "synonym (verb)": [
       "cut down trees",
@@ -8285,8 +8530,8 @@ p {
       "expulsion",
       "limitation",
       "eradication",
-      "banishment",
       "clear",
+      "banishment",
       "eviction"
     ],
     "synonym (verb)": [
@@ -8296,8 +8541,8 @@ p {
       "eradicate",
       "clear from",
       "restrict",
-      "clear out",
       "limit",
+      "clear out",
       "extract",
       "evacuate"
     ],
@@ -8336,13 +8581,15 @@ p {
     "synonym (noun)": [
       "liberation",
       "rescue",
-      "restitution"
+      "restitution",
+      "restoration"
     ],
     "synonym (verb)": [
       "give back",
       "revert",
       "rescue",
       "release",
+      "restore",
       "free",
       "take back",
       "liberate",
@@ -8393,8 +8640,8 @@ p {
     ],
     "synonym (noun)": [
       "winnings",
-      "award",
       "recompense",
+      "award",
       "bonus",
       "prize"
     ],
@@ -8440,8 +8687,8 @@ p {
     ],
     "synonym (noun)": [
       "hunt",
-      "stalking",
       "exploration",
+      "stalking",
       "forage",
       "rummaging",
       "seeking",
@@ -8450,9 +8697,10 @@ p {
     "synonym (verb)": [
       "forage",
       "fish around",
-      "explore",
       "hunt",
+      "explore",
       "seek",
+      "search",
       "look for",
       "look high and low",
       "scavenge",
@@ -8507,6 +8755,9 @@ p {
       "detachment"
     ],
     "synonym (verb)": [
+      "separate",
+      "isolate",
+      "sever",
       "set apart",
       "detach",
       "segregate",
@@ -8514,9 +8765,7 @@ p {
       "uncouple",
       "divide",
       "disconnect",
-      "isolate",
       "dissociate",
-      "sever",
       "disassemble",
       "break"
     ],
@@ -8626,7 +8875,8 @@ p {
     "synonym (verb)": [
       "use up",
       "use",
-      "consume"
+      "consume",
+      "utilize"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -8636,6 +8886,9 @@ p {
     "iri": "urn:ontoinsights:dna:ViolationOfAgreement",
     "definition": [
       "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."
+    ],
+    "synonym (verb)": [
+      "violate"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -8652,13 +8905,13 @@ p {
     "synonym (noun)": [
       "condition",
       "situation",
-      "factor",
       "circumstance",
+      "factor",
       "happening",
       "occurrence",
-      "status",
       "incident",
-      "act"
+      "act",
+      "status"
     ]
   },
   "Narrative": {
@@ -16014,8 +16267,8 @@ p {
       "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
     ],
     "synonym (noun)": [
-      "timeline",
-      "plot"
+      "plot",
+      "timeline"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -16476,8 +16729,8 @@ p {
     "synonym (noun)": [
       "cycle",
       "rhythm",
-      "repetition",
-      "cadence"
+      "cadence",
+      "repetition"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Time')\">Time</a>"
@@ -16684,6 +16937,12 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
+  "Bohemia": {
+    "iri": "urn:ontoinsights:geonames:3077311",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
   "Bonaire": {
     "iri": "urn:ontoinsights:geonames:7626844",
     "Type": [
@@ -16846,12 +17105,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "Czechia": {
-    "iri": "urn:ontoinsights:geonames:3077311",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "Democratic Kampuchea": {
     "iri": "urn:ontoinsights:geonames:1831722",
     "Type": [
@@ -16860,12 +17113,6 @@ p {
   },
   "Democratic People's Republic of Korea": {
     "iri": "urn:ontoinsights:geonames:1873107",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
-  "Democratic Republic of the Congo": {
-    "iri": "urn:ontoinsights:geonames:203312",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -17524,12 +17771,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "Plurinational State of Bolivia": {
-    "iri": "urn:ontoinsights:geonames:3923057",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "Poland": {
     "iri": "urn:ontoinsights:geonames:798544",
     "Type": [
@@ -17562,6 +17803,12 @@ p {
   },
   "Republic of Benin": {
     "iri": "urn:ontoinsights:geonames:2395170",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Republic of Bolivar": {
+    "iri": "urn:ontoinsights:geonames:3923057",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -17962,12 +18209,6 @@ p {
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
   },
-  "U.S.S.R.": {
-    "iri": "urn:ontoinsights:geonames:2017370",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
-    ]
-  },
   "UAE": {
     "iri": "urn:ontoinsights:geonames:290557",
     "Type": [
@@ -18066,6 +18307,12 @@ p {
   },
   "Yugoslavia": {
     "iri": "urn:ontoinsights:geonames:6290252",
+    "Type": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ]
+  },
+  "Zaire": {
+    "iri": "urn:ontoinsights:geonames:203312",
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
     ]
@@ -18675,8 +18922,8 @@ p {
     "synonym (noun)": [
       "Ms.",
       "lady",
-      "miss",
       "girl",
+      "miss",
       "Mrs.",
       "matron",
       "woman"
@@ -22689,6 +22936,9 @@ p {
                   },
                   {
                     "id": "Police Force"
+                  },
+                  {
+                    "id": "Political Party"
                   }
                 ]
               }
@@ -22727,6 +22977,9 @@ p {
                   },
                   {
                     "id": "Police Force"
+                  },
+                  {
+                    "id": "Political Party"
                   }
                 ]
               }
@@ -22773,6 +23026,9 @@ p {
                     "id": "Abduction"
                   },
                   {
+                    "id": "Invasion and Occupation"
+                  },
+                  {
                     "id": "Robbery and Theft"
                   }
                 ]
@@ -22813,6 +23069,9 @@ p {
                 "children": [
                   {
                     "id": "Abduction"
+                  },
+                  {
+                    "id": "Invasion and Occupation"
                   },
                   {
                     "id": "Robbery and Theft"
@@ -22925,13 +23184,15 @@ p {
                 "id": "Decision Making"
               },
               {
-                "id": "Desire"
+                "id": "Desire",
+                "children": [
+                  {
+                    "id": "Intention and Goal"
+                  }
+                ]
               },
               {
                 "id": "Ignoring and Overlooking"
-              },
-              {
-                "id": "Intention and Goal"
               },
               {
                 "id": "Knowledge and Skill",
@@ -22973,7 +23234,12 @@ p {
                     "id": "Judicial Declaration"
                   },
                   {
-                    "id": "Promise and Oath"
+                    "id": "Promise and Oath",
+                    "children": [
+                      {
+                        "id": "Marriage"
+                      }
+                    ]
                   },
                   {
                     "id": "Surrender and Yielding"
@@ -22985,9 +23251,6 @@ p {
               },
               {
                 "id": "Inquiry"
-              },
-              {
-                "id": "Optative"
               },
               {
                 "id": "Permission"
@@ -23137,9 +23400,6 @@ p {
                     "id": "Excitement"
                   },
                   {
-                    "id": "Friendliness and Trust"
-                  },
-                  {
                     "id": "Generosity and Kindness"
                   },
                   {
@@ -23162,6 +23422,9 @@ p {
                   },
                   {
                     "id": "Surprise"
+                  },
+                  {
+                    "id": "Trust and Tolerance"
                   }
                 ]
               }
@@ -23469,7 +23732,15 @@ p {
             "id": "Information Handling"
           },
           {
-            "id": "Legal Event"
+            "id": "Legal Event",
+            "children": [
+              {
+                "id": "Divorce"
+              },
+              {
+                "id": "Marriage"
+              }
+            ]
           },
           {
             "id": "Life Event",
@@ -23484,6 +23755,12 @@ p {
                     "id": "Suicide"
                   }
                 ]
+              },
+              {
+                "id": "Divorce"
+              },
+              {
+                "id": "Marriage"
               }
             ]
           },
@@ -23497,7 +23774,12 @@ p {
             "id": "Meeting and Encounter",
             "children": [
               {
-                "id": "Ceremony"
+                "id": "Ceremony",
+                "children": [
+                  {
+                    "id": "Marriage"
+                  }
+                ]
               },
               {
                 "id": "Protest and Strike"
@@ -23568,6 +23850,9 @@ p {
             "children": [
               {
                 "id": "Cutting"
+              },
+              {
+                "id": "Divorce"
               }
             ]
           },
@@ -27929,6 +28214,9 @@ p {
             "id": "Bermuda"
           },
           {
+            "id": "Bohemia"
+          },
+          {
             "id": "Bonaire"
           },
           {
@@ -28010,16 +28298,10 @@ p {
             "id": "Cyprus"
           },
           {
-            "id": "Czechia"
-          },
-          {
             "id": "Democratic Kampuchea"
           },
           {
             "id": "Democratic People's Republic of Korea"
-          },
-          {
-            "id": "Democratic Republic of the Congo"
           },
           {
             "id": "Denmark"
@@ -28352,9 +28634,6 @@ p {
             "id": "Pitcairn"
           },
           {
-            "id": "Plurinational State of Bolivia"
-          },
-          {
             "id": "Poland"
           },
           {
@@ -28371,6 +28650,9 @@ p {
           },
           {
             "id": "Republic of Benin"
+          },
+          {
+            "id": "Republic of Bolivar"
           },
           {
             "id": "Republic of Bulgaria"
@@ -28440,6 +28722,9 @@ p {
           },
           {
             "id": "Romania"
+          },
+          {
+            "id": "Russia"
           },
           {
             "id": "Rwandese Republic"
@@ -28571,9 +28856,6 @@ p {
             "id": "Tuvalu"
           },
           {
-            "id": "U.S.S.R."
-          },
-          {
             "id": "UAE"
           },
           {
@@ -28623,6 +28905,9 @@ p {
           },
           {
             "id": "Yugoslavia"
+          },
+          {
+            "id": "Zaire"
           }
         ]
       },

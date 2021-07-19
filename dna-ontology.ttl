@@ -1148,6 +1148,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Acknowledgment
 <urn:ontoinsights:dna:Acknowledgment> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:dna:AssertionAndDeclaration> ;
+                                      owl:disjointWith <urn:ontoinsights:dna:Denial> ;
                                       rdfs:label "Acknowledgment" ;
                                       <urn:ontoinsights:dna:definition> "An admission of responsibility or guilt for some act. The Agent making the admission is indicated using the :has_active_agent property, while the thing that is confessed is defined using :has_topic." ;
                                       <urn:ontoinsights:dna:noun_synonym> "admission" ,
@@ -1208,6 +1209,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:AdmirationAndRespect
 <urn:ontoinsights:dna:AdmirationAndRespect> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                                            owl:disjointWith <urn:ontoinsights:dna:FearAndDistrust> ;
                                             rdfs:label "Admiration and Respect" ;
                                             <urn:ontoinsights:dna:noun_synonym> "awe" ,
                                                                                 "entrancement" ,
@@ -1232,10 +1234,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                    "counsel" ,
                                                                                    "guidance" ,
                                                                                    "suggestion" ;
-                                               <urn:ontoinsights:dna:verb_synonym> "consult" ,
+                                               <urn:ontoinsights:dna:verb_synonym> "advise" ,
+                                                                                   "consult" ,
                                                                                    "counsel" ,
                                                                                    "guide" ,
                                                                                    "provide guidance" ,
+                                                                                   "recommend" ,
                                                                                    "suggest" .
 
 
@@ -1245,9 +1249,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    rdfs:label "Affiliation" ;
                                    <urn:ontoinsights:dna:definition> "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
                                    <urn:ontoinsights:dna:example> "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
-                                   <urn:ontoinsights:dna:noun_synonym> "association" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "allying" ,
+                                                                       "annexing" ,
+                                                                       "association" ;
                                    <urn:ontoinsights:dna:verb_synonym> "affiliate" ,
-                                                                       "associate with" .
+                                                                       "ally" ,
+                                                                       "annex" ,
+                                                                       "associate" ,
+                                                                       "join" .
 
 
 ###  urn:ontoinsights:dna:Agent
@@ -1277,7 +1286,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                               <urn:ontoinsights:dna:definition> "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
                                               <urn:ontoinsights:dna:noun_synonym> "aggression" ,
                                                                                   "confrontation" ,
-                                                                                  "hostility" .
+                                                                                  "hostility" ;
+                                              <urn:ontoinsights:dna:verb_synonym> "confront" .
 
 
 ###  urn:ontoinsights:dna:Agreement
@@ -1322,6 +1332,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:AngerAndAnnoyance
 <urn:ontoinsights:dna:AngerAndAnnoyance> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                         owl:disjointWith <urn:ontoinsights:dna:Appreciation> ,
+                                                          <urn:ontoinsights:dna:RelaxationAndSerenity> ;
                                          rdfs:label "Anger and Annoyance" ;
                                          <urn:ontoinsights:dna:noun_synonym> "aggravation" ,
                                                                              "animosity" ,
@@ -1344,6 +1356,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "wrath" ;
                                          <urn:ontoinsights:dna:verb_synonym> "aggravate" ,
                                                                              "anatagonize" ,
+                                                                             "annoy" ,
                                                                              "exasperate" ,
                                                                              "irritate" .
 
@@ -1398,11 +1411,15 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:ApathyAndBoredom
 <urn:ontoinsights:dna:ApathyAndBoredom> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                        owl:disjointWith <urn:ontoinsights:dna:CompassionAndEmpathy> ,
+                                                         <urn:ontoinsights:dna:Curiosity> ,
+                                                         <urn:ontoinsights:dna:Excitement> ;
                                         rdfs:label "Apathy and Boredom" ;
                                         <urn:ontoinsights:dna:noun_synonym> "dullness" ,
                                                                             "heartlessness" ,
                                                                             "indifference" ,
-                                                                            "lethargy" .
+                                                                            "lethargy" ;
+                                        <urn:ontoinsights:dna:verb_synonym> "bore" .
 
 
 ###  urn:ontoinsights:dna:Appreciation
@@ -1431,6 +1448,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Arrogance
 <urn:ontoinsights:dna:Arrogance> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                 owl:disjointWith <urn:ontoinsights:dna:Humility> ;
                                  rdfs:label "Arrogance" ;
                                  <urn:ontoinsights:dna:noun_synonym> "aloofness" ,
                                                                      "boastfulness" ,
@@ -1532,6 +1550,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                          "rating" ,
                                                                                          "valuation" ;
                                                      <urn:ontoinsights:dna:verb_synonym> "appraise" ,
+                                                                                         "assess" ,
+                                                                                         "characterize" ,
                                                                                          "classify" ,
                                                                                          "compare" ,
                                                                                          "correlate" ,
@@ -1557,17 +1577,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "destruction" ,
                                                                                   "fighting" ,
                                                                                   "incursion" ,
-                                                                                  "invasion" ,
                                                                                   "offensive" ,
                                                                                   "onslaught" ,
                                                                                   "raid" ,
                                                                                   "skirmish" ,
                                                                                   "violence" ;
                                               <urn:ontoinsights:dna:verb_synonym> "assail" ,
+                                                                                  "assault" ,
+                                                                                  "attack" ,
+                                                                                  "damage" ,
                                                                                   "deface" ,
                                                                                   "destroy" ,
                                                                                   "fight" ,
-                                                                                  "invade" ,
                                                                                   "raid" ,
                                                                                   "shoot down" ,
                                                                                   "skirmish" ,
@@ -1582,7 +1603,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
                                <urn:ontoinsights:dna:verb_synonym> "attempt" ,
                                                                    "endeavor" ,
-                                                                   "seek out to" ,
+                                                                   "seek to" ,
                                                                    "strive to" ,
                                                                    "try" ,
                                                                    "undertake" .
@@ -1639,6 +1660,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:AwkwardnessAndShyness
 <urn:ontoinsights:dna:AwkwardnessAndShyness> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                             owl:disjointWith <urn:ontoinsights:dna:Confidence> ;
                                              rdfs:label "Awkwardness and Shyness" ;
                                              <urn:ontoinsights:dna:noun_synonym> "cloddishness" ,
                                                                                  "egotism" ,
@@ -12742,21 +12764,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                          <urn:ontoinsights:dna:AggressiveOrHostileAct> ;
                                          rdfs:label "Capture and Seizure" ;
                                          <urn:ontoinsights:dna:definition> "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
-                                         <urn:ontoinsights:dna:noun_synonym> "annexation" ,
+                                         <urn:ontoinsights:dna:noun_synonym> "arrest" ,
+                                                                             "confiscation" ,
+                                                                             "misappropriation" ;
+                                         <urn:ontoinsights:dna:verb_synonym> "apprehend" ,
                                                                              "arrest" ,
-                                                                             "occupation" ,
-                                                                             "overrunning" ,
-                                                                             "takeover" ;
-                                         <urn:ontoinsights:dna:verb_synonym> "annex" ,
-                                                                             "apprehend" ,
-                                                                             "arrest" ,
-                                                                             "conquer" ,
-                                                                             "occupy" ,
-                                                                             "overrun" ,
+                                                                             "capture" ,
+                                                                             "confiscate" ,
+                                                                             "misappropriate" ,
+                                                                             "seize" ,
                                                                              "snatch" ,
                                                                              "take captive" ,
-                                                                             "take control" ,
-                                                                             "take over" .
+                                                                             "take control" .
 
 
 ###  urn:ontoinsights:dna:CardiovascularDisease
@@ -12891,7 +12910,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "order" ,
                                                                    "rule" ,
                                                                    "summons" ;
-                               <urn:ontoinsights:dna:verb_synonym> "direct" ,
+                               <urn:ontoinsights:dna:verb_synonym> "command" ,
+                                                                   "direct" ,
                                                                    "instruct" ,
                                                                    "mandate" ,
                                                                    "rule" ,
@@ -13025,12 +13045,12 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Confidence
 <urn:ontoinsights:dna:Confidence> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                                  owl:disjointWith <urn:ontoinsights:dna:ConfusionAndDoubt> ;
                                   rdfs:label "Confidence" ;
                                   <urn:ontoinsights:dna:noun_synonym> "certainty" ,
                                                                       "poise" ,
                                                                       "resoluteness" ,
-                                                                      "self-possession" ;
-                                  <urn:ontoinsights:dna:verb_synonym> "poise" .
+                                                                      "self-possession" .
 
 
 ###  urn:ontoinsights:dna:ConfusionAndDoubt
@@ -13184,8 +13204,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                              rdfs:subClassOf <urn:ontoinsights:dna:LifeEvent> ;
                              rdfs:label "Death" ;
                              <urn:ontoinsights:dna:definition> "The act of an individual (animal or Person) ending life." ;
-                             <urn:ontoinsights:dna:verb_synonym> "decease" ,
-                                                                 "die" .
+                             <urn:ontoinsights:dna:noun_synonym> "annihilation" ,
+                                                                 "casualty" ,
+                                                                 "decease" ,
+                                                                 "demise" ;
+                             <urn:ontoinsights:dna:verb_synonym> "annihilate" ,
+                                                                 "die" ,
+                                                                 "drown" ,
+                                                                 "expire" .
 
 
 ###  urn:ontoinsights:dna:DecisionMaking
@@ -13199,6 +13225,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "resolution" ;
                                       <urn:ontoinsights:dna:verb_synonym> "conclude" ,
                                                                           "decide" ,
+                                                                          "make a decision" ,
                                                                           "plan" ,
                                                                           "resolve" .
 
@@ -13212,6 +13239,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:noun_synonym> "drop" ,
                                                                     "reduction" ;
                                 <urn:ontoinsights:dna:verb_synonym> "decline" ,
+                                                                    "decrease" ,
                                                                     "deflate" ,
                                                                     "drop" ,
                                                                     "lessen" ,
@@ -13230,6 +13258,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "safeguarding" ,
                                                                                     "security" ;
                                                 <urn:ontoinsights:dna:verb_synonym> "conserve" ,
+                                                                                    "defend" ,
                                                                                     "preserve" ,
                                                                                     "protect" ,
                                                                                     "safeguard" ,
@@ -13266,6 +13295,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:DelightAndHappiness
 <urn:ontoinsights:dna:DelightAndHappiness> rdf:type owl:Class ;
                                            rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                                           owl:disjointWith <urn:ontoinsights:dna:Loneliness> ,
+                                                            <urn:ontoinsights:dna:SadnessAndDisappointment> ;
                                            rdfs:label "Delight and happiness" ;
                                            <urn:ontoinsights:dna:noun_synonym> "amusement" ,
                                                                                "bliss" ,
@@ -13319,7 +13350,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "refutation" ,
                                                                   "repudiation" ,
                                                                   "retraction" ;
-                              <urn:ontoinsights:dna:verb_synonym> "dissent" ,
+                              <urn:ontoinsights:dna:verb_synonym> "deny" ,
+                                                                  "dissent" ,
                                                                   "rebut" ,
                                                                   "refute" ,
                                                                   "repudiate" ,
@@ -13340,14 +13372,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                               rdfs:label "Desire" ;
                               <urn:ontoinsights:dna:definition> "Wanting something, someone or some event or condition to occur. The thing, EventAndState, Agent or Resource that is 'wanted' is specified using the :has_topic property." ;
                               <urn:ontoinsights:dna:noun_synonym> "craving" ,
+                                                                  "curse" ,
                                                                   "longing" ,
                                                                   "passion" ,
+                                                                  "prayer" ,
                                                                   "wanting" ,
                                                                   "wish" ,
                                                                   "yearning" ;
                               <urn:ontoinsights:dna:verb_synonym> "crave" ,
+                                                                  "curse" ,
                                                                   "desire" ,
                                                                   "long for" ,
+                                                                  "pray" ,
                                                                   "want" ,
                                                                   "wish" ,
                                                                   "yearn" .
@@ -13412,6 +13448,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:label "Displaced Person or Refugee" ;
                                        <urn:ontoinsights:dna:definition> "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." ;
                                        <urn:ontoinsights:dna:noun_synonym> "refugee" .
+
+
+###  urn:ontoinsights:dna:Divorce
+<urn:ontoinsights:dna:Divorce> rdf:type owl:Class ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:LegalEvent> ,
+                                               <urn:ontoinsights:dna:LifeEvent> ,
+                                               <urn:ontoinsights:dna:Separation> ;
+                               owl:disjointWith <urn:ontoinsights:dna:Marriage> ;
+                               rdfs:label "Divorce" ;
+                               <urn:ontoinsights:dna:definition> "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage." ;
+                               <urn:ontoinsights:dna:noun_synonym> "annulment" ,
+                                                                   "breakup" ;
+                               <urn:ontoinsights:dna:verb_synonym> "annul" ,
+                                                                   "breakup" ,
+                                                                   "end a marriage" ,
+                                                                   "get a divorce" .
 
 
 ###  urn:ontoinsights:dna:DrinkableWater
@@ -13523,9 +13575,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "test" ,
                                                                             "training" ,
                                                                             "tutoring" ;
-                                        <urn:ontoinsights:dna:verb_synonym> "coach" ,
+                                        <urn:ontoinsights:dna:verb_synonym> "attend school" ,
+                                                                            "coach" ,
                                                                             "educate" ,
+                                                                            "go to school" ,
                                                                             "instruct" ,
+                                                                            "take a class" ,
                                                                             "teach" ,
                                                                             "test" ,
                                                                             "train" ,
@@ -13665,6 +13720,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Envy
 <urn:ontoinsights:dna:Envy> rdf:type owl:Class ;
                             rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                            owl:disjointWith <urn:ontoinsights:dna:GenerosityAndKindness> ;
                             rdfs:label "Envy" ;
                             <urn:ontoinsights:dna:noun_synonym> "coveting" ,
                                                                 "covetousness" ,
@@ -13737,7 +13793,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   <urn:ontoinsights:dna:noun_synonym> "enthusiasm" ,
                                                                       "exhilaration" ,
                                                                       "thrill" ,
-                                                                      "zeal" .
+                                                                      "zeal" ;
+                                  <urn:ontoinsights:dna:verb_synonym> "excite" ,
+                                                                      "thrill" .
 
 
 ###  urn:ontoinsights:dna:Expenses
@@ -13769,7 +13827,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "apologize" ,
                                                                                     "awe" ,
                                                                                     "congratulate" ,
-                                                                                    "express emotion" ,
+                                                                                    "exclaim" ,
+                                                                                    "express [emotion]" ,
                                                                                     "give thanks" ,
                                                                                     "greet" .
 
@@ -13800,6 +13859,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:FearAndDistrust
 <urn:ontoinsights:dna:FearAndDistrust> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                       owl:disjointWith <urn:ontoinsights:dna:TrustAndTolerance> ;
                                        rdfs:label "Fear and Distrust" ;
                                        <urn:ontoinsights:dna:noun_synonym> "alarm" ,
                                                                            "dread" ,
@@ -13813,7 +13873,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                            "suspicion" ,
                                                                            "terror" ;
                                        <urn:ontoinsights:dna:verb_synonym> "be afraid" ,
-                                                                           "be scared" .
+                                                                           "be scared" ,
+                                                                           "distrust" .
 
 
 ###  urn:ontoinsights:dna:FinancialEvent
@@ -13859,37 +13920,23 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "liberty" .
 
 
-###  urn:ontoinsights:dna:FriendlinessAndTrust
-<urn:ontoinsights:dna:FriendlinessAndTrust> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
-                                            rdfs:label "Friendliness and Trust" ;
-                                            <urn:ontoinsights:dna:noun_synonym> "acceptance" ,
-                                                                                "camaraderie" ,
-                                                                                "comradery" ,
-                                                                                "conviviality" ,
-                                                                                "cordiality" ,
-                                                                                "geniality" ,
-                                                                                "neighborliness" ,
-                                                                                "openness" ,
-                                                                                "politeness" ,
-                                                                                "sociability" ,
-                                                                                "tolerance" ;
-                                            <urn:ontoinsights:dna:verb_synonym> "tolerate" ,
-                                                                                "trust" .
-
-
 ###  urn:ontoinsights:dna:FriendlyOrSupportiveAct
 <urn:ontoinsights:dna:FriendlyOrSupportiveAct> rdf:type owl:Class ;
                                                rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                                rdfs:label "Friendly or Supportive Act" ;
                                                <urn:ontoinsights:dna:definition> "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
-                                               <urn:ontoinsights:dna:verb_synonym> "patronize" ,
+                                               <urn:ontoinsights:dna:noun_synonym> "encouragement" ,
+                                                                                   "friendliness" ,
+                                                                                   "neighborliness" ;
+                                               <urn:ontoinsights:dna:verb_synonym> "encourage" ,
+                                                                                   "patronize" ,
                                                                                    "support" .
 
 
 ###  urn:ontoinsights:dna:FrustrationAndHelplessness
 <urn:ontoinsights:dna:FrustrationAndHelplessness> rdf:type owl:Class ;
                                                   rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                                  owl:disjointWith <urn:ontoinsights:dna:Satisfaction> ;
                                                   rdfs:label "Frustration and Helplessness" ;
                                                   <urn:ontoinsights:dna:noun_synonym> "exasperation" ,
                                                                                       "powerlessness" ;
@@ -13960,6 +14007,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:GenerosityAndKindness
 <urn:ontoinsights:dna:GenerosityAndKindness> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                                             owl:disjointWith <urn:ontoinsights:dna:Greed> ;
                                              rdfs:label "Generosity and Kindness" ;
                                              <urn:ontoinsights:dna:noun_synonym> "beneficence" ,
                                                                                  "charity" ,
@@ -14049,6 +14097,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:GuiltAndShame
 <urn:ontoinsights:dna:GuiltAndShame> rdf:type owl:Class ;
                                      rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                     owl:disjointWith <urn:ontoinsights:dna:Satisfaction> ;
                                      rdfs:label "Guilt and Shame" ;
                                      <urn:ontoinsights:dna:noun_synonym> "embarrassment" ,
                                                                          "humilitation" ,
@@ -14075,21 +14124,24 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      <urn:ontoinsights:dna:definition> "Any Resource that provides capabilities for heating/cooling, ventilation/air movement, air cleaning or refrigeration." .
 
 
-###  urn:ontoinsights:dna:HatredAndDigust
-<urn:ontoinsights:dna:HatredAndDigust> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
-                                       rdfs:label "Hatred and Disgust" ;
-                                       <urn:ontoinsights:dna:noun_synonym> "aversion" ,
-                                                                           "contempt" ,
-                                                                           "hostility" ,
-                                                                           "loathing" ,
-                                                                           "resentment" ,
-                                                                           "revulsion" ,
-                                                                           "scorn" ,
-                                                                           "spite" ,
-                                                                           "vengefulness" ;
-                                       <urn:ontoinsights:dna:verb_synonym> "loathe" ,
-                                                                           "spite" .
+###  urn:ontoinsights:dna:HatredAndDisgust
+<urn:ontoinsights:dna:HatredAndDisgust> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
+                                        owl:disjointWith <urn:ontoinsights:dna:Love> ;
+                                        rdfs:label "Hatred and Disgust" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "aversion" ,
+                                                                            "contempt" ,
+                                                                            "hostility" ,
+                                                                            "loathing" ,
+                                                                            "resentment" ,
+                                                                            "revulsion" ,
+                                                                            "scorn" ,
+                                                                            "spite" ,
+                                                                            "vengefulness" ;
+                                        <urn:ontoinsights:dna:verb_synonym> "despise" ,
+                                                                            "hate" ,
+                                                                            "loathe" ,
+                                                                            "spite" .
 
 
 ###  urn:ontoinsights:dna:HealthAndDiseaseRelated
@@ -14125,11 +14177,14 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Hope
 <urn:ontoinsights:dna:Hope> rdf:type owl:Class ;
                             rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                            owl:disjointWith <urn:ontoinsights:dna:Pessimism> ;
                             rdfs:label "Hope" ;
                             <urn:ontoinsights:dna:noun_synonym> "anticipation" ,
                                                                 "eagerness" ,
                                                                 "expectancy" ,
-                                                                "optimism" .
+                                                                "optimism" ;
+                            <urn:ontoinsights:dna:verb_synonym> "anticipate" ,
+                                                                "hope" .
 
 
 ###  urn:ontoinsights:dna:Hospitality
@@ -14191,9 +14246,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                    "reproduction" ,
                                                                                    "simulation" ;
                                                <urn:ontoinsights:dna:verb_synonym> "copy" ,
+                                                                                   "counterfeit" ,
                                                                                    "duplicate" ,
                                                                                    "fake" ,
                                                                                    "forge" ,
+                                                                                   "imitate" ,
                                                                                    "reproduce" ,
                                                                                    "simulate" .
 
@@ -14210,7 +14267,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "touch" ;
                                         <urn:ontoinsights:dna:verb_synonym> "bump" ,
                                                                             "collide" ,
+                                                                            "contact" ,
                                                                             "hit" ,
+                                                                            "impact" ,
                                                                             "poke" ,
                                                                             "slam" ,
                                                                             "strike" ,
@@ -14264,11 +14323,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                              "synthesis" ,
                                                                                              "union" ;
                                                          <urn:ontoinsights:dna:verb_synonym> "amalgamate" ,
+                                                                                             "attach" ,
                                                                                              "attach to" ,
                                                                                              "coalesce" ,
                                                                                              "combine" ,
                                                                                              "federate" ,
                                                                                              "fuse" ,
+                                                                                             "include" ,
                                                                                              "insert" ,
                                                                                              "integrate" ,
                                                                                              "merge" ,
@@ -14323,7 +14384,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:InformationHandling> rdf:type owl:Class ;
                                            rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                            rdfs:label "Information Handling" ;
-                                           <urn:ontoinsights:dna:definition> "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." .
+                                           <urn:ontoinsights:dna:definition> "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." ;
+                                           <urn:ontoinsights:dna:noun_synonym> "IT" ,
+                                                                               "information technology" .
 
 
 ###  urn:ontoinsights:dna:InformationSource
@@ -14355,6 +14418,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "question" ;
                                <urn:ontoinsights:dna:verb_synonym> "ask" ,
                                                                    "cross-examination" ,
+                                                                   "enquire" ,
+                                                                   "inquire" ,
                                                                    "interrogate" ,
                                                                    "investigate" ,
                                                                    "probe" ,
@@ -14372,7 +14437,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:IntentionAndGoal
 <urn:ontoinsights:dna:IntentionAndGoal> rdf:type owl:Class ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:Desire> ;
                                         rdfs:label "Intention and Goal" ;
                                         <urn:ontoinsights:dna:definition> "An event or condition that an Agent hopes to attain/accomplish. Intentions are often distinguished from goals by being focused on the present moment, while goals are focused on the future." ;
                                         <urn:ontoinsights:dna:noun_synonym> "aim" ,
@@ -14389,6 +14454,24 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:definition> "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration." ;
                                 <urn:ontoinsights:dna:noun_synonym> "period" ,
                                                                     "timeframe" .
+
+
+###  urn:ontoinsights:dna:InvasionAndOccupation
+<urn:ontoinsights:dna:InvasionAndOccupation> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:CaptureAndSeizure> ;
+                                             rdfs:label "Invasion and Occupation" ;
+                                             <urn:ontoinsights:dna:definition> "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource." ;
+                                             <urn:ontoinsights:dna:noun_synonym> "annexation" ,
+                                                                                 "annexing" ,
+                                                                                 "conquering" ,
+                                                                                 "overrunning" ,
+                                                                                 "takeover" ;
+                                             <urn:ontoinsights:dna:verb_synonym> "annex" ,
+                                                                                 "conquer" ,
+                                                                                 "invade" ,
+                                                                                 "occupy" ,
+                                                                                 "overrun" ,
+                                                                                 "take over" .
 
 
 ###  urn:ontoinsights:dna:Jewelry
@@ -14451,7 +14534,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                     "practicing" ,
                                                                     "studying" ,
                                                                     "training" ;
-                                <urn:ontoinsights:dna:verb_synonym> "memorize" ,
+                                <urn:ontoinsights:dna:verb_synonym> "learn" ,
+                                                                    "memorize" ,
                                                                     "practice" ,
                                                                     "study" ,
                                                                     "train" .
@@ -14473,8 +14557,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "hearing" ,
                                                                       "jury" ,
                                                                       "justice" ,
+                                                                      "legal proceedings" ,
                                                                       "trial" ;
-                                  <urn:ontoinsights:dna:verb_synonym> "try a case" .
+                                  <urn:ontoinsights:dna:verb_synonym> "go to court" ,
+                                                                      "try a case" .
 
 
 ###  urn:ontoinsights:dna:LegalInstrument
@@ -14520,7 +14606,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Loneliness> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
                                   rdfs:label "Loneliness" ;
-                                  <urn:ontoinsights:dna:noun_synonym> "isolation" .
+                                  <urn:ontoinsights:dna:noun_synonym> "alienation" ,
+                                                                      "isolation" ,
+                                                                      "lonesomeness" .
 
 
 ###  urn:ontoinsights:dna:LongingAndPassion
@@ -14537,7 +14625,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:verb_synonym> "arouse" ,
                                                                              "crave" ,
                                                                              "desire" ,
-                                                                             "enthrall" .
+                                                                             "enthrall" ,
+                                                                             "long for" .
 
 
 ###  urn:ontoinsights:dna:Loss
@@ -14594,6 +14683,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      <urn:ontoinsights:dna:definition> "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
 
 
+###  urn:ontoinsights:dna:Marriage
+<urn:ontoinsights:dna:Marriage> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:Ceremony> ,
+                                                <urn:ontoinsights:dna:LegalEvent> ,
+                                                <urn:ontoinsights:dna:LifeEvent> ,
+                                                <urn:ontoinsights:dna:PromiseAndOath> ;
+                                rdfs:label "Marriage" ;
+                                <urn:ontoinsights:dna:definition> "A formal/legal event and condition describing that two people have committed to a relationship with each other." ;
+                                <urn:ontoinsights:dna:noun_synonym> "betrothal" ,
+                                                                    "nuptials" ,
+                                                                    "wedding" ;
+                                <urn:ontoinsights:dna:verb_synonym> "betroth" ,
+                                                                    "marry" ,
+                                                                    "wed" .
+
+
 ###  urn:ontoinsights:dna:Measurement
 <urn:ontoinsights:dna:Measurement> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -14621,8 +14726,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                "swarming" ;
                                            <urn:ontoinsights:dna:verb_synonym> "assemble" ,
                                                                                "congregate" ,
+                                                                               "encounter" ,
                                                                                "gather" ,
                                                                                "herd" ,
+                                                                               "meet" ,
                                                                                "swarm" .
 
 
@@ -14710,6 +14817,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "misinterprete" ,
                                                                    "misjudge" ,
                                                                    "misstate" ,
+                                                                   "misunderstand" ,
                                                                    "omit" .
 
 
@@ -14758,7 +14866,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "ship" ,
                                                                                            "take a trip" ,
                                                                                            "take a vacation" ,
-                                                                                           "transport" .
+                                                                                           "transport" ,
+                                                                                           "travel" .
 
 
 ###  urn:ontoinsights:dna:MultipleSclerosis
@@ -14843,6 +14952,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:NegativeEmotion
 <urn:ontoinsights:dna:NegativeEmotion> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:EmotionalResponse> ;
+                                       owl:disjointWith <urn:ontoinsights:dna:PositiveEmotion> ;
                                        rdfs:label "Negative Emotion" ;
                                        <urn:ontoinsights:dna:definition> "Any EmotionalResponse related to unpleasant, pessimistic or insecure feelings." ;
                                        <urn:ontoinsights:dna:example> "Examples are unhappiness, fear, frustration, loneliness, disgust, hatred, etc." .
@@ -14910,19 +15020,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                  rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                                  rdfs:label "Opportunity and Possibility" ;
                                                  <urn:ontoinsights:dna:definition> "Some entity or group of entities (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing(s) that are possible are specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
-
-
-###  urn:ontoinsights:dna:Optative
-<urn:ontoinsights:dna:Optative> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:CommunicationAndSpeechAct> ;
-                                rdfs:label "Optative" ;
-                                <urn:ontoinsights:dna:definition> "A statement which expresses a prayer, wish, curse etc. The Agent making the statement is indicated using the :has_active_agent property. The thing that is discussed is indicated using :has_topic." ;
-                                <urn:ontoinsights:dna:noun_synonym> "curse" ,
-                                                                    "prayer" ,
-                                                                    "wish" ;
-                                <urn:ontoinsights:dna:verb_synonym> "curse" ,
-                                                                    "pray" ,
-                                                                    "wish" .
 
 
 ###  urn:ontoinsights:dna:Organization
@@ -14993,7 +15090,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "assent" ,
                                                                       "authorize" ,
                                                                       "consent" ,
-                                                                      "let" .
+                                                                      "let" ,
+                                                                      "permit" .
 
 
 ###  urn:ontoinsights:dna:Person
@@ -15101,6 +15199,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          rdfs:label "Political Ideology" ;
                                          <urn:ontoinsights:dna:definition> "Used to indicate how a Location or Agent (such as a Person or GeopoliticalEntity) is evaluated. A Location is identified using the :has_location property, while an Agent is indicated using :has_holder. From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].'" ;
                                          <urn:ontoinsights:dna:example> "Examples are Authoritarian, Communism, Socialism, etc." .
+
+
+###  urn:ontoinsights:dna:PoliticalParty
+<urn:ontoinsights:dna:PoliticalParty> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:Organization> ;
+                                      rdfs:label "Political Party" ;
+                                      <urn:ontoinsights:dna:definition> "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office." .
 
 
 ###  urn:ontoinsights:dna:PopulatedPlace
@@ -15225,12 +15330,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "pledge" ,
                                                                           "vow" ,
                                                                           "word of honor" ;
-                                      <urn:ontoinsights:dna:verb_synonym> "bethoth" ,
-                                                                          "bond" ,
+                                      <urn:ontoinsights:dna:verb_synonym> "bond" ,
                                                                           "commit" ,
                                                                           "give one's word" ,
                                                                           "guarantee" ,
-                                                                          "marry" ,
                                                                           "pledge" ,
                                                                           "vow" .
 
@@ -15285,7 +15388,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "penalizing" ,
                                                                       "retribution" ;
                                   <urn:ontoinsights:dna:verb_synonym> "discipline" ,
-                                                                      "penalize" .
+                                                                      "penalize" ,
+                                                                      "punish" .
 
 
 ###  urn:ontoinsights:dna:PurchaseAndSale
@@ -15436,7 +15540,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:verb_synonym> "be at peace" ,
                                                                                  "be calm" ,
                                                                                  "be content" ,
-                                                                                 "be patient" .
+                                                                                 "be patient" ,
+                                                                                 "be relaxed" .
 
 
 ###  urn:ontoinsights:dna:ReligiousActivities
@@ -15607,13 +15712,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "An act of restoring something or someone to their original owner/location/condition, granting freedom to someone or something, or publishing/releasing something. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." ;
                                         <urn:ontoinsights:dna:noun_synonym> "liberation" ,
                                                                             "rescue" ,
-                                                                            "restitution" ;
+                                                                            "restitution" ,
+                                                                            "restoration" ;
                                         <urn:ontoinsights:dna:verb_synonym> "free" ,
                                                                             "give back" ,
                                                                             "liberate" ,
                                                                             "pay back" ,
                                                                             "release" ,
                                                                             "rescue" ,
+                                                                            "restore" ,
                                                                             "return" ,
                                                                             "revert" ,
                                                                             "take back" .
@@ -15719,7 +15826,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "self-pity" ,
                                                                                     "sorrow" ,
                                                                                     "unhappiness" ,
-                                                                                    "woe" .
+                                                                                    "woe" ;
+                                                <urn:ontoinsights:dna:verb_synonym> "disappoint" .
 
 
 ###  urn:ontoinsights:dna:SafeConditions
@@ -15743,7 +15851,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:noun_synonym> "fulfillment" ,
                                                                         "gratification" ,
                                                                         "pride" ,
-                                                                        "triumph" .
+                                                                        "triumph" ;
+                                    <urn:ontoinsights:dna:verb_synonym> "satisfy" .
 
 
 ###  urn:ontoinsights:dna:SavingsAndInvestment
@@ -15792,6 +15901,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "root around" ,
                                                                      "rummage" ,
                                                                      "scavenge" ,
+                                                                     "search" ,
                                                                      "seek" ,
                                                                      "stalk" .
 
@@ -15861,6 +15971,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "divide" ,
                                                                       "isolate" ,
                                                                       "segregate" ,
+                                                                      "separate" ,
                                                                       "set apart" ,
                                                                       "sever" ,
                                                                       "split" ,
@@ -16034,7 +16145,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                 "relent" ,
                                                                                 "relinquish" ,
                                                                                 "resign" ,
-                                                                                "succomb" .
+                                                                                "succomb" ,
+                                                                                "surrender" ,
+                                                                                "yield" .
 
 
 ###  urn:ontoinsights:dna:SwallowingDisorder
@@ -16119,7 +16232,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "browbeat" ,
                                                                   "intimidate" ,
                                                                   "menace" ,
-                                                                  "threat" ,
+                                                                  "threaten" ,
                                                                   "warn" .
 
 
@@ -16169,6 +16282,23 @@ rdf:label rdf:type owl:AnnotationProperty .
                                               <urn:ontoinsights:dna:example> "Examples include water ports, airports, heliports, roads, bridges, railroads, railroad yards, etc." .
 
 
+###  urn:ontoinsights:dna:TrustAndTolerance
+<urn:ontoinsights:dna:TrustAndTolerance> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
+                                         rdfs:label "Trust and Tolerance" ;
+                                         <urn:ontoinsights:dna:noun_synonym> "acceptance" ,
+                                                                             "camaraderie" ,
+                                                                             "comradery" ,
+                                                                             "conviviality" ,
+                                                                             "cordiality" ,
+                                                                             "geniality" ,
+                                                                             "openness" ,
+                                                                             "sociability" ;
+                                         <urn:ontoinsights:dna:verb_synonym> "accept" ,
+                                                                             "tolerate" ,
+                                                                             "trust" .
+
+
 ###  urn:ontoinsights:dna:Unemployment
 <urn:ontoinsights:dna:Unemployment> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
@@ -16192,7 +16322,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "use" ;
                                                  <urn:ontoinsights:dna:verb_synonym> "consume" ,
                                                                                      "use" ,
-                                                                                     "use up" .
+                                                                                     "use up" ,
+                                                                                     "utilize" .
 
 
 ###  urn:ontoinsights:dna:Vehicle
@@ -16207,7 +16338,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:ViolationOfAgreement> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                             rdfs:label "Violation of Agreement" ;
-                                            <urn:ontoinsights:dna:definition> "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." .
+                                            <urn:ontoinsights:dna:definition> "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." ;
+                                            <urn:ontoinsights:dna:verb_synonym> "violate" .
 
 
 ###  urn:ontoinsights:dna:WasteAndResidue
@@ -20929,8 +21061,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 <urn:ontoinsights:dna:meet> <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
-                            <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                "converge" ;
+                            <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                "touch" ;
                             rdfs:label "meet" ;
                             <urn:ontoinsights:dna:noun_synonym> "convergence" .
 

@@ -222,7 +222,7 @@ def get_y_x_values(number_narrators: int, variable: str, query: str, store_name:
                      'gender', 'year' or 'country'
     :param query: String holding the query to run to get the count
     :param store_name: String holding the database/data store name with the narratives and narrator details
-    :return: Two tuples of integers - for the y and x axes of a horizontal bar chart
+    :return: Two tuples of integers - for the y and x axes of a horizontal bar chart ...
              The y axis is the list of genders, birth countries and birth years,
              and the x axis is the number of narrators
     """
