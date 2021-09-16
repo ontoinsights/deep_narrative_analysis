@@ -9,7 +9,7 @@
 # https://www.gdeltproject.org/data/documentation/CAMEO.Manual.1.1b3.pdf.
 # 
 # Created: April 7 2020
-# Last Modified: May 23 2021
+# Last Modified: September 11 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -22,6 +22,7 @@
 # Changes:
 #  Added 'Gypsy' as a synonym for Roma
 #  Updated the default and dna prefixes
+#  Changed multiple labels into 1 label and noun_synonyms
 ########################################################################
 
 
@@ -31,15 +32,18 @@
 
 :CameoEthnicity_abk a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Abkhaz", "Abkhazians" .
+  rdfs:label "Abkhaz" ;
+  :noun_synonym "Abkhazians" .
 
 :CameoEthnicity_abr a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Aboriginal-Australians", "Aborigines" .
+  rdfs:label "Aboriginal-Australians" ;
+  :noun_synonym "Aborigines" .
 
 :CameoEthnicity_ace a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Acehnese", "Achinese" .
+  rdfs:label "Acehnese" ;
+  :noun_synonym "Achinese" .
 
 :CameoEthnicity_acg a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -55,11 +59,13 @@
 
 :CameoEthnicity_adj a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Adjarians", "Adzhars" .
+  rdfs:label "Adjarians" ;
+  :noun_synonym "Adzhars" .
 
 :CameoEthnicity_ady a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Adyghe", "Circasians" .
+  rdfs:label "Adyghe" ;
+  :noun_synonym "Circasians" .
 
 :CameoEthnicity_aar a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -83,11 +89,13 @@
 
 :CameoEthnicity_aka a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Akan", "Asante" .
+  rdfs:label "Akan"  ;
+  :noun_synonym "Asante" .
 
 :CameoEthnicity_aku a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Aku", "Creoles" .
+  rdfs:label "Aku"  ;
+  :noun_synonym "Creoles" .
 
 :CameoEthnicity_alb a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -103,7 +111,8 @@
 
 :CameoEthnicity_alt a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Altay", "Altai" .
+  rdfs:label "Altay"  ;
+  :noun_synonym "Altai" .
 
 :CameoEthnicity_alu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -111,7 +120,8 @@
 
 :CameoEthnicity_amb a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Ambonese", "Amboinese" .
+  rdfs:label "Ambonese"  ;
+  :noun_synonym "Amboinese" .
 
 :CameoEthnicity_ame a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -207,11 +217,13 @@
 
 :CameoEthnicity_znd a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Azande", "Azande-Mangbetu" .
+  rdfs:label "Azande"  ;
+  :noun_synonym "Azande-Mangbetu" .
 
 :CameoEthnicity_aze a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Azerbaijani", "Azeri" .
+  rdfs:label "Azerbaijani"  ;
+  :noun_synonym "Azeri" .
 
 :CameoEthnicity_bad a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -243,11 +255,13 @@
 
 :CameoEthnicity_bal a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Baloch", "Baluchis" .
+  rdfs:label "Baloch"  ;
+  :noun_synonym "Baluchis" .
 
 :CameoEthnicity_bmr a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Bamar", "Barman" .
+  rdfs:label "Bamar"  ;
+  :noun_synonym "Barman" .
 
 :CameoEthnicity_bam a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -279,7 +293,8 @@
 
 :CameoEthnicity_bas a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Basoga", "Bassa/Duala" .
+  rdfs:label "Basoga"  ;
+  :noun_synonym "Bassa", "Duala" .
 
 :CameoEthnicity_baq a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -303,7 +318,8 @@
 
 :CameoEthnicity_bel a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Belarusians", "Byelorussians" .
+  rdfs:label "Belarusians"  ;
+  :noun_synonym "Byelorussians" .
 
 :CameoEthnicity_bem a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -311,7 +327,8 @@
 
 :CameoEthnicity_ben a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Bengali-Hindu", "Bengali" .
+  rdfs:label "Bengali-Hindu"  ;
+  :noun_synonym "Bengali" .
 
 :CameoEthnicity_bni a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -323,11 +340,13 @@
 
 :CameoEthnicity_bte a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Beti-Pahuin", "Beti" .
+  rdfs:label "Beti-Pahuin"  ;
+  :noun_synonym "Beti" .
 
 :CameoEthnicity_bey a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Beydan", "White Moors" .
+  rdfs:label "Beydan"  ;
+  :noun_synonym "White Moors" .
 
 :CameoEthnicity_bho a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -347,7 +366,8 @@
 
 :CameoEthnicity_afa a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Black-African", "Africans" .
+  rdfs:label "Black-African"  ;
+  :noun_synonym "Africans" .
 
 :CameoEthnicity_blg a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -399,7 +419,8 @@
 
 :CameoEthnicity_bsh a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Bushmen", "San" .
+  rdfs:label "Bushmen"  ;
+  :noun_synonym "San" .
 
 :CameoEthnicity_bou a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -423,7 +444,8 @@
 
 :CameoEthnicity_ava a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Caucasian Avars", "Avars" .
+  rdfs:label "Caucasian Avars"  ;
+  :noun_synonym "Avars" .
 
 :CameoEthnicity_ceb a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -455,7 +477,8 @@
 
 :CameoEthnicity_nya a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Chewa", "Nyanja speakers" .
+  rdfs:label "Chewa"  ;
+  :noun_synonym "Nyanja speakers" .
 
 :CameoEthnicity_chy a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -467,7 +490,8 @@
 
 :CameoEthnicity_chi a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Chinese", "Mainland Chinese" .
+  rdfs:label "Chinese"  ;
+  :noun_synonym "Mainland Chinese" .
 
 :CameoEthnicity_chn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -483,7 +507,8 @@
 
 :CameoEthnicity_cht a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Ch'orti'", "Chorti" .
+  rdfs:label "Ch'orti'"  ;
+  :noun_synonym "Chorti" .
 
 :CameoEthnicity_chc a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -551,7 +576,8 @@
 
 :CameoEthnicity_dal a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Dalit", "Backward classes/castes" .
+  rdfs:label "Dalit"  ;
+  :noun_synonym "Backward classes/castes" .
 
 :CameoEthnicity_dam a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -563,7 +589,8 @@
 
 :CameoEthnicity_dar a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Dargwa", "Dargins" .
+  rdfs:label "Dargwa"  ;
+  :noun_synonym "Dargins" .
 
 :CameoEthnicity_dau a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -615,7 +642,8 @@
 
 :CameoEthnicity_dut a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Dutch", "Flemings" .
+  rdfs:label "Dutch"  ;
+  :noun_synonym "Flemings" .
 
 :CameoEthnicity_dyu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -655,7 +683,8 @@
 
 :CameoEthnicity_esh a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Eshira", "Bapounou" .
+  rdfs:label "Eshira"  ;
+  :noun_synonym "Bapounou" .
 
 :CameoEthnicity_est a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -679,7 +708,8 @@
 
 :CameoEthnicity_fan a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Fang", "Estuary Fang" .
+  rdfs:label "Fang"  ;
+  :noun_synonym "Estuary Fang" .
 
 :CameoEthnicity_fat a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -727,7 +757,8 @@
 
 :CameoEthnicity_ful a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Fula", "Fulani" .
+  rdfs:label "Fula"  ;
+  :noun_synonym "Fulani" .
 
 :CameoEthnicity_fru a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -735,7 +766,8 @@
 
 :CameoEthnicity_ada a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Ga", "Ga-Adangbe" .
+  rdfs:label "Ga"  ;
+  :noun_synonym "Ga-Adangbe" .
 
 :CameoEthnicity_gla a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -747,7 +779,8 @@
 
 :CameoEthnicity_gar a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Garifuna", "Garifs" .
+  rdfs:label "Garifuna"  ;
+  :noun_synonym "Garifs" .
 
 :CameoEthnicity_gay a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -755,11 +788,13 @@
 
 :CameoEthnicity_gba a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Gbaya", "Baya" .
+  rdfs:label "Gbaya"  ;
+  :noun_synonym "Baya" .
 
 :CameoEthnicity_gel a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Gelao", "Gelo" .
+  rdfs:label "Gelao"  ;
+  :noun_synonym "Gelo" .
 
 :CameoEthnicity_geo a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -775,7 +810,8 @@
 
 :CameoEthnicity_gin a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Gin", "Jing" .
+  rdfs:label "Gin"  ;
+  :noun_synonym "Jing" .
 
 :CameoEthnicity_gio a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -787,7 +823,8 @@
 
 :CameoEthnicity_gor a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Gorontalonese", "Gorontalos" .
+  rdfs:label "Gorontalonese"  ;
+  :noun_synonym "Gorontalos" .
 
 :CameoEthnicity_gra a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -843,11 +880,13 @@
 
 :CameoEthnicity_hrt a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Haratin", "Black Moors" .
+  rdfs:label "Haratin"  ;
+  :noun_synonym "Black Moors" .
 
 :CameoEthnicity_hau a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Hausa", "Hausa-Fulani" .
+  rdfs:label "Hausa"  ;
+  :noun_synonym "Hausa-Fulani" .
 
 :CameoEthnicity_haw a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -975,23 +1014,28 @@
 
 :CameoEthnicity_jew a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Jewish" .
+  rdfs:label "Jewish"  ;
+  :noun_synonym "Hebrew" .
 
 :CameoEthnicity_jin a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Jino", "Jinuo" .
+  rdfs:label "Jino"  ;
+  :noun_synonym "Jinuo" .
 
 :CameoEthnicity_jol a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Jola", "Diola" .
+  rdfs:label "Jola"  ;
+  :noun_synonym "Diola" .
 
 :CameoEthnicity_kbd a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kabarday", "Kabardins" .
+  rdfs:label "Kabarday"  ;
+  :noun_synonym "Kabardins" .
 
 :CameoEthnicity_kby a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kabye", "Kabre" .
+  rdfs:label "Kabye"  ;
+  :noun_synonym "Kabre" .
 
 :CameoEthnicity_kab a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1031,7 +1075,8 @@
 
 :CameoEthnicity_kau a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kanuri", "Kanouri" .
+  rdfs:label "Kanuri"  ;
+  :noun_synonym "Kanouri" .
 
 :CameoEthnicity_kao a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1043,7 +1088,8 @@
 
 :CameoEthnicity_kch a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Karachays", "Karachai" .
+  rdfs:label "Karachays"  ;
+  :noun_synonym "Karachai" .
 
 :CameoEthnicity_kaa a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1059,7 +1105,8 @@
 
 :CameoEthnicity_kar a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Karen", "Kayin" .
+  rdfs:label "Karen"  ;
+  :noun_synonym "Kayin" .
 
 :CameoEthnicity_kas a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1087,7 +1134,8 @@
 
 :CameoEthnicity_khm a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Khmer", "Khmer Loei" .
+  rdfs:label "Khmer"  ;
+  :noun_synonym "Khmer Loei" .
 
 :CameoEthnicity_khu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1119,11 +1167,13 @@
 
 :CameoEthnicity_kom a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Komi", "Komi-Permyaks" .
+  rdfs:label "Komi"  ;
+  :noun_synonym "Komi-Permyaks" .
 
 :CameoEthnicity_kon a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kongo", "Bakongo" .
+  rdfs:label "Kongo"  ;
+  :noun_synonym "Bakongo" .
 
 :CameoEthnicity_kno a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1143,11 +1193,13 @@
 
 :CameoEthnicity_kpe a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kpelle", "Guerze" .
+  rdfs:label "Kpelle"  ;
+  :noun_synonym "Guerze" .
 
 :CameoEthnicity_krh a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Krahn", "Guere" .
+  rdfs:label "Krahn"  ;
+  :noun_synonym "Guere" .
 
 :CameoEthnicity_kro a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1167,7 +1219,8 @@
 
 :CameoEthnicity_brm a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kurichiya", "Hill Barhmins" .
+  rdfs:label "Kurichiya"  ;
+  :noun_synonym "Hill Barhmins" .
 
 :CameoEthnicity_kru a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1179,7 +1232,8 @@
 
 :CameoEthnicity_kir a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Kyrgyz", "Kirghis/Kirgiz" .
+  rdfs:label "Kyrgyz"  ;
+  :noun_synonym "Kirghis", "Kirgiz" .
 
 :CameoEthnicity_lhu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1187,7 +1241,8 @@
 
 :CameoEthnicity_lak a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Lak", "Russia" .
+  rdfs:label "Lak"  ;
+  :noun_synonym "Russia" .
 
 :CameoEthnicity_lam a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1223,7 +1278,8 @@
 
 :CameoEthnicity_lez a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Lezgian", "Lezgins" .
+  rdfs:label "Lezgian"  ;
+  :noun_synonym "Lezgins" .
 
 :CameoEthnicity_lii a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1251,7 +1307,8 @@
 
 :CameoEthnicity_lom a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Lomwe", "Nguru" .
+  rdfs:label "Lomwe"  ;
+  :noun_synonym "Nguru" .
 
 :CameoEthnicity_lov a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1263,7 +1320,8 @@
 
 :CameoEthnicity_loz a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Lozi", "Barotse" .
+  rdfs:label "Lozi"  ;
+  :noun_synonym "Barotse" .
 
 :CameoEthnicity_lua a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1327,7 +1385,8 @@
 
 :CameoEthnicity_mad a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Madurese", "Madura" .
+  rdfs:label "Madurese"  ;
+  :noun_synonym "Madura" .
 
 :CameoEthnicity_maf a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1347,7 +1406,8 @@
 
 :CameoEthnicity_mok a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Makonde", "Makonde-Yao" .
+  rdfs:label "Makonde"  ;
+  :noun_synonym "Makonde-Yao" .
 
 :CameoEthnicity_mlg a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1387,7 +1447,8 @@
 
 :CameoEthnicity_man a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Mandinka", "Mandigo/Mandingue" .
+  rdfs:label "Mandinka"  ;
+  :noun_synonym "Mandigo", "Mandingue" .
 
 :CameoEthnicity_mni a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1395,7 +1456,8 @@
 
 :CameoEthnicity_mnj a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Manjack", "Manjaco" .
+  rdfs:label "Manjack"  ;
+  :noun_synonym "Manjaco" .
 
 :CameoEthnicity_mnn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1455,7 +1517,8 @@
 
 :CameoEthnicity_mbe a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Mbere", "Mbede" .
+  rdfs:label "Mbere"  ;
+  :noun_synonym "Mbede" .
 
 :CameoEthnicity_mbo a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1531,11 +1594,13 @@
 
 :CameoEthnicity_mon a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Mongol", "Mongolians" .
+  rdfs:label "Mongol"  ;
+  :noun_synonym "Mongolians" .
 
 :CameoEthnicity_tuu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Mongour", "Tu" .
+  rdfs:label "Mongour"  ;
+  :noun_synonym "Tu" .
 
 :CameoEthnicity_mtn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1543,7 +1608,8 @@
 
 :CameoEthnicity_myv a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Mordvins", "Mordva" .
+  rdfs:label "Mordvins"  ;
+  :noun_synonym "Mordva" .
 
 :CameoEthnicity_mro a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1587,7 +1653,8 @@
 
 :CameoEthnicity_nax a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Nakhi", "Naxi" .
+  rdfs:label "Nakhi"  ;
+  :noun_synonym "Naxi" .
 
 :CameoEthnicity_nam a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1755,7 +1822,8 @@
 
 :CameoEthnicity_oss a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Ossetians", "Ossetes" .
+  rdfs:label "Ossetians"  ;
+  :noun_synonym "Ossetes" .
 
 :CameoEthnicity_oto a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1771,7 +1839,8 @@
 
 :CameoEthnicity_ran a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Pahari Rajput", "Rana/Thakuri" .
+  rdfs:label "Pahari Rajput"  ;
+  :noun_synonym "Rana", "Thakuri" .
 
 :CameoEthnicity_pau a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1799,7 +1868,8 @@
 
 :CameoEthnicity_paa a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Papuan", "Papua" .
+  rdfs:label "Papuan"  ;
+  :noun_synonym "Papua" .
 
 :CameoEthnicity_par a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1807,7 +1877,8 @@
 
 :CameoEthnicity_psh a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Pashayi", "Pashai" .
+  rdfs:label "Pashayi"  ;
+  :noun_synonym "Pashai" .
 
 :CameoEthnicity_pus a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1827,7 +1898,8 @@
 
 :CameoEthnicity_pol a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Poles" .
+  rdfs:label "Poles" ;
+  :noun_synonym "Polish" .
 
 :CameoEthnicity_pom a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1851,7 +1923,8 @@
 
 :CameoEthnicity_phu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Puthai", "Phuthai" .
+  rdfs:label "Puthai"  ;
+  :noun_synonym "Phuthai" .
 
 :CameoEthnicity_qia a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1871,7 +1944,8 @@
 
 :CameoEthnicity_bda a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Rakhine", "Buddist Arakanese" .
+  rdfs:label "Rakhine"  ;
+  :noun_synonym "Buddist Arakanese" .
 
 :CameoEthnicity_rap a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1879,7 +1953,9 @@
 
 :CameoEthnicity_rom a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Romani", "Roma", "Gypsy" .
+  rdfs:label "Romani"  ;
+  :noun_synonym "Roma" ;
+  :noun_synonym "Gypsy" .
 
 :CameoEthnicity_rum a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1895,7 +1971,8 @@
 
 :CameoEthnicity_rus a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Russian" .
+  rdfs:label "Russian" ;
+  :noun_synonym "Soviet" .
 
 :CameoEthnicity_slr a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1939,7 +2016,8 @@
 
 :CameoEthnicity_sco a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Scottish", "Scots" .
+  rdfs:label "Scottish"  ;
+  :noun_synonym "Scots" .
 
 :CameoEthnicity_sel a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -1975,7 +2053,8 @@
 
 :CameoEthnicity_sna a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Shona", "Ndau" .
+  rdfs:label "Shona"  ;
+  :noun_synonym "Ndau" .
 
 :CameoEthnicity_scn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2055,7 +2134,8 @@
 
 :CameoEthnicity_bsu a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Subiya", "Basubia" .
+  rdfs:label "Subiya"  ;
+  :noun_synonym "Basubia" .
 
 :CameoEthnicity_sat a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2111,7 +2191,8 @@
 
 :CameoEthnicity_tai a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tai", "Tha/Tai-Lu/Tai-Yuan" .
+  rdfs:label "Tai"  ;
+  :noun_synonym "Tha", "Tai-Lu", "Tai-Yuan" .
 
 :CameoEthnicity_twn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2119,7 +2200,8 @@
 
 :CameoEthnicity_tgk a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tajik", "Pamir Tajiks" .
+  rdfs:label "Tajik"  ;
+  :noun_synonym "Pamir Tajiks" .
 
 :CameoEthnicity_tms a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2179,7 +2261,8 @@
 
 :CameoEthnicity_tir a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tigray-Tigrinya", "Tigry" .
+  rdfs:label "Tigray-Tigrinya"  ;
+  :noun_synonym "Tigry" .
 
 :CameoEthnicity_tig a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2203,11 +2286,13 @@
 
 :CameoEthnicity_tog a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tonga", "Africa" .
+  rdfs:label "Tonga"  ;
+  :noun_synonym "Africa" .
 
 :CameoEthnicity_ton a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tonga", "Pacific" .
+  rdfs:label "Tonga"  ;
+  :noun_synonym "Pacific" .
 
 :CameoEthnicity_tor a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2231,7 +2316,8 @@
 
 :CameoEthnicity_tso a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tsonga", "Tsonga-Chopi" .
+  rdfs:label "Tsonga"  ;
+  :noun_synonym "Tsonga-Chopi" .
 
 :CameoEthnicity_tsn a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2251,11 +2337,13 @@
 
 :CameoEthnicity_tup a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tupi", "Tupi-Guarani" .
+  rdfs:label "Tupi"  ;
+  :noun_synonym "Tupi-Guarani" .
 
 :CameoEthnicity_tur a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Turkish", "Turks" .
+  rdfs:label "Turkish"  ;
+  :noun_synonym "Turks" .
 
 :CameoEthnicity_tuk a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2263,7 +2351,8 @@
 
 :CameoEthnicity_tts a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tutsi", "Tutsi-Banyamulenge" .
+  rdfs:label "Tutsi"  ;
+  :noun_synonym "Tutsi-Banyamulenge" .
 
 :CameoEthnicity_tvl a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2271,7 +2360,8 @@
 
 :CameoEthnicity_tyv a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Tuvans", "Tuvinians" .
+  rdfs:label "Tuvans"  ;
+  :noun_synonym "Tuvinians" .
 
 :CameoEthnicity_udm a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2295,7 +2385,8 @@
 
 :CameoEthnicity_uig a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Uyghur", "Uighur" .
+  rdfs:label "Uyghur"  ;
+  :noun_synonym "Uighur" .
 
 :CameoEthnicity_uzb a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2303,7 +2394,8 @@
 
 :CameoEthnicity_vaa a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Va", "Wa" .
+  rdfs:label "Va"  ;
+  :noun_synonym "Wa" .
 
 :CameoEthnicity_vai a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2319,7 +2411,8 @@
 
 :CameoEthnicity_vie a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Vietnamese", "Kinh" .
+  rdfs:label "Vietnamese"  ;
+  :noun_synonym "Kinh" .
 
 :CameoEthnicity_vil a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2379,11 +2472,13 @@
 
 :CameoEthnicity_yao a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "African Yao", "Yao" .
+  rdfs:label "African Yao"  ;
+  :noun_synonym "Yao" .
 
 :CameoEthnicity_dao a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Asian Yao", "Dao" .
+  rdfs:label "Asian Yao"  ;
+  :noun_synonym "Dao" .
 
 :CameoEthnicity_yap a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2411,7 +2506,8 @@
 
 :CameoEthnicity_zay a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Zaidiyya", "Zaydis" .
+  rdfs:label "Zaidiyya"  ;
+  :noun_synonym "Zaydis" .
 
 :CameoEthnicity_zap a owl:Class;
   rdfs:subClassOf :Ethnicity ;
@@ -2431,7 +2527,8 @@
 
 :CameoEthnicity_zom a owl:Class;
   rdfs:subClassOf :Ethnicity ;
-  rdfs:label "Zomi", "Chins" .
+  rdfs:label "Zomi"  ;
+  :noun_synonym "Chins" .
 
 :CameoEthnicity_zul a owl:Class;
   rdfs:subClassOf :Ethnicity ;

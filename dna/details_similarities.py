@@ -1,9 +1,10 @@
+# TODO: Summary of processing
+
 import logging
 import PySimpleGUI as sg
 
 from database import query_database
-from encoded_images import encoded_logo
-from utilities import capture_error
+from utilities import capture_error, encoded_logo
 
 query_narrative_text = 'prefix : <urn:ontoinsights:dna:> SELECT ?narr_text WHERE ' \
                        '{ ?narr a :Narrative ; :text ?narr_text . }'
@@ -26,11 +27,10 @@ def display_similarities(store_name: str):
 
     # Create the GUI Window
     try:
-        success, narrative_results = query_database('select', query_narrative_text, store_name)
+        narrative_results = query_database('select', query_narrative_text, store_name)
         number_narratives = 0
-        if 'results' in narrative_results.keys() and \
-                'bindings' in narrative_results['results'].keys():
-            number_narratives = len(narrative_results['results']['bindings'])
+        if narrative_results:
+            number_narratives = len(narrative_results)
         if not number_narratives:
             sg.popup_error(f'No narrators are defined in {store_name}. '
                            f'Similarities graph cannot be displayed.',
@@ -41,13 +41,13 @@ def display_similarities(store_name: str):
         return
     window_similarities_list = sg.Window('Narrative Similarities', layout, icon=encoded_logo).Finalize()
 
-    # Event Loop to process window "events"
+    # Loop to process window "events"
     while True:
         event_similarities_list, values = window_similarities_list.read()
         if event_similarities_list in (sg.WIN_CLOSED, 'End'):
             # If user closes window or clicks 'End'
             break
-        # TODO
+        # TODO: Get similarities details
 
     # Done
     window_similarities_list.close()

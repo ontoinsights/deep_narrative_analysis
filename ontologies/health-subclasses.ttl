@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 7 2021
+# Last Modified: September 14 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,7 @@
 # Changes:
 #  Moved classes to this file from event-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
+#  Added :Healthy
 ########################################################################
 
 
@@ -138,6 +139,13 @@
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Diabetes" ;
   :definition "Diabetes is a condition resulting in high blood sugars. It may be caused by a lack of insulin or a body's inability to absorb glucose. Note that Type 1 diabetes should also be classified as an :AutoimmuneDisease." .
+
+:Healthy a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Healthy" ;
+  :definition "Free from disease and injury" ;
+  :noun_synonym "good health", "physically fit", "good shape", "hale", "hearty" ;
+  :verb_synonym "be healthy" .
 
 :HIVAndAIDS a owl:Class ;
   rdfs:subClassOf :InfectiousDisease, :AutoimmuneDisease ;

@@ -1,9 +1,10 @@
+# TODO: Summary of processing
+
 import logging
 import PySimpleGUI as sg
 
 from database import query_database
-from encoded_images import encoded_logo
-from utilities import capture_error
+from utilities import capture_error, encoded_logo
 
 query_hypotheses = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?hypo ?label WHERE ' \
                    '{ ?hypo a :Script ; rdfs:label ?label }'
@@ -32,15 +33,13 @@ def test_hypothesis(store_name: str):
 
     # Create the GUI Window
     try:
-        success1, hypotheses_results = query_database('select', query_hypotheses, store_name)
+        hypotheses_results = query_database('select', query_hypotheses, store_name)
         number_hypotheses = 0
         number_narratives = 0
-        if success1 and 'results' in hypotheses_results.keys() and \
-                'bindings' in hypotheses_results['results'].keys():
+        if hypotheses_results:
             number_hypotheses = len(hypotheses_results['results']['bindings'])
-        success2, narratives_results = query_database('select', query_number_narratives, store_name)
-        if success2 and 'results' in narratives_results.keys() and \
-                'bindings' in narratives_results['results'].keys():
+        narratives_results = query_database('select', query_number_narratives, store_name)
+        if narratives_results:
             number_narratives = int(narratives_results['results']['bindings'][0]['cnt']['value'])
         error_msg = ''
         if not number_hypotheses:
@@ -64,7 +63,7 @@ def test_hypothesis(store_name: str):
         if event_test_list in (sg.WIN_CLOSED, 'End'):
             # If user closes window or clicks 'End'
             break
-        # TODO
+        # TODO: Test hypothesis
 
     # Done
     window_test_list.close()

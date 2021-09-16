@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: July 7 2021
+# Last modified: September 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,6 +28,7 @@
 #  Updated to the Mar 2021 semantics
 #  Updated the default and dna prefixes
 #  Changed :synonym to :noun_synonym
+#  Added :Database, :Publication, :Spreadsheet and :WebPage
 ########################################################################
 
 
@@ -82,6 +83,11 @@
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
   :example "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
   :noun_synonym "clothes", "apparel", "attire" .
+
+:Database a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Database" ;
+  :definition "Information organized into a collection of tables (e.g., relational databases) or records/triples/etc. (e.g., NoSQL databases), stored on a computer and accessed via specialized query languages." .
 
 :DyeAndInk a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
@@ -169,6 +175,12 @@
   :definition "Entities that are naturally occurring, of high economic value and (usually) rare (due to scarcity or controlled release)." ;
   :example "Examples of precious metals are gold and silver. Examples of gemstones include diamonds, rubies and sapphires." .
 
+:Publication a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Publication" ;
+  :definition "A book, magazine, article, etc. that is available/published." ;
+  :noun_synonym "book", "volume", "hardback", "paperback", "title", "work", "opus", "treatise", "manual", "register", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report" .
+
 :SoapAndCleaningSubstance a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Soap and Cleaning Substance" ;
@@ -180,6 +192,12 @@
   rdfs:label "Software and Data" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579), Software 'is a collection of instructions and data that tell [a] computer how to work ... In computer science and software engineering, computer software is all information processed by computer systems, including programs and data." ;
   :example "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" .
+
+:Spreadsheet a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Spreadsheet" ;
+  :noun_synonym "spread sheet" ;
+  :definition "A computer document where data is organized into labelled rows and columns." .
 
 :SubstanceAndRawMaterial a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -213,9 +231,15 @@
 :WeaponAndAmmunition a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Weapon and Ammunition" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Weapon&oldid=1011762825), a 'weapon, arm or armament is any implement or device that can be used with the intent to inflict damage or harm. Weapons are used to increase the efficacy and efficiency of activities such as hunting, crime, law enforcement, self-defense, and warfare. In broader context, weapons may be construed to include anything used to gain a tactical, strategic, material or mental advantage over an adversary or enemy target. While ordinary objects – sticks, rocks, bottles, chairs, vehicles – can be used as weapons, many are expressly designed for the purpose; these range from simple implements such as clubs, axes and swords, to complicated modern firearms, tanks, intercontinental ballistic missiles, biological weapons, and cyberweapons. Something that has been re-purposed, converted, or enhanced to become a weapon of war is termed weaponized, such as a weaponized virus or weaponized laser.' On the other hand, ammunition '(informally ammo) is the material fired, scattered, dropped or detonated from any weapon. Ammunition is both expendable weapons (e.g., bombs, missiles, grenades, land mines) and the component parts of other weapons that create the effect on a target (e.g., bullets and warheads).[1] Nearly all mechanical weapons require some form of ammunition to operate.'(https://en.wikipedia.org/w/index.php?title=Ammunition&oldid=1012849062)" .
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Weapon&oldid=1011762825), a 'weapon, arm or armament is any implement or device that can be used with the intent to inflict damage or harm. Weapons are used to increase the efficacy and efficiency of activities such as hunting, crime, law enforcement, self-defense, and warfare. In broader context, weapons may be construed to include anything used to gain a tactical, strategic, material or mental advantage over an adversary or enemy target. While ordinary objects – sticks, rocks, bottles, chairs, vehicles – can be used as weapons, many are expressly designed for the purpose; these range from simple implements such as clubs, axes and swords, to complicated modern firearms, tanks, intercontinental ballistic missiles, biological weapons, and cyberweapons. Something that has been re-purposed, converted, or enhanced to become a weapon of war is termed weaponized, such as a weaponized virus or weaponized laser.' On the other hand, ammunition '(informally ammo) is the material fired, scattered, dropped or detonated from any weapon. Ammunition is both expendable weapons (e.g., bombs, missiles, grenades, land mines) and the component parts of other weapons that create the effect on a target (e.g., bullets and warheads). Nearly all mechanical weapons require some form of ammunition to operate.'(https://en.wikipedia.org/w/index.php?title=Ammunition&oldid=1012849062)" .
   
-:WoodAndSubstitue  a owl:Class ;
+:WebPage a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Web Page" ;
+  :noun_synonym "webpage" ;
+  :definition "A hypertext document available on the World Wide Web, at a URL." .
+
+:WoodAndSubstitue a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Wood and Substitute" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wood&oldid=1009092813), Wood 'is a porous and fibrous structural tissue found in the stems and roots of trees and other woody plants. It is an organic material – a natural composite of cellulose fibers that are strong in tension and embedded in a matrix of lignin that resists compression ... Wood may also refer to other plant materials with comparable properties, and to material engineered from wood, or wood chips or fiber. Wood has been used for thousands of years for fuel, as a construction material, for making tools and weapons, furniture and paper. More recently it emerged as a feedstock for the production of purified cellulose and its derivatives, such as cellophane and cellulose acetate.' Wood substitutes include hump, bamboo, composites and plastics." .

@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 16 2021
+# Last Modified: August 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,7 +26,12 @@
 # Changes:
 #  Moved classes to this file from event-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
-#  Added InvasionAndOccupation
+#  Added :InvasionAndOccupation, :Forgetting, :Battle and :War
+#  Merged :Recovery into :ReturnRecoveryAndRelease 
+#    (in event-state-subclasses)
+#  Added :Hunger and :Thirst as subclasses of :SensoryPerception
+#  Added :Arson, :Battle and :BoycottAndBan
+#  Moved :ProtestAndStrike to the event-state-suclasses.ttl module
 ########################################################################
 
 
@@ -41,6 +46,13 @@
   :noun_synonym "kidnapping", "hijacking" ;
   :verb_synonym "abduct", "kidnap", "hijack", "take hostage" .
 
+:Arson a owl:Class ;
+  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:label "Arson" ;
+  :definition "An Event where a fire is intentionally set in order to destroy or damage property." ;
+  :noun_synonym "incendiarism", "pyromania", "firebombing" ;
+  :verb_synonym "set fire", "incinerate" .
+
 :AssessmentAndCharacterization a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Assessment and Characterization" ;
@@ -52,15 +64,22 @@
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Attack, Damage and Assault" ;
   :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "destruction", "incursion", "offensive", "skirmish", "raid", "assailant", "onslaught", "violence", "fighting", "defacement" ;
-  :verb_synonym "attack", "damage", "assault", "destroy", "take the offensive", "skirmish", "raid", "assail", "fight", "shoot down", "trash", "deface" .
+  :noun_synonym "destruction", "assailant", "onslaught", "violence", "defacement" ;
+  :verb_synonym "attack", "damage", "assault", "destroy",  "assail", "shoot down", "trash", "deface", "take the offensive" .
 
 :AttentionAndFocus a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Attention and Focus" ;
   :definition "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
-  :noun_synonym "contemplation", "concentration", "awareness", "attentiveness", "vigilance", "entrancement" ;
-  :verb_synonym "focus", "contemplate", "concentrate", "pay attention", "be vigil", "entrance" .
+  :noun_synonym "contemplation", "concentration", "awareness", "attentiveness", "vigilance", "entrancement", "perception" ;
+  :verb_synonym "focus", "contemplate", "concentrate", "pay attention", "be vigil", "entrance", "perceive" .
+
+:Battle a owl:Class ;
+  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:label "Battle" ;
+  :definition "Any Event that involves fighting (typically) between military/paramilitary/armed forces." ;
+  :noun_synonym "fight", "skirmish", "dogfight", "raid", "incursion", "surprise attack", "combat" ;
+  :verb_synonym "fight", "battle", "skirmish", "raid", "combat" .
 
 :Belief a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -68,6 +87,13 @@
   :definition "An 'attitude that something is the case, or that some proposition about the world is true' (https://en.wikipedia.org/w/index.php?title=Belief&oldid=1013662709)." ;
   :noun_synonym "trust", "confidence", "suspicion" ;
   :verb_synonym "believe", "trust", "suspect" .
+
+:BoycottAndBan a owl:Class ;
+  rdfs:subClassOf :Avoidance ;
+  rdfs:label "Boycott and Ban" ;
+  :definition "An act of abstaining from interacting with (such as working with or buying from) an Agent. The Agent which is boycotting another entity is identified using :has_active_agent, while the Agent boycotted against is specified using :has_affected_agent." ;
+  :noun_synonym "embargo", "moratorium", "proscription" ;
+  :verb_synonym "boycott", "ban", "embargo" .
 
 :CaptureAndSeizure a owl:Class ;
   rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
@@ -81,14 +107,14 @@
   rdfs:label "Coercion and Intimidation" ;
   :definition "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear." ;
   :noun_synonym "force", "bullying", "strong-arm tactic" ;
-  :verb_synonym "coerce", "intimidate", "bully", "force", "compel" .
+  :verb_synonym "coerce", "intimidate", "bully", "force", "compel", "strong-arm" .
 
 :Concealment a owl:Class ;
   rdfs:subClassOf :Prevention ;
   rdfs:label "Concealment" ;
   :definition "An act of preventing something/someone from being known/found." ;
-  :noun_synonym "hiding", "camouflage", "cover-up", "disguise", "dissimulation", "secrecy", "hide-out", "obscuration", "smoke screen", "occultation" ;
-  :verb_synonym "hide", "conceal", "camouflage", "cover up", "disguise", "dissimulate", "keep secret", "obscure", "put up a smoke screen" .
+  :noun_synonym "hiding", "camouflage", "cover", "disguise", "dissimulation", "secrecy", "secret", "hide-out", "obscuration", "smoke screen", "occultation" ;
+  :verb_synonym "hide", "conceal", "camouflage", "cover", "disguise", "dissimulate", "keep secret", "obscure", "put up a smoke screen" .
 
 :DecisionMaking a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -116,21 +142,28 @@
   rdfs:label "Escape and Evasion" ;
   :definition "An act of avoiding/getting away from something, someone or some Event, or of breaking free from captivity or oppression." ;
   :noun_synonym "breakout", "desertion", "extrication", "fleeing" ;
-  :verb_synonym "escape", "evade", "elude", "get off", "desert", "extricate", "flee", "slip away" .
+  :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away" .
 
 :GiftAndDonation a owl:Class ;
-  rdfs:subClassOf :Acquisition ;
+  rdfs:subClassOf :Acquisition, :FriendlyOrSupportiveAct ;
   rdfs:label "Gift and Donation" ;
   :definition "An act of giving with no expectation of payment." ;
   :noun_synonym "contribution", "present", "giveaway", "endowment", "offering", "alms", "contribution", "charity" ; 
   :verb_synonym "give", "donate", "contribute", "endow" .
+
+:Hunger a owl:Class ;
+  rdfs:subClassOf :SensoryPerception ;
+  rdfs:label "Hunger" ;
+  :definition "A feeling of discomfort caused by a lack of food or by the desire to eat." ;
+  :noun_synonym "starvation", "famine", "ravenousness" ;
+  :verb_synonym "starve", "be hungry", "be famished", "be ravenous" .
 
 :IgnoringAndOverlooking a owl:Class ;
   rdfs:subClassOf :Avoidance, :Cognition ;
   rdfs:label "Ignoring and Overlooking" ;
   :definition "An act of purposefully disregarding, not noticing or not acknowledging something or someone." ;
   :noun_synonym "cold-shoulder" ;
-  :verb_synonym "disregard", "neglect", "pay no attention to", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye" .
+  :verb_synonym "disregard", "neglect", "pay no attention", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye" .
 
 :IntentionAndGoal a owl:Class ;
   rdfs:subClassOf :Desire ;
@@ -172,13 +205,13 @@
   rdfs:label "Mistake" ;
   :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property." ;
   :noun_synonym "error", "fault", "inaccuracy", "omission", "miscalculation", "blunder", "gaffe", "misconception", "misinterpretation", "misstatement", "false step", "misjudgment" ;
-  :verb_synonym "lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterprete", "misstate", "misjudge", "misunderstand" .
+  :verb_synonym "lack judgment", "show a lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterprete", "misstate", "misjudge", "misunderstand" .
 
 :MurderAndHomicide a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;
   rdfs:label "Murder and Homicide" ;
   :definition "Any Event that is related to killing a person or living thing." ;
-  :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation" ;
+  :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation", "pogrom" ;
   :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "execute", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "hang", "decapitate" .
 
 :Pain a owl:Class ;
@@ -195,12 +228,12 @@
   :noun_synonym "forestalling", "determent", "hinderance", "inhibitor", "thwarting", "deterence", "impediment" ;
   :verb_synonym "forestall", "deter", "hinder", "inhibit", "thwart", "avert", "hamper", "impede", "prevent" .
 
-:ProtestAndStrike a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct, :MeetingAndEncounter, :RefusalAndRejection ;
-  rdfs:label "Protest and Strike" ;
+:ProvisionOfAid a owl:Class ;
+  rdfs:subClassOf :FriendlyOrSupportiveAct ;
+  rdfs:label "Provision of Aid" ;
   :definition "An organized public demonstration indicating disapproval or objection to something or someone. The entity which is disapproved of/objected to is defined using the :has_topic property." ;
-  :noun_synonym "boycott", "mutiny", "picket", "sit-in" ;
-  :verb_synonym "protest", "go on strike", "be on strike", "mutiny", "walk out" .
+  :noun_synonym "assistance", "helping hand" ;
+  :verb_synonym "aid", "help", "provide", "assist" .
 
 :PurchaseAndSale a owl:Class ;
   rdfs:subClassOf :Acquisition, :FinancialEvent ;
@@ -215,13 +248,6 @@
   :definition "Any Event that involves sexual assault of a Person." ;
   :noun_synonym "sexual assault", "sexual abuse", "molestation" ;
   :verb_synonym "rape", "molest" .
-
-:Recovery a owl:Class ;
-  rdfs:subClassOf :Acquisition, :ReturnAndRelease ;
-  rdfs:label "Recovery" ;
-  :definition "An act of returning something or someone who/which was lost, taken or in a perilous situation." ;
-  :noun_synonym "retrieval" ;
-  :verb_synonym "recover", "retrieve", "get back", "reclaim", "regain" .
 
 :Repair a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
@@ -248,8 +274,15 @@
   rdfs:subClassOf :Cognition ;
   rdfs:label "Sensory Perception" ;
   :definition "An act involving one of the senses - sight, hearing, touch, taste and smell." ;
-  :noun_synonym "sight", "smell", "taste", "touch", "hearing" ;
-  :verb_synonym "see", "hear", "touch", "taste", "smell" .
+  :noun_synonym "sight", "smell", "taste", "touch", "hearing", "sense" ;
+  :verb_synonym "see", "hear", "touch", "taste", "smell", "listen", "feel" .
+
+:Thirst a owl:Class ;
+  rdfs:subClassOf :SensoryPerception ;
+  rdfs:label "Thirst" ;
+  :definition "A feeling of discomfort caused by a lack of water/liquids or by the desire to drink." ;
+  :noun_synonym "dehydration", "polydipsia" ;
+  :verb_synonym "be thirsty" .
 
 
 ########################################################################

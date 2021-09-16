@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 7 2021
+# Last Modified: September 15 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,8 @@
 # Changes:
 #  Moved classes to this file from state-condition-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
+#  Added War and CaringForDependents
+#  Moved PolitialIdeology to agent.ttl
 ########################################################################
 
 
@@ -53,6 +55,13 @@
   :definition "The condition of an Agent being held captive and confined to a certain location." ;
   :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery" ;
   :verb_synonym "imprison", "incarcerate", "intern", "confine", "enslave" .
+
+:CaringForDependents a owl:Class ;
+  rdfs:subClassOf :LivingConditions ;
+  rdfs:label "Caring for Dependents" ;
+  :definition "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures." ;
+  :noun_synonym "child care", "childcare", "dependent care", "elder care" ;
+  :verb_synonym "raise children", "care for parent" .
 
 :Compatibility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -142,7 +151,8 @@
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Law and Policy" ;
   :definition "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents." ;
-  :noun_synonym "directive", "legislation" .
+  :noun_synonym "directive", "legislation", "decree" ;
+  :verb_synonym "decree", "legislate" .
 
 :LivingConditions a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -163,19 +173,6 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Political Environment" ;
   :definition "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
-
-:PoliticalIdeology a owl:Class ;
-  rdfs:subClassOf :Enumeration, :PoliticalEnvironment ;
-  rdfs:label "Political Ideology" ;
-  :definition "Used to indicate how a Location or Agent (such as a Person or GeopoliticalEntity) is evaluated. A Location is identified using the :has_location property, while an Agent is indicated using :has_holder. From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].'" ;
-  :example "Examples are Authoritarian, Communism, Socialism, etc." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:Anarchism :enum:Authoritarianism :enum:ColonialismAndImperialism 
-                                    :enum:Communism :enum:Communitarianism :enum:Conservatism :enum:Corporatism 
-                                    :enum:Democracy :enum:Environmentalism :enum:Facism :enum:Liberalism 
-                                    :enum:Libertarianism :enum:Localism :enum:ModerateIdeology :enum:Nationalism 
-                                    :enum:Populism :enum:Progressivism :enum:Reactionist :enum:Socialism 
-                                    :enum:Syndicalism ) ] .
 
 :Recession a owl:Class ;
   rdfs:subClassOf :Decrease, :EconomicEnvironment ;
@@ -231,6 +228,14 @@
   rdfs:label "Unemployment" ;
   :definition "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
 
+:War a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "War" ;
+  :definition "A condition/environment of sustained armed conflict between two or more Agents (typically nations and countries, or groups within countries)." ;
+  :noun_synonym "armed conflict", "warfare", "struggle" ;
+  :verb_synonym "wage war", "make war", "be at war" .
+:War :has_component :Battle .
+
 
 ########################################################################
 # Disjointness
@@ -273,56 +278,8 @@
 # Individuals
 ########################################################################
 
-:enum:Anarchism a :PoliticalIdeology ;
-  rdfs:label "Anarchism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" .
-
-:enum:Authoritarianism a :PoliticalIdeology ;
-  rdfs:label "Authoritarianism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" .
-
-:enum:ColonialismAndImperialism a :PoliticalIdeology ;
-  rdfs:label "Colonialism and Imperialism" ;
-  :definition "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
-
-:enum:Communism a :PoliticalIdeology ;
-  rdfs:label "Communism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" .
-
-:enum:Communitarianism a :PoliticalIdeology ;
-  rdfs:label "Communitarianism" ;
-  :definition "Communitarianism emphasizes the community over the individual, and the responsibilities of the individual to the community. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communitarianism&oldid=1018133055), 'its overriding philosophy is based upon the belief that a person's social identity and personality are largely molded by community relationships, with a smaller degree of development being placed on individualism. Although the community might be a family, communitarianism usually is understood, in the wider, philosophical sense, as a collection of interactions, among a community of people in a given place (geographical location), or among a community who share an interest or who share a history.'" .
-
-:enum:Conservatism a :PoliticalIdeology ;
-  rdfs:label "Conservatism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Conservatism&oldid=1018019763), Conservatism promotes 'traditional social institutions. The central tenets of conservatism may vary in relation to the traditional values or practices of the culture and civilization in which it appears. In Western culture, conservatives seek to preserve a range of institutions such as organized religion, parliamentary government, and property rights. Adherents of conservatism often oppose modernism and seek a return to traditional values.'" .
-
-:enum:Corporatism a :PoliticalIdeology ;
-  rdfs:label "Corporatism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Corporatism&oldid=1017376258), Corporatism 'advocates the organization of society by corporate groups, such as agricultural, labour, military, scientific, or guild associations, on the basis of their common interests ... The hypothesis that society will reach a peak of harmonious functioning when each of its divisions efficiently performs its designated function, such as a body's organs individually contributing its general health and functionality, lies at the center of corporatist theory. Corporatist ideas have been expressed since ancient Greek and Roman societies, with integration into Catholic social teaching and Christian democratic political parties. They have been paired by various advocates and implemented in various societies with a wide variety of political systems, including authoritarianism, absolutism, fascism and liberalism. Corporatism may also refer to economic tripartism involving negotiations between labour and business interest groups and the government to establish economic policy. This is sometimes also referred to as neo-corporatism or social democratic corporatism.'" .
-
-:enum:Democracy a :PoliticalIdeology ;
-  rdfs:label "Democracy" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Democracy&oldid=1018088389), Democracy is a 'form of government in which the people have the authority to choose their governing legislators. The decisions on who is considered part of the people and how authority is shared among or delegated by the people have changed over time and at different speeds in different countries, but they have included more and more of the inhabitants of all countries. Cornerstones include freedom of assembly and speech, inclusiveness and equality, membership, consent, voting, right to life and minority rights.'" .
-
-:enum:Environmentalism a :PoliticalIdeology ;
-  rdfs:label "Environmentalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Environmentalism&oldid=1005807941), Environmentalism is a 'broad philosophy, ideology, and social movement regarding concerns for environmental protection and improvement of the health of the environment, particularly as the measure for this health seeks to incorporate the impact of changes to the environment on humans, animals, plants and non-living matter'." .
-
-:enum:Facism a :PoliticalIdeology ;
-  rdfs:label "Facism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." .
-
 :enum:High a :Assessment ;
   rdfs:label "High" .
-
-:enum:Liberalism a :PoliticalIdeology ;
-  rdfs:label "Liberalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" .
-
-:enum:Libertarianism a :PoliticalIdeology ;
-  rdfs:label "Libertarianism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Libertarianism&oldid=1017897385), Libertarianism 'upholds liberty as a core principle. Libertarians seek to maximize autonomy and political freedom, emphasizing free association, freedom of choice, individualism and voluntary association. Libertarians share a skepticism of authority and state power, but some of them diverge on the scope of their opposition to existing economic and political systems. Various schools of libertarian thought offer a range of views regarding the legitimate functions of state and private power, often calling for the restriction or dissolution of coercive social institutions.'" .
 
 :enum:Low a :Assessment ;
   rdfs:label "Low" .
@@ -330,36 +287,8 @@
 :enum:Medium a :Assessment ;
   rdfs:label "Medium" .
 
-:enum:ModerateIdeology a :PoliticalIdeology ;
-  rdfs:label "Moderate Ideology" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Moderate&oldid=1006575574), Moderate 'is an ideological category which designates a rejection of radical or extreme views, especially in regard to politics and religion. A moderate is considered someone occupying any mainstream position avoiding extreme views and major social change. In United States politics, a moderate is considered someone occupying a centre position on the left–right political spectrum.'" .
-
-:enum:Nationalism a :PoliticalIdeology ;
-  rdfs:label "Nationalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Nationalism&oldid=1018089498), Nationalism 'promotes the interests of a particular nation (as in a group of people), especially with the aim of gaining and maintaining the nation's sovereignty (self-governance) over its homeland. Nationalism holds that each nation should govern itself, free from outside interference (self-determination), that a nation is a natural and ideal basis for a polity and that the nation is the only rightful source of political power (popular sovereignty). It further aims to build and maintain a single national identity, based on shared social characteristics of culture, ethnicity, geographic location, language, politics (or the government), religion, traditions and belief in a shared singular history, and to promote national unity or solidarity. Nationalism seeks to preserve and foster a nation's traditional cultures and cultural revivals have been associated with nationalist movements. It also encourages pride in national achievements and is closely linked to patriotism. Nationalism is often combined with other ideologies such as conservatism (national conservatism) or socialism (left-wing nationalism).'" .
-
 :enum:NegligibleOrNone a :Assessment ;
   rdfs:label "Negligible or None" .
-
-:enum:Populism  a :PoliticalIdeology ;
-  rdfs:label "Populism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Populism&oldid=1016524972), Populism is 'an ideology which presents 'the people' as a morally good force and contrasts them against 'the elite', who are portrayed as corrupt and self-serving. Populists differ in how 'the people' are defined, but it can be based along class, ethnic, or national lines. Populists typically present 'the elite' as comprising the political, economic, cultural, and media establishment, depicted as a homogeneous entity and accused of placing their own interests, and often the interests of other groups—such as large corporations, foreign countries, or immigrants—above the interests of 'the people'. Populist parties and social movements are often led by charismatic or dominant figures who present themselves as the 'voice of the people'. According to the ideational approach, populism is often combined with other ideologies, such as nationalism, liberalism, or socialism. Thus, populists can be found at different locations along the left–right political spectrum, and there exist both left-wing populism and right-wing populism.'" .
-
-:enum:Progressivism a :PoliticalIdeology ;
-  rdfs:label "Progressivism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" .
-
-:enum:Reactionist a :PoliticalIdeology ;
-  rdfs:label "Reactionist" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Reactionary&oldid=1016120273), Reactionists 'favour a return to a previous political state of society that they believe possessed positive characteristics that are absent in contemporary society. As an adjective, the word reactionary describes points of view and policies meant to restore a past status quo. The word reactionary is often used in the context of the left–right political spectrum, and is one tradition in right-wing politics. In popular usage, it is commonly used to refer to a highly traditional position, one opposed to social or political change. However, according to political theorist Mark Lilla, a reactionary yearns to overturn a present condition of perceived decadence and recover an idealized past. Such reactionary individuals and policies favour social transformation, in contrast to conservative individuals or policies that seek incremental change or to preserve what exists in the present.'" .
-
-:enum:Socialism a :PoliticalIdeology ;
-  rdfs:label "Socialism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Socialism&oldid=1018154550), Socialism is 'a political, social, and economic philosophy encompassing a range of economic and social systems characterised by social ownership of the means of production. It includes the political theories and movements associated with such systems. Social ownership can be public, collective, cooperative, or of equity. While no single definition encapsulates the many types of socialism, social ownership is the one common element. The types of socialism vary based on the role of markets and planning in resource allocation, on the structure of management in organizations, and socialists disagree on whether government, particularly existing government, is the correct vehicle for change.'" .
-
-:enum:Syndicalism a :PoliticalIdeology ;
-  rdfs:label "Syndicalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Syndicalism&oldid=1013439694), Syndicalism is a 'current in the labor movement to establish local, worker-based organizations and advance the demands and rights of workers through strikes'." .
 
 :enum:VeryHigh a :Assessment ;
   rdfs:label "Very High" .

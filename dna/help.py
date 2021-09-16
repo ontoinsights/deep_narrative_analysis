@@ -1,6 +1,9 @@
+# Displays various help texts in a popup window
+# Called by app.py
+
 import PySimpleGUI as sg
 
-from encoded_images import encoded_logo
+from utilities import encoded_logo
 
 # Help text, Each line should be 70 chars or less
 scrolled_existing = \
@@ -32,8 +35,8 @@ scrolled_csv = \
     "the date and location of the narrator's birth) are extracted from the texts and \n" \
     "added to the database.\n\n" \
     "For the Holocaust narratives, the format of the CSV Metadata file is: \n" \
-    "   Source,Title,Person,Given,Given2,Surname,Maiden,Maiden2,Gender, \n" \
-    "   Start,End,Remove,Header,Footer \n" \
+    "   Source,Title,Person,Type, Given,Given2,Surname,Maiden,Maiden2, \n" \
+    "   Gender,Start,End,Remove,Header,Footer \n" \
     "where: \n" \
     "   * Source is the filename of the narrative \n" \
     "     The file MUST be stored in the dna/resources directory\n" \
@@ -41,6 +44,8 @@ scrolled_csv = \
     "   * Title is a free-form string which will be used to identify the narrative \n" \
     "   * Person is either 1 or 3 indicating whether the narrative is written in the first or \n" \
     "     third person \n" \
+    "   * Type is either 'T' or 'E' indicating whether the story is a timeline/life history \n" \
+    "     of the narrator or the narrative related to an episode in the narrator's life \n" \
     "   * Given, Surname and Maiden are free-form strings defining the first, last and \n" \
     "     maiden names of the narrator/person whose narrative is defined \n" \
     "     (Note that a unique Given name/identifier MUST be specified for each narrator/\n" \
@@ -63,6 +68,11 @@ scrolled_csv = \
     "After the narratives are ingested, the selected database will be noted (directly below \n" \
     "the 'Load Narratives' section in the main window) along with a count of the contained \n" \
     "narratives."
+
+scrolled_edit = \
+    "After selecting the narrative database, click on 'Edit Narrative' to open a new window \n" \
+    "and choose one of the ingested narratives for editing. A table of the sentence text and \n" \
+    "extracted concepts will be shown. Concepts and events can be added, updated and removed."
 
 scrolled_stats = \
     "After selecting the narrative database, choose 'Summary Statistics' to open a new \n" \
@@ -87,13 +97,17 @@ scrolled_stats = \
     "the number and variety of default graphs and charts will expand based on user \n" \
     "feedback."
 
-scrolled_search = \
-    "After selecting the database, choose 'Narrative Search/Display' to open a new window to \n" \
-    "review a list of ingested narratives, and select one for display. The metadata, text and \n" \
-    "a timeline of the selected narrative are displayed.\n\n" \
+scrolled_timeline = \
+    "After selecting the database, click on 'Narrative Timeline' to open a new window \n" \
+    "to choose either a timeline of domain-specific events (if applicable) or one of \n" \
+    "the ingested narratives for display. For a narrative, the metadata, story text and \n" \
+    "a timeline plot are displayed. For the domain details, only a timeline is displayed.\n\n" \
+    "From the timeline, a date (YYYY-mm) can be entered to obtain a network diagram of \n" \
+    "the events that occurred in that month and year.\n\n" \
     "In a future release, it will be possible to compare timelines (for example, a news \n" \
-    "event timeline, an aid or medical treatment timeline, and the narrative timeline) visually \n" \
-    "and programmatically to understand correlations."
+    "event timeline, an aid or medical treatment timeline, and the narrative timeline) both \n" \
+    "visually (in a single figure) and programmatically. At present, the windows with the \n" \
+    "individual timelines can be kept open and compared."
 
 scrolled_similarities = \
     "After selecting the narrative database, choose 'Narrative Similarities' to open a new \n" \
@@ -126,16 +140,18 @@ scrolled_test = \
 # Dictionaries tying help text and popup window title to the event
 text_dict = {'existing_question': scrolled_existing,
              'csv_question': scrolled_csv,
+             'edit_question': scrolled_edit,
              'similarities_question': scrolled_similarities,
-             'search_question': scrolled_search,
+             'timeline_question': scrolled_timeline,
              'stats_question': scrolled_stats,
              'hypothesis_question': scrolled_hypothesis,
              'test_question': scrolled_test}
 
 title_dict = {'existing_question': "Help for 'From Existing Source'",
               'csv_question': "Help for 'From CSV Metadata'",
+              'edit_question': "Help for 'Edit Narrative'",
               'similarities_question': "Help for 'Narrative Similarities'",
-              'search_question': "Help for 'Narrative Search/Display'",
+              'timeline_question': "Help for 'Narrative Timeline'",
               'stats_question': "Help for 'Summary Statistics'",
               'hypothesis_question': "Help for 'Create/Review/Edit Hypothesis'",
               'test_question': "Help for 'Test Hypothesis'"}
@@ -155,3 +171,4 @@ def display_popup_help(event: str):
                       size=(72, 15), text_color='black',
                       title=title_dict[event], background_color='white',
                       button_color='dark blue', icon=encoded_logo)
+    return

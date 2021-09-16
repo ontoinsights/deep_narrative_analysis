@@ -1,0 +1,823 @@
+@prefix : <urn:ontoinsights:dna:> . 
+@prefix dna: <urn:ontoinsights:dna:> . 
+@prefix geo: <urn:ontoinsights:geonames:> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> . 
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
+
+# Created September 15 2021
+# Extracted from the Key Dates pages at https://encyclopedia.ushmm.org/content/en/article/19xx-key-dates (1933-1937)
+# Focus on Events that were appointments, arrests and forced moves, laws and policies, battles, murders,
+#    boycotts and bans, rallies, concentration camps established or opened, etc.
+
+# 
+# Web Pages
+# 
+
+:BerlinMarzahn_CampForRoma a :WebPage ;
+  rdfs:label "Berlin Marzahn (Camp for Roma)" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/marzahn" .
+
+:Web1933_Key_Dates a :WebPage ;
+  rdfs:label "1933: Key Dates" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/1933-key-dates" .
+
+:Web1934_Key_Dates a :WebPage ;
+  rdfs:label "1934: Key Dates" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/1934-key-dates" .
+
+:Web1935_Key_Dates a :WebPage ;
+  rdfs:label "1935: Key Dates" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/1935-key-dates" .
+
+:Web1936_Key_Dates a :WebPage ;
+  rdfs:label "1936: Key Dates" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/1936-key-dates" .
+
+:Web1937_Key_Dates a :WebPage ;
+  rdfs:label "1937: Key Dates" ;
+  :url "https://encyclopedia.ushmm.org/content/en/article/1937-key-dates" .
+
+:Wikipedia a :Collection, :WebPage ;
+  rdfs:label "Wikipedia" ;
+  :url "https://en.wikipedia.org/wiki/Main_Page" .
+
+
+# 
+# Events
+# 
+
+:HitlerAppointedChancellor a :AppointmentAndNomination ;
+  rdfs:label "Hitler Appointed Chancellor" ;
+  :text "The National Socialist German Workers' Party (Nationalsozialistische Deutsche Arbeiterpartei; NSDAP), more commonly known as the Nazi Party, assumes control of the German state when German President Paul von Hindenburg appoints Nazi Party leader (Fuhrer) Adolf Hitler as Chancellor at the head of a coalition government of 'National Renewal'. The Nazis and the German Nationalist People's Party (Deutschnationale Volkspartei; DNVP) are members of the coalition." ;
+  :has_active_agent :vonHindenburgPaul ;
+  :has_affected_agent :HitlerAdolf ;
+  :role "Chancellor at the head of a coalition government" ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_time :PiTJanuary_30_1933 ;
+  :has_location geo:2921044 .
+  
+:PiTJanuary_30_1933 a :PointInTime ;
+  rdfs:label "January 30, 1933" ;
+  :day_of_month 30 ;
+  :month_of_year 1 ;
+  :year 1933 .
+
+:ReichstagBurned a :Arson ;
+  rdfs:label "Reichstag Burned" ;
+  :text "The German parliament (Reichstag) building burns down due to arson. The government falsely portrays the fire as part of a Communist effort to overthrow the state." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_time :PiTFebruary_27_1933 ;
+  :has_location :Reichstag .
+  
+:Reichstag a :BuildingAndDwelling ;
+  rdfs:label "Reichstag" ;
+  :definition "The German parliament building" ;
+  :text "The German parliament (Reichstag) building burns down due to arson. The government falsely portrays the fire as part of a Communist effort to overthrow the state." ;
+  :sourced_from :Web1933_Key_Dates .
+:BerlinGermany :has_component :Reichstag .
+
+:BerlinGermany a :PopulatedPlace ;
+  rdfs:label "Berlin" ;
+  :country_name "Germany" .
+geo:2921044 :has_component :BerlinGermany .
+
+:PiTFebruary_27_1933 a :PointInTime ;
+  rdfs:label "February 27, 1933" ;
+  :day_of_month 27 ;
+  :month_of_year 2 ;
+  :year 1933 .
+
+:ReichstagFireDecree a :LawAndPolicy ;
+  rdfs:label "Reichstag Fire Decree" ;
+  :noun_synonym "Decree of the Reich President for the Protection of People and State" ;
+  :text "In the Decree of the Reich President for the Protection of People and State, President von Hindenburg grants emergency powers to the Nazi/DNVP coalition government under Adolf Hitler. Popularly known as the Reichstag Fire Decree, and justified by a profoundly exaggerated threat of a German Communist uprising, the decree suspends civil rights in Germany and allows for imprisonment without trial. It also gives the central government the authority to overrule state and local laws and overthrow state and local governments." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTFebruary_28_1933 ;
+  :has_location geo:2921044 .
+  
+:PiTFebruary_28_1933 a :PointInTime ;
+  rdfs:label "February 28, 1933" ;
+  :day_of_month 28 ;
+  :month_of_year 2 ;
+  :year 1933 .
+
+:OverthrowOfStateGovernments a :RemovalAndRestriction, :Substitution ;
+  rdfs:label "Overthrow of State Governments" ;
+  :text "Under authority of the Reichstag Fire Decree, the Nazi/DNVP coalition government overthrows the German state governments (Landerregierungen) and installs provisional Reich commissars who are directly subordinate to the central government." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_active_agent :NaziParty ;
+  :has_affected_agent :GermanStateGovernments ;
+  :has_beginning :PiTMarch_9_1933 ;
+  :has_end :PiTMarch_11_1933 ;
+  :has_location geo:2921044 .
+:ReichstagFireDecree :enables :OverthrowOfGermanStateGovernments .
+
+:GermanStateGoverments a :GroupOfAgents, :GPE ;
+  rdfs:label "German State Governments" ;
+  :noun_synonym "Landerregierungen" ;
+  :admin_level 1 ;
+  :country_name "Germany" ;
+  :has_location geo:2921044 .
+
+:PiTMarch_9_1933 a :PointInTime ;
+  rdfs:label "March 9, 1933" ;
+  :day_of_month 9 ;
+  :month_of_year 3 ;
+  :year 1933 .
+:PiTMarch_11_1933 a :PointInTime ;
+  rdfs:label "March 11, 1933" ;
+  :day_of_month 11 ;
+  :month_of_year 3 ;
+  :year 1933 .
+
+:MaliciousPracticesAct a :LawAndPolicy ;
+  rdfs:label "Malicious Practices Act" ;
+  :noun_synonym "Verordnung zur Abwehr heimtückischer Diskreditierung der nationalen Regierung" ;
+  :definition "Legislation prohibiting disapproval of Hitler or the Nazi government. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Malicious_Practices_Act_1933&oldid=956186689), 'the Malicious Practices Act was a measure introduced to rid the German state of its 'oppressors' and 'enemies'. In particular, the Nazi state imposed new legislation that made it illegal to speak wrongly of, or criticise the regime and its leaders. The two key guidelines were that of Protective Custody and Preventative Custody. Preventative Custody was aimed at the undesirables within society, for example paupers, homosexuals and Jews. Those who were unfortunate enough to fall into this category could be arrested even if an offence had not been committed. Homosexuality was a criminal offense in Weimar and Nazi Germany. Protective custody, however, was aimed at the regime's political opponents, in particular those from the left, such as the communists and the social democrats. The state made it apparent that those who failed to comply with Nazi ideology and politics could be arrested for the 'protection of the state'. In particular this was in an attempt to eliminate other political parties from German politics and eradicate their presence permanently.'" ;
+  :sourced_from :Wikipedia ;
+  :has_topic :PreventiveArrest, :ProtectiveCustody ;
+  :has_beginning :PiTMarch_21_1933 ;
+  :has_location geo:2921044 .
+
+:PiTMarch_21_1933 a :PointInTime ;
+  rdfs:label "March 21, 1933" ;
+  :day_of_month 21 ;
+  :month_of_year 3 ;
+  :year 1933 .
+
+:DachauCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+  rdfs:label "Dachau Camp Established" ;
+  :text "Outside the town of Dachau, Germany, the SS (Schutzstaffel, Protection Squads) establishes the first SS-managed concentration camp to incarcerate political opponents of the regime. Dachau is the only concentration camp to remain in operation from 1933 until 1945." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_topic :DachauConcentrationCamp ;
+  :has_active_agent :SS ;
+  :has_time :PiTMarch_22_1933 ;
+  :has_location :DachauGermany .
+
+:DachauConcentrationCamp a :ConcentrationCamp ;
+  rdfs:label "Dachau Concentration Camp" ;
+  :definition "(1933-1945) Initially built for political prisoners, Dachau grew to house forced labor, Jews, Roma (Gypsies) and foreign nationals from occupied countries. The camp system grew to nearly 100 sub-camps." ;
+  :sourced_from :Wikipedia ;
+  :text "Outside the town of Dachau, Germany, the SS (Schutzstaffel, Protection Squads) establishes the first SS-managed concentration camp to incarcerate political opponents of the regime. Dachau is the only concentration camp to remain in operation from 1933 until 1945." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiT1933 ;
+  :has_end :PiT1945 ;
+  :near :DachauGermany .
+
+:DachauGermany a :PopulatedPlace, :AdministrativeDivision ;
+  rdfs:label "Dachau" ;
+  :admin_level 3 ;
+  :country_name "Germany" ;
+  :near :MunichGermany .
+geo:2921044 :has_component :DachauGermany .
+
+:MunichGermany a :PopulatedPlace, :AdministrativeDivision ;
+  rdfs:label "Munich" ;
+  :admin_level 1 ;
+  :country_name "Germany" .
+geo:2921044 :has_component :MunichGermany .
+
+:PiTMarch_22_1933 a :PointInTime ;
+  rdfs:label "March 22, 1933" ;
+  :day_of_month 22 ;
+  :month_of_year 3 ;
+  :year 1933 .
+
+:EnablingActBecomesLaw a :LawAndPolicy ;
+  rdfs:label "Enabling Act Becomes Law" ;
+  :noun_synonym "Law for Rectification of the Distress of Nation and Reich", "Gesetz zur Behebung der Not von Volk und Reich", "Ermachtigungsgesetz" ;
+  :text "The German parliament passes the Law for Rectification of the Distress of Nation and Reich (Gesetz zur Behebung der Not von Volk und Reich), commonly known as the Enabling Act (Ermächtigungsgesetz). This law allows Hitler, as Chancellor, to initiate and sign legislation into law without obtaining parliamentary consent. The act effectively establishes a dictatorship in Germany." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTMarch_23_1933 ;
+  :has_location geo:2921044 .
+
+:PiTMarch_23_1933 a :PointInTime ;
+  rdfs:label "March 23, 1933" ;
+  :day_of_month 23 ;
+  :month_of_year 3 ;
+  :year 1933 .
+
+:BoycottOfJewishBusinesses a :BoycottAndBan ;
+  rdfs:label "Boycott of Jewish Businesses" ;
+  :text "Members of the Nazi Party and its affiliated organizations (such as the SS, SA, and the Hitler Youth) organize and implement a nationwide boycott of Jewish-owned businesses in Germany." ;
+  :has_active_agent :NaziParty ;
+  :has_affected_agent :JewishBusinesses ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_time :PiTApril_1_1933 ;
+  :has_location geo:2921044 .
+
+:JewishBusinesses a :GroupOfAgents, :Organization ;
+  rdfs:label "Jewish Businesses" ;
+  :has_agent_aspect :CameoEthnicity_jew .
+:AffiliationJewishBusinessesJew a :Affiliation ;
+  :affiliated_with :CameoReligion_JEW ;
+  :affiliated_agent :JewishBusinesses .
+
+:PiTApril_1_1933 a :PointInTime ;
+  rdfs:label "April 1, 1933" ;
+  :day_of_month 1 ;
+  :month_of_year 4 ;
+  :year 1933 .
+
+:JewsExcludedFromCivilService a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Civil Service" ;
+  :noun_synonym "Law for the Restoration of the Professional Civil Service", "Gesetz zur Wiederherstellung des Berufsbeamtentums" ;
+  :text "The German government issues the Law for the Restoration of the Professional Civil Service (Gesetz zur Wiederherstellung des Berufsbeamtentums), which excludes Jews and political opponents from all civil service positions. The law initially exempts those who had worked in the civil service since August 1, 1914, those who were veterans of World War I, or those with a father or son killed in action in World War I." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTApril_7_1933 ;
+  :has_location geo:2921044 .
+
+:JewsExcludedFromLegalPractice a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Legal Practice" ;
+  :noun_synonym "Law on the Admission to the Legal Profession" ;
+  :text "The German government issues a law concerning membership in the bar, which mandates the disbarment of non-'Aryan' lawyers by September 30, 1933. Exempted from this provision are Jewish lawyers practicing law since August 1, 1914, or Jewish lawyers who are veterans of World War I." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTApril_7_1933 ;
+  :has_location geo:2921044 .
+
+:PiTApril_7_1933 a :PointInTime ;
+  rdfs:label "April 7, 1933" ;
+  :day_of_month 7 ;
+  :month_of_year 4 ;
+  :year 1933 .
+
+:JewsExcludedFromArmedForces a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Armed Forces" ;
+  :text "The German government decrees that all Jewish workers and employees of the German armed forces (Reichswehr) be dismissed from service." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTMay_7_1933 ;
+  :has_location geo:2921044 .
+
+:PiTMay_7_1933 a :PointInTime ;
+  rdfs:label "May 7, 1933" ;
+  :day_of_month 7 ;
+  :month_of_year 5 ;
+  :year 1933 .
+
+:JewsExcludedFromCulturalSector a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Cultural Sector" ;
+  :text "In Germany, the newly founded Chambers of Literature, Press, Broadcasting, Theater, Film, Music, and Fine Arts deny membership to Jews, effectively excluding Jews from employment in the cultural sector." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTSeptember_23_1933 ;
+  :has_location geo:2921044 .
+
+:PiTSeptember_23_1933 a :PointInTime ;
+  rdfs:label "September 23, 1933" ;
+  :day_of_month 23 ;
+  :month_of_year 9 ;
+  :year 1933 .
+
+:JewsExcludedFromInheritingFarms a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Inheriting Farms" ;
+  :noun_synonym "Hereditary Farm Law", "Reichserbhofgesetz" ;
+  :text "The German government issues the Hereditary Farm Law (Reichserbhofgesetz) stipulating that hereditary farms ('Erbhofe') could only be inherited by German farmers able to document that they had no Jewish or 'colored' ancestors back to January 1, 1800." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTSeptember_29_1933 ;
+  :has_location geo:2921044 .
+
+:PiTSeptember_29_1933 a :PointInTime ;
+  rdfs:label "September 29, 1933" ;
+  :day_of_month 29 ;
+  :month_of_year 9 ;
+  :year 1933 .
+
+:JewsExcludedFromJournalism a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Journalism" ;
+  :noun_synonym "Editor's Law", "Schriftleitergesetz" ;
+  :text "The Editor's Law (Schriftleitergesetz) forbids non-'Aryans' to work in journalism." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTOctober_4_1933 ;
+  :has_location geo:2921044 .
+
+:PiTOctober_4_1933 a :PointInTime ;
+  rdfs:label "October 4, 1933" ;
+  :day_of_month 4 ;
+  :month_of_year 10 ;
+  :year 1933 .
+
+:JewsExcludedFromPrivateSector a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Jews Excluded from Private Sector" ;
+  :text "The German government bans Jews from membership in the German Labor Front. Because membership in the German Labor Front is mandatory for wage laborers and salaried employees, this decree effectively deprives Jews of the opportunity to find positions in the private sector and denies to those already employed the benefits available to non-Jews." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_beginning :PiTJanuary_24_1934;
+  :has_location geo:2921044 .
+
+:PiTJanuary_24_1934 a :PointInTime ;
+  rdfs:label "January 24, 1934" ;
+  :day_of_month 24 ;
+  :month_of_year 1 ;
+  :year 1934 .
+
+:GestapoCreated a :FormationOfOrganization;
+  rdfs:label "Gestapo Created" ;
+  :text "Hermann Goring, Minister President and Minister of the Interior of Germany's largest state, Prussia, creates a new agency, the Gestapo (Geheime Staatspolizei, or Secret State Police), from the old Prussian state political police department." ;
+  :has_affected_agent :Gestapo ;
+  :has_active_agent :GoringHermann ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_time :PiTApril_26_1933 ;
+  :has_location geo:2921044 .
+
+:PiTApril_26_1933 a :PointInTime ;
+  rdfs:label "April 26, 1933" ;
+  :day_of_month 26 ;
+  :month_of_year 4 ;
+  :year 1933 .
+
+:BooksBurned a :Arson, :DemonstrationAndRally ;
+  rdfs:label "Books Burned" ;
+  :text "German student organizations supported by Nazi Party members organize public rallies across Germany. They burn books written by Jews, political opponents, and liberal intellectuals, and announce that they are 'purifying' German libraries of 'un-German' books." ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_active_agent :GermanStudentOrganizations ;
+  :has_active_agent :NaziParty ;
+  :has_time :PiTMay_10_1933 ;
+  :has_location geo:2921044 .
+
+:GermanStudentOrganizations a :GroupOfAgents, :Organization ;
+  rdfs:label "German Student Organizations" ;
+  :has_line_of_business :Education .
+:AffiliationGermanStudentOrganiztionsNaziGermany a :Affiliation ;
+  :affiliated_with :NaziGermany ;
+  :affiliated_agent :GermanStudentOrganizations .
+
+:PiTMay_10_1933 a :PointInTime ;
+  rdfs:label "May 10, 1933" ;
+  :day_of_month 10 ;
+  :month_of_year 5 ;
+  :year 1933 .
+
+:LawAgainstPoliticalParties a :LawAndPolicy, :BoycottAndBan ;
+  rdfs:label "Law against Political Parties" ;
+  :noun_synonym "aw against the Founding of New Political Parties" ;
+  :text "The German parliament issues the Law against the Founding of New Political Parties, which establishes the Nazi Party as the sole legal political party in Germany. Nazi Germany formally becomes a one-party state." ;
+  :has_affected_agent :PoliticalParty ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTJuly_14_1933 ;
+  :has_location geo:2921044 .
+
+:PiTJuly_14_1933 a :PointInTime ;
+  rdfs:label "July 14, 1933" ;
+  :day_of_month 14 ;
+  :month_of_year 7 ;
+  :year 1933 .
+
+:LawForRepealOfNaturalization a :LawAndPolicy, :RemovalAndRestriction ;
+  rdfs:label "Law for Repeal of Naturalization" ;
+  :noun_synonym "Law for the Repeal of Naturalization and Recognition of German Citizenship", "Gesetz uber den Widerruf von Einbürgerungen und die Aberkennung der deutschen Staatsangehorigkeit" ;
+  :text "The German government enacts the Law for the Repeal of Naturalization and Recognition of German Citizenship (Gesetz über den Widerruf von Einbürgerungen und die Aberkennung der deutschen Staatsangehörigkeit), which deprives recently naturalized German Jews of German citizenship." ;
+  :has_affected_agent :JewishPersons ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTJuly_14_1933 ;
+  :has_location geo:2921044 .
+
+:LawForPreventionOfHereditaryDiseases a :LawAndPolicy ;
+  rdfs:label "Law for Prevention of Hereditary Diseases" ;
+  :noun_synonym "Law for the Prevention of Genetically Diseased Offspring", "Law for the Prevention of Offspring with Hereditary Diseases", "Gesetz zur Verhütung erbkranken Nachwuchses" ;
+  :text "The German government passes the Law for the Prevention of Offspring with Hereditary Diseases (Gesetz zur Verhütung erbkranken Nachwuchses), mandating the forced sterilization with physical and mental disabilities. This law provides the basis for the involuntary sterilization of people with physical and mental disabilities or mental illness, Roma (Gypsies), 'asocial elements', and Afro-Germans." ;
+  :has_topic :Sterilization ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTJuly_14_1933 ;
+  :has_location geo:2921044 .
+
+:CentralOrganizationOfGermanJewsCreated a :FormationOfOrganization ;
+  rdfs:label "Central Organization of German Jews Created" ;
+  :text "German Jewish organizations form the Central Organization of German Jews (Reichsvertretung der deutschen Juden) in an effort to better represent the interests of German Jews through a unified response." ;
+  :has_affected_agent :CentralOrganizationOfGermanJews ;
+  :has_active_agent :JewishBusinesses ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_time :PiTSeptember_17_1933 ;
+  :has_location geo:2921044 .
+  
+:CentralOrganizationOfGermanJews a :Organization ;
+  rdfs:label "Central Organization of German Jews" ;
+  :noun_synonym "Reichsvertretung der deutschen Juden" ;
+  :has_beginning :PiT1933 ;
+  :has_end :PiT1943 .
+
+:PiTSeptember_17_1933 a :PointInTime ;
+  rdfs:label "September 17, 1933" ;
+  :day_of_month 17 ;
+  :month_of_year 9 ;
+  :year 1933 .
+
+:LawAgainstHabitualCriminals a :LawAndPolicy ;
+  rdfs:label "Law against Habitual Criminals" ;
+  :noun_synonym "Law against Dangerous Habitual Criminals" ;
+  :text "The German government passes the Law against Dangerous Habitual Criminals. The law allows the courts to order indefinite imprisonment of 'habitual criminals' if they deem the person dangerous to society. It also provides for the castration of sex offenders." ;
+  :has_topic :CaptivityAndDetention ;
+  :has_topic :Sterilization ;
+  :sourced_from :Web1933_Key_Dates ;
+  :has_beginning :PiTNovember_24_1933 ;
+  :has_location geo:2921044 .
+
+:PiTNovember_24_1933 a :PointInTime ;
+  rdfs:label "November 24, 1933" ;
+  :day_of_month 24 ;
+  :month_of_year 11 ;
+  :year 1933 .
+
+:NightOfTheLongKnives a :Collection, :MurderAndHomicide ;
+  rdfs:label "Night of the Long Knives" ;
+  :noun_synonym "Rohm Affair" ;
+  :text "In the 'Rohm Affair', also known as 'Night of the Long Knives', Hitler orders the purge of the top leadership of the Nazi Party paramilitary formation, the SA (Sturmabteilungen; Assault Detachments). Pressured by German army commanders, whose support Adolf Hitler needed to become President of Germany upon Paul von Hindenburg's impending death, Hitler used the SS to murder SA Chief of Staff Ernst Rohm and his top commanders on June 30–July 2. The SS also murders several present and past conservative critics of the Nazi regime including Hitler's predecessor as Chancellor, General Kurt von Schleicher, and the former Bavarian Minister-President, Gustav von Kahr. At Hitler's request, the German parliament (Reichstag) declares the killings legal after the fact, based on the false accusation that Rohm and his commanders had planned to overthrow the government." ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_active_agent :SS ;
+  :has_affected_agent :SALeadership ;
+  :has_affected_agent :RohmErnst ;
+  :has_affected_agent :vonKahrGustav ;
+  :has_beginning :PiTJune_30_1934 ;
+  :has_end :PiTJuly_2_1934 ;
+  :has_location geo:2921044 .
+
+:SALeadership a :GroupOfAgents, :Person ;
+  rdfs:label "SA Leadership" .
+:SA :has_component :SALeadership .
+  
+:RohmErnst a :Person ;
+  rdfs:label "Rohm, Ernst" , "Ernst Rohm", "Ernst Julius Gunther Rohm" ;
+  :definition "A German military officer, friend and ally of Adolf Hitler and a co-founder (and later commander) of the SA. He was executed during the Night of the Long Knives." ;
+  :sourced_from :Wikipedia ;
+  :text "In the 'Rohm Affair', also known as 'Night of the Long Knives', Hitler orders the purge of the top leadership of the Nazi Party paramilitary formation, the SA (Sturmabteilungen; Assault Detachments). Pressured by German army commanders, whose support Adolf Hitler needed to become President of Germany upon Paul von Hindenburg's impending death, Hitler used the SS to murder SA Chief of Staff Ernst Rohm and his top commanders on June 30–July 2. The SS also murders several present and past conservative critics of the Nazi regime including Hitler's predecessor as Chancellor, General Kurt von Schleicher, and the former Bavarian Minister-President, Gustav von Kahr. At Hitler's request, the German parliament (Reichstag) declares the killings legal after the fact, based on the false accusation that Rohm and his commanders had planned to overthrow the government." ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_beginning :PiT1887 ;
+  :has_end :PiT1934 .
+:AffiliationRohmSA a :Affiliation ;
+  :affiliated_with :SALeadership ;
+  :affiliated_agent :RohmErnst .
+  
+:vonKahrGustav a :Person ;
+  rdfs:label "von Kahr, Gustav", "Gustav Ritter von Kahr", "Gustav von Kahr" ;
+  :definition "A German politician and Bavarian Minister-President. He was 'instrumental in the collapse and suppression of Adolf Hitler's Beer Hall Putsch in 1923. In revenge for the latter, he was murdered later in the 1934 Night of the Long Knives.' (https://en.wikipedia.org/w/index.php?title=Gustav_Ritter_von_Kahr&oldid=1029419726)" ;
+  :sourced_from :Wikipedia ;
+  :text "In the 'Rohm Affair', also known as 'Night of the Long Knives', Hitler orders the purge of the top leadership of the Nazi Party paramilitary formation, the SA (Sturmabteilungen; Assault Detachments). Pressured by German army commanders, whose support Adolf Hitler needed to become President of Germany upon Paul von Hindenburg's impending death, Hitler used the SS to murder SA Chief of Staff Ernst Rohm and his top commanders on June 30–July 2. The SS also murders several present and past conservative critics of the Nazi regime including Hitler's predecessor as Chancellor, General Kurt von Schleicher, and the former Bavarian Minister-President, Gustav von Kahr. At Hitler's request, the German parliament (Reichstag) declares the killings legal after the fact, based on the false accusation that Rohm and his commanders had planned to overthrow the government." ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_beginning :PiT1862 ;
+  :has_end :PiT1934 .
+:AffiliationvonKahrBavaria a :Affiliation ;
+  :affiliated_with :BavariaGermany ;
+  :affiliated_agent :vonKahrGustav ;
+  :role "Minister-President" .
+:Bavaria a :PopulatedPlace, :AdministrativeDivision ;
+  rdfs:label "Bavaria" ;
+  :country_name "Germany" ;
+  :admin_level 1.
+
+:PiT1887 a :PointInTime ;
+  rdfs:label "1887" ;
+  :year 1887 .
+
+:PiT1862 a :PointInTime ;
+  rdfs:label "1862" ;
+  :year 1862 .
+
+:PiTJune_30_1934 a :PointInTime ;
+  rdfs:label "June 30, 1934" ;
+  :day_of_month 30 ;
+  :month_of_year 6 ;
+  :year 1934 .
+
+:PiTJuly_2_1934 a :PointInTime ;
+  rdfs:label "July 2, 1934" ;
+  :day_of_month 2 ;
+  :month_of_year 7 ;
+  :year 1934 .
+
+:vonHindenburgDied a :Death ;
+  rdfs:label "von Hindenburg Died" ;
+  :text "German President von Hindenburg dies. With the support of the German armed forces, Hitler becomes President of Germany." ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_affected_agent :vonHindenburgPaul ;
+  :has_time :PiTAugust_2_1934 ;
+  :has_location geo:2921044 .
+
+:HitlerBecamePresident a :AppointmentAndNomination ;
+  rdfs:label "Hitler Became German President" ;
+  :text "German President von Hindenburg dies. With the support of the German armed forces, Hitler becomes President of Germany." ;
+  :role "President" ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_affected_agent :HitlerAdolf ;
+  :has_time :PiTAugust_2_1934 ;
+  :has_location geo:2921044 .
+:vonHindenburgDied :enables :HitlerBecameGermanPresident .
+
+:PiTAugust_2_1934 a :PointInTime ;
+  rdfs:label "August 2, 1934" ;
+  :day_of_month 2 ;
+  :month_of_year 8 ;
+  :year 1934 .
+
+:HitlerDeclaredFuhrer a :AssertionAndDeclaration ;
+  rdfs:label "Hitler Declared Fuhrer" ;
+  :text "Hitler abolishes the office of President and declares himself Fuhrer of the German Reich and People, in addition to his position as Chancellor. In this capacity as Fuhrer, Hitler's decisions are not bound by the laws of the state. Hitler now becomes the absolute dictator of Germany; there are no further legal or constitutional limits to his authority." ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_active_agent :HitlerAdolf ;
+  :has_affected_agent :HitlerAdolf ;
+  :has_time :PiTAugust_19_1934 ;
+  :has_location geo:2921044 .
+
+:PiTAugust_19_1934 a :PointInTime ;
+  rdfs:label "August 19, 1934" ;
+  :day_of_month 19 ;
+  :month_of_year 8 ;
+  :year 1934 .
+
+:InspectorateOfConcentrationCampsCreated a :FormationOfOrganization ;
+  rdfs:label "Inspectorate of Concentration Camps Created" ;
+  :text "SS chief Himmler creates the Inspectorate of Concentration Camps under the leadership of SS General Theodor Eicke. This move formalizes the SS takeover and centralization of the concentration camp system that had taken place in July 1934." ;
+  :has_affected_agent :InspectorateOfConcentrationCamps ;
+  :has_active_agent :HimmlerHeinrich ;
+  :sourced_from :Web1934_Key_Dates ;
+  :has_time :PiTDecember_10_1934 ;
+  :has_location geo:2921044 .
+  
+:InspectorateOfConcentrationCamps a :Organization ;
+  rdfs:label "Inspectorate of Concentration Camps" ;
+  :noun_synonym "Concentration Camps Inspectorate", "CCI", "IKL", " Inspektion der Konzentrationslager" ;
+  :has_beginning :PiT1934 ;
+  :has_end :PiT1945 .
+
+:PiTDecember_10_1934 a :PointInTime ;
+  rdfs:label "December 10, 1934" ;
+  :day_of_month 10 ;
+  :month_of_year 12 ;
+  :year 1934 .
+
+:JehovahsWitnessesBan a :BoycottAndBan, :LawAndPolicy ;
+  rdfs:label "Jehovah's Witnesses Organization Ban" ;
+  :text "The German government bans Jehovah's Witness organizations. The ban is due to Jehovah's Witnesses refusal to swear allegiance to the state; their religious convictions forbid an oath of allegiance to and service in the armed forces of any temporal power." ;
+  :has_affected_agent :JehovahsWitnessPersons ;
+  :sourced_from :Web1935_Key_Dates ;
+  :has_beginning :PiTApril_1_1935 ;
+  :has_location geo:2921044 .
+
+:JehovahsWitnessPersons a :GroupOfAgents, :Person ;
+  rdfs:label "Jehovah's Witness Persons" .
+:AffiliationJehovahsWitnessPersonsJehovahsWitness a :Affiliation ;
+  :affiliated_with :CameoReligion_CHRJHW ;
+  :affiliated_agent :JehovahsWitnessPersons .
+
+:PiTApril_1_1935 a :PointInTime ;
+  rdfs:label "April 1, 1935" ;
+  :day_of_month 1 ;
+  :month_of_year 4 ;
+  :year 1935 .
+
+:HitlerAnnouncedRaceLaws a :AssertionAndDeclaration ;
+  rdfs:label "Hitler Announced Race Laws" ;
+  :text "The German government decrees the Reich Citizenship Law and the Law for the Protection of the German Blood and Honor. Hitler announces the measures at the Nazi Party rally in Nuremberg. These Nuremberg “Race Laws” effectively make Jews into second-class citizens. They prohibit intermarriages and criminalize sexual relations between Jews and 'persons of German or related blood'. The German government later applies the laws to Roma (Gypsies) and Afro-Germans." ;
+  :has_active_agent :HitlerAdolf ;
+  :has_topic :ReichCitizenshipLaw, :LawForProtectionOfGermanBlood ;
+  :sourced_from :Web1935_Key_Dates ;
+  :has_time :PiTSeptember_15_1935 ;
+  :has_location :NurembergGermany .
+
+:NurembergGermany a :PopulatedPlace ;
+  rdfs:label "Nuremberg" ;
+  :country_name "Germany" .
+geo:2921044 :has_component :NurembergGermany .
+
+:PiTSeptember_15_1935 a :PointInTime ;
+  rdfs:label "September 15, 1935" ;
+  :day_of_month 15 ;
+  :month_of_year 9 ;
+  :year 1935 .
+
+:ReichCitizenshipLaw a :LawAndPolicy ;
+  rdfs:label "Reich Citizenship Law" ;
+  :text "The German government decrees the Reich Citizenship Law and the Law for the Protection of the German Blood and Honor. Hitler announces the measures at the Nazi Party rally in Nuremberg. These Nuremberg “Race Laws” effectively make Jews into second-class citizens. They prohibit intermarriages and criminalize sexual relations between Jews and 'persons of German or related blood'. The German government later applies the laws to Roma (Gypsies) and Afro-Germans." ;
+  :has_affected_agent :JewishPersons, :RomaPersons, :AfroGermanPersons ;
+  :sourced_from :Web1935_Key_Dates ;
+  :has_beginning :PiTSeptember_15_1935 ;
+  :has_location geo:2921044 .
+
+:LawForProtectionOfGermanBlood a :LawAndPolicy ;
+  rdfs:label "Law for Protection of German Blood" ;
+  :noun_synonym "Law for the Protection of the German Blood and Honor" ;
+  :text "The German government decrees the Reich Citizenship Law and the Law for the Protection of the German Blood and Honor. Hitler announces the measures at the Nazi Party rally in Nuremberg. These Nuremberg “Race Laws” effectively make Jews into second-class citizens. They prohibit intermarriages and criminalize sexual relations between Jews and 'persons of German or related blood'. The German government later applies the laws to Roma (Gypsies) and Afro-Germans." ;
+  :has_affected_agent :JewishPersons, :RomaPersons, :AfroGermanPersons ;
+  :sourced_from :Web1935_Key_Dates ;
+  :has_beginning :PiTSeptember_15_1935 ;
+  :has_location geo:2921044 .
+
+:RomaPersons a :GroupOfAgents, :Person ;
+  rdfs:label "Roma (Gypsy) persons" ;
+  :has_agent_aspect :CameoEthnicity_rom .
+
+:AfroGermanPersons a :GroupOfAgents, :Person ;
+  rdfs:label "Afro-German persons" ;
+  :has_agent_aspect :CameoEthnicity_afa, :CameoEthnicity_ger .
+
+:HimmlerAppointedToPoliceChief a :AppointmentAndNomination ;
+  rdfs:label "Himmler Appointed to Chief of German Police" ;
+  :text "Hitler appoints Reichsfuhrer-SS (SS chief) Heinrich Himmler Chief of German Police." ;
+  :has_active_agent :HitlerAdolf ;
+  :has_affected_agent :HimmlerHeinrich ;
+  :role "Chief of German Police" ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_time :PiTJune_17_1936 ;
+  :has_location geo:2921044 .
+
+:PiTJune_17_1936 a :PointInTime ;
+  rdfs:label "June 17, 1936" ;
+  :day_of_month 17 ;
+  :month_of_year 6 ;
+  :year 1936 .
+
+:SachsenhausenCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+  rdfs:label "Sachsenhausen Camp Established" ;
+  :text "The SS establishes the Sachsenhausen concentration camp near Oranienburg, located to the north of Berlin, Germany. By September, German authorities have imprisoned about 1,000 people in the camp." ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_topic :SachsenhausenConcentrationCamp ;
+  :has_active_agent :SS ;
+  :has_time :PiTJuly_12_1936 ;
+  :has_location :BerlinGermany .
+
+:SachsenhausenConcentrationCamp a :ConcentrationCamp ;
+  rdfs:label "Sachsenhausen Concentration Camp" ;
+  :definition "(1936-1945) The principal Nazi concentration camp for the Berlin area." ;
+  :text "The SS establishes the Sachsenhausen concentration camp near Oranienburg, located to the north of Berlin, Germany. By September, German authorities have imprisoned about 1,000 people in the camp." ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_beginning :PiT1936 ;
+  :has_end :PiT1945 ;
+  :near :BerlinGermany .
+
+:PiTJuly_12_1936 a :PointInTime ;
+  rdfs:label "July 12, 1936" ;
+  :day_of_month 12 ;
+  :month_of_year 7 ;
+  :year 1936 .
+
+:BerlinRomaArrested a :CaptureAndSeizure, :MovementTravelAndTransportation ;
+  rdfs:label "Berlin Roma Arrested" ;
+  :text "On July 16, 1936, more than 500 policemen arrested approximately 600 Roma and Sinti, including men, women, and children, and forced them to move into the Berlin-Marzahn camp. The camp was supervised primarily by the criminal police (Kripo) in Berlin." ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_active_agent :Kripo ;
+  :has_affected_agent :RomaPersons ;
+  :count 600 ;
+  :has_time :PiTJuly_16_1936 ;
+  :has_origin :BerlinGermany ;
+  :has_destination :BerlinMarzahnCamp .
+:ReichCitizenshipLaw :enables :RomaRelocated .
+:LawForProtectionOfGermanHonor :enables :RomaRelocated .
+
+:PiTJuly_16_1936 a :PointInTime ;
+  rdfs:label "July 16, 1936" ;
+  :day_of_month 16 ;
+  :month_of_year 7 ;
+  :year 1936 .
+
+:BerlinMarzahnCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+  rdfs:label "Berlin-Marzahn Camp Established" ;
+  :definition "(1936-1945) The camp for Roma in Berlin-Marzahn, officially known as 'Rastplatz Marzahn', was located approximately 6.25 miles (10 kilometers) east-northeast of the city center of Berlin. It was established on the eve of the summer Olympics in Berlin, after Reich Interior Minister Wilhelm Frick issued a decree for 'Combating the Gypsy Plague' on June 6 1936. This document called for tightening controls and police oversight of the 'Gypsy' population in Germany. As a result, the head of the Berlin police ordered construction of an internment camp in Marzahn." ;
+  :sourced_from :BerlinMarzahn_CampForRoma ;
+  :has_topic :BerlinMarzahnCamp ;
+  :has_active_agent :BerlinPolice ;
+  :has_time :PiTJuly_1936 ;
+  :has_location :BerlinGermany .
+
+:BerlinPolice a :PoliceForce ;
+  rdfs:label "Berlin Police" .
+:AffiliationBerlinPoliceBrlin a :Affiliation ;
+  :affiliated_agent :BerlinPolice ;
+  :affiliated_location :BerlinGermany .
+
+:BerlinMarzahnCamp a :ConcentrationCamp ;
+  rdfs:label "Berlin-Marzahnn Camp" ;
+  :noun_synonym "Rastplatz Marzahn" ;
+  :definition "(1936-1945) The camp for Roma in Berlin-Marzahn, officially known as 'Rastplatz Marzahn', was located approximately 6.25 miles (10 kilometers) east-northeast of the city center of Berlin. It was established on the eve of the summer Olympics in Berlin, after Reich Interior Minister Wilhelm Frick issued a decree for 'Combating the Gypsy Plague' on June 6 1936. This document called for tightening controls and police oversight of the 'Gypsy' population in Germany. As a result, the head of the Berlin police ordered construction of an internment camp in Marzahn." ;
+  :sourced_from :BerlinMarzahn_CampForRoma ;
+  :has_beginning :PiT1936 ;
+  :has_end :PiT1945 ;
+  :near :BerlinGermany .
+
+:SummerOlympicGames1936 a :Competition, :ArtAndEntertainmentEvent ;
+  rdfs:label "1936 Summer Olympic Games" ;
+  :noun_synonym "Berlin 1936", "Games of the XI Olympiad" ;
+  :text "The Summer Olympic Games open in Berlin, attended by athletes and spectators from countries around the world. The Olympic Games are a propaganda success for the Nazi government, as German officials make every effort to portray Germany as a respectable member of the international community. They remove anti-Jewish signs from public display and restrain anti-Jewish activities. In response to pressure from foreign Olympic delegations, Germany also includes one part-Jew, the fencer Helene Mayer, on its Olympic team. Germany also lifts anti-homosexuality laws for foreign visitors for the duration of the games." ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_beginning :PiTAugust_1_1936 ;
+  :has_end :PiTAugust_16_1936 ;
+  :has_location :BerlinGermany .
+
+:PiTAugust_1_1936 a :PointInTime ;
+  rdfs:label "August 1, 1936" ;
+  :day_of_month 1 ;
+  :month_of_year 8 ;
+  :year 1936 .
+
+:PiTAugust_16_1936 a :PointInTime ;
+  rdfs:label "August 16, 1936" ;
+  :day_of_month 16 ;
+  :month_of_year 8 ;
+  :year 1936 .
+
+:JehovahsWitnessesArrested a :CaptureAndSeizure, :MovementTravelAndTransportation ;
+  rdfs:label "Jehovah's Witnesses Arrested" ;
+  :text "German authorities implement mass arrests of Jehovah's Witnesses in Germany. Most are sent to concentration camps." ;
+  :sourced_from :Web1936_Key_Dates ;
+  :has_affected_agent :JehovahsWitnessPersons ;
+  :has_beginning :PiTAugust_28_1936 ;
+  :has_location geo:2921044 .
+
+:PiTAugust_28_1936 a :PointInTime ;
+  rdfs:label "August 28, 1936" ;
+  :day_of_month 28 ;
+  :month_of_year 8 ;
+  :year 1936 .
+
+:FourYearPlan a :LawAndPolicy ;
+  rdfs:label "Four Year Plan";
+  :has_beginning :PiT1936 ;
+  :has_end :PiT1940 ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Four_Year_Plan&oldid=1037983031), the 'purpose of the Four Year Plan was to provide for the rearmament of Germany, and to prepare the country for self-sufficiency in four years, from 1936 to 1940. Aside from emphasizing the rebuilding of the nation's military defenses, ..., the Four Year Plan sought to reduce unemployment; increase synthetic fibre production, undertake public works projects under the direction of Fritz Todt, increase automobile production, initiate numerous building and architectural projects and further develop the Autobahn system.'" ;
+  :sourced_from :Wikipedia .
+
+:GoringToLeadFourYearPlan a :AppointmentAndNomination ;
+  rdfs:label "Goring to Lead Four Year Plan" ;
+  :text "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Four_Year_Plan&oldid=1037983031), in 'August 1936, in response to a growing crisis in the German economy caused by the strains of rearmament, Hitler issued the 'Four-Year Plan Memorandum' ordering Goring to carry out the Four Year Plan to have the German economy ready for war within the next four years.'" ;
+  :has_active_agent :HitlerAdolf ;
+  :has_affected_agent :GoringHermann ;
+  :role "Lead" ;
+  :sourced_from :Wikipedia ;
+  :has_time :PiTAugust_1936 ;
+  :has_location geo:2921044 .
+
+:PiTAugust_1936 a :PointInTime ;
+  rdfs:label "August, 1936" ;
+  :month_of_year 8 ;
+  :year 1936 .
+
+:ConvictedOffendersArrested a :CaptureAndSeizure, :MovementTravelAndTransportation ;
+  rdfs:label "Convicted Offenders Arrested" ;
+  :text "German Criminal Police officials round up approximately 2,000 convicted offenders and incarcerate them in concentration camps. This is the first mass roundup of persons not deemed to be political opponents for incarceration in concentration camps." ;
+  :sourced_from :Web1937_Key_Dates ;
+  :has_active_agent :Kripo ;
+  :has_affected_agent :ConvictedPersons ;
+  :count 2000 ;
+  :has_beginning :PiTFebruary_27_1937 ;
+  :has_end :PiTMarch_9_1937 ;
+  :has_location geo:2921044 .
+
+:ConvictedPersons a :GroupOfAgents, :Person ;
+  rdfs:label "Convicted Persons" .
+
+:PiTFebruary_27_1937 a :PointInTime ;
+  rdfs:label "February 27, 1937" ;
+  :day_of_month 27 ;
+  :month_of_year 2 ;
+  :year 1937 .
+
+:PiTMarch_9_1937 a :PointInTime ;
+  rdfs:label "March 9, 1937" ;
+  :day_of_month 9 ;
+  :month_of_year 3 ;
+  :year 1937 .
+
+:BuchenwaldCampOpened a :ProductionManufactureAndCreation, :StartOrBeginning ;
+  rdfs:label "Buchenwald Camp Opened" ;
+  :text "The Inspectorate of Concentration Camps opens the Buchenwald concentration camp near the city of Weimar, Germany. Camp authorities will murder at least 56,000 prisoners in the Buchenwald camp system, some 11,000 of them Jews." ;
+  :sourced_from :Web1937_Key_Dates ;
+  :has_topic :BuchenwaldConcentrationCamp ;
+  :has_active_agent :InspectorateOfConcentrationCamps ;
+  :has_time :PiTJuly_15_1937 .
+
+:BuchenwaldConcentrationCamp a :ConcentrationCamp ;
+  rdfs:label "Buchenwald Concentration Camp" ;
+  :definition "(1937-1945) A large concentration camp established in 1937 by the Nazis. It was located in north-central Germany, near the city of Weimar." ;
+  :text "The Inspectorate of Concentration Camps opens the Buchenwald concentration camp near the city of Weimar, Germany. Camp authorities will murder at least 56,000 prisoners in the Buchenwald camp system, some 11,000 of them Jews." ;
+  :sourced_from :Web1937_Key_Dates ;
+  :has_beginning :PiT1937 ;
+  :has_end :PiT1945 ;
+  :near :WeimarGermany .
+
+:WeimarGermany a :PopulatedPlace, :AdministrativeDivision ;
+  rdfs:label "Weimar" ;
+  :country_name "Germany" ;
+  :admin_level 3 .
+geo:2921044 :has_component :WeimarGermany .
+
+:PiTJuly_15_1937 a :PointInTime ;
+  rdfs:label "July 15, 1937" ;
+  :day_of_month 15 ;
+  :month_of_year 7 ;
+  :year 1937 .
+
+:SuppressionOfCrimeDecree a :LawAndPolicy ;
+  rdfs:label "Suppression of Crime Decree" ;
+  :noun_synonym "Grunderlab uber vorbeugende Verbrechensbekampfung durch die Polizeie" ;
+  :text "SS chief and Chief of German Police Heinrich Himmler passes a decree on Preventive Suppression of Crime by the Police (Grunderlaß über vorbeugende Verbrechensbekämpfung durch die Polizei), which facilitates the roundup of persons deemed to be: engaging in chronic 'asocial' behavior (Asoziale); habitual criminals (Gewohnheitsverbrecher); or making their living from criminal activity (Berufsverbrecher). The German authorities often include Roma (Gypsies) in these groups. The decree authorizes the German Criminal Police to round up persons suspected of engaging in asocial or criminal behavior without evidence of a specific criminal act, to hold them for an indefinite period of time, and to incarcerate them in concentration camps. By 1943 the German police will send more than 70,000 'asocial' persons and previously convicted criminals to concentration camps. Almost half of them die by the end of 1943." ;
+  :sourced_from :Web1937_Key_Dates ;
+  :has_beginning :PiTDecember_14_1937 ;
+  :has_location geo:2921044 .
+
+:PiTDecember_14_1937 a :PointInTime ;
+  rdfs:label "December 14, 1937" ;
+  :day_of_month 14 ;
+  :month_of_year 12 ;
+  :year 1937 .

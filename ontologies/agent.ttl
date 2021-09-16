@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: July 16 2021
+# Last modified: September 11 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,8 +28,13 @@
 #  Updated the default and dna prefixes
 #  Renamed Characteristic to AgentAspect
 #  Added subProperty definition to :has_agent_aspect
-#  Changed :synonym to :noun_synonym and :verb_synonym, and added several
+#  Changed :synonym to :noun_synonym and :verb_synonym, and added synonyms
 #  Added PoliticalParty
+#  Changed :ReligiousActivities to :Religion, and added :ReligiousBelief
+#  Added :AppointmentAndNomination to the domain of :role
+#  Moved PoliticalIdeology from environment-subclasses.ttl and added
+#    :has_political_ideology and :enum:Oligarchy
+#  Added jobs to the LineOfBusiness subclasses' "examples".
 ########################################################################
 
 
@@ -40,7 +45,7 @@
 :Affiliation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Affiliation" ;
-  :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) to a Group, Organization, Location, etc. The individual to whom/which the Agent is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent 'plays' is defined by the :has_role property. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
+  :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) or Location, to another entity such as a Organization or GeopoliticalEntity. The individual to whom/which the Agent or Location is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent or Location 'plays' is defined by the :has_role or :role properties. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
   :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
   :noun_synonym "association", "allying", "annexing" ;
   :verb_synonym "affiliate", "associate", "join", "ally", "annex" .
@@ -145,12 +150,12 @@
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Agriculture, Apiculture and Aquaculture" ;
   :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
-  :example "Examples are farms, dairies, ranches, api- and aquaculture businesses, seed companies and nurseries." .
+  :example "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." .
 
 :BankingAndFinance a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Banking, Finance and Investment" ;
-  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock trading activities, etc." .
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
 
 :Construction a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -166,13 +171,13 @@
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Education" ;
   :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
-  :example "Examples are schools, universities, tutoring, etc." .
+  :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
 
 :ElectronicsAndComputers a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Electronics and Computers" ;
   :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
-  :example "Examples include both the engineering and fabrication aspects of electronics and computer hardware." .
+  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
 
 :EnergyAndUtilities a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -184,7 +189,7 @@
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Entertainment" ;
   :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
-  :example "Entertainment businesses include museums, theaters, any type of performance acts, etc." .
+  :example "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." .
 
 :EnvironmentalOrEcologicalActivities a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -195,34 +200,34 @@
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Fashion" ;
   :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
-  :example "Examples include beauty salons and workers, alteration activities, jewelry and clothing design and sales, etc." .
+  :example "Examples include beauty and nail salons and their workers, alteration/seamstress activities, jewelry and clothing design and sales, etc." .
 
 :FoodProcessingAndPreparation a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Food Processing and Preparation" ;
   :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
-  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities, etc." .
+  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
 
 :GovernmentAndPolitics a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Government and Politics" ;
-  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, etc." .
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
 
-:Healthcare a owl:Class ;
+:HealthcareAndMedical a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Healthcare" ;
+  rdfs:label "Healthcare and Medical" ;
   :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
-  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" .
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." .
 
 :Hospitality a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Hospitality" ;
-  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+  :definition "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." .
 
 :HumanitarianActivities a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Humanitarian Activities" ;
-  :definition "Involved with food and drink services, lodging, amusement and theme parks, tour services, travel agencies, etc." .
+  :definition "Involved with providing direct services or materials to people and areas in need." .
 
 :InformationTechnologyServices a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -244,7 +249,7 @@
 :LegalAndJudicialActivities a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Legal and Judicial Activities" ;
-  :definition "Involved with courts and trials, attorneys and litigations, etc." .
+  :definition "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." .
 
 :Manufacturing a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -254,36 +259,54 @@
 :Military a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Military" ;
-  :definition "Involved with armed forces, troops, equipment and research/consulting related to these." .
+  :definition "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
+
+:PoliticalIdeology a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Political Ideology" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
+  :example "Examples are Authoritarian, Communism, Socialism, etc." ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:Anarchism :enum:Authoritarianism :enum:ColonialismAndImperialism 
+                                    :enum:Communism :enum:Communitarianism :enum:Conservatism :enum:Corporatism 
+                                    :enum:Democracy :enum:Environmentalism :enum:Facism :enum:Liberalism 
+                                    :enum:Libertarianism :enum:Localism :enum:ModerateIdeology :enum:Oligarchy 
+                                    :enum:Nationalism :enum:Populism :enum:Progressivism :enum:Reactionist 
+                                    :enum:Socialism :enum:Syndicalism ) ] .
 
 :PublishingAndMedia a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Publishing and Media" ;
   :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
-  :example "Examples are activities related to books, journals, magazines, periodicals, blogs, newspapers, etc." .
+  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." .
 
 :RawMaterialProcessingAndPreparation a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Raw Material Processing and Preparation" ;
   :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
-  :example "Examples are mining, drilling and logging and processing such as distillation and refinery." .
+  :example "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
 
 :RealEstate a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Raw Material Processing and Preparation" ;
   :definition "Involved with the maintenance and sale of property/land and buildings." .
 
-:ReligiousActivities a owl:Class ;
+:Religion a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Religious Activities" ;
+  rdfs:label "Religion" ;
   :definition "Involved with activities related to spirituality, faith and worship." ;
-  :example "Examples include churches and similar organizations, clergy and shaman, etc." .
+  :example "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." .
+
+:ReligiousBelief a owl:Class ;
+  rdfs:subClassOf :AgentAspect, :Belief ;
+  rdfs:label "Religious Belief" ;
+  :definition "A superclass of the various world religions as well as no religion (nonreligion)." .
 
 :Retail a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Religious Activities" ;
+  rdfs:label "Retail" ;
   :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
-  :example "Examples are stores, malls, groceries, etc." .
+  :example "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." .
 
 :Security a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -293,7 +316,7 @@
 :Transport  a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Transport" ;
-  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations." .
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .
 
 
 ########################################################################
@@ -308,9 +331,10 @@
 
 :role a owl:DatatypeProperty ;
   rdfs:label "role" ;
-  rdfs:domain :Affiliation ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :Affiliation :AppointmentAndNomination ) ] ;
   rdfs:range xsd:string ;
-  :definition "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
+  :definition "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
 
 
 ########################################################################
@@ -323,6 +347,13 @@
   rdfs:domain :Affiliation ;
   rdfs:range :Agent ;
   :definition "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property." .
+
+:affiliated_location a owl:ObjectProperty ;
+  rdfs:label "affiliated location" ;
+  rdfs:domain :Affiliation ;
+  rdfs:range :Location ;
+  :definition "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity is defined using the :affiliated_with property." ;
+  :example "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization." .
 
 :affiliated_with a owl:ObjectProperty ;
   rdfs:label "affiliated with" ;
@@ -348,6 +379,14 @@
   rdfs:range :LineOfBusiness ;
   :definition "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" .
 
+:has_political_ideology a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
+  rdfs:label "has political ideology" ;
+  :definition "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :Location :Agent ) ] ;
+  rdfs:range :PoliticalIdeology .
+
 :has_role a owl:ObjectProperty ;
   rdfs:label "has role" ;
   rdfs:domain :Affiliation ;
@@ -362,8 +401,28 @@
 :enum:Agender a :Gender ;
   rdfs:label "Agender, Gender Neutral or Lack of Gender" .
 
+:enum:Anarchism a :PoliticalIdeology ;
+  rdfs:label "Anarchism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" .
+
+:enum:Authoritarianism a :PoliticalIdeology ;
+  rdfs:label "Authoritarianism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" .
+
 :enum:Bigender a :Gender ;
   rdfs:label "Bigender" .
+
+:enum:ColonialismAndImperialism a :PoliticalIdeology ;
+  rdfs:label "Colonialism and Imperialism" ;
+  :definition "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
+
+:enum:Communism a :PoliticalIdeology ;
+  rdfs:label "Communism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" .
+
+:enum:Communitarianism a :PoliticalIdeology ;
+  rdfs:label "Communitarianism" ;
+  :definition "Communitarianism emphasizes the community over the individual, and the responsibilities of the individual to the community. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communitarianism&oldid=1018133055), 'its overriding philosophy is based upon the belief that a person's social identity and personality are largely molded by community relationships, with a smaller degree of development being placed on individualism. Although the community might be a family, communitarianism usually is understood, in the wider, philosophical sense, as a collection of interactions, among a community of people in a given place (geographical location), or among a community who share an interest or who share a history.'" .
 
 :enum:CompletedDoctoralEducation a :EducationLevel ;
   rdfs:label "Completed Doctoral Education" .
@@ -380,19 +439,79 @@
 :enum:CompletedUndergraduateEducation a :EducationLevel ;
   rdfs:label "Completed Undergraduate Education" .
 
+:enum:Conservatism a :PoliticalIdeology ;
+  rdfs:label "Conservatism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Conservatism&oldid=1018019763), Conservatism promotes 'traditional social institutions. The central tenets of conservatism may vary in relation to the traditional values or practices of the culture and civilization in which it appears. In Western culture, conservatives seek to preserve a range of institutions such as organized religion, parliamentary government, and property rights. Adherents of conservatism often oppose modernism and seek a return to traditional values.'" .
+
+:enum:Corporatism a :PoliticalIdeology ;
+  rdfs:label "Corporatism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Corporatism&oldid=1017376258), Corporatism 'advocates the organization of society by corporate groups, such as agricultural, labour, military, scientific, or guild associations, on the basis of their common interests ... The hypothesis that society will reach a peak of harmonious functioning when each of its divisions efficiently performs its designated function, such as a body's organs individually contributing its general health and functionality, lies at the center of corporatist theory. Corporatist ideas have been expressed since ancient Greek and Roman societies, with integration into Catholic social teaching and Christian democratic political parties. They have been paired by various advocates and implemented in various societies with a wide variety of political systems, including authoritarianism, absolutism, fascism and liberalism. Corporatism may also refer to economic tripartism involving negotiations between labour and business interest groups and the government to establish economic policy. This is sometimes also referred to as neo-corporatism or social democratic corporatism.'" .
+
+:enum:Democracy a :PoliticalIdeology ;
+  rdfs:label "Democracy" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Democracy&oldid=1018088389), Democracy is a 'form of government in which the people have the authority to choose their governing legislators. The decisions on who is considered part of the people and how authority is shared among or delegated by the people have changed over time and at different speeds in different countries, but they have included more and more of the inhabitants of all countries. Cornerstones include freedom of assembly and speech, inclusiveness and equality, membership, consent, voting, right to life and minority rights.'" .
+
+:enum:Environmentalism a :PoliticalIdeology ;
+  rdfs:label "Environmentalism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Environmentalism&oldid=1005807941), Environmentalism is a 'broad philosophy, ideology, and social movement regarding concerns for environmental protection and improvement of the health of the environment, particularly as the measure for this health seeks to incorporate the impact of changes to the environment on humans, animals, plants and non-living matter'." .
+
+:enum:Facism a :PoliticalIdeology ;
+  rdfs:label "Facism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." .
+
 :enum:Female a :Gender ;
   rdfs:label "Female" ;
   :noun_synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
+
+:enum:Liberalism a :PoliticalIdeology ;
+  rdfs:label "Liberalism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" .
+
+:enum:Libertarianism a :PoliticalIdeology ;
+  rdfs:label "Libertarianism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Libertarianism&oldid=1017897385), Libertarianism 'upholds liberty as a core principle. Libertarians seek to maximize autonomy and political freedom, emphasizing free association, freedom of choice, individualism and voluntary association. Libertarians share a skepticism of authority and state power, but some of them diverge on the scope of their opposition to existing economic and political systems. Various schools of libertarian thought offer a range of views regarding the legitimate functions of state and private power, often calling for the restriction or dissolution of coercive social institutions.'" .
+
+:enum:Localism a :PoliticalIdeology ;
+  rdfs:label "Localism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Localism_(politics)&oldid=1036561541), Localism 'describes a range of political philosophies which prioritize the local. Generally, localism supports local production and consumption of goods, local control of government, and promotion of local history, local culture and local identity. Localism can be contrasted with regionalism and centralized government, with its opposite being found in the unitary state. Localism can also refer to a systematic approach to organizing a national government so that local autonomy is retained rather than following the usual pattern of government and political power becoming centralized over time. On a conceptual level, there are important affinities between localism and deliberative democracy. This concerns mainly the democratic goal of engaging citizens in decisions that affect them. Consequently, localism will encourage stronger democratic and political participatory forums and widening public sphere connectivity.'" .
 
 :enum:Male a :Gender ;
   rdfs:label "Male" ;
   :noun_synonym "boy", "man", "mister", "Mr." .
 
+:enum:ModerateIdeology a :PoliticalIdeology ;
+  rdfs:label "Moderate Ideology" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Moderate&oldid=1006575574), Moderate 'is an ideological category which designates a rejection of radical or extreme views, especially in regard to politics and religion. A moderate is considered someone occupying any mainstream position avoiding extreme views and major social change. In United States politics, a moderate is considered someone occupying a centre position on the left–right political spectrum.'" .
+
+:enum:Nationalism a :PoliticalIdeology ;
+  rdfs:label "Nationalism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Nationalism&oldid=1018089498), Nationalism 'promotes the interests of a particular nation (as in a group of people), especially with the aim of gaining and maintaining the nation's sovereignty (self-governance) over its homeland. Nationalism holds that each nation should govern itself, free from outside interference (self-determination), that a nation is a natural and ideal basis for a polity and that the nation is the only rightful source of political power (popular sovereignty). It further aims to build and maintain a single national identity, based on shared social characteristics of culture, ethnicity, geographic location, language, politics (or the government), religion, traditions and belief in a shared singular history, and to promote national unity or solidarity. Nationalism seeks to preserve and foster a nation's traditional cultures and cultural revivals have been associated with nationalist movements. It also encourages pride in national achievements and is closely linked to patriotism. Nationalism is often combined with other ideologies such as conservatism (national conservatism) or socialism (left-wing nationalism).'" .
+
 :enum:NoEducation a :EducationLevel ;
   rdfs:label "No Education" .
 
+:enum:Oligarchy a :PoliticalIdeology ;
+  rdfs:label "Oligarchy" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Oligarchy&oldid=1040627006), Oligarchy 'is a form of power structure in which power rests with a small number of people. These people may or may not be distinguished by one or several characteristics, such as nobility, fame, wealth, education, or corporate, religious, political, or military control. Throughout history, oligarchies have often been tyrannical, relying on public obedience or oppression to exist.'" .
+
+:enum:Populism  a :PoliticalIdeology ;
+  rdfs:label "Populism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Populism&oldid=1016524972), Populism is 'an ideology which presents 'the people' as a morally good force and contrasts them against 'the elite', who are portrayed as corrupt and self-serving. Populists differ in how 'the people' are defined, but it can be based along class, ethnic, or national lines. Populists typically present 'the elite' as comprising the political, economic, cultural, and media establishment, depicted as a homogeneous entity and accused of placing their own interests, and often the interests of other groups—such as large corporations, foreign countries, or immigrants—above the interests of 'the people'. Populist parties and social movements are often led by charismatic or dominant figures who present themselves as the 'voice of the people'. According to the ideational approach, populism is often combined with other ideologies, such as nationalism, liberalism, or socialism. Thus, populists can be found at different locations along the left–right political spectrum, and there exist both left-wing populism and right-wing populism.'" .
+
 :enum:PostDoctoralEducation a :EducationLevel ;
   rdfs:label "Post-Doctoral Education" .
+
+:enum:Progressivism a :PoliticalIdeology ;
+  rdfs:label "Progressivism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" .
+
+:enum:Reactionist a :PoliticalIdeology ;
+  rdfs:label "Reactionist" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Reactionary&oldid=1016120273), Reactionists 'favour a return to a previous political state of society that they believe possessed positive characteristics that are absent in contemporary society. As an adjective, the word reactionary describes points of view and policies meant to restore a past status quo. The word reactionary is often used in the context of the left–right political spectrum, and is one tradition in right-wing politics. In popular usage, it is commonly used to refer to a highly traditional position, one opposed to social or political change. However, according to political theorist Mark Lilla, a reactionary yearns to overturn a present condition of perceived decadence and recover an idealized past. Such reactionary individuals and policies favour social transformation, in contrast to conservative individuals or policies that seek incremental change or to preserve what exists in the present.'" .
+
+:enum:Socialism a :PoliticalIdeology ;
+  rdfs:label "Socialism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Socialism&oldid=1018154550), Socialism is 'a political, social, and economic philosophy encompassing a range of economic and social systems characterised by social ownership of the means of production. It includes the political theories and movements associated with such systems. Social ownership can be public, collective, cooperative, or of equity. While no single definition encapsulates the many types of socialism, social ownership is the one common element. The types of socialism vary based on the role of markets and planning in resource allocation, on the structure of management in organizations, and socialists disagree on whether government, particularly existing government, is the correct vehicle for change.'" .
 
 :enum:SomeDoctoralEducation a :EducationLevel ;
   rdfs:label "Some Doctoral Education" .
@@ -408,3 +527,7 @@
 
 :enum:SomeUndergraduateEducation a :EducationLevel ;
   rdfs:label "Some Undergraduate Education" .
+
+:enum:Syndicalism a :PoliticalIdeology ;
+  rdfs:label "Syndicalism" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Syndicalism&oldid=1013439694), Syndicalism is a 'current in the labor movement to establish local, worker-based organizations and advance the demands and rights of workers through strikes'." .

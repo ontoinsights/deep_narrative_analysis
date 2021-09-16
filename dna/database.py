@@ -1,9 +1,15 @@
+# Stardog database processing:
+# 1) create/delete databases
+# 2) add/remove data from a database
+# 3) list databases
+# 4) query or update a database
+
 import configparser as cp
 import logging
 import os
 import stardog
 
-from utilities import resources_root, capture_error
+from utilities import resources_root, capture_error, empty_string
 
 # Get details from the dna.config file, stored in the resources directory
 # And set the connection details
@@ -19,7 +25,7 @@ if not ontol_path.endswith('/'):
     ontol_path = f'{ontol_path}/'
 
 
-def add_remove_data(op_type: str, triples: str, database: str, graph: str = '') -> bool:
+def add_remove_data(op_type: str, triples: str, database: str, graph: str = empty_string) -> bool:
     """
     Add or remove data to/from the database/store
 
@@ -67,26 +73,27 @@ def create_delete_database(op_type: str, database: str) -> str:
     logging.info(f'Database {database} being {op_type}d')
     if op_type != 'create' and op_type != 'delete':
         capture_error(f'Invalid op_type {op_type} for create_delete_db', True)
-        return ''
+        return empty_string
     try:
         admin = stardog.Admin(**sd_conn_details)
         if op_type == 'create':
             # Create database
             admin.new_database(database,
                                {'search.enabled': True, 'edge.properties': True, 'reasoning': True,
-                                'reasoning.punning.enabled': True, 'query.timeout': '20m'})
+                                'reasoning.punning.enabled': True, 'query.timeout': '5m'})
             # Load ontologies to the newly created database
             conn = stardog.Connection(database, **sd_conn_details)
             conn.begin()
             logging.info(f'Loading DNA ontologies to {database}')
             _load_directory_to_database(ontol_path, conn)
-            _load_directory_to_database(f'{ontol_path}domain-context/', conn)
+            # TODO: Remove if not applicable for the domain
+            _load_directory_to_database(f'{ontol_path}domain-events/', conn)
             conn.commit()
         else:
             # Delete database
             database_obj = admin.database(database)
             database_obj.drop()
-        return ''
+        return empty_string
     except Exception as e:
         return f'Database ({op_type}) exception: {str(e)}'
 
@@ -101,7 +108,7 @@ def get_databases() -> list:
     try:
         admin = stardog.Admin(**sd_conn_details)
         databases = admin.databases()
-        db_names = list()
+        db_names = []
     except Exception as e:
         capture_error(f'Exception getting list of stores: {str(e)}', True)
         return []
@@ -110,7 +117,7 @@ def get_databases() -> list:
     return db_names
 
 
-def query_database(query_type: str, query: str, database: str) -> (bool, dict):
+def query_database(query_type: str, query: str, database: str) -> dict:
     """
     Process a SELECT or UPDATE query
 
@@ -123,29 +130,30 @@ def query_database(query_type: str, query: str, database: str) -> (bool, dict):
     logging.info(f'Querying database, {database}, using {query_type}, with query, {query}')
     if query_type != 'select' and query_type != 'update':
         capture_error(f'Invalid query_type {query_type} for query_db', True)
-        return False, dict()
+        return dict()
     try:
         conn = stardog.Connection(database, **sd_conn_details)
         if query_type == 'select':
             # Select query, which will return results, if successful
             query_results = conn.select(query, content_type='application/sparql-results+json')
-            if query_results['results']['bindings']:
-                return True, query_results
+            if 'results' in query_results.keys() and 'bindings' in query_results['results'].keys():
+                return query_results['results']['bindings']
             else:
-                return True, dict()
+                return dict()
         else:
             # Update query; No results (either success or failure)
             conn.update(query)
-            return True, dict()
+            return {'update': 'successful'}
     except Exception as e:
         capture_error(f'Database ({database}) query exception for {query}: {str(e)}', True)
-        return False, dict()
+        return dict()
 
 
 # Functions internal to the module
 def _load_directory_to_database(directory_name, conn):
     """
-    Loads the DNA files to a new database/data store.
+    Loads the DNA files to a new database/data store. Domain-specific content is added
+    to the 'urn:Domain_Events' named graph.
 
     :param directory_name: String holding the directory name
     :param conn: The connection to the Stardog DB for the database
@@ -155,6 +163,10 @@ def _load_directory_to_database(directory_name, conn):
         list_files = os.listdir(directory_name)
         for file in list_files:
             if file.endswith('.ttl'):
-                conn.add(stardog.content.File(f'{directory_name}{file}'))
+                if 'domain-' in directory_name:
+                    conn.add(stardog.content.File(f'{directory_name}{file}'), 'urn:Domain_Events')
+                else:
+                    conn.add(stardog.content.File(f'{directory_name}{file}'))
     except Exception as e:
         capture_error(f'Exception loading ontologies from {directory_name}: {str(e)}', True)
+    return

@@ -1,9 +1,10 @@
+# TODO: Summary of processing
+
 import logging
 import PySimpleGUI as sg
 
 from database import query_database
-from encoded_images import encoded_logo
-from utilities import capture_error
+from utilities import capture_error, encoded_logo
 
 query_hypotheses = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?hypo ?label WHERE ' \
                    '{ ?hypo a :Script ; rdfs:label ?label }'
@@ -20,6 +21,7 @@ def display_hypotheses(store_name: str):
     logging.info(f'Displaying hypotheses in {store_name}')
     # Setup the PySimpleGUI window
     sg.theme('Material2')
+    # TODO: Hypothesis creation
     layout = [[sg.Text("Not yet implemented.",
                        font=('Arial', 16))],
               [sg.Text("To exit, press 'End' or close the window.",
@@ -29,17 +31,16 @@ def display_hypotheses(store_name: str):
 
     # Get the data for the window
     try:
-        success, hypotheses_results = query_database('select', query_hypotheses, store_name)
+        hypotheses_results = query_database('select', query_hypotheses, store_name)
         number_hypotheses = 0
-        if success and 'results' in hypotheses_results.keys() and \
-                'bindings' in hypotheses_results['results'].keys():
-            number_hypotheses = len(hypotheses_results['results']['bindings'])
+        if hypotheses_results:
+            number_hypotheses = len(hypotheses_results)
     except Exception as e:
         capture_error(f'Exception getting hypotheses details from {store_name}: {str(e)}', True)
         return
     window_hypotheses_list = sg.Window('Display Hypotheses', layout, icon=encoded_logo).Finalize()
 
-    # Event Loop to process window "events"
+    # Loop to process window "events"
     while True:
         event_hypotheses_list, values = window_hypotheses_list.read()
         if event_hypotheses_list in (sg.WIN_CLOSED, 'End'):

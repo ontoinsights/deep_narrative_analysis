@@ -1,25 +1,57 @@
+# Various string constants, images and small, utility methods used across different DNA modules
+
+import base64
 import logging
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import os
+
 import PySimpleGUI as sg
 
-from encoded_images import encoded_logo
+base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+resources_root = os.path.join(base_dir, 'dna/resources/')
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-resources_root = os.path.join(BASE_DIR, 'dna/resources/')
+image_file_logo = os.path.join(resources_root, 'DNA2.png')
+image_file_question = os.path.join(resources_root, 'QuestionMark3.png')
 
-EMPTY_STRING = ''
-SPACE = ' '
-NEW_LINE = '\n'
-DOUBLE_NEW_LINE = '\n\n'
+with open(image_file_logo, "rb") as im_file:
+    encoded_logo = base64.b64encode(im_file.read())
+with open(image_file_question, "rb") as im_file:
+    encoded_question = base64.b64encode(im_file.read())
+
+empty_string = ''
+space = ' '
+new_line = '\n'
+double_new_line = '\n\n'
+subjects_string = 'subjects'
+objects_string = 'objects'
+verbs_string = 'verbs'
 
 dna_prefix = 'urn:ontoinsights:dna:'
+owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
+event_and_state = 'urn:ontoinsights:dna:EventAndState'
 
-gender_dict = {'A': ':Agender', 'B': 'Bigender',
+gender_dict = {'A': ':Agender', 'B': ':Bigender',
                'F': ':Female', 'M': ':Male'}
+
+family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
+                  'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
+                  'parent': '', 'sibling': '', 'cousin': '', 'grandparent': ''}
 
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
+
+processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in',
+                          'for', 'from', 'near', 'of', 'on', 'to', 'with', 'without')
+
+# Words that introduce a 'causal' clause, where the main clause is the effect
+cause_connectors = ['when', 'because', 'since', 'as']
+# Words that introduce a 'causal' effect in the main clause, where the other clause is the cause
+effect_connectors = ['so', 'therefore ', 'consequently ']
+# If - then only is cause-effect when the tenses of the main and other clause are the same
+cause_effect_pairs = [('if', 'then')]
+# Prepositions that introduce a cause in the form of a noun phrase
+cause_prepositions = ['because of', 'due to', 'as a result [of]', 'as a consequence [of]', 'my means of']
+# Prepositions that introduce an effect in the form of a noun phrase
+effect_prepositions = ['in order to']
 
 with open('../dna/resources/country_names.txt', 'r') as names_file:
     countries = names_file.read().split('\n')
@@ -45,6 +77,20 @@ def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):
     return
 
 
+def add_unique_to_array(new_array: list, array: list):
+    """
+    Adds any unique elements from new_array to array.
+
+    :param new_array: An array of elements
+    :param array: The array to be updated with any 'new'/unique elements
+    :return None (array is updated)
+    """
+    for new_elem in new_array:
+        if new_elem not in array:      # Element is NOT in the array
+            array.append(new_elem)     # So, add it
+    return
+
+
 def capture_error(message: str, notify: bool):
     """
     Both log and popup the error message.
@@ -60,20 +106,7 @@ def capture_error(message: str, notify: bool):
                        font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
     else:
         sg.popup_error(message, font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
-
-
-def draw_figure(canvas, figure):
-    """
-    Routine to draw a matplotlib image on a tkinter canvas
-
-    :param canvas: The 'canvas' object in PySimpleGUI
-    :param figure: The matplotlib figure to be drawn
-    :return: The tkinter canvas which will contain the figure
-    """
-    figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
-    figure_canvas_agg.draw()
-    figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
-    return figure_canvas_agg
+    return
 
 
 def update_dictionary_count(dictionary: dict, key: str):
@@ -84,8 +117,5 @@ def update_dictionary_count(dictionary: dict, key: str):
     :param key: String holding the dictionary key
     :return: None (Dictionary is updated)
     """
-    if key in dictionary.keys():
-        dictionary[key] = dictionary[key] + 1
-    else:
-        dictionary[key] = 1
+    dictionary[key] = dictionary[key] + 1 if key in dictionary.keys() else 1
     return

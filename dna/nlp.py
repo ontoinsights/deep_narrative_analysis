@@ -1,12 +1,29 @@
-import copy
+# Entry points for all spaCy processing:
+# 1) Pattern matching (in get_birth_family_details)
+# 2) Noun/verb details (in get_nouns_verbs)
+# 3) Processing for phrases in the form, 'a'|'the'|# 'years'|'months'|'days'|... 'earlier'|'later'|'prior'|...
+#    (in get_time_details)
+# 4) Parses the sentences from a narrative into dictionary elements with the following form:
+#    'text': 'narrative_text', 'LOCS': ['location'], 'TIMES': ['date_or_time'],
+#    'subjects': [{'subject_text': 'subject_text', 'subject_type': 'type_such_as_SINGNOUN'},
+#                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
+#    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
+#               'preps': [{'prep_text': 'preposition_text',
+#                          'prep_details': [{'prep_text': 'preposition_object', 'prep_type': 'type_eg_SINGGPE'}]}],
+#                          # Preposition object may also have a preposition - for ex, 'with the aid of the police'
+#                          # If so, following the 'prep_type' entry would be another 'preps' element
+#                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_NOUN'}]}]}]}]}]}
+#    (in parse_narrative)
+
 import logging
 import spacy
 from spacy.matcher import DependencyMatcher
-from spacy.tokens import Span, Token
+from word2number import w2n
 
-from nlp_graph import extract_graph_details
 from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
-from utilities import NEW_LINE, update_dictionary_count
+from nlp_sentence_dictionary import extract_dictionary_details
+from nlp_split_sentences import split_clauses
+from utilities import empty_string, new_line, update_dictionary_count
 
 nlp = spacy.load('en_core_web_trf')
 nlp.add_pipe('sentencizer')
@@ -19,10 +36,25 @@ matcher.add("born_date", [born_date_pattern])
 matcher.add("born_place", [born_place_pattern])
 matcher.add("family_member_name", [family_member_name_pattern])
 
-# Words that introduce a 'causal' clause, where the main clause is the effect
-cause_connectors = ['when', 'because', 'since', 'as']
-# Words that introduce a 'causal' effect in the main clause, where the other clause is the cause
-effect_connectors = ['so', 'therefore ', 'consequently ']
+agent_ner_dict = {'PERSON': ':Person',
+                  'NORP': ':Organization',
+                  'ORG': ':Organization',
+                  'GPE': ':GeopoliticalEntity',
+                  'LOC': ':GeopoliticalEntity'}
+agent_ner_types = list(agent_ner_dict.keys())
+
+# Replace multi-word phrases or non-standard terms acting as conjunctions and prepositions
+# (or using prepositions) with single words
+replacement_words = {
+    'as well as': 'and',
+    'circa': 'in',
+    'in addition to': 'and',
+    'since': 'for',   # Assumes that clauses such as 'since [noun] [verb]' have already been split out
+    'next to': 'near',
+    'on behalf of': 'for',
+    'prior to': 'before',
+    'subsequent to': 'after'
+}
 
 
 def get_birth_family_details(narrative: str) -> (list, list, dict):
@@ -37,7 +69,7 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     """
     logging.info('Getting birth and family data from narrative')
     # Analyze the text using spaCy and get matches to the 'born' and 'member' rules
-    doc = nlp(narrative[:1000])
+    doc = nlp(narrative.replace('\n', ''))
     matches = matcher(doc)
     # Get born on and born in details from the matches
     born_on_date = set()
@@ -53,7 +85,7 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
         elif string_id == 'born_place':
             born_in_place.add(doc[token_ids[2]].text)
         elif string_id == 'family_member_name':
-            family_dict[doc[token_ids[0]].text] = doc[token_ids[1]].text
+            family_dict[doc[token_ids[1]].text] = doc[token_ids[0]].text   # Key = proper name, Value = relationship
     # Verify that dates actually have a year
     found_year = any([value for value in born_on_date if (value.isnumeric() and int(value) > 1000)])
     if not found_year:
@@ -61,14 +93,53 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     return list(born_on_date), list(born_in_place), family_dict
 
 
+def get_named_entity_in_string(text: str) -> (str, str):
+    """
+    Returns information on any Named Entity that are Agents (people, organizations, geopolitical
+    entities, ...) in the input text.
+
+    :param text: The text to be parsed
+    :return Two strings - the first is the named entity's text and the second string is its
+            type mapped to the DNA Agent sub-classing hierarchy; If the input text does not
+            contain any Named Entities that are Agents, then two empty strings are returned
+    """
+    doc = nlp(text)
+    for ent in doc.ents:
+        if ent.label_ in agent_ner_types:
+            return ent.text, agent_ner_dict[ent.label_]
+    return empty_string, empty_string
+
+
+def get_noun(text: str, first: bool) -> str:
+    """
+    Creates a spacy Doc from the input text and returns the first (or last) noun found.
+
+    :param text: The text to parse
+    :param first: Boolean indicating that the first noun is returned (if True);
+                  otherwise, the last noun is returned
+    :return: The first or last (depending on whether the first variable is True or False) noun
+             in the input text, or an empty string if no noun is found
+    """
+    doc = nlp(text)
+    word = empty_string
+    for token in doc:
+        if token.pos_ in ('NOUN', 'PROPN'):
+            if token.dep_ == 'compound':
+                continue
+            word = token.text
+            if first:
+                break
+    return word
+
+
 def get_nouns_verbs(sentences: str) -> (dict, dict):
     """
     Parses all the sentences in the input parameter to return counts of each distinct
-    nouns and verbs.
+    noun and verb.
 
     :param sentences: String with the text of one or more sentences
-    :return: Two dictionaries of the counts of the noun/verb lemmas
-             The noun dictionary is returned first
+    :return: Two dictionaries of the counts of the noun/verb lemmas where the noun
+             dictionary is returned first
     """
     logging.info('Getting the nouns and verbs from a set of narratives')
     noun_dict = dict()
@@ -85,14 +156,41 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     return sorted_nouns, sorted_verbs
 
 
-def parse_narrative(narr_text: str) -> list:
+def get_time_details(phrase: str) -> (int, str):
+    """
+    For a phrase (such as 'a year later'), get the time increment and number of increments.
+
+    :param phrase: String to be processed
+    :return A tuple of the number of increments and the increment length (for example, 'year')
+    """
+    number = 0
+    increment = ''
+    nlp_date = nlp(phrase)
+    for token in nlp_date:
+        if token.dep_ == 'det':    # Assumes 'a' or 'the' means 1
+            number = 1
+        elif token.dep_ == 'nummod':
+            if token.text.isnumeric():
+                number = int(token.text)
+            else:
+                number = w2n.word_to_num(token.lemma_)
+        elif token.dep_ == 'npadvmod':
+            increment = token.text
+    return number, increment
+
+
+def parse_narrative(narr_text: str, gender: str, family_dict: dict) -> list:
     """
     Creates a spacy Doc from the input text, splits sentences by conjunctions into clauses with
     their own subjects/verbs, and then parses each of the resulting sentences to create a
-    dictionary holding the subject/verb/preposition/... details. Each of the sentence
+    dictionary holding the subject/verb/object/preposition/... details. Each of the sentence
     dictionaries are added to an array, which is returned.
 
     :param narr_text: The narrative text
+    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+                   MALE - indicating the gender of the narrator
+    :param family_dict: A dictionary containing the names of family members and their
+                        relationship to the narrator/subject
     :return: An array of dictionaries holding the details of each sentence (after splitting)
     """
     doc = nlp(narr_text)
@@ -100,10 +198,16 @@ def parse_narrative(narr_text: str) -> list:
     sentence_dicts = []
     # Split sentences by conjunctions
     for sentence in doc.sents:
-        if sentence.text.startswith(NEW_LINE):
-            continue
+        if sentence.text.startswith(new_line):
+            # When using a text editor on the narrative, the new line may be part of the 'next' line of text
+            split_sentences.append(nlp("New line"))
+            sent_text = sentence.text.replace(new_line, '')
+            if not sent_text:
+                continue
+        else:
+            sent_text = sentence.text
         # Change conjunctions into new sentences
-        for sent in split_clauses(sentence):
+        for sent in split_clauses(sent_text, nlp):
             sent_nlp = nlp(sent)
             # Determine the spans of individual nouns and noun chunks
             spans = list(sent_nlp.ents) + list(sent_nlp.noun_chunks)
@@ -116,189 +220,22 @@ def parse_narrative(narr_text: str) -> list:
             split_sentences.append(sent_nlp)
     # Get the details of each sentence
     for sentence in split_sentences:
-        extract_graph_details(sentence, sentence_dicts, nlp)
+        revised = _replace_words(sentence.text)
+        extract_dictionary_details(revised, sentence_dicts, nlp, gender, family_dict)
     return sentence_dicts
 
 
-# Functions internal to the module, but accessible to testing
-def check_subject_in_clause(cls_sentence: Span) -> (list, list):
-    """
-    Return a list of the verb and connector tokens in a sentence/Span IF the sentence
-    has dependent clauses with their own subject and verb (and a few other conditions are
-    met as documented below).
-
-    :param cls_sentence: The sentence/Span to be analyzed
-    :return: Two lists - the first with the independent verbs and the second with any connectors
-    """
-    # Returns a list of the verb and connector tokens
-    # Check for adverbial clauses, which will have the advmod in the clause
-    clausal_verbs = [child for child in cls_sentence.root.children if child.dep_ == 'advcl']
-    connectors = []
-    keep_separate_clauses = False
-    if len(clausal_verbs) > 0:
-        connectors = [conn for conn in clausal_verbs[0].children if conn.dep_ in ('advmod', 'mark')]
-        # Only keep the verbs and connectors under certain circumstances
-        for conn in connectors:
-            if conn.text.lower() in cause_connectors:
-                keep_separate_clauses = True
-    if not keep_separate_clauses:
-        connectors = []
-    # Also check for clausal complement, where we want the advmod (or mark) in the original/root verb clause
-    new_verbs = [child for child in cls_sentence.root.children if child.dep_ == 'ccomp']
-    if new_verbs:
-        new_connectors = [conn for conn in cls_sentence.root.children if conn.dep_ in ('advmod', 'mark')]
-        if new_connectors:
-            keep_separate_clauses = False
-            for new_conn in new_connectors:
-                if new_conn.text.lower() in effect_connectors:
-                    keep_separate_clauses = True
-            if keep_separate_clauses:
-                clausal_verbs.extend(new_verbs)
-                connectors.extend(new_connectors)
-    return clausal_verbs, connectors
-
-
-def get_chunks(verb: Token, connector: list, chunk_sentence: Span, is_conj: bool) -> list:
-    """
-    Given a conjunctive verb, a connector token relating that verb to the root verb
-    (such as 'and', 'but', ...) and the sentence that contains these tokens, determine if
-    the sentence can be separated into clauses. Also separate semi-colon-ed sentences
-    into two.
-
-    :param verb: The token of the conjunctive verb
-    :param connector: Tokens of the connectors between the root and conjunctive verbs
-                      (if is_conj is true) or adverb modifiers of the conjunctive verb
-                      (if is_conj is false)
-    :param chunk_sentence: A Span representing the parsed sentence
-    :param is_conj: A boolean indicating whether the connector is related to terms such as
-                    'and', 'but', 'or' or is related to an adverbial clause
-    :return: A list of the text of the clauses of the sentence (split if indicated by the
-             logic below) or just the original sentence returned
-    """
-    logging.info(f'Getting the clauses in {chunk_sentence.text}')
-    chunks = []
-    # Is there a subject of the other clause's verb? That is required to split the sentence
-    # An 'expl' is the word, 'there'
-    subj2 = [subj for subj in verb.children if ('subj' in subj.dep_ or subj.dep_ == 'expl')]
-    if len(subj2):
-        # Yes ... Separate clauses
-        # Get the tokens in sentence related to the 'other' verb's subtree
-        seen = [ww for ww in verb.subtree if ww.pos_ != 'PUNCT']
-        seen_chunk = ' '.join([ww.text for ww in seen]).strip() + '.'
-        unseen = [ww for ww in chunk_sentence if ww not in seen and ww.pos_ != 'PUNCT']
-        unseen_chunk = ' '.join([ww.text for ww in unseen]).strip() + '.'
-        seen_first = False
-        for conn in connector:
-            if is_conj:
-                # Remove the connector words (to prevent cycles and sentences such as 'Mary biked to the market and')
-                unseen_chunk = unseen_chunk.replace(f' {conn.text} ', ' ').replace(f' {conn.text}.', '.')
-            else:
-                # Connector in the seen words; Should seen words be first because they are a
-                # cause related to an effect?
-                if not seen_first and conn.text in seen_chunk and conn.text in cause_connectors:
-                    seen_first = True
-                # Remove the connector words (to prevent cycles) but NOT if there is a single auxiliary verb
-                # If so, then the advmod is needed
-                # For example, 'my daughter is home' (is = auxiliary verb, home = adverbial modifier)
-                if not any([ww for ww in seen if ww.pos_ == 'AUX']) or any([ww for ww in seen if ww.pos_ == 'VERB']):
-                    seen_chunk = _remove_startswith(seen_chunk, conn.text)
-                    seen_chunk = seen_chunk.replace(f' {conn.text} ', ' ').replace(f' {conn.text}.', '.')
-                if not any([ww for ww in unseen if ww.pos_ == 'AUX']) or any(
-                        [ww for ww in unseen if ww.pos_ == 'VERB']):
-                    unseen_chunk = _remove_startswith(unseen_chunk, conn.text)
-                    # Store the seen and unseen clauses as separate sentences
-        if seen_first:
-            chunks.append(seen_chunk)
-            chunks.append(unseen_chunk)
-        else:
-            chunks.append(unseen_chunk)
-            chunks.append(seen_chunk)
-    if len(chunks) > 0:
-        return chunks
-    else:
-        return [chunk_sentence.text]
-
-
-def split_clauses(sentence: Span) -> list:
-    """
-    Perform splitting of sentences first by splitting by coordinating conjunctions (calling the function,
-    split_by_conjunctions) and second by adverbial clauses and clausal complements.
-
-    :param sentence: The sentence/Span to be split
-    :return: A list of new sentences/Spans created from the split
-    """
-    orig_sents = [sentence.text]
-    # Iterate until the sentences cannot be further decomposed/split
-    while True:
-        new_sents = []
-        # Go through each sentence in the array
-        for orig_sent in orig_sents:
-            # Semi-colons automatically split sentences
-            if '; ' in orig_sent:
-                semicolon_index = orig_sent.index('; ')
-                new_sents = [f'{orig_sent[:semicolon_index]}.', f'{orig_sent[semicolon_index + 2:]}.']
-                break
-            # First split by words such as 'and', 'but', 'or', ... related to the 'root' verb
-            # TODO: Deal with 'or', 'nor' as the splitting word below (e.g., as an alternative)
-            for chunk_sent in nlp(orig_sent).sents:
-                # nlp(orig_sent) creates a new Document to allow .sents processing of ROOT verbs
-                intermed_sents, splitting_word = _split_by_conjunctions(chunk_sent)
-                # Now check resulting sentences to further split by adverbial clauses and clausal complements
-                # Only split if there is a subject for a related verb
-                # Example: 'When I went to the store, I met George.' ('when ...' is an adverbial modifier)
-                for intermed_sent in intermed_sents:
-                    for chunk_sent2 in nlp(intermed_sent).sents:
-                        # nlp(intermed_sent) 're-tokenizes' in order to create a new Document, as above
-                        clausal_verbs, connectors = check_subject_in_clause(chunk_sent2)
-                        # Need to have both a clause and a connector/modifier for this logic
-                        if len(clausal_verbs) > 0:
-                            new_sents.extend(get_chunks(clausal_verbs[0], connectors, chunk_sent2, False))
-                        else:
-                            new_sents.append(intermed_sent)
-
-        # Check if the processing has resulted in new sentence clauses
-        if len(orig_sents) == len(new_sents):
-            # If not, break out of the while loop
-            break
-        else:
-            # New clauses, so keep processing
-            orig_sents = copy.deepcopy(new_sents)
-    return new_sents
-
-
 # Functions internal to the module
-def _remove_startswith(chunk: str, connector: str) -> str:
+def _replace_words(sentence: str) -> str:
     """
-    Returns first string with the second string removed from its start.
+    Replace specific phrases/terms with simpler ones - such as replacing 'as well as' with the word, 'and'.
 
-    :param chunk: String to be updated
-    :param connector: String to be removed from the beginning of the chunk
-    :return: Updated 'chunk' string
+    :param sentence: The sentence whose text should be updated
+    :return The updated sentence
     """
-    if chunk.startswith(f'{connector} '):
-        chunk = chunk[len(connector) + 1:]
-    elif chunk.startswith(f' {connector} '):
-        chunk = chunk[len(connector) + 2:]
-    return chunk
-
-
-def _split_by_conjunctions(conj_sentence: Span) -> (list, str):
-    """
-    Split the clauses of a sentence into separate sentences, if they are connected by a coordinating
-    conjunction (for, and, but, or, nor, yet, so). For example,"Mary and John walked to the store." would
-    NOT be split, but "Mary biked to the market and John walked to the store." should be split.
-
-    :param conj_sentence The sentence which is analyzed
-    :return: An array of simpler sentence(s) to be parsed and the text of the connecting token
-             (note that only the text of the sentences is returned, not the spacy tokens)
-    """
-    logging.info(f'Splitting the sentence, {conj_sentence.text}')
-    conj_sents = []
-    conj_verb = [child for child in conj_sentence.root.children if child.dep_ == 'conj']
-    connectors = [conn for conn in conj_sentence.root.children if conn.dep_ == 'cc']
-    if len(conj_verb) > 0:
-        for chunk in get_chunks(conj_verb[0], connectors, conj_sentence, True):
-            conj_sents.append(str(chunk))
-    else:
-        conj_sents = [conj_sentence.text]
-    return conj_sents, ('' if not connectors else connectors[0].text)
+    for key, value in replacement_words.items():
+        if key in sentence:
+            sentence = sentence.replace(key, value)
+        if key.title() in sentence:
+            sentence = sentence.replace(key.title(), value.title())
+    return sentence

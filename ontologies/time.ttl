@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: June 30 2021
+# Last modified: August 3 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -24,12 +24,25 @@
 #  Updated the default and dna prefixes
 #  Added example individuals
 #  Changed :synonym to :noun_synonym
+#  Added Intervals of :Childhood, :TeenYears, :Adulthood, :OldAge
 ########################################################################
 
 
 ########################################################################
 # Classes
 ########################################################################
+
+:Adulthood a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Adulthood" ;
+  :definition "An interval of time in a Person's life, typically from 18-21 through 60-65 years of age." ;
+  :noun_synonym "middle age", "thirties", "forties", "fifties", "twenties", "legal age" .
+
+:Childhood a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Childhood" ;
+  :definition "An interval of time in a Person's life, typically from birth to 12 years old." ;
+  :noun_synonym "infant", "infancy", "youth", "boyhood", "girlhood", "minor" .
 
 :Duration a owl:Class ;
   rdfs:subClassOf :Time ;
@@ -42,6 +55,13 @@
   rdfs:label "Interval of Time" ;
   :definition "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."; 
   :noun_synonym "timeframe", "period" .
+
+:OldAge a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Old Age" ;
+  :definition "An interval of time in a Person's life, typically 60-65 years of age or older." ;
+  :noun_synonym "elderliness", "advanced years", "declining years", "oldness", "agedness", "pensioner" ;
+  :verb_synonym "be elderly", "be old", "be aged" .
 
 :PointInTime a owl:Class ;
   rdfs:subClassOf :Time ;
@@ -60,8 +80,14 @@
 :Season a owl:Class ;
   rdfs:subClassOf :RecurrencePattern ;
   rdfs:label "Season" ;
-  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains. For this reason, a subclass hierarchy specific to the domain should be defined." ;
-  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various subclasses of Season may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
+  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains. For this reason, types of Seasons are specified as individuals as an 'open enumeration'." ;
+  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
+
+:TeenAge a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Teenage" ;
+  :definition "An interval of time in a Person's life, typically from 13 through 19 years old." ;
+  :noun_synonym "teen", "adolescence", "young adult" .
 
 :TemporalUnit a owl:Class ;
   rdfs:subClassOf :Enumeration ;
@@ -185,10 +211,11 @@
   rdfs:domain :RecurrencePattern ;
   rdfs:range :PointInTime .
 
-:has_season a owl:DatatypeProperty ;
+:has_season a owl:ObjectProperty ;
   rdfs:label "has season" ;
-  :definition "Reference to a subclass of Season when a RecurrencePattern has a recurrence unit of :Seasonal." ;
-  rdfs:domain :RecurrencePattern ;
+  :definition "Reference to a Season when a RecurrencePattern has a recurrence unit of :Seasonal, or when an :Interval or :PointInTime is defined by a Season." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :RecurrencePattern :PointInTime :Interval ) ] ; 
   rdfs:range :Season .
 
 :has_temporal_unit a owl:ObjectProperty, owl:FunctionalProperty ;
