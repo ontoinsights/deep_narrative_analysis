@@ -1,4 +1,5 @@
 # Deep Narrative Analysis (DNA)
+Updated September 16 2021
 
 ## License
 Creative Commons 
@@ -16,6 +17,7 @@ The semantics (ontologies) and processing (initially, Jupyter notebooks) are cap
 * _dna_ contains the (evolving) Deep Narrative Analysis application executed through a simple GUI
   * The GUI was developed using PySimpleGUI (documented at https://pysimplegui.readthedocs.io/en/latest/)
   * No changes were made to the imported PySimpleGUI module
+  * The import structure of the DNA Python modules is visualized at https://github.com/ontoinsights/deep_narrative_analysis/blob/master/ontol-docs/graphs/python_modules_overview.png
 * _tests_ holds pytest validation code for the dna application
   * This code is NOT executed when pushing new code (as a github workflow) since a Stardog server would have to be deployed 
   * However, the code is run locally and the htmlcov sub-directory is included to show results
@@ -36,5 +38,7 @@ The Stardog triple store must be installed and the following environment variabl
 
 * PATH needs to specifically include the GitHub project's dna directory (for testing)
 * TOKENIZERS_PARALLELISM = false (to resolve warning from HuggingFace transformers and their use in spaCy)
+
+In addition, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name.
 
 To run the application, cd to the dna directory and execute python3 app.py.
