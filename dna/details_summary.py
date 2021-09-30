@@ -12,8 +12,9 @@ from utilities import empty_string, resources_root, capture_error, encoded_logo
 from utilities_matplotlib import draw_figure, display_horiz_histogram
 
 query_countries = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?country WHERE ' \
-                  '{ ?narr a :Narrative ; :has_author ?narrator . ?event a :Birth ; :has_actor ?narrator ; ' \
-                  ':has_location/:country_name ?country . { ?narrator a :Person . ' \
+                  '{ ?narr a :Narrative ; :has_author ?narrator . ?event a :Birth ; ' \
+                  ':has_affected_agent ?narrator ; :has_location/:country_name ?country . ' \
+                  '{ ?narrator a :Person . ' \
                   'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
                   'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
                   'BIND (?unifying2 as ?s) } }'
@@ -36,8 +37,8 @@ query_number_narrators = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(distinc
                          '?narrator . BIND(?unifying as ?s) } } }'
 
 query_years = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?year WHERE ' \
-              '{ ?narr a :Narrative ; :has_author ?narrator . ?event a :Birth ; :has_actor ?narrator ; ' \
-              ':has_time/:year ?year . { ?narrator a :Person . ' \
+              '{ ?narr a :Narrative ; :has_author ?narrator . ?event a :Birth ; ' \
+              ':has_affected_agent ?narrator ; :has_time/:year ?year . { ?narrator a :Person . ' \
               'FILTER NOT EXISTS { ?unifying1 a :UnifyingCollection ; :has_member ?narrator } . ' \
               'BIND (?narrator as ?s) } UNION { ?unifying2 a :UnifyingCollection ; :has_member ?narrator . ' \
               'BIND (?unifying2 as ?s) } }'
@@ -122,6 +123,10 @@ def display_statistics(store_name: str):
         capture_error(f'Exception getting initial narrative details from {store_name}: {str(e)}', True)
         return
     window_stats_list = sg.Window('Display Summary Statistics', layout, icon=encoded_logo).Finalize()
+    window_stats_list['directory_name'].Widget.config(insertbackground='black')
+    window_stats_list['words_in_cloud'].Widget.config(insertbackground='black')
+    window_stats_list['verbs_in_csv'].Widget.config(insertbackground='black')
+    window_stats_list['nouns_in_csv'].Widget.config(insertbackground='black')
     window_stats_list.find_element('directory_name', True).Update(resources_root[0:len(resources_root) - 1])
     window_stats_list.find_element('words_in_cloud', True).Update(50)
     window_stats_list.find_element('nouns_in_csv', True).Update(50)

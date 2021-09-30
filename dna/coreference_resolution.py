@@ -24,8 +24,8 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
     in the thirteenth century.", the sent_dictionary will be defined as {'DATE': ['June 12 1928',
     'thirteenth century'], 'GPE': ['Znojmo', 'Czechia'], 'verbs': [{'verb_text': 'born',
     'verb_lemma': 'bear', 'tense': 'Past', 'objects': [{'object_text': 'Mary', 'object_type': 'SINGPERSON'}],
-    'preps': [{'prep_text': 'on', 'prep_details': [{'prep_text': ' June', 'prep_type': 'DATE'}]},
-    {'prep_text': 'in', 'prep_details': [{'prep_text': ' Znojmo', 'prep_type': 'GPE'}]}]}]}.
+    'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': ' June', 'detail_type': 'DATE'}]},
+    {'prep_text': 'in', 'prep_details': [{'detail_text': ' Znojmo', 'detail_type': 'GPE'}]}]}]}.
 
     If the function parameters are ('Female', sent_dictionary, 'objects', last_nouns), then the text,
     'Mary' and 'SINGPERSON' will be returned.
@@ -73,7 +73,7 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
                     break
             if not found:
                 if 'preps' in elem.keys():
-                    elem_text = _get_noun_preposition_text(elem, 'preps', elem_text)
+                    elem_text = _get_noun_preposition_text(elem, elem_text)
                 nouns.add((elem_text, elem_type))
     return list(nouns)
 
@@ -164,17 +164,16 @@ def _check_last_nouns(last_nouns: list, looking_for_singular: Union[bool, None],
     return possible_nouns
 
 
-def _get_noun_preposition_text(dictionary: dict, prep_key: str, text: str) -> str:
+def _get_noun_preposition_text(dictionary: dict, text: str) -> str:
     """
     Get prepositional details for a noun.
 
     :param dictionary: Dictionary holding the details to be added
-    :param prep_key: String defining the key to get the prepositional data
     :param text: Input noun text
     :return The updated noun text or the original text if no change is warranted
     """
     new_text = text
-    preps = dictionary[prep_key]
+    preps = dictionary['preps']
     for prep in preps:
         prep_str = str(prep)
         if "_text': '" not in prep_str:

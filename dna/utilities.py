@@ -24,10 +24,11 @@ double_new_line = '\n\n'
 subjects_string = 'subjects'
 objects_string = 'objects'
 verbs_string = 'verbs'
+preps_string = 'preps'
 
 dna_prefix = 'urn:ontoinsights:dna:'
 owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
-event_and_state = 'urn:ontoinsights:dna:EventAndState'
+event_and_state_class = 'urn:ontoinsights:dna:EventAndState'
 
 gender_dict = {'A': ':Agender', 'B': ':Bigender',
                'F': ':Female', 'M': ':Male'}

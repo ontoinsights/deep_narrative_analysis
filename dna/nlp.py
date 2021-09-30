@@ -9,15 +9,16 @@
 #                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
 #    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
 #               'preps': [{'prep_text': 'preposition_text',
-#                          'prep_details': [{'prep_text': 'preposition_object', 'prep_type': 'type_eg_SINGGPE'}]}],
+#                          'prep_details': [{'detail_text': 'preposition_object', 'detail_type': 'type_eg_SINGGPE'}]}],
 #                          # Preposition object may also have a preposition - for ex, 'with the aid of the police'
-#                          # If so, following the 'prep_type' entry would be another 'preps' element
+#                          # If so, following the 'detail_type' entry would be another 'preps' element
 #                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_NOUN'}]}]}]}]}]}
 #    (in parse_narrative)
 
 import logging
 import spacy
 from spacy.matcher import DependencyMatcher
+from textblob import TextBlob
 from word2number import w2n
 
 from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
@@ -156,6 +157,20 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     return sorted_nouns, sorted_verbs
 
 
+def get_sentence_sentiment(sentence: str) -> float:
+    """
+    Use TextBlob to get sentence polarity/sentiment.
+
+    :param sentence: The sentence to be analyzed.
+    :return The polarity (-1 for negative, 1 for positive) of the sentence
+    """
+    blob = TextBlob(sentence)
+    # TextBlob's sentiment property returns a namedtuple of the form, (polarity, subjectivity).
+    # The polarity score is a float within the range [-1.0, 1.0] - negative to positive.
+    # The subjectivity is a float within the range [0.0, 1.0] - 0.0 = very objective and 1.0 = very subjective.
+    return blob.sentiment.polarity
+
+
 def get_time_details(phrase: str) -> (int, str):
     """
     For a phrase (such as 'a year later'), get the time increment and number of increments.
@@ -219,9 +234,11 @@ def parse_narrative(narr_text: str, gender: str, family_dict: dict) -> list:
             # Store new sentence details
             split_sentences.append(sent_nlp)
     # Get the details of each sentence
+    sentence_offset = 1
     for sentence in split_sentences:
         revised = _replace_words(sentence.text)
-        extract_dictionary_details(revised, sentence_dicts, nlp, gender, family_dict)
+        extract_dictionary_details(revised, sentence_dicts, nlp, gender, family_dict, sentence_offset)
+        sentence_offset += 1
     return sentence_dicts
 
 

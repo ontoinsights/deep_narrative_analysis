@@ -7,7 +7,7 @@
 # Created May 23 2021
 # Extracted from the Holocaust Glossary at https://encyclopedia.ushmm.org/en/glossary
 #   and supplemented with WWII details
-# Updated September 7 2021
+# Updated September 19 2021
 
 
 :AdministrativeStaff a :CampOrCenterRole ;
@@ -39,6 +39,7 @@
 :Antisemitism a :Belief, :HatredBitternessAndDisgust ;
   rdfs:label "Antisemitism" ;
   :definition "Hostility toward or hatred of Jews as a religious or ethnic group, often accompanied by social, economic, or political discrimination." ;
+  :sentiment -1.0 ;
   :has_affected_agent :JewishPersons .
 
 :Appellplatz a owl:Class ;
@@ -137,7 +138,7 @@
   :has_political_ideology :enum:Oligarchy .
 :AffiliationEmpireOfJapan a :Affiliation ;
   :affiliated_agent :EmpireOfJapan ;
-  :affiliated_location geo:1861060  .   # Japan
+  :affiliated_with geo:1861060  .   # Japan
 
 :Euthanasia a owl:Class ;
   rdfs:subClassOf :MurderAndHomicide ;
@@ -153,7 +154,7 @@
   :has_political_ideology :enum:Fascism .
 :AffiliationFascistItaly a :Affiliation ;
   :affiliated_agent :FacistItaly ;
-  :affiliated_location geo:3175395 .   # Italy
+  :affiliated_with geo:3175395 .   # Italy
 
 :FinalSolution a :LawAndPolicy ;
   rdfs:label "Final Solution" ;
@@ -167,7 +168,7 @@
   :definition "That part of German-occupied Poland not directly annexed to Germany, attached to German East Prussia, or incorporated into the German-occupied Soviet Union." .
 :AffiliationGeneralGovernmentPoland a :Affiliation ;
   :affiliated_agent :GeneralGovernment ;
-  :affiliated_location geo:798544 .   # Poland
+  :affiliated_with geo:798544 .   # Poland
 
 :Gestapo a :PoliceForce ;
   rdfs:label "Gestapo" ;
@@ -262,7 +263,7 @@
   :has_beginning :PiT1911 ;
   :has_end :PiT1979 .
 :AffiliationMengeleAuschwitz a :Affiliation ;
-  :affiliated_location :AuschwitzConcentrationCamp ;
+  :affiliated_with :AuschwitzConcentrationCamp ;
   :affiliated_agent :MengeleJosef ;
   :has_role :MedicalStaff .
 :AffiliationMengeleSS a :Affiliation ;
@@ -282,10 +283,8 @@
   :definition "(1933-1945) The government of Germany under Adolf Hitler and the Nazi political party." ;
   :has_beginning :PiT1933 ;
   :has_end :PiT1945 ;
-  :has_political_ideology :enum:Authoritarianism .
-:AffiliationNaziGermany a :Affiliation ;
-  :affiliated_agent :NaziGermany ;   # Germany
-  :affiliated_location geo:2921044 .   # Germany
+  :has_political_ideology :enum:Authoritarianism ;
+  :has_location geo:2921044 .   # Germany
 
 :Orpo a :PoliceForce ;
   rdfs:label "Orpo" ;
@@ -480,23 +479,22 @@ geo:798544 :has_component :Warthegau .  # In Poland
   :has_beginning :PiT1919 ; 
   :has_end :PiT1933 ;
   :has_location geo:2921044 .
-:AffiliationWeimarRepublicGermany a :Affiliation ;
-  :affiliated_agent :WeimarRepublic ;
-  :affiliated_location geo:2921044 .   # Germany
 
 :WorldWarI a :War ;
   rdfs:label "World War I" ;
   :noun_synonym "World War One", "WWI", "WW I", "Great War", "war to end all wars", "First World War", "WW1", "WW 1" ;
   :definition "(1914-1918) A global conflict that originated in Europe in 1914." ;
   :has_beginning :PiTJuly_1914 ; 
-  :has_end :PiTNovember_1918 .
+  :has_end :PiTNovember_1918 ;
+  :sentiment -1.0 .
 
 :WorldWarII a :War ;
   rdfs:label "World War II" ;
   :noun_synonym "World War Two", "WWII", "WW II", "Second World War", "WW2", "WW 2" ;
   :definition "(1939-1945) A global conflict that originated in Europe in 1939 with Nazi Germany's invasion of Poland." ;
   :has_beginning :PiTSeptember_1939 ; 
-  :has_end :PiTSeptember_1945 .
+  :has_end :PiTSeptember_1945 ;
+  :sentiment -1.0 .
 
 :YellowStar a :ClothingAndAccessory ;
   rdfs:label "Yellow Star" ;

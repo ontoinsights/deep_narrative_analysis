@@ -117,20 +117,19 @@ def get_databases() -> list:
     return db_names
 
 
-def query_database(query_type: str, query: str, database: str) -> dict:
+def query_database(query_type: str, query: str, database: str) -> list:
     """
     Process a SELECT or UPDATE query
 
     :param query_type: A string = 'select' or 'update'
     :param query: The text of a SPARQL query
     :param database: The database (name) to be queried
-    :return: True if successful; False otherwise
-             Query results (if the query_type is 'select'); An empty dictionary otherwise
+    :return: The bindings array from the query results
     """
     logging.info(f'Querying database, {database}, using {query_type}, with query, {query}')
     if query_type != 'select' and query_type != 'update':
         capture_error(f'Invalid query_type {query_type} for query_db', True)
-        return dict()
+        return []
     try:
         conn = stardog.Connection(database, **sd_conn_details)
         if query_type == 'select':
@@ -139,14 +138,14 @@ def query_database(query_type: str, query: str, database: str) -> dict:
             if 'results' in query_results.keys() and 'bindings' in query_results['results'].keys():
                 return query_results['results']['bindings']
             else:
-                return dict()
+                return []
         else:
             # Update query; No results (either success or failure)
             conn.update(query)
-            return {'update': 'successful'}
+            return ['successful']
     except Exception as e:
         capture_error(f'Database ({database}) query exception for {query}: {str(e)}', True)
-        return dict()
+        return []
 
 
 # Functions internal to the module

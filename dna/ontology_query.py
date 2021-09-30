@@ -3,12 +3,14 @@
 # Called by create_event_turtle.py
 
 import logging
+import os
+import pickle
 from PyDictionary import PyDictionary
 
 from database import query_database
-from idiom_processing import process_idiom_detail
+from idiom_processing import process_idiom_detail, get_noun_idiom
 from nlp import get_named_entity_in_string, get_noun
-from utilities import empty_string, event_and_state, owl_thing, processed_prepositions
+from utilities import resources_root, event_and_state_class, owl_thing, processed_prepositions
 
 dictionary = PyDictionary()
 
@@ -17,39 +19,30 @@ part_of_group = ('member', 'group', 'citizen', 'people', 'affiliate', 'represent
 
 ontologies_database = 'ontologies'
 
-query_event1 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-               '{ { { ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
-               '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(90 as ?prob) } } ' \
-               '?class rdfs:subClassOf+ :EventAndState } ORDER BY DESC(?prob)'
+nouns_file = os.path.join(resources_root, 'verb-idioms.pickle')
+with open(nouns_file, 'rb') as inFile:
+    nouns_dict = pickle.load(inFile)
 
-query_noun1 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE ' \
-               '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . ' \
-              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
-              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } }'
+query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
+              '{ { { ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(95 as ?prob) } UNION ' \
+              '{ ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
+              'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
+              'UNION { ?class :verb_synonym ?nsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
+              'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
+              '?class rdfs:subClassOf+ :EventAndState } ORDER BY DESC(?prob)'
 
-query_event2 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-               '{ { { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(75 as ?prob) } UNION ' \
-               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(65 as ?prob) } UNION ' \
-               '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(55 as ?prob) } UNION ' \
-               '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(65 as ?prob) } } ' \
-               '?class rdfs:subClassOf+ :EventAndState } ORDER BY DESC(?prob)'
-
-query_noun2 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-               '{ { { ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(65 as ?prob) } UNION ' \
-               '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(65 as ?prob) } UNION ' \
-               '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(65 as ?prob) } } ' \
-               'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
-               'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } } ORDER BY DESC(?prob)'
-
-query_event3 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-               '{ { { ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(50 as ?prob) } UNION ' \
-               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(40 as ?prob) } } ' \
-               '?class rdfs:subClassOf+ :EventAndState } ORDER BY DESC(?prob)'
-
-query_noun3 = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE ' \
-              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . ' \
-              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
-              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } }'
+query_noun = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
+             '{ ?class a owl:Class ' \
+             '{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
+             '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
+             '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } ' \
+             'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } ' \
+             'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(65 as ?prob) } } ' \
+             'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
+             'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } } ORDER BY DESC(?prob)'
 
 
 def create_affiliation_ttl(noun_uri: str, affiliated_text: str, affiliated_type: str) -> list:
@@ -63,10 +56,10 @@ def create_affiliation_ttl(noun_uri: str, affiliated_text: str, affiliated_type:
     :return An array of strings holding the Turtle representation of the Affiliation
     """
     affiliated_uri = f':{affiliated_text.replace(" ", "_")}'
-    ttl = [f'{noun_uri}{affiliated_text.replace(" ", "_")}Affiliation a :Affiliation ; ',
-           f'  :affiliated_with {affiliated_uri} ; :affiliated_agent {noun_uri} . ',
-           f'{affiliated_uri} a {affiliated_type} ; rdfs:label "{affiliated_text}" ; '
-           f':definition "Insert from Wikidata" .']  # TODO: Get definition of org from Wikidata
+    affiliation_uri = f'{noun_uri}{affiliated_text.replace(" ", "_")}Affiliation'
+    ttl = [f'{affiliation_uri} a :Affiliation ; :affiliated_with {affiliated_uri} ; :affiliated_agent {noun_uri} .',
+           f'{affiliated_uri} a {affiliated_type} ; rdfs:label "{affiliated_text}" .'
+           f'{affiliated_uri} :definition "Insert from Wikidata" .']  # TODO: Get definition of org from Wikidata
     return ttl
 
 
@@ -88,15 +81,22 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                 for clause in word_def[term_type]:
                     for sub_clause in clause.split(';'):
                         if is_noun:
-                            noun = get_noun(sub_clause, True)
-                            class_name = _query_ontology(noun, query_noun1, query_noun2, query_noun3)
+                            word = get_noun(sub_clause, True)  # Return first noun in clause
+                            query_str = query_noun
                         else:
-                            verb = sub_clause.split(' ')[0]
-                            class_name = _query_ontology(verb, query_event1, query_event2, query_event3)
-                        if class_name != owl_thing and class_name != event_and_state:
+                            word = sub_clause.split(' ')[0]
+                            query_str = query_event
+                        class_name = _query_ontology(word, query_str)
+                        if class_name != owl_thing:
                             return class_name
-    finally:
-        return owl_thing if is_noun else event_and_state
+        if is_noun:
+            class_name = _query_ontology(word, query_event)
+            return class_name
+        else:
+            return event_and_state_class
+    except Exception as e:
+        logging.error(f'Exception when getting noun class for {word}: {e}')
+        return owl_thing
 
 
 def check_text(text: str, words: tuple) -> bool:
@@ -114,27 +114,52 @@ def check_text(text: str, words: tuple) -> bool:
     return False
 
 
-def find_noun_class(noun_uri: str, noun_text: str, noun_type: str) -> (str, []):
+def get_event_state_ttl(sentence_text: str, event_uri: str, verb_dict: dict, lemma: str,
+                        processing: list) -> list:
+    """
+    Determine the appropriate event or state in the DNA ontology, that matches the semantics of
+    the verb and create the resulting Turtle. If the semantics are defined by idiom processing,
+    return any triples dictated by the idiom processing.
+
+    :param sentence_text: String holding the text of the sentence
+    :param event_uri: The URI identifying the event for the verb, in the resulting Turtle file
+    :param verb_dict: Dictionary holding the verb details
+    :param lemma: The verb lemma or idiom
+    :param processing: A list of string holding special processing for idioms
+    :return Mapping of the verb/sentence semantics to the DNA ontology, returning the Turtle details
+    """
+    if processing:
+        # TODO: Select the best process_str if len(processing) > 1
+        ttl_list = process_idiom_detail(processing[0], sentence_text, event_uri, verb_dict, lemma)
+        if ttl_list:
+            return ttl_list
+    class_name = _query_ontology(lemma, query_event)
+    if class_name == event_and_state_class:
+        # Applicable class not found, check dictionary and synonyms
+        class_name = check_dictionary(lemma, False)   # Not a noun
+        if class_name == event_and_state_class:
+            logging.warning(f'Could not map the verb, {lemma}, to the ontology')
+    return [f'{event_uri} a <{class_name}> .']
+
+
+def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: str) -> list:
     """
     Determine the appropriate class in the DNA ontology, that matches the semantics of the noun_text.
 
-    :param noun_uri: String specifying the URI/URL/individual associated with the noun_text
-    :param noun_text: String specifying the noun
+    :param noun_uri: String identifying the URI/URL/individual associated with the noun_text
+    :param noun_text: String specifying the noun text from the original narrative sentence
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
-    :return Mapping of the semantics to a DNA ontology class; Also if the mapping is to a GroupOfAgents
-            AND the agents are affiliated with a Person, Organization, GPE, etc. then the Turtle details
-            of the affiliation are returned (as an array of strings)
+    :param sentence_text: The full text of the sentence (needed for checking for idioms)
+    :return The resulting Turtle for a mapping of the semantics to a DNA ontology class
     """
-    class_name = empty_string
-    noun = empty_string
-    affiliation_ttl = []
-    if 'SINGPERSON' in noun_type or noun_text == 'Narrator':
+    if 'PERSON' in noun_type or noun_text == 'Narrator':
         class_name = 'urn:ontoinsights:dna:Person'
-    elif 'PLURALPERSON' in noun_type:
-        class_name = 'urn:ontoinsights:dna:GroupOfAgents'
+        if 'PLURAL' in noun_type:
+            class_name = 'urn:ontoinsights:dna:GroupOfAgents'
     elif noun_type.endswith('GPE'):
         class_name = 'urn:ontoinsights:dna:GeopoliticalEntity'
     elif noun_type.endswith('ORG') or noun_type.endswith('NORP'):
+        # TODO: Ethnicity
         class_name = 'urn:ontoinsights:dna:Organization'
     else:
         found_prep = False
@@ -143,83 +168,44 @@ def find_noun_class(noun_uri: str, noun_text: str, noun_type: str) -> (str, []):
                          (True if f' {prep} ' in noun_text.lower() else False)
             if found_prep:
                 break
-        if found_prep:
-            # TODO: Improve coverage
-            if check_text(noun_text, part_of_group):  # May be a reference to members of an org, group, ...
-                if 'PLURAL' in noun_type or check_text(noun_text, explicit_plural):
-                    class_name = 'urn:ontoinsights:dna:GroupOfAgents'
-                else:
-                    class_name = 'urn:ontoinsights:dna:Person'
-                # Check if the org, group, ... is mentioned
-                if ' of ' in noun_text or ' in ' in noun_text or ' from ' in noun_text:
-                    agent_text, agent_type = get_named_entity_in_string(noun_text)
-                    if agent_text:    # Found a named entity that is an affiliated agent
-                        affiliation_ttl = create_affiliation_ttl(noun_uri, agent_text, agent_type)
+        if found_prep and check_text(noun_text, part_of_group):  # May be a reference to members of an org, group, ...
+            if 'PLURAL' in noun_type or check_text(noun_text, explicit_plural):
+                class_name = 'urn:ontoinsights:dna:GroupOfAgents'
             else:
-                noun = get_noun(noun_text, True)    # Use first noun of the phrase
+                class_name = 'urn:ontoinsights:dna:Person'
+            # Check if the org, group, ... is mentioned
+            if ' of ' in noun_text or ' in ' in noun_text or ' from ' in noun_text:
+                agent_text, agent_type = get_named_entity_in_string(noun_text)
+                if agent_text:    # Found a named entity that is an affiliated agent
+                    new_ttl = create_affiliation_ttl(noun_uri, agent_text, agent_type)
+                    new_ttl.append(f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .')
+                    return new_ttl
         else:
             noun = get_noun(noun_text, False)   # Use the last word of the phrase
-        if noun:
-            class_name = _query_ontology(noun, query_noun1, query_noun2, query_noun3)
-            if class_name == owl_thing:
-                class_name = check_dictionary(noun, True)
-    if not class_name:
-        class_name = owl_thing
+            class_name = _query_ontology(noun, query_noun)
+            if class_name == owl_thing:   # Nothing found for the words
+                new_ttl = get_noun_idiom(noun, noun_text, sentence_text, noun_uri)  # Check for special processing
+                if new_ttl:
+                    return new_ttl
+                class_name = check_dictionary(noun, True)    # No special processing so check the dictionary
     if class_name == owl_thing:
         logging.warning(f'Could not map the noun, {noun_text}, to the ontology')
     if 'PLURAL' in noun_type and 'PERSON' not in noun_type:
         class_name = f'{class_name}>, <urn:ontoinsights:dna:Collection'
-    return class_name, affiliation_ttl
-
-
-def find_event_state_class(sentence_text: str, verb_dict: dict, lemma: str, processing: list) -> (str, list):
-    """
-    Determine the appropriate event or state in the DNA ontology, that matches the semantics of
-    the verb. If the semantics are defined by idiom processing, return the event or state class and
-    any triples dictated by the idiom processing.
-
-    :param sentence_text: String holding the text of the sentence
-    :param verb_dict: Dictionary holding the verb details
-    :param lemma: The verb lemma or idiom
-    :param processing: A list of string holding special processing for idioms
-    :return Mapping of the verb/sentence semantics to the DNA ontology - either to a subclass of
-            EventAndState or both the subclass and the complete ttl details for idiom processing
-    """
-    ttl_list = []
-    for process in processing:
-        class_name, ttl_list = process_idiom_detail(process, sentence_text, verb_dict, lemma)
-        if ttl_list:
-            return empty_string, ttl_list
-    class_name = _query_ontology(lemma, query_event1, query_event2, query_event3)
-    if class_name != event_and_state:
-        return class_name, ttl_list  # ttl_list is empty
-    # Applicable class not found, check dictionary and synonyms
-    class_name = check_dictionary(lemma, False)
-    if class_name == event_and_state:
-        logging.warning(f'Could not map the verb, {lemma}, to the ontology')
-    return class_name, ttl_list      # ttl_list is empty
+    return [f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .']
 
 
 # Functions internal to the module
-def _query_ontology(text: str, query1: str, query2: str, query3: str) -> str:
+def _query_ontology(text: str, query_str: str) -> str:
     """
-    Attempts to match the text to verb/noun_synonyms, labels and definitions in the ontology.
+    Attempts to match the text to verb/noun_synonyms, labels and definitions in the ontology
+    using the specified query.
 
     :param text: Text to match
-    :param query1: The first query to execute with the most exact results (equally of synonyms)
-    :param query2: The second query to execute (if the first did not obtain results) which checks
-                   that the text is contained in the synonyms, label or examples of a class
-    :param query3: The last query to execute (if the second did not obtain results) which checks
-                   if the synonyms contain the text (the least exact results)
-    :return The class name that best matches the text
+    :param query_str: String holding the query to execute
+    :return The highest probability class name returned by the query
     """
-    results1 = query_database('select', query1.replace('keyword', text), ontologies_database)
-    for result in results1:
+    results = query_database('select', query_str.replace('keyword', text), ontologies_database)
+    for result in results:
         return result['class']['value']
-    results2 = query_database('select', query2.replace('keyword', text), ontologies_database)
-    for result in results2:
-        return result['class']['value']
-    results3 = query_database('select', query3.replace('keyword', text), ontologies_database)
-    for result in results3:
-        return result['class']['value']
-    return 'urn:ontoinsights:dna:EventAndState' if query1 == 'query_event1' else owl_thing
+    return owl_thing

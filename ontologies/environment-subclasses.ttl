@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: September 15 2021
+# Last Modified: September 29 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,6 +28,8 @@
 #  Added and clarified noun/verb_synonyms
 #  Added War and CaringForDependents
 #  Moved PolitialIdeology to agent.ttl
+#  Moved Freedom, CaptivityAndDetention and economic and political 
+#    environments under LivingConditions
 ########################################################################
 
 
@@ -50,7 +52,7 @@
   :noun_synonym "capability", "volume", "maximum amount", "capacitance" .
 
 :CaptivityAndDetention a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Captivity and Detention" ;
   :definition "The condition of an Agent being held captive and confined to a certain location." ;
   :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery" ;
@@ -94,7 +96,7 @@
   :noun_synonym "potable water" .
 
 :EconomicEnvironment a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Economic Environment" ;
   :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
@@ -106,7 +108,8 @@
 :Employment a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Employment" ;
-  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." .
+  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
+  :noun_synonym "job", "position", "work", "post" .
 
 :Expenses a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
@@ -116,7 +119,7 @@
   :noun_synonym "costs" .
 
 :Freedom a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Freedom" ;
   :definition "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." ;
   :noun_synonym "liberty", "independence" .
@@ -157,7 +160,7 @@
 :LivingConditions a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Living Conditions" ;
-  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
+  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
 :Nutrition a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
@@ -170,7 +173,7 @@
   :definition "Some entity or group of entities (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing(s) that are possible are specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
 
 :PoliticalEnvironment a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :LivingConditions ;
   rdfs:label "Political Environment" ;
   :definition "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
 

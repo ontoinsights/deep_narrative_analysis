@@ -46,6 +46,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:definition> "A noun which has a similar meaning." .
 
 
+###  urn:ontoinsights:dna:processing
+<urn:ontoinsights:dna:processing> rdf:type owl:AnnotationProperty ;
+                                  rdfs:label "processing instructions" ;
+                                  <urn:ontoinsights:dna:definition> "Additional details to capture the semantics of a class/concept." .
+
+
 ###  urn:ontoinsights:dna:verb_synonym
 <urn:ontoinsights:dna:verb_synonym> rdf:type owl:AnnotationProperty ;
                                     rdfs:label "synonym (verb)" ;
@@ -71,6 +77,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:affiliated_with
 <urn:ontoinsights:dna:affiliated_with> rdf:type owl:ObjectProperty ;
+                                       rdfs:subPropertyOf <urn:ontoinsights:dna:has_topic> ;
                                        rdfs:domain <urn:ontoinsights:dna:Affiliation> .
 
 
@@ -902,6 +909,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:example> "For example, using 44 as the country code for the United Kingdom, a phone_number may appear as '+44 (0) 5555-5555 x 1234'." .
 
 
+###  urn:ontoinsights:dna:political_ideology
+<urn:ontoinsights:dna:political_ideology> rdf:type owl:DatatypeProperty ;
+                                          rdfs:domain <urn:ontoinsights:dna:Agent> ;
+                                          rdfs:range xsd:string ;
+                                          rdfs:label "political ideology" ;
+                                          <urn:ontoinsights:dna:definition> "Specifies a particular a particular ideology (as free form text) that the Agent holds or that is present at a location. Note that the :has_political_ideology property should also be specified, which maps the text to a predefined/enumerated value." ;
+                                          <urn:ontoinsights:dna:example> "Zionism is an example where the property, :political_ideology, is used to define a particular type of Nationalism, with a specific goal. In this case, the enumerated value for :has_political_ideology would be :enum:Nationalism." .
+
+
 ###  urn:ontoinsights:dna:postal_address_detail
 <urn:ontoinsights:dna:postal_address_detail> rdf:type owl:DatatypeProperty ;
                                              rdfs:domain <urn:ontoinsights:dna:PostalAddress> ;
@@ -1005,6 +1021,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:range xsd:integer ;
                                        rdfs:label "sentence offset" ;
                                        <urn:ontoinsights:dna:definition> "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted." .
+
+
+###  urn:ontoinsights:dna:sentiment
+<urn:ontoinsights:dna:sentiment> rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                 rdfs:range [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:decimal ;
+                                              owl:withRestrictions ( [ xsd:minInclusive -1.0
+                                                                     ]
+                                                                     [ xsd:maxInclusive 1.0
+                                                                     ]
+                                                                   )
+                                            ] .
 
 
 ###  urn:ontoinsights:dna:separation_interval
@@ -1495,7 +1525,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:ArmedForce
 <urn:ontoinsights:dna:ArmedForce> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:Organization> ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:GovernmentOrganization> ;
                                   rdfs:label "Armed Force" ;
                                   <urn:ontoinsights:dna:definition> "A GPE's military force." ;
                                   <urn:ontoinsights:dna:example> "Examples of ArmedForces are army, navy, marines, air force, etc." .
@@ -5837,7 +5867,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:CaptivityAndDetention
 <urn:ontoinsights:dna:CaptivityAndDetention> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
                                              owl:disjointWith <urn:ontoinsights:dna:Freedom> ;
                                              rdfs:label "Captivity and Detention" ;
                                              <urn:ontoinsights:dna:definition> "The condition of an Agent being held captive and confined to a certain location." ;
@@ -6018,8 +6048,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "aggregation" ,
                                                                       "assemblage" ,
                                                                       "assortment" ,
+                                                                      "bevy" ,
                                                                       "compendium" ,
                                                                       "compilation" ,
+                                                                      "herd" ,
+                                                                      "pack" ,
                                                                       "set" .
 
 
@@ -6708,7 +6741,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:EconomicEnvironment
 <urn:ontoinsights:dna:EconomicEnvironment> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
                                            rdfs:label "Economic Environment" ;
                                            <urn:ontoinsights:dna:definition> "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
@@ -6817,7 +6850,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
                                   owl:disjointWith <urn:ontoinsights:dna:Unemployment> ;
                                   rdfs:label "Employment" ;
-                                  <urn:ontoinsights:dna:definition> "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." .
+                                  <urn:ontoinsights:dna:definition> "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
+                                  <urn:ontoinsights:dna:noun_synonym> "job" ,
+                                                                      "position" ,
+                                                                      "post" ,
+                                                                      "work" .
 
 
 ###  urn:ontoinsights:dna:EmploymentEvent
@@ -7035,14 +7072,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
 
 
-###  urn:ontoinsights:dna:Family
-<urn:ontoinsights:dna:Family> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:GroupOfAgents> ;
-                              rdfs:label "Family" ;
-                              <urn:ontoinsights:dna:definition> "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another." ;
-                              <urn:ontoinsights:dna:noun_synonym> "household" .
-
-
 ###  urn:ontoinsights:dna:Fashion
 <urn:ontoinsights:dna:Fashion> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -7124,7 +7153,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Freedom
 <urn:ontoinsights:dna:Freedom> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
                                rdfs:label "Freedom" ;
                                <urn:ontoinsights:dna:definition> "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." ;
                                <urn:ontoinsights:dna:noun_synonym> "independence" ,
@@ -7286,6 +7315,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:definition> "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
 
 
+###  urn:ontoinsights:dna:GovernmentOrganization
+<urn:ontoinsights:dna:GovernmentOrganization> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:dna:Organization> ;
+                                              rdfs:label "Government Organization" ;
+                                              <urn:ontoinsights:dna:definition> "A type of Organization related to the governance of an area." ;
+                                              <urn:ontoinsights:dna:example> "Examples are courts, city councils, senates, parliaments, etc." .
+
+
 ###  urn:ontoinsights:dna:Greed
 <urn:ontoinsights:dna:Greed> rdf:type owl:Class ;
                              rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
@@ -7317,7 +7354,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                      <urn:ontoinsights:dna:Collection> ;
                                      rdfs:label "Group/Collection of Agents" ;
                                      <urn:ontoinsights:dna:definition> "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
-                                     <urn:ontoinsights:dna:example> "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." .
+                                     <urn:ontoinsights:dna:example> "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
+                                     <urn:ontoinsights:dna:noun_synonym> "alliance" ,
+                                                                         "band" ,
+                                                                         "consortium" ,
+                                                                         "crowd" ,
+                                                                         "society" ,
+                                                                         "troop" ,
+                                                                         "troupe" .
 
 
 ###  urn:ontoinsights:dna:GuiltAndShame
@@ -7905,18 +7949,18 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:LivingConditions> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                         rdfs:label "Living Conditions" ;
-                                        <urn:ontoinsights:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
+                                        <urn:ontoinsights:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
 
 ###  urn:ontoinsights:dna:Location
 <urn:ontoinsights:dna:Location> rdf:type owl:Class ;
                                 rdfs:label "Location" ;
-                                <urn:ontoinsights:dna:definition> "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
+                                <urn:ontoinsights:dna:definition> "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
                                 <urn:ontoinsights:dna:noun_synonym> "locale" ,
+                                                                    "locality" ,
                                                                     "placement" ,
-                                                                    "position" ,
+                                                                    "setting" ,
                                                                     "site" ,
-                                                                    "situating" ,
                                                                     "venue" .
 
 
@@ -8047,6 +8091,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                "crowd" ,
                                                                                "gathering" ,
                                                                                "herding" ,
+                                                                               "social" ,
                                                                                "social event" ,
                                                                                "swarming" ;
                                            <urn:ontoinsights:dna:verb_synonym> "assemble" ,
@@ -8519,14 +8564,14 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:PoliceForce
 <urn:ontoinsights:dna:PoliceForce> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:Organization> ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:GovernmentOrganization> ;
                                    rdfs:label "Police Force" ;
                                    <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" .
 
 
 ###  urn:ontoinsights:dna:PoliticalEnvironment
 <urn:ontoinsights:dna:PoliticalEnvironment> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
                                             rdfs:label "Political Environment" ;
                                             <urn:ontoinsights:dna:definition> "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
 
@@ -9225,7 +9270,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Role
 <urn:ontoinsights:dna:Role> rdf:type owl:Class ;
                             rdfs:label "Role" ;
-                            <urn:ontoinsights:dna:definition> "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics." ;
+                            <urn:ontoinsights:dna:definition> "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationRole), define explicit semantics." ;
                             <urn:ontoinsights:dna:example> "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." .
 
 
@@ -9992,21 +10037,21 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:AffiliationEmpireOfJapan> rdf:type owl:NamedIndividual ,
                                                          <urn:ontoinsights:dna:Affiliation> ;
                                                 <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:EmpireOfJapan> ;
-                                                <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:geonames:1861060> .
+                                                <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:1861060> .
 
 
 ###  urn:ontoinsights:dna:AffiliationFascistItaly
 <urn:ontoinsights:dna:AffiliationFascistItaly> rdf:type owl:NamedIndividual ,
                                                         <urn:ontoinsights:dna:Affiliation> ;
                                                <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:FacistItaly> ;
-                                               <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:geonames:3175395> .
+                                               <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:3175395> .
 
 
 ###  urn:ontoinsights:dna:AffiliationGeneralGovernmentPoland
 <urn:ontoinsights:dna:AffiliationGeneralGovernmentPoland> rdf:type owl:NamedIndividual ,
                                                                    <urn:ontoinsights:dna:Affiliation> ;
                                                           <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:GeneralGovernment> ;
-                                                          <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:geonames:798544> .
+                                                          <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:798544> .
 
 
 ###  urn:ontoinsights:dna:AffiliationGoringNaziGermany
@@ -10048,7 +10093,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:AffiliationMengeleAuschwitz> rdf:type owl:NamedIndividual ,
                                                             <urn:ontoinsights:dna:Affiliation> ;
                                                    <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:MengeleJosef> ;
-                                                   <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:AuschwitzConcentrationCamp> ;
+                                                   <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:AuschwitzConcentrationCamp> ;
                                                    <urn:ontoinsights:dna:has_role> <urn:ontoinsights:dna:MedicalStaff> .
 
 
@@ -10057,13 +10102,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                      <urn:ontoinsights:dna:Affiliation> ;
                                             <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:MengeleJosef> ;
                                             <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SS> .
-
-
-###  urn:ontoinsights:dna:AffiliationNaziGermany
-<urn:ontoinsights:dna:AffiliationNaziGermany> rdf:type owl:NamedIndividual ,
-                                                       <urn:ontoinsights:dna:Affiliation> ;
-                                              <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:NaziGermany> ;
-                                              <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:geonames:2921044> .
 
 
 ###  urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty
@@ -10129,13 +10167,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                           <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
 
 
-###  urn:ontoinsights:dna:AffiliationWeimarRepublicGermany
-<urn:ontoinsights:dna:AffiliationWeimarRepublicGermany> rdf:type owl:NamedIndividual ,
-                                                                 <urn:ontoinsights:dna:Affiliation> ;
-                                                        <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:WeimarRepublic> ;
-                                                        <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:geonames:2921044> .
-
-
 ###  urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic
 <urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic> rdf:type owl:NamedIndividual ,
                                                                        <urn:ontoinsights:dna:Affiliation> ;
@@ -10188,7 +10219,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:HatredBitternessAndDisgust> ;
                                     rdfs:label "Antisemitism" ;
                                     <urn:ontoinsights:dna:definition> "Hostility toward or hatred of Jews as a religious or ethnic group, often accompanied by social, economic, or political discrimination." ;
-                                    <urn:ontoinsights:dna:has_affected_agent> <urn:ontoinsights:dna:JewishPersons> .
+                                    <urn:ontoinsights:dna:has_affected_agent> <urn:ontoinsights:dna:JewishPersons> ;
+                                    <urn:ontoinsights:dna:sentiment> -1.0 .
 
 
 ###  urn:ontoinsights:dna:Autumn
@@ -10425,6 +10457,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:definition> "(1933-1945) The government of Germany under Adolf Hitler and the Nazi political party." ;
                                    <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1933> ;
                                    <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
+                                   <urn:ontoinsights:dna:has_location> <urn:ontoinsights:geonames:2921044> ;
                                    <urn:ontoinsights:dna:has_political_ideology> <urn:ontoinsights:dna:enum:Authoritarianism> ;
                                    <urn:ontoinsights:dna:noun_synonym> "German Reich" ,
                                                                        "Third Reich" .
@@ -10940,7 +10973,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "WW1" ,
                                                                      "WWI" ,
                                                                      "World War One" ,
-                                                                     "war to end all wars" .
+                                                                     "war to end all wars" ;
+                                 <urn:ontoinsights:dna:sentiment> -1.0 .
 
 
 ###  urn:ontoinsights:dna:WorldWarII
@@ -10955,7 +10989,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "WW II" ,
                                                                       "WW2" ,
                                                                       "WWII" ,
-                                                                      "World War Two" .
+                                                                      "World War Two" ;
+                                  <urn:ontoinsights:dna:sentiment> -1.0 .
 
 
 ###  urn:ontoinsights:dna:YellowStar
@@ -15629,13 +15664,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         rdfs:label "affiliated agent" .
 
 
-<urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:definition> "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity is defined using the :affiliated_with property." ;
+<urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:definition> "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property." ;
                                            rdfs:label "affiliated location" ;
                                            <urn:ontoinsights:dna:example> "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization." .
 
 
-<urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:definition> "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." ;
-                                       rdfs:label "affiliated with" .
+<urn:ontoinsights:dna:affiliated_with> rdfs:label "affiliated with" ;
+                                       <urn:ontoinsights:dna:definition> "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
 
 
 <urn:ontoinsights:dna:has_active_agent> rdfs:label "has active agent" ;
@@ -15712,10 +15747,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                              <urn:ontoinsights:dna:verb_synonym> "touch" ,
                                                                  "converge" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
-                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
-                             <urn:ontoinsights:dna:verb_synonym> "meet" .
+                             rdfs:label "meets" ;
+                             <urn:ontoinsights:dna:verb_synonym> "meet" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" .
 
 
 <urn:ontoinsights:dna:month_of_year> rdfs:label "month of year" ;
@@ -15724,6 +15759,10 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 <urn:ontoinsights:dna:role> <urn:ontoinsights:dna:definition> "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." ;
                             rdfs:label "role" .
+
+
+<urn:ontoinsights:dna:sentiment> <urn:ontoinsights:dna:definition> "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)." ;
+                                 rdfs:label "sentiment" .
 
 
 <urn:ontoinsights:dna:text> rdfs:label "text" ;

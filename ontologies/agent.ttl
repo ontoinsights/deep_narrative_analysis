@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: September 11 2021
+# Last modified: September 29 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,7 +34,9 @@
 #  Added :AppointmentAndNomination to the domain of :role
 #  Moved PoliticalIdeology from environment-subclasses.ttl and added
 #    :has_political_ideology and :enum:Oligarchy
-#  Added jobs to the LineOfBusiness subclasses' "examples".
+#  Added jobs to the LineOfBusiness subclasses' "examples"
+#  Added the property, :political_ideology
+#  Added GovernmentOrganization
 ########################################################################
 
 
@@ -55,7 +57,7 @@
   :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Gender) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
 
 :ArmedForce a owl:Class ;
-  rdfs:subClassOf :Organization ;
+  rdfs:subClassOf :GovernmentOrganization ;
   rdfs:label "Armed Force" ;
   :definition "A GPE's military force." ;
   :example "Examples of ArmedForces are army, navy, marines, air force, etc." .
@@ -83,12 +85,6 @@
   rdfs:label "Ethnicity" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
   :noun_synonym "race" .
-
-:Family a owl:Class ;
-  rdfs:subClassOf :GroupOfAgents ;
-  rdfs:label "Family" ;
-  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another." ;
-  :noun_synonym "household" .
   
 :Gender a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Enumeration ;
@@ -98,11 +94,18 @@
                         owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] ;
   :noun_synonym "sex" .
 
+:GovernmentOrganization a owl:Class ;
+  rdfs:subClassOf :Organization ;
+  rdfs:label "Government Organization" ;
+  :definition "A type of Organization related to the governance of an area." ;
+  :example "Examples are courts, city councils, senates, parliaments, etc." .
+
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
   rdfs:label "Group/Collection of Agents" ;
   :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
-  :example "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." .
+  :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
+  :noun_synonym "consortium", "society", "crowd", "alliance", "band", "troupe", "troop" .
 
 :LineOfBusiness a owl:Class ;
   rdfs:label "Line/Type of Business" ;
@@ -127,7 +130,7 @@
   :noun_synonym "human", "human being", "man", "woman", "child" .
 
 :PoliceForce a owl:Class ;
-  rdfs:subClassOf :Organization ;
+  rdfs:subClassOf :GovernmentOrganization ;
   rdfs:label "Police Force" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" .
 
@@ -138,7 +141,7 @@
 
 :Role a owl:Class ;
   rdfs:label "Role" ;
-  :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics." ;
+  :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationRole), define explicit semantics." ;
   :example "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." .
 
 
@@ -329,6 +332,13 @@
   rdfs:range xsd:string ;
   :definition "Specifies a particular a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or Organization). Note that the :has_line_of_business property may also be specified, which maps the text to a set of predefined values." .
 
+:political_ideology a owl:DatatypeProperty ;
+  rdfs:label "political ideology" ;
+  rdfs:domain :Agent ;
+  rdfs:range xsd:string ;
+  :definition "Specifies a particular a particular ideology (as free form text) that the Agent holds or that is present at a location. Note that the :has_political_ideology property should also be specified, which maps the text to a predefined/enumerated value." ;
+  :example "Zionism is an example where the property, :political_ideology, is used to define a particular type of Nationalism, with a specific goal. In this case, the enumerated value for :has_political_ideology would be :enum:Nationalism." .
+
 :role a owl:DatatypeProperty ;
   rdfs:label "role" ;
   rdfs:domain [ a owl:Class ;
@@ -352,10 +362,11 @@
   rdfs:label "affiliated location" ;
   rdfs:domain :Affiliation ;
   rdfs:range :Location ;
-  :definition "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity is defined using the :affiliated_with property." ;
+  :definition "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property." ;
   :example "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization." .
 
 :affiliated_with a owl:ObjectProperty ;
+  rdfs:subPropertyOf :has_topic ;
   rdfs:label "affiliated with" ;
   rdfs:domain :Affiliation ;
   :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .

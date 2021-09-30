@@ -14,6 +14,8 @@ import logging
 import os
 import PySimpleGUI as sg
 import subprocess
+import sys
+import traceback
 
 from create_event_turtle import create_event_turtle
 from create_metadata_turtle import create_metadata_turtle
@@ -77,6 +79,8 @@ def ingest_narratives() -> (str, int):
 
     # Create the GUI Window
     window_csv = sg.Window('Select CSV File and Store', layout, icon=encoded_logo).Finalize()
+    window_csv['csv_file'].Widget.config(insertbackground='black')
+    window_csv['store_name'].Widget.config(insertbackground='black')
 
     # Loop to process window "events"
     while True:
@@ -246,6 +250,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
             # Add the triples to the data store
             add_remove_data('add', ' '.join(unified_triples), store_name)
     except Exception as e:
+        traceback.print_exc(file=sys.stdout)
         capture_error(f'Exception ingesting narratives: {str(e)}', True)
     return count
 

@@ -7,6 +7,7 @@ from database import query_database
 from details_narrative import display_narratives
 from details_similarities import display_similarities
 from details_summary import display_statistics
+from edit_narrative import display_narratives_for_edit
 from help import display_popup_help
 from hypotheses import display_hypotheses
 from load import select_store, ingest_narratives
@@ -99,8 +100,8 @@ if __name__ == '__main__':
             # If user closes window or clicks 'End'
             break
         # Help for various buttons
-        elif event in ('existing_question', 'csv_question', 'similarities_question', 'timeline_question',
-                       'stats_question', 'hypothesis_question', 'test_question'):
+        elif event in ('existing_question', 'csv_question', 'edit_question', 'similarities_question',
+                       'timeline_question', 'stats_question', 'hypothesis_question', 'test_question'):
             display_popup_help(event)
         # New windows to process narratives
         # TODO: Remove reference to the domain timeline (from the next 2 events) if not applicable
@@ -138,6 +139,8 @@ if __name__ == '__main__':
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
             else:
                 display_similarities(store_name)
+        elif event == 'Edit Narrative':
+            display_narratives_for_edit(store_name)
         elif event == 'Hypothesis Search/Edit':
             display_hypotheses(store_name)
         elif event == 'Hypothesis Test':

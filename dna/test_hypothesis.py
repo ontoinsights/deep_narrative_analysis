@@ -37,10 +37,10 @@ def test_hypothesis(store_name: str):
         number_hypotheses = 0
         number_narratives = 0
         if hypotheses_results:
-            number_hypotheses = len(hypotheses_results['results']['bindings'])
+            number_hypotheses = len(hypotheses_results)
         narratives_results = query_database('select', query_number_narratives, store_name)
         if narratives_results:
-            number_narratives = int(narratives_results['results']['bindings'][0]['cnt']['value'])
+            number_narratives = int(narratives_results[0]['cnt']['value'])
         error_msg = ''
         if not number_hypotheses:
             error_msg = 'No hypotheses'

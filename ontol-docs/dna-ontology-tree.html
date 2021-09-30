@@ -3879,8 +3879,8 @@ p {
   "Tai": {
     "iri": "urn:ontoinsights:dna:CameoEthnicity_tai",
     "synonym (noun)": [
-      "Tai-Yuan",
       "Tai-Lu",
+      "Tai-Yuan",
       "Tha"
     ],
     "SubClass Of": [
@@ -4616,8 +4616,8 @@ p {
     "synonym (noun)": [
       "alcohol abuse",
       "alcoholism",
-      "substance abuse",
       "drug abuse",
+      "substance abuse",
       "addict"
     ],
     "synonym (verb)": [
@@ -4694,8 +4694,8 @@ p {
       "psychiatric disorder",
       "psychotic disorder",
       "depression",
-      "mental illness",
       "mood disorder",
+      "mental illness",
       "depressive disorder"
     ],
     "SubClass Of": [
@@ -4765,8 +4765,8 @@ p {
     "synonym (noun)": [
       "attention deficit disorder",
       "hyperactivity",
-      "difficulty focusing",
       "ADHD",
+      "difficulty focusing",
       "ADD"
     ],
     "SubClass Of": [
@@ -4779,8 +4779,8 @@ p {
       "Autism spectrum disorder (ASD) is a neurodevelopmental disability that affects social skills and verbal/nonverbal communication, and causes repetitive behaviors and other behavioral issues."
     ],
     "synonym (noun)": [
-      "ASD",
-      "Autism spectrum disorder"
+      "Autism spectrum disorder",
+      "ASD"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Neurological Disability')\">'Neurological Disability'</a>"
@@ -4792,8 +4792,8 @@ p {
       "A NeurologicalDisability resulting from interruptions and disruptions in the connections between nerve cells in the brain. They can cause a Person's body to shake and jerk or lose consciousness. Causes may be a high fever, problems with blood sugar levels, a concussion, etc."
     ],
     "synonym (noun)": [
-      "epilepsy",
-      "convultion"
+      "convultion",
+      "epilepsy"
     ],
     "synonym (verb)": [
       "convulse"
@@ -4874,17 +4874,17 @@ p {
     ],
     "synonym (noun)": [
       "infection",
-      "sickness",
       "vaccine",
+      "sickness",
       "injury",
       "affliction",
-      "deformation",
       "contagion",
+      "deformation",
       "cure",
       "impairment",
       "malady",
-      "illness",
       "disorder",
+      "illness",
       "ailment"
     ],
     "synonym (verb)": [
@@ -5145,8 +5145,8 @@ p {
       "bug",
       "insect",
       "fauna",
-      "beast",
-      "creature"
+      "creature",
+      "beast"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
@@ -5231,18 +5231,6 @@ p {
       "<a href=\"javascript:jumpTo('Physical Location')\">'Physical Location'</a>"
     ]
   },
-  "Family": {
-    "iri": "urn:ontoinsights:dna:Family",
-    "definition": [
-      "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Family&oldid=932219516), Family 'is a group of people related either by consanguinity (by recognized birth), affinity (by marriage or other relationship), or co-residence'. Note that a Family may include other Persons (for example, an 'au pair' living with and assisting a family). Or, a Family may include a grandparent who lives in the same residence. In this case, the Person may be a member of another instance of Family that existed at a different time period. Note also that Family instances evolve over time with births, deaths, change of residence, etc. The time for which membership in a Family is relevant may be noted using the :has_time properties (or its sub-properties), and/or by indicating that one Family instance occurs :before another."
-    ],
-    "synonym (noun)": [
-      "household"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Group/Collection of Agents')\">'Group/Collection of Agents'</a>"
-    ]
-  },
   "Kommando": {
     "iri": "urn:ontoinsights:dna:Kommando",
     "definition": [
@@ -5262,6 +5250,27 @@ p {
       "A GPE's military force."
     ],
     "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Government Organization')\">'Government Organization'</a>"
+    ]
+  },
+  "Police Force": {
+    "iri": "urn:ontoinsights:dna:PoliceForce",
+    "definition": [
+      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Government Organization')\">'Government Organization'</a>"
+    ]
+  },
+  "Government Organization": {
+    "iri": "urn:ontoinsights:dna:GovernmentOrganization",
+    "example": [
+      "Examples are courts, city councils, senates, parliaments, etc."
+    ],
+    "definition": [
+      "A type of Organization related to the governance of an area."
+    ],
+    "SubClass Of": [
       "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
     ]
   },
@@ -5272,15 +5281,6 @@ p {
     ],
     "synonym (noun)": [
       "quasi military"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
-    ]
-  },
-  "Police Force": {
-    "iri": "urn:ontoinsights:dna:PoliceForce",
-    "definition": [
-      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
@@ -5314,10 +5314,19 @@ p {
   "Group/Collection of Agents": {
     "iri": "urn:ontoinsights:dna:GroupOfAgents",
     "example": [
-      "Examples of groups of Agents that appear to operate as a single entity are the sub-classes, Family and Organization. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State."
+      "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State."
     ],
     "definition": [
       "A sub-class of both Agent and Collection defining a set/grouping of Agents."
+    ],
+    "synonym (noun)": [
+      "band",
+      "alliance",
+      "society",
+      "troupe",
+      "crowd",
+      "consortium",
+      "troop"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>",
@@ -5392,8 +5401,11 @@ p {
       "compilation",
       "accumulation",
       "compendium",
+      "bevy",
+      "pack",
       "assemblage",
       "assortment",
+      "herd",
       "aggregation",
       "set"
     ]
@@ -5768,10 +5780,10 @@ p {
       "liquidation",
       "decapitation",
       "assassination",
-      "casualty",
       "hanging",
-      "slaying",
+      "casualty",
       "extermination",
+      "slaying",
       "killing",
       "pogrom",
       "massacre",
@@ -5872,8 +5884,8 @@ p {
     ],
     "synonym (verb)": [
       "bully",
-      "strong-arm",
       "compel",
+      "strong-arm",
       "intimidate",
       "coerce",
       "force"
@@ -5934,8 +5946,8 @@ p {
       "acquiesce",
       "reach resolution",
       "commit",
-      "comply",
-      "agree"
+      "agree",
+      "comply"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -6073,8 +6085,8 @@ p {
       "cover",
       "secrecy",
       "smoke screen",
-      "hiding",
       "disguise",
+      "hiding",
       "secret"
     ],
     "synonym (verb)": [
@@ -6105,8 +6117,8 @@ p {
       "inhibitor",
       "deterence",
       "impediment",
-      "determent",
       "forestalling",
+      "determent",
       "thwarting"
     ],
     "synonym (verb)": [
@@ -6319,8 +6331,8 @@ p {
     "synonym (verb)": [
       "grow",
       "extend",
-      "expand",
       "add to",
+      "expand",
       "raise",
       "escalate",
       "increase"
@@ -6446,8 +6458,8 @@ p {
     ],
     "synonym (noun)": [
       "entrancement",
-      "perception",
       "attentiveness",
+      "perception",
       "awareness",
       "vigilance",
       "concentration",
@@ -6535,13 +6547,13 @@ p {
     ],
     "synonym (noun)": [
       "longing",
-      "prayer",
       "wish",
+      "prayer",
       "passion",
       "craving",
       "yearning",
-      "curse",
-      "wanting"
+      "wanting",
+      "curse"
     ],
     "synonym (verb)": [
       "long for",
@@ -6563,8 +6575,8 @@ p {
       "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"
     ],
     "synonym (noun)": [
-      "comprehension",
       "understanding",
+      "comprehension",
       "proficiency",
       "know-how",
       "intelligence",
@@ -6628,14 +6640,14 @@ p {
       "A reaction of suffering or discomfort."
     ],
     "synonym (noun)": [
-      "first degree burn",
       "hurting",
+      "first degree burn",
       "suffering",
       "agony",
       "second degree burn",
       "hurt",
-      "throb",
       "throbbing",
+      "throb",
       "soreness",
       "third degree burn",
       "aching",
@@ -6766,8 +6778,8 @@ p {
     "synonym (verb)": [
       "select",
       "commission",
-      "nominate",
-      "appoint"
+      "appoint",
+      "nominate"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assertion and Declaration')\">'Assertion and Declaration'</a>"
@@ -6899,16 +6911,16 @@ p {
       "announcement",
       "explanation",
       "deposition",
-      "description",
       "claim",
+      "description",
       "disclosure",
       "lecture",
       "attestation",
       "affirmation"
     ],
     "synonym (verb)": [
-      "accuse",
       "assert",
+      "accuse",
       "attest",
       "affirm",
       "declare",
@@ -6966,8 +6978,8 @@ p {
     ],
     "synonym (verb)": [
       "question",
-      "cross-examination",
       "interrogate",
+      "cross-examination",
       "inquire",
       "ask",
       "query",
@@ -6986,8 +6998,8 @@ p {
     ],
     "synonym (noun)": [
       "approval",
-      "allowing",
       "authorization",
+      "allowing",
       "consent",
       "dispensation",
       "license"
@@ -7049,8 +7061,8 @@ p {
       "prohibition",
       "objection",
       "veto",
-      "brush-off",
       "cold shoulder",
+      "brush-off",
       "turndown",
       "renounciation"
     ],
@@ -7178,8 +7190,8 @@ p {
       "ridicule",
       "disrespect",
       "jeer",
-      "taunt",
       "denigration",
+      "taunt",
       "mockery"
     ],
     "synonym (verb)": [
@@ -7239,8 +7251,8 @@ p {
       "brag",
       "attest",
       "be boastful",
-      "disclose",
       "swagger",
+      "disclose",
       "crow",
       "explain",
       "gloat",
@@ -7289,8 +7301,8 @@ p {
       "congratulation"
     ],
     "synonym (verb)": [
-      "greet",
       "exclaim",
+      "greet",
       "give thanks",
       "congratulate",
       "apologize"
@@ -7390,8 +7402,8 @@ p {
     ],
     "synonym (verb)": [
       "argue",
-      "quarrel",
       "dispute",
+      "quarrel",
       "disagree",
       "debate"
     ],
@@ -7408,8 +7420,8 @@ p {
       "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."
     ],
     "synonym (noun)": [
-      "calamity",
       "catastrophe",
+      "calamity",
       "cataclysm",
       "act of God"
     ],
@@ -7479,8 +7491,8 @@ p {
       "infatuation",
       "rapture",
       "arousal",
-      "lust",
       "enthrallment",
+      "lust",
       "desire",
       "craving"
     ],
@@ -7552,8 +7564,8 @@ p {
       "disquiet",
       "jitters",
       "unease",
-      "nervousness",
       "discontentment",
+      "nervousness",
       "angst",
       "concern",
       "worry",
@@ -7562,8 +7574,8 @@ p {
     "synonym (verb)": [
       "fret",
       "be anxious",
-      "agitate",
       "worry",
+      "agitate",
       "concern"
     ],
     "SubClass Of": [
@@ -7625,8 +7637,8 @@ p {
     "synonym (verb)": [
       "be timid",
       "be awkward",
-      "be shy",
       "be inept",
+      "be shy",
       "be meek"
     ],
     "SubClass Of": [
@@ -7647,8 +7659,8 @@ p {
       "fluster",
       "uncertainty",
       "trepidation",
-      "perplexity",
-      "disorientation"
+      "disorientation",
+      "perplexity"
     ],
     "synonym (verb)": [
       "disorient",
@@ -7725,8 +7737,8 @@ p {
       "exasperation"
     ],
     "synonym (verb)": [
-      "exasperate",
       "frustrate",
+      "exasperate",
       "be frustrated",
       "be exasperated"
     ],
@@ -7761,8 +7773,8 @@ p {
       "embarrassment",
       "mortification",
       "regret",
-      "remorse",
       "humiliation",
+      "remorse",
       "self-loathing"
     ],
     "synonym (verb)": [
@@ -7782,11 +7794,11 @@ p {
     "synonym (noun)": [
       "hostility",
       "malice",
-      "vengefulness",
       "aversion",
+      "vengefulness",
       "animosity",
-      "resentment",
       "ill will",
+      "resentment",
       "scorn",
       "spite",
       "contempt",
@@ -7796,8 +7808,8 @@ p {
     "synonym (verb)": [
       "loathe",
       "hate",
-      "spite",
-      "despise"
+      "despise",
+      "spite"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Negative Emotion')\">'Negative Emotion'</a>"
@@ -7810,8 +7822,8 @@ p {
     "iri": "urn:ontoinsights:dna:Loneliness",
     "synonym (noun)": [
       "lonesomeness",
-      "isolation",
-      "alienation"
+      "alienation",
+      "isolation"
     ],
     "synonym (verb)": [
       "be isolated",
@@ -7944,8 +7956,8 @@ p {
       "thanksgiving",
       "thanks",
       "thankfulness",
-      "gratefulness",
-      "gratitude"
+      "gratitude",
+      "gratefulness"
     ],
     "synonym (verb)": [
       "be grateful",
@@ -8036,11 +8048,11 @@ p {
       "glee",
       "cheerfulness",
       "enjoyment",
-      "jubilation",
       "jolliness",
       "gaiety",
-      "gladness",
+      "jubilation",
       "bliss",
+      "gladness",
       "laughter"
     ],
     "synonym (verb)": [
@@ -8140,8 +8152,8 @@ p {
     "iri": "urn:ontoinsights:dna:Love",
     "synonym (noun)": [
       "affection",
-      "liking",
       "sentimentality",
+      "liking",
       "fondness",
       "attraction",
       "tenderness",
@@ -8235,8 +8247,8 @@ p {
     "iri": "urn:ontoinsights:dna:TrustAndTolerance",
     "synonym (noun)": [
       "acceptance",
-      "comradery",
       "cordiality",
+      "comradery",
       "sociability",
       "geniality",
       "conviviality",
@@ -8245,8 +8257,8 @@ p {
     ],
     "synonym (verb)": [
       "tolerate",
-      "be cordial",
       "be sociable",
+      "be cordial",
       "be congenial",
       "accept",
       "trust",
@@ -8342,8 +8354,8 @@ p {
     ],
     "synonym (verb)": [
       "fire",
-      "hire",
       "demote",
+      "hire",
       "layoff",
       "promote"
     ],
@@ -8363,8 +8375,8 @@ p {
       "close",
       "complete",
       "conclude",
-      "resolution",
       "completion",
+      "resolution",
       "conclusion",
       "terminate"
     ],
@@ -8394,13 +8406,58 @@ p {
       "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate."
     ],
     "synonym (noun)": [
-      "capability",
       "maximum amount",
+      "capability",
       "volume",
       "capacitance"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+    ]
+  },
+  "Compatibility": {
+    "iri": "urn:ontoinsights:dna:Compatibility",
+    "definition": [
+      "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate."
+    ],
+    "synonym (noun)": [
+      "coexistence"
+    ],
+    "synonym (verb)": [
+      "is compatible with",
+      "coexist"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+    ]
+  },
+  "Compliance": {
+    "iri": "urn:ontoinsights:dna:Compliance",
+    "definition": [
+      "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate."
+    ],
+    "synonym (noun)": [
+      "conformity"
+    ],
+    "synonym (verb)": [
+      "conform",
+      "compliant",
+      "is in compliance"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+    ]
+  },
+  "Impossibility": {
+    "iri": "urn:ontoinsights:dna:Impossibility",
+    "definition": [
+      "Some entity or collection of entities (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing(s) that are impossible are specified using the :has_topic property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Opportunity and Possibility')\">'Opportunity and Possibility'</a>"
     ]
   },
   "Preventive Arrest": {
@@ -8453,43 +8510,41 @@ p {
       "imprison"
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
     ],
     "Disjoint Classes": [
       "<a href=\"javascript:jumpTo('Freedom')\">Freedom</a>"
     ]
   },
-  "Compatibility": {
-    "iri": "urn:ontoinsights:dna:Compatibility",
+  "Caring for Dependents": {
+    "iri": "urn:ontoinsights:dna:CaringForDependents",
     "definition": [
-      "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate."
+      "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures."
     ],
     "synonym (noun)": [
-      "coexistence"
+      "child care",
+      "elder care",
+      "childcare",
+      "dependent care"
     ],
     "synonym (verb)": [
-      "is compatible with",
-      "coexist"
+      "raise children",
+      "care for parent"
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
     ]
   },
-  "Compliance": {
-    "iri": "urn:ontoinsights:dna:Compliance",
+  "Drinkable Water": {
+    "iri": "urn:ontoinsights:dna:DrinkableWater",
     "definition": [
-      "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate."
+      "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate."
     ],
     "synonym (noun)": [
-      "conformity"
-    ],
-    "synonym (verb)": [
-      "conform",
-      "compliant",
-      "is in compliance"
+      "potable water"
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
+      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
     ]
   },
   "Consumer Confidence": {
@@ -8505,6 +8560,12 @@ p {
     "iri": "urn:ontoinsights:dna:Employment",
     "definition": [
       "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate."
+    ],
+    "synonym (noun)": [
+      "position",
+      "job",
+      "post",
+      "work"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Economic Environment')\">'Economic Environment'</a>"
@@ -8593,65 +8654,6 @@ p {
       "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
-    ]
-  },
-  "Freedom": {
-    "iri": "urn:ontoinsights:dna:Freedom",
-    "definition": [
-      "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate."
-    ],
-    "synonym (noun)": [
-      "liberty",
-      "independence"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Captivity and Detention')\">'Captivity and Detention'</a>"
-    ]
-  },
-  "Impossibility": {
-    "iri": "urn:ontoinsights:dna:Impossibility",
-    "definition": [
-      "Some entity or collection of entities (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing(s) that are impossible are specified using the :has_topic property."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Opportunity and Possibility')\">'Opportunity and Possibility'</a>"
-    ]
-  },
-  "Caring for Dependents": {
-    "iri": "urn:ontoinsights:dna:CaringForDependents",
-    "definition": [
-      "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures."
-    ],
-    "synonym (noun)": [
-      "child care",
-      "elder care",
-      "childcare",
-      "dependent care"
-    ],
-    "synonym (verb)": [
-      "raise children",
-      "care for parent"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
-    ]
-  },
-  "Drinkable Water": {
-    "iri": "urn:ontoinsights:dna:DrinkableWater",
-    "definition": [
-      "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate."
-    ],
-    "synonym (noun)": [
-      "potable water"
-    ],
-    "SubClass Of": [
       "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
     ]
   },
@@ -8678,6 +8680,22 @@ p {
       "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
     ]
   },
+  "Freedom": {
+    "iri": "urn:ontoinsights:dna:Freedom",
+    "definition": [
+      "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate."
+    ],
+    "synonym (noun)": [
+      "liberty",
+      "independence"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Captivity and Detention')\">'Captivity and Detention'</a>"
+    ]
+  },
   "Healthcare": {
     "iri": "urn:ontoinsights:dna:Healthcare",
     "definition": [
@@ -8691,6 +8709,42 @@ p {
     "iri": "urn:ontoinsights:dna:Housing",
     "definition": [
       "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
+    ]
+  },
+  "Law and Policy": {
+    "iri": "urn:ontoinsights:dna:LawAndPolicy",
+    "definition": [
+      "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents."
+    ],
+    "synonym (noun)": [
+      "directive",
+      "decree",
+      "legislation"
+    ],
+    "synonym (verb)": [
+      "legislate",
+      "decree"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Political Environment')\">'Political Environment'</a>"
+    ]
+  },
+  "Support for Government": {
+    "iri": "urn:ontoinsights:dna:SupportForGovernment",
+    "definition": [
+      "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Political Environment')\">'Political Environment'</a>"
+    ]
+  },
+  "Political Environment": {
+    "iri": "urn:ontoinsights:dna:PoliticalEnvironment",
+    "definition": [
+      "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Living Conditions')\">'Living Conditions'</a>"
@@ -8739,7 +8793,7 @@ p {
   "Living Conditions": {
     "iri": "urn:ontoinsights:dna:LivingConditions",
     "definition": [
-      "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics."
+      "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
@@ -8755,42 +8809,6 @@ p {
     ],
     "Disjoint Classes": [
       "<a href=\"javascript:jumpTo('Impossibility')\">Impossibility</a>"
-    ]
-  },
-  "Law and Policy": {
-    "iri": "urn:ontoinsights:dna:LawAndPolicy",
-    "definition": [
-      "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents."
-    ],
-    "synonym (noun)": [
-      "directive",
-      "decree",
-      "legislation"
-    ],
-    "synonym (verb)": [
-      "legislate",
-      "decree"
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Political Environment')\">'Political Environment'</a>"
-    ]
-  },
-  "Support for Government": {
-    "iri": "urn:ontoinsights:dna:SupportForGovernment",
-    "definition": [
-      "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Political Environment')\">'Political Environment'</a>"
-    ]
-  },
-  "Political Environment": {
-    "iri": "urn:ontoinsights:dna:PoliticalEnvironment",
-    "definition": [
-      "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
     ]
   },
   "Requirement and Dependence": {
@@ -8886,8 +8904,8 @@ p {
     "synonym (noun)": [
       "mutual assistance",
       "collaboration",
-      "sharing",
       "symbiosis",
+      "sharing",
       "teamwork"
     ],
     "synonym (verb)": [
@@ -8938,8 +8956,8 @@ p {
     "synonym (verb)": [
       "assist",
       "aid",
-      "help",
-      "provide"
+      "provide",
+      "help"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
@@ -9016,8 +9034,8 @@ p {
     ],
     "synonym (verb)": [
       "counterfeit",
-      "copy",
       "fake",
+      "copy",
       "simulate",
       "imitate",
       "forge",
@@ -9064,8 +9082,8 @@ p {
     "synonym (noun)": [
       "federation",
       "fusion",
-      "synthesis",
       "integration",
+      "synthesis",
       "confederation",
       "coalition",
       "amalgamation",
@@ -9148,8 +9166,8 @@ p {
       "lawsuit",
       "jury",
       "sentence",
-      "testimony",
       "lawyer",
+      "testimony",
       "court case",
       "attorney",
       "justice",
@@ -9238,9 +9256,9 @@ p {
       "An event or condition describing NOT having some goods or property, which previously were in an Agent's Possession."
     ],
     "synonym (noun)": [
-      "mislaying",
       "squandering",
       "forfeiture",
+      "mislaying",
       "misplacing",
       "disappearance",
       "losing"
@@ -9248,8 +9266,8 @@ p {
     "synonym (verb)": [
       "lose",
       "forfeit",
-      "mislay",
       "squander",
+      "mislay",
       "misplace"
     ],
     "SubClass Of": [
@@ -9308,12 +9326,13 @@ p {
     ],
     "synonym (noun)": [
       "herding",
-      "congregation",
       "assembly",
+      "congregation",
       "gathering",
       "social event",
       "swarming",
       "conference",
+      "social",
       "crowd",
       "convention"
     ],
@@ -9407,8 +9426,8 @@ p {
       "depart",
       "travel",
       "arrive",
-      "leave",
       "walk out",
+      "leave",
       "take a trip",
       "ship",
       "carry"
@@ -9454,8 +9473,8 @@ p {
       "belonging",
       "proprietorship",
       "guardianship",
-      "keeping",
       "control",
+      "keeping",
       "custody",
       "personal effects"
     ],
@@ -9466,8 +9485,8 @@ p {
       "impound",
       "commandeer",
       "get hold of",
-      "control",
       "confiscate",
+      "control",
       "take possession",
       "belong"
     ],
@@ -9516,8 +9535,8 @@ p {
     ],
     "synonym (verb)": [
       "punish",
-      "discipline",
-      "penalize"
+      "penalize",
+      "discipline"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -9552,8 +9571,8 @@ p {
       "drilling",
       "deforestation",
       "logging",
-      "excavation",
-      "mining"
+      "mining",
+      "excavation"
     ],
     "synonym (verb)": [
       "cut down trees",
@@ -9577,8 +9596,8 @@ p {
       "withdrawal",
       "extraction",
       "sanction",
-      "cutback",
       "expulsion",
+      "cutback",
       "limitation",
       "eradication",
       "banishment",
@@ -9674,8 +9693,8 @@ p {
       "exhibition"
     ],
     "synonym (verb)": [
-      "lay open",
       "divulge",
+      "lay open",
       "expose",
       "disclose",
       "exhibit",
@@ -9697,8 +9716,8 @@ p {
     ],
     "synonym (noun)": [
       "winnings",
-      "award",
       "recompense",
+      "award",
       "bonus",
       "prize"
     ],
@@ -9730,8 +9749,8 @@ p {
       "wager",
       "place a bet",
       "gamble",
-      "bet",
-      "play the horses"
+      "play the horses",
+      "bet"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Risk Taking')\">'Risk Taking'</a>"
@@ -9746,8 +9765,8 @@ p {
     "synonym (noun)": [
       "bravado",
       "recklessness",
-      "boldness",
       "audacity",
+      "boldness",
       "daring",
       "pluck"
     ],
@@ -9767,8 +9786,8 @@ p {
     ],
     "synonym (noun)": [
       "hunt",
-      "exploration",
       "stalking",
+      "exploration",
       "forage",
       "rummaging",
       "seeking",
@@ -9777,11 +9796,11 @@ p {
     "synonym (verb)": [
       "forage",
       "fish around",
-      "hunt",
       "explore",
+      "hunt",
       "seek",
-      "search",
       "look for",
+      "search",
       "look high and low",
       "scavenge",
       "rummage",
@@ -9808,8 +9827,8 @@ p {
       "slit",
       "carve",
       "lacerate",
-      "slash",
       "calve",
+      "slash",
       "cut",
       "clip"
     ],
@@ -9839,8 +9858,8 @@ p {
       "isolate",
       "sever",
       "set apart",
-      "detach",
       "segregate",
+      "detach",
       "split",
       "uncouple",
       "divide",
@@ -9876,8 +9895,8 @@ p {
     "synonym (noun)": [
       "onset",
       "commencement",
-      "emergence",
-      "inception"
+      "inception",
+      "emergence"
     ],
     "synonym (verb)": [
       "kick off",
@@ -9933,8 +9952,8 @@ p {
       "replacement"
     ],
     "synonym (verb)": [
-      "switch",
       "replace",
+      "switch",
       "exchange",
       "substitute"
     ],
@@ -9987,9 +10006,9 @@ p {
       "circumstance",
       "happening",
       "occurrence",
-      "status",
       "incident",
-      "act"
+      "act",
+      "status"
     ]
   },
   "Database": {
@@ -10026,16 +10045,16 @@ p {
       "compendium",
       "journal",
       "title",
-      "newsletter",
       "newspaper",
+      "newsletter",
       "volume",
       "almanac",
       "work",
       "hardback",
       "register",
-      "yearbook",
-      "manual",
       "periodical",
+      "manual",
+      "yearbook",
       "bulletin",
       "book",
       "opus",
@@ -10583,15 +10602,15 @@ p {
   "Location": {
     "iri": "urn:ontoinsights:dna:Location",
     "definition": [
-      "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property."
+      "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property."
     ],
     "synonym (noun)": [
+      "locality",
       "placement",
       "site",
-      "situating",
-      "position",
       "locale",
-      "venue"
+      "venue",
+      "setting"
     ]
   },
   "Mention": {
@@ -10638,8 +10657,8 @@ p {
       "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story."
     ],
     "synonym (noun)": [
-      "plot",
-      "timeline"
+      "timeline",
+      "plot"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
@@ -11032,7 +11051,7 @@ p {
       "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads."
     ],
     "definition": [
-      "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationROle), define explicit semantics."
+      "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationRole), define explicit semantics."
     ]
   },
   "Duration of Time": {
@@ -11092,12 +11111,12 @@ p {
       "declining years",
       "pensioner",
       "agedness",
-      "oldness",
-      "elderliness"
+      "elderliness",
+      "oldness"
     ],
     "synonym (verb)": [
-      "be old",
       "be elderly",
+      "be old",
       "be aged"
     ],
     "SubClass Of": [
@@ -11168,10 +11187,10 @@ p {
       "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property."
     ],
     "synonym (noun)": [
-      "rhythm",
       "cycle",
-      "repetition",
-      "cadence"
+      "rhythm",
+      "cadence",
+      "repetition"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Time')\">Time</a>"
@@ -11300,12 +11319,6 @@ p {
       "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
     ]
   },
-  "urn:ontoinsights:dna:AffiliationNaziGermany": {
-    "iri": "urn:ontoinsights:dna:AffiliationNaziGermany",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
-    ]
-  },
   "urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty": {
     "iri": "urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty",
     "Type": [
@@ -11362,12 +11375,6 @@ p {
   },
   "urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic": {
     "iri": "urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic",
-    "Type": [
-      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
-    ]
-  },
-  "urn:ontoinsights:dna:AffiliationWeimarRepublicGermany": {
-    "iri": "urn:ontoinsights:dna:AffiliationWeimarRepublicGermany",
     "Type": [
       "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
     ]
@@ -12106,8 +12113,8 @@ p {
     "iri": "urn:ontoinsights:geonames:223816",
     "synonym (noun)": [
       "French Territory of the Afars and the Issas",
-      "Obock Territory",
       "French Somaliland",
+      "Obock Territory",
       "Republic of Djibouti"
     ],
     "Type": [
@@ -12963,8 +12970,8 @@ p {
       "State of Palestine",
       "Occupied Palestinian Territories",
       "West Bank",
-      "Occupied Palestinian Territory",
       "Palestinian territories",
+      "Occupied Palestinian Territory",
       "Palestinian National Authority"
     ],
     "Type": [
@@ -13088,8 +13095,8 @@ p {
     "synonym (noun)": [
       "Union of Soviet Socialist Republics",
       "U.S.S.R.",
-      "Soviet Union",
       "USSR",
+      "Soviet Union",
       "Russian Federation"
     ],
     "Type": [
@@ -13126,9 +13133,9 @@ p {
   "Saint Christopher and Nevis": {
     "iri": "urn:ontoinsights:geonames:3575174",
     "synonym (noun)": [
-      "Saint Kitts",
-      "St Kitts",
       "Saint Kitts and Nevis",
+      "St Kitts",
+      "Saint Kitts",
       "Saint Christopher",
       "Nevis",
       "Federation of Saint Kitts and Nevis",
@@ -13177,8 +13184,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3424932",
     "synonym (noun)": [
       "Miquelon",
-      "Saint Pierre",
       "St Pierre",
+      "Saint Pierre",
       "St. Pierre"
     ],
     "Type": [
@@ -13419,8 +13426,8 @@ p {
     "iri": "urn:ontoinsights:geonames:1668284",
     "synonym (noun)": [
       "Formosa",
-      "Republic of China",
-      "Taiwan, Province of China"
+      "Taiwan, Province of China",
+      "Republic of China"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -14306,8 +14313,8 @@ p {
     "iri": "urn:ontoinsights:dna:enum:Male",
     "synonym (noun)": [
       "Mr.",
-      "mister",
       "man",
+      "mister",
       "boy"
     ],
     "Type": [
@@ -14924,8 +14931,8 @@ p {
       "Regular uniformed German police force. Central Headquarters were in Berlin. Municipal Police (Schutzpolizei) served as the urban police forces. Gendarmerie, or rural police, served in the countryside. There were also larger units of Order Police called Police Battalions."
     ],
     "synonym (noun)": [
-      "Order Police",
-      "Ordnungspolizei"
+      "Ordnungspolizei",
+      "Order Police"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Police Force')\">'Police Force'</a>"
@@ -15401,13 +15408,13 @@ p {
     ],
     "synonym (noun)": [
       "Great War",
-      "WWI",
       "WW I",
+      "WWI",
       "First World War",
       "war to end all wars",
       "World War One",
-      "WW1",
-      "WW 1"
+      "WW 1",
+      "WW1"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('War')\">War</a>"
@@ -15455,6 +15462,12 @@ p {
     "iri": "urn:ontoinsights:dna:negative_example",
     "definition": [
       "Words/text whose whose definitions do not support or whose instances should be excluded from the concept/semantic being defined."
+    ]
+  },
+  "processing instructions": {
+    "iri": "urn:ontoinsights:dna:processing",
+    "definition": [
+      "Additional details to capture the semantics of a class/concept."
     ]
   },
   "synonym (noun)": {
@@ -15916,6 +15929,21 @@ p {
       "<a href=\"javascript:jumpTo('string[pattern')\">string[pattern</a> \"^(\\(?\\+?[0-9]*\\)?)?[ \\.\\-])?(\\(?[0-9]*\\)?)?[0-9A-Z \\.\\-\\(\\)]*((x|ext|extension)? ?[0-9]*)?$\"]"
     ]
   },
+  "political ideology": {
+    "iri": "urn:ontoinsights:dna:political_ideology",
+    "example": [
+      "Zionism is an example where the property, :political_ideology, is used to define a particular type of Nationalism, with a specific goal. In this case, the enumerated value for :has_political_ideology would be :enum:Nationalism."
+    ],
+    "definition": [
+      "Specifies a particular a particular ideology (as free form text) that the Agent holds or that is present at a location. Note that the :has_political_ideology property should also be specified, which maps the text to a predefined/enumerated value."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Agent/Actor')\">Agent/Actor</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
   "city name": {
     "iri": "urn:ontoinsights:dna:city_name",
     "definition": [
@@ -16153,6 +16181,21 @@ p {
       "<a href=\"javascript:jumpTo('integer')\">integer</a>"
     ]
   },
+  "sentiment": {
+    "iri": "urn:ontoinsights:dna:sentiment",
+    "definition": [
+      "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('decimal[=')\">decimal[=</a> -1.0 , <= 1.0]"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
   "separation interval": {
     "iri": "urn:ontoinsights:dna:separation_interval",
     "example": [
@@ -16270,22 +16313,13 @@ p {
       "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization."
     ],
     "definition": [
-      "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity is defined using the :affiliated_with property."
+      "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property."
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Location')\">Location</a>"
-    ]
-  },
-  "affiliated with": {
-    "iri": "urn:ontoinsights:dna:affiliated_with",
-    "definition": [
-      "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property."
-    ],
-    "Domains": [
-      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
     ]
   },
   "before": {
@@ -16814,6 +16848,18 @@ p {
       "<a href=\"javascript:jumpTo('Time')\">Time</a>"
     ]
   },
+  "affiliated with": {
+    "iri": "urn:ontoinsights:dna:affiliated_with",
+    "definition": [
+      "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has topic')\">'has topic'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Affiliation')\">Affiliation</a>"
+    ]
+  },
   "has topic": {
     "iri": "urn:ontoinsights:dna:has_topic",
     "example": [
@@ -16853,8 +16899,8 @@ p {
     ],
     "synonym (verb)": [
       "meet",
-      "converge",
-      "touch"
+      "touch",
+      "converge"
     ]
   },
   "near": {
@@ -19172,22 +19218,24 @@ p {
             "id": "Group/Collection of Agents",
             "children": [
               {
-                "id": "Family"
-              },
-              {
                 "id": "Kommando"
               },
               {
                 "id": "Organization",
                 "children": [
                   {
-                    "id": "Armed Force"
+                    "id": "Government Organization",
+                    "children": [
+                      {
+                        "id": "Armed Force"
+                      },
+                      {
+                        "id": "Police Force"
+                      }
+                    ]
                   },
                   {
                     "id": "Paramilitary Force"
-                  },
-                  {
-                    "id": "Police Force"
                   },
                   {
                     "id": "Political Party"
@@ -19219,22 +19267,24 @@ p {
             "id": "Group/Collection of Agents",
             "children": [
               {
-                "id": "Family"
-              },
-              {
                 "id": "Kommando"
               },
               {
                 "id": "Organization",
                 "children": [
                   {
-                    "id": "Armed Force"
+                    "id": "Government Organization",
+                    "children": [
+                      {
+                        "id": "Armed Force"
+                      },
+                      {
+                        "id": "Police Force"
+                      }
+                    ]
                   },
                   {
                     "id": "Paramilitary Force"
-                  },
-                  {
-                    "id": "Police Force"
                   },
                   {
                     "id": "Political Party"
@@ -19853,59 +19903,10 @@ p {
                 "id": "Capacity"
               },
               {
-                "id": "Captivity and Detention",
-                "children": [
-                  {
-                    "id": "Preventive Arrest"
-                  },
-                  {
-                    "id": "Protective Custody"
-                  }
-                ]
-              },
-              {
                 "id": "Compatibility"
               },
               {
                 "id": "Compliance"
-              },
-              {
-                "id": "Economic Environment",
-                "children": [
-                  {
-                    "id": "Consumer Confidence"
-                  },
-                  {
-                    "id": "Deflation"
-                  },
-                  {
-                    "id": "Employment"
-                  },
-                  {
-                    "id": "Expenses"
-                  },
-                  {
-                    "id": "Income"
-                  },
-                  {
-                    "id": "Inflation"
-                  },
-                  {
-                    "id": "Recession"
-                  },
-                  {
-                    "id": "Savings and Investment"
-                  },
-                  {
-                    "id": "Taxes"
-                  },
-                  {
-                    "id": "Unemployment"
-                  }
-                ]
-              },
-              {
-                "id": "Freedom"
               },
               {
                 "id": "Impossibility"
@@ -19914,10 +19915,56 @@ p {
                 "id": "Living Conditions",
                 "children": [
                   {
+                    "id": "Captivity and Detention",
+                    "children": [
+                      {
+                        "id": "Preventive Arrest"
+                      },
+                      {
+                        "id": "Protective Custody"
+                      }
+                    ]
+                  },
+                  {
                     "id": "Caring for Dependents"
                   },
                   {
                     "id": "Drinkable Water"
+                  },
+                  {
+                    "id": "Economic Environment",
+                    "children": [
+                      {
+                        "id": "Consumer Confidence"
+                      },
+                      {
+                        "id": "Deflation"
+                      },
+                      {
+                        "id": "Employment"
+                      },
+                      {
+                        "id": "Expenses"
+                      },
+                      {
+                        "id": "Income"
+                      },
+                      {
+                        "id": "Inflation"
+                      },
+                      {
+                        "id": "Recession"
+                      },
+                      {
+                        "id": "Savings and Investment"
+                      },
+                      {
+                        "id": "Taxes"
+                      },
+                      {
+                        "id": "Unemployment"
+                      }
+                    ]
                   },
                   {
                     "id": "Education"
@@ -19926,10 +19973,24 @@ p {
                     "id": "Food"
                   },
                   {
+                    "id": "Freedom"
+                  },
+                  {
                     "id": "Healthcare"
                   },
                   {
                     "id": "Housing and Lodging"
+                  },
+                  {
+                    "id": "Political Environment",
+                    "children": [
+                      {
+                        "id": "Law and Policy"
+                      },
+                      {
+                        "id": "Support for Government"
+                      }
+                    ]
                   },
                   {
                     "id": "Safe Conditions"
@@ -19947,17 +20008,6 @@ p {
               },
               {
                 "id": "Opportunity and Possibility"
-              },
-              {
-                "id": "Political Environment",
-                "children": [
-                  {
-                    "id": "Law and Policy"
-                  },
-                  {
-                    "id": "Support for Government"
-                  }
-                ]
               },
               {
                 "id": "Requirement and Dependence"
@@ -20771,9 +20821,6 @@ p {
             "id": "urn:ontoinsights:dna:AffiliationMengeleSS"
           },
           {
-            "id": "urn:ontoinsights:dna:AffiliationNaziGermany"
-          },
-          {
             "id": "urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty"
           },
           {
@@ -20802,9 +20849,6 @@ p {
           },
           {
             "id": "urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic"
-          },
-          {
-            "id": "urn:ontoinsights:dna:AffiliationWeimarRepublicGermany"
           },
           {
             "id": "urn:ontoinsights:dna:AffliationSynagogueJew"
@@ -22771,6 +22815,9 @@ p {
         "id": "negative example"
       },
       {
+        "id": "processing instructions"
+      },
+      {
         "id": "synonym (noun)"
       },
       {
@@ -22877,6 +22924,9 @@ p {
         "id": "phone number"
       },
       {
+        "id": "political ideology"
+      },
+      {
         "id": "postal address detail",
         "children": [
           {
@@ -22924,6 +22974,9 @@ p {
         "id": "sentence offset"
       },
       {
+        "id": "sentiment"
+      },
+      {
         "id": "separation interval"
       },
       {
@@ -22955,9 +23008,6 @@ p {
     "children": [
       {
         "id": "affiliated location"
-      },
-      {
-        "id": "affiliated with"
       },
       {
         "id": "before"
@@ -23086,7 +23136,12 @@ p {
         ]
       },
       {
-        "id": "has topic"
+        "id": "has topic",
+        "children": [
+          {
+            "id": "affiliated with"
+          }
+        ]
       },
       {
         "id": "has unit of measure"

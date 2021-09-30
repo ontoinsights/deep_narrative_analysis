@@ -70,9 +70,12 @@ scrolled_csv = \
     "narratives."
 
 scrolled_edit = \
-    "After selecting the narrative database, click on 'Edit Narrative' to open a new window \n" \
-    "and choose one of the ingested narratives for editing. A table of the sentence text and \n" \
-    "extracted concepts will be shown. Concepts and events can be added, updated and removed."
+    "After selecting the narrative database, click on 'Edit Narrative' to open a new \n" \
+    "window and choose one of the ingested narratives for editing. The narrative's \n" \
+    "nouns/concepts or events can be selected for edit. A table of the nouns and their " \
+    "details, and/or the sentence text and event details will be shown. \n\n" \
+    "Note that new concepts/nouns and events can be added, while existing ones can be updated \n" \
+    "or removed."
 
 scrolled_stats = \
     "After selecting the narrative database, choose 'Summary Statistics' to open a new \n" \

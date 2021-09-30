@@ -70,6 +70,8 @@ def display_narratives(store_name: str):
 
     # Create the GUI Window
     window_narrative_list = sg.Window('Select Narrative or Domain Timeline', layout, icon=encoded_logo).Finalize()
+    window_narrative_list['begin_year'].Widget.config(insertbackground='black')
+    window_narrative_list['end_year'].Widget.config(insertbackground='black')
 
     # Loop to process window "events"
     while True:
@@ -119,6 +121,7 @@ def display_narratives(store_name: str):
                     return
                 # Display timeline
                 display_timeline(narrative_name, events_list, store_name)
+                break
 
     # Done
     window_narrative_list.close()

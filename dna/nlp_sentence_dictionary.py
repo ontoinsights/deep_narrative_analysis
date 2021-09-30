@@ -4,9 +4,9 @@
 #                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
 #    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
 #               'preps': [{'prep_text': 'preposition_text',
-#                          'prep_details': [{'prep_text': 'preposition_object', 'prep_type': 'type_eg_SINGGPE'}]}],
+#                          'prep_details': [{'detail_text': 'preposition_object', 'detail_type': 'type_eg_SINGGPE'}]}],
 #                          # Preposition object may also have a preposition - for ex, 'with the aid of the police'
-#                          # If so, following the 'prep_type' entry would be another 'preps' element
+#                          # If so, following the 'detail_type' entry would be another 'preps' element
 #                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_NOUN'}]}]}]}]}]}
 # Called by nlp.py
 
@@ -17,10 +17,11 @@ from spacy.tokens import Doc, Token
 
 from idiom_processing import get_verb_idiom
 from nlp_sentence_tokens import add_token_details
-from utilities import objects_string, subjects_string, verbs_string, add_to_dictionary_values, processed_prepositions
+from utilities import objects_string, subjects_string, add_to_dictionary_values, processed_prepositions
 
 
-def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Language, gender: str, family_dict: dict):
+def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Language, gender: str,
+                               family_dict: dict, sentence_offset: int):
     """
     Extract the subject, verb, object details from a sentence and store these in a dictionary for
     further processing (and rendering in Turtle).
@@ -32,12 +33,14 @@ def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Languag
                    indicating the gender of the narrator
     :param family_dict: A dictionary containing the names of family members and their relationship
                         to the narrator/subject
+    :param sentence_offset: Integer indicating the order of the sentence in the overall narrative
     :return None (the sentence_dicts array is updated)
     """
     logging.info(f'Creating sentence dictionary for {sentence}')
     # Store details for each sentence, starting from the ROOT verb
     sentence_dict = dict()
     sentence_dict['text'] = sentence
+    sentence_dict['offset'] = sentence_offset
     if sentence == "New line":     # Track ending of paragraphs
         sentence_dicts.append(sentence_dict)
         return
@@ -150,5 +153,5 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
                 add_to_dictionary_values(verb_dict, 'preps', prep_dict, dict)
         elif 'xcomp' == child.dep_:  # Clausal complement of the verb
             add_token_details(child, verb_dict, 'verb_xcomp', gender, family_dict)
-    add_to_dictionary_values(dictionary, verbs_string, verb_dict, dict)
+    add_to_dictionary_values(dictionary, 'verbs', verb_dict, dict)
     return

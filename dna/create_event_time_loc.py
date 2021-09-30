@@ -4,7 +4,7 @@
 import re
 
 from nlp import get_time_details
-from utilities import months, empty_string, verbs_string
+from utilities import months, empty_string, preps_string, verbs_string
 
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
@@ -69,12 +69,12 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
         # Try to reduce locations to only ones associated directly with the main verb using the preposition, to
         revised_locs = []
         for verb in sentence_dictionary[verbs_string]:
-            if 'preps' in verb.keys():
-                check_to_loc(verb['preps'], new_locs, revised_locs)
+            if preps_string in verb.keys():
+                check_to_loc(verb[preps_string], new_locs, revised_locs)
             if 'verb_xcomp' in verb.keys():
                 for xcomp in verb['verb_xcomp']:
-                    if 'preps' in xcomp.keys():
-                        check_to_loc(xcomp['preps'], new_locs, revised_locs)
+                    if preps_string in xcomp.keys():
+                        check_to_loc(xcomp[preps_string], new_locs, revised_locs)
         if len(revised_locs):
             return revised_locs[0]
         else:
@@ -108,7 +108,7 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str) -> str:
         if len(new_dates) > 1:
             # Get most precise date (e.g., one with a year)
             for new_date in new_dates:
-                if year_pattern.search(new_date):    # TODO: Expand to month, day, ...
+                if year_pattern.search(new_date):
                     date = new_date
                     break
         date_lower = date.lower()
@@ -136,8 +136,8 @@ def _add_str_to_array(check_str: str, sent_dictionary: dict, key: str, array: li
     in the thirteenth century.", the sent_dictionary will be defined as {'DATE': ['June 12 1928',
     'thirteenth century'], 'GPE': ['Znojmo', 'Czechia'], 'verbs': [{'verb_text': 'born',
     'verb_lemma': 'bear', 'tense': 'Past', 'objects': [{'object_text': 'Mary', 'object_type': 'SINGPERSON'}],
-    'preps': [{'prep_text': 'on', 'prep_details': [{'prep_text': ' June', 'prep_type': 'DATE'}]},
-    {'prep_text': 'in', 'prep_details': [{'prep_text': ' Znojmo', 'prep_type': 'GPE'}]}]}]}.
+    'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': ' June', 'detail_type': 'DATE'}]},
+    {'prep_text': 'in', 'prep_details': [{'detail_text': ' Znojmo', 'detail_type': 'GPE'}]}]}]}.
 
     check_str is the string value of sent_dictionary['verbs']. If the function parameters are
     ("Mary was born ...", sent_dictionary, 'DATE', new_dates), then the text, 'June 12 1928' will be

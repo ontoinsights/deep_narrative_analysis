@@ -22,7 +22,7 @@ query_metadata1 = 'prefix : <urn:ontoinsights:dna:> SELECT ?name WHERE ' \
                   '{ ?narrator rdfs:label ?name }'
 
 query_metadata2 = 'prefix : <urn:ontoinsights:dna:> SELECT ?year ?country WHERE ' \
-                  '{ ?birthEvent a :Birth ; :has_actor ?narrator . ' \
+                  '{ ?birthEvent a :Birth ; :has_affected_agent ?narrator . ' \
                   'OPTIONAL { ?birthEvent :has_time/:year ?year } ' \
                   'OPTIONAL { ?birthEvent :has_location/:country_name ?country } }'
 
@@ -106,7 +106,6 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
               [sg.Text()],
               [sg.Text("To exit, close the window.", font=('Arial', 16))]]
     window_metadata_list = sg.Window(f'Metadata for {narrative_name}', layout, icon=encoded_logo).Finalize()
-    # window_metadata_list['narr_text'].TKOut.output.config(wrap='word')
     window_metadata_list.find_element('narr_text', True).Update(narrative_text)
     window_metadata_list.find_element('narr_text', True).Widget.configure()
     # Non-blocking window
@@ -179,15 +178,17 @@ def display_timeline(narrative_name: str, events_bindings: dict, store_name: str
               [sg.Text('Controls:', font=('Arial', 14)),
                sg.Canvas(key='controls_cv')],
               [sg.Column(layout=[[sg.Canvas(key='fig_cv', size=(800 * 2, 800))]], pad=(0, 0))]]
-    timeline_window = sg.Window('Timeline', layout, icon=encoded_logo, element_justification='center').Finalize()
-    draw_figure_with_toolbar(timeline_window['fig_cv'].TKCanvas, fig,
-                             timeline_window['controls_cv'].TKCanvas)
-    timeline_window.Maximize()
+    window_timeline = sg.Window('Timeline', layout, icon=encoded_logo, element_justification='center',
+                                resizable=True).Finalize()
+    window_timeline['event_date'].Widget.config(insertbackground='black')
+    draw_figure_with_toolbar(window_timeline['fig_cv'].TKCanvas, fig,
+                             window_timeline['controls_cv'].TKCanvas)
+    window_timeline.Maximize()
     while True:
-        event, values = timeline_window.read()
+        event, values = window_timeline.read()
         if event == 'Graph':
             display_graph(narrative_name, events_bindings, store_name, values['event_date'])
         if event == sg.WIN_CLOSED:
             break
-    timeline_window.close()
+    window_timeline.close()
     return

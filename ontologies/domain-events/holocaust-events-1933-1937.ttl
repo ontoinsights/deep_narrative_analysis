@@ -4,7 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> . 
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
 
-# Created September 15 2021
+# Created September 20 2021
 # Extracted from the Key Dates pages at https://encyclopedia.ushmm.org/content/en/article/19xx-key-dates (1933-1937)
 # Focus on Events that were appointments, arrests and forced moves, laws and policies, battles, murders,
 #    boycotts and bans, rallies, concentration camps established or opened, etc.
@@ -67,7 +67,8 @@
   :text "The German parliament (Reichstag) building burns down due to arson. The government falsely portrays the fire as part of a Communist effort to overthrow the state." ;
   :sourced_from :Web1933_Key_Dates ;
   :has_time :PiTFebruary_27_1933 ;
-  :has_location :Reichstag .
+  :has_location :Reichstag ;
+  :sentiment -1.0 .
   
 :Reichstag a :BuildingAndDwelling ;
   rdfs:label "Reichstag" ;
@@ -109,7 +110,8 @@ geo:2921044 :has_component :BerlinGermany .
   :has_affected_agent :GermanStateGovernments ;
   :has_beginning :PiTMarch_9_1933 ;
   :has_end :PiTMarch_11_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 :ReichstagFireDecree :enables :OverthrowOfGermanStateGovernments .
 
 :GermanStateGoverments a :GroupOfAgents, :GPE ;
@@ -204,7 +206,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishBusinesses ;
   :sourced_from :Web1933_Key_Dates ;
   :has_time :PiTApril_1_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :JewishBusinesses a :GroupOfAgents, :Organization ;
   rdfs:label "Jewish Businesses" ;
@@ -226,7 +229,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTApril_7_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :JewsExcludedFromLegalPractice a :LawAndPolicy, :BoycottAndBan ;
   rdfs:label "Jews Excluded from Legal Practice" ;
@@ -235,7 +239,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTApril_7_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTApril_7_1933 a :PointInTime ;
   rdfs:label "April 7, 1933" ;
@@ -249,7 +254,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTMay_7_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTMay_7_1933 a :PointInTime ;
   rdfs:label "May 7, 1933" ;
@@ -263,7 +269,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTSeptember_23_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTSeptember_23_1933 a :PointInTime ;
   rdfs:label "September 23, 1933" ;
@@ -278,7 +285,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTSeptember_29_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTSeptember_29_1933 a :PointInTime ;
   rdfs:label "September 29, 1933" ;
@@ -293,7 +301,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTOctober_4_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTOctober_4_1933 a :PointInTime ;
   rdfs:label "October 4, 1933" ;
@@ -307,7 +316,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1934_Key_Dates ;
   :has_beginning :PiTJanuary_24_1934;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTJanuary_24_1934 a :PointInTime ;
   rdfs:label "January 24, 1934" ;
@@ -337,7 +347,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_active_agent :GermanStudentOrganizations ;
   :has_active_agent :NaziParty ;
   :has_time :PiTMay_10_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :GermanStudentOrganizations a :GroupOfAgents, :Organization ;
   rdfs:label "German Student Organizations" ;
@@ -359,7 +370,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :PoliticalParty ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTJuly_14_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTJuly_14_1933 a :PointInTime ;
   rdfs:label "July 14, 1933" ;
@@ -374,7 +386,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JewishPersons ;
   :sourced_from :Web1933_Key_Dates ;
   :has_beginning :PiTJuly_14_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :LawForPreventionOfHereditaryDiseases a :LawAndPolicy ;
   rdfs:label "Law for Prevention of Hereditary Diseases" ;
@@ -392,7 +405,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_active_agent :JewishBusinesses ;
   :sourced_from :Web1933_Key_Dates ;
   :has_time :PiTSeptember_17_1933 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment 1.0 .
   
 :CentralOrganizationOfGermanJews a :Organization ;
   rdfs:label "Central Organization of German Jews" ;
@@ -433,7 +447,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :vonKahrGustav ;
   :has_beginning :PiTJune_30_1934 ;
   :has_end :PiTJuly_2_1934 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :SALeadership a :GroupOfAgents, :Person ;
   rdfs:label "SA Leadership" .
@@ -494,7 +509,8 @@ geo:2921044 :has_component :MunichGermany .
   :sourced_from :Web1934_Key_Dates ;
   :has_affected_agent :vonHindenburgPaul ;
   :has_time :PiTAugust_2_1934 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :HitlerBecamePresident a :AppointmentAndNomination ;
   rdfs:label "Hitler Became German President" ;
@@ -554,7 +570,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_affected_agent :JehovahsWitnessPersons ;
   :sourced_from :Web1935_Key_Dates ;
   :has_beginning :PiTApril_1_1935 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :JehovahsWitnessPersons a :GroupOfAgents, :Person ;
   rdfs:label "Jehovah's Witness Persons" .
@@ -575,7 +592,8 @@ geo:2921044 :has_component :MunichGermany .
   :has_topic :ReichCitizenshipLaw, :LawForProtectionOfGermanBlood ;
   :sourced_from :Web1935_Key_Dates ;
   :has_time :PiTSeptember_15_1935 ;
-  :has_location :NurembergGermany .
+  :has_location :NurembergGermany ;
+  :sentiment -1.0 .
 
 :NurembergGermany a :PopulatedPlace ;
   rdfs:label "Nuremberg" ;
@@ -662,7 +680,8 @@ geo:2921044 :has_component :NurembergGermany .
   :count 600 ;
   :has_time :PiTJuly_16_1936 ;
   :has_origin :BerlinGermany ;
-  :has_destination :BerlinMarzahnCamp .
+  :has_destination :BerlinMarzahnCamp ;
+  :sentiment -1.0 .
 :ReichCitizenshipLaw :enables :RomaRelocated .
 :LawForProtectionOfGermanHonor :enables :RomaRelocated .
 
@@ -685,7 +704,7 @@ geo:2921044 :has_component :NurembergGermany .
   rdfs:label "Berlin Police" .
 :AffiliationBerlinPoliceBrlin a :Affiliation ;
   :affiliated_agent :BerlinPolice ;
-  :affiliated_location :BerlinGermany .
+  :affiliated_with :BerlinGermany .
 
 :BerlinMarzahnCamp a :ConcentrationCamp ;
   rdfs:label "Berlin-Marzahnn Camp" ;
@@ -703,7 +722,8 @@ geo:2921044 :has_component :NurembergGermany .
   :sourced_from :Web1936_Key_Dates ;
   :has_beginning :PiTAugust_1_1936 ;
   :has_end :PiTAugust_16_1936 ;
-  :has_location :BerlinGermany .
+  :has_location :BerlinGermany ;
+  :sentiment 1.0 .
 
 :PiTAugust_1_1936 a :PointInTime ;
   rdfs:label "August 1, 1936" ;
@@ -723,7 +743,8 @@ geo:2921044 :has_component :NurembergGermany .
   :sourced_from :Web1936_Key_Dates ;
   :has_affected_agent :JehovahsWitnessPersons ;
   :has_beginning :PiTAugust_28_1936 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTAugust_28_1936 a :PointInTime ;
   rdfs:label "August 28, 1936" ;
@@ -762,7 +783,8 @@ geo:2921044 :has_component :NurembergGermany .
   :count 2000 ;
   :has_beginning :PiTFebruary_27_1937 ;
   :has_end :PiTMarch_9_1937 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :ConvictedPersons a :GroupOfAgents, :Person ;
   rdfs:label "Convicted Persons" .

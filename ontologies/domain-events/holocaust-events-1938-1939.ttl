@@ -4,7 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> . 
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
 
-# Created September 15 2021
+# Created September 20 2021
 # Extracted from the Key Dates pages at https://encyclopedia.ushmm.org/content/en/article/19xx-key-dates (1938-1939)
 # Focus on Events that were appointments, arrests and forced moves, laws and policies, battles and invasions, murders,
 #    boycotts and bans, rallies, concentration camps established or opened, etc.
@@ -34,7 +34,8 @@
   :has_end :PiTMarch_13_1938 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent geo:2782113 ;    # Austria
-  :has_location geo:2782113 .
+  :has_location geo:2782113 ;
+  :sentiment -1.0 .
 
 :PiTMarch_11_1938 a :PointInTime ;
   rdfs:label "March 11, 1938" ;
@@ -54,7 +55,8 @@
   :sourced_from :Web1938_Key_Dates ;
   :has_affected_agent :JewishPersons ;
   :has_beginning :PiTMarch_1938 ;
-  :has_location geo:2782113 .
+  :has_location geo:2782113 ;
+  :sentiment -1.0 .
 :InvasionOfAustria :enables :ViolenceAgainstJewishPersonsInAustria .
 
 :April1938MassIncarceration a :CaptureAndSeizure, :MovementTravelAndTransportation ;
@@ -65,7 +67,8 @@
   :count 1500 ;
   :has_beginning :PiTApril_21_1938 ;
   :has_end :PiTApril_30_1938 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
 
 :PiTApril_21_1938 a :PointInTime ;
   rdfs:label "April 21, 1938" ;
@@ -128,7 +131,8 @@ geo:2921044 :has_component :FlossenburgGermany .
   :sourced_from :Web1938_Key_Dates ;
   :has_affected_agent :JewishPersons ;
   :has_beginning :PiTMay_29_1938 ;
-  :has_location geo:719819 .
+  :has_location geo:719819 ;
+  :sentiment -1.0 .
 
 :PiTMay_29_1938 a :PointInTime ;
   rdfs:label "May 29, 1938" ;
@@ -146,7 +150,8 @@ geo:2921044 :has_component :FlossenburgGermany .
   :count 1000 ;
   :has_beginning :PiTJune_13_1938 ;
   :has_end :PiTJune_18_1938 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
 
 :PiTJune_13_1938 a :PointInTime ;
   rdfs:label "June 13, 1938" ;
@@ -166,7 +171,8 @@ geo:2921044 :has_component :FlossenburgGermany .
   :sourced_from :Web1938_Key_Dates ;
   :has_beginning :PiTJuly_6_1938 ;
   :has_end :PiTJuly_15_1938 ;
-  :has_location :EvianFrance .
+  :has_location :EvianFrance ;
+  :sentiment 1.0 .
 
 :EvianFrance a :PopulatedPlace, :AdministrativeDivision ;
   rdfs:label "Evian" ;
@@ -255,7 +261,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_end :PiTOctober_10_1938 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent geo:3077311 ;    # Czechoslovakia
-  :has_location :Sudetenland .
+  :has_location :Sudetenland ;
+  :sentiment -1.0 .
 :MunichAgreement :enables :AnnexationOfSudetenland .
 
 :PiTOctober_1_1938 a :PointInTime ;
@@ -279,7 +286,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_end :PiTOctober_28_1938 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent :JewishPolishPersons ;
-  :has_origin :NaziGermany .
+  :has_origin :NaziGermany ;
+  :sentiment -1.0 .
 
 :JewishPolishPersons a :GroupOfAgents, :Person ;
   rdfs:label "Jewish persons" ;
@@ -310,7 +318,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_end :PiTNovember_10_1938 ;
   :has_location :NaziGermany ;
   :has_affected_agent :JewishPersons ;
-  :has_active_agent :NaziGermany .
+  :has_active_agent :NaziGermany ;
+  :sentiment -1.0 .
 
 :KillingDuringKristallnacht a :MurderAndHomicide ;
   rdfs:label "Killing during Kristallnacht" ;
@@ -321,7 +330,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_location :NaziGermany ;
   :has_affected_agent :JewishPersons ;
   :minimum_count 91 ;
-  :has_active_agent :NaziGermany .
+  :has_active_agent :NaziGermany ;
+  :sentiment -1.0 .
 :Kristallnacht :has_component :KillingDuringKristallnacht .
 
 :ImprisonmentDuringKristallnacht a :CaptureAndSeizure, :MovementTravelAndTransportation ;
@@ -334,7 +344,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_destination :DachauConcentrationCamp, :SachsenhausenConcentrationCamp, :BuchenwaldConcentrationCamp ;
   :has_affected_agent :JewishPersons ;
   :count 30000 ;
-  :has_active_agent :Gestapo .
+  :has_active_agent :Gestapo ;
+  :sentiment -1.0 .
 :Kristallnacht :has_component :ImprisonmentDuringKristallnacht .
 
 :PiTNovember_9_1938 a :PointInTime ;
@@ -356,7 +367,8 @@ geo:2782113 :has_component :LinzAustria .
   :sourced_from :Web1938_Key_Dates ;
   :has_affected_agent :JewishPersons ;
   :has_beginning :PiTNovember_12_1938 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
 
 :PiTNovember_12_1938 a :PointInTime ;
   rdfs:label "November 12, 1938" ;
@@ -370,7 +382,8 @@ geo:2782113 :has_component :LinzAustria .
   :sourced_from :Web1938_Key_Dates ;
   :has_affected_agent :JewishPersons ;
   :has_beginning :PiTNovember_15_1938 ;
-  :has_location geo:2921044 .
+  :has_location geo:2921044 ;
+  :sentiment -1.0 .
 
 :PiTNovember_15_1938 a :PointInTime ;
   rdfs:label "November 15, 1938" ;
@@ -394,7 +407,8 @@ geo:2782113 :has_component :LinzAustria .
   :sourced_from :Web1938_Key_Dates ;
   :has_active_agent :JewishPersons ;
   :has_beginning :PiTDecember_3_1938 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
 :DecreeOnJewishProperty :enables :CompulsorySaleOfProperty .
   
 :PiTDecember_3_1938 a :PointInTime ;
@@ -410,7 +424,8 @@ geo:2782113 :has_component :LinzAustria .
   :sourced_from :Web1938_Key_Dates ;
   :has_affected_agent :RomaPersons ;
   :has_beginning :PiTDecember_8_1938 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
   
 :PiTDecember_8_1938 a :PointInTime ;
   rdfs:label "December 8, 1938" ;
@@ -429,7 +444,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_beginning :PiTDecember_1938 ;
   :has_end :PiTAugust_1939 ;
   :has_origin :NaziGermany ;
-  :has_destination geo:2635167 .   # UK
+  :has_destination geo:2635167 ;   # UK
+  :sentiment 1.0 .
 
 :JewishChildrenToUK a :GroupOfAgents, :Person ;
   rdfs:label "Jewish Children Admitted to the UK, 1938-1939" ;
@@ -455,7 +471,8 @@ geo:2782113 :has_component :LinzAustria .
   :sourced_from :Web1939_Key_Dates ;
   :has_affected_agent :JewishPersons ;
   :has_beginning :PiTJanuary_17_1939 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
   
 :PiTJanuary_17_1939 a :PointInTime ;
   rdfs:label "January 17, 1939" ;
@@ -468,7 +485,8 @@ geo:2782113 :has_component :LinzAustria .
   :has_time :PiTMarch_1939 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent geo:597427 ;    # Lithuania
-  :has_location :Memelland .
+  :has_location :Memelland ;
+  :sentiment -1.0 .
 
 :Memelland a :Location ;
   rdfs:label "Memelland" ;
@@ -483,7 +501,8 @@ geo:597427 :has_component :Memelland .    # In Lithuania
   :has_time :PiTMarch_1939 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent geo:3077311 ;    # Czechoslovakia
-  :has_location geo:3077311 .
+  :has_location geo:3077311 ;
+  :sentiment -1.0 .
   
 :PiTMarch_1939 a :PointInTime ;
   rdfs:label "March, 1939" ;
@@ -520,7 +539,8 @@ geo:597427 :has_component :Memelland .    # In Lithuania
   :has_time :PiTAugust_23_1939 ;
   :has_active_agent :NaziGermany ;
   :has_active_agent :SovietUnion ;
-  :has_location :MoscowRussia .
+  :has_location :MoscowRussia ;
+  :sentiment 1.0 .
 
 :MoscowRussia a :PopulatedPlace ;
   rdfs:label "Moscow" ;
@@ -540,7 +560,8 @@ geo:2017370 :has_component :MoscowRussia .
   :has_time :PiTSeptember_1939 ;
   :has_active_agent :NaziGermany ;
   :has_affected_agent geo:798544 ;    # Poland
-  :has_location geo:798544 .
+  :has_location geo:798544 ;
+  :sentiment -1.0 .
 
 :PiTSeptember_1939 a :PointInTime ;
   rdfs:label "September, 1939" ;
@@ -555,7 +576,8 @@ geo:2017370 :has_component :MoscowRussia .
   :has_active_agent geo:2635167 ;   # UK
   :has_affected_agent :NaziGermany ;
   :has_time :PiTSeptember_3_1939 ;
-  :has_topic :War .
+  :has_topic :War ;
+  :sentiment -1.0 .
 
 :PiTSeptember_3_1939 a :PointInTime ;
   rdfs:label "September 3, 1939" ;
@@ -602,7 +624,8 @@ geo:798544 :has_component :GdanskPoland .
   :has_beginning :PiTSeptember_17_1939 ;
   :has_active_agent :SovietUnion ;
   :has_affected_agent geo:798544 ;    # Poland
-  :has_location geo:798544 .
+  :has_location geo:798544 ;
+  :sentiment -1.0 .
 
 :PiTSeptember_17_1939 a :PointInTime ;
   rdfs:label "September 17, 1939" ;
@@ -615,9 +638,20 @@ geo:798544 :has_component :GdanskPoland .
   :text "The head of the Security Police (Sicherheitspolizei) and SD (Sicherheitsdienst), SS Lieutenant General Reinhard Heydrich meets with Secret Police (Sipo) and Security Service (SD) officials in Berlin. Heydrich issues instructions that (1) Polish Jews should be concentrated in major cities near major railroad lines, (2) all Jews should be transferred from the Reich to Poland, (3) the remaining 30,000 Roma (Gypsies) in Germany be deported to Poland, and (4) freight cars of the German railways (Reichsbahn) should be used to transport Jews and Roma from the Reich." ;
   :sourced_from :Web1939_Key_Dates ;
   :has_active_agent :HeydrichReinhard ;
+  :has_time :PiTSeptember_21_1939 ;
+  :has_location :BerlinGermany .
+:CommandResettlementToPoland :causes :ResettlementInPoland .
+
+:ResettlementInPoland a :CoercionAndIntimidation, :Resettlement ;
+  rdfs:label "Resettlement of Jews, Roma in Poland" ;
+  :text "The head of the Security Police (Sicherheitspolizei) and SD (Sicherheitsdienst), SS Lieutenant General Reinhard Heydrich meets with Secret Police (Sipo) and Security Service (SD) officials in Berlin. Heydrich issues instructions that (1) Polish Jews should be concentrated in major cities near major railroad lines, (2) all Jews should be transferred from the Reich to Poland, (3) the remaining 30,000 Roma (Gypsies) in Germany be deported to Poland, and (4) freight cars of the German railways (Reichsbahn) should be used to transport Jews and Roma from the Reich." ;
+  :sourced_from :Web1939_Key_Dates ;
+  :has_active_agent :Sipo, :SD ;
   :has_affected_agent :JewishPersons, :RomaPersons ;
   :has_beginning :PiTSeptember_21_1939 ;
-  :has_location :BerlinGermany .
+  :has_origin :NaziGermany ;
+  :has_destination geo:798544 ;   # Poland
+  :sentiment -1.0 .
 
 :PiTSeptember_21_1939 a :PointInTime ;
   rdfs:label "September 21, 1939" ;
@@ -646,7 +680,8 @@ geo:798544 :has_component :GdanskPoland .
   :sourced_from :Web1939_Key_Dates ;
   :has_active_agent :HitlerAdolf ;
   :has_beginning :PiTSeptember_1_1939 ;
-  :has_location :NaziGermany .
+  :has_location :NaziGermany ;
+  :sentiment -1.0 .
 
 :PiTSeptember_1_1939 a :PointInTime ;
   rdfs:label "September 1, 1939" ;
@@ -664,7 +699,8 @@ geo:798544 :has_component :GdanskPoland .
   :has_beginning :PiTOctober_20_1939 ;
   :has_end :PiTOctober_26_1939 ;
   :has_origin :ViennaAustria, geo:3077311, geo:798544 ;    # Austria, Czechoslovakia, Poland
-  :has_destination :ZarzeczeConcentrationCamp .
+  :has_destination :ZarzeczeConcentrationCamp ;
+  :sentiment -1.0 .
 
 :ZarzeczeConcentrationCamp a :ConcentrationCamp ;
   rdfs:label "Zarzecze Concentration Camp" ;
@@ -726,7 +762,8 @@ geo:798544 :has_component :NiskoPoland .
   :has_beginning :PiTDecember_1_1939 ;
   :has_end :PiT1941 ;
   :has_origin :NaziGermany ;
-  :has_destination :GeneralGovernment .
+  :has_destination :GeneralGovernment ;
+  :sentiment -1.0 .
 
 :PiTDecember_1_1939 a :PointInTime ;
   rdfs:label "December 1, 1939" ;

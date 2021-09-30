@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: September 15 2021
+# Last modified: September 28 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,7 +30,7 @@
 #  Simplified :Mention, and merged :trigger_text into :text
 #  Removed :mentioned_in in lieu of using :sourced_from
 #  Renamed :record_identifier to :data_identifier
-#  Added :alternatives and :has_author
+#  Added :alternatives, :has_author and the annotation property, :processing
 ########################################################################
 
 
@@ -58,6 +58,10 @@
   rdfs:label "synonym (noun)" ;
   :definition "A noun which has a similar meaning." .
 
+:processing a owl:AnnotationProperty ;
+  rdfs:label "processing instructions" ;
+  :definition "Additional details to capture the semantics of a class/concept." .
+
 :verb_synonym a owl:AnnotationProperty ;
   rdfs:label "synonym (verb)" ;
   :definition "A verb which has a similar meaning. Verb synonyms are typically only defined for EventAndState and relationship concepts." .
@@ -75,7 +79,7 @@
 :Collection a owl:Class ;
   rdfs:label "Collection/Group" ;
   :definition "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property." ;
-  :noun_synonym "assemblage", "assortment", "compilation", "set", "compendium", "accumulation", "aggregation" .
+  :noun_synonym "assemblage", "assortment", "compilation", "set", "compendium", "accumulation", "aggregation", "bevy", "pack", "herd" .
 
 :Enumeration a owl:Class ;
   rdfs:label "Enumeration" ;
@@ -105,8 +109,8 @@
 
 :Location a owl:Class ;
   rdfs:label "Location" ;
-  :definition "A place or position, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
-  :noun_synonym "locale", "position", "site", "venue", "situating", "placement" .
+  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
+  :noun_synonym "locale", "site", "venue", "placement", "locality", "setting" .
 
 :Mention a owl:Class ;
   rdfs:label "Mention" ;
