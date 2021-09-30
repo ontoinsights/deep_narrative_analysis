@@ -82,7 +82,7 @@ def display_graph(narrative_name: str, events_bindings: dict, store_name: str, e
                 obj_label = obj.split(':')[-1]
                 if obj_type == 'Event':
                     obj_sentiment_details = query_database(
-                        'select', query_event_sentiment.replace('uri', obj), store_name)[0]['sentiment']['value']
+                        'select', query_event_sentiment.replace('uri', obj), store_name)
                     if obj_sentiment_details:
                         obj_sentiment = obj_sentiment_details[0]['sentiment']['value']
                     else:
