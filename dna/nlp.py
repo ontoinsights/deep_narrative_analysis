@@ -4,7 +4,8 @@
 # 3) Processing for phrases in the form, 'a'|'the'|# 'years'|'months'|'days'|... 'earlier'|'later'|'prior'|...
 #    (in get_time_details)
 # 4) Parses the sentences from a narrative into dictionary elements with the following form:
-#    'text': 'narrative_text', 'LOCS': ['location'], 'TIMES': ['date_or_time'],
+#    'text': 'narrative_text',
+#    'LOCS': ['location1', ...], 'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'subjects': [{'subject_text': 'subject_text', 'subject_type': 'type_such_as_SINGNOUN'},
 #                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
 #    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
@@ -18,7 +19,7 @@
 import logging
 import spacy
 from spacy.matcher import DependencyMatcher
-from textblob import TextBlob
+from textblob import TextBlob, Word
 from word2number import w2n
 
 from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
@@ -41,7 +42,8 @@ agent_ner_dict = {'PERSON': ':Person',
                   'NORP': ':Organization',
                   'ORG': ':Organization',
                   'GPE': ':GeopoliticalEntity',
-                  'LOC': ':GeopoliticalEntity'}
+                  'LOC': ':GeopoliticalEntity',
+                  'EVENT': ':EventAndState'}
 agent_ner_types = list(agent_ner_dict.keys())
 
 # Replace multi-word phrases or non-standard terms acting as conjunctions and prepositions
@@ -94,10 +96,21 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     return list(born_on_date), list(born_in_place), family_dict
 
 
+def get_lemma(text: str) -> str:
+    """
+    Get the lemma of the input text.
+
+    :param text: String to be lemmatized
+    :return String holding the lemma of the input text
+    """
+    word = Word(text)
+    return word.lemmatize()
+
+
 def get_named_entity_in_string(text: str) -> (str, str):
     """
     Returns information on any Named Entity that are Agents (people, organizations, geopolitical
-    entities, ...) in the input text.
+    entities, ...) or Events in the input text, based on the setting of the return_if_agent boolean.
 
     :param text: The text to be parsed
     :return Two strings - the first is the named entity's text and the second string is its

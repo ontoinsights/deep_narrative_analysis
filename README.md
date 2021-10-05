@@ -23,10 +23,14 @@ The semantics (ontologies) and processing (initially, Jupyter notebooks) are cap
   * However, the code is run locally and the htmlcov sub-directory is included to show results
 * _ontologies_ holds the definitions of the concepts and relationships that will be extracted from the narratives and online/structured data
   * All of the posted ontology files are written in Turtle (OWL2) and have been updated to align with the March 2021 redesign
+  * Domain-specific concepts and events are defined in the _domain-specific_ subdirectory of _ontologies_
+    * At this time, these are all related to WWI, WWII and the Holocaust, and have been extracted from the reference pages of the U.S. Holocaust Museum website
+    * Domain ontologies are not required for DNA to execute, but if available, improve the parse and semantic understanding
   * In addition, a Protege-ready merge of all the component files is available in the file, dna-ontology.ttl, in the top-level directory
 * _ontol-docs_ contains documentation explaining the ontologies and their usage
   * The _graphs_ sub-directory contains PNGs of the main ontology concepts
-  * The file, dna-ontology-tree.html, holds a searchable tree view of the complete set of concepts and relationships
+  * The file, dna-ontology-tree.html, holds a searchable tree view of the generic concepts and relationships
+  * The file, domain-ontology-tree.html, holds a searchable tree view of the domain-specific concepts and relationships
 * _tools_ contains scripts used to generate the DNA ontology artifacts (the Protege-ready merge and tree output)
   * The create_merged_ontol_and_tree script uses a branched version of the robot.jar from the OBO ROBOT GitHub repository (https://github.com/ontodev/robot/tree/tree-view)
 * _notebooks_ holds the Jupyter notebooks used to scrape/parse web pages, create necessary pickle files for processing, and perform initial parsing and analysis experiments on the narratives
@@ -34,11 +38,16 @@ The semantics (ontologies) and processing (initially, Jupyter notebooks) are cap
 
 ## Environment
 
-The Stardog triple store must be installed and the following environment variables need to be set for the DNA application:
+The Stardog triple store must be installed and the following databases created:
+
+* "ontologies" with the files from the _ontologies_ directory
+* "domain-specific" with the files from the _ontologies/domain-specific_ subdirectory
+
+These environment variables need to be set for the DNA application:
 
 * PATH needs to specifically include the GitHub project's dna directory (for testing)
 * TOKENIZERS_PARALLELISM = false (to resolve warning from HuggingFace transformers and their use in spaCy)
 
 In addition, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name.
 
-To run the application, cd to the dna directory and execute python3 app.py.
+To run the application, cd to the dna directory and execute python3 app.py (making sure to have installed the Python libraries specified in the requirements.txt file).

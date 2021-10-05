@@ -2,14 +2,10 @@
 # Called by create_event_turtle.py
 
 import logging
-import re
 
 from typing import Union
 
-from utilities import months, subjects_string
-
-month_pattern = re.compile('|'.join(months))
-year_pattern = re.compile('[0-9]{4}')
+from utilities import subjects_string
 
 dependency_refs = ('acomp', 'dobj', 'pobj', 'xcomp')
 
@@ -20,15 +16,16 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
     using the last_nouns details to attempt to resolve co-references/anaphora. Subject/object
     information (the nouns and their types) is returned.
 
-    For example, for the sentence "Mary was born on June 12, 1928, in Znojmo, Czechia, which was settled
-    in the thirteenth century.", the sent_dictionary will be defined as {'DATE': ['June 12 1928',
-    'thirteenth century'], 'GPE': ['Znojmo', 'Czechia'], 'verbs': [{'verb_text': 'born',
-    'verb_lemma': 'bear', 'tense': 'Past', 'objects': [{'object_text': 'Mary', 'object_type': 'SINGPERSON'}],
-    'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': ' June', 'detail_type': 'DATE'}]},
-    {'prep_text': 'in', 'prep_details': [{'detail_text': ' Znojmo', 'detail_type': 'GPE'}]}]}]}.
+    For example, for the sentence "Narrator was born on June 12, 1928, in Znojmo, Czechia, which was settled
+    in the thirteenth century.", the sent_dictionary will be defined as {'text': 'Narrator was born ...',
+    'offset': 1, 'TIMES': ['June 12, 1928', 'the thirteenth century'], 'LOCS': ['Znojmo', 'Czechia'],
+    'verbs': [{'verb_text': 'born', 'verb_lemma': 'bear', 'tense': 'Past',
+    'objects': [{'object_text': 'Narrator', 'object_type': 'FEMALESINGPERSON'}],
+    'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': 'June', 'detail_type': 'DATE'}]},
+    {'prep_text': 'in', 'prep_details': [{'detail_text': 'Znojmo', 'detail_type': 'SINGGPE'}]}]}]}.
 
     If the function parameters are ('Female', sent_dictionary, 'objects', last_nouns), then the text,
-    'Mary' and 'SINGPERSON' will be returned.
+    'Mary' and 'FEMALESINGPERSON' will be returned.
 
     :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
                         indicating the gender of the narrator
@@ -38,6 +35,7 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
     :param last_nouns: The list/array of tuples defining the noun text and its type
     :return Array of tuples that are the noun text and type for subjects or objects
     """
+    # TODO: Use previous sentence to give context to nouns (ex: bloody attacks => during the violence)
     logging.info(f'Getting {key} nouns')
     nouns = set()
     for elem in sent_dictionary[key]:

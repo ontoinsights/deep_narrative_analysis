@@ -40,6 +40,8 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
     """
     logging.info(f'Processing the token, {token.text}, for key, {token_key}, of type, {token.ent_type_}')
     ent = token.text
+    if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
+        return
     ent_type = token.ent_type_
     # Handle proper nouns and pronouns
     if 'Prop' in token.morph.get('NounType'):      # Proper noun
@@ -243,13 +245,10 @@ def _process_proper_noun(token: Token, narr_gender: str, family_dict: dict) -> (
             entity_type = f'{gender}SINGPERSON'
     elif entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('ORG') \
             or entity_type.endswith('NORP'):
-        entity, ent_type = _process_noun(token, entity_type)
-        entity_type = f'SING{ent_type}'
+        entity, entity_type = _process_noun(token, entity_type)
     elif not entity_type.endswith('DATE') and not entity_type.endswith('TIME'):
         entity, gender, entity_type = _check_family(entity, family_dict)
         if entity_type == 'NOUN':    # Proper noun that is not a Person or identified as GPE, ORG, ...
             entity, entity_type = _process_noun(token, entity_type)   # Get the full entity text at least
-        entity_type = f'PLURAL{entity_type}' if 'Plur' in token.morph.get('Number') else \
-            (f'SING{entity_type}' if 'Sing' in token.morph.get('Number') else entity_type)
         entity_type = f'{gender}{entity_type}' if gender else entity_type
     return entity, entity_type

@@ -129,6 +129,12 @@ def display_narratives(store_name: str):
 
 
 def get_narratives(store_name: str) -> dict:
+    """
+    Query the specified database for ingested narratives.
+
+    :param store_name: The database/data store name
+    :return A dictionary with keys = narrative title and values = narrator name
+    """
     narrative_dict = dict()
     try:
         narrative_names = query_database('select', query_narratives, store_name)

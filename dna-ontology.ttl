@@ -66,19 +66,26 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:affiliated_agent> rdf:type owl:ObjectProperty ;
                                         rdfs:subPropertyOf <urn:ontoinsights:dna:has_holder> ;
                                         rdfs:domain <urn:ontoinsights:dna:Affiliation> ;
-                                        rdfs:range <urn:ontoinsights:dna:Agent> .
+                                        rdfs:range <urn:ontoinsights:dna:Agent> ;
+                                        rdfs:label "affiliated agent" ;
+                                        <urn:ontoinsights:dna:definition> "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property." .
 
 
 ###  urn:ontoinsights:dna:affiliated_location
 <urn:ontoinsights:dna:affiliated_location> rdf:type owl:ObjectProperty ;
                                            rdfs:domain <urn:ontoinsights:dna:Affiliation> ;
-                                           rdfs:range <urn:ontoinsights:dna:Location> .
+                                           rdfs:range <urn:ontoinsights:dna:Location> ;
+                                           rdfs:label "affiliated location" ;
+                                           <urn:ontoinsights:dna:definition> "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property." ;
+                                           <urn:ontoinsights:dna:example> "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization." .
 
 
 ###  urn:ontoinsights:dna:affiliated_with
 <urn:ontoinsights:dna:affiliated_with> rdf:type owl:ObjectProperty ;
                                        rdfs:subPropertyOf <urn:ontoinsights:dna:has_topic> ;
-                                       rdfs:domain <urn:ontoinsights:dna:Affiliation> .
+                                       rdfs:domain <urn:ontoinsights:dna:Affiliation> ;
+                                       rdfs:label "affiliated with" ;
+                                       <urn:ontoinsights:dna:definition> "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
 
 
 ###  urn:ontoinsights:dna:before
@@ -143,14 +150,19 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:has_active_agent> rdf:type owl:ObjectProperty ;
                                         rdfs:subPropertyOf <urn:ontoinsights:dna:has_agent> ;
                                         rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                        rdfs:range <urn:ontoinsights:dna:Agent> .
+                                        rdfs:range <urn:ontoinsights:dna:Agent> ;
+                                        rdfs:label "has active agent" ;
+                                        <urn:ontoinsights:dna:definition> "References an Agent who is an active/animate participant (carries out some action) in an EventAndState." .
 
 
 ###  urn:ontoinsights:dna:has_affected_agent
 <urn:ontoinsights:dna:has_affected_agent> rdf:type owl:ObjectProperty ;
                                           rdfs:subPropertyOf <urn:ontoinsights:dna:has_agent> ;
                                           rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                          rdfs:range <urn:ontoinsights:dna:Agent> .
+                                          rdfs:range <urn:ontoinsights:dna:Agent> ;
+                                          rdfs:label "has affected agent" ;
+                                          <urn:ontoinsights:dna:definition> "References an Agent who is affected by an EventAndState but does not actively participate in it." ;
+                                          <urn:ontoinsights:dna:example> "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_agent property and the attacked Person is identified using the :has_affected_agent property." .
 
 
 ###  urn:ontoinsights:dna:has_agent
@@ -165,7 +177,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:has_agent_aspect> rdf:type owl:ObjectProperty ;
                                         rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
                                         rdfs:domain <urn:ontoinsights:dna:Person> ;
-                                        rdfs:range <urn:ontoinsights:dna:AgentAspect> .
+                                        rdfs:range <urn:ontoinsights:dna:AgentAspect> ;
+                                        rdfs:label "has agent aspect" ;
+                                        <urn:ontoinsights:dna:definition> "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
 
 
 ###  urn:ontoinsights:dna:has_assessment
@@ -188,7 +202,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:has_beginning> rdf:type owl:ObjectProperty ;
                                      rdfs:subPropertyOf <urn:ontoinsights:dna:has_time> ;
                                      rdf:type owl:FunctionalProperty ;
-                                     rdfs:range <urn:ontoinsights:dna:Time> .
+                                     rdfs:range <urn:ontoinsights:dna:Time> ;
+                                     rdfs:label "has beginning" ;
+                                     <urn:ontoinsights:dna:definition> "References a Time that is the start of the existence/time frame of some entity, or that is the beginning of an Interval or Duration." .
 
 
 ###  urn:ontoinsights:dna:has_bounding_coordinate
@@ -238,11 +254,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      <urn:ontoinsights:dna:definition> "References one of the enumerated values of Direction for a RelativeDirectionLocation." .
 
 
+###  urn:ontoinsights:dna:has_earliest_beginning
+<urn:ontoinsights:dna:has_earliest_beginning> rdf:type owl:ObjectProperty ;
+                                              rdfs:subPropertyOf <urn:ontoinsights:dna:has_beginning> ;
+                                              rdf:type owl:FunctionalProperty ;
+                                              rdfs:range <urn:ontoinsights:dna:Time> ;
+                                              rdfs:label "has earliest beginning" ;
+                                              <urn:ontoinsights:dna:definition> "References a Time that is the earliest start of the existence/time frame of some entity, or that is the earliest beginning of an Interval or Duration." .
+
+
 ###  urn:ontoinsights:dna:has_end
 <urn:ontoinsights:dna:has_end> rdf:type owl:ObjectProperty ;
                                rdfs:subPropertyOf <urn:ontoinsights:dna:has_time> ;
                                rdf:type owl:FunctionalProperty ;
-                               rdfs:range <urn:ontoinsights:dna:Time> .
+                               rdfs:range <urn:ontoinsights:dna:Time> ;
+                               rdfs:label "has end" ;
+                               <urn:ontoinsights:dna:definition> "References a point in time that is the end of the existence/time frame of some entity, or that is the end of an Interval or Duration." .
 
 
 ###  urn:ontoinsights:dna:has_evidence
@@ -297,25 +324,46 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:definition> "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process." .
 
 
+###  urn:ontoinsights:dna:has_latest_end
+<urn:ontoinsights:dna:has_latest_end> rdf:type owl:ObjectProperty ;
+                                      rdfs:subPropertyOf <urn:ontoinsights:dna:has_end> ;
+                                      rdf:type owl:FunctionalProperty ;
+                                      rdfs:range <urn:ontoinsights:dna:Time> ;
+                                      rdfs:label "has latest end" ;
+                                      <urn:ontoinsights:dna:definition> "References a point in time that is the latest end of the existence/time frame of some entity, or that is the latest end of an Interval or Duration." .
+
+
 ###  urn:ontoinsights:dna:has_line_of_business
 <urn:ontoinsights:dna:has_line_of_business> rdf:type owl:ObjectProperty ;
                                             rdfs:domain <urn:ontoinsights:dna:Agent> ;
-                                            rdfs:range <urn:ontoinsights:dna:LineOfBusiness> .
+                                            rdfs:range <urn:ontoinsights:dna:LineOfBusiness> ;
+                                            rdfs:label "has line of business" ;
+                                            <urn:ontoinsights:dna:definition> "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" .
 
 
 ###  urn:ontoinsights:dna:has_location
 <urn:ontoinsights:dna:has_location> rdf:type owl:ObjectProperty ;
                                     rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                    rdfs:range <urn:ontoinsights:dna:Location> .
+                                    rdfs:range <urn:ontoinsights:dna:Location> ;
+                                    rdfs:label "has location" ;
+                                    <urn:ontoinsights:dna:definition> "References where an EventAndState occurs/occurred." .
 
 
 ###  urn:ontoinsights:dna:has_member
 <urn:ontoinsights:dna:has_member> rdf:type owl:ObjectProperty ;
-                                  rdfs:domain <urn:ontoinsights:dna:Collection> .
+                                  rdfs:domain <urn:ontoinsights:dna:Collection> ;
+                                  rdfs:label "has member" ;
+                                  <urn:ontoinsights:dna:definition> "Defines an entity that is in a (is a member of a) grouping/Collection." .
 
 
 ###  urn:ontoinsights:dna:has_next
-<urn:ontoinsights:dna:has_next> rdf:type owl:ObjectProperty .
+<urn:ontoinsights:dna:has_next> rdf:type owl:ObjectProperty ;
+                                rdfs:label "has next" ;
+                                <urn:ontoinsights:dna:definition> "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." ;
+                                <urn:ontoinsights:dna:noun_synonym> "adjacency" ,
+                                                                    "adjacent" ,
+                                                                    "following" ;
+                                <urn:ontoinsights:dna:verb_synonym> "follow" .
 
 
 ###  urn:ontoinsights:dna:has_origin
@@ -336,7 +384,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           <urn:ontoinsights:dna:Location>
                                                                         )
                                                           ] ;
-                                              rdfs:range <urn:ontoinsights:dna:PoliticalIdeology> .
+                                              rdfs:range <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                              rdfs:label "has political ideology" ;
+                                              <urn:ontoinsights:dna:definition> "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent." .
 
 
 ###  urn:ontoinsights:dna:has_provider
@@ -398,7 +448,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:has_role
 <urn:ontoinsights:dna:has_role> rdf:type owl:ObjectProperty ;
                                 rdfs:domain <urn:ontoinsights:dna:Affiliation> ;
-                                rdfs:range <urn:ontoinsights:dna:Role> .
+                                rdfs:range <urn:ontoinsights:dna:Role> ;
+                                rdfs:label "has role" ;
+                                <urn:ontoinsights:dna:definition> "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative" .
 
 
 ###  urn:ontoinsights:dna:has_season
@@ -878,7 +930,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          [ xsd:maxInclusive 12
                                                                          ]
                                                                        )
-                                                ] .
+                                                ] ;
+                                     rdfs:label "month of year" ;
+                                     <urn:ontoinsights:dna:definition> "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12." .
 
 
 ###  urn:ontoinsights:dna:numeric_duration
@@ -988,7 +1042,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                         <urn:ontoinsights:dna:AppointmentAndNomination>
                                                       )
                                         ] ;
-                            rdfs:range xsd:string .
+                            rdfs:range xsd:string ;
+                            rdfs:label "role" ;
+                            <urn:ontoinsights:dna:definition> "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
 
 
 ###  urn:ontoinsights:dna:row_number
@@ -1034,7 +1090,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      [ xsd:maxInclusive 1.0
                                                                      ]
                                                                    )
-                                            ] .
+                                            ] ;
+                                 rdfs:label "sentiment" ;
+                                 <urn:ontoinsights:dna:definition> "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)." .
 
 
 ###  urn:ontoinsights:dna:separation_interval
@@ -1134,7 +1192,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:year> rdf:type owl:DatatypeProperty ,
                                      owl:FunctionalProperty ;
                             rdfs:domain <urn:ontoinsights:dna:PointInTime> ;
-                            rdfs:range xsd:integer .
+                            rdfs:range xsd:integer ;
+                            rdfs:label "year" ;
+                            <urn:ontoinsights:dna:definition> "An integer value indicating a year using the conventions of Common Era. Note that negative values indicate BCE." .
 
 
 #################################################################
@@ -1383,13 +1443,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "drug abuse" .
 
 
-###  urn:ontoinsights:dna:Aliyah
-<urn:ontoinsights:dna:Aliyah> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:MovementTravelAndTransportation> ;
-                              rdfs:label "Aliyah" ;
-                              <urn:ontoinsights:dna:definition> "Word meaning 'ascent.' It refers to Jewish immigration to the land of Israel." .
-
-
 ###  urn:ontoinsights:dna:AngerAndAnnoyance
 <urn:ontoinsights:dna:AngerAndAnnoyance> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
@@ -1488,13 +1541,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "bore" .
 
 
-###  urn:ontoinsights:dna:Appellplatz
-<urn:ontoinsights:dna:Appellplatz> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:DesignatedArea> ;
-                                   rdfs:label "Appellplatz" ;
-                                   <urn:ontoinsights:dna:definition> "German word for the roll call square where prisoners in Nazi concentration camps were forced to assemble." .
-
-
 ###  urn:ontoinsights:dna:AppointmentAndNomination
 <urn:ontoinsights:dna:AppointmentAndNomination> rdf:type owl:Class ;
                                                 rdfs:subClassOf <urn:ontoinsights:dna:AssertionAndDeclaration> ;
@@ -1584,14 +1630,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                  rdfs:subClassOf <urn:ontoinsights:dna:MobilityImpairment> ;
                                  rdfs:label "Arthritis" ;
                                  <urn:ontoinsights:dna:definition> "A health condition related to inflammation/swelling and stiffness of a Person's joints. Note that cases of rheumatoid arthritis should also be classified as an :AutoimmuneDisease." .
-
-
-###  urn:ontoinsights:dna:Aryan
-<urn:ontoinsights:dna:Aryan> rdf:type owl:Class ;
-                             rdfs:subClassOf <urn:ontoinsights:dna:Ethnicity> ;
-                             rdfs:label "Aryan" ;
-                             <urn:ontoinsights:dna:definition> "Term used in Nazi Germany to refer to non-Jewish and non-Roma (Gypsy) Caucasians. Northern Europeans with especially \"Nordic\" features such as blonde hair and blue eyes were considered by so-called race scientists to be the most superior of Aryans, members of a \"master race.\"" ;
-                             <urn:ontoinsights:dna:noun_synonym> "Master Race" .
 
 
 ###  urn:ontoinsights:dna:AssertionAndDeclaration
@@ -5831,22 +5869,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:noun_synonym> "Zoroasterianist" .
 
 
-###  urn:ontoinsights:dna:CampOrCenterRole
-<urn:ontoinsights:dna:CampOrCenterRole> rdf:type owl:Class ;
-                                        owl:equivalentClass [ rdf:type owl:Class ;
-                                                              owl:oneOf ( <urn:ontoinsights:dna:enum:AdministrativeStaff>
-                                                                          <urn:ontoinsights:dna:enum:Commander>
-                                                                          <urn:ontoinsights:dna:enum:Guard>
-                                                                          <urn:ontoinsights:dna:enum:Kapo>
-                                                                          <urn:ontoinsights:dna:enum:MedicalStaff>
-                                                                          <urn:ontoinsights:dna:enum:Prisoner>
-                                                                          <urn:ontoinsights:dna:enum:Sonderkommando>
-                                                                        )
-                                                            ] ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ,
-                                                        <urn:ontoinsights:dna:Role> .
-
-
 ###  urn:ontoinsights:dna:Cancer
 <urn:ontoinsights:dna:Cancer> rdf:type owl:Class ;
                               rdfs:subClassOf <urn:ontoinsights:dna:HealthAndDiseaseRelated> ;
@@ -6209,16 +6231,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                        "put up a smoke screen" .
 
 
-###  urn:ontoinsights:dna:ConcentrationCamp
-<urn:ontoinsights:dna:ConcentrationCamp> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:AnthropogenicFeature> ,
-                                                         <urn:ontoinsights:dna:DesignatedArea> ;
-                                         rdfs:label "Concentration Camp" ;
-                                         <urn:ontoinsights:dna:definition> "Throughout German-occupied Europe, the Nazis established camps to detain and, if necessary, kill so-called enemies of the state, including Jews, Gypsies, political and religious opponents, members of national resistance movements, homosexuals, and others. Imprisonment in a concentration camp was of unlimited duration, was not linked to a specific act, and was not subject to any judicial review. In addition to concentration camps, the Nazi regime ran several other kinds of camps including labor camps, transit camps, prisoner-of-war camps, and killing centers." ;
-                                         <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:Appellplatz> ,
-                                                                              <urn:ontoinsights:dna:Crematorium> .
-
-
 ###  urn:ontoinsights:dna:Confidence
 <urn:ontoinsights:dna:Confidence> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
@@ -6299,6 +6311,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                         "continue" .
 
 
+###  urn:ontoinsights:dna:Contract
+<urn:ontoinsights:dna:Contract> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:Agreement> ,
+                                                <urn:ontoinsights:dna:LegalInstrument> ;
+                                rdfs:label "Contract" ;
+                                <urn:ontoinsights:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." .
+
+
 ###  urn:ontoinsights:dna:Cooperation
 <urn:ontoinsights:dna:Cooperation> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
@@ -6330,13 +6350,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                <urn:ontoinsights:dna:RespiratoryandPulmonaryDisease> ;
                                rdfs:label "Covid-19 Coronavirus" ;
                                <urn:ontoinsights:dna:definition> "A viral infection that attacks the respiratory system" .
-
-
-###  urn:ontoinsights:dna:Crematorium
-<urn:ontoinsights:dna:Crematorium> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:BuildingAndDwelling> ;
-                                   rdfs:label "Crematorium" ;
-                                   <urn:ontoinsights:dna:definition> "A facility containing a furnace for reducing dead bodies to ashes by burning." .
 
 
 ###  urn:ontoinsights:dna:CriminalActivities
@@ -6991,13 +7004,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                  <urn:ontoinsights:dna:noun_synonym> "race" .
 
 
-###  urn:ontoinsights:dna:Euthanasia
-<urn:ontoinsights:dna:Euthanasia> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:MurderAndHomicide> ;
-                                  rdfs:label "Euthanasia" ;
-                                  <urn:ontoinsights:dna:definition> "(Literally, \"good death\") Usually refers to the inducement of a painless death for a chronically or terminally ill individual. In Nazi usage, however, \"euthanasia\" was a euphemistic term for a clandestine program which targeted for systematic killing institutionalized mentally and physically disabled patients, without the consent of themselves or their families." .
-
-
 ###  urn:ontoinsights:dna:EventAndState
 <urn:ontoinsights:dna:EventAndState> rdf:type owl:Class ;
                                      rdfs:label "Event and State" ;
@@ -7271,13 +7277,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                               "political region" .
 
 
-###  urn:ontoinsights:dna:Ghetto
-<urn:ontoinsights:dna:Ghetto> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:PopulatedPlace> ;
-                              rdfs:label "Ghetto" ;
-                              <urn:ontoinsights:dna:definition> "A confined area of a city in which members of a minority group are compelled to live. The first use of the term \"ghetto\" for a section of a city in which Jews lived was in Venice, Italy, in 1516." .
-
-
 ###  urn:ontoinsights:dna:GiftAndDonation
 <urn:ontoinsights:dna:GiftAndDonation> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
@@ -7530,6 +7529,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "be hungry" ,
                                                                   "be ravenous" ,
                                                                   "starve" .
+
+
+###  urn:ontoinsights:dna:IdentificationInstrument
+<urn:ontoinsights:dna:IdentificationInstrument> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:dna:LegalInstrument> ;
+                                                rdfs:label "Identification Instrument" ;
+                                                <urn:ontoinsights:dna:definition> "A legal document that establishes who someone is, what they know, what they can do, etc." ;
+                                                <urn:ontoinsights:dna:noun_synonym> "birth certificate" ,
+                                                                                    "driver's license" ,
+                                                                                    "identification card" ,
+                                                                                    "identification papers" ,
+                                                                                    "passport" .
 
 
 ###  urn:ontoinsights:dna:IgnoringAndOverlooking
@@ -7816,18 +7827,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "wisecrack" .
 
 
-###  urn:ontoinsights:dna:KillingCenter
-<urn:ontoinsights:dna:KillingCenter> rdf:type owl:Class ;
-                                     rdfs:subClassOf <urn:ontoinsights:dna:AnthropogenicFeature> ,
-                                                     <urn:ontoinsights:dna:DesignatedArea> ;
-                                     rdfs:label "Killing Center" ;
-                                     <urn:ontoinsights:dna:definition> "The Nazis established killing centers for efficient mass murder. Unlike concentration camps, which served primarily as detention and labor centers, killing centers (also referred to as \"extermination camps\" or \"death camps\") were almost exclusively \"death factories.\" German SS and police murdered nearly 2,700,000 Jews in the killing centers either by asphyxiation with poison gas or by shooting." ;
-                                     <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:Appellplatz> ,
-                                                                          <urn:ontoinsights:dna:Crematorium> ;
-                                     <urn:ontoinsights:dna:noun_synonym> "death camp" ,
-                                                                         "extermination camp" .
-
-
 ###  urn:ontoinsights:dna:KnowledgeAndSkill
 <urn:ontoinsights:dna:KnowledgeAndSkill> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
@@ -7842,14 +7841,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:verb_synonym> "comprehend" ,
                                                                              "know" ,
                                                                              "understand" .
-
-
-###  urn:ontoinsights:dna:Kommando
-<urn:ontoinsights:dna:Kommando> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:GroupOfAgents> ,
-                                                <urn:ontoinsights:dna:Person> ;
-                                rdfs:label "Kommando" ;
-                                <urn:ontoinsights:dna:definition> "German word for detachment, such as a detachment of concentration camp prisoners at forced labor." .
 
 
 ###  urn:ontoinsights:dna:LaborAndStaffing
@@ -8545,13 +8536,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
 
 
-###  urn:ontoinsights:dna:Pogrom
-<urn:ontoinsights:dna:Pogrom> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:AttackDamageAndAssault> ;
-                              rdfs:label "Pogrom" ;
-                              <urn:ontoinsights:dna:definition> "Russian word meaning 'to wreak havoc, to demolish violently.' Historically, the term refers to violent attacks, usually planned, by local non-Jewish populations on Jews." .
-
-
 ###  urn:ontoinsights:dna:PointInTime
 <urn:ontoinsights:dna:PointInTime> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:Time> ;
@@ -8705,16 +8689,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "thwart" .
 
 
-###  urn:ontoinsights:dna:PreventiveArrest
-<urn:ontoinsights:dna:PreventiveArrest> rdf:type owl:Class ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:CaptivityAndDetention> ;
-                                        rdfs:label "Preventive Arrest" ;
-                                        <urn:ontoinsights:dna:definition> "Instrument of detention that permitted criminal police detectives to take persons suspected of engaging in criminal activities into custody without warrant or judicial review of any kind. Preventive arrest usually meant indefinite internment in a concentration camp." ;
-                                        <urn:ontoinsights:dna:noun_synonym> "Preventative Custody" ,
-                                                                            "Preventive Custody" ,
-                                                                            "Vorbeugungshaft" .
-
-
 ###  urn:ontoinsights:dna:Process
 <urn:ontoinsights:dna:Process> rdf:type owl:Class ;
                                rdfs:label "Process/Sequence" ;
@@ -8762,16 +8736,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "guarantee" ,
                                                                           "pledge" ,
                                                                           "vow" .
-
-
-###  urn:ontoinsights:dna:ProtectiveCustody
-<urn:ontoinsights:dna:ProtectiveCustody> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:CaptivityAndDetention> ;
-                                         rdfs:label "Protective Custody" ;
-                                         <urn:ontoinsights:dna:definition> "(Schutzhaft) Was an instrument of detention that permitted secret state police detectives to take persons suspected of pursuing activities hostile to state interests into custody without warrant or judicial review of any kind. Protective custody most often meant indefinite internment in a concentration camp." ;
-                                         <urn:ontoinsights:dna:noun_synonym> "Protectative Custody" ,
-                                                                             "Schutzhaft" ,
-                                                                             "protective detention" .
 
 
 ###  urn:ontoinsights:dna:ProtestAndStrike
@@ -9119,13 +9083,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                 <urn:ontoinsights:dna:definition> "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate." ;
                                                 <urn:ontoinsights:dna:noun_synonym> "need" ,
                                                                                     "reliance" .
-
-
-###  urn:ontoinsights:dna:Resettlement
-<urn:ontoinsights:dna:Resettlement> rdf:type owl:Class ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:MovementTravelAndTransportation> ;
-                                    rdfs:label "Resettlement" ;
-                                    <urn:ontoinsights:dna:definition> "A Nazi euphemism for deportation and murder." .
 
 
 ###  urn:ontoinsights:dna:Resistance
@@ -9694,13 +9651,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                               "odynophagia" .
 
 
-###  urn:ontoinsights:dna:Synagogue
-<urn:ontoinsights:dna:Synagogue> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:BuildingAndDwelling> ;
-                                 rdfs:label "Synagogue" ;
-                                 <urn:ontoinsights:dna:definition> "In Judaism, a house of worship and learning." .
-
-
 ###  urn:ontoinsights:dna:Taxes
 <urn:ontoinsights:dna:Taxes> rdf:type owl:Class ;
                              rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
@@ -9825,14 +9775,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         rdfs:label "Toy and Gaming Item" ;
                                         <urn:ontoinsights:dna:definition> "An object used in play or in a game (for recreation or competition)." ;
                                         <urn:ontoinsights:dna:example> "Examples of toys are dolls, gaming boards, playing cards, balls, etc." .
-
-
-###  urn:ontoinsights:dna:TransitCamp
-<urn:ontoinsights:dna:TransitCamp> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:AnthropogenicFeature> ,
-                                                   <urn:ontoinsights:dna:DesignatedArea> ;
-                                   rdfs:label "Transit Camp" ;
-                                   <urn:ontoinsights:dna:definition> "A temporary holding facility for Jews awaiting deportation. These camps were usually the last stop before deportation to a killing center." .
 
 
 ###  urn:ontoinsights:dna:Transport
@@ -9977,303 +9919,12 @@ rdf:label rdf:type owl:AnnotationProperty .
 #    Individuals
 #################################################################
 
-###  urn:ontoinsights:dna:AdministrativeStaff
-<urn:ontoinsights:dna:AdministrativeStaff> rdf:type owl:NamedIndividual ,
-                                                    <urn:ontoinsights:dna:CampOrCenterRole> ;
-                                           rdfs:label "Administrative Staff" ;
-                                           <urn:ontoinsights:dna:definition> "A Person who assisted in the overall management of a ConcentrationCamp or KillingCenter." .
-
-
-###  urn:ontoinsights:dna:AffiliationBetarZionism
-<urn:ontoinsights:dna:AffiliationBetarZionism> rdf:type owl:NamedIndividual ,
-                                                        <urn:ontoinsights:dna:Affiliation> ;
-                                               <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Betar> ;
-                                               <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:CameoReligion_JEW> .
-
-
-###  urn:ontoinsights:dna:AffiliationConcentrationCampNaziGermany
-<urn:ontoinsights:dna:AffiliationConcentrationCampNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                        <urn:ontoinsights:dna:Affiliation> ;
-                                                               <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:ConcentrationCamp> ;
-                                                               <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationCriminalPoliceNaziGermany
-<urn:ontoinsights:dna:AffiliationCriminalPoliceNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                     <urn:ontoinsights:dna:Affiliation> ;
-                                                            <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:CriminalPolice> ;
-                                                            <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationEinsatzgruppenOrdnungspolizei
-<urn:ontoinsights:dna:AffiliationEinsatzgruppenOrdnungspolizei> rdf:type owl:NamedIndividual ,
-                                                                         <urn:ontoinsights:dna:Affiliation> ;
-                                                                <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Einsatzgruppen> ;
-                                                                <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:Ordnungspolizei> .
-
-
-###  urn:ontoinsights:dna:AffiliationEinsatzgruppenSD
-<urn:ontoinsights:dna:AffiliationEinsatzgruppenSD> rdf:type owl:NamedIndividual ,
-                                                            <urn:ontoinsights:dna:Affiliation> ;
-                                                   <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Einsatzgruppen> ;
-                                                   <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SD> .
-
-
-###  urn:ontoinsights:dna:AffiliationEinsatzgruppenSS
-<urn:ontoinsights:dna:AffiliationEinsatzgruppenSS> rdf:type owl:NamedIndividual ,
-                                                            <urn:ontoinsights:dna:Affiliation> ;
-                                                   <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Einsatzgruppen> ;
-                                                   <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SS> .
-
-
-###  urn:ontoinsights:dna:AffiliationEinsatzgruppenSiPo
-<urn:ontoinsights:dna:AffiliationEinsatzgruppenSiPo> rdf:type owl:NamedIndividual ,
-                                                              <urn:ontoinsights:dna:Affiliation> ;
-                                                     <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Einsatzgruppen> ;
-                                                     <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SiPo> .
-
-
-###  urn:ontoinsights:dna:AffiliationEmpireOfJapan
-<urn:ontoinsights:dna:AffiliationEmpireOfJapan> rdf:type owl:NamedIndividual ,
-                                                         <urn:ontoinsights:dna:Affiliation> ;
-                                                <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:EmpireOfJapan> ;
-                                                <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:1861060> .
-
-
-###  urn:ontoinsights:dna:AffiliationFascistItaly
-<urn:ontoinsights:dna:AffiliationFascistItaly> rdf:type owl:NamedIndividual ,
-                                                        <urn:ontoinsights:dna:Affiliation> ;
-                                               <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:FacistItaly> ;
-                                               <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:3175395> .
-
-
-###  urn:ontoinsights:dna:AffiliationGeneralGovernmentPoland
-<urn:ontoinsights:dna:AffiliationGeneralGovernmentPoland> rdf:type owl:NamedIndividual ,
-                                                                   <urn:ontoinsights:dna:Affiliation> ;
-                                                          <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:GeneralGovernment> ;
-                                                          <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:798544> .
-
-
-###  urn:ontoinsights:dna:AffiliationGoringNaziGermany
-<urn:ontoinsights:dna:AffiliationGoringNaziGermany> rdf:type owl:NamedIndividual ,
-                                                             <urn:ontoinsights:dna:Affiliation> ;
-                                                    <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:GoringHermann> ;
-                                                    <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationHimmlerSS
-<urn:ontoinsights:dna:AffiliationHimmlerSS> rdf:type owl:NamedIndividual ,
-                                                     <urn:ontoinsights:dna:Affiliation> ;
-                                            <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:HimmlerHeinrich> ;
-                                            <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SS> .
-
-
-###  urn:ontoinsights:dna:AffiliationHitlerNaziGermany
-<urn:ontoinsights:dna:AffiliationHitlerNaziGermany> rdf:type owl:NamedIndividual ,
-                                                             <urn:ontoinsights:dna:Affiliation> ;
-                                                    <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:HitlerAdolf> ;
-                                                    <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationJewishPersonsJew
-<urn:ontoinsights:dna:AffiliationJewishPersonsJew> rdf:type owl:NamedIndividual ,
-                                                            <urn:ontoinsights:dna:Affiliation> ;
-                                                   <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:JewishPersons> ;
-                                                   <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:CameoReligion_JEW> .
-
-
-###  urn:ontoinsights:dna:AffiliationKillingCenterNaziGermany
-<urn:ontoinsights:dna:AffiliationKillingCenterNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                    <urn:ontoinsights:dna:Affiliation> ;
-                                                           <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:KillingCenter> ;
-                                                           <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationMengeleAuschwitz
-<urn:ontoinsights:dna:AffiliationMengeleAuschwitz> rdf:type owl:NamedIndividual ,
-                                                            <urn:ontoinsights:dna:Affiliation> ;
-                                                   <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:MengeleJosef> ;
-                                                   <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:AuschwitzConcentrationCamp> ;
-                                                   <urn:ontoinsights:dna:has_role> <urn:ontoinsights:dna:MedicalStaff> .
-
-
-###  urn:ontoinsights:dna:AffiliationMengeleSS
-<urn:ontoinsights:dna:AffiliationMengeleSS> rdf:type owl:NamedIndividual ,
-                                                     <urn:ontoinsights:dna:Affiliation> ;
-                                            <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:MengeleJosef> ;
-                                            <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:SS> .
-
-
-###  urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty
-<urn:ontoinsights:dna:AffiliationNaziGermanyNaziParty> rdf:type owl:NamedIndividual ,
-                                                                <urn:ontoinsights:dna:Affiliation> ;
-                                                       <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:NaziParty> ;
-                                                       <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationOrdnungspolizeiNaziGermany
-<urn:ontoinsights:dna:AffiliationOrdnungspolizeiNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                      <urn:ontoinsights:dna:Affiliation> ;
-                                                             <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Orpo> ;
-                                                             <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationPeoplesCourtNaziGermany
-<urn:ontoinsights:dna:AffiliationPeoplesCourtNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                   <urn:ontoinsights:dna:Affiliation> ;
-                                                          <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:PeoplesCourt> ;
-                                                          <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationRedArmySovietUnion
-<urn:ontoinsights:dna:AffiliationRedArmySovietUnion> rdf:type owl:NamedIndividual ,
-                                                              <urn:ontoinsights:dna:Affiliation> ;
-                                                     <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:RedArmy> ;
-                                                     <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:2017370> .
-
-
-###  urn:ontoinsights:dna:AffiliationReichsgerichtGermany
-<urn:ontoinsights:dna:AffiliationReichsgerichtGermany> rdf:type owl:NamedIndividual ,
-                                                                <urn:ontoinsights:dna:Affiliation> ;
-                                                       <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Reichsgericht> ;
-                                                       <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:geonames:2921044> .
-
-
-###  urn:ontoinsights:dna:AffiliationReinhardRSHA
-<urn:ontoinsights:dna:AffiliationReinhardRSHA> rdf:type owl:NamedIndividual ,
-                                                        <urn:ontoinsights:dna:Affiliation> ;
-                                               <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:HeydrichReinhard> ;
-                                               <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:ReichSecurityMainOffice> .
-
-
-###  urn:ontoinsights:dna:AffiliationSANaziGermany
-<urn:ontoinsights:dna:AffiliationSANaziGermany> rdf:type owl:NamedIndividual ,
-                                                         <urn:ontoinsights:dna:Affiliation> ;
-                                                <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:SA> ;
-                                                <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationSSNaziGermany
-<urn:ontoinsights:dna:AffiliationSSNaziGermany> rdf:type owl:NamedIndividual ,
-                                                         <urn:ontoinsights:dna:Affiliation> ;
-                                                <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:SS> ;
-                                                <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationSpecialCourtNaziGermany
-<urn:ontoinsights:dna:AffiliationSpecialCourtNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                   <urn:ontoinsights:dna:Affiliation> ;
-                                                          <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:SpecialCourt> ;
-                                                          <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic
-<urn:ontoinsights:dna:AffiliationvonHindenburgWeimarRepublic> rdf:type owl:NamedIndividual ,
-                                                                       <urn:ontoinsights:dna:Affiliation> ;
-                                                              <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:vonHindenburgPaul> ;
-                                                              <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:WeimarRepublic> ;
-                                                              <urn:ontoinsights:dna:role> "President" .
-
-
-###  urn:ontoinsights:dna:AffliationSynagogueJew
-<urn:ontoinsights:dna:AffliationSynagogueJew> rdf:type owl:NamedIndividual ,
-                                                       <urn:ontoinsights:dna:Affiliation> ;
-                                              <urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:Synagogue> ;
-                                              <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:CameoReligion_JEW> .
-
-
-###  urn:ontoinsights:dna:AffliationVolksgemeinschaftNaziGermany
-<urn:ontoinsights:dna:AffliationVolksgemeinschaftNaziGermany> rdf:type owl:NamedIndividual ,
-                                                                       <urn:ontoinsights:dna:Affiliation> ;
-                                                              <urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:Volksgemeinschaft> ;
-                                                              <urn:ontoinsights:dna:affiliated_with> <urn:ontoinsights:dna:NaziGermany> .
-
-
-###  urn:ontoinsights:dna:AgudatIsrael
-<urn:ontoinsights:dna:AgudatIsrael> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:PoliticalParty> ;
-                                    rdfs:label "Agudat Israel" ;
-                                    <urn:ontoinsights:dna:definition> "(In Yiddish, Agudas Yisroel) Was a political party founded in Kattowitz in Poland in 1912 to represent Orthodox Jews. Although the founding conference of the primary political part of Orthodox Jewry took place in May of 1912, the serious organization of Agudat Israel in Poland began in 1916. It was internal Jewish developments, rather than external factors, which spurred the anti-Zionist Orthodox to organize politically for the first time. Agudat Israel represented Jews who wished to regulate all aspects of life according to tradition, with the assumption that this obligated Jews to manifest strong loyalty and peace toward the state in which they lived. Agudat Israel, therefore, felt threatened by Zionist activity (including that of the religious Zionist party, Mizrachi), its culture and nationalism, as well as by the Bund's secularist understanding of its mission." ;
-                                    <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1912> ;
-                                    <urn:ontoinsights:dna:noun_synonym> "Agudas Yisroel" .
-
-
-###  urn:ontoinsights:dna:AlliedPowers
-<urn:ontoinsights:dna:AlliedPowers> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:GeopoliticalEntity> ,
-                                             <urn:ontoinsights:dna:GroupOfAgents> ;
-                                    rdfs:label "Allied Powers" ;
-                                    <urn:ontoinsights:dna:definition> "(1939-1945) A military coalition (mainly) between the United Kingdom, United States, Soviet Union and China. Membership in the Allied Powers varied over the course of WWII." ;
-                                    <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1939> ;
-                                    <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                                    <urn:ontoinsights:dna:has_member> <urn:ontoinsights:geonames:1814991> ,
-                                                                      <urn:ontoinsights:geonames:2017370> ,
-                                                                      <urn:ontoinsights:geonames:2635167> ,
-                                                                      <urn:ontoinsights:geonames:6252001> ;
-                                    <urn:ontoinsights:dna:noun_synonym> "Unied Nations" .
-
-
-###  urn:ontoinsights:dna:Antisemitism
-<urn:ontoinsights:dna:Antisemitism> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Belief> ,
-                                             <urn:ontoinsights:dna:HatredBitternessAndDisgust> ;
-                                    rdfs:label "Antisemitism" ;
-                                    <urn:ontoinsights:dna:definition> "Hostility toward or hatred of Jews as a religious or ethnic group, often accompanied by social, economic, or political discrimination." ;
-                                    <urn:ontoinsights:dna:has_affected_agent> <urn:ontoinsights:dna:JewishPersons> ;
-                                    <urn:ontoinsights:dna:sentiment> -1.0 .
-
-
 ###  urn:ontoinsights:dna:Autumn
 <urn:ontoinsights:dna:Autumn> rdf:type owl:NamedIndividual ,
                                        <urn:ontoinsights:dna:Season> ;
                               rdfs:label "Autumn" ;
                               <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
                               <urn:ontoinsights:dna:noun_synonym> "fall" .
-
-
-###  urn:ontoinsights:dna:AxisPowers
-<urn:ontoinsights:dna:AxisPowers> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:GeopoliticalEntity> ,
-                                           <urn:ontoinsights:dna:GroupOfAgents> ;
-                                  rdfs:label "Axis Powers" ;
-                                  <urn:ontoinsights:dna:definition> "(1936-1945) A military coalition (mainly) between Nazi Germany, fascist Italy (under Mussolini) and the Empire of Japan (under Emperor Hirohito). Membership in the Axis Powers varied over the course of WWII. The coalition was formally defined by the Tripartite Pact in September 1940." ;
-                                  <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1936> ;
-                                  <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                                  <urn:ontoinsights:dna:has_member> <urn:ontoinsights:dna:EmpireOfJapan> ,
-                                                                    <urn:ontoinsights:dna:KingdomOfItaly> ,
-                                                                    <urn:ontoinsights:dna:NaziGermany> ;
-                                  <urn:ontoinsights:dna:noun_synonym> "Rome-Berlin Axis" .
-
-
-###  urn:ontoinsights:dna:Betar
-<urn:ontoinsights:dna:Betar> rdf:type owl:NamedIndividual ,
-                                      <urn:ontoinsights:dna:Organization> ;
-                             rdfs:label "Betar" ;
-                             <urn:ontoinsights:dna:definition> "Youth group affiliated with Revisionist Zionism established in 1923 in Riga, Latvia. The name was formed from the initials of Brit Yosef Trumpeldor, Joseph Trumpeldor Alliance." ;
-                             <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1923> .
-
-
-###  urn:ontoinsights:dna:Bund
-<urn:ontoinsights:dna:Bund> rdf:type owl:NamedIndividual ,
-                                     <urn:ontoinsights:dna:PoliticalParty> ;
-                            rdfs:label "Bund" ;
-                            <urn:ontoinsights:dna:definition> "Abbreviation in Yiddish for 'Algemeyner Yidisher Arbeter Bund in Lite, Poyln un Rusland'. The General Workers' Union was the Jewish Socialist party. Founded in 1897 in Vilna, Lithuania, it soon solidified its ideology: for autonomism, devoted to Yiddish language and culture, and secular nationalism. It proclaimed for Jews to live in 'Doykeit' ('hereness'), an ideological perspective that supported changes in the place where Jews had lived for a millennium. The Bund embraced three major groups: parts of the working class, the radical intelligentsia and the semi-intelligentsia, and those Jews that lacked sufficient general education but were steeped in Jewish culture. It took on formidable battles against the Zionists, but occasionally collaborated in educational efforts with the Poalei Tzion, a socialist and Yiddish-based Zionist party. It helped spread many educational institutions and organizations for adults and youth, as well as important training in self-defense." ;
-                            <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1897> ;
-                            <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1921> ;
-                            <urn:ontoinsights:dna:noun_synonym> "General Jewish Labour Bund" ,
-                                                                "General Workers Union" .
-
-
-###  urn:ontoinsights:dna:CampOrCenterRole
-<urn:ontoinsights:dna:CampOrCenterRole> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:Role> .
-
-
-###  urn:ontoinsights:dna:Commander
-<urn:ontoinsights:dna:Commander> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:CampOrCenterRole> ;
-                                 rdfs:label "Commander" ;
-                                 <urn:ontoinsights:dna:definition> "A Person in charge of/managing a ConcentrationCamp or KillingCenter." .
 
 
 ###  urn:ontoinsights:dna:Domain_Events
@@ -10291,71 +9942,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                  <urn:ontoinsights:dna:definition> "A period of the year when there is low rainfall, typically describing a time of year in the tropics." .
 
 
-###  urn:ontoinsights:dna:Einsatzgruppen
-<urn:ontoinsights:dna:Einsatzgruppen> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliceForce> ;
-                                      rdfs:label "Einsatzgruppen" ;
-                                      <urn:ontoinsights:dna:definition> "Mobile units of the German Security Police and SD augmented by Order Police and Waffen-SS personnel. It is a German word translated into English literally as 'special action groups.' Einsatzgruppen are also often referred to in English as 'mobile killing units.' They were special units of the German Security Police (Sicherheitspolizei, SiPo) and the Security Service (Sicherheitsdienst, SD), augmented by Order Police and Waffen-SS personnel, created as early as 1938. Einsatzgruppen were assigned for duty in territories newly seized by the German armed forces. Their task was to carry out various security measures, such as identifying and neutralizing potential enemies of German rule, seizing important sites and preventing sabotage, and recruiting collaborators and establishing intelligence networks. In Poland in 1939, these units were assigned to shoot Polish intellectuals and to concentrate the Jewish population into large cities. After the German invasion of the Soviet Union in 1941, Einsatzgruppen personnel killed Jews, Soviet political commissars, Gypsies (Roma), mentally disabled persons, and other perceived \"racial\" and ideological enemies, usually by mass shootings." .
-
-
-###  urn:ontoinsights:dna:EmpireOfJapan
-<urn:ontoinsights:dna:EmpireOfJapan> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:GeopoliticalEntity> ;
-                                     rdfs:label "Empire of Japan" ;
-                                     <urn:ontoinsights:dna:definition> "(1922-1943) The government of Japan under three emperors, ending with Emperor Showa (Hirohito)." ;
-                                     <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1868> ;
-                                     <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1947> ;
-                                     <urn:ontoinsights:dna:has_political_ideology> <urn:ontoinsights:dna:enum:Oligarchy> .
-
-
-###  urn:ontoinsights:dna:FascistItaly
-<urn:ontoinsights:dna:FascistItaly> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:GeopoliticalEntity> ;
-                                    rdfs:label "Fascist Italy" ;
-                                    <urn:ontoinsights:dna:definition> "(1922-1943) The government of Italy under Benito Mussolini and the National Fascist Party." ;
-                                    <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1922> ;
-                                    <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1943> ;
-                                    <urn:ontoinsights:dna:has_political_ideology> <urn:ontoinsights:dna:enum:Fascism> ;
-                                    <urn:ontoinsights:dna:noun_synonym> "Kingdom of Italy" .
-
-
-###  urn:ontoinsights:dna:FinalSolution
-<urn:ontoinsights:dna:FinalSolution> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:LawAndPolicy> ;
-                                     rdfs:label "Final Solution" ;
-                                     <urn:ontoinsights:dna:definition> "Is a shortened version of the Nazi term, 'the Final Solution of the Jewish Question,' (die Endlosung der Judenfrage), which refers to the systematic mass destruction of Europe's Jews." ;
-                                     <urn:ontoinsights:dna:has_active_agent> <urn:ontoinsights:dna:NaziGermany> ;
-                                     <urn:ontoinsights:dna:has_location> <urn:ontoinsights:geonames:6255148> .
-
-
-###  urn:ontoinsights:dna:GeneralGovernment
-<urn:ontoinsights:dna:GeneralGovernment> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:GeopoliticalEntity> ,
-                                                  <urn:ontoinsights:dna:OccupiedArea> ;
-                                         rdfs:label "General Government" ;
-                                         <urn:ontoinsights:dna:definition> "That part of German-occupied Poland not directly annexed to Germany, attached to German East Prussia, or incorporated into the German-occupied Soviet Union." ;
-                                         <urn:ontoinsights:dna:noun_synonym> "Generalgouvernement" .
-
-
-###  urn:ontoinsights:dna:Gestapo
-<urn:ontoinsights:dna:Gestapo> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PoliceForce> ;
-                               rdfs:label "Gestapo" ;
-                               <urn:ontoinsights:dna:definition> "The German Secret State Police (Geheime Staatspolizei) which was under SS control. It was responsible for investigating political crimes and opposition activities." ;
-                               <urn:ontoinsights:dna:noun_synonym> "Geheime Staatspolizei" ,
-                                                                   "Secret State Police" .
-
-
-###  urn:ontoinsights:dna:GoringHermann
-<urn:ontoinsights:dna:GoringHermann> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:Person> ;
-                                     rdfs:label "Goring, Hermann" ,
-                                                "Hermann Goring" ;
-                                     <urn:ontoinsights:dna:definition> "(1893–1946) A German politician and commander-in-chief of the Luftwaffe (German air force)." ;
-                                     <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1893> ;
-                                     <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1946> .
-
-
 ###  urn:ontoinsights:dna:GrowingSeason
 <urn:ontoinsights:dna:GrowingSeason> rdf:type owl:NamedIndividual ,
                                               <urn:ontoinsights:dna:Season> ;
@@ -10363,400 +9949,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'." .
 
 
-###  urn:ontoinsights:dna:Guard
-<urn:ontoinsights:dna:Guard> rdf:type owl:NamedIndividual ,
-                                      <urn:ontoinsights:dna:CampOrCenterRole> ;
-                             rdfs:label "Guard" ;
-                             <urn:ontoinsights:dna:definition> "A Person responsible for protecting the staff and controlling the prisoners at a ConcentrationCamp or KillingCenter." .
-
-
-###  urn:ontoinsights:dna:HeydrichReinhard
-<urn:ontoinsights:dna:HeydrichReinhard> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:Person> ;
-                                        rdfs:label "Heydrich, Reinhard" ,
-                                                   "Reinhard Heydrich" ;
-                                        <urn:ontoinsights:dna:definition> "(1904–1942) SS General and chief of the Security Police and SD. Sometime in December 1940, Heydrich was tasked with developing a \"Final Solution\" of the Jewish question in Europe." ;
-                                        <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1904> ;
-                                        <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1942> .
-
-
-###  urn:ontoinsights:dna:HimmlerHeinrich
-<urn:ontoinsights:dna:HimmlerHeinrich> rdf:type owl:NamedIndividual ,
-                                                <urn:ontoinsights:dna:Person> ;
-                                       rdfs:label "Heinrich Himmler" ,
-                                                  "Himmler, Heinrich" ;
-                                       <urn:ontoinsights:dna:definition> "(1900–1945) Reichsführer-SS (Reich Leader of the SS) and Chief of German Police, a position which included supreme command over the Gestapo, the concentration camps, and the Waffen-SS. After 1943, Himmler was Minister of the Interior of Nazi Germany, principal planner for the aim of Nazi Germany to kill all European Jews." ;
-                                       <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1900> ;
-                                       <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> .
-
-
-###  urn:ontoinsights:dna:HitlerAdolf
-<urn:ontoinsights:dna:HitlerAdolf> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Person> ;
-                                   rdfs:label "Adolf Hitler" ,
-                                              "Hitler, Adolf" ;
-                                   <urn:ontoinsights:dna:definition> "(1889–1945) Führer (leader) of the National Socialist (Nazi) movement (1921–1945); Reich Chancellor of Germany 1933–1945; Führer of the German Nation (1934–1945)." ;
-                                   <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1889> ;
-                                   <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> .
-
-
-###  urn:ontoinsights:dna:Holocaust
-<urn:ontoinsights:dna:Holocaust> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:LawAndPolicy> ;
-                                 rdfs:label "Holocaust" ;
-                                 <urn:ontoinsights:dna:definition> "The Holocaust was the state-sponsored systematic persecution and annihilation of European Jewry by Nazi Germany and its collaborators between 1933 and 1945. Jews were the primary victims. Six million were murdered." ;
-                                 <urn:ontoinsights:dna:has_active_agent> <urn:ontoinsights:dna:NaziGermany> ;
-                                 <urn:ontoinsights:dna:has_location> <urn:ontoinsights:geonames:6255148> .
-
-
-###  urn:ontoinsights:dna:JewishPersons
-<urn:ontoinsights:dna:JewishPersons> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:GroupOfAgents> ,
-                                              <urn:ontoinsights:dna:Person> ;
-                                     rdfs:label "Jewish persons" ;
-                                     <urn:ontoinsights:dna:has_agent_aspect> <urn:ontoinsights:dna:CameoEthnicity_jew> .
-
-
-###  urn:ontoinsights:dna:Kapo
-<urn:ontoinsights:dna:Kapo> rdf:type owl:NamedIndividual ,
-                                     <urn:ontoinsights:dna:CampOrCenterRole> ;
-                            rdfs:label "Kapo" ;
-                            <urn:ontoinsights:dna:definition> "A concentration camp prisoner selected to oversee other prisoners on labor details. The term is often used generically for any concentration camp prisoner to whom the SS gave authority over other prisoners." .
-
-
-###  urn:ontoinsights:dna:Kripo
-<urn:ontoinsights:dna:Kripo> rdf:type owl:NamedIndividual ,
-                                      <urn:ontoinsights:dna:PoliceForce> ;
-                             rdfs:label "Kripo" ;
-                             <urn:ontoinsights:dna:definition> "German police detective force responsible for investigating non-political crimes." ;
-                             <urn:ontoinsights:dna:noun_synonym> "Criminal Police" ,
-                                                                 "Kriminalpolizei" .
-
-
-###  urn:ontoinsights:dna:MedicalStaff
-<urn:ontoinsights:dna:MedicalStaff> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:CampOrCenterRole> ;
-                                    rdfs:label "Medical Staff" ;
-                                    <urn:ontoinsights:dna:definition> "A Person who was part of the medical/research team at a ConcentrationCamp or KillingCenter." .
-
-
-###  urn:ontoinsights:dna:MengeleJosef
-<urn:ontoinsights:dna:MengeleJosef> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Person> ;
-                                    rdfs:label "Josef Mengele" ,
-                                               "Mengele, Josef" ;
-                                    <urn:ontoinsights:dna:definition> "(1911–1979) SS physician assigned to Auschwitz; notorious for conducting so-called medical experiments on inmates, especially twins and dwarfs." ;
-                                    <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1911> ;
-                                    <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1979> .
-
-
-###  urn:ontoinsights:dna:NaziGermany
-<urn:ontoinsights:dna:NaziGermany> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:GeopoliticalEntity> ;
-                                   rdfs:label "Nazi Germany" ;
-                                   <urn:ontoinsights:dna:definition> "(1933-1945) The government of Germany under Adolf Hitler and the Nazi political party." ;
-                                   <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1933> ;
-                                   <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                                   <urn:ontoinsights:dna:has_location> <urn:ontoinsights:geonames:2921044> ;
-                                   <urn:ontoinsights:dna:has_political_ideology> <urn:ontoinsights:dna:enum:Authoritarianism> ;
-                                   <urn:ontoinsights:dna:noun_synonym> "German Reich" ,
-                                                                       "Third Reich" .
-
-
-###  urn:ontoinsights:dna:NaziParty
-<urn:ontoinsights:dna:NaziParty> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:PoliticalParty> ;
-                                 rdfs:label "Nazi Party" ;
-                                 <urn:ontoinsights:dna:noun_synonym> "NSDAP" ,
-                                                                     "National Socialist German Workers' Party" ,
-                                                                     "Nationalsozialistische Deutsche Arbeiterpartei" .
-
-
 ###  urn:ontoinsights:dna:OntoInsights
 <urn:ontoinsights:dna:OntoInsights> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Organization> ;
                                     rdfs:label "OntoInsights, LLC" .
-
-
-###  urn:ontoinsights:dna:Orpo
-<urn:ontoinsights:dna:Orpo> rdf:type owl:NamedIndividual ,
-                                     <urn:ontoinsights:dna:PoliceForce> ;
-                            rdfs:label "Orpo" ;
-                            <urn:ontoinsights:dna:definition> "Regular uniformed German police force. Central Headquarters were in Berlin. Municipal Police (Schutzpolizei) served as the urban police forces. Gendarmerie, or rural police, served in the countryside. There were also larger units of Order Police called Police Battalions." ;
-                            <urn:ontoinsights:dna:noun_synonym> "Order Police" ,
-                                                                "Ordnungspolizei" .
-
-
-###  urn:ontoinsights:dna:PeoplesCourt
-<urn:ontoinsights:dna:PeoplesCourt> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Organization> ;
-                                    rdfs:label "People's Court" ;
-                                    <urn:ontoinsights:dna:definition> "A Nazi court with jurisdiction over treason and other politically motivated crimes. It dealt summary justice without right of appeal to all those accused of crimes against the Führer, Adolf Hitler, and against the government of the Third Reich." ;
-                                    <urn:ontoinsights:dna:has_line_of_business> <urn:ontoinsights:dna:LegalAndJudicialActivities> ;
-                                    <urn:ontoinsights:dna:noun_synonym> "Volksgericht" .
-
-
-###  urn:ontoinsights:dna:PiT1847
-<urn:ontoinsights:dna:PiT1847> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1847" ;
-                               <urn:ontoinsights:dna:year> 1847 .
-
-
-###  urn:ontoinsights:dna:PiT1868
-<urn:ontoinsights:dna:PiT1868> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1868" ;
-                               <urn:ontoinsights:dna:year> 1868 .
-
-
-###  urn:ontoinsights:dna:PiT1871
-<urn:ontoinsights:dna:PiT1871> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1871" ;
-                               <urn:ontoinsights:dna:year> 1871 .
-
-
-###  urn:ontoinsights:dna:PiT1877
-<urn:ontoinsights:dna:PiT1877> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1877" ;
-                               <urn:ontoinsights:dna:year> 1877 .
-
-
-###  urn:ontoinsights:dna:PiT1889
-<urn:ontoinsights:dna:PiT1889> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1889" ;
-                               <urn:ontoinsights:dna:year> 1889 .
-
-
-###  urn:ontoinsights:dna:PiT1893
-<urn:ontoinsights:dna:PiT1893> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1893" ;
-                               <urn:ontoinsights:dna:year> 1893 .
-
-
-###  urn:ontoinsights:dna:PiT1897
-<urn:ontoinsights:dna:PiT1897> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1897" ;
-                               <urn:ontoinsights:dna:year> 1897 .
-
-
-###  urn:ontoinsights:dna:PiT1900
-<urn:ontoinsights:dna:PiT1900> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1900" ;
-                               <urn:ontoinsights:dna:year> 1900 .
-
-
-###  urn:ontoinsights:dna:PiT1904
-<urn:ontoinsights:dna:PiT1904> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1904" ;
-                               <urn:ontoinsights:dna:year> 1904 .
-
-
-###  urn:ontoinsights:dna:PiT1911
-<urn:ontoinsights:dna:PiT1911> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1911" ;
-                               <urn:ontoinsights:dna:year> 1911 .
-
-
-###  urn:ontoinsights:dna:PiT1912
-<urn:ontoinsights:dna:PiT1912> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1912" ;
-                               <urn:ontoinsights:dna:year> 1912 .
-
-
-###  urn:ontoinsights:dna:PiT1917
-<urn:ontoinsights:dna:PiT1917> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1917" ;
-                               <urn:ontoinsights:dna:year> 1917 .
-
-
-###  urn:ontoinsights:dna:PiT1919
-<urn:ontoinsights:dna:PiT1919> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1919" ;
-                               <urn:ontoinsights:dna:year> 1919 .
-
-
-###  urn:ontoinsights:dna:PiT1921
-<urn:ontoinsights:dna:PiT1921> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1921" ;
-                               <urn:ontoinsights:dna:year> 1921 .
-
-
-###  urn:ontoinsights:dna:PiT1922
-<urn:ontoinsights:dna:PiT1922> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1922" ;
-                               <urn:ontoinsights:dna:year> 1922 .
-
-
-###  urn:ontoinsights:dna:PiT1923
-<urn:ontoinsights:dna:PiT1923> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1923" ;
-                               <urn:ontoinsights:dna:year> 1923 .
-
-
-###  urn:ontoinsights:dna:PiT1933
-<urn:ontoinsights:dna:PiT1933> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1933" ;
-                               <urn:ontoinsights:dna:year> 1933 .
-
-
-###  urn:ontoinsights:dna:PiT1934
-<urn:ontoinsights:dna:PiT1934> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1934" ;
-                               <urn:ontoinsights:dna:year> 1934 .
-
-
-###  urn:ontoinsights:dna:PiT1935
-<urn:ontoinsights:dna:PiT1935> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1935" ;
-                               <urn:ontoinsights:dna:year> 1935 .
-
-
-###  urn:ontoinsights:dna:PiT1936
-<urn:ontoinsights:dna:PiT1936> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1936" ;
-                               <urn:ontoinsights:dna:year> 1936 .
-
-
-###  urn:ontoinsights:dna:PiT1937
-<urn:ontoinsights:dna:PiT1937> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1937" ;
-                               <urn:ontoinsights:dna:year> 1937 .
-
-
-###  urn:ontoinsights:dna:PiT1938
-<urn:ontoinsights:dna:PiT1938> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1938" ;
-                               <urn:ontoinsights:dna:year> 1938 .
-
-
-###  urn:ontoinsights:dna:PiT1939
-<urn:ontoinsights:dna:PiT1939> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1939" ;
-                               <urn:ontoinsights:dna:year> 1939 .
-
-
-###  urn:ontoinsights:dna:PiT1940
-<urn:ontoinsights:dna:PiT1940> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1940" ;
-                               <urn:ontoinsights:dna:year> 1940 .
-
-
-###  urn:ontoinsights:dna:PiT1941
-<urn:ontoinsights:dna:PiT1941> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1941" ;
-                               <urn:ontoinsights:dna:year> 1941 .
-
-
-###  urn:ontoinsights:dna:PiT1942
-<urn:ontoinsights:dna:PiT1942> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1942" ;
-                               <urn:ontoinsights:dna:year> 1942 .
-
-
-###  urn:ontoinsights:dna:PiT1943
-<urn:ontoinsights:dna:PiT1943> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1943" ;
-                               <urn:ontoinsights:dna:year> 1943 .
-
-
-###  urn:ontoinsights:dna:PiT1944
-<urn:ontoinsights:dna:PiT1944> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1944" ;
-                               <urn:ontoinsights:dna:year> 1944 .
-
-
-###  urn:ontoinsights:dna:PiT1945
-<urn:ontoinsights:dna:PiT1945> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1945" ;
-                               <urn:ontoinsights:dna:year> 1945 .
-
-
-###  urn:ontoinsights:dna:PiT1946
-<urn:ontoinsights:dna:PiT1946> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1946" ;
-                               <urn:ontoinsights:dna:year> 1946 .
-
-
-###  urn:ontoinsights:dna:PiT1947
-<urn:ontoinsights:dna:PiT1947> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1947" ;
-                               <urn:ontoinsights:dna:year> 1947 .
-
-
-###  urn:ontoinsights:dna:PiT1979
-<urn:ontoinsights:dna:PiT1979> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:PointInTime> ;
-                               rdfs:label "1979" ;
-                               <urn:ontoinsights:dna:year> 1979 .
-
-
-###  urn:ontoinsights:dna:PiTJuly_1914
-<urn:ontoinsights:dna:PiTJuly_1914> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:PointInTime> ;
-                                    rdfs:label "July 1914" ;
-                                    <urn:ontoinsights:dna:month_of_year> 7 ;
-                                    <urn:ontoinsights:dna:year> 1914 .
-
-
-###  urn:ontoinsights:dna:PiTNovember_1918
-<urn:ontoinsights:dna:PiTNovember_1918> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:PointInTime> ;
-                                        rdfs:label "November 1918" ;
-                                        <urn:ontoinsights:dna:month_of_year> 11 ;
-                                        <urn:ontoinsights:dna:year> 1918 .
-
-
-###  urn:ontoinsights:dna:PiTSeptember_1939
-<urn:ontoinsights:dna:PiTSeptember_1939> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:PointInTime> ;
-                                         rdfs:label "September 1939" ;
-                                         <urn:ontoinsights:dna:month_of_year> 9 ;
-                                         <urn:ontoinsights:dna:year> 1939 .
-
-
-###  urn:ontoinsights:dna:PiTSeptember_1945
-<urn:ontoinsights:dna:PiTSeptember_1945> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:PointInTime> ;
-                                         rdfs:label "September 1945" ;
-                                         <urn:ontoinsights:dna:month_of_year> 9 ;
-                                         <urn:ontoinsights:dna:year> 1945 .
-
-
-###  urn:ontoinsights:dna:Prisoner
-<urn:ontoinsights:dna:Prisoner> rdf:type owl:NamedIndividual ,
-                                         <urn:ontoinsights:dna:CampOrCenterRole> ;
-                                rdfs:label "Prisoner" ;
-                                <urn:ontoinsights:dna:definition> "A Person confined in a ConcentrationCamp or KillingCenter." .
 
 
 ###  urn:ontoinsights:dna:RainySeason
@@ -10768,155 +9964,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                        "wet season" .
 
 
-###  urn:ontoinsights:dna:RedArmy
-<urn:ontoinsights:dna:RedArmy> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:ArmedForce> ;
-                               rdfs:label "Red Army" ;
-                               <urn:ontoinsights:dna:definition> "The army of the Soviet Union." ;
-                               <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1917> ;
-                               <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1946> ;
-                               <urn:ontoinsights:dna:noun_synonym> "Workers' and Peasants' Red Army" .
-
-
-###  urn:ontoinsights:dna:ReichCommissariatOstland
-<urn:ontoinsights:dna:ReichCommissariatOstland> rdf:type owl:NamedIndividual ,
-                                                         <urn:ontoinsights:dna:OccupiedArea> ;
-                                                rdfs:label "Reich Commissariat Ostland" ;
-                                                <urn:ontoinsights:dna:definition> "A German civilian occupation region that included the Baltic States and most of Belarus." ;
-                                                <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:453733> ,
-                                                                                     <urn:ontoinsights:geonames:458258> ,
-                                                                                     <urn:ontoinsights:geonames:597427> ,
-                                                                                     <urn:ontoinsights:geonames:630336> ;
-                                                <urn:ontoinsights:dna:noun_synonym> "Reichskommissariat Ostland" .
-
-
-###  urn:ontoinsights:dna:ReichLawGazette
-<urn:ontoinsights:dna:ReichLawGazette> rdf:type owl:NamedIndividual ,
-                                                <urn:ontoinsights:dna:Publication> ;
-                                       rdfs:label "Reich Law Gazette" ;
-                                       <urn:ontoinsights:dna:definition> "The legal register for the Reich since 1871. Since 1922 the Gazette had two parts: Part I contained laws, decrees, and rulings having the force of law, and Part II contained international treaties and agreements between the German Reich and other states." ;
-                                       <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1871> ;
-                                       <urn:ontoinsights:dna:noun_synonym> "Reichsgesetzblatt" .
-
-
-###  urn:ontoinsights:dna:ReichSecurityMainOffice
-<urn:ontoinsights:dna:ReichSecurityMainOffice> rdf:type owl:NamedIndividual ,
-                                                        <urn:ontoinsights:dna:Organization> ;
-                                               rdfs:label "Reich Security Main Office" ;
-                                               <urn:ontoinsights:dna:definition> "The central offices of the Gestapo, the Kripo, and the SD. Commanded by Reinhard Heydrich and, later, Ernst Kaltenbrunner." ;
-                                               <urn:ontoinsights:dna:has_member> <urn:ontoinsights:dna:SD> ,
-                                                                                 <urn:ontoinsights:dna:SiPo> ;
-                                               <urn:ontoinsights:dna:noun_synonym> "RSHA" ,
-                                                                                   "Reichssicherheitshauptamt" .
-
-
-###  urn:ontoinsights:dna:ReichsgauWarthegau
-<urn:ontoinsights:dna:ReichsgauWarthegau> rdf:type owl:NamedIndividual ,
-                                                   <urn:ontoinsights:dna:Location> ;
-                                          rdfs:label "Reichsgau Wartheland" ;
-                                          <urn:ontoinsights:dna:definition> "A territory of Poland occupied by Nazi Germany in September of 1939 and incorporated directly into the Third Reich. Taking its name from the Warta River in what is today western Poland, the province had previously formed part of the German state of Prussia, covering almost 17,000 square miles. Its 4,922,000 inhabitants included approximately 385,000 Jews and 325,000 ethnic Germans. In November 1939, the industrial city of Lodz, renamed Litzmannstadt by the German occupation authorities, was incorporated into the territory. In December 1941, the first functioning Nazi killing center, Chelmno (Kulmhof) was set up in the Warthegau to carry out the mass murder of the Jews and Roma (Gypsies) from the Lodz ghetto." ;
-                                          <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1939> ;
-                                          <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                                          <urn:ontoinsights:dna:noun_synonym> "Reichsgau" ,
-                                                                              "Wartheland" .
-
-
-###  urn:ontoinsights:dna:Reichsgericht
-<urn:ontoinsights:dna:Reichsgericht> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:Organization> ;
-                                     rdfs:label "Reichsgericht" ;
-                                     <urn:ontoinsights:dna:definition> "The National Supreme Court of Justice (the highest tribunal in Germany), established in Leipzig, Germany, by the Court Organization Act of 1877." ;
-                                     <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1877> ;
-                                     <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                                     <urn:ontoinsights:dna:noun_synonym> "National Supreme Court of Justice" .
-
-
-###  urn:ontoinsights:dna:SA
-<urn:ontoinsights:dna:SA> rdf:type owl:NamedIndividual ,
-                                   <urn:ontoinsights:dna:ParamilitaryForce> ;
-                          rdfs:label "SA" ;
-                          <urn:ontoinsights:dna:definition> "Assisted Hitler's rise to power in the 1920s and 1930s. The SA provided protection at Nazi rallies and assemblies and agitated and disrupted at the meetings of opposing parties. They fell out of Hitler's favor in 1934 and were succeeded by the SS. The SA continued to exist to the end of WWII." ;
-                          <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1921> ;
-                          <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1945> ;
-                          <urn:ontoinsights:dna:has_next> <urn:ontoinsights:dna:SS> ;
-                          <urn:ontoinsights:dna:noun_synonym> "Storm Battalion" ,
-                                                              "Storm Detachment" ,
-                                                              "Storm Troopers" ,
-                                                              "Sturmabteilung" ,
-                                                              "brownshirts" .
-
-
-###  urn:ontoinsights:dna:SD
-<urn:ontoinsights:dna:SD> rdf:type owl:NamedIndividual ,
-                                   <urn:ontoinsights:dna:Organization> ;
-                          rdfs:label "SD" ;
-                          <urn:ontoinsights:dna:definition> "An SS agency which served as the political intelligence service of the Nazi party and, later, of the German Reich. The SD also claimed to be the repository of the intellectual elite of the Nazi SS. The SD played a central role in carrying out the Holocaust. All key departments of the Security Police were commanded by SD officers." ;
-                          <urn:ontoinsights:dna:noun_synonym> "Security Service" ,
-                                                              "Sicherheitsdienst des Reichsfuhrers-SS" .
-
-
-###  urn:ontoinsights:dna:SS
-<urn:ontoinsights:dna:SS> rdf:type owl:NamedIndividual ,
-                                   <urn:ontoinsights:dna:ParamilitaryForce> ;
-                          rdfs:label "SS" ;
-                          <urn:ontoinsights:dna:definition> "German abbreviation for Schutzstaffel (literally, protection squads). A paramilitary formation of the Nazi party initially created to serve as bodyguards to Hitler and other Nazi leaders. It later took charge of political intelligence gathering, the German police and the central security apparatus, the concentration camps, and the systematic mass murder of Jews and other victims." ;
-                          <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:Gestapo> ,
-                                                               <urn:ontoinsights:dna:SD> ;
-                          <urn:ontoinsights:dna:noun_synonym> "Schutzstaffel" .
-
-
-###  urn:ontoinsights:dna:SiPo
-<urn:ontoinsights:dna:SiPo> rdf:type owl:NamedIndividual ,
-                                     <urn:ontoinsights:dna:ParamilitaryForce> ;
-                            rdfs:label "SiPo" ;
-                            <urn:ontoinsights:dna:definition> "In Nazi Germany, the state political and criminal investigation security agencies. It was made up of Gestapo and the Kriminalpolizei (criminal police; Kripo) between 1936 and 1939. As a formal agency, the SiPo was incorporated into the Reich Security Main Office (RSHA) in 1939, but the term continued to be used informally until the end of World War II in Europe." ;
-                            <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1936> ;
-                            <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:Gestapo> ,
-                                                                 <urn:ontoinsights:dna:Kripo> ;
-                            <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1939> ;
-                            <urn:ontoinsights:dna:has_next> <urn:ontoinsights:dna:ReichSecurityMainOffice> ;
-                            <urn:ontoinsights:dna:noun_synonym> "German Security Police" ,
-                                                                "Sicherheitspolizei" .
-
-
-###  urn:ontoinsights:dna:Sonderkommando
-<urn:ontoinsights:dna:Sonderkommando> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:CampOrCenterRole> ;
-                                      rdfs:label "Sonderkommando" ;
-                                      <urn:ontoinsights:dna:definition> "In killing centers, Sonderkommandos consisted of those prisoners selected to remain alive as forced laborers to facilitate the killing process, particularly the disposal of corpses." ;
-                                      <urn:ontoinsights:dna:noun_synonym> "Special Detachment" .
-
-
-###  urn:ontoinsights:dna:SpecialCourt
-<urn:ontoinsights:dna:SpecialCourt> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Organization> ;
-                                    rdfs:label "Special Court" ;
-                                    <urn:ontoinsights:dna:definition> "Tribunal for minor political crimes established in each Superior Court district by federal law on March 21, 1933. Defendants convicted for offenses before the special courts had no right of appeal." ;
-                                    <urn:ontoinsights:dna:has_line_of_business> <urn:ontoinsights:dna:LegalAndJudicialActivities> ;
-                                    <urn:ontoinsights:dna:noun_synonym> "Sondergericht" .
-
-
 ###  urn:ontoinsights:dna:Spring
 <urn:ontoinsights:dna:Spring> rdf:type owl:NamedIndividual ,
                                        <urn:ontoinsights:dna:Season> ;
                               rdfs:label "Spring" ;
                               <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'." .
-
-
-###  urn:ontoinsights:dna:Sterilization
-<urn:ontoinsights:dna:Sterilization> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:HealthAndDiseaseRelated> ;
-                                     rdfs:label "Sterilization" ;
-                                     <urn:ontoinsights:dna:definition> "A procedure that destroys the ability of a person to reproduce. During the 1930s, around 400,000 Germans were sterilized in the name of improving the German nation and purifying 'Aryan' racial stock. Sterilizations were also performed on thousands of concentration camp inmates in the 1940s." ;
-                                     <urn:ontoinsights:dna:noun_synonym> "castration" ;
-                                     <urn:ontoinsights:dna:verb_synonym> "castrate" .
-
-
-###  urn:ontoinsights:dna:Sudetenland
-<urn:ontoinsights:dna:Sudetenland> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Location> ;
-                                   rdfs:label "Sudetenland" ;
-                                   <urn:ontoinsights:dna:definition> "Territory comprising the western, northern, and southern border regions of the former Czechoslovakia, long inhabited by ethnic Germans. The goal of annexing this contested region became central to Adolf Hitler's foreign policy in the 1930s. A negotiated settlement between Great Britain, France, Italy, and Nazi Germany in September of 1938—known as the Munich Agreement—ceded control of the Sudetenland to Nazi Germany in exchange for Hitler's guarantee that he would seek no further territorial gains in Europe." .
 
 
 ###  urn:ontoinsights:dna:Summer
@@ -10926,100 +9978,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                               <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'." .
 
 
-###  urn:ontoinsights:dna:UpperSilesia
-<urn:ontoinsights:dna:UpperSilesia> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:OccupiedArea> ;
-                                    rdfs:label "Upper Silesia" ;
-                                    <urn:ontoinsights:dna:definition> "An area that Nazi Germany annexed in 1939 after invading and conquering Poland." .
-
-
-###  urn:ontoinsights:dna:Volksgemeinschaft
-<urn:ontoinsights:dna:Volksgemeinschaft> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:GroupOfAgents> ,
-                                                  <urn:ontoinsights:dna:Person> ;
-                                         rdfs:label "Volksgemeinschaft" ;
-                                         <urn:ontoinsights:dna:definition> "Translated literally as 'folk community'. The Nazis used this term to refer to race-conscious 'Aryan' Germans who accepted, obeyed, and conformed with Nazi ideology and social norms." ;
-                                         <urn:ontoinsights:dna:has_agent_aspect> <urn:ontoinsights:dna:Aryan> .
-
-
-###  urn:ontoinsights:dna:WeimarRepublic
-<urn:ontoinsights:dna:WeimarRepublic> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:GeopoliticalEntity> ;
-                                      rdfs:label "Weimar Republic" ;
-                                      <urn:ontoinsights:dna:definition> "Name for the parliamentary democracy established in Germany from 1919–1933, following the collapse of Imperial Germany and preceding Nazi rule." ;
-                                      <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1919> ;
-                                      <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1933> ;
-                                      <urn:ontoinsights:dna:has_location> <urn:ontoinsights:geonames:2921044> .
-
-
 ###  urn:ontoinsights:dna:Winter
 <urn:ontoinsights:dna:Winter> rdf:type owl:NamedIndividual ,
                                        <urn:ontoinsights:dna:Season> ;
                               rdfs:label "Winter" ;
                               <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." .
-
-
-###  urn:ontoinsights:dna:WorldWarI
-<urn:ontoinsights:dna:WorldWarI> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:War> ;
-                                 rdfs:label "World War I" ;
-                                 <urn:ontoinsights:dna:definition> "(1914-1918) A global conflict that originated in Europe in 1914." ;
-                                 <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiTJuly_1914> ;
-                                 <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiTNovember_1918> ;
-                                 <urn:ontoinsights:dna:noun_synonym> "First World War" ,
-                                                                     "Great War" ,
-                                                                     "WW 1" ,
-                                                                     "WW I" ,
-                                                                     "WW1" ,
-                                                                     "WWI" ,
-                                                                     "World War One" ,
-                                                                     "war to end all wars" ;
-                                 <urn:ontoinsights:dna:sentiment> -1.0 .
-
-
-###  urn:ontoinsights:dna:WorldWarII
-<urn:ontoinsights:dna:WorldWarII> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:War> ;
-                                  rdfs:label "World War II" ;
-                                  <urn:ontoinsights:dna:definition> "(1939-1945) A global conflict that originated in Europe in 1939 with Nazi Germany's invasion of Poland." ;
-                                  <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiTSeptember_1939> ;
-                                  <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiTSeptember_1945> ;
-                                  <urn:ontoinsights:dna:noun_synonym> "Second World War" ,
-                                                                      "WW 2" ,
-                                                                      "WW II" ,
-                                                                      "WW2" ,
-                                                                      "WWII" ,
-                                                                      "World War Two" ;
-                                  <urn:ontoinsights:dna:sentiment> -1.0 .
-
-
-###  urn:ontoinsights:dna:YellowStar
-<urn:ontoinsights:dna:YellowStar> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:ClothingAndAccessory> ;
-                                  rdfs:label "Yellow Star" ;
-                                  <urn:ontoinsights:dna:definition> "A badge featuring the Star of David (a six-pointed star, a symbol of Judaism) used by the Nazi regime during the Holocaust as a method of visibly identifying Jews." ;
-                                  <urn:ontoinsights:dna:noun_synonym> "Star of David" .
-
-
-###  urn:ontoinsights:dna:ZyklonB
-<urn:ontoinsights:dna:ZyklonB> rdf:type owl:NamedIndividual ,
-                                        <urn:ontoinsights:dna:ChemicalElementAndCompound> ;
-                               rdfs:label "Zyklon B" ;
-                               <urn:ontoinsights:dna:definition> "A highly poisonous insecticide originally used to kill rats and insects. When exposed to air, Zyklon B pellets converted into lethal gas. This proved to be the quickest gassing method and was chosen as the means of mass murder at Auschwitz." .
-
-
-###  urn:ontoinsights:dna:vonHindenburgPaul
-<urn:ontoinsights:dna:vonHindenburgPaul> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:Person> ;
-                                         rdfs:label "Paul von Hindenburg" ,
-                                                    "von Hindenburg, Paul" ;
-                                         <urn:ontoinsights:dna:definition> "(1847-1934) Field Marshal Paul von Hindenburg was a German general who gained renown during World War I and later as President of the Weimar Republic." ;
-                                         <urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:PiT1847> ;
-                                         <urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:PiT1934> .
-
-
-###  urn:ontoinsights:dna:enum:AdministrativeStaff
-<urn:ontoinsights:dna:enum:AdministrativeStaff> rdf:type owl:NamedIndividual .
 
 
 ###  urn:ontoinsights:dna:enum:Agender
@@ -11059,10 +10022,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                <urn:ontoinsights:dna:PoliticalIdeology> ;
                                                       rdfs:label "Colonialism and Imperialism" ;
                                                       <urn:ontoinsights:dna:definition> "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
-
-
-###  urn:ontoinsights:dna:enum:Commander
-<urn:ontoinsights:dna:enum:Commander> rdf:type owl:NamedIndividual .
 
 
 ###  urn:ontoinsights:dna:enum:Communism
@@ -11194,10 +10153,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       rdfs:label "Grassland and Prairie" .
 
 
-###  urn:ontoinsights:dna:enum:Guard
-<urn:ontoinsights:dna:enum:Guard> rdf:type owl:NamedIndividual .
-
-
 ###  urn:ontoinsights:dna:enum:High
 <urn:ontoinsights:dna:enum:High> rdf:type owl:NamedIndividual ,
                                           <urn:ontoinsights:dna:Assessment> ;
@@ -11215,10 +10170,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                            <urn:ontoinsights:dna:TemporalUnit> ;
                                   rdfs:label "Hours" ;
                                   <urn:ontoinsights:dna:definition> "A 60-minute interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:Kapo
-<urn:ontoinsights:dna:enum:Kapo> rdf:type owl:NamedIndividual .
 
 
 ###  urn:ontoinsights:dna:enum:Liberalism
@@ -11262,10 +10213,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:Marsh> rdf:type owl:NamedIndividual ,
                                            <urn:ontoinsights:dna:Terrain> ;
                                   rdfs:label "Marsh" .
-
-
-###  urn:ontoinsights:dna:enum:MedicalStaff
-<urn:ontoinsights:dna:enum:MedicalStaff> rdf:type owl:NamedIndividual .
 
 
 ###  urn:ontoinsights:dna:enum:Medium
@@ -11370,10 +10317,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                   rdfs:label "Post-Doctoral Education" .
 
 
-###  urn:ontoinsights:dna:enum:Prisoner
-<urn:ontoinsights:dna:enum:Prisoner> rdf:type owl:NamedIndividual .
-
-
 ###  urn:ontoinsights:dna:enum:Progressivism
 <urn:ontoinsights:dna:enum:Progressivism> rdf:type owl:NamedIndividual ,
                                                    <urn:ontoinsights:dna:PoliticalIdeology> ;
@@ -11443,10 +10386,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:SomeUndergraduateEducation> rdf:type owl:NamedIndividual ,
                                                                 <urn:ontoinsights:dna:EducationLevel> ;
                                                        rdfs:label "Some Undergraduate Education" .
-
-
-###  urn:ontoinsights:dna:enum:Sonderkommando
-<urn:ontoinsights:dna:enum:Sonderkommando> rdf:type owl:NamedIndividual .
 
 
 ###  urn:ontoinsights:dna:enum:South
@@ -13977,7 +12916,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:3077311> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Country> ;
                                     rdfs:label "Czechia" ;
-                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:Sudetenland> ;
                                     <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencyCZK> ;
                                     <urn:ontoinsights:dna:iso_alpha2> "CZ" ;
                                     <urn:ontoinsights:dna:iso_alpha3> "CZE" ;
@@ -15462,8 +14400,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:798544> rdf:type owl:NamedIndividual ,
                                             <urn:ontoinsights:dna:Country> ;
                                    rdfs:label "Poland" ;
-                                   <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:UpperSilesia> ,
-                                                                        <urn:ontoinsights:dna:Warthegau> ;
                                    <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencyPLN> ;
                                    <urn:ontoinsights:dna:iso_alpha2> "PL" ;
                                    <urn:ontoinsights:dna:iso_alpha3> "POL" ;
@@ -15656,42 +14592,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 #    Annotations
 #################################################################
 
-<urn:ontoinsights:dna:CampOrCenterRole> rdfs:label "Concentation Camp or Killing Center Role" ;
-                                        <urn:ontoinsights:dna:definition> "A type of Role identifyig the function performed by/responsibilities of a Person or Group in the context of a ConcentrationCamp or KillingCenter. This is defined as an enumeration of values ranging from 'commander' to 'prisoner'." .
-
-
-<urn:ontoinsights:dna:affiliated_agent> <urn:ontoinsights:dna:definition> "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property." ;
-                                        rdfs:label "affiliated agent" .
-
-
-<urn:ontoinsights:dna:affiliated_location> <urn:ontoinsights:dna:definition> "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property." ;
-                                           rdfs:label "affiliated location" ;
-                                           <urn:ontoinsights:dna:example> "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the company/Organization." .
-
-
-<urn:ontoinsights:dna:affiliated_with> rdfs:label "affiliated with" ;
-                                       <urn:ontoinsights:dna:definition> "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
-
-
-<urn:ontoinsights:dna:has_active_agent> rdfs:label "has active agent" ;
-                                        <urn:ontoinsights:dna:definition> "References an Agent who is an active/animate participant (carries out some action) in an EventAndState." .
-
-
-<urn:ontoinsights:dna:has_affected_agent> <urn:ontoinsights:dna:definition> "References an Agent who is affected by an EventAndState but does not actively participate in it." ;
-                                          <urn:ontoinsights:dna:example> "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_agent property and the attacked Person is identified using the :has_affected_agent property." ;
-                                          rdfs:label "has affected agent" .
-
-
-<urn:ontoinsights:dna:has_agent_aspect> rdfs:label "has agent aspect" ;
-                                        <urn:ontoinsights:dna:definition> "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
-
-
 <urn:ontoinsights:dna:has_author> <urn:ontoinsights:dna:definition> "References the Agent (Person, Organization, etc.) that created or published the information." ;
                                   rdfs:label "has author" .
-
-
-<urn:ontoinsights:dna:has_beginning> <urn:ontoinsights:dna:definition> "References a Time that is the start of the existence/time frame of some entity, or that is the beginning of an Interval or Duration." ;
-                                     rdfs:label "has beginning" .
 
 
 <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:verb_synonym> "is part of" ;
@@ -15701,38 +14603,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 <urn:ontoinsights:dna:has_currency> rdfs:label "has currency" ;
                                     <urn:ontoinsights:dna:definition> "References the currency unit of a Country." .
-
-
-<urn:ontoinsights:dna:has_end> <urn:ontoinsights:dna:definition> "References a point in time that is the end of the existence/time frame of some entity, or that is the end of an Interval or Duration." ;
-                               rdfs:label "has end" .
-
-
-<urn:ontoinsights:dna:has_line_of_business> <urn:ontoinsights:dna:definition> "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" ;
-                                            rdfs:label "has line of business" .
-
-
-<urn:ontoinsights:dna:has_location> rdfs:label "has location" ;
-                                    <urn:ontoinsights:dna:definition> "References where an EventAndState occurs/occurred." .
-
-
-<urn:ontoinsights:dna:has_member> <urn:ontoinsights:dna:definition> "Defines an entity that is in a (is a member of a) grouping/Collection." ;
-                                  rdfs:label "has member" .
-
-
-<urn:ontoinsights:dna:has_next> <urn:ontoinsights:dna:verb_synonym> "follow" ;
-                                <urn:ontoinsights:dna:definition> "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." ;
-                                <urn:ontoinsights:dna:noun_synonym> "following" ,
-                                                                    "adjacent" ;
-                                rdfs:label "has next" ;
-                                <urn:ontoinsights:dna:noun_synonym> "adjacency" .
-
-
-<urn:ontoinsights:dna:has_political_ideology> <urn:ontoinsights:dna:definition> "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent." ;
-                                              rdfs:label "has political ideology" .
-
-
-<urn:ontoinsights:dna:has_role> rdfs:label "has role" ;
-                                <urn:ontoinsights:dna:definition> "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative" .
 
 
 <urn:ontoinsights:dna:iso_alpha2> <urn:ontoinsights:dna:definition> "A string specifying the 2 character ISO 3166 code of a country." ;
@@ -15746,31 +14616,15 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
                              <urn:ontoinsights:dna:verb_synonym> "touch" ,
                                                                  "converge" ;
+                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
-                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:noun_synonym> "boundary" .
 
 
-<urn:ontoinsights:dna:month_of_year> rdfs:label "month of year" ;
-                                     <urn:ontoinsights:dna:definition> "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12." .
-
-
-<urn:ontoinsights:dna:role> <urn:ontoinsights:dna:definition> "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." ;
-                            rdfs:label "role" .
-
-
-<urn:ontoinsights:dna:sentiment> <urn:ontoinsights:dna:definition> "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)." ;
-                                 rdfs:label "sentiment" .
-
-
 <urn:ontoinsights:dna:text> rdfs:label "text" ;
                             <urn:ontoinsights:dna:definition> "String holding the contents of an InformationSource or the particular text that generated the individual or subject-object-predicate triple." .
-
-
-<urn:ontoinsights:dna:year> <urn:ontoinsights:dna:definition> "An integer value indicating a year using the conventions of Common Era. Note that negative values indicate BCE." ;
-                            rdfs:label "year" .
 
 
 ###  Generated by the OWL API (version 4.5.6) https://github.com/owlcs/owlapi

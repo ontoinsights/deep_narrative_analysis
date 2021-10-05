@@ -9,9 +9,9 @@ from details_narrative import get_narratives
 from utilities import empty_string, new_line, resources_root, capture_error, encoded_logo
 
 query_events = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?event ?pred ?obj ' \
-               'FROM NAMED <urn:narr_graph> FROM <tag:stardog:api:context:default> WHERE ' \
-               '{ { graph <urn:narr_graph> { ?event a ?type ;  ?pred ?obj ; :sentence_offset ?offset } } ' \
-               '?type rdfs:subClassOf* :EventAndState } ORDER BY ?offset ?pred ?obj'
+               'FROM <urn:narr_graph> WHERE ' \
+               '{ ?event a ?type ; :sentiment ?sent ; :sentence_offset ?offset ; ?pred ?obj } ' \
+               'ORDER BY ?offset ?pred ?obj'
 
 query_nouns = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?noun ?pred ?obj ' \
               'FROM NAMED <urn:narr_graph> FROM <tag:stardog:api:context:default> WHERE ' \

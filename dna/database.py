@@ -87,7 +87,7 @@ def create_delete_database(op_type: str, database: str) -> str:
             logging.info(f'Loading DNA ontologies to {database}')
             _load_directory_to_database(ontol_path, conn)
             # TODO: Remove if not applicable for the domain
-            _load_directory_to_database(f'{ontol_path}domain-events/', conn)
+            _load_directory_to_database(f'{ontol_path}domain-specific/', conn)
             conn.commit()
         else:
             # Delete database
@@ -113,7 +113,9 @@ def get_databases() -> list:
         capture_error(f'Exception getting list of stores: {str(e)}', True)
         return []
     for database in databases:
-        db_names.append(database.name)
+        db_name = database.name
+        if db_name != 'ontologies' and 'domain-' not in db_name and 'test-' not in db_name:
+            db_names.append(database.name)
     return db_names
 
 

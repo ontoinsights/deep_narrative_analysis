@@ -1,5 +1,6 @@
 # Processing to create the sentence dictionary, which has the form:
-#    'text': 'narrative_text', 'LOCS': ['location'], 'TIMES': ['date_or_time'],
+#    'text': 'narrative_text',
+#    'LOCS': ['location1', ...], 'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'subjects': [{'subject_text': 'subject_text', 'subject_type': 'type_such_as_SINGNOUN'},
 #                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
 #    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
@@ -58,15 +59,17 @@ def get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
     Get the GPE, LOC (location), EVENT, DATE and TIME entities from the input sentence.
 
     :param nlp_sentence: The sentence (a spaCy Doc)
-    :param sentence_dict: A dictionary that is updated with time-related details
+    :param sentence_dict: A dictionary that is updated with time-, location- and/or event-related details
     :return: None (sentence_dict is updated with the text of the named entities, where the
              key is either 'LOCS' or 'TIMES')
     """
     for ent in nlp_sentence.ents:
         if ent.label_ in ('GPE', 'LOC', 'FAC'):
             add_to_dictionary_values(sentence_dict, 'LOCS', ent.text, str)
-        if ent.label_ in ('EVENT', 'DATE', 'TIME'):
+        elif ent.label_ in ('DATE', 'TIME'):
             add_to_dictionary_values(sentence_dict, 'TIMES', ent.text, str)
+        elif ent.label_ == 'EVENT':
+            add_to_dictionary_values(sentence_dict, 'EVENTS', ent.text, str)
     return
 
 
@@ -137,6 +140,7 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
                 # Idiom was not found in the dictionary - log this for manual addition
                 logging.warning(f'Verb idiom not found, {token.lemma_} {child.text}')
         elif 'prep' in child.dep_:    # Preposition associated with the verb
+            # Only concerned with certain prepositions and their semantics
             if child.text.lower() not in processed_prepositions:
                 continue
             # TODO: Handle pcomp (where the preposition's object is itself a clause)

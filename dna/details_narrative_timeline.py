@@ -113,19 +113,19 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
     return
 
 
-def display_timeline(narrative_name: str, events_bindings: dict, store_name: str):
+def display_timeline(narrative_name: str, event_list: list, store_name: str):
     """
     Displays a timeline of the narrative or domain events using a matplotlib stem plot.
 
     :param narrative_name: The name/label of the narrative
-    :param events_bindings: The binding results for the query, query_timeline_events, for the
-                            specified narrative
+    :param event_list: An array of the binding results for the query, query_timeline_events,
+                       for the specified narrative
     :param store_name: The database/store to be queried for data
     :return: None (timeline is displayed)
     """
     logging.info(f'Displaying narrative timeline for {narrative_name}')
     event_dict = dict()
-    for binding in events_bindings:
+    for binding in event_list:
         if 'month' in binding.keys():
             dict_key = f'{binding["year"]["value"]}-{binding["month"]["value"]}'
         else:
@@ -187,7 +187,7 @@ def display_timeline(narrative_name: str, events_bindings: dict, store_name: str
     while True:
         event, values = window_timeline.read()
         if event == 'Graph':
-            display_graph(narrative_name, events_bindings, store_name, values['event_date'])
+            display_graph(narrative_name, event_list, store_name, values['event_date'])
         if event == sg.WIN_CLOSED:
             break
     window_timeline.close()

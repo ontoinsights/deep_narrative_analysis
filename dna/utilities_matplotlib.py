@@ -83,10 +83,3 @@ def draw_figure_with_toolbar(canvas, fig, canvas_toolbar) -> FigureCanvasTkAgg:
     toolbar.update()
     figure_canvas_agg.get_tk_widget().pack(side='top', fill='both', expand=1)
     return figure_canvas_agg
-
-
-def on_click(event):
-    if event.dblclick:
-        global ix, iy
-        ix, iy = event.xdata, event.ydata
-

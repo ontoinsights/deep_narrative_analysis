@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: August 3 2021
+# Last modified: October 4 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,7 @@
 #  Added example individuals
 #  Changed :synonym to :noun_synonym
 #  Added Intervals of :Childhood, :TeenYears, :Adulthood, :OldAge
+#  Added :has_earliest_beginning and :has_latest_end
 ########################################################################
 
 
@@ -196,6 +197,18 @@
 ########################################################################
 # Object Properties
 ########################################################################
+
+:has_earliest_beginning a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has earliest beginning" ;
+  rdfs:subPropertyOf :has_beginning ;
+  rdfs:range :Time ;
+  :definition "References a Time that is the earliest start of the existence/time frame of some entity, or that is the earliest beginning of an Interval or Duration." .
+
+:has_latest_end a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has latest end" ;
+  rdfs:subPropertyOf :has_end;
+  rdfs:range :Time ;
+  :definition "References a point in time that is the latest end of the existence/time frame of some entity, or that is the latest end of an Interval or Duration." .
 
 :has_recurrence_unit a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has recurrence unit" ;

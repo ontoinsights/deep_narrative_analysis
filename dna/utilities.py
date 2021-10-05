@@ -30,6 +30,9 @@ dna_prefix = 'urn:ontoinsights:dna:'
 owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
 event_and_state_class = 'urn:ontoinsights:dna:EventAndState'
 
+domain_database = "domain-specific"
+ontologies_database = 'ontologies'
+
 gender_dict = {'A': ':Agender', 'B': ':Bigender',
                'F': ':Female', 'M': ':Male'}
 
@@ -40,8 +43,8 @@ family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'bro
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
 
-processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in',
-                          'for', 'from', 'near', 'of', 'on', 'to', 'with', 'without')
+processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in', 'inside',
+                          'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with', 'without')
 
 # Words that introduce a 'causal' clause, where the main clause is the effect
 cause_connectors = ['when', 'because', 'since', 'as']

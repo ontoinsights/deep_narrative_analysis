@@ -30,13 +30,13 @@ query_event_sentiment = 'prefix : <urn:ontoinsights:dna:> SELECT ?sentiment FROM
 year_list = list(range(1933, 1946))  # TODO: Check if dates in range?
 
 
-def display_graph(narrative_name: str, events_bindings: dict, store_name: str, event_date: str):
+def display_graph(narrative_name: str, event_list: list, store_name: str, event_date: str):
     """
     Displays a graph of the narrative events using NetworkX.
 
     :param narrative_name: The name/label of the narrative
-    :param events_bindings: The binding results for the query, query_timeline_events, for the
-                            specified narrative
+    :param event_list: An array of the binding results for the query, query_timeline_events, for the
+                       specified narrative
     :param store_name: The database/store that holds the narrative's knowledge graph
     :param event_date: A string in YYYY-mm format indicating which events (events with times in that
                        month) should be shown in the graph
@@ -47,7 +47,7 @@ def display_graph(narrative_name: str, events_bindings: dict, store_name: str, e
     node_set = set()
     edges = []
     edge_label_dict = dict()
-    for binding in events_bindings:
+    for binding in event_list:
         event_uri = binding['event']['value']
         event_name = event_uri.split(':')[-1]
         event_time = binding['year']['value']
@@ -60,12 +60,7 @@ def display_graph(narrative_name: str, events_bindings: dict, store_name: str, e
             event_time = f'{event_time}-01'
         if event_time != event_date:
             continue
-        sentiment_details = query_database(
-            'select', query_event_sentiment.replace('uri', event_uri), store_name)
-        if sentiment_details:
-            sentiment = sentiment_details[0]['sentiment']['value']
-        else:
-            sentiment = 0.0   # Default sentiment is neutral
+        sentiment = get_sentiment(event_uri, narrative_name, store_name)
         event_tuples = get_event_data(narrative_name, store_name, event_uri)
         for event_tuple in event_tuples:
             if len(event_tuple) == 4:
@@ -81,12 +76,8 @@ def display_graph(narrative_name: str, events_bindings: dict, store_name: str, e
             if obj_type:
                 obj_label = obj.split(':')[-1]
                 if obj_type == 'Event':
-                    obj_sentiment_details = query_database(
-                        'select', query_event_sentiment.replace('uri', obj), store_name)
-                    if obj_sentiment_details:
-                        obj_sentiment = obj_sentiment_details[0]['sentiment']['value']
-                    else:
-                        obj_sentiment = 0.0   # Default sentiment is neutral
+                    obj_sentiment = get_sentiment(obj, narrative_name, store_name)
+                    # Capture the sentiment with the node label so that pos/neg colors can be shown
                     obj_node_name = f'evt{obj_label}$${str(obj_sentiment)}'
                 elif obj_type == 'Class':
                     obj_node_name = f'cls{obj_label}'
@@ -98,7 +89,7 @@ def display_graph(narrative_name: str, events_bindings: dict, store_name: str, e
                 pred_name = pred.split(':')[-1]
             edges.append((event_name, obj_label))
             edge_label_dict[(event_name, obj_label)] = pred_name
-            node_set.add(f'evt{event_name}$${str(sentiment)}')
+            node_set.add(f'evt{event_name}$${str(sentiment)}')  # Capture the sentiment with the node name
             node_set.add(obj_node_name)
 
     # Associate the color red with 'bad' Events/States and green with 'good' ones
@@ -209,3 +200,22 @@ def get_event_data(narrative_name: str, store_name: str, event_uri: str) -> list
         else:
             results.append((binding['pred']['value'], binding['obj']['value']))
     return results
+
+
+def get_sentiment(event_uri: str, narrative_name: str, store_name: str) -> float:
+    """
+    Get the value of the :sentiment predicate for the event.
+
+    :param event_uri: String holding the URI to be queries
+    :param narrative_name: String holding the narrative where the event is defined
+    :param store_name: String holding the database where the narrative is stored
+    :return Float that is the event's sentiment
+    """
+    sentiment_details = query_database(
+        'select',
+        query_event_sentiment.replace('uri', event_uri).replace('narr_graph', narrative_name.replace(' ', '_')),
+        store_name)
+    if sentiment_details:
+        return sentiment_details[0]['sentiment']['value']
+    else:
+        return 0.0   # Default sentiment is neutral

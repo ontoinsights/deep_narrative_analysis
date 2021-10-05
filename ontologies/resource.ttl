@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: September 7 2021
+# Last modified: October 4 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,7 +28,8 @@
 #  Updated to the Mar 2021 semantics
 #  Updated the default and dna prefixes
 #  Changed :synonym to :noun_synonym
-#  Added :Database, :Publication, :Spreadsheet and :WebPage
+#  Added Database, Publication, Spreadsheet and WebPage
+#  Added Contract and IdentificationInstrument
 ########################################################################
 
 
@@ -76,6 +77,11 @@
   rdfs:label "Container" ;
   :definition "A receptacle or enclosure for holding a solid, liquid or gas." ;
   :noun_synonym "receptacle" .
+
+:Contract a owl:Class ;
+  rdfs:subClassOf :LegalInstrument, :Agreement ;
+  rdfs:label "Contract" ;
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." .
 
 :ClothingAndAccessory a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -126,6 +132,12 @@
   rdfs:subClassOf :Machine ;
   rdfs:label "Heating, Ventilation, Air Conditioning and Refrigeration Machine and Equipment" ;
   :definition "Any Resource that provides capabilities for heating/cooling, ventilation/air movement, air cleaning or refrigeration." .
+
+:IdentificationInstrument a owl:Class ;
+  rdfs:subClassOf :LegalInstrument ;
+  rdfs:label "Identification Instrument" ;
+  :definition "A legal document that establishes who someone is, what they know, what they can do, etc." ;
+  :noun_synonym "driver's license", "birth certificate", "passport", "identification papers", "identification card" .
 
 :Jewelry a owl:Class ;
   rdfs:subClassOf :ClothingAndAccessory ;

@@ -4,7 +4,7 @@
 @prefix owl: <http://www.w3.org/2002/07/owl#> . 
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . 
 
-# Created September 20 2021
+# Created October 4 2021
 # Extracted from the Key Dates pages at https://encyclopedia.ushmm.org/content/en/article/19xx-key-dates (1933-1937)
 # Focus on Events that were appointments, arrests and forced moves, laws and policies, battles, murders,
 #    boycotts and bans, rallies, concentration camps established or opened, etc.
@@ -114,7 +114,7 @@ geo:2921044 :has_component :BerlinGermany .
   :sentiment -1.0 .
 :ReichstagFireDecree :enables :OverthrowOfGermanStateGovernments .
 
-:GermanStateGoverments a :GroupOfAgents, :GPE ;
+:GermanStateGoverments a :GroupOfAgents, :GeopoliticalEntity ;
   rdfs:label "German State Governments" ;
   :noun_synonym "Landerregierungen" ;
   :admin_level 1 ;
@@ -147,7 +147,7 @@ geo:2921044 :has_component :BerlinGermany .
   :month_of_year 3 ;
   :year 1933 .
 
-:DachauCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+:DachauCampEstablished a :ProductionManufactureAndCreation, :StartOrBeginning ;
   rdfs:label "Dachau Camp Established" ;
   :text "Outside the town of Dachau, Germany, the SS (Schutzstaffel, Protection Squads) establishes the first SS-managed concentration camp to incarcerate political opponents of the regime. Dachau is the only concentration camp to remain in operation from 1933 until 1945." ;
   :sourced_from :Web1933_Key_Dates ;
@@ -647,7 +647,7 @@ geo:2921044 :has_component :NurembergGermany .
   :month_of_year 6 ;
   :year 1936 .
 
-:SachsenhausenCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+:SachsenhausenCampEstablished a :ProductionManufactureAndCreation, :StartOrBeginning ;
   rdfs:label "Sachsenhausen Camp Established" ;
   :text "The SS establishes the Sachsenhausen concentration camp near Oranienburg, located to the north of Berlin, Germany. By September, German authorities have imprisoned about 1,000 people in the camp." ;
   :sourced_from :Web1936_Key_Dates ;
@@ -691,7 +691,7 @@ geo:2921044 :has_component :NurembergGermany .
   :month_of_year 7 ;
   :year 1936 .
 
-:BerlinMarzahnCampEstablished a :ProductionManufactureCreation, :StartOrBeginning ;
+:BerlinMarzahnCampEstablished a :ProductionManufactureAndCreation, :StartOrBeginning ;
   rdfs:label "Berlin-Marzahn Camp Established" ;
   :definition "(1936-1945) The camp for Roma in Berlin-Marzahn, officially known as 'Rastplatz Marzahn', was located approximately 6.25 miles (10 kilometers) east-northeast of the city center of Berlin. It was established on the eve of the summer Olympics in Berlin, after Reich Interior Minister Wilhelm Frick issued a decree for 'Combating the Gypsy Plague' on June 6 1936. This document called for tightening controls and police oversight of the 'Gypsy' population in Germany. As a result, the head of the Berlin police ordered construction of an internment camp in Marzahn." ;
   :sourced_from :BerlinMarzahn_CampForRoma ;
