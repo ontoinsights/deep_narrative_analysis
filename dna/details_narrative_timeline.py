@@ -10,6 +10,7 @@ import numpy as np
 import PySimpleGUI as sg
 
 from datetime import datetime
+
 from database import query_database
 from details_narrative_graph import display_graph
 from utilities import empty_string, add_to_dictionary_values, capture_error, encoded_logo

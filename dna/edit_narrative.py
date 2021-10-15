@@ -94,6 +94,7 @@ def display_edit_table(title: str, data_list: list, store_name: str):
             return
         if edit_events == 'Save':
             # TODO: Write items_changed to Stardog; Reset the window with the new changes
+            # TODO: Changes update the idioms dictionaries
             window_table.close()
             display_narratives_for_edit(store_name)
             return

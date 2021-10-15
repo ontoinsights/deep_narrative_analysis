@@ -82,13 +82,12 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
     # Process specific children (conjunctions and prepositions)
     for child in token.children:
         if ent_type == 'VERB' and ('obj' in child.dep_ or 'attr' in child.dep_):
-            # TODO: Always associate object with its verb?
             # if 'advcl' in token_key or 'xcomp' in token_key:
             # Object/attr is part of the adverbial clause, so it adds to the current ent_dict
             # add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
             # else:
             add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
-        # TODO: Note a "cc" of "or" or "nor" (alternatives vs conjunctions)
+        # TODO: Note a "cc" of "or" or "nor" (:alternative true Collection)
         elif 'conj' == child.dep_:
             add_token_details(child, dictionary, token_key, narr_gender, family_dict)
         elif 'prep' in child.dep_:
@@ -161,7 +160,7 @@ def _process_noun(token: Token, ent_type: str) -> (str, str):
     ent_type = f'PLURAL{ent_type}' if 'Plur' in token.morph.get('Number') else \
         (f'SING{ent_type}' if 'Sing' in token.morph.get('Number') else ent_type)
     ent_type = f'{gender}{ent_type}' if gender else ent_type
-    # Account for a determiner of 'no' - i.e., nothing (for ex, 'no information  was found')
+    # Account for a determiner of 'no' - i.e., nothing (for ex, 'no information was found')
     if any([tc for tc in token.children if tc.dep_ == 'det' and tc.text == 'no']):
         ent_type = f'NEG{ent_type}'
     return ent, ent_type
@@ -248,7 +247,7 @@ def _process_proper_noun(token: Token, narr_gender: str, family_dict: dict) -> (
         entity, entity_type = _process_noun(token, entity_type)
     elif not entity_type.endswith('DATE') and not entity_type.endswith('TIME'):
         entity, gender, entity_type = _check_family(entity, family_dict)
-        if entity_type == 'NOUN':    # Proper noun that is not a Person or identified as GPE, ORG, ...
+        if entity_type.endswith('NOUN'):    # Proper noun that is not a Person or identified as GPE, ORG, ...
             entity, entity_type = _process_noun(token, entity_type)   # Get the full entity text at least
         entity_type = f'{gender}{entity_type}' if gender else entity_type
     return entity, entity_type

@@ -2,8 +2,8 @@
 
 import logging
 
-from geonames_query import get_location_details
 from nlp import get_birth_family_details
+from ontology_wikipedia_geonames_query import get_geonames_location
 from utilities import empty_string, space, family_members, gender_dict, months, countries
 
 
@@ -101,7 +101,7 @@ def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) 
             label_text = ', '.join(labels)
             if not found_country and labels:
                 # TODO: What if the first country (most likely country) is not correct? Or the country is not found?
-                loc_type, found_country, admin_level = get_location_details(labels[0], True)  # Only need country
+                loc_type, found_country, admin_level = get_geonames_location(labels[0])  # Only need country
             if found_country:
                 label_text += f', {found_country}'
                 new_triples.append(f':{iri_narrator}BirthPlace :country_name "{found_country}" .')

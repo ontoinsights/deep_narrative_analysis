@@ -2,11 +2,19 @@
 # Called from create_event_turtle.py
 
 import logging
+import os
+import pickle
 import re
 
 from database import query_database
-from nlp import get_named_entity_in_string, get_time_details
-from utilities import domain_database, empty_string, months, preps_string, verbs_string
+from ontology_wikipedia_geonames_query import get_geonames_location
+from nlp import get_named_entity_in_string, get_proper_nouns, get_time_details
+from utilities import domain_database, empty_string, months, preps_string, resources_root, space, verbs_string
+
+# A dictionary where the keys are country names and the values are the GeoNames country codes
+geocodes_file = os.path.join(resources_root, 'country_names_mapped_to_geo_codes.pickle')
+with open(geocodes_file, 'rb') as inFile:
+    names_to_geo_dict = pickle.load(inFile)
 
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
@@ -85,19 +93,60 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     return time
 
 
-def get_location_uri(loc: str, names_to_geo_dict: dict) -> str:
+def get_location_uri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
     """
-    Get a location URI based on the input string.
+    Get a location URI based on the input string and if appropriate, add the Turtle explaining/
+    defining that location.
 
     :param loc: Input location string
-    :param names_to_geo_dict: A dictionary where the keys are country names and the values are the
-                              GeoNames country codes
-    :return A string holding the URI using a GeoNames prefix or the DNA prefix
+    :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
+                           all locations already processed
+    :return A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
+            array of strings that are the Turtle for a new location
     """
-    if loc in names_to_geo_dict.keys():
-        return f'geo:{names_to_geo_dict[loc]}'
+    loc_ttl = []
+    if loc in names_to_geo_dict.keys():   # Location is a country name
+        return f'geo:{names_to_geo_dict[loc]}', loc_ttl
+    if loc in processed_locs.keys():      # Location is already captured
+        return processed_locs[loc], loc_ttl
+    split_locs = loc.split(space)
+    if len(split_locs) == 1:
+        loc_uri = f':{loc}'
     else:
-        return f":{loc.replace(' ', '_')}"
+        if loc.lower().startswith('the '):
+            loc = space.join(split_locs[1:])
+        loc_uri = f':{loc.replace(space,"_")}'
+    # Check if the location is known - May be a city/town name
+    loc_ttl = _create_geonames_ttl(loc_uri, loc)
+    if not loc_ttl:
+        containing_uri = empty_string
+        # Need to get strings that are the Proper Nouns
+        # Can't parse "loc" text directly since there is a problem in the NLP results
+        # For example, the phrase, "Czernowitz ghetto", is completely returned as a GPE
+        # But the text, "New York City ghetto", only returns "New York City" as the GPE
+        proper_nouns = get_proper_nouns(loc)
+        if proper_nouns:
+            if proper_nouns in processed_locs.keys():
+                containing_uri = processed_locs[proper_nouns]
+            else:
+                containing_uri = proper_nouns.replace(space, "_")
+                containing_ttl = _create_geonames_ttl(containing_uri, proper_nouns)
+                if containing_ttl:
+                    loc_ttl.extend(containing_ttl)
+                    processed_locs[proper_nouns] = containing_uri
+                else:
+                    # Could not get geonames definition
+                    containing_uri = empty_string
+        # TODO: Generalize a part of a city beyond ghetto
+        if 'ghetto' in loc:
+            loc_ttl.append(f'{loc_uri} a :Ghetto ; rdfs:label "{loc}" .')
+        else:
+            loc_ttl.append(f'{loc_uri} a :PopulatedPlace ; rdfs:label "{loc}" .')
+        if containing_uri:
+            loc_ttl.append(f'{containing_uri} :has_component {loc_uri} .')
+    # Record location text in processed_locs so that the details are not added again
+    processed_locs[loc] = loc_uri
+    return loc_uri, loc_ttl
 
 
 def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
@@ -319,7 +368,7 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
         if key == 'TIMES':
             for split_elem in split_elems:
                 if split_elem in check_str:
-                    if len(split_elem) < 3:    # Avoid determiners, short words/abbreviations/...
+                    if len(split_elem) < 4:    # Avoid determiners, short words/abbreviations/...
                         continue
                     if split_elem in ('earlier', 'later', 'next', 'previous', 'prior', 'following'):
                         array_text = elem_text
@@ -335,13 +384,37 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
                 if 'prep_text' in prep_str:
                     array_text = _get_before_after(prep_str, elem_text)
         elif key == 'LOCS':
-            if elem_text in check_str:
-                prep_str = check_str.split(elem_text)[0]
-                if 'prep_text' in prep_str:
-                    array_text = elem_text
+            for split_elem in split_elems:
+                if split_elem in check_str:
+                    prep_str = check_str.split(elem_text)[0]
+                    if 'prep_text' in prep_str:
+                        array_text = elem_text
+                        break
         if array_text and array_text not in array:
             array.append(array_text)
     return
+
+
+def _create_geonames_ttl(loc_uri: str, loc_text: str) -> list:
+    """
+    Create the Turtle for a location that is a populated place.
+
+    :param loc_uri: String holding the URI to be assigned to the location
+    :param loc_text: The location text
+    :return An array holding the Turtle for the location/location URI if the information is
+            obtainable from GeoNames or an empty array
+    """
+    geonames_ttl = []
+    class_type, country, admin_level = get_geonames_location(loc_text)
+    if class_type:
+        geonames_ttl.append(f'{loc_uri} a {class_type} ; rdfs:label "{loc_text.strip()}" .')
+        if admin_level > 0:
+            geonames_ttl.append(f'{loc_uri} :admin_level {str(admin_level)} .')
+        if country and country != "None":
+            geonames_ttl.append(f'{loc_uri} :country_name "{country}" .')
+            if country in names_to_geo_dict.keys():
+                geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_uri} .')
+    return geonames_ttl
 
 
 def _get_before_after(prep_str: str, element: str) -> str:

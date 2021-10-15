@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: September 28 2021
+# Last modified: October 5 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -31,6 +31,7 @@
 #  Removed :mentioned_in in lieu of using :sourced_from
 #  Renamed :record_identifier to :data_identifier
 #  Added :alternatives, :has_author and the annotation property, :processing
+#  Added the properties, :negation and :sentiment
 ########################################################################
 
 
@@ -212,6 +213,11 @@
   rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
+:negation a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "negation (boolean)" ;
+  rdfs:range xsd:boolean ;
+  :definition "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc." .
+
 :probability a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "probability/likelihood" ;
   :definition "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing." ;
@@ -239,6 +245,14 @@
   :definition "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted." ;
   rdfs:domain :Mention ;
   rdfs:range xsd:integer .
+
+:sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "sentiment" ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:decimal ;
+               owl:withRestrictions ( [ xsd:minInclusive "-1.0"^^xsd:decimal ]
+                                      [ xsd:maxInclusive "1.0"^^xsd:decimal ] ) ] ;
+  :definition "Indicates whether the referencing entity is considered to be something positive (maximum value 1.0) or negative (minimum value -1.0)." .
 
 :supporting a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "supporting evidence (boolean)" ;

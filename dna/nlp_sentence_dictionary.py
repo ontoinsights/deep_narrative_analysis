@@ -16,7 +16,7 @@ import logging
 from spacy.language import Language
 from spacy.tokens import Doc, Token
 
-from idiom_processing import get_verb_idiom
+from idiom_processing import get_verb_word_idiom
 from nlp_sentence_tokens import add_token_details
 from utilities import objects_string, subjects_string, add_to_dictionary_values, processed_prepositions
 
@@ -97,13 +97,8 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     # Processing is based on dependency parsing
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
     for child in token.children:
-        if 'acomp' == child.dep_:          # Adjectival phrase that complements the verb
-            add_token_details(child, dictionary, 'verb_acomp', gender, family_dict)
-        elif 'advmod' == child.dep_:        # Adverbial modifier
-            # Only care about before/after and earlier/later (for now)
-            add_token_details(child, verb_dict, 'verb_advmod', gender, family_dict)
-        elif 'advcl' == child.dep_:        # Adverbial clause of the verb
-            add_token_details(child, verb_dict, 'verb_advcl', gender, family_dict)
+        if child.dep_ in ('acomp', 'advmod', 'advcl', 'ccomp'):
+            add_token_details(child, dictionary, f'verb_{child.dep_}', gender, family_dict)
         elif 'agent' == child.dep_:          # Agent of a passive verb, introduced by the word, 'by'
             for child2 in child.children:
                 if 'pobj' == child2.dep_:    # The real subject is the object of the preposition, 'by'
@@ -132,9 +127,8 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
             add_token_details(child, verb_dict, objects_string, gender, family_dict)
         elif 'prt' in child.dep_:     # Phrasal verb particle
             # Check for a substitution in the verb_idioms dictionary
-            idiom, processing = get_verb_idiom(token.lemma_, child.text.lower())
-            if idiom:
-                verb_dict['verb_lemma'] = idiom
+            processing = get_verb_word_idiom(token.lemma_, child.text.lower())
+            if processing:
                 verb_dict['verb_processing'] = processing
             else:
                 # Idiom was not found in the dictionary - log this for manual addition
@@ -145,9 +139,8 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
                 continue
             # TODO: Handle pcomp (where the preposition's object is itself a clause)
             # Check if there is processing defined for this verb/prep combination
-            idiom, processing = get_verb_idiom(token.lemma_, child.text.lower())
-            if idiom:
-                verb_dict['verb_lemma'] = idiom
+            processing = get_verb_word_idiom(token.lemma_, child.text.lower())
+            if processing:
                 verb_dict['verb_processing'] = processing
             else:
                 prep_dict = dict()

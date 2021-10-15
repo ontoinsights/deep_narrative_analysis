@@ -18,9 +18,12 @@
 
 import logging
 import spacy
+
+from nltk.corpus import wordnet as wn
 from spacy.matcher import DependencyMatcher
-from textblob import TextBlob, Word
+from textblob import TextBlob
 from word2number import w2n
+
 
 from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
 from nlp_sentence_dictionary import extract_dictionary_details
@@ -38,13 +41,13 @@ matcher.add("born_date", [born_date_pattern])
 matcher.add("born_place", [born_place_pattern])
 matcher.add("family_member_name", [family_member_name_pattern])
 
-agent_ner_dict = {'PERSON': ':Person',
-                  'NORP': ':Organization',
-                  'ORG': ':Organization',
-                  'GPE': ':GeopoliticalEntity',
-                  'LOC': ':GeopoliticalEntity',
-                  'EVENT': ':EventAndState'}
-agent_ner_types = list(agent_ner_dict.keys())
+ner_dict = {'PERSON': ':Person',
+            'NORP': ':Organization',
+            'ORG': ':Organization',
+            'GPE': ':GeopoliticalEntity',
+            'LOC': ':GeopoliticalEntity',
+            'EVENT': ':EventAndState'}
+ner_types = list(ner_dict.keys())
 
 # Replace multi-word phrases or non-standard terms acting as conjunctions and prepositions
 # (or using prepositions) with single words
@@ -96,31 +99,35 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     return list(born_on_date), list(born_in_place), family_dict
 
 
-def get_lemma(text: str) -> str:
+def get_synonym(text: str) -> list:
     """
-    Get the lemma of the input text.
+    Get the synonyms/lemma of the input text.
 
     :param text: String to be lemmatized
-    :return String holding the lemma of the input text
+    :return An array holding the synonyms/lemmas of the input text
     """
-    word = Word(text)
-    return word.lemmatize()
+    words = []
+    syns = wn.synsets(text)
+    for syn in syns:
+        text = str(syn)
+        words.append(text[text.index("'") + 1:text.index('.')])
+    return words
 
 
 def get_named_entity_in_string(text: str) -> (str, str):
     """
     Returns information on any Named Entity that are Agents (people, organizations, geopolitical
-    entities, ...) or Events in the input text, based on the setting of the return_if_agent boolean.
+    entities, ...) or Events in the input text.
 
     :param text: The text to be parsed
     :return Two strings - the first is the named entity's text and the second string is its
-            type mapped to the DNA Agent sub-classing hierarchy; If the input text does not
-            contain any Named Entities that are Agents, then two empty strings are returned
+            type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
+            does not contain any Named Entities, then two empty strings are returned
     """
     doc = nlp(text)
     for ent in doc.ents:
-        if ent.label_ in agent_ner_types:
-            return ent.text, agent_ner_dict[ent.label_]
+        if ent.label_ in ner_types:
+            return ent.text, ner_dict[ent.label_]
     return empty_string, empty_string
 
 
@@ -168,6 +175,26 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     sorted_nouns = dict(sorted(noun_dict.items(), key=lambda item: item[1], reverse=True))
     sorted_verbs = dict(sorted(verb_dict.items(), key=lambda item: item[1], reverse=True))
     return sorted_nouns, sorted_verbs
+
+
+def get_proper_nouns(text: str) -> str:
+    """
+    Extract a string consisting of the proper nouns in a text string. For example, "New York City ghetto"
+    would return "New York City".
+
+    :param text: The text string to be parsed
+    :return A string of the proper nouns
+    """
+    phrase = nlp(text)
+    proper_nouns = []
+    for token in phrase:
+        noun_type = token.morph.get('NounType')
+        if noun_type and noun_type[0] == 'Prop':   # Have a proper noun
+            proper_nouns.append(token.text)
+    if proper_nouns:
+        return ' '.join(proper_nouns)
+    else:
+        return empty_string
 
 
 def get_sentence_sentiment(sentence: str) -> float:

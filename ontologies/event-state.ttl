@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: September 19 2021
+# Last modified: October 5 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,7 +25,7 @@
 #  Added temporal aspects
 #  Simplified superclassing by removing Event and StateAndCondition
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added several
-#  Added the property, :sentiment
+#  Moved the property, :sentiment, to top.ttl
 ########################################################################
 
 
@@ -58,15 +58,6 @@
 ########################################################################
 # Datatype Properties
 ########################################################################
-
-:sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "sentiment" ;
-  rdfs:domain :EventAndState ;
-  rdfs:range [ a rdfs:Datatype ;
-               owl:onDatatype xsd:decimal ;
-               owl:withRestrictions ( [ xsd:minInclusive "-1.0"^^xsd:decimal ]
-                                      [ xsd:maxInclusive "1.0"^^xsd:decimal ] ) ] ;
-  :definition "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)." .
 
 
 ########################################################################

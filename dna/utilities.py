@@ -38,7 +38,8 @@ gender_dict = {'A': ':Agender', 'B': ':Bigender',
 
 family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
                   'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
-                  'parent': '', 'sibling': '', 'cousin': '', 'grandparent': ''}
+                  'parent': empty_string, 'sibling': empty_string, 'cousin': empty_string,
+                  'grandparent': empty_string, 'relative': empty_string}
 
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
