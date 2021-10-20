@@ -97,7 +97,7 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     # Processing is based on dependency parsing
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
     for child in token.children:
-        if child.dep_ in ('acomp', 'ccomp', 'xcomp'):    # Various complements of the verb
+        if child.dep_ in ('acomp', 'advcl', 'ccomp', 'xcomp'):    # Various complements of the verb
             add_token_details(child, verb_dict, f'verb_{child.dep_}', gender, family_dict)
         elif 'agent' == child.dep_:          # Agent of a passive verb, introduced by the word, 'by'
             for child2 in child.children:
