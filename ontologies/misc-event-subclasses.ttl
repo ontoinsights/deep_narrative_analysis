@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: August 23 2021
+# Last Modified: October 20 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -29,9 +29,10 @@
 #  Added :InvasionAndOccupation, :Forgetting, :Battle and :War
 #  Merged :Recovery into :ReturnRecoveryAndRelease 
 #    (in event-state-subclasses)
-#  Added :Hunger and :Thirst as subclasses of :SensoryPerception
+#  Added :Exhaustion, :Hunger, :Thirst as subclasses of :SensoryPerception
 #  Added :Arson, :Battle and :BoycottAndBan
 #  Moved :ProtestAndStrike to the event-state-suclasses.ttl module
+#  Updated definitions
 ########################################################################
 
 
@@ -70,7 +71,7 @@
 :AttentionAndFocus a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Attention and Focus" ;
-  :definition "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
+  :definition "The act of a Person paying attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
   :noun_synonym "contemplation", "concentration", "awareness", "attentiveness", "vigilance", "entrancement", "perception" ;
   :verb_synonym "focus", "contemplate", "concentrate", "pay attention", "be vigil", "entrance", "perceive" .
 
@@ -143,6 +144,13 @@
   :definition "An act of avoiding/getting away from something, someone or some Event, or of breaking free from captivity or oppression." ;
   :noun_synonym "breakout", "desertion", "extrication", "fleeing" ;
   :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away" .
+
+:Exhaustion a owl:Class ;
+  rdfs:subClassOf :SensoryPerception ;
+  rdfs:label "Exhaustion" ;
+  :definition "A feeling of discomfort caused by a lack of sleep, over exertion, etc." ;
+  :noun_synonym "fatigue", "weariness", "tiredness", "over-exertion" ;
+  :verb_synonym "fatigue", "be weary", "be tired" .
 
 :GiftAndDonation a owl:Class ;
   rdfs:subClassOf :Acquisition, :FriendlyOrSupportiveAct ;

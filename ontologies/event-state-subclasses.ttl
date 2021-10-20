@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: September 27 2021
+# Last Modified: October 19 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,6 +34,7 @@
 #  Added Marriage, Divorce, DemonstrationAndRally and FormationOfOrganization
 #  Renamed ReturnAndRelease to ReturnRecoveryAndRelease
 #  Renamed Publication to ActOfPublishing
+#  Updated definitions
 ########################################################################
 
 
@@ -190,10 +191,10 @@
   :definition "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)." ;
   :noun_synonym "catastrophe", "cataclysm", "calamity", "act of God" .
 
-:DissolutionOfOrganization a owl:Class ;
+:DissolutionOfBusiness a owl:Class ;
   rdfs:subClassOf :EmploymentEvent, :End ;
-  rdfs:label "Dissolution of Organization" ;
-  :definition "An Event indicating that an existing Organization ceased operations." ;
+  rdfs:label "Dissolution of Business" ;
+  :definition "An Event indicating that an existing business (Organization) or business location ceased operations." ;
   :noun_synonym "closing" ;
   :verb_synonym "go out of business", "shut its doors", "close" .
 

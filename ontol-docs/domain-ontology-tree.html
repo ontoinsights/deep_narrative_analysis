@@ -768,6 +768,21 @@ p {
   "urn:ontoinsights:dna:MurderAndHomicide": {
     "iri": "urn:ontoinsights:dna:MurderAndHomicide"
   },
+  "Zionism": {
+    "iri": "urn:ontoinsights:dna:Zionism",
+    "urn:ontoinsights:dna:definition": [
+      "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Zionism&oldid=1050004256), Zionism is 'both an ideology and nationalist movement that espouses the establishment of, and support for a Jewish state centered in the area roughly corresponding to Canaan, the Holy Land, the region of Palestine or Eretz Israel, on the basis of a long Jewish connection and attachment to that land'."
+    ],
+    "urn:ontoinsights:dna:noun_synonym": [
+      "Zionist"
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('urn:ontoinsights:dna:Nationalism')\">urn:ontoinsights:dna:Nationalism</a>"
+    ]
+  },
+  "urn:ontoinsights:dna:Nationalism": {
+    "iri": "urn:ontoinsights:dna:Nationalism"
+  },
   "urn:ontoinsights:dna:OccupiedArea": {
     "iri": "urn:ontoinsights:dna:OccupiedArea"
   },
@@ -785,6 +800,9 @@ p {
   },
   "urn:ontoinsights:dna:PoliceForce": {
     "iri": "urn:ontoinsights:dna:PoliceForce"
+  },
+  "urn:ontoinsights:dna:PoliticalIdeology": {
+    "iri": "urn:ontoinsights:dna:PoliticalIdeology"
   },
   "urn:ontoinsights:dna:PoliticalParty": {
     "iri": "urn:ontoinsights:dna:PoliticalParty"
@@ -6353,8 +6371,8 @@ p {
     "urn:ontoinsights:dna:noun_synonym": [
       "World War Two",
       "Second World War",
-      "WWII",
       "WW II",
+      "WWII",
       "WW2",
       "WW 2"
     ],
@@ -6760,6 +6778,14 @@ p {
         ]
       },
       {
+        "id": "urn:ontoinsights:dna:Nationalism",
+        "children": [
+          {
+            "id": "Zionism"
+          }
+        ]
+      },
+      {
         "id": "urn:ontoinsights:dna:OccupiedArea"
       },
       {
@@ -6781,6 +6807,9 @@ p {
       },
       {
         "id": "urn:ontoinsights:dna:PoliceForce"
+      },
+      {
+        "id": "urn:ontoinsights:dna:PoliticalIdeology"
       },
       {
         "id": "urn:ontoinsights:dna:PoliticalParty"
@@ -8082,6 +8111,14 @@ p {
           },
           {
             "id": "Orpo"
+          }
+        ]
+      },
+      {
+        "id": "urn:ontoinsights:dna:PoliticalIdeology{OWLClass}",
+        "children": [
+          {
+            "id": "Zionism"
           }
         ]
       },

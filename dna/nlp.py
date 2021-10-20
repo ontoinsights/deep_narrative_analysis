@@ -131,13 +131,13 @@ def get_named_entity_in_string(text: str) -> (str, str):
     return empty_string, empty_string
 
 
-def get_noun(text: str, first: bool) -> str:
+def get_noun(text: str, get_first_occurrence: bool) -> str:
     """
     Creates a spacy Doc from the input text and returns the first (or last) noun found.
 
     :param text: The text to parse
-    :param first: Boolean indicating that the first noun is returned (if True);
-                  otherwise, the last noun is returned
+    :param get_first_occurrence: Boolean indicating that the first noun is returned (if True);
+                                 otherwise, the last noun is returned
     :return: The first or last (depending on whether the first variable is True or False) noun
              in the input text, or an empty string if no noun is found
     """
@@ -148,7 +148,7 @@ def get_noun(text: str, first: bool) -> str:
             if token.dep_ == 'compound':
                 continue
             word = token.text
-            if first:
+            if get_first_occurrence:
                 break
     return word
 

@@ -3,7 +3,7 @@
 import logging
 
 from nlp import get_birth_family_details
-from ontology_wikipedia_geonames_query import get_geonames_location
+from query_ontology_and_sources import get_geonames_location
 from utilities import empty_string, space, family_members, gender_dict, months, countries
 
 

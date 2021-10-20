@@ -234,7 +234,7 @@ def _process_proper_noun(token: Token, narr_gender: str, family_dict: dict) -> (
     :param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
     :return: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
-             GPE/LOC/...).
+             GPE/LOC/EVENT/...).
     """
     entity = token.text
     entity_type = token.ent_type_
@@ -246,8 +246,11 @@ def _process_proper_noun(token: Token, narr_gender: str, family_dict: dict) -> (
             or entity_type.endswith('NORP'):
         entity, entity_type = _process_noun(token, entity_type)
     elif not entity_type.endswith('DATE') and not entity_type.endswith('TIME'):
-        entity, gender, entity_type = _check_family(entity, family_dict)
-        if entity_type.endswith('NOUN'):    # Proper noun that is not a Person or identified as GPE, ORG, ...
+        if entity_type.endswith('EVENT'):
+            gender = empty_string
+        else:
+            entity, gender, entity_type = _check_family(entity, family_dict)
+        if entity_type.endswith('NOUN') or entity_type.endswith('EVENT'):
             entity, entity_type = _process_noun(token, entity_type)   # Get the full entity text at least
         entity_type = f'{gender}{entity_type}' if gender else entity_type
     return entity, entity_type

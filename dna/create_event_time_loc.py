@@ -7,7 +7,7 @@ import pickle
 import re
 
 from database import query_database
-from ontology_wikipedia_geonames_query import get_geonames_location
+from query_ontology_and_sources import get_geonames_location
 from nlp import get_named_entity_in_string, get_proper_nouns, get_time_details
 from utilities import domain_database, empty_string, months, preps_string, resources_root, space, verbs_string
 
@@ -281,8 +281,13 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
         return time, []
     else:
         processed_dates.append(instance_uri)    # Track that the Turtle details have been created
-        if ':ontoinsights:dna' in time:
-            new_label = f'Related to {sent_date}'   # Note that the time is 'related' to the event
+        if ':ontoinsights:dna' in time:         # Note that the time is 'related' to the event
+            if time.startswith('after'):
+                new_label = f'Related to after {sent_date}'
+            elif time.startswith('before'):
+                new_label = f'Related to before {sent_date}'
+            else:
+                new_label = f'Related to {sent_date}'
         else:
             new_label = sent_date
         # Update the time (which is returned) to be consistent with the processed_dates
@@ -367,17 +372,16 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
         split_elems = elem_text.split(' ')
         if key == 'TIMES':
             for split_elem in split_elems:
-                if split_elem in check_str:
+                if split_elem in ('earlier', 'later', 'next', 'previous', 'prior', 'following'):
+                    array_text = elem_text
+                    break
+                elif split_elem in check_str:
                     if len(split_elem) < 4:    # Avoid determiners, short words/abbreviations/...
                         continue
-                    if split_elem in ('earlier', 'later', 'next', 'previous', 'prior', 'following'):
-                        array_text = elem_text
+                    prep_str = check_str.split(split_elem)[0]
+                    if 'prep_text' in prep_str:
+                        array_text = _get_before_after(prep_str, elem_text)
                         break
-                    else:
-                        prep_str = check_str.split(split_elem)[0]
-                        if 'prep_text' in prep_str:
-                            array_text = _get_before_after(prep_str, elem_text)
-                            break
         elif key == 'EVENTS':
             if elem_text in check_str:
                 prep_str = check_str.split(elem_text)[0]

@@ -935,6 +935,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      <urn:ontoinsights:dna:definition> "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12." .
 
 
+###  urn:ontoinsights:dna:negation
+<urn:ontoinsights:dna:negation> rdf:type owl:DatatypeProperty ,
+                                         owl:FunctionalProperty ;
+                                rdfs:range xsd:boolean ;
+                                rdfs:label "negation (boolean)" ;
+                                <urn:ontoinsights:dna:definition> "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc." .
+
+
 ###  urn:ontoinsights:dna:numeric_duration
 <urn:ontoinsights:dna:numeric_duration> rdf:type owl:DatatypeProperty ,
                                                  owl:FunctionalProperty ;
@@ -1082,7 +1090,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:sentiment
 <urn:ontoinsights:dna:sentiment> rdf:type owl:DatatypeProperty ,
                                           owl:FunctionalProperty ;
-                                 rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
                                  rdfs:range [ rdf:type rdfs:Datatype ;
                                               owl:onDatatype xsd:decimal ;
                                               owl:withRestrictions ( [ xsd:minInclusive -1.0
@@ -1092,7 +1099,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    )
                                             ] ;
                                  rdfs:label "sentiment" ;
-                                 <urn:ontoinsights:dna:definition> "Indicates whether the backing sentence for the Event or State is positive (maximum value 1.0) or negative (minimum value -1.0)." .
+                                 <urn:ontoinsights:dna:definition> "Indicates whether the referencing entity is considered to be something positive (maximum value 1.0) or negative (minimum value -1.0)." .
 
 
 ###  urn:ontoinsights:dna:separation_interval
@@ -1443,6 +1450,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "drug abuse" .
 
 
+###  urn:ontoinsights:dna:Anarchism
+<urn:ontoinsights:dna:Anarchism> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Anarchism" ;
+                                 <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "anachist" .
+
+
 ###  urn:ontoinsights:dna:AngerAndAnnoyance
 <urn:ontoinsights:dna:AngerAndAnnoyance> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
@@ -1753,7 +1768,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
                                          owl:disjointWith <urn:ontoinsights:dna:IgnoringAndOverlooking> ;
                                          rdfs:label "Attention and Focus" ;
-                                         <urn:ontoinsights:dna:definition> "The act of a Person paying close attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
+                                         <urn:ontoinsights:dna:definition> "The act of a Person paying attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
                                          <urn:ontoinsights:dna:noun_synonym> "attentiveness" ,
                                                                              "awareness" ,
                                                                              "concentration" ,
@@ -1768,6 +1783,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "focus" ,
                                                                              "pay attention" ,
                                                                              "perceive" .
+
+
+###  urn:ontoinsights:dna:Authoritarianism
+<urn:ontoinsights:dna:Authoritarianism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Authoritarianism" ;
+                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "authoritarian" .
 
 
 ###  urn:ontoinsights:dna:Autism
@@ -5792,8 +5815,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          rdfs:subClassOf <urn:ontoinsights:dna:ReligiousBelief> ;
                                          rdfs:label "Judaism" ;
                                          <urn:ontoinsights:dna:noun_synonym> "Hebrew" ,
-                                                                             "Jew" ,
-                                                                             "Zionist" .
+                                                                             "Jew" .
 
 
 ###  urn:ontoinsights:dna:CameoReligion_MOS
@@ -5894,13 +5916,17 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              rdfs:label "Captivity and Detention" ;
                                              <urn:ontoinsights:dna:definition> "The condition of an Agent being held captive and confined to a certain location." ;
                                              <urn:ontoinsights:dna:noun_synonym> "bondage" ,
+                                                                                 "captive" ,
                                                                                  "confinement" ,
+                                                                                 "detainee" ,
                                                                                  "enslavement" ,
                                                                                  "imprisonment" ,
                                                                                  "incarceration" ,
                                                                                  "internment" ,
+                                                                                 "slave" ,
                                                                                  "slavery" ;
                                              <urn:ontoinsights:dna:verb_synonym> "confine" ,
+                                                                                 "detain" ,
                                                                                  "enslave" ,
                                                                                  "imprison" ,
                                                                                  "incarcerate" ,
@@ -6078,6 +6104,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "set" .
 
 
+###  urn:ontoinsights:dna:ColonialismAndImperialism
+<urn:ontoinsights:dna:ColonialismAndImperialism> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                                 rdfs:label "Colonialism and Imperialism" ;
+                                                 <urn:ontoinsights:dna:definition> "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" ;
+                                                 <urn:ontoinsights:dna:noun_synonym> "colonialist" ,
+                                                                                     "imperialist" .
+
+
 ###  urn:ontoinsights:dna:Command
 <urn:ontoinsights:dna:Command> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:RequestAndAppeal> ;
@@ -6116,6 +6151,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "tell" ,
                                                                                      "utter" ,
                                                                                      "write" .
+
+
+###  urn:ontoinsights:dna:Communism
+<urn:ontoinsights:dna:Communism> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Communism" ;
+                                 <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "communist" .
+
+
+###  urn:ontoinsights:dna:Communitarianism
+<urn:ontoinsights:dna:Communitarianism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Communitarianism" ;
+                                        <urn:ontoinsights:dna:definition> "Communitarianism emphasizes the community over the individual, and the responsibilities of the individual to the community. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communitarianism&oldid=1018133055), 'its overriding philosophy is based upon the belief that a person's social identity and personality are largely molded by community relationships, with a smaller degree of development being placed on individualism. Although the community might be a family, communitarianism usually is understood, in the wider, philosophical sense, as a collection of interactions, among a community of people in a given place (geographical location), or among a community who share an interest or who share a history.'" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "communitarian" .
 
 
 ###  urn:ontoinsights:dna:CompassionAndEmpathy
@@ -6271,6 +6322,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "perplex" .
 
 
+###  urn:ontoinsights:dna:Conservatism
+<urn:ontoinsights:dna:Conservatism> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                    rdfs:label "Conservatism" ;
+                                    <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Conservatism&oldid=1018019763), Conservatism promotes 'traditional social institutions. The central tenets of conservatism may vary in relation to the traditional values or practices of the culture and civilization in which it appears. In Western culture, conservatives seek to preserve a range of institutions such as organized religion, parliamentary government, and property rights. Adherents of conservatism often oppose modernism and seek a return to traditional values.'" ;
+                                    <urn:ontoinsights:dna:noun_synonym> "conservationist" .
+
+
 ###  urn:ontoinsights:dna:Construction
 <urn:ontoinsights:dna:Construction> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -6332,6 +6391,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:verb_synonym> "collaborate" ,
                                                                        "cooperate" ,
                                                                        "share" .
+
+
+###  urn:ontoinsights:dna:Corporatism
+<urn:ontoinsights:dna:Corporatism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Corporatism" ;
+                                   <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Corporatism&oldid=1017376258), Corporatism 'advocates the organization of society by corporate groups, such as agricultural, labour, military, scientific, or guild associations, on the basis of their common interests ... The hypothesis that society will reach a peak of harmonious functioning when each of its divisions efficiently performs its designated function, such as a body's organs individually contributing its general health and functionality, lies at the center of corporatist theory. Corporatist ideas have been expressed since ancient Greek and Roman societies, with integration into Catholic social teaching and Christian democratic political parties. They have been paired by various advocates and implemented in various societies with a wide variety of political systems, including authoritarianism, absolutism, fascism and liberalism. Corporatism may also refer to economic tripartism involving negotiations between labour and business interest groups and the government to establish economic policy. This is sometimes also referred to as neo-corporatism or social democratic corporatism.'" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "corporatist" .
 
 
 ###  urn:ontoinsights:dna:Country
@@ -6552,6 +6619,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:noun_synonym> "Alzheimer's disease" .
 
 
+###  urn:ontoinsights:dna:Democracy
+<urn:ontoinsights:dna:Democracy> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Democracy" ;
+                                 <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Democracy&oldid=1018088389), Democracy is a 'form of government in which the people have the authority to choose their governing legislators. The decisions on who is considered part of the people and how authority is shared among or delegated by the people have changed over time and at different speeds in different countries, but they have included more and more of the inhabitants of all countries. Cornerstones include freedom of assembly and speech, inclusiveness and equality, membership, consent, voting, right to life and minority rights.'" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "democratist" .
+
+
 ###  urn:ontoinsights:dna:DemonstrationAndRally
 <urn:ontoinsights:dna:DemonstrationAndRally> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
@@ -6674,16 +6749,16 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:noun_synonym> "refugee" .
 
 
-###  urn:ontoinsights:dna:DissolutionOfOrganization
-<urn:ontoinsights:dna:DissolutionOfOrganization> rdf:type owl:Class ;
-                                                 rdfs:subClassOf <urn:ontoinsights:dna:EmploymentEvent> ,
-                                                                 <urn:ontoinsights:dna:End> ;
-                                                 rdfs:label "Dissolution of Organization" ;
-                                                 <urn:ontoinsights:dna:definition> "An Event indicating that an existing Organization ceased operations." ;
-                                                 <urn:ontoinsights:dna:noun_synonym> "closing" ;
-                                                 <urn:ontoinsights:dna:verb_synonym> "close" ,
-                                                                                     "go out of business" ,
-                                                                                     "shut its doors" .
+###  urn:ontoinsights:dna:DissolutionOfBusiness
+<urn:ontoinsights:dna:DissolutionOfBusiness> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:EmploymentEvent> ,
+                                                             <urn:ontoinsights:dna:End> ;
+                                             rdfs:label "Dissolution of Business" ;
+                                             <urn:ontoinsights:dna:definition> "An Event indicating that an existing business (Organization) or business location ceased operations." ;
+                                             <urn:ontoinsights:dna:noun_synonym> "closing" ;
+                                             <urn:ontoinsights:dna:verb_synonym> "close" ,
+                                                                                 "go out of business" ,
+                                                                                 "shut its doors" .
 
 
 ###  urn:ontoinsights:dna:Divorce
@@ -6965,6 +7040,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                       <urn:ontoinsights:dna:definition> "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals." .
 
 
+###  urn:ontoinsights:dna:Environmentalism
+<urn:ontoinsights:dna:Environmentalism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Environmentalism" ;
+                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Environmentalism&oldid=1005807941), Environmentalism is a 'broad philosophy, ideology, and social movement regarding concerns for environmental protection and improvement of the health of the environment, particularly as the measure for this health seeks to incorporate the impact of changes to the environment on humans, animals, plants and non-living matter'." ;
+                                        <urn:ontoinsights:dna:noun_synonym> "environmentalist" .
+
+
 ###  urn:ontoinsights:dna:Envy
 <urn:ontoinsights:dna:Envy> rdf:type owl:Class ;
                             rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
@@ -7044,6 +7127,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "thrill" .
 
 
+###  urn:ontoinsights:dna:Exhaustion
+<urn:ontoinsights:dna:Exhaustion> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:SensoryPerception> ;
+                                  rdfs:label "Exhaustion" ;
+                                  <urn:ontoinsights:dna:definition> "A feeling of discomfort caused by a lack of sleep, over exertion, etc." ;
+                                  <urn:ontoinsights:dna:noun_synonym> "fatigue" ,
+                                                                      "over-exertion" ,
+                                                                      "tiredness" ,
+                                                                      "weariness" ;
+                                  <urn:ontoinsights:dna:verb_synonym> "be tired" ,
+                                                                      "be weary" ,
+                                                                      "fatigue" .
+
+
 ###  urn:ontoinsights:dna:Expenses
 <urn:ontoinsights:dna:Expenses> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
@@ -7069,6 +7166,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "exclaim" ,
                                                                                     "give thanks" ,
                                                                                     "greet" .
+
+
+###  urn:ontoinsights:dna:Facism
+<urn:ontoinsights:dna:Facism> rdf:type owl:Class ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                              rdfs:label "Facism" ;
+                              <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." ;
+                              <urn:ontoinsights:dna:noun_synonym> "facist" .
 
 
 ###  urn:ontoinsights:dna:Factory
@@ -7923,6 +8028,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
 
 
+###  urn:ontoinsights:dna:Liberalism
+<urn:ontoinsights:dna:Liberalism> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                  rdfs:label "Liberalism" ;
+                                  <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" ;
+                                  <urn:ontoinsights:dna:noun_synonym> "liberalist" .
+
+
+###  urn:ontoinsights:dna:Libertarianism
+<urn:ontoinsights:dna:Libertarianism> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                      rdfs:label "Libertarianism" ;
+                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Libertarianism&oldid=1017897385), Libertarianism 'upholds liberty as a core principle. Libertarians seek to maximize autonomy and political freedom, emphasizing free association, freedom of choice, individualism and voluntary association. Libertarians share a skepticism of authority and state power, but some of them diverge on the scope of their opposition to existing economic and political systems. Various schools of libertarian thought offer a range of views regarding the legitimate functions of state and private power, often calling for the restriction or dissolution of coercive social institutions.'" ;
+                                      <urn:ontoinsights:dna:noun_synonym> "libertarian" .
+
+
 ###  urn:ontoinsights:dna:LifeEvent
 <urn:ontoinsights:dna:LifeEvent> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -7941,6 +8062,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                         rdfs:label "Living Conditions" ;
                                         <urn:ontoinsights:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
+
+
+###  urn:ontoinsights:dna:Localism
+<urn:ontoinsights:dna:Localism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                rdfs:label "Localism" ;
+                                <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Localism_(politics)&oldid=1036561541), Localism 'describes a range of political philosophies which prioritize the local. Generally, localism supports local production and consumption of goods, local control of government, and promotion of local history, local culture and local identity. Localism can be contrasted with regionalism and centralized government, with its opposite being found in the unitary state. Localism can also refer to a systematic approach to organizing a national government so that local autonomy is retained rather than following the usual pattern of government and political power becoming centralized over time. On a conceptual level, there are important affinities between localism and deliberative democracy. This concerns mainly the democratic goal of engaging citizens in decisions that affect them. Consequently, localism will encourage stronger democratic and political participatory forums and widening public sphere connectivity.'" ;
+                                <urn:ontoinsights:dna:noun_synonym> "localist" .
 
 
 ###  urn:ontoinsights:dna:Location
@@ -8190,6 +8319,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                           <urn:ontoinsights:dna:definition> "Any health condition that impacts movement and the ability to move freely." .
 
 
+###  urn:ontoinsights:dna:ModerateIdeology
+<urn:ontoinsights:dna:ModerateIdeology> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Moderate Ideology" ;
+                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Moderate&oldid=1006575574), Moderate 'is an ideological category which designates a rejection of radical or extreme views, especially in regard to politics and religion. A moderate is considered someone occupying any mainstream position avoiding extreme views and major social change. In United States politics, a moderate is considered someone occupying a centre position on the left–right political spectrum.'" .
+
+
 ###  urn:ontoinsights:dna:MonetaryAndFinancialInstrument
 <urn:ontoinsights:dna:MonetaryAndFinancialInstrument> rdf:type owl:Class ;
                                                       rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -8310,6 +8446,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "tale" .
 
 
+###  urn:ontoinsights:dna:Nationalism
+<urn:ontoinsights:dna:Nationalism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Nationalism" ;
+                                   <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Nationalism&oldid=1018089498), Nationalism 'promotes the interests of a particular nation (as in a group of people), especially with the aim of gaining and maintaining the nation's sovereignty (self-governance) over its homeland. Nationalism holds that each nation should govern itself, free from outside interference (self-determination), that a nation is a natural and ideal basis for a polity and that the nation is the only rightful source of political power (popular sovereignty). It further aims to build and maintain a single national identity, based on shared social characteristics of culture, ethnicity, geographic location, language, politics (or the government), religion, traditions and belief in a shared singular history, and to promote national unity or solidarity. Nationalism seeks to preserve and foster a nation's traditional cultures and cultural revivals have been associated with nationalist movements. It also encourages pride in national achievements and is closely linked to patriotism. Nationalism is often combined with other ideologies such as conservatism (national conservatism) or socialism (left-wing nationalism).'" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "nationalist" .
+
+
 ###  urn:ontoinsights:dna:NaturalProcess
 <urn:ontoinsights:dna:NaturalProcess> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:dna:Process> ;
@@ -8396,6 +8540,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                               <urn:ontoinsights:dna:verb_synonym> "be aged" ,
                                                                   "be elderly" ,
                                                                   "be old" .
+
+
+###  urn:ontoinsights:dna:Oligarchy
+<urn:ontoinsights:dna:Oligarchy> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Oligarchy" ;
+                                 <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Oligarchy&oldid=1040627006), Oligarchy 'is a form of power structure in which power rests with a small number of people. These people may or may not be distinguished by one or several characteristics, such as nobility, fame, wealth, education, or corporate, religious, political, or military control. Throughout history, oligarchies have often been tyrannical, relying on public obedience or oppression to exist.'" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "oligarchist" .
 
 
 ###  urn:ontoinsights:dna:OnlineLocation
@@ -8569,30 +8721,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:PoliticalIdeology
 <urn:ontoinsights:dna:PoliticalIdeology> rdf:type owl:Class ;
-                                         owl:equivalentClass [ rdf:type owl:Class ;
-                                                               owl:oneOf ( <urn:ontoinsights:dna:enum:Anarchism>
-                                                                           <urn:ontoinsights:dna:enum:Authoritarianism>
-                                                                           <urn:ontoinsights:dna:enum:ColonialismAndImperialism>
-                                                                           <urn:ontoinsights:dna:enum:Communism>
-                                                                           <urn:ontoinsights:dna:enum:Communitarianism>
-                                                                           <urn:ontoinsights:dna:enum:Conservatism>
-                                                                           <urn:ontoinsights:dna:enum:Corporatism>
-                                                                           <urn:ontoinsights:dna:enum:Democracy>
-                                                                           <urn:ontoinsights:dna:enum:Environmentalism>
-                                                                           <urn:ontoinsights:dna:enum:Facism>
-                                                                           <urn:ontoinsights:dna:enum:Liberalism>
-                                                                           <urn:ontoinsights:dna:enum:Libertarianism>
-                                                                           <urn:ontoinsights:dna:enum:Localism>
-                                                                           <urn:ontoinsights:dna:enum:ModerateIdeology>
-                                                                           <urn:ontoinsights:dna:enum:Nationalism>
-                                                                           <urn:ontoinsights:dna:enum:Oligarchy>
-                                                                           <urn:ontoinsights:dna:enum:Populism>
-                                                                           <urn:ontoinsights:dna:enum:Progressivism>
-                                                                           <urn:ontoinsights:dna:enum:Reactionist>
-                                                                           <urn:ontoinsights:dna:enum:Socialism>
-                                                                           <urn:ontoinsights:dna:enum:Syndicalism>
-                                                                         )
-                                                             ] ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
                                          rdfs:label "Political Ideology" ;
                                          <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
@@ -8617,6 +8745,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "village" .
 
 
+###  urn:ontoinsights:dna:Populism
+<urn:ontoinsights:dna:Populism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                rdfs:label "Populism" ;
+                                <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Populism&oldid=1016524972), Populism is 'an ideology which presents 'the people' as a morally good force and contrasts them against 'the elite', who are portrayed as corrupt and self-serving. Populists differ in how 'the people' are defined, but it can be based along class, ethnic, or national lines. Populists typically present 'the elite' as comprising the political, economic, cultural, and media establishment, depicted as a homogeneous entity and accused of placing their own interests, and often the interests of other groups—such as large corporations, foreign countries, or immigrants—above the interests of 'the people'. Populist parties and social movements are often led by charismatic or dominant figures who present themselves as the 'voice of the people'. According to the ideational approach, populism is often combined with other ideologies, such as nationalism, liberalism, or socialism. Thus, populists can be found at different locations along the left–right political spectrum, and there exist both left-wing populism and right-wing populism.'" ;
+                                <urn:ontoinsights:dna:noun_synonym> "populist" .
+
+
 ###  urn:ontoinsights:dna:PositiveEmotion
 <urn:ontoinsights:dna:PositiveEmotion> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:EmotionalResponse> ;
@@ -8630,14 +8766,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                   rdfs:label "Possession" ;
                                   <urn:ontoinsights:dna:definition> "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-                                  <urn:ontoinsights:dna:noun_synonym> "belonging" ,
+                                  <urn:ontoinsights:dna:noun_synonym> "belongings" ,
                                                                       "control" ,
                                                                       "custody" ,
                                                                       "guardianship" ,
                                                                       "keeping" ,
-                                                                      "personal effects" ,
                                                                       "proprietorship" ;
-                                  <urn:ontoinsights:dna:verb_synonym> "belong" ,
+                                  <urn:ontoinsights:dna:verb_synonym> "belong to" ,
                                                                       "commandeer" ,
                                                                       "confiscate" ,
                                                                       "control" ,
@@ -8713,6 +8848,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                             "manufacture" ,
                                                                                             "model" ,
                                                                                             "produce" .
+
+
+###  urn:ontoinsights:dna:Progressivism
+<urn:ontoinsights:dna:Progressivism> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                     rdfs:label "Progressivism" ;
+                                     <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" ;
+                                     <urn:ontoinsights:dna:noun_synonym> "progressivist" .
 
 
 ###  urn:ontoinsights:dna:PromiseAndOath
@@ -8857,6 +9000,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                            rdfs:label "Raw Material Processing and Preparation" ;
                                                            <urn:ontoinsights:dna:definition> "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
                                                            <urn:ontoinsights:dna:example> "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
+
+
+###  urn:ontoinsights:dna:Reactionism
+<urn:ontoinsights:dna:Reactionism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Reactionism" ;
+                                   <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Reactionary&oldid=1016120273), Reactionists 'favour a return to a previous political state of society that they believe possessed positive characteristics that are absent in contemporary society. As an adjective, the word reactionary describes points of view and policies meant to restore a past status quo. The word reactionary is often used in the context of the left–right political spectrum, and is one tradition in right-wing politics. In popular usage, it is commonly used to refer to a highly traditional position, one opposed to social or political change. However, according to political theorist Mark Lilla, a reactionary yearns to overturn a present condition of perceived decadence and recover an idealized past. Such reactionary individuals and policies favour social transformation, in contrast to conservative individuals or policies that seek incremental change or to preserve what exists in the present.'" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "reactionist" .
 
 
 ###  urn:ontoinsights:dna:RealEstate
@@ -9476,6 +9627,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                 <urn:ontoinsights:dna:example> "Examples are soaps, detergents, solvents, sands and chemicals such as carbon dioxide." .
 
 
+###  urn:ontoinsights:dna:Socialism
+<urn:ontoinsights:dna:Socialism> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Socialism" ;
+                                 <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Socialism&oldid=1018154550), Socialism is 'a political, social, and economic philosophy encompassing a range of economic and social systems characterised by social ownership of the means of production. It includes the political theories and movements associated with such systems. Social ownership can be public, collective, cooperative, or of equity. While no single definition encapsulates the many types of socialism, social ownership is the one common element. The types of socialism vary based on the role of markets and planning in resource allocation, on the structure of management in organizations, and socialists disagree on whether government, particularly existing government, is the correct vehicle for change.'" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "socialist" .
+
+
 ###  urn:ontoinsights:dna:Software
 <urn:ontoinsights:dna:Software> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -9649,6 +9808,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                           <urn:ontoinsights:dna:noun_synonym> "bulbar muscle dysfunction" ,
                                                                               "dysphagia" ,
                                                                               "odynophagia" .
+
+
+###  urn:ontoinsights:dna:Syndicalism
+<urn:ontoinsights:dna:Syndicalism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Syndicalism" ;
+                                   <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Syndicalism&oldid=1013439694), Syndicalism is a 'current in the labor movement to establish local, worker-based organizations and advance the demands and rights of workers through strikes'." ;
+                                   <urn:ontoinsights:dna:noun_synonym> "syndicalist" .
 
 
 ###  urn:ontoinsights:dna:Taxes
@@ -9991,20 +10158,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:label "Agender, Gender Neutral or Lack of Gender" .
 
 
-###  urn:ontoinsights:dna:enum:Anarchism
-<urn:ontoinsights:dna:enum:Anarchism> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                      rdfs:label "Anarchism" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" .
-
-
-###  urn:ontoinsights:dna:enum:Authoritarianism
-<urn:ontoinsights:dna:enum:Authoritarianism> rdf:type owl:NamedIndividual ,
-                                                      <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                             rdfs:label "Authoritarianism" ;
-                                             <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" .
-
-
 ###  urn:ontoinsights:dna:enum:Bigender
 <urn:ontoinsights:dna:enum:Bigender> rdf:type owl:NamedIndividual ,
                                               <urn:ontoinsights:dna:Gender> ;
@@ -10015,27 +10168,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:Canyon> rdf:type owl:NamedIndividual ,
                                             <urn:ontoinsights:dna:Terrain> ;
                                    rdfs:label "Canyon and deep gorge" .
-
-
-###  urn:ontoinsights:dna:enum:ColonialismAndImperialism
-<urn:ontoinsights:dna:enum:ColonialismAndImperialism> rdf:type owl:NamedIndividual ,
-                                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                                      rdfs:label "Colonialism and Imperialism" ;
-                                                      <urn:ontoinsights:dna:definition> "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" .
-
-
-###  urn:ontoinsights:dna:enum:Communism
-<urn:ontoinsights:dna:enum:Communism> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                      rdfs:label "Communism" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" .
-
-
-###  urn:ontoinsights:dna:enum:Communitarianism
-<urn:ontoinsights:dna:enum:Communitarianism> rdf:type owl:NamedIndividual ,
-                                                      <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                             rdfs:label "Communitarianism" ;
-                                             <urn:ontoinsights:dna:definition> "Communitarianism emphasizes the community over the individual, and the responsibilities of the individual to the community. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communitarianism&oldid=1018133055), 'its overriding philosophy is based upon the belief that a person's social identity and personality are largely molded by community relationships, with a smaller degree of development being placed on individualism. Although the community might be a family, communitarianism usually is understood, in the wider, philosophical sense, as a collection of interactions, among a community of people in a given place (geographical location), or among a community who share an interest or who share a history.'" .
 
 
 ###  urn:ontoinsights:dna:enum:CompletedDoctoralEducation
@@ -10068,32 +10200,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                             rdfs:label "Completed Undergraduate Education" .
 
 
-###  urn:ontoinsights:dna:enum:Conservatism
-<urn:ontoinsights:dna:enum:Conservatism> rdf:type owl:NamedIndividual ,
-                                                  <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                         rdfs:label "Conservatism" ;
-                                         <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Conservatism&oldid=1018019763), Conservatism promotes 'traditional social institutions. The central tenets of conservatism may vary in relation to the traditional values or practices of the culture and civilization in which it appears. In Western culture, conservatives seek to preserve a range of institutions such as organized religion, parliamentary government, and property rights. Adherents of conservatism often oppose modernism and seek a return to traditional values.'" .
-
-
-###  urn:ontoinsights:dna:enum:Corporatism
-<urn:ontoinsights:dna:enum:Corporatism> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                        rdfs:label "Corporatism" ;
-                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Corporatism&oldid=1017376258), Corporatism 'advocates the organization of society by corporate groups, such as agricultural, labour, military, scientific, or guild associations, on the basis of their common interests ... The hypothesis that society will reach a peak of harmonious functioning when each of its divisions efficiently performs its designated function, such as a body's organs individually contributing its general health and functionality, lies at the center of corporatist theory. Corporatist ideas have been expressed since ancient Greek and Roman societies, with integration into Catholic social teaching and Christian democratic political parties. They have been paired by various advocates and implemented in various societies with a wide variety of political systems, including authoritarianism, absolutism, fascism and liberalism. Corporatism may also refer to economic tripartism involving negotiations between labour and business interest groups and the government to establish economic policy. This is sometimes also referred to as neo-corporatism or social democratic corporatism.'" .
-
-
 ###  urn:ontoinsights:dna:enum:Days
 <urn:ontoinsights:dna:enum:Days> rdf:type owl:NamedIndividual ,
                                           <urn:ontoinsights:dna:TemporalUnit> ;
                                  rdfs:label "Days" ;
                                  <urn:ontoinsights:dna:definition> "A 24-hour interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:Democracy
-<urn:ontoinsights:dna:enum:Democracy> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                      rdfs:label "Democracy" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Democracy&oldid=1018088389), Democracy is a 'form of government in which the people have the authority to choose their governing legislators. The decisions on who is considered part of the people and how authority is shared among or delegated by the people have changed over time and at different speeds in different countries, but they have included more and more of the inhabitants of all countries. Cornerstones include freedom of assembly and speech, inclusiveness and equality, membership, consent, voting, right to life and minority rights.'" .
 
 
 ###  urn:ontoinsights:dna:enum:Desert
@@ -10106,20 +10217,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:East> rdf:type owl:NamedIndividual ,
                                           <urn:ontoinsights:dna:Direction> ;
                                  rdfs:label "East" .
-
-
-###  urn:ontoinsights:dna:enum:Environmentalism
-<urn:ontoinsights:dna:enum:Environmentalism> rdf:type owl:NamedIndividual ,
-                                                      <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                             rdfs:label "Environmentalism" ;
-                                             <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Environmentalism&oldid=1005807941), Environmentalism is a 'broad philosophy, ideology, and social movement regarding concerns for environmental protection and improvement of the health of the environment, particularly as the measure for this health seeks to incorporate the impact of changes to the environment on humans, animals, plants and non-living matter'." .
-
-
-###  urn:ontoinsights:dna:enum:Facism
-<urn:ontoinsights:dna:enum:Facism> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                   rdfs:label "Facism" ;
-                                   <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." .
 
 
 ###  urn:ontoinsights:dna:enum:Female
@@ -10172,27 +10269,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   <urn:ontoinsights:dna:definition> "A 60-minute interval of time." .
 
 
-###  urn:ontoinsights:dna:enum:Liberalism
-<urn:ontoinsights:dna:enum:Liberalism> rdf:type owl:NamedIndividual ,
-                                                <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                       rdfs:label "Liberalism" ;
-                                       <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" .
-
-
-###  urn:ontoinsights:dna:enum:Libertarianism
-<urn:ontoinsights:dna:enum:Libertarianism> rdf:type owl:NamedIndividual ,
-                                                    <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                           rdfs:label "Libertarianism" ;
-                                           <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Libertarianism&oldid=1017897385), Libertarianism 'upholds liberty as a core principle. Libertarians seek to maximize autonomy and political freedom, emphasizing free association, freedom of choice, individualism and voluntary association. Libertarians share a skepticism of authority and state power, but some of them diverge on the scope of their opposition to existing economic and political systems. Various schools of libertarian thought offer a range of views regarding the legitimate functions of state and private power, often calling for the restriction or dissolution of coercive social institutions.'" .
-
-
-###  urn:ontoinsights:dna:enum:Localism
-<urn:ontoinsights:dna:enum:Localism> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                     rdfs:label "Localism" ;
-                                     <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Localism_(politics)&oldid=1036561541), Localism 'describes a range of political philosophies which prioritize the local. Generally, localism supports local production and consumption of goods, local control of government, and promotion of local history, local culture and local identity. Localism can be contrasted with regionalism and centralized government, with its opposite being found in the unitary state. Localism can also refer to a systematic approach to organizing a national government so that local autonomy is retained rather than following the usual pattern of government and political power becoming centralized over time. On a conceptual level, there are important affinities between localism and deliberative democracy. This concerns mainly the democratic goal of engaging citizens in decisions that affect them. Consequently, localism will encourage stronger democratic and political participatory forums and widening public sphere connectivity.'" .
-
-
 ###  urn:ontoinsights:dna:enum:Low
 <urn:ontoinsights:dna:enum:Low> rdf:type owl:NamedIndividual ,
                                          <urn:ontoinsights:dna:Assessment> ;
@@ -10228,13 +10304,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:definition> "A 60-second interval of time." .
 
 
-###  urn:ontoinsights:dna:enum:ModerateIdeology
-<urn:ontoinsights:dna:enum:ModerateIdeology> rdf:type owl:NamedIndividual ,
-                                                      <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                             rdfs:label "Moderate Ideology" ;
-                                             <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Moderate&oldid=1006575574), Moderate 'is an ideological category which designates a rejection of radical or extreme views, especially in regard to politics and religion. A moderate is considered someone occupying any mainstream position avoiding extreme views and major social change. In United States politics, a moderate is considered someone occupying a centre position on the left–right political spectrum.'" .
-
-
 ###  urn:ontoinsights:dna:enum:Months
 <urn:ontoinsights:dna:enum:Months> rdf:type owl:NamedIndividual ,
                                             <urn:ontoinsights:dna:TemporalUnit> ;
@@ -10246,13 +10315,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:Mountainous> rdf:type owl:NamedIndividual ,
                                                  <urn:ontoinsights:dna:Terrain> ;
                                         rdfs:label "Mountainous" .
-
-
-###  urn:ontoinsights:dna:enum:Nationalism
-<urn:ontoinsights:dna:enum:Nationalism> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                        rdfs:label "Nationalism" ;
-                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Nationalism&oldid=1018089498), Nationalism 'promotes the interests of a particular nation (as in a group of people), especially with the aim of gaining and maintaining the nation's sovereignty (self-governance) over its homeland. Nationalism holds that each nation should govern itself, free from outside interference (self-determination), that a nation is a natural and ideal basis for a polity and that the nation is the only rightful source of political power (popular sovereignty). It further aims to build and maintain a single national identity, based on shared social characteristics of culture, ethnicity, geographic location, language, politics (or the government), religion, traditions and belief in a shared singular history, and to promote national unity or solidarity. Nationalism seeks to preserve and foster a nation's traditional cultures and cultural revivals have been associated with nationalist movements. It also encourages pride in national achievements and is closely linked to patriotism. Nationalism is often combined with other ideologies such as conservatism (national conservatism) or socialism (left-wing nationalism).'" .
 
 
 ###  urn:ontoinsights:dna:enum:NegligibleOrNone
@@ -10297,38 +10359,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   rdfs:label "Ocean" .
 
 
-###  urn:ontoinsights:dna:enum:Oligarchy
-<urn:ontoinsights:dna:enum:Oligarchy> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                      rdfs:label "Oligarchy" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Oligarchy&oldid=1040627006), Oligarchy 'is a form of power structure in which power rests with a small number of people. These people may or may not be distinguished by one or several characteristics, such as nobility, fame, wealth, education, or corporate, religious, political, or military control. Throughout history, oligarchies have often been tyrannical, relying on public obedience or oppression to exist.'" .
-
-
-###  urn:ontoinsights:dna:enum:Populism
-<urn:ontoinsights:dna:enum:Populism> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                     rdfs:label "Populism" ;
-                                     <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Populism&oldid=1016524972), Populism is 'an ideology which presents 'the people' as a morally good force and contrasts them against 'the elite', who are portrayed as corrupt and self-serving. Populists differ in how 'the people' are defined, but it can be based along class, ethnic, or national lines. Populists typically present 'the elite' as comprising the political, economic, cultural, and media establishment, depicted as a homogeneous entity and accused of placing their own interests, and often the interests of other groups—such as large corporations, foreign countries, or immigrants—above the interests of 'the people'. Populist parties and social movements are often led by charismatic or dominant figures who present themselves as the 'voice of the people'. According to the ideational approach, populism is often combined with other ideologies, such as nationalism, liberalism, or socialism. Thus, populists can be found at different locations along the left–right political spectrum, and there exist both left-wing populism and right-wing populism.'" .
-
-
 ###  urn:ontoinsights:dna:enum:PostDoctoralEducation
 <urn:ontoinsights:dna:enum:PostDoctoralEducation> rdf:type owl:NamedIndividual ,
                                                            <urn:ontoinsights:dna:EducationLevel> ;
                                                   rdfs:label "Post-Doctoral Education" .
-
-
-###  urn:ontoinsights:dna:enum:Progressivism
-<urn:ontoinsights:dna:enum:Progressivism> rdf:type owl:NamedIndividual ,
-                                                   <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                          rdfs:label "Progressivism" ;
-                                          <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" .
-
-
-###  urn:ontoinsights:dna:enum:Reactionist
-<urn:ontoinsights:dna:enum:Reactionist> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                        rdfs:label "Reactionist" ;
-                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Reactionary&oldid=1016120273), Reactionists 'favour a return to a previous political state of society that they believe possessed positive characteristics that are absent in contemporary society. As an adjective, the word reactionary describes points of view and policies meant to restore a past status quo. The word reactionary is often used in the context of the left–right political spectrum, and is one tradition in right-wing politics. In popular usage, it is commonly used to refer to a highly traditional position, one opposed to social or political change. However, according to political theorist Mark Lilla, a reactionary yearns to overturn a present condition of perceived decadence and recover an idealized past. Such reactionary individuals and policies favour social transformation, in contrast to conservative individuals or policies that seek incremental change or to preserve what exists in the present.'" .
 
 
 ###  urn:ontoinsights:dna:enum:River
@@ -10349,13 +10383,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:TemporalUnit> ;
                                     rdfs:label "Seconds" ;
                                     <urn:ontoinsights:dna:definition> "A period of time that is one of the base units in the International System of Units (SI)." .
-
-
-###  urn:ontoinsights:dna:enum:Socialism
-<urn:ontoinsights:dna:enum:Socialism> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                      rdfs:label "Socialism" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Socialism&oldid=1018154550), Socialism is 'a political, social, and economic philosophy encompassing a range of economic and social systems characterised by social ownership of the means of production. It includes the political theories and movements associated with such systems. Social ownership can be public, collective, cooperative, or of equity. While no single definition encapsulates the many types of socialism, social ownership is the one common element. The types of socialism vary based on the role of markets and planning in resource allocation, on the structure of management in organizations, and socialists disagree on whether government, particularly existing government, is the correct vehicle for change.'" .
 
 
 ###  urn:ontoinsights:dna:enum:SomeDoctoralEducation
@@ -10410,13 +10437,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:Swamp> rdf:type owl:NamedIndividual ,
                                            <urn:ontoinsights:dna:Terrain> ;
                                   rdfs:label "Swamp" .
-
-
-###  urn:ontoinsights:dna:enum:Syndicalism
-<urn:ontoinsights:dna:enum:Syndicalism> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:PoliticalIdeology> ;
-                                        rdfs:label "Syndicalism" ;
-                                        <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Syndicalism&oldid=1013439694), Syndicalism is a 'current in the labor movement to establish local, worker-based organizations and advance the demands and rights of workers through strikes'." .
 
 
 ###  urn:ontoinsights:dna:enum:Tundra
@@ -14614,11 +14634,11 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                 "converge" ;
+                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                 "touch" ;
+                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                              rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
-                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:noun_synonym> "boundary" .
 

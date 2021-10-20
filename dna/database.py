@@ -9,7 +9,7 @@ import logging
 import os
 import stardog
 
-from utilities import resources_root, capture_error, empty_string
+from utilities import domain_database, empty_string, ontologies_database, owl_thing, resources_root, capture_error
 
 # Get details from the dna.config file, stored in the resources directory
 # And set the connection details
@@ -148,6 +148,27 @@ def query_database(query_type: str, query: str, database: str) -> list:
     except Exception as e:
         capture_error(f'Database ({database}) query exception for {query}: {str(e)}', True)
         return []
+
+
+def query_ontology(text: str, query: str, domain_query: str) -> str:
+    """
+    Attempts to match the input text to verb/noun_synonyms, labels and definitions in the ontology
+    AND domain-specific ontology using the specified queries.
+
+    :param text: Text to match
+    :param query: String holding the query to execute for the core ontologies
+    :param domain_query: String holding the query to execute for the domain ontologies
+    :return The highest probability class name returned by the query
+    """
+    domain_query_replaced = domain_query.replace('domain-database', domain_database).\
+        replace('ontologies-database', ontologies_database)
+    results = query_database('select', domain_query_replaced.replace('keyword', text), domain_database)
+    for result in results:
+        return result['class']['value']
+    results = query_database('select', query.replace('keyword', text), ontologies_database)
+    for result in results:
+        return result['class']['value']
+    return owl_thing
 
 
 # Functions internal to the module

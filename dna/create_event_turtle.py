@@ -1,38 +1,44 @@
 # Processing to create the Turtle rendering of the events for the sentences in a narrative
 # The sentences are defined by their sentence dictionaries, which have the form:
-#    'text': 'narrative_text', 'LOCS': ['location'], 'TIMES': ['date_or_time'],
+#    'text': 'narrative_text',
+#    'LOCS': ['location1', ...], 'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'subjects': [{'subject_text': 'subject_text', 'subject_type': 'type_such_as_SINGNOUN'},
 #                 {'subject_text': 'Narrator', 'subject_type': 'example_FEMALESINGPERSON'}],
 #    'verbs': [{'verb_text': 'verb_text', 'verb_lemma': 'verb_lemma', 'tense': 'tense_such_as_Past',
 #               'preps': [{'prep_text': 'preposition_text',
-#                          'prep_details': [{'prep_text': 'preposition_object', 'prep_type': 'type_eg_SINGGPE'}]}],
+#                          'prep_details': [{'detail_text': 'preposition_object', 'detail_type': 'type_eg_SINGGPE'}]}],
 #                          # Preposition object may also have a preposition - for ex, 'with the aid of the police'
-#                          # If so, following the 'prep_type' entry would be another 'preps' element
+#                          # If so, following the 'detail_type' entry would be another 'preps' element
 #                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_SINGNOUN'}]}]}]}]}]}
 
 import copy
 import logging
-import os
-import pickle
-import re
 import uuid
 
 from coreference_resolution import check_nouns
-from create_event_time_loc import get_location_uri, get_sentence_location, get_sentence_time
-from geonames_query import get_location_details
-from idiom_processing import determine_processing_be, get_verb_idiom
-from ontology_query import find_noun_class, find_event_state_class
-from utilities import base_dir, empty_string, objects_string, subjects_string, verbs_string, add_unique_to_array
+from create_event_time_loc import names_to_geo_dict, get_location_uri_and_ttl, \
+    get_sentence_location, get_sentence_time
+from database import query_database
+from idiom_processing import get_verb_processing
+from nlp import get_sentence_sentiment
+from query_ontology_and_sources import get_noun_ttl, get_event_state_ttl
+from utilities import domain_database, empty_string, objects_string, preps_string, \
+    subjects_string, verbs_string, add_unique_to_array
 
 dependency_refs = ('acomp', objects_string, 'xcomp')
 
-geocodes_file = os.path.join(base_dir, 'dna/resources/country_names_mapped_to_geo_codes.pickle')
-with open(geocodes_file, 'rb') as inFile:
-    names_to_geo_dict = pickle.load(inFile)
+query_domain = 'prefix : <urn:ontoinsights:dna:> SELECT ?uri ?type ?prob WHERE ' \
+               '{ ?uri a ?type . ' \
+               '{ { ?uri rdfs:label ?label . FILTER(?label = "keyword") . BIND(100 as ?prob) } UNION ' \
+               '{ ?uri :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
+               '{ ?uri rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(90 as ?prob) } UNION ' \
+               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
+               '{ ?uri rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } ' \
+               'UNION { ?uri rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(80 as ?prob) } } } ' \
+               'ORDER BY DESC(?prob)'
 
 
-# TODO: after earlier event, before later event, during event
-# TODO: of someone (possession), of something (part), of org (member), of related to measurement (2 lbs of potatoes)
+# TODO: of someone (possession), of something (part), of related to measurement (2 lbs of potatoes)
 # TODO: https://www.oxfordlearnersdictionaries.com/us/definition/english/of
 # TODO: near loc, on loc, https://www.oxfordlearnersdictionaries.com/us/definition/english/over_1
 # TODO: without x
@@ -42,6 +48,22 @@ prep_to_predicate_for_locs = {'about': ':has_topic',
                               'from': ':has_origin',
                               'to': ':has_destination',
                               'in': ':has_location'}
+
+
+def check_domain_specific_match(noun: str, noun_type: str) -> (str, str):
+    """
+    Checks if the concept/Person/Location/... is already defined in the domain-specific ontology modules.
+
+    :param noun: String holding the text to be matched
+    :param noun_type: String holding the noun type (PERSON/GPE/LOC/...) from spacy's NER
+    :return A tuple consisting of the matched URI and its type (if a match is found) or two empty strings
+    """
+    if noun_type.endswith('PERSON') or noun_type.endswith('GPE') or noun_type.endswith('LOC') \
+            or noun_type.endswith('ORG') or noun_type.endswith('NORP') or noun_type.endswith('EVENT'):
+        domain_details = query_database('select', query_domain.replace('keyword', noun), domain_database)
+        if domain_details:
+            return domain_details[0]['uri']['value'], domain_details[0]['type']['value']
+    return empty_string, empty_string
 
 
 def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
@@ -55,17 +77,19 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
     :return A list of the Turtle statements
     """
     logging.info(f'Creating event Turtle')
-    last_date = empty_string  # Track the last mentioned date/year
-    # List of years in the events
-    processed_dates = []      # Track all dates/times mentioned in the Turtle to only define once
+    last_date = empty_string  # Track the last mentioned date/time/event
+    # List of dates/times/specific events in the sentences
+    processed_dates = []      # Track all dates/times/events mentioned in the Turtle to only define once
     last_loc = empty_string   # Track the last mentioned location
-    processed_locs = []       # Track all locations mentioned in the Turtle to only define once
+    # Track all locations mentioned in the Turtle to only define once
+    processed_locs = dict()   # Keys are location strings and the values are their URIs
     last_nouns = []           # List of tuples (noun text and type) from previous sentence - Used for coref resolution
     graph_ttl_list = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
                       '@prefix geo: <urn:ontoinsights:geonames:> .',
                       '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
     for sent_dict in sentence_dicts:
         sentence_text = sent_dict['text']
+        sentence_offset = sent_dict['offset']
         if not sentence_text[0].isalnum():
             # Parse can return a verb_text of punctuation or new line; Ignore this
             continue
@@ -73,16 +97,16 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
             last_nouns = []         # Reset list of last_nouns (coref only selects from current paragraph)
             continue
         sent_keys = sent_dict.keys()
+        new_loc = empty_string
         if 'LOCS' in sent_keys:
             new_loc = get_sentence_location(sent_dict, last_loc)
-            if new_loc:
+            if not last_loc:
                 last_loc = new_loc
-        if 'TIMES' in sent_keys:
-            new_date = get_sentence_time(sent_dict, last_date)
-            if new_date:
-                last_date = new_date
-                if last_date not in processed_dates:
-                    processed_dates.append(last_date)
+        if 'TIMES' in sent_keys or 'EVENTS' in sent_keys:
+            # Format of last_date: ('before'|'after'|'') (PointInTime date)
+            last_date, date_ttl = get_sentence_time(sent_dict, last_date, processed_dates)
+            if date_ttl:
+                graph_ttl_list.extend(date_ttl)
         subjects = []
         if subjects_string in sent_keys:
             # Get the subject nouns in the sent_dictionary and if a pronoun, attempt to resolve co-references
@@ -92,26 +116,25 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
         objects = []
         for verb in sent_dict[verbs_string]:
             event_uri, new_ttl_list, new_objects = \
-                process_sentence_verb(narr_gender, sentence_text, verb, subjects, last_date, last_loc,
-                                      last_nouns, processed_locs, processed_dates)
+                process_sentence_verb(narr_gender, sentence_text, sentence_offset, verb, subjects,
+                                      last_date, last_loc, new_loc, last_nouns, processed_locs,
+                                      False)   # Not xcomp processing
             add_unique_to_array(new_objects, objects)       # Track all object nouns
             sentence_ttl_list.extend(new_ttl_list)
-            sentence_ttl_str = str(sentence_ttl_list)
-            if not (':has_location' in sentence_ttl_str or ':has_origin' in sentence_ttl_str
-                    or ':has_destination' in sentence_ttl_str):
-                # No location from the sentence dictionary, so use/persist the last location
-                loc = get_location_uri(last_loc, names_to_geo_dict)
-                sentence_ttl_list.append(f'{event_uri} :has_location {loc} .')
         graph_ttl_list.extend(sentence_ttl_list)
         # Update last_nouns to all the subjects/objects of the sentence
         add_unique_to_array(objects, subjects)   # Add objects -> subjects
         last_nouns = copy.deepcopy(subjects)     # Reset last_nouns to the nouns from the current sentence
+        # Update the last_loc
+        if new_loc:
+            last_loc = new_loc
     # Finished with all the sentences
     return graph_ttl_list
 
 
 # Functions internal to the module but accessible to testing
-def create_ttl_for_prep_detail(processed_preps: list, event_uri: str, processed_locs: list) -> list:
+def create_ttl_for_prep_detail(processed_preps: list, event_uri: str, processed_locs: dict,
+                               sentence_text: str) -> list:
     """
     Parse the details for a verb's prepositions and create the corresponding Turtle. Note that
     dates/times are not handled in this code, but for the sentence overall (in create_event_turtle).
@@ -119,34 +142,20 @@ def create_ttl_for_prep_detail(processed_preps: list, event_uri: str, processed_
     :param processed_preps: A list of tuples holding the preposition text, its object text
                             and object type
     :param event_uri: The URI for the verb/event
-    :param processed_locs: A list of all locations whose Turtle has already been created
+    :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
+                           all locations already processed
+    :param sentence_text: The full text of the sentence (needed for checking for idioms)
     :return A list holding the Turtle statements describing the preposition semantics
     """
     ttl_list = []
     for prep in processed_preps:
         prep_text, obj_text, obj_type = prep
-        if prep_text == empty_string:
-            continue
         obj_uri = f':{obj_text.replace(" ", "_")}'
-        if obj_type.endswith('GPE') or obj_type.endswith('LOC'):
-            # Get location details and add the corresponding Turtle
-            class_type, country, admin_or_geocode = get_location_details(obj_text, False)
-            if class_type == ':Country':
-                ttl_list.append(f'{event_uri} {prep_to_predicate_for_locs[prep_text]} geo:{admin_or_geocode} .')
-                return ttl_list
-            if obj_text not in processed_locs:
-                ttl_list.append(f'{event_uri} {prep_to_predicate_for_locs[prep_text]} {obj_uri} .')
-                ttl_list.append(f'{obj_uri} a {class_type} ; rdfs:label "{obj_text.strip()}" .')
-                if admin_or_geocode > 0:
-                    ttl_list.append(f'{obj_uri} :admin_level {str(admin_or_geocode)} .')
-                if country and country != "None":
-                    ttl_list.append(f'{obj_uri} :country_name "{country}" .')
-                    if country in names_to_geo_dict.keys():
-                        ttl_list.append(f'geo:{names_to_geo_dict[country]} :has_component {obj_uri} .')
-                # Record text in processed_locs so that the details are added again
-                processed_locs.append(obj_uri)
-        elif 'PERSON' in obj_type:
-            ttl_list.append(f'{obj_uri} a :Person ; rdfs:label "{obj_text.strip()}" .')
+        # PROPRIETARY: Replace with full code from private repository
+        noun_ttl = [f'{obj_uri} a owl:Thing ; rdfs:label "{obj_text}" .']   # Placeholder for public repository
+        noun_str = str(noun_ttl)
+        # Relationships for an Agent are different than for other "things"
+        if ':Person' in noun_str or 'Agent' in noun_str or ':Organization' in noun_str:
             if prep_text == 'from':
                 ttl_list.append(f'{event_uri} :has_provider {obj_uri} .')
             elif prep_text == 'to':
@@ -155,32 +164,42 @@ def create_ttl_for_prep_detail(processed_preps: list, event_uri: str, processed_
                 ttl_list.append(f'{event_uri} :has_affected_agent {obj_uri} .')
             elif prep_text == 'with':
                 ttl_list.append(f'{event_uri} :has_active_agent {obj_uri} .')
-        elif prep_text == 'with':
-            obj_uri = f'{obj_uri}_{str(uuid.uuid4())[:13]}'
-            ttl_list.append(f'{event_uri} :has_instrument {obj_uri} .')
-            ttl_list.extend(_get_noun_ttl(obj_uri, obj_text, obj_type))
+        else:
+            if prep_text == 'with':
+                ttl_list.append(f'{event_uri} :has_instrument {obj_uri} .')
+            elif prep_text in prep_to_predicate_for_locs.keys() and ':Location' in noun_str:
+                ttl_list.append(f'{event_uri} {prep_to_predicate_for_locs[prep_text]} {obj_uri} .')
+            elif prep_text in ('about', 'of', 'from', 'to'):
+                ttl_list.append(f'{event_uri} :has_topic {obj_uri} .')
     return ttl_list
 
 
-def get_preposition_details(prep_dict: dict) -> (str, str, str):
+def get_preposition_details(prep_dict: dict) -> list:
     """
     Extracts the details from the preposition dictionary of a verb.
 
     :param prep_dict: A dictionary holding the details for a single preposition for a verb
-                      For example, "{'prep_text': 'with', 'objects': [{'object_text': 'other children',
-                      'object_type': 'PLURALNOUN'}"
-    :return A tuple holding the preposition text, object text and object type
+                      For example, "{'prep_text': 'with', 'prep_details': [{'detail_text': 'other children',
+                      'detail_type': 'PLURALNOUN'}]"
+    :return An array holding tuples consisting of the preposition text, and the preposition's object
+            text(s) and object type(s)
     """
+    prep_details = []
     if 'prep_details' in prep_dict.keys():
         for prep in prep_dict['prep_details']:
-            if 'prep_type' in prep.keys() and 'DATE' not in prep['prep_type']:
-                return prep_dict['prep_text'].lower(), prep['prep_text'], prep['prep_type']
-    return empty_string, empty_string, empty_string
+            if 'detail_text' in prep.keys():
+                prep_detail_type = prep['detail_type']
+                if prep_detail_type.endswith('DATE') or prep_detail_type.endswith('TIME') or  \
+                        prep_detail_type.endswith('EVENT'):
+                    # Time-related - so, this is already handled => ignore
+                    continue
+                prep_details.append((prep_dict['prep_text'].lower(), prep['detail_text'], prep['detail_type']))
+    return prep_details
 
 
-def process_sentence_verb(narr_gender: str, sentence_text: str, verb_dict: dict, subjects: list,
-                          last_date: str, last_loc: str, last_nouns: list,
-                          processed_locs: list, processed_dates: list) -> (str, list, list):
+def process_sentence_verb(narr_gender: str, sentence_text: str, sentence_offset: int,
+                          verb_dict: dict, subjects: list, last_date: str, last_loc: str, new_loc: str,
+                          last_nouns: list, processed_locs: dict, is_xcomp: bool) -> (str, list, list):
     """
     Generate the Turtle for the root event/verb of the sentence, based on the details for the verb
     in the sentence dictionary.
@@ -188,100 +207,31 @@ def process_sentence_verb(narr_gender: str, sentence_text: str, verb_dict: dict,
     :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
                         indicating the gender of the narrator
     :param sentence_text: The full text of the sentence (needed for checking for idioms)
+    :param sentence_offset: Integer indicating the order of the sentence in the overall narrative
     :param verb_dict: The verb details from the sentence dictionary
     :param subjects: A list of texts of the subjects of the sentence
-    :param last_date: The inferred (or explicit) time of the event (in years for the prototype)
-    :param last_loc: A inferred location of the event, if not supplanted by new info from the sentence
+    :param last_date: The inferred (or explicit) time of the event, formatted as:
+                      ('before'|'after'|'') (PointInTime date)
+    :param last_loc: An inferred location of the event, if not supplanted by new info from the sentence
+                     - OR - the origin location for a movement/transport
+    :param new_loc: A new location defined in the sentence, or an empty string (if no location is specified)
     :param last_nouns: A list of all noun text and type tuples that is used for co-reference resolution
                        (it is updated with new nouns from the verb prepositions)
-    :param processed_locs: A list of all locations whose Turtle has already been created
-    :param processed_dates: A list of all dates whose Turtle has already been created
+    :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
+                           all locations already processed
+    :param is_xcomp: Boolean indicating that the verb processing is part of xcomp processing (if true)
     :return A tuple with 1) a string that is the event URI, 2) a list of Turtle statements describing
             the event, and 3) an array of tuples of the verb's object nouns and their types
     """
     logging.info(f'Processing verb, {verb_dict["verb_lemma"]}')
-    # TODO: Proprietary; Replace with full code from private repository
     ttl_list = []
+    objects = []
     event_uri = f':Event_{str(uuid.uuid4())[:13]}'
-    ttl_list.append(f'{event_uri} :text "{sentence_text}" .')
+    ttl_list.append(f'{event_uri} :text "{sentence_text}" ; :sentence_offset {sentence_offset} .')
+    if 'negation' in verb_dict.keys():
+        ttl_list.append(f'{event_uri} :negation true .')
     verb_keys = verb_dict.keys()
-    verb_text = verb_dict['verb_lemma']
-    processing = []         # Strings identifying how the verb should be processed
-    if 'verb_processing' in verb_keys:
-        processing = [verb_dict['verb_processing']]
-    elif verb_text in ('be', 'being', 'become'):    # Special handling of the verb, be
-        processing = determine_processing_be(sentence_text, verb_dict)
-    # Map verbs and related details to the ontology
-    logging.info('Mapping to the DNA ontology')
-    event_state_class, event_state_ttl = find_event_state_class(sentence_text, verb_dict, verb_text, processing)
-    if event_state_ttl:
-        for turtle in event_state_ttl:
-            ttl_list.append(turtle.replace('event_uri', event_uri))
-    else:
-        ttl_list.append(f'{event_uri} a <{event_state_class}> .')
-        if ':Movement' in event_state_class:
-            ttl_list.append(f'{event_uri} :has_origin {get_location_uri(last_loc, names_to_geo_dict)} .')
-    verb_label = verb_dict['verb_text']
-    date_uri = f':PiT{last_date.replace(" ", "_")}'
-    ttl_list.append(f'{event_uri} :has_time {date_uri} .')
-    if date_uri not in processed_dates:
-        year_search = re.search('[0-9]{4}', last_date)
-        if year_search:
-            year_index = year_search.start()
-            year = last_date[year_index:year_index + 4]
-            ttl_list.append(f'{date_uri} a :PointInTime ; rdfs:label "{last_date}" ; :year {year} .')
-        else:
-            ttl_list.append(f'{date_uri} a :PointInTime ; rdfs:label "{last_date}" .')
-        processed_dates.append(date_uri)
-    subj_labels = []
-    person_in_subj_obj = False   # TODO: Specific rule => Generalize definition and usage
-    for subj in subjects:
-        subj_text, subj_type = subj
-        if 'PERSON' in subj_type:
-            person_in_subj_obj = True
-        subj_labels.append(subj_text)
-        subj_uri = f':{subj_text.replace(" ", "_")}'
-        ttl_list.append(f'{event_uri} :has_active_agent {subj_uri} .')
-        ttl_list.extend(_get_noun_ttl(subj_uri, subj_text, subj_type))
-    obj_labels = []
-    for obj in objects:
-        obj_text, obj_type = obj
-        obj_labels.append(obj_text)
-        obj_uri = f':{obj_text.replace(" ", "_")}'
-        if 'PERSON' in obj_type or obj_text == 'Narrator':
-            person_in_subj_obj = True
-            ttl_list.append(f'{event_uri} :has_affected_agent {obj_uri} .')
-            ttl_list.append(f'{obj_uri} a :Person ; rdfs:label "{obj_text.strip()}" .')
-        else:
-            ttl_list.append(f'{event_uri} :has_topic {obj_uri} .')
-            ttl_list.extend(_get_noun_ttl(obj_uri, obj_text, obj_type))
-    if not person_in_subj_obj:
-        return event_uri, [f'{event_uri} a :Ignored .'], objects
-    if not subj_labels:
-        event_label = f'{", ".join(obj_labels)} {verb_label}'
-    elif not obj_labels:
-        event_label = f'{", ".join(subj_labels)} {verb_label}'
-    else:
-        event_label = verb_label
-    ttl_list.append(f'{event_uri} rdfs:label "{event_label.strip()}" .')
-    return event_uri, ttl_list, []
-
-
-# Functions internal to the module
-def _get_noun_ttl(inst_uri: str, inst_text: str, inst_type: str) -> list:
-    """
-    Creates the Turtle for a noun - defining its class type and label. If the noun is an entity
-    that is affiliated with an Agent (Person, Group, Organization, ...), then that affiliation
-    Turtle is also created.
-
-    :param inst_uri: The URI of the noun concept
-    :param inst_text: The text associated with the concept (from the narrative)
-    :param inst_type: The type of the noun from the NLP parse
-    :return An array of Turtle statements
-    """
-    ttl = []
-    class_name, affiliation_ttl = find_noun_class(inst_uri, inst_text, inst_type)
-    if affiliation_ttl:
-        ttl.extend(affiliation_ttl)
-    ttl.append(f'{inst_uri} a <{class_name}> ; rdfs:label "{inst_text}" .')
-    return ttl
+    # PROPRIETARY: Replace with full code from private repository
+    ttl_list.append(f'{event_uri} a :EventAndState .')
+    ttl_list.append(f'{event_uri} :sentiment {get_sentence_sentiment(sentence_text)} .')
+    return event_uri, ttl_list, objects
