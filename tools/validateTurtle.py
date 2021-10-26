@@ -666,7 +666,7 @@ def run_main():
             python3 validateTurtle create Erika-Oct20
         2) Cut and paste the contents of the temp file into init_expected_events
             (i.e. Erika-Oct20_temp.txt).  This file can then be deleted.
-    From then on.  When a new version of the turtle file has been create, then you can run the validate cmd to
+    When a new version of the turtle file has been create, then you can run the validate cmd to
     insure that the events have remained the same.
         1) Run the program with the validate cmd
             python3 validateTurtle validate Erika-Oct20
