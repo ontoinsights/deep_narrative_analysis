@@ -3,3 +3,14 @@ testpaths = tests
 
 [coverage:run]
 branch = True
+
+[coverage:report]
+skip_empty = True
+omit =
+    */dna/app.py
+    */dna/details_similarities.py
+    */dna/evaluate_hypothesis.py
+    */dna/help.py
+    */dna/hypotheses.py
+    */dna/nlp_patterns.py
+    */dna/utilities_matplotlib.py

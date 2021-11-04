@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
+    <title>Coverage for /Users/andreaw/Hold/deep_narrative_analysis/dna/query_ontology_specific_classes.py: 0%</title>
+    <link rel="icon" sizes="32x32" href="favicon_32.png">
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="jquery.isonscreen.js"></script>
+    <script type="text/javascript" src="coverage_html.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(coverage.pyfile_ready);
+    </script>
+</head>
+<body class="pyfile">
+<div id="header">
+    <div class="content">
+        <h1>Coverage for <b>/Users/andreaw/Hold/deep_narrative_analysis/dna/query_ontology_specific_classes.py</b> :
+            <span class="pc_cov">0%</span>
+        </h1>
+        <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
+        <h2 class="stats">
+            10 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">0 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">10 missing</button>
+            <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
+            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">0 partial</button>
+        </h2>
+    </div>
+</div>
+<div class="help_panel">
+    <img id="panel_icon" src="keybd_open.png" alt="Hide keyboard shortcuts" />
+    <p class="legend">Hot-keys on this page</p>
+    <div>
+    <p class="keyhelp">
+        <span class="key">r</span>
+        <span class="key">m</span>
+        <span class="key">x</span>
+        <span class="key">p</span> &nbsp; toggle line displays
+    </p>
+    <p class="keyhelp">
+        <span class="key">j</span>
+        <span class="key">k</span> &nbsp; next/prev highlighted chunk
+    </p>
+    <p class="keyhelp">
+        <span class="key">0</span> &nbsp; (zero) top of page
+    </p>
+    <p class="keyhelp">
+        <span class="key">1</span> &nbsp; (one) first highlighted chunk
+    </p>
+    </div>
+</div>
+<div id="source">
+    <p id="t1" class="pln"><span class="n"><a href="#t1">1</a></span><span class="t"><span class="com"># Query ontology class details</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t2" class="pln"><span class="n"><a href="#t2">2</a></span><span class="t"><span class="com"># To avoid passing a store name parameter, the ontology files are pre-loaded into an 'ontologies' database</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t3" class="pln"><span class="n"><a href="#t3">3</a></span><span class="t"><span class="com"># Called by create_event_turtle.py</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t4" class="pln"><span class="n"><a href="#t4">4</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t5" class="mis show_mis"><span class="n"><a href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">database</span> <span class="key">import</span> <span class="nam">query_ontology</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t6" class="mis show_mis"><span class="n"><a href="#t6">6</a></span><span class="t"><span class="key">from</span> <span class="nam">utilities</span> <span class="key">import</span> <span class="nam">empty_string</span><span class="op">,</span> <span class="nam">owl_thing</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t7" class="pln"><span class="n"><a href="#t7">7</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t8" class="mis show_mis"><span class="n"><a href="#t8">8</a></span><span class="t"><span class="nam">domain_query_norp_emotion_or_enum</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t9" class="pln"><span class="n"><a href="#t9">9</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t10" class="pln"><span class="n"><a href="#t10">10</a></span><span class="t">    <span class="str">'{ SERVICE &lt;db://ontologies-database> { ?domain_class_type rdfs:subClassOf+ :class_type } } '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t11" class="pln"><span class="n"><a href="#t11">11</a></span><span class="t">    <span class="str">'{ SERVICE &lt;db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t12" class="pln"><span class="n"><a href="#t12">12</a></span><span class="t">    <span class="str">'{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t13" class="pln"><span class="n"><a href="#t13">13</a></span><span class="t">    <span class="str">'{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t14" class="pln"><span class="n"><a href="#t14">14</a></span><span class="t">    <span class="str">'{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t15" class="pln"><span class="n"><a href="#t15">15</a></span><span class="t">    <span class="str">'{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t16" class="pln"><span class="n"><a href="#t16">16</a></span><span class="t">    <span class="str">'{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(80 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t17" class="pln"><span class="n"><a href="#t17">17</a></span><span class="t">    <span class="str">'{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } } } '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t18" class="pln"><span class="n"><a href="#t18">18</a></span><span class="t">    <span class="str">'} ORDER BY DESC(?prob)'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t19" class="pln"><span class="n"><a href="#t19">19</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t20" class="mis show_mis"><span class="n"><a href="#t20">20</a></span><span class="t"><span class="nam">query_norp_emotion_or_enum</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t21" class="pln"><span class="n"><a href="#t21">21</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t22" class="pln"><span class="n"><a href="#t22">22</a></span><span class="t">    <span class="str">'?class rdfs:subClassOf+ :class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t23" class="pln"><span class="n"><a href="#t23">23</a></span><span class="t">    <span class="str">'{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t24" class="pln"><span class="n"><a href="#t24">24</a></span><span class="t">    <span class="str">'{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t25" class="pln"><span class="n"><a href="#t25">25</a></span><span class="t">    <span class="str">'{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t26" class="pln"><span class="n"><a href="#t26">26</a></span><span class="t">    <span class="str">'{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t27" class="pln"><span class="n"><a href="#t27">27</a></span><span class="t">    <span class="str">'{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(80 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t28" class="pln"><span class="n"><a href="#t28">28</a></span><span class="t">    <span class="str">'{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="pln"><span class="n"><a href="#t29">29</a></span><span class="t">    <span class="str">'} ORDER BY DESC(?prob)'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="pln"><span class="n"><a href="#t30">30</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t31" class="pln"><span class="n"><a href="#t31">31</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t32" class="mis show_mis"><span class="n"><a href="#t32">32</a></span><span class="t"><span class="key">def</span> <span class="nam">get_norp_emotion_or_enum</span><span class="op">(</span><span class="nam">noun_text</span><span class="op">:</span> <span class="nam">str</span><span class="op">)</span> <span class="op">-></span> <span class="op">(</span><span class="nam">str</span><span class="op">,</span> <span class="nam">str</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t33" class="pln"><span class="n"><a href="#t33">33</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t34" class="pln"><span class="n"><a href="#t34">34</a></span><span class="t"><span class="str">    Check if the input text is a kind of ethnicity, religion, line of work or political ideology.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t35" class="pln"><span class="n"><a href="#t35">35</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t36" class="pln"><span class="n"><a href="#t36">36</a></span><span class="t"><span class="str">    :param noun_text: String holding the text to be categorized.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t37" class="pln"><span class="n"><a href="#t37">37</a></span><span class="t"><span class="str">    :return A tuple consisting of a string indicating either 'Ethnicity', 'ReligiousBelief',</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t38" class="pln"><span class="n"><a href="#t38">38</a></span><span class="t"><span class="str">            'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t39" class="pln"><span class="n"><a href="#t39">39</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t40" class="mis show_mis"><span class="n"><a href="#t40">40</a></span><span class="t">    <span class="key">for</span> <span class="nam">class_type</span> <span class="key">in</span> <span class="op">(</span><span class="str">'Ethnicity'</span><span class="op">,</span> <span class="str">'ReligiousBelief'</span><span class="op">,</span> <span class="str">'LineOfBusiness'</span><span class="op">,</span> <span class="str">'PoliticalIdeology'</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t41" class="mis show_mis"><span class="n"><a href="#t41">41</a></span><span class="t">        <span class="nam">result</span> <span class="op">=</span> <span class="nam">query_ontology</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t42" class="pln"><span class="n"><a href="#t42">42</a></span><span class="t">            <span class="nam">noun_text</span><span class="op">,</span> <span class="nam">query_norp_emotion_or_enum</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">'class_type'</span><span class="op">,</span> <span class="nam">class_type</span><span class="op">)</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t43" class="pln"><span class="n"><a href="#t43">43</a></span><span class="t">            <span class="nam">domain_query_norp_emotion_or_enum</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">'class_type'</span><span class="op">,</span> <span class="nam">class_type</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t44" class="mis show_mis"><span class="n"><a href="#t44">44</a></span><span class="t">        <span class="key">if</span> <span class="nam">result</span> <span class="op">!=</span> <span class="nam">owl_thing</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t45" class="mis show_mis"><span class="n"><a href="#t45">45</a></span><span class="t">            <span class="key">return</span> <span class="nam">class_type</span><span class="op">,</span> <span class="nam">result</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t46" class="mis show_mis"><span class="n"><a href="#t46">46</a></span><span class="t">    <span class="key">return</span> <span class="nam">empty_string</span><span class="op">,</span> <span class="nam">empty_string</span>&nbsp;</span><span class="r"></span></p>
+</div>
+<div id="footer">
+    <div class="content">
+        <p>
+            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
+            created at 2021-11-04 13:31 -0400
+        </p>
+    </div>
+</div>
+</body>
+</html>
