@@ -1,0 +1,35 @@
+﻿expected,subject,predicate,object
+pass,:PiTJune_1928,a,:PointInTime
+pass,:PiTJune_1928,rdfs:label,June 12 1928
+pass,:PiTJune_1928,:year,1928
+pass,:PiTJune_1928,:month_of_year,6
+pass,:father,a,:Person
+pass,:father,:has_political_ideology,:Zionism
+pass,:father,:has_line_of_business,:LegalAndJudicialActivities
+pass,:father,:line_of_business,attorney
+pass,:Hebrew_school_xxx,a,:Organization
+pass,:Hebrew_school_xxx,rdfs:label,Hebrew school
+pass,:Znojmo ,a,":PopulatedPlace, :AdministrativeDivision"
+pass,:Znojmo ,rdfs:label,Znojmo
+pass,:Znojmo ,:admin_level,2
+pass,:Znojmo,:country_name,Czechia
+pass,geo:3077311 ,:has_component,:Znojmo 
+pass,:members_of_fascist_Iron_Guard_xxx,a,:GroupOfAgents
+pass,:members_of_fascist_Iron_Guard_xxx,rdfs:label,members of fascist Iron Guard
+pass,:position_xxx,a,:Employment
+pass,:members_of_fascist_Iron_Guard_xxxIron_GuardAffiliation,a,:Affiliation
+pass,:members_of_fascist_Iron_Guard_xxxIron_GuardAffiliation,:affiliated_with,:Iron_Guard
+pass,:members_of_fascist_Iron_Guard_xxxIron_GuardAffiliation,:affiliated_agent,:members_of_fascist_Iron_Guard_xxx
+pass,:members_of_fascist_Iron_Guard_xxxIron_GuardAffiliation,rdfs:label,"Relationship based on the text, xxx"
+pass,:Iron_Guard,a,:Organization
+pass,:Iron_Guard,:definition,From Wikipedia (xxx
+fail,:Soviets_xxx,a,:GroupOfAgents
+fail,:Soviets_xxx,:has_agent_aspect,:CameoEthnicity_rus
+pass,:Czernowitz_ghetto,a,:Ghetto
+pass,:Czernowitz,:has_component,:Czernowitz_ghetto
+pass,geo:690791,:has_component,:Czernowitz
+pass,:officer_in_Czech_army_xxx,a,:Person
+pass,:officer_in_Czech_army_xxxArmyAffiliation,a,:Affiliation
+pass,:officer_in_Czech_army_xxxArmyAffiliation,:affiliated_agent,:officer_in_Czech_army_xxx
+pass,:officer_in_Czech_army_xxxArmyAffiliation,:affiliated_with,:ArmedForce
+fail,:officer_in_Czech_army_xxxArmyAffiliation,:affiliated_location,geo:690791

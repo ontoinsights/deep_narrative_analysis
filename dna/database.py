@@ -84,7 +84,6 @@ def create_delete_database(op_type: str, database: str) -> str:
             # Load ontologies to the newly created database
             conn = stardog.Connection(database, **sd_conn_details)
             conn.begin()
-            logging.info(f'Loading DNA ontologies to {database}')
             _load_directory_to_database(ontol_path, conn)
             # TODO: Remove if not applicable for the domain
             _load_directory_to_database(f'{ontol_path}domain-specific/', conn)
@@ -104,7 +103,6 @@ def get_databases() -> list:
 
     :return: List of database/store names
     """
-    logging.info('Getting a list of all databases')
     try:
         admin = stardog.Admin(**sd_conn_details)
         databases = admin.databases()

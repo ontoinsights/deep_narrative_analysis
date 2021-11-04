@@ -1,8 +1,6 @@
 # Processing to create the individual token dictionaries within a sentence dictionary
 # Called by nlp_sentence_dictionary.py
 
-import logging
-
 from spacy.tokens import Token
 
 from utilities import empty_string, space, objects_string, family_members, \
@@ -38,7 +36,6 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
                         relationship to the narrator/subject
     :return: None (Specified dictionary is updated)
     """
-    logging.info(f'Processing the token, {token.text}, for key, {token_key}, of type, {token.ent_type_}')
     ent = token.text
     if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
         return

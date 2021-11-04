@@ -1,8 +1,6 @@
 # Functions for co-reference resolution
 # Called by create_event_turtle.py
 
-import logging
-
 from typing import Union
 
 from utilities import subjects_string
@@ -36,7 +34,6 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
     :return Array of tuples that are the noun text and type for subjects or objects
     """
     # TODO: Use previous sentence to give context to nouns (ex: bloody attacks => during the violence)
-    logging.info(f'Getting {key} nouns')
     nouns = set()
     for elem in sent_dictionary[key]:
         elem_key = key[0:-1]

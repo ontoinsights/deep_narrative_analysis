@@ -47,7 +47,7 @@ remove_stranded_triples = 'prefix : <urn:ontoinsights:dna:> ' \
                           '?type rdfs:subClassOf* :EventAndState } } } FILTER(!(CONTAINS(str(?type), "Idiom"))) }'
 
 
-def ingest_narratives() -> (str, int):
+def ingest_narratives() -> (str, int):   # pragma: no cover
     """
     Allow the user to select a CSV file for processing and to then select an existing
     database/store (or define a new store name) to which the described narratives are added.
@@ -55,7 +55,6 @@ def ingest_narratives() -> (str, int):
     :return: String indicating the data store to which narratives were added
              Integer indicating the number of narratives added
     """
-    logging.info('Ingesting narratives')
     store_list = get_databases()
 
     # Setup the PySimpleGUI window
@@ -115,13 +114,12 @@ def ingest_narratives() -> (str, int):
     return selected_store, count
 
 
-def select_store() -> str:
+def select_store() -> str:    # pragma: no cover
     """
     Display a list of all database/store names and allow selection of one.
 
     :return: Either an empty string or the name of the selected data store
     """
-    logging.info('Top-level select store processing')
     store_list = get_databases()
     if not store_list:
         sg.popup_ok('No stores are currently available.', font=('Arial', 14),
@@ -215,6 +213,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
                                        f'{source}, and narrative title, {title}. That record is skipped.',
                                        font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                         continue
+                    # TODO: If the text is multi-page, the first line of all pages but the first is lost
                     in_file = f'{resources_root}{title}.txt'
                     subprocess.run(['../tools/pdftotext', '-f', narr_meta['Start'], '-l', narr_meta['End'],
                                     '-simple', f'{resources_root}{source}', in_file])
@@ -253,7 +252,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
                     os.remove(in_file)
                 count += 1
         # Determine if any narrators/subjects (different names) are really the same
-        logging.info('Checking if any unification of narrators can be performed')
+        logging.info('Checking for unification of narrators')
         unified_triples = unify_narrators(store_name)
         if unified_triples:
             # Add the triples to the data store

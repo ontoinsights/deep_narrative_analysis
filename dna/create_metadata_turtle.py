@@ -14,7 +14,7 @@ def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, l
     :param narrative: String consisting of the full narrative text
     :param narr_metadata: Dictionary of metadata information - Keys are:
                           Source,Title,Person,Type,Given,Surname,Maiden,Gender,Start,End,Remove,Header,Footer
-    :return: 3 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise;
+    :return: 3 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise) -
              gender is one of AGENDER, BIGENDER, FEMALE or MALE), 2) a dictionary containing the family member
              roles mentioned in the narrative and the members' proper names (if provided), and 3) a list of
              Turtle statements to add to the database with the narrative and metadata information
@@ -59,7 +59,7 @@ def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) 
     :return: List holding strings of the new triples to add and a dictionary containing the names
              of family members and their relationship to the narrator/subject
     """
-    logging.info('Getting birth details')
+    logging.info('Getting birth and family details')
     new_triples = []
     family_dict = dict()
     # Set up default family dictionary with the roles mentioned in the narrative
@@ -71,9 +71,6 @@ def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) 
     birth_date, birth_place, revised_family_dict = get_birth_family_details(narrative)
     for rev_fam, value in revised_family_dict.items():
         family_dict[rev_fam] = value
-    logging.info(f'birth date: {birth_date}')
-    logging.info(f'birth place: {birth_place}')
-    logging.info(f'family: {family_dict}')
     if birth_date or birth_place:
         # Create birth event Turtle
         new_triples.append(f':{iri_narrator}Birth a :Birth ; :has_affected_agent :{iri_narrator} .')
@@ -107,16 +104,16 @@ def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) 
                 new_triples.append(f':{iri_narrator}BirthPlace :country_name "{found_country}" .')
             new_triples.append(f':{iri_narrator}Birth :has_location :{iri_narrator}BirthPlace . '
                                f':{iri_narrator}BirthPlace a :PopulatedPlace ; rdfs:label "{label_text}" .')
-        # Create family Turtle
-        if len(family_dict):
-            new_triples.append(f':{iri_narrator}Family a :Family ; :has_member :{iri_narrator} .')
-            for key, value in family_dict.items():
-                if key == value:
-                    new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key} . '
-                                       f':{iri_narrator}{key} rdfs:label "{key}" .')
-                else:
-                    new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key}{value} . '
-                                       f':{iri_narrator}{key}{value} rdfs:label "{key}", "{value}" .')
+    # Create family Turtle
+    if len(family_dict):
+        new_triples.append(f':{iri_narrator}Family a :Family ; :has_member :{iri_narrator} .')
+        for key, value in family_dict.items():
+            if key == value:
+                new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key} . '
+                                   f':{iri_narrator}{key} rdfs:label "{key}" .')
+            else:
+                new_triples.append(f':{iri_narrator}Family :has_member :{iri_narrator}{key}{value} . '
+                                   f':{iri_narrator}{key}{value} rdfs:label "{key}", "{value}" .')
     return new_triples, family_dict
 
 

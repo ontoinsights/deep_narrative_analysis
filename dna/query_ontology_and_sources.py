@@ -14,6 +14,7 @@ from PyDictionary import PyDictionary
 from database import query_ontology
 from idiom_processing import process_idiom_detail, get_noun_idiom
 from nlp import get_synonym, get_named_entity_in_string, get_noun
+from query_ontology_specific_classes import get_norp_emotion_or_enum
 from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, owl_thing, \
     processed_prepositions
 
@@ -32,73 +33,52 @@ with open(nouns_file, 'rb') as inFile:
     nouns_dict = pickle.load(inFile)
 
 domain_query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
+                     '{ SERVICE <db://ontologies-database> { ?class rdfs:subClassOf+ :searchClass } } ' \
                      '{ { SERVICE <db://domain-database> { <keyword> rdfs:subClassOf* ?class } } UNION ' \
-                     '{ SERVICE <db://ontologies-database> { <keyword> rdfs:subClassOf* ?class } } } ' \
-                     'SERVICE <db://ontologies-database> { ?class rdfs:subClassOf+ :searchClass } } '
+                     '{ SERVICE <db://ontologies-database> { <keyword> rdfs:subClassOf* ?class } } } }'
 
 query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '<keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'
 
-domain_query_norp_emotion_or_enum = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
-    'SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(85 as ?prob) } } ' \
-    'SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf* :class_type } ' \
-    '} ORDER BY DESC(?prob)'
-
-query_norp_emotion_or_enum = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-    '{ ?class rdfs:subClassOf+ :class_type . ' \
-    '{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(85 as ?prob) } } ' \
-    '} ORDER BY DESC(?prob)'
-
-query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE ' \
-              '{ { ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
+query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
+              '{ ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
               '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") } UNION ' \
               '{ ?class rdfs:label ?label . FILTER(lcase(?label) = "keyword") } }'
 
 domain_query_event = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
+    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
+    '{ SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf+ :EventAndState } } ' \
     '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
     '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
     'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
     'UNION { ?class :verb_synonym ?nsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
-    'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } ' \
-    'SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf+ :EventAndState } } ' \
-    'ORDER BY DESC(?prob)'
+    'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } } ' \
+    '} ORDER BY DESC(?prob)'
 
-query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-              '{ { { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
+query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
+              '?class rdfs:subClassOf+ :EventAndState . ' \
+              '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
               '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
               'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
               'UNION { ?class :verb_synonym ?nsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
               'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
-              '?class rdfs:subClassOf+ :EventAndState } ORDER BY DESC(?prob)'
+              '} ORDER BY DESC(?prob)'
 
 domain_query_noun = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
+    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
     '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
     '{ { ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } ' \
-    'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } ' \
-    'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(65 as ?prob) } } } ' \
-    'SERVICE <db://ontologies-database> { ?domain_class_type a owl:Class . ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } UNION ' \
+    '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } UNION ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(65 as ?prob) } } } } ' \
+    '{ SERVICE <db://ontologies-database> { ?domain_class_type a owl:Class . ' \
     'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :EventAndState } ' \
     'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :Ethnicity } ' \
-    'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :Enumeration } } } ORDER BY DESC(?prob)'
+    'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :Enumeration } } } ' \
+    '} ORDER BY DESC(?prob)'
 
 query_noun = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
              '{ ?class a owl:Class ' \
@@ -150,10 +130,8 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                 term_types = ('Noun', 'Verb')
             for term_type in term_types:
                 if term_type in word_def.keys():
-                    count = 0
-                    for clause in word_def[term_type]:
-                        count += 1
-                        if count > 3:   # TODO: Is 3 the right number of definitions to check?
+                    for i, clause in enumerate(word_def[term_type]):
+                        if i > 3:   # TODO: Is 3 the right number of definitions to check?
                             break
                         for sub_clause in clause.split(';'):
                             if term_type == 'Noun':
@@ -235,7 +213,7 @@ def get_geonames_location(loc_text: str) -> (str, str, int):
             and an administrative level (if 0, then admin level is not applicable) or GeoNames ID
             (for a Country)
     """
-    logging.info(f'Getting location details for {loc_text}')
+    logging.info(f'Getting geonames details for {loc_text}')
     # TODO: Need to add sleep to meet geonames timing requirements?
     response = requests.get(
         f'http://api.geonames.org/search?q={loc_text.lower().replace(" ", "+")}&maxRows=1&username={geonamesUser}')
@@ -270,24 +248,6 @@ def get_geonames_location(loc_text: str) -> (str, str, int):
             else:
                 admin_level = 1
     return class_type, country, admin_level
-
-
-def get_norp_emotion_or_enum(noun_text: str) -> (str, str):
-    """
-    Query the ontology to determine if the noun_text is a reference to an ethnicity, line of work,
-    religion or political ideology.
-
-    :param noun_text: String holding the noun text
-    :return A tuple that is the class type (one of 'Ethnicity', 'ReligiousBelief', 'LineOfBusiness'
-            or 'PoliticalIdeology'), and the specific subclass
-    """
-    for class_type in ('Ethnicity', 'ReligiousBelief', 'LineOfBusiness', 'PoliticalIdeology'):
-        result = query_ontology(
-            noun_text, query_norp_emotion_or_enum.replace('class_type', class_type),
-            domain_query_norp_emotion_or_enum.replace('class_type', class_type))
-        if result != owl_thing:
-            return class_type, result
-    return empty_string, empty_string
 
 
 def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: str) -> list:
@@ -378,6 +338,7 @@ def get_wikipedia_description(noun: str) -> str:
     :return String that is the first paragraph of the Wikipedia page (if the org/group is found);
             otherwise, an empty string
     """
+    logging.info(f'Getting wikipedia details for {noun}')
     resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/{noun.replace(" ", "_")}')
     wikipedia = resp.json()
     if "extract" in wikipedia.keys():

@@ -235,7 +235,6 @@ def display_row_for_edit(subj: str, pred: str, obj: str, del_flag: bool) -> (str
     :param del_flag: Boolean indicating that the triple should be removed from the store
     :return A tuple consisting of the window's predicate and object strings
     """
-    logging.info(f'Triple edit for {subj}, {pred}, {obj}, {del_flag}')
     # Determine the height of the 'Object' text
     if len(obj) > 2000:
         obj_size = 25

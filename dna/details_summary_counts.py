@@ -18,7 +18,7 @@ def display_dates_events(narratives: str):
     :param narratives: String consisting of all the narratives' texts
     :return: None (Table of locations and counts is displayed)
     """
-    logging.info(f'Displaying years and events in narratives')
+    logging.info(f'Displaying dates in narratives')
     # Setup the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Not yet implemented.",

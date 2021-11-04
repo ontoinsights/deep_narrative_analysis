@@ -13,7 +13,7 @@ query_number_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(?narr)
                        '{ ?narr a :Narrative . }'
 
 
-def test_hypothesis(store_name: str):
+def evaluate_hypothesis(store_name: str):
     """
     Display a window to show currently defined hypotheses, and allow selection and test
     of one of them.

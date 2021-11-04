@@ -11,7 +11,7 @@ from edit_narrative import display_narratives_for_edit
 from help import display_popup_help
 from hypotheses import display_hypotheses
 from load import select_store, ingest_narratives
-from test_hypothesis import test_hypothesis
+from evaluate_hypothesis import evaluate_hypothesis
 from utilities import empty_string, capture_error, encoded_logo, encoded_question
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
@@ -144,7 +144,7 @@ if __name__ == '__main__':
         elif event == 'Hypothesis Search/Edit':
             display_hypotheses(store_name)
         elif event == 'Hypothesis Test':
-            test_hypothesis(store_name)
+            evaluate_hypothesis(store_name)
 
     # Done
     window.close()

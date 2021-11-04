@@ -1,6 +1,5 @@
 # Various small matplotlib-related utilities used across various DNA modules
 
-import logging
 import numpy as np
 import PySimpleGUI as sg
 
@@ -30,7 +29,6 @@ def display_horiz_histogram(y_values: tuple, x_values: tuple, x_label: str, titl
     :param title: The title of the histogram chart
     :return: None (Histogram is displayed)
     """
-    logging.info('Displaying histogram')
     # Setup the histogram
     plt.rcdefaults()
     fig, ax = plt.subplots()

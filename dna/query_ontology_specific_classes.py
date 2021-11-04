@@ -7,19 +7,19 @@ from utilities import empty_string, owl_thing
 
 domain_query_norp_emotion_or_enum = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
-    'SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
+    '{ SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf+ :class_type } } ' \
+    '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
     '{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
     '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(80 as ?prob) } UNION ' \
-    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } } ' \
-    'SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf* :class_type } ' \
+    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } } } ' \
     '} ORDER BY DESC(?prob)'
 
 query_norp_emotion_or_enum = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-    '{ ?class rdfs:subClassOf+ :class_type . ' \
+    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
+    '?class rdfs:subClassOf+ :class_type . ' \
     '{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \

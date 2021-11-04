@@ -52,7 +52,7 @@ def display_statistics(store_name: str):
     :param store_name: The database/data store name
     :return: None (Window is displayed)
     """
-    logging.info(f'Displaying summary statistics for {store_name}')
+    logging.info(f'Displaying metadata statistics for {store_name}')
     # Setup the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Click one or more of the buttons to display various summary statistics.",
@@ -71,7 +71,7 @@ def display_statistics(store_name: str):
               [sg.Text("Narrative Information:", font=('Arial', 16))],
               [sg.Button('Locations Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
                          pad=((25, 0), 3))],
-              [sg.Button('Years and Events Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Years Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
                          pad=((25, 0), 3))],
               [sg.Text()],
               [sg.Text("Frequent Words:", font=('Arial', 16))],
@@ -140,7 +140,6 @@ def display_statistics(store_name: str):
             break
         elif event_stats_list == 'Gender Details':
             if number_narrators:
-                logging.info(f'Displaying gender statistics for {store_name}')
                 y_values, x_values = get_y_x_values(number_narrators, 'gender', query_genders, store_name)
                 display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects', 'Narrator Genders')
             else:
@@ -149,7 +148,6 @@ def display_statistics(store_name: str):
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
         elif event_stats_list == 'Birth Year Details':
             if number_narrators:
-                logging.info(f'Displaying birth year statistics for {store_name}')
                 y_values, x_values = get_y_x_values(number_narrators, 'year', query_years, store_name)
                 display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects Born in Year',
                                         'Narrator Birth Years')
@@ -159,7 +157,6 @@ def display_statistics(store_name: str):
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
         elif event_stats_list == 'Birth Country Details':
             if number_narrators:
-                logging.info(f'Displaying birth country statistics for {store_name}')
                 y_values, x_values = get_y_x_values(number_narrators, 'country', query_countries, store_name)
                 display_horiz_histogram(y_values, x_values, 'Number of Narrators/Subjects Born in Country',
                                         'Narrator Birth Countries')
@@ -174,10 +171,10 @@ def display_statistics(store_name: str):
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
             display_locations(narratives)
-        elif event_stats_list == 'Years and Events Mentioned':
+        elif event_stats_list == 'Years Mentioned':
             if not narratives:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
-                               f'A list of years and events cannot be extracted.',
+                               f'A list of years cannot be extracted.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
             display_dates_events(narratives)
@@ -204,7 +201,6 @@ def display_statistics(store_name: str):
                                f'The word frequencies cannot be output.',
                                font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
                 continue
-            logging.info(f'Outputting nouns/verbs for {store_name}')
             output_words_in_csv(narratives, int(values['nouns_in_csv']), int(values['verbs_in_csv']),
                                 values['directory_name'])
 
@@ -222,7 +218,6 @@ def _display_word_cloud(narratives: str, words_in_cloud: int):
     :param words_in_cloud: Integer value indicating the number of words to be displayed
     :return: None (Word cloud is displayed)
     """
-    logging.info('Displaying word cloud')
     # Size the WordCloud plot
     plt.rcdefaults()
     fig, ax = plt.subplots()

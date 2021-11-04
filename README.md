@@ -48,6 +48,8 @@ The Stardog triple store (downloadable from https://www.stardog.com/get-started/
 * "ontologies" with the files from the _ontologies_ directory
 * "domain-specific" with the files from the _ontologies/domain-specific_ subdirectory
 
+In addition to downloading the spaCy library (which is addressed in requirements.txt), spaCy's transformer language model also needs to be installed. This is accomplished by executing "python3 -m spacy download en_core_web_trf".
+
 These environment variables need to be set for the DNA application:
 
 * PATH needs to specifically include the GitHub project's dna directory (for testing)

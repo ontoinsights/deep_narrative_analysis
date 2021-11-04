@@ -2,7 +2,6 @@
 # can show a detailed event graph (for the events in the timeline for a specific month and year)
 # Uses the functions in details_narrative_timeline to display narrative metadata and an event timeline
 
-import logging
 import PySimpleGUI as sg
 
 from database import query_database
@@ -38,7 +37,6 @@ def display_narratives(store_name: str):
     :param store_name: The database/data store name
     :return: None (Narrative timeline is displayed)
     """
-    logging.info('Narrative selection for timeline display')
     # Get the list of narratives
     narrative_dict = get_narratives(store_name)
     if len(narrative_dict):

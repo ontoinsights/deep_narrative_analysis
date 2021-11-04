@@ -20,7 +20,7 @@ def clean_text(narrative: str, narr_metadata: dict) -> str:
     """
     new_text = empty_string
     # Split the text by the new lines/CRs since these are added by the PDF->text conversion
-    if narr_metadata['Remove']:
+    if 'Remove' in narr_metadata.keys():
         # Remove the first x line(s) from the text, if a value is provided in the CSV
         lines = narrative.split(new_line)[int(narr_metadata['Remove']):]
     else:
@@ -34,9 +34,11 @@ def clean_text(narrative: str, narr_metadata: dict) -> str:
             # Else, just ignore the line assuming that it is a blank line between text and footer/header
         else:
             # Remove header/footer lines (if any are defined)
-            if narr_metadata['Header'] and _check_header_footer_match(line, narr_metadata['Header'].split(';')):
+            if 'Header' in narr_metadata.keys() and \
+                    _check_header_footer_match(line, narr_metadata['Header'].split(';')):
                 continue               # Skip line
-            if narr_metadata['Footer'] and _check_header_footer_match(line, narr_metadata['Footer'].split(';')):
+            if 'Footer' in narr_metadata.keys() and \
+                    _check_header_footer_match(line, narr_metadata['Footer'].split(';')):
                 continue               # Skip line
             # Remove white space at beginning/ending of lines, and have 1 white space between words
             new_text += line.strip()

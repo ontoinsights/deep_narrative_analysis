@@ -162,7 +162,6 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     :return: Two dictionaries of the counts of the noun/verb lemmas where the noun
              dictionary is returned first
     """
-    logging.info('Getting the nouns and verbs from a set of narratives')
     noun_dict = dict()
     verb_dict = dict()
     doc = nlp(sentences)

@@ -28,7 +28,6 @@ def get_chunks(verb: Token, connector: list, chunk_sentence: Span, is_conj: bool
     :return: A list of the text of the clauses of the sentence (split if indicated by the
              logic below) or just the original sentence returned
     """
-    logging.info(f'Getting the clauses in {chunk_sentence.text}')
     chunks = []
     # Is there a subject of the other clause's verb? That is required to split the sentence
     # An 'expl' is the word, 'there'
@@ -173,7 +172,6 @@ def _split_by_conjunctions(conj_sentence: Span) -> (list, str):
              returned, not the spacy tokens) and the coordinating conjunction. The latter is
              needed to process or/nor alternatives.
     """
-    logging.info(f'Splitting the sentence, {conj_sentence.text}')
     conj_sents = []
     conj_verb = [child for child in conj_sentence.root.children if child.dep_ == 'conj']
     connectors = [conn for conn in conj_sentence.root.children if conn.dep_ == 'cc']
