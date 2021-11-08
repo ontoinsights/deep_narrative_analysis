@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: October 4 2021
+# Last modified: November 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,6 +30,7 @@
 #  Changed :synonym to :noun_synonym
 #  Added Database, Publication, Spreadsheet and WebPage
 #  Added Contract and IdentificationInstrument
+#  Added Email as an InformationSource
 ########################################################################
 
 
@@ -99,6 +100,13 @@
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Dye, Pigment and Ink" ;
   :definition "A substance that is used to color (or change the color of) somthing to which is it applied. A dye chemically bonds to the applied material, whereas a pigment does not. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Ink&oldid=1008461908), an ink 'is a gel, sol, or solution that contains at least one colourant, such as a dye or pigment, and is used to color a surface to produce an image, text, or design ... Ink can be a complex medium, composed of solvents, pigments, dyes, resins, lubricants, solubilizers, surfactants, particulate matter, fluorescents, and other materials.'" .
+
+:EmailAndLetter a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Email and Letter" ;
+  :definition "A message distributed by electronic or physical delivery, conveying some information." ;
+  :noun_synonym "correspondence", "mail", "message" ;
+  :verb_synonym "mail", "message", "email" .
 
 :EngineAndGenerator a owl:Class ;
   rdfs:subClassOf :Machine ;

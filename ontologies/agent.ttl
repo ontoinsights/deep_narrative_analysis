@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: October 19 2021
+# Last modified: November 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -24,12 +24,11 @@
 #  Updated to the Mar 2021 semantics
 #  Changed LineOfBusiness from an enumeration to the top of a class hierarchy
 #    and clarified its definition
-#  Added :ArmedForce, :ParamilitaryForce and :PoliceForce
+#  Added :ArmedForce, :ParamilitaryForce, :PoliceForce and :PoliticalParty
 #  Updated the default and dna prefixes
 #  Renamed Characteristic to AgentAspect
-#  Added subProperty definition to :has_agent_aspect
+#  Added subProperty to :has_agent_aspect
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added synonyms
-#  Added PoliticalParty
 #  Changed :ReligiousActivities to :Religion, and added :ReligiousBelief
 #  Added :AppointmentAndNomination to the domain of :role
 #  Moved PoliticalIdeology from environment-subclasses.ttl, added
@@ -39,6 +38,9 @@
 #  Added the property, :political_ideology
 #  Added GovernmentOrganization and noun synonyms for PoliticalIdeologies
 #  Changed PoliticalIdeology individuals to subclasses
+#  Changed InformationTechnologyServices to InformationTechnology
+#  Added the Technology, MultiIndustry and Space lines of business, and
+#    updated the LOB subclassing hierarchy
 ########################################################################
 
 
@@ -169,7 +171,7 @@
   :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
 
 :Construction a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:subClassOf :Manufacturing ;
   rdfs:label "Construction" ;
   :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
   :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
@@ -185,7 +187,7 @@
   :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
 
 :ElectronicsAndComputers a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:subClassOf :Technology ;
   rdfs:label "Electronics and Computers" ;
   :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
   :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
@@ -240,9 +242,9 @@
   rdfs:label "Humanitarian Activities" ;
   :definition "Involved with providing direct services or materials to people and areas in need." .
 
-:InformationTechnologyServices a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Information Technology Services" ;
+:InformationTechnology a owl:Class ;
+  rdfs:subClassOf :Technology ;
+  rdfs:label "Information Technology" ;
   :definition "Involved with the collection, analysis, storage and communication of data." ;
   :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
 
@@ -271,6 +273,12 @@
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Military" ;
   :definition "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
+
+:MultiIndustry a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Multiple Industries" ;
+  :definition "Involved with more than one line of business such as an industrial conglomerate." ;
+  :noun_synonym "conglomerate" .
 
 :PublishingAndMedia a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
@@ -311,7 +319,18 @@
   rdfs:label "Security" ;
   :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
 
-:Transport  a owl:Class ;
+:Space a owl:Class ;
+  rdfs:subClassOf :Technology ;
+  rdfs:label "Space" ;
+  :definition "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
+  :noun_synonym "astronautics", "astronaut", "interstellar travel", "outer space", "spaceflight" .
+
+:Technology a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Technology" ;
+  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+
+:Transport a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Transport" ;
   :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .

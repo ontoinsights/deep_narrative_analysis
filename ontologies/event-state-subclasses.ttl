@@ -23,15 +23,15 @@
 # either express or implied.
 # 
 # Changes:
-#  Added MistakeAndRegret, MurderAndHomicide
+#  Added MistakeAndRegret, MurderAndHomicide, ProjectAndCampaign, 
+#    Marriage, Divorce, DemonstrationAndRally, FormationOfOrganization
+#    and ProjectAndCampaign
 #  Updated the default and dna prefixes
-#  Added multiple new classes and VerbNet synonyms
 #  Renamed :value to :reported_numeric and added :reported_string
 #  Added and clarified noun/verb_synonyms
 #  Moved classes from state-condition-subclasses here (and to 
 #    environment-subclasses.ttl)
-#  Also subclassed HealthAndDiseaseRelated from AgentAspect
-#  Added Marriage, Divorce, DemonstrationAndRally and FormationOfOrganization
+#  Also subclassed HealthAndDiseaseRelated from AgentAspect\
 #  Renamed ReturnAndRelease to ReturnRecoveryAndRelease
 #  Renamed Publication to ActOfPublishing
 #  Updated definitions
@@ -47,6 +47,13 @@
   rdfs:label "Acquisition" ;
   :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
   :verb_synonym "acquire", "equip", "obtain" .
+
+:ActOfPublishing a owl:Class ;
+  rdfs:subClassOf :ReturnRecoveryAndRelease ;
+  rdfs:label "Act of publishing" ;
+  :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." ;
+  :noun_synonym "issue", "report", "broadcast", "publication" ;
+  :verb_synonym "publish", "print", "report", "broadcast" .
 
 :AggressiveOrHostileAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -407,19 +414,19 @@
   :noun_synonym "construction", "fabrication", "manufacturing", "model", "modeling" ;
   :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "model" .
 
+:ProjectAndCampaign a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Project and Campaign" ;
+  :definition "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)." ;
+  :noun_synonym "venture", "operation", "expedition", "crusade" ;
+  :verb_synonym "campaign", "crusade" .
+
 :ProtestAndStrike a owl:Class ;
   rdfs:subClassOf :DemonstrationAndRally, :RefusalAndRejection ;
   rdfs:label "Protest and Strike" ;
   :definition "An organized public demonstration indicating disapproval or objection to something or someone. The entity which is disapproved of/objected to is defined using the :has_topic property." ;
   :noun_synonym "boycott", "mutiny", "picket", "sit-in", "walk-out" ;
   :verb_synonym "protest", "go on strike", "be on strike", "mutiny" .
-
-:ActOfPublishing a owl:Class ;
-  rdfs:subClassOf :ReturnRecoveryAndRelease ;
-  rdfs:label "Act of publishing" ;
-  :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." ;
-  :noun_synonym "issue", "report", "broadcast", "publication" ;
-  :verb_synonym "publish", "print", "report", "broadcast" .
 
 :Punishment a owl:Class ;
   rdfs:subClassOf :EventAndState ;

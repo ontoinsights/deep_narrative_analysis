@@ -290,11 +290,14 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:has_goal
 <urn:ontoinsights:dna:has_goal> rdf:type owl:ObjectProperty ;
-                                rdfs:subPropertyOf <urn:ontoinsights:dna:has_last> ;
-                                rdfs:domain <urn:ontoinsights:dna:GoalDirectedProcess> ;
+                                rdfs:domain [ rdf:type owl:Class ;
+                                              owl:unionOf ( <urn:ontoinsights:dna:Agent>
+                                                            <urn:ontoinsights:dna:EventAndState>
+                                                          )
+                                            ] ;
                                 rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                 rdfs:label "has goal" ;
-                                <urn:ontoinsights:dna:definition> "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of a :GoalDirectedProcess. Note that this is synonymous with the final step in that process - and hence is a subproperty of :has_last." .
+                                <urn:ontoinsights:dna:definition> "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc." .
 
 
 ###  urn:ontoinsights:dna:has_holder
@@ -1081,10 +1084,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:sentence_offset
 <urn:ontoinsights:dna:sentence_offset> rdf:type owl:DatatypeProperty ;
-                                       rdfs:domain <urn:ontoinsights:dna:Mention> ;
                                        rdfs:range xsd:integer ;
                                        rdfs:label "sentence offset" ;
-                                       <urn:ontoinsights:dna:definition> "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted." .
+                                       <urn:ontoinsights:dna:definition> "Defines the sentence number in a InformationSource that is unstructured text, where a Mention or entity is extracted." .
 
 
 ###  urn:ontoinsights:dna:sentiment
@@ -6332,7 +6334,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Construction
 <urn:ontoinsights:dna:Construction> rdf:type owl:Class ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:Manufacturing> ;
                                     rdfs:label "Construction" ;
                                     <urn:ontoinsights:dna:definition> "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
                                     <urn:ontoinsights:dna:example> "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
@@ -6916,10 +6918,23 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:ElectronicsAndComputers
 <urn:ontoinsights:dna:ElectronicsAndComputers> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
                                                rdfs:label "Electronics and Computers" ;
                                                <urn:ontoinsights:dna:definition> "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
                                                <urn:ontoinsights:dna:example> "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
+
+
+###  urn:ontoinsights:dna:EmailAndLetter
+<urn:ontoinsights:dna:EmailAndLetter> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                      rdfs:label "Email and Letter" ;
+                                      <urn:ontoinsights:dna:definition> "A message distributed by electronic or physical delivery, conveying some information." ;
+                                      <urn:ontoinsights:dna:noun_synonym> "correspondence" ,
+                                                                          "mail" ,
+                                                                          "message" ;
+                                      <urn:ontoinsights:dna:verb_synonym> "email" ,
+                                                                          "mail" ,
+                                                                          "message" .
 
 
 ###  urn:ontoinsights:dna:EmotionalResponse
@@ -7827,12 +7842,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:definition> "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content." .
 
 
-###  urn:ontoinsights:dna:InformationTechnologyServices
-<urn:ontoinsights:dna:InformationTechnologyServices> rdf:type owl:Class ;
-                                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                                     rdfs:label "Information Technology Services" ;
-                                                     <urn:ontoinsights:dna:definition> "Involved with the collection, analysis, storage and communication of data." ;
-                                                     <urn:ontoinsights:dna:example> "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+###  urn:ontoinsights:dna:InformationTechnology
+<urn:ontoinsights:dna:InformationTechnology> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
+                                             rdfs:label "Information Technology" ;
+                                             <urn:ontoinsights:dna:definition> "Involved with the collection, analysis, storage and communication of data." ;
+                                             <urn:ontoinsights:dna:example> "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
 
 
 ###  urn:ontoinsights:dna:Inquiry
@@ -8373,6 +8388,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "walk out" .
 
 
+###  urn:ontoinsights:dna:MultiIndustry
+<urn:ontoinsights:dna:MultiIndustry> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                     rdfs:label "Multiple Industries" ;
+                                     <urn:ontoinsights:dna:definition> "Involved with more than one line of business such as an industrial conglomerate." ;
+                                     <urn:ontoinsights:dna:noun_synonym> "conglomerate" .
+
+
 ###  urn:ontoinsights:dna:MultipleSclerosis
 <urn:ontoinsights:dna:MultipleSclerosis> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:AutoimmuneDisease> ,
@@ -8856,6 +8879,19 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      rdfs:label "Progressivism" ;
                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" ;
                                      <urn:ontoinsights:dna:noun_synonym> "progressivist" .
+
+
+###  urn:ontoinsights:dna:ProjectAndCampaign
+<urn:ontoinsights:dna:ProjectAndCampaign> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                          rdfs:label "Project and Campaign" ;
+                                          <urn:ontoinsights:dna:definition> "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)." ;
+                                          <urn:ontoinsights:dna:noun_synonym> "crusade" ,
+                                                                              "expedition" ,
+                                                                              "operation" ,
+                                                                              "venture" ;
+                                          <urn:ontoinsights:dna:verb_synonym> "campaign" ,
+                                                                              "crusade" .
 
 
 ###  urn:ontoinsights:dna:PromiseAndOath
@@ -9643,6 +9679,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:example> "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" .
 
 
+###  urn:ontoinsights:dna:Space
+<urn:ontoinsights:dna:Space> rdf:type owl:Class ;
+                             rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
+                             rdfs:label "Space" ;
+                             <urn:ontoinsights:dna:definition> "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
+                             <urn:ontoinsights:dna:noun_synonym> "astronaut" ,
+                                                                 "astronautics" ,
+                                                                 "interstellar travel" ,
+                                                                 "outer space" ,
+                                                                 "spaceflight" .
+
+
 ###  urn:ontoinsights:dna:SpaceEvent
 <urn:ontoinsights:dna:SpaceEvent> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -9830,6 +9878,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                  "toll" .
 
 
+###  urn:ontoinsights:dna:Technology
+<urn:ontoinsights:dna:Technology> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                  rdfs:label "Technology" ;
+                                  <urn:ontoinsights:dna:definition> "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+
+
 ###  urn:ontoinsights:dna:TeenAge
 <urn:ontoinsights:dna:TeenAge> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:Interval> ;
@@ -9989,6 +10044,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:UnifyingCollection
 <urn:ontoinsights:dna:UnifyingCollection> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:Collection> ;
                                           rdfs:label "Unifying Collection" ;
                                           <urn:ontoinsights:dna:definition> "A Collection whose members are considered the 'same' thing." ;
                                           <urn:ontoinsights:dna:example> "A company, ABC, may be referenced as 'A Better Company', 'ABC, Limited' or 'ABC', in different InformationSources. Later analysis may reveal that these references all indicate the same company and can therefore be unified. This is an alternate mechanism to the semantics of owl:sameAs." .
@@ -14634,11 +14690,11 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
-                                                                 "touch" ;
-                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
+                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
+                                                                 "converge" ;
                              rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
+                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:noun_synonym> "boundary" .
 

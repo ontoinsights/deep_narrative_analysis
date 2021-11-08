@@ -162,7 +162,7 @@ def select_store() -> str:    # pragma: no cover
 
 
 # Functions internal to the module, but accessible to testing
-def process_csv(csv_file: str, store_name: str, store_list: list) -> int:
+def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pragma: no cover
     """
     Input the specified CSV file and process the narratives defined in it.
     The format of the CSV MUST be:

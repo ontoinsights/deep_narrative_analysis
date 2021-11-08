@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: October 5 2021
+# Last modified: November 7 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -32,6 +32,8 @@
 #  Renamed :record_identifier to :data_identifier
 #  Added :alternatives, :has_author and the annotation property, :processing
 #  Added the properties, :negation and :sentiment
+#  Generalized :has_goal
+#  Corrected :sentence_offset domain (to be anything)
 ########################################################################
 
 
@@ -151,6 +153,7 @@
   :noun_synonym "fourth dimension" .
 
 :UnifyingCollection a owl:Class ;
+  rdfs:subClassOf :Collection ;
   rdfs:label "Unifying Collection" ;
   :definition "A Collection whose members are considered the 'same' thing." ;
   :example "A company, ABC, may be referenced as 'A Better Company', 'ABC, Limited' or 'ABC', in different InformationSources. Later analysis may reveal that these references all indicate the same company and can therefore be unified. This is an alternate mechanism to the semantics of owl:sameAs." .
@@ -242,8 +245,7 @@
 
 :sentence_offset a owl:DatatypeProperty;
   rdfs:label "sentence offset" ;
-  :definition "Defines the sentence number in a InformationSource that is unstructured text, where a Mention is extracted." ;
-  rdfs:domain :Mention ;
+  :definition "Defines the sentence number in a InformationSource that is unstructured text, where a Mention or entity is extracted." ;
   rdfs:range xsd:integer .
 
 :sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -340,10 +342,10 @@
 
 :has_goal a owl:ObjectProperty ;
   rdfs:label "has goal" ;
-  rdfs:subPropertyOf :has_last ;
-  rdfs:domain :GoalDirectedProcess ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :EventAndState :Agent ) ] ;
   rdfs:range :EventAndState ;
-  :definition "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of a :GoalDirectedProcess. Note that this is synonymous with the final step in that process - and hence is a subproperty of :has_last." .
+  :definition "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc." .
 
 :has_last a owl:ObjectProperty ;
   rdfs:label "has last" ;
