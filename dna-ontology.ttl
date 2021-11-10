@@ -1443,6 +1443,21 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 <urn:ontoinsights:dna:definition> "Events dealing with farming, ranching, breeding, beekeeping, etc." .
 
 
+###  urn:ontoinsights:dna:AirPollution
+<urn:ontoinsights:dna:AirPollution> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                    rdfs:label "Air Pollution" ;
+                                    <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Air_pollution&oldid=1054050398), AirPollution is 'the presence of substances in the atmosphere that are harmful to the health of humans and other living beings, or cause damage to the climate or to materials. There are many different types of air pollutants, such as gases (including ammonia, carbon monoxide, sulfur dioxide, nitrous oxides, methane, carbon dioxide and chlorofluorocarbons), particulates (both organic and inorganic), and biological molecules. Air pollution may cause diseases, allergies and even death to humans; it may also cause harm to other living organisms such as animals and food crops, and may damage the natural environment (for example, climate change, ozone depletion or habitat degradation) or built environment (for example, acid rain). Both human activity and natural processes can generate air pollution.'" .
+
+
+###  urn:ontoinsights:dna:AirborneParticulate
+<urn:ontoinsights:dna:AirborneParticulate> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:AirPollution> ;
+                                           rdfs:label "Airborne Particulate" ;
+                                           <urn:ontoinsights:dna:definition> "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances which can accumulate." ;
+                                           <urn:ontoinsights:dna:noun_synonym> "PM2.5" .
+
+
 ###  urn:ontoinsights:dna:AlcoholAndDrugUse
 <urn:ontoinsights:dna:AlcoholAndDrugUse> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:HealthAndDiseaseRelated> ;
@@ -6048,6 +6063,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "youth" .
 
 
+###  urn:ontoinsights:dna:ClimateChange
+<urn:ontoinsights:dna:ClimateChange> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                     rdfs:label "Climate Change" ;
+                                     <urn:ontoinsights:dna:definition> "From the United Nations (https://www.un.org/en/climatechange/what-is-climate-change), ClimateChange 'refers to long-term shifts in temperatures and weather patterns. These shifts may be natural, such as through variations in the solar cycle. But since the 1800s, human activities have been the main driver of climate change, primarily due to burning fossil fuels like coal, oil and gas. Burning fossil fuels generates greenhouse gas emissions that act like a blanket wrapped around the Earth, trapping the sun’s heat and raising temperatures.'" ;
+                                     <urn:ontoinsights:dna:noun_synonym> "global warming" .
+
+
 ###  urn:ontoinsights:dna:ClothingAndAccessory
 <urn:ontoinsights:dna:ClothingAndAccessory> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -6831,7 +6854,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:EconomicEnvironment
 <urn:ontoinsights:dna:EconomicEnvironment> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                            rdfs:label "Economic Environment" ;
                                            <urn:ontoinsights:dna:definition> "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
@@ -6922,19 +6945,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                rdfs:label "Electronics and Computers" ;
                                                <urn:ontoinsights:dna:definition> "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
                                                <urn:ontoinsights:dna:example> "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
-
-
-###  urn:ontoinsights:dna:EmailAndLetter
-<urn:ontoinsights:dna:EmailAndLetter> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
-                                      rdfs:label "Email and Letter" ;
-                                      <urn:ontoinsights:dna:definition> "A message distributed by electronic or physical delivery, conveying some information." ;
-                                      <urn:ontoinsights:dna:noun_synonym> "correspondence" ,
-                                                                          "mail" ,
-                                                                          "message" ;
-                                      <urn:ontoinsights:dna:verb_synonym> "email" ,
-                                                                          "mail" ,
-                                                                          "message" .
 
 
 ###  urn:ontoinsights:dna:EmotionalResponse
@@ -7039,6 +7049,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                rdfs:label "Environment and Condition" ;
                                                <urn:ontoinsights:dna:definition> "A factor, situation or condition related to an Agent's (defined using the :has_holder property) or Resource's (defined using the :has_resource predicate) living conditions, external circumstances or physical environment at some time (defined using the :has_time property or its sub-properties) and place (defined using the :has_location property)." ;
                                                <urn:ontoinsights:dna:example> "For example, when hypothesizing about possible (or impossible), future scenarios, one can use a sub-class of EnvironmentAndCondition (OpportunityOrPossibility or Impossibility) to create this world/'environment'. Or, a sub-class (DrinkableWater) can describe that a Person or community lives in an area without potable water." .
+
+
+###  urn:ontoinsights:dna:EnvironmentalIssue
+<urn:ontoinsights:dna:EnvironmentalIssue> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                          rdfs:label "Environmental Issue" ;
+                                          <urn:ontoinsights:dna:definition> "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:dna:EnvironmentalOrEcologicalActivities
@@ -8151,6 +8168,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "squander" .
 
 
+###  urn:ontoinsights:dna:LossOfBiodiversity
+<urn:ontoinsights:dna:LossOfBiodiversity> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                          rdfs:label "Loss of Biodiversity" ;
+                                          <urn:ontoinsights:dna:definition> "LossOfBiodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
+                                          <urn:ontoinsights:dna:noun_synonym> "biological diversity" ,
+                                                                              "extinction" .
+
+
 ###  urn:ontoinsights:dna:Love
 <urn:ontoinsights:dna:Love> rdf:type owl:Class ;
                             rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
@@ -8276,6 +8302,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:example> "For example, a value of the GDP of a country may be available in a spreadsheet at a particular row and column." ;
                                <urn:ontoinsights:dna:noun_synonym> "citation" ,
                                                                    "reference" .
+
+
+###  urn:ontoinsights:dna:Message
+<urn:ontoinsights:dna:Message> rdf:type owl:Class ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                               rdfs:label "Message" ;
+                               <urn:ontoinsights:dna:definition> "A communication distributed by electronic or physical means, conveying some information." ;
+                               <urn:ontoinsights:dna:noun_synonym> "correspondence" ,
+                                                                   "email" ,
+                                                                   "instant message" ,
+                                                                   "mail" ,
+                                                                   "tweet" ;
+                               <urn:ontoinsights:dna:verb_synonym> "email" ,
+                                                                   "mail" ,
+                                                                   "message" ,
+                                                                   "tweet" .
 
 
 ###  urn:ontoinsights:dna:Military
@@ -8730,7 +8772,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:PoliticalEnvironment
 <urn:ontoinsights:dna:PoliticalEnvironment> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                             rdfs:label "Political Environment" ;
                                             <urn:ontoinsights:dna:definition> "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
 
@@ -10100,12 +10142,36 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:example> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" .
 
 
+###  urn:ontoinsights:dna:WasteManagement
+<urn:ontoinsights:dna:WasteManagement> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                       rdfs:label "Waste Management" ;
+                                       <urn:ontoinsights:dna:definition> "From the European Environment Agency (https://www.eea.europa.eu/publications/signals-2014/articles/waste-a-problem-or-a-resource), WasteManagement refers to any type of discarded materials including 'food and garden waste, construction and demolition waste, mining waste, industrial waste, sludge, old televisions, old cars, batteries, plastic bags, paper, sanitary waste, old clothes and old furniture. Poor waste management contributes to climate change and air pollution, and directly affects many ecosystems and species. Landfills, considered the last resort in the waste hierarchy, release methane, a very powerful greenhouse gas linked to climate change... Some ecosystems, like the marine and coastal ones, can be severely affected by poor management of waste, or by littering. Marine litter is a growing concern, and not only for aesthetic reasons: entanglement and ingestion constitute severe threats to many marine species... Waste also represents an economic loss and burden to our society. Labour and the other inputs (land, energy, etc.) used in its extraction, production, dissemination and consumption phases are also lost when the 'leftovers' are discarded.'" .
+
+
 ###  urn:ontoinsights:dna:WaterFeature
 <urn:ontoinsights:dna:WaterFeature> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
                                     rdfs:label "Water Feature" ;
                                     <urn:ontoinsights:dna:definition> "A body of water as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
                                     <urn:ontoinsights:dna:example> "Examples include oceans, rivers, streams, bays, lakes, channels, etc." .
+
+
+###  urn:ontoinsights:dna:WaterPollution
+<urn:ontoinsights:dna:WaterPollution> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                      rdfs:label "Water Pollution" ;
+                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_pollution&oldid=1054178853), WaterPollution '(or aquatic pollution) is the contamination of water bodies, usually as a result of human activities, in such a manner that negatively affects its legitimate uses...  Water pollution results when contaminants are introduced into these water bodies. In addition to damage to many species, water pollution can also lead to water-borne diseases for people. Water pollution traditionally is attributed to four sources... sewage, industry, agriculture [and] urban runoff including stormwater. Water pollution can also be classified as surface water pollution (for example lakes, streams, estuaries, and parts of the ocean in marine pollution) or groundwater pollution.'" ;
+                                      <urn:ontoinsights:dna:noun_synonym> "aquatic pollution" .
+
+
+###  urn:ontoinsights:dna:WaterScarcity
+<urn:ontoinsights:dna:WaterScarcity> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                     rdfs:label "Water Scarcity" ;
+                                     <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_scarcity&oldid=1054040280), WaterScarcity '(closely related to water stress or water crisis) is the lack of fresh water resources to meet the standard water demand. Two types of water scarcity have been defined: physical or economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands, including that needed for ecosystems to function effectively. Arid areas (for example Central and West Asia, and North Africa) often suffer from physical water scarcity. On the other hand, economic water scarcity is caused by a lack of investment in infrastructure or technology to draw water from rivers, aquifers, or other water sources, or insufficient human capacity to satisfy the demand for water. Much of Sub-Saharan Africa is characterized by economic water scarcity. The essence of global water scarcity is the geographic and temporal mismatch between fresh water demand and availability... The main driving forces for the rising global demand for water are the increasing world population, improving living standards, changing consumption patterns (for example a dietary shift toward more animal products), and expansion of irrigated agriculture. Climate change (including droughts or floods), deforestation, increased water pollution and wasteful use of water can also cause insufficient water supply. Scarcity varies over time as a result of natural hydrological variability, but varies even more so as a function of prevailing economic policy, planning and management approaches. Scarcity can be expected to intensify with most forms of economic development'." ;
+                                     <urn:ontoinsights:dna:noun_synonym> "water crisis" ,
+                                                                         "water stress" .
 
 
 ###  urn:ontoinsights:dna:WeaponAndAmmunition
@@ -14690,13 +14756,13 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                 "converge" ;
-                             rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
+                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                 "touch" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
-                             <urn:ontoinsights:dna:verb_synonym> "meet" ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" .
+                             rdfs:label "meets" ;
+                             <urn:ontoinsights:dna:noun_synonym> "meet" ,
+                                                                 "boundary" ;
+                             <urn:ontoinsights:dna:verb_synonym> "meet" .
 
 
 <urn:ontoinsights:dna:text> rdfs:label "text" ;

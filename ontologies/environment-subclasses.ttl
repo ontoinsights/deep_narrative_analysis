@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 19 2021
+# Last Modified: November 9 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,12 +30,26 @@
 #  Moved PolitialIdeology to agent.ttl
 #  Moved Freedom, CaptivityAndDetention and economic and political 
 #    environments under LivingConditions
+#  Added EnvironmentalIssue and subclasses
+#  Removed subclassing from LivingConditions for Economic and Political
+#    Environments
 ########################################################################
 
 
 ########################################################################
 # Classes
 ########################################################################
+
+:AirborneParticulate a owl:Class ;
+  rdfs:subClassOf :AirPollution ;
+  rdfs:label "Airborne Particulate" ;
+  :definition "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances which can accumulate." ;
+  :noun_synonym "PM2.5" .
+
+:AirPollution a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Air Pollution" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Air_pollution&oldid=1054050398), AirPollution is 'the presence of substances in the atmosphere that are harmful to the health of humans and other living beings, or cause damage to the climate or to materials. There are many different types of air pollutants, such as gases (including ammonia, carbon monoxide, sulfur dioxide, nitrous oxides, methane, carbon dioxide and chlorofluorocarbons), particulates (both organic and inorganic), and biological molecules. Air pollution may cause diseases, allergies and even death to humans; it may also cause harm to other living organisms such as animals and food crops, and may damage the natural environment (for example, climate change, ozone depletion or habitat degradation) or built environment (for example, acid rain). Both human activity and natural processes can generate air pollution.'" .
 
 :Assessment a owl:Class ;
   rdfs:subClassOf :Enumeration ;
@@ -64,6 +78,12 @@
   :definition "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures." ;
   :noun_synonym "child care", "childcare", "dependent care", "elder care" ;
   :verb_synonym "raise children", "care for parent" .
+
+:ClimateChange a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Climate Change" ;
+  :definition "From the United Nations (https://www.un.org/en/climatechange/what-is-climate-change), ClimateChange 'refers to long-term shifts in temperatures and weather patterns. These shifts may be natural, such as through variations in the solar cycle. But since the 1800s, human activities have been the main driver of climate change, primarily due to burning fossil fuels like coal, oil and gas. Burning fossil fuels generates greenhouse gas emissions that act like a blanket wrapped around the Earth, trapping the sun’s heat and raising temperatures.'" ;
+  :noun_synonym "global warming" .
 
 :Compatibility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -96,7 +116,7 @@
   :noun_synonym "potable water" .
 
 :EconomicEnvironment a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Economic Environment" ;
   :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
@@ -110,6 +130,11 @@
   rdfs:label "Employment" ;
   :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
   :noun_synonym "job", "position", "work", "post" .
+
+:EnvironmentalIssue a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Environmental Issue" ;
+  :definition "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate." .
 
 :Expenses a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
@@ -162,6 +187,12 @@
   rdfs:label "Living Conditions" ;
   :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
+:LossOfBiodiversity a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Loss of Biodiversity" ;
+  :definition "LossOfBiodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
+  :noun_synonym "biological diversity", "extinction" .
+
 :Nutrition a owl:Class ;
   rdfs:subClassOf :LivingConditions ;
   rdfs:label "Food" ;
@@ -173,7 +204,7 @@
   :definition "Some entity or group of entities (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing(s) that are possible are specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
 
 :PoliticalEnvironment a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Political Environment" ;
   :definition "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
 
@@ -230,6 +261,23 @@
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Unemployment" ;
   :definition "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
+
+:WasteManagement a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Waste Management" ;
+  :definition "From the European Environment Agency (https://www.eea.europa.eu/publications/signals-2014/articles/waste-a-problem-or-a-resource), WasteManagement refers to any type of discarded materials including 'food and garden waste, construction and demolition waste, mining waste, industrial waste, sludge, old televisions, old cars, batteries, plastic bags, paper, sanitary waste, old clothes and old furniture. Poor waste management contributes to climate change and air pollution, and directly affects many ecosystems and species. Landfills, considered the last resort in the waste hierarchy, release methane, a very powerful greenhouse gas linked to climate change... Some ecosystems, like the marine and coastal ones, can be severely affected by poor management of waste, or by littering. Marine litter is a growing concern, and not only for aesthetic reasons: entanglement and ingestion constitute severe threats to many marine species... Waste also represents an economic loss and burden to our society. Labour and the other inputs (land, energy, etc.) used in its extraction, production, dissemination and consumption phases are also lost when the 'leftovers' are discarded.'" .
+
+:WaterPollution a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Water Pollution" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_pollution&oldid=1054178853), WaterPollution '(or aquatic pollution) is the contamination of water bodies, usually as a result of human activities, in such a manner that negatively affects its legitimate uses...  Water pollution results when contaminants are introduced into these water bodies. In addition to damage to many species, water pollution can also lead to water-borne diseases for people. Water pollution traditionally is attributed to four sources... sewage, industry, agriculture [and] urban runoff including stormwater. Water pollution can also be classified as surface water pollution (for example lakes, streams, estuaries, and parts of the ocean in marine pollution) or groundwater pollution.'" ;
+  :noun_synonym "aquatic pollution" .
+
+:WaterScarcity a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Water Scarcity" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_scarcity&oldid=1054040280), WaterScarcity '(closely related to water stress or water crisis) is the lack of fresh water resources to meet the standard water demand. Two types of water scarcity have been defined: physical or economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands, including that needed for ecosystems to function effectively. Arid areas (for example Central and West Asia, and North Africa) often suffer from physical water scarcity. On the other hand, economic water scarcity is caused by a lack of investment in infrastructure or technology to draw water from rivers, aquifers, or other water sources, or insufficient human capacity to satisfy the demand for water. Much of Sub-Saharan Africa is characterized by economic water scarcity. The essence of global water scarcity is the geographic and temporal mismatch between fresh water demand and availability... The main driving forces for the rising global demand for water are the increasing world population, improving living standards, changing consumption patterns (for example a dietary shift toward more animal products), and expansion of irrigated agriculture. Climate change (including droughts or floods), deforestation, increased water pollution and wasteful use of water can also cause insufficient water supply. Scarcity varies over time as a result of natural hydrological variability, but varies even more so as a function of prevailing economic policy, planning and management approaches. Scarcity can be expected to intensify with most forms of economic development'." ;
+  :noun_synonym "water stress", "water crisis" .
 
 :War a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
