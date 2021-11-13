@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: October 4 2021
+# Last modified: November 11 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,7 +25,7 @@
 #  Added example individuals
 #  Changed :synonym to :noun_synonym
 #  Added Intervals of :Childhood, :TeenYears, :Adulthood, :OldAge
-#  Added :has_earliest_beginning and :has_latest_end
+#  Added :has_earliest_beginning, :has_latest_end and :time_zone
 ########################################################################
 
 
@@ -177,6 +177,15 @@
   :example "For example, to indicate an occurrence every day, :has_recurrence_unit would be set to :Days and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range xsd:decimal .
+
+:time_zone a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "time zone" ;
+  :definition "An integer indicating that time is specified as an offset from Coordinated Universal Time (UTC). Time zone values are specified as positive or negative numbers representing 'hhmm'. They range from −1200 to +1400. The offsets are usually in hours only (e.g., '##00'), but a few zones are offset by 30 or 45 minutes." ;
+  rdfs:domain :PointInTime ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:integer ;
+               owl:withRestrictions ( [ xsd:minInclusive "-1200"^^xsd:decimal ]
+                                      [ xsd:maxInclusive "1400"^^xsd:decimal ] ) ] .
 
 :week_of_month a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "week of month" ;
