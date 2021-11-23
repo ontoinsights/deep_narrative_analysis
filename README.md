@@ -55,6 +55,13 @@ These environment variables need to be set for the DNA application:
 * PATH needs to specifically include the GitHub project's dna directory (for testing)
 * TOKENIZERS_PARALLELISM = false (to resolve warning from HuggingFace transformers and their use in spaCy)
 
-In addition, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name.
+Furthermore, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name.
 
 To run the application, cd to the dna directory and execute python3 app.py (making sure to have installed the Python libraries specified in the requirements.txt file).
+
+### Execution Errors
+
+When executing the application on a Mac, the following error may occur ... "Error loading wordnet: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:unable to get local issuer certificate (_ssl.c:1108)>". NLTK is the culprit (that is how WordNet is accessed) along with changes in Python. Python 3.6+ does not rely on/have access to MacOS' root certificates, and so certificate verification fails. To correct this:
+
+* Follow the instructions at https://stackoverflow.com/questions/38916452/nltk-download-ssl-certificate-verify-failed - OR -
+* Execute the _Install Certificates.command_ in the /Applications/Python 3.x directory
