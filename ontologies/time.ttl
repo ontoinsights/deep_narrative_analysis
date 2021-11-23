@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9, 2020
-# Last modified: November 11 2021
+# Last modified: November 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,8 @@
 #  Changed :synonym to :noun_synonym
 #  Added Intervals of :Childhood, :TeenYears, :Adulthood, :OldAge
 #  Added :has_earliest_beginning, :has_latest_end and :time_zone
+#  Modified :has_temporal_unit and :has_recurrence_unit to be a restricted 
+#    set of string values
 ########################################################################
 
 
@@ -48,7 +50,7 @@
 :Duration a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Duration of Time" ;
-  :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :has_temporal_unit properties." ;
+  :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :temporal_unit properties." ;
   :noun_synonym "temporal distance", "lifespan" .
 
 :Interval a owl:Class ;
@@ -74,8 +76,8 @@
 :RecurrencePattern a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Recurrence Pattern" ;
-  :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
-  :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :has_recurrence_unit property would be set to :Months. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :has_recurrence_unit would be :Weekly and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :has_recurrence_unit of :Seasonal and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
+  :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
+  :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :recurrence_unit property would be set to 'Months'. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :recurrence_unit would be 'Weeks' and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :recurrence_unit of 'Seasonal' and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
   :noun_synonym "rhythm", "cadence", "cycle", "repetition" .
 
 :Season a owl:Class ;
@@ -89,14 +91,6 @@
   rdfs:label "Teenage" ;
   :definition "An interval of time in a Person's life, typically from 13 through 19 years old." ;
   :noun_synonym "teen", "adolescence", "young adult" .
-
-:TemporalUnit a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
-  rdfs:label "Temporal Unit" ;
-  :definition "An enumeration of the values, :Seconds, :Minutes, :Hours, :Days, :Weeks, :Months, :Years or :Seasonal." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:Seconds :enum:Minutes :enum:Hours :enum:Days :enum:Weeks :enum:Months 
-                                    :enum:Years :enum:Seasonal ) ] .
 
 
 ########################################################################
@@ -156,11 +150,18 @@
 
 :numeric_duration a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "numeric duration" ;
-  :definition "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :has_temporal_unit property value." ;
+  :definition "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :temporal_unit property value." ;
   rdfs:domain :Duration ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ] ) ] .
+
+:recurrence_unit a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "recurrence unit" ;
+  :definition "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
+  rdfs:domain :RecurrencePattern ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Days" "Hours" "Minutes" "Months" "Seconds" "Seasonal" "Weeks" "Years" ) ] .
 
 :second_of_minute a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "second of minute" ;
@@ -173,10 +174,17 @@
 
 :separation_interval a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "separation interval" ;
-  :definition "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :has_recurrence_unit property value." ;
-  :example "For example, to indicate an occurrence every day, :has_recurrence_unit would be set to :Days and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." ;
+  :definition "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :recurrence_unit property value." ;
+  :example "For example, to indicate an occurrence every day, :recurrence_unit would be set to 'Days' and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range xsd:decimal .
+
+:temporal_unit a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "temporal unit" ;
+  :definition "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
+  rdfs:domain :Duration ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Days" "Hours" "Minutes" "Months" "Seconds" "Seasonal" "Weeks" "Years" ) ] .
 
 :time_zone a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "time zone" ;
@@ -219,17 +227,10 @@
   rdfs:range :Time ;
   :definition "References a point in time that is the latest end of the existence/time frame of some entity, or that is the latest end of an Interval or Duration." .
 
-:has_recurrence_unit a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has recurrence unit" ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  :definition "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
-  rdfs:domain :RecurrencePattern ;
-  rdfs:range :TemporalUnit .
-
 :has_recurrence_time a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has recurrence time" ;
   :definition "References a PointInTime indicating that a RecurrencePattern repeats at that particular time." ;
-  :example "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also reference the instance, :Years, using the :has_recurrence_unit property." ;
+  :example "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also indicate the value, 'Years', using the :recurrence_unit property." ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range :PointInTime .
 
@@ -239,13 +240,6 @@
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :RecurrencePattern :PointInTime :Interval ) ] ; 
   rdfs:range :Season .
-
-:has_temporal_unit a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has temporal unit" ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  :definition "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
-  rdfs:domain :Duration ;
-  rdfs:range :TemporalUnit .
 
 :omit_time a owl:ObjectProperty ;
   rdfs:label "omitted/cancelled/ignored time" ;
@@ -266,38 +260,6 @@
 :DrySeason a :Season ;
   rdfs:label "Dry Season" ;
   :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics." .
-
-:enum:Days a :TemporalUnit ;
-  rdfs:label "Days" ;
-  :definition "A 24-hour interval of time." .
-
-:enum:Hours a :TemporalUnit ;
-  rdfs:label "Hours" ;
-  :definition "A 60-minute interval of time." .
-
-:enum:Minutes a :TemporalUnit ;
-  rdfs:label "Minutes" ;
-  :definition "A 60-second interval of time." .
-
-:enum:Months a :TemporalUnit ;
-  rdfs:label "Months" ;
-  :definition "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon." .
-
-:enum:Seasonal a :TemporalUnit ;
-  rdfs:label "Seasonal" ;
-  :definition "A period of time characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc., and which is defined differently in various localities and domains of interest." .
-
-:enum:Seconds a :TemporalUnit ;
-  rdfs:label "Seconds" ;
-  :definition "A period of time that is one of the base units in the International System of Units (SI)." .
-
-:enum:Weeks a :TemporalUnit ;
-  rdfs:label "Weeks" ;
-  :definition "A 7-day interval of time." .
-
-:enum:Years a :TemporalUnit ;
-  rdfs:label "Years" ;
-  :definition "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention." .
 
 :GrowingSeason a :Season ;
   rdfs:label "Growing Season" ;

@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: November 11 2021
+# Last modified: November 20 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -32,6 +32,7 @@
 #    as InformationSources
 #  Added Contract and IdentificationInstrument
 #  Added the property, :cites
+#  Added Electricity, Fuel and LandAndWaterResource (and their subclasses)
 ########################################################################
 
 
@@ -39,11 +40,21 @@
 # Classes
 ########################################################################
 
+:AgriculturalLand a owl:Class ;
+  rdfs:subClassOf :LandAndWaterResource ;
+  rdfs:label "Agricultural Land" ;
+  :definition "Land that is arable, under permanent crops, or under permanent pastures." .
+
 :Animal a owl:Class ;
   rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Animal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
   :noun_synonym "beast", "creature", "insect", "bug", "fauna" .
+
+:ArableLand a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Arable Land" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Arable_land&oldid=1054005801), ArableLand is 'any land capable of being ploughed and used to grow crops. Alternatively, for the purposes of agricultural statistics, the term often has a more precise definition: [It] is the land under temporary agricultural crops (multiple-cropped areas are counted only once), temporary meadows for mowing or pasture, land under market and kitchen gardens and land temporarily fallow (less than five years)... A more concise definition appearing in the Eurostat glossary similarly refers to actual rather than potential uses: \"land worked (ploughed or tilled) regularly, generally under a system of crop rotation\".'" .
 
 :ArtAndCollectible a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -61,6 +72,19 @@
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Chemical Element and Compound" ;
   :definition "A ChemicalElement is any is substance consisting only of atoms from a single entry in the Periodic Table. Alternately, a chemical compound is a 'substance composed of many identical molecules (or molecular entities) composed of atoms from more than one element [in the Periodic Table] held together by chemical bonds. Two atoms of the same element bonded in a molecule do not form a chemical compound, since this would require two different elements. There are four types of compounds, depending on how the constituent atoms are held together: (1) molecules held together by covalent bonds; (2) ionic compounds held together by ionic bonds; (3) intermetallic compounds held together by metallic bonds; and, (4) certain complexes held together by coordinate covalent bonds.' (https://en.wikipedia.org/w/index.php?title=Chemical_compound&oldid=935156698)" .
+
+:ClothingAndAccessory a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Clothing and Accessory" ;
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
+  :example "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
+  :noun_synonym "clothes", "apparel", "attire" .
+
+:Coal a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Coal" ;
+  :definition "A type of Fuel." ;
+  :noun_synonym "anthracite" .
 
 :ComponentPart a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -85,12 +109,11 @@
   rdfs:label "Contract" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." .
 
-:ClothingAndAccessory a owl:Class ;
-  rdfs:subClassOf :Resource ;
-  rdfs:label "Clothing and Accessory" ;
-  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
-  :example "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
-  :noun_synonym "clothes", "apparel", "attire" .
+:CrudeOil a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Crude Oil" ;
+  :definition "A type of Fuel that is 'a mixture of hydrocarbons that exists in liquid phase in natural underground reservoirs and remains liquid at atmospheric pressure after passing through surface separating facilities' (https://www3.epa.gov/carbon-footprint-calculator/tool/definitions/crude-oil.html)." ;
+  :noun_synonym "petroleum" .
 
 :Database a owl:Class ;
   rdfs:subClassOf :Dataset ;
@@ -99,13 +122,19 @@
 
 :Dataset a owl:Class ;
   rdfs:subClassOf :Software ;
-  rdfs:label "Dataset" 
+  rdfs:label "Dataset" ;
   :definition "Related information organized into a collection." .
 
 :DyeAndInk a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Dye, Pigment and Ink" ;
   :definition "A substance that is used to color (or change the color of) somthing to which is it applied. A dye chemically bonds to the applied material, whereas a pigment does not. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Ink&oldid=1008461908), an ink 'is a gel, sol, or solution that contains at least one colourant, such as a dye or pigment, and is used to color a surface to produce an image, text, or design ... Ink can be a complex medium, composed of solvents, pigments, dyes, resins, lubricants, solubilizers, surfactants, particulate matter, fluorescents, and other materials.'" .
+
+:Electricity a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Electricity" ;
+  :definition "Electricity is a type of Resource (inanimate entity that is produced, consumed, bought, sold, ...). It is defined as 'a secondary energy source because it is produced by converting primary sources of energy such as coal, natural gas, nuclear energy, solar energy, and wind energy, into electrical power. Electricity is also referred to as an energy carrier [since] it can be converted to other forms of energy such as mechanical energy or heat.' (https://www.eia.gov/energyexplained/electricity/)" ;
+  :noun_synonym "electric power", "electric energy" .
 
 :EngineAndGenerator a owl:Class ;
   rdfs:subClassOf :Machine ;
@@ -118,11 +147,17 @@
   :definition "An entity that is consumed to satisfy hunger and/or thirst, or for nutritional or recreational reasons." ;
   :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance" .
 
+:Forest a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Forest" ;
+  :definition "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
+  :noun_synonym "wood", "woodland", "jungle", "timberland" .
+
 :Fuel a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Fuel" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451), a fuel 'is any material that can be made to react with other substances so that it releases energy as heat energy or to be used for work [to provide power]. The concept was originally applied solely to those materials capable of releasing chemical energy but has since also been applied to other sources of heat energy such as nuclear energy (via nuclear fission and nuclear fusion). The heat energy released by reactions of fuels is converted into mechanical energy via a heat engine. Other times the heat itself is valued for warmth, cooking, or industrial processes, as well as the illumination that comes with combustion.'" ;
-  :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are other examples of fuels." .
+  :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are types of fuels." .
 
 :FungusAndPlant a owl:Class ;
   rdfs:subClassOf :Resource, :Agent ;
@@ -152,6 +187,11 @@
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Jewellery&oldid=932741930), Jewelry 'consists of decorative items worn for personal adornment, such as brooches, rings, necklaces, earrings, pendants, bracelets, and cufflinks. Jewellery may be attached to the body or the clothes.' It may be made of precious metals and stones or imitations." ;
   :example "Examples are a bracelet, brooch, earrings, rings, a necklace or pendant, anklet, cameo, charm, choker, locket or cufflink." ;
   :noun_synonym "jewelery" .
+
+:LandAndWaterResource a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Land and Water Resource" ;
+  :definition "Parts of the Earth's surface either covered by water, or available for agriculture, building, forests, etc. LandAndWaterResources host different natural habitats and ecosystems" .
 
 :LegalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -183,6 +223,22 @@
   :definition "A Resource that is found, built or adapted to produce 'music'. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Music&oldid=1012822353), music 'is the art of arranging sounds in time to produce a composition through the elements of melody, harmony, rhythm, and timbre'." ;
   :example "Examples of MusicalInstruments include string instruments such as guitars, percussion instruments such as drums and wind instruments such as flutes and oboes." .
 
+:NaturalGas a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Natural Gas" ;
+  :definition "A type of Fuel that is 'a naturally occurring hydrocarbon gas mixture consisting of methane and commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium. Natural gas is colorless and odorless, and explosive ... The extraction and consumption of natural gas is a major and growing driver of climate change. It is a potent greenhouse gas itself when released into the atmosphere, and creates carbon dioxide when burnt.' (https://en.wikipedia.org/w/index.php?title=Natural_gas&oldid=1056092303)" ;
+  :noun_synonym "fossil gas" .
+
+:PermanentCrop a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Permanent Crop" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Permanent_crop&oldid=1034516992), PermanentCrop is 'one produced from plants which last for many seasons, rather than being replanted after each harvest... [It describes] cultivable land that is not being used for annually-harvested crops such as staple grains. In such usage, permanent cropland is a form of agricultural land that includes grasslands and shrublands used to grow grape vines or coffee; orchards used to grow fruit or olives; and forested plantations used to grow nuts or rubber.'" .
+
+:PermanentPasture a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Permanent Pasture and Meadow" ;
+  :definition "Permanent pastures and meadows are 'used for at least five years or more to grow herbaceous forage, either cultivated or growing naturally' (https://www.cia.gov/the-world-factbook/field/land-use)." .
+
 :PersonalAndBabyCare a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Personal and Baby Care" ;
@@ -207,11 +263,22 @@
   :definition "A book, magazine, article, etc. that is available/published." ;
   :noun_synonym "book", "volume", "hardback", "paperback", "title", "work", "opus", "treatise", "manual", "register", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report" .
 
+:RefinedPetroleumProduct a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Refined Petroleum Product" ;
+  :definition "A type of Fuel that is 'derived from crude oils through processes such as catalytic cracking and fractional distillation. These products have physical and chemical characteristics that differ according to the type of crude oil and subsequent refining processes' (https://www.epa.gov/emergency-response/types-refined-petroleum-products)." ;
+  :example "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." .
+
+:RenewableWater a owl:Class ;
+  rdfs:subClassOf :WaterResource ;
+  rdfs:label "Renewable Water" ;
+  :definition "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
+
 :SoapAndCleaningSubstance a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Soap and Cleaning Substance" ;
   :definition "An entity used to separate dirt, grime, particulates, pathogens, etc. from various articles and environments." ;
-  :example "Examples are soaps, detergents, solvents, sands and chemicals such as carbon dioxide." .
+  :example "Examples are soaps, detergents, solvents, sands, etc." .
 
 :Software a owl:Class ;
   rdfs:subClassOf :InformationSource ;
@@ -247,6 +314,11 @@
   rdfs:label "Vehicle" ;
   :definition "A Machine used for transporting people and/or goods. Vehicles operate on land or sea, and in the air or space." ;
   :noun_synonym "conveyance" .
+
+:WaterResource a owl:Class ;
+  rdfs:subClassOf :LandAndWaterResource ;
+  rdfs:label "Water Resource" ;
+  :definition "A WaterResource is a source of 'water that [is] useful or potentially useful to humans... uses of water include agricultural, industrial, household, recreational and environmental activities. Virtually all of these human uses require fresh water. Only 2.5% of water on the Earth is fresh water, and over two thirds of this is frozen in glaciers and polar ice caps. Water demand already exceeds supply in many parts of the world, and many more areas are expected to experience this imbalance in the near future.' (https://www.sciencedaily.com/terms/water_resources.htm)" .
 
 :WasteAndResidue a owl:Class ;
   rdfs:subClassOf :Resource ;

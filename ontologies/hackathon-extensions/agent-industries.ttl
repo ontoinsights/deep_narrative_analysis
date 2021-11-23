@@ -1,0 +1,297 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+
+########################################################################
+# File expanding the semantics of LineOfBusiness with (many of) the 
+# industries and sub-industries of the Global Industry Classification 
+# System (GICS)
+# 
+# Created: November 16 2021
+# Last modified: November 16 2021
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  New
+########################################################################
+
+
+########################################################################
+# Subclasses of :LineOfBusiness (defined in agent.ttl)
+########################################################################
+
+:AerospaceAndDefense a owl:Class ; rdfs:subClassOf :Space, :Military ; rdfs:label "Aerospace and Defense" .
+
+:AirFreightAndLogistics a owl:Class ; rdfs:subClassOf :Transport ; rdfs:label "Air Freight and Logistics" .
+
+:Airlines a owl:Class ; rdfs:subClassOf :Transport ; rdfs:label "Airlines" .
+
+:AutoComponents a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Auto Components" .
+
+:AutomobilesAndMotorcyles a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Automobiles" .
+
+:Banks a owl:Class ; rdfs:subClassOf :BankingAndFinance ; rdfs:label "Banks" .
+
+:BeverageProduction a owl:Class ; rdfs:subClassOf :FoodProcessingAndPreparation ; rdfs:label "Beverage Production" .
+
+:Brewers a owl:Class ; rdfs:subClassOf :BeverageProduction ; rdfs:label "Brewers" .
+
+:DistillersAndVintners a owl:Class ; rdfs:subClassOf :BeverageProduction ; rdfs:label "Distillers and Vintners" .
+
+:SoftDrinks a owl:Class ; rdfs:subClassOf :BeverageProduction ; rdfs:label "Soft Drinks" .
+
+:Biotechnology a owl:Class ; rdfs:subClassOf :Technology ; rdfs:label "Biotechnology" .
+
+:BuildingProducts a owl:Class ; rdfs:subClassOf :Construction ; rdfs:label "Building Products" .
+
+:CapitalMarkets a owl:Class ; rdfs:subClassOf :BankingAndFinance ; rdfs:label "Capital Markets" .
+
+:Chemicals a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Chemicals" .
+
+:CommodityChemicals a owl:Class ; rdfs:subClassOf :Chemicals ; rdfs:label "Commodity Chemicals" .
+
+:DiversifiedChemicals a owl:Class ; rdfs:subClassOf :Chemicals ; rdfs:label "Diversified Chemicals" .
+
+:FertilizersAndAgriculturalChemicals a owl:Class ; rdfs:subClassOf :Chemicals ; rdfs:label "Fertilizers and Agricultural Chemicals" .
+
+:IndustrialGases a owl:Class ; rdfs:subClassOf :Chemicals ; rdfs:label "Industrial Gases" .
+
+:SpecialtyChemicals a owl:Class ; rdfs:subClassOf :Chemicals ; rdfs:label "Specialty Chemicals" .
+
+:CommercialServicesAndSupplies a owl:Class ; rdfs:subClassOf :ProvisionOfServices ; rdfs:label "Commercial Services and Supplies" .
+
+:CommercialPrinting a owl:Class ; rdfs:subClassOf :CommercialServicesAndSupplies ; rdfs:label "Commercial Printing" .
+
+:DiversifiedSupportServices a owl:Class ; rdfs:subClassOf :CommercialServicesAndSupplies ; rdfs:label "Diversified Support Services" .
+
+:EnvironmentalAndFacilitiesServices a owl:Class ; rdfs:subClassOf :CommercialServicesAndSupplies, :EnvironmentalOrEcologicalActivities ; rdfs:label "Environmental and Facilities Services" .
+
+:SecurityAndAlarmServices a owl:Class ; rdfs:subClassOf :CommercialServicesAndSupplies, :Security ; rdfs:label "Security and Alarm Services" .
+
+:CommunicationsEquipment a owl:Class ; rdfs:subClassOf :Technology, :Manufacturing ; rdfs:label "Communications Equipment" .
+
+:ConstructionAndEngineering a owl:Class ; rdfs:subClassOf :Construction ; rdfs:label "Construction and Engineering" .
+
+:ConstructionMaterials a owl:Class ; rdfs:subClassOf :Construction ; rdfs:label "Construction Materials" .
+
+:ConsumerFinance a owl:Class ; rdfs:subClassOf :BankingAndFinance ; rdfs:label "Consumer Finance" .
+
+:ContainersAndPackaging a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Containers and Packaging" .
+
+:MetalAndGlassContainers a owl:Class ; rdfs:subClassOf :ContainersAndPackaging ; rdfs:label "Metal and Glass Containers" .
+
+:PaperPackaging a owl:Class ; rdfs:subClassOf :ContainersAndPackaging ; rdfs:label "Paper Packaging" .
+
+:Distributors a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Distributors" .
+
+:DiversifiedConsumerServices a owl:Class ; rdfs:subClassOf :ProvisionOfServices ; rdfs:label "Diversified Consumer Services" .
+
+:DiversifiedFinancialServices a owl:Class ; rdfs:subClassOf :BankingAndFinance, :ProvisionOfServices ; rdfs:label "Diversified Financial Services" .
+
+:DiversifiedTelecommunicationServices a owl:Class ; rdfs:subClassOf :Technology, :ProvisionOfServices ; rdfs:label "Diversified Telecommunication Services" .
+
+:ElectricUtilities a owl:Class ; rdfs:subClassOf :EnergyAndUtilities ; rdfs:label "Electric Utilities" .
+
+:ElectricalEquipment a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Electrical Equipment" .
+
+:ElectricalComponentsAndEquipment a owl:Class ; rdfs:subClassOf :ElectricalEquipment ; rdfs:label "Electrical Components and Equipment" .
+
+:HeavyElectricalEquipment a owl:Class ; rdfs:subClassOf :ElectricalEquipment ; rdfs:label "Heavy Electrical Equipment" .
+
+:ElectronicComponents a owl:Class ; rdfs:subClassOf :ElectricalEquipment, :ElectronicsAndComputers ; rdfs:label "Electronic Components" .
+
+:ElectronicEquipmentAndInstruments a owl:Class ; rdfs:subClassOf :ElectricalEquipment, :ElectronicsAndComputers ; rdfs:label "Electronic Equipment and Instruments" .
+
+:ElectronicManufacturingServices a owl:Class ; rdfs:subClassOf :ElectricalEquipment, :ElectronicsAndComputers, :ProvisionOfServices ; rdfs:label "Electronic Manufacturing Services" .
+
+:TechnologyDistributors a owl:Class ; rdfs:subClassOf :Technology, :Retail ; rdfs:label "Technology Distributors" .
+
+:OilAndGasDrilling a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Oil and Gas Drilling" .
+
+:OilAndGasEquipmentAndServices a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation, :Manufacturing, :ProvisionOfServices ; rdfs:label "Oil and Gas Equipment and Services" .
+
+:EquityRealEstateInvestmentTrusts a owl:Class ; rdfs:subClassOf :BankingAndFinance ; rdfs:label "Equity Real Estate Investment Trusts ..." .
+
+:FoodAndStaplesRetailing a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Food and Staples Retailing" .
+
+:FoodDistributors a owl:Class ; rdfs:subClassOf :FoodAndStaplesRetailing ; rdfs:label "Food Distributors" .
+
+:FoodRetail a owl:Class ; rdfs:subClassOf :FoodAndStaplesRetailing ; rdfs:label "Food Retail" .
+
+:HypermarketsAndSuperCenters a owl:Class ; rdfs:subClassOf :FoodAndStaplesRetailing ; rdfs:label "Hypermarkets and Super Centers" .
+
+:FoodProducts a owl:Class ; rdfs:subClassOf :FoodProcessingAndPreparation ; rdfs:label "Food Products" .
+
+:AgriculturalProducts a owl:Class ; rdfs:subClassOf :FoodProducts ; rdfs:label "Agricultural Products" .
+
+:PackagedFoodsAndMeats a owl:Class ; rdfs:subClassOf :FoodProducts ; rdfs:label "Packaged Foods and Meats" .
+
+:GasUtilities a owl:Class ; rdfs:subClassOf :EnergyAndUtilities ; rdfs:label "Gas Utilities" .
+
+:HealthCareEquipmentAndSupplies a owl:Class ; rdfs:subClassOf :HealthcareAndMedical, :Manufacturing ; rdfs:label "Health Care Equipment and Supplies" .
+
+:HealthCareProvidersAndServices a owl:Class ; rdfs:subClassOf :HealthcareAndMedical, :ProvisionOfServices ; rdfs:label "Health Care Providers and Services" .
+
+:HealthCareTechnology a owl:Class ; rdfs:subClassOf :HealthcareAndMedical, :Technology ; rdfs:label "Health Care Technology" .
+
+:HouseholdDurables a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Household Durables" .
+
+:ConsumerElectronics a owl:Class ; rdfs:subClassOf :HouseholdDurables, :ElectronicsAndComputers ; rdfs:label "Consumer Electronics" .
+
+:HomeFurnishings a owl:Class ; rdfs:subClassOf :HouseholdDurables ; rdfs:label "Home Furnishings" .
+
+:HouseholdAppliances a owl:Class ; rdfs:subClassOf :HouseholdDurables ; rdfs:label "Household Appliances" .
+
+:HousewaresAndSpecialties a owl:Class ; rdfs:subClassOf :HouseholdDurables ; rdfs:label "Housewares and Specialties" .
+
+:Homebuilding a owl:Class ; rdfs:subClassOf :Construction ; rdfs:label "Homebuilding" .
+
+:HouseholdProducts a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Household Products" .
+
+:ITServices a owl:Class ; rdfs:subClassOf :InformationTechnology, :ProvisionOfServices ; rdfs:label "IT Services" .
+
+:IndependentPowerAndRenewableElectricityProducers a owl:Class ; rdfs:subClassOf :EnergyAndUtilities ; rdfs:label "Independent Power and Renewable Electricity Producers" .
+
+:IndustrialConglomerates a owl:Class ; rdfs:subClassOf :MultiIndustry ; rdfs:label "Industrial Conglomerates" .
+
+:InteractiveMediaAndServices a owl:Class ; rdfs:subClassOf :Technology, :ProvisionOfServices ; rdfs:label "Interactive Media and Services" .
+
+:InternetAndDirectMarketingRetail a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Internet and Direct Marketing Retail" .
+
+:LeisureProducts a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Leisure Products" .
+
+:LifeSciencesToolsAndServices a owl:Class ; rdfs:subClassOf :Technology, :ProvisionOfServices ; rdfs:label "Life Sciences Tools and Services" .
+
+:Machinery a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Machinery" .
+
+:AgriculturalAndFarmMachinery a owl:Class ; rdfs:subClassOf :Machinery ; rdfs:label "Agricultural and Farm Machinery" .
+
+:ConstructionMachineryAndHeavyTrucks a owl:Class ; rdfs:subClassOf :Machinery ; rdfs:label "Construction Machinery and Heavy Trucks" .
+
+:IndustrialMachinery a owl:Class ; rdfs:subClassOf :Machinery ; rdfs:label "Industrial Machinery" .
+
+:Marine a owl:Class ; rdfs:subClassOf :Transport, :MultiIndustry ; rdfs:label "Marine" .
+
+:Advertising a owl:Class ; rdfs:subClassOf :PublishingAndMedia ; rdfs:label "Advertising" .
+
+:Broadcasting a owl:Class ; rdfs:subClassOf :PublishingAndMedia ; rdfs:label "Broadcasting" .
+
+:CableAndSatellite a owl:Class ; rdfs:subClassOf :PublishingAndMedia ; rdfs:label "Cable and Satellite" .
+
+:Publishing a owl:Class ; rdfs:subClassOf :PublishingAndMedia ; rdfs:label "Publishing" .
+
+:MetalsAndMining a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Metals and Mining" .
+
+:Aluminum a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Aluminum" .
+
+:Copper a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Copper" .
+
+:DiversifiedMetalsAndMining a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Diversified Metals and Mining" .
+
+:Gold a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Gold" .
+
+:PreciousMetalsAndMinerals a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Precious Metals and Minerals" .
+
+:Silver a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Silver" .
+
+:Steel a owl:Class ; rdfs:subClassOf :MetalsAndMining ; rdfs:label "Steel" .
+
+:MultiUtilities a owl:Class ; rdfs:subClassOf :EnergyAndUtilities ; rdfs:label "Multi-Utilities" .
+
+:MultilineRetail a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Multiline Retail" .
+
+:OilGasAndConsumableFuels a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Oil, Gas and Consumable Fuels" .
+
+:CoalAndConsumableFuels a owl:Class ; rdfs:subClassOf :OilGasAndConsumableFuels ; rdfs:label "Coal and Consumable Fuels" .
+
+:IntegratedOilAndGas a owl:Class ; rdfs:subClassOf :OilGasAndConsumableFuels ; rdfs:label "Integrated Oil and Gas" .
+
+:OilAndGasExplorationAndProduction a owl:Class ; rdfs:subClassOf :OilGasAndConsumableFuels ; rdfs:label "Oil and Gas Exploration and Production" .
+
+:OilAndGasRefiningAndMarketing a owl:Class ; rdfs:subClassOf :OilGasAndConsumableFuels ; rdfs:label "Oil and Gas Refining and Marketing" .
+
+:OilAndGasStorageAndTransportation a owl:Class ; rdfs:subClassOf :OilGasAndConsumableFuels, :Transport ; rdfs:label "Oil and Gas Storage and Transportation" .
+
+:PaperAndForestProducts a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Paper and Forest Products" .
+
+:ForestProducts a owl:Class ; rdfs:subClassOf :PaperAndForestProducts ; rdfs:label "Forest Products" .
+
+:PaperProducts a owl:Class ; rdfs:subClassOf :PaperAndForestProducts ; rdfs:label "Paper Products" .
+
+:PersonalProducts a owl:Class ; rdfs:subClassOf :Manufacturing ; rdfs:label "Personal Products" .
+
+:Pharmaceuticals a owl:Class ; rdfs:subClassOf :HealthcareAndMedical ; rdfs:label "Pharmaceuticals" .
+
+:HumanResourceAndEmploymentServices a owl:Class ; rdfs:subClassOf :ProvisionOfServices ; rdfs:label "Human Resource and Employment Services" .
+
+:ResearchAndConsultingServices a owl:Class ; rdfs:subClassOf :ProvisionOfServices ; rdfs:label "Research and Consulting Services" .
+
+:DiversifiedRealEstateActivities a owl:Class ; rdfs:subClassOf :RealEstate ; rdfs:label "Diversified Real Estate Activities" .
+
+:RealEstateDevelopment a owl:Class ; rdfs:subClassOf :RealEstate ; rdfs:label "Real Estate Development" .
+
+:RealEstateOperatingCompanies a owl:Class ; rdfs:subClassOf :RealEstate ; rdfs:label "Real Estate Operating Companies" .
+
+:RealEstateServices a owl:Class ; rdfs:subClassOf :RealEstate, :ProvisionOfServices ; rdfs:label "Real Estate Services" .
+
+:RoadAndRail a owl:Class ; rdfs:subClassOf :Transport ; rdfs:label "Road and Rail" .
+
+:Railroads a owl:Class ; rdfs:subClassOf :RoadAndRail ; rdfs:label "Railroads" .
+
+:Trucking a owl:Class ; rdfs:subClassOf :RoadAndRail ; rdfs:label "Trucking" .
+
+:SemiconductorsAndEquipment a owl:Class ; rdfs:subClassOf :ElectronicsAndComputers ; rdfs:label "Semiconductors and Semiconductor Equipment" .
+
+:SemiconductorEquipment a owl:Class ; rdfs:subClassOf :SemiconductorsAndEquipment ; rdfs:label "Semiconductor Equipment" .
+
+:Semiconductors a owl:Class ; rdfs:subClassOf :SemiconductorsAndEquipment ; rdfs:label "Semiconductors" .
+
+:SoftwareDevelopment a owl:Class ; rdfs:subClassOf :InformationTechnology ; rdfs:label "Software Development" .
+
+:ApplicationSoftware a owl:Class ; rdfs:subClassOf :SoftwareDevelopment ; rdfs:label "Application Software" .
+
+:SystemsSoftware a owl:Class ; rdfs:subClassOf :SoftwareDevelopment ; rdfs:label "Systems Software" .
+
+:SpecialtyRetail a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Specialty Retail" .
+
+:ApparelRetail a owl:Class ; rdfs:subClassOf :SpecialtyRetail ; rdfs:label "Apparel Retail" .
+
+:AutomotiveRetail a owl:Class ; rdfs:subClassOf :SpecialtyRetail ; rdfs:label "Automotive Retail" .
+
+:ComputerAndElectronicsRetail a owl:Class ; rdfs:subClassOf :SpecialtyRetail, :ElectronicsAndComputers ; rdfs:label "Computer and Electronics Retail" .
+
+:HomeImprovementRetail a owl:Class ; rdfs:subClassOf :SpecialtyRetail ; rdfs:label "Home Improvement Retail" .
+
+:SpecialtyStores a owl:Class ; rdfs:subClassOf :SpecialtyRetail ; rdfs:label "Specialty Stores" .
+
+:TechnologyHardwareStorageAndPeripherals a owl:Class ; rdfs:subClassOf :ElectronicsAndComputers ; rdfs:label "Technology Hardware, Storage and Peripherals" .
+
+:ApparelAccessoriesAndLuxuryGoods a owl:Class ; rdfs:subClassOf :Fashion, :Retail ; rdfs:label "Apparel, Accessories and Luxury Goods" .
+
+:Footwear a owl:Class ; rdfs:subClassOf :Fashion, :Retail ; rdfs:label "Footwear" .
+
+:Textiles a owl:Class ; rdfs:subClassOf :Fashion, :Retail ; rdfs:label "Textiles" .
+
+:ThriftsAndMortgageFinance a owl:Class ; rdfs:subClassOf :BankingAndFinance ; rdfs:label "Thrifts and Mortgage Finance" .
+
+:Tobacco a owl:Class ; rdfs:subClassOf :RawMaterialProcessingAndPreparation ; rdfs:label "Tobacco" .
+
+:TradingCompaniesAndDistributors a owl:Class ; rdfs:subClassOf :Retail ; rdfs:label "Trading Companies and Distributors" .
+
+:TransportationInfrastructure a owl:Class ; rdfs:subClassOf :Transport ; rdfs:label "Transportation Infrastructure" .
+
+:AirportServices a owl:Class ; rdfs:subClassOf :TransportationInfrastructure, :ProvisionOfServices ; rdfs:label "Airport Services" .
+
+:HighwaysAndRailtracks a owl:Class ; rdfs:subClassOf :TransportationInfrastructure ; rdfs:label "Highways and Railtracks" .
+
+:MarinePortsAndServices a owl:Class ; rdfs:subClassOf :TransportationInfrastructure, :Marine, :ProvisionOfServices ; rdfs:label "Marine Ports and Services" .
+
+:WaterUtilities a owl:Class ; rdfs:subClassOf :EnergyAndUtilities ; rdfs:label "Water Utilities" .
+
+:WirelessTelecommunicationServices a owl:Class ; rdfs:subClassOf :Technology, :ProvisionOfServices ; rdfs:label "Wireless Telecommunication Services" .

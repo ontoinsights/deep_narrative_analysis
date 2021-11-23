@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: September 11 2021
+# Last modified: November 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -27,6 +27,8 @@
 #  Updated the default and dna prefixes
 #  Corrected typos and added a class definition for Continent
 #  Changed :synonym to :noun_synonym
+#  Modified :Terrain and :Direction to be a restricted set of string values
+#    (the :terrain and :direction properties)
 ########################################################################
 
 
@@ -84,15 +86,6 @@
   :definition "A portion of land identified for specific use." ;
   :example "Examples are parks and commons, and even oil fields or demilitarized zones." .
 
-:Direction a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
-  rdfs:label "Direction" ;
-  :definition "An enumeration of values such as :enum:North, :enum:South and :enum:SouthEast." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:East :enum:North :enum:NorthEast :enum:NorthWest :enum:South :enum:SouthEast 
-                                    :enum:SouthWest :enum:West ) ] ;
-  :noun_synonym "compass direction", "compass orientation" .
-
 :Factory a owl:Class ;
   rdfs:subClassOf :BuildingAndDwelling ;
   rdfs:label "Factory" ;
@@ -137,15 +130,6 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Relative Direction Location" ;
   :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known." .
-
-:Terrain a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
-  rdfs:label "Terrain" ;
-  :definition "An enumeration describing the physical characteristics of a Location - whether mountainous, a river, grasslands, etc." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:Canyon :enum:Desert :enum:Forest :enum:Grassland :enum:Glacier :enum:Hilly 
-                                    :enum:Marsh :enum:Mountainous :enum:Oasis :enum:Ocean :enum:River :enum:Swamp 
-                                    :enum:Tundra :enum:Valley ) ] .
 
 :TransportationFeeature a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
@@ -202,6 +186,14 @@
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :PostalAddress :PopulatedPlace ) ] ; 
   rdfs:range xsd:string .
+
+:direction a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "direction" ;
+  :definition "String indicating a general compass direction, such as 'North' or 'SouthEast'." ;
+  rdfs:domain :RelativeDirectionLocation ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "East" "North" "NorthEast" "NorthWest" "South" "SouthEast" "SouthWest" "West" ) ] ;
+  :noun_synonym "compass direction", "compass orientation" .
 
 :distance_meters a owl:DatatypeProperty ;
   rdfs:label "distance in meters" ;
@@ -333,6 +325,13 @@
   rdfs:domain :PostalAddress ;
   rdfs:range xsd:string .
 
+:terrain a owl:DatatypeProperty ;
+  rdfs:label "terrain" ;
+  :definition "A string describing the physical characteristics of a Location - whether 'Mountainous', 'River', 'Grassland', etc." ;
+  rdfs:domain :PhysicalLocation ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Canyon" "Desert" "Forest" "Grassland" "Glacier" "Hilly" "Marsh" "Mountainous" "Oasis" "Ocean" "River" "Swamp" "Tundra" "Valley" ) ] .
+
 :url a owl:DatatypeProperty ;
   rdfs:label "Uniform Resource Locator (URL)" ;
   :definition "A string defining a web address, using the HTTP or HTTPS protocols." ;
@@ -364,20 +363,6 @@
   rdfs:domain :Country ;
   rdfs:range :Currency .
 
-:has_direction a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has direction" ;
-  :definition "References one of the enumerated values of Direction for a RelativeDirectionLocation." ;
-  rdfs:domain :RelativeDirectionLocation ;
-  rdfs:range :Direction .
-
-:has_terrain a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has terrain" ;
-  :definition "References one of the enumerated values of Terrain for a PhysicalLocation." ;
-  rdfs:domain :PhysicalLocation ;
-  rdfs:range :Terrain .
-
 :near a owl:ObjectProperty ;
   rdfs:label "near", "close" ;
   :definition "Indicates that a RelativeDirectionLocation is 'close to' another, 'established' PhysicalLocation." ;
@@ -388,69 +373,3 @@
 ########################################################################
 # Individuals
 ########################################################################
-
-:enum:Canyon a :Terrain ;
-  rdfs:label "Canyon and deep gorge" .
-
-:enum:Desert a :Terrain ;
-  rdfs:label "Desert" .
-
-:enum:East a :Direction ;
-  rdfs:label "East" .
-
-:enum:Forest a :Terrain ;
-  rdfs:label "Forest and Woods" .
-
-:enum:Grassland a :Terrain ;
-  rdfs:label "Grassland and Prairie" .
-
-:enum:Glacier a :Terrain ;
-  rdfs:label "Glacier" .
-
-:enum:Hilly a :Terrain ;
-  rdfs:label "Hilly" .
-
-:enum:Marsh a :Terrain ;
-  rdfs:label "Marsh" .
-
-:enum:Mountainous a :Terrain ;
-  rdfs:label "Mountainous" .
-
-:enum:North a :Direction ;
-  rdfs:label "North" .
-
-:enum:NorthEast a :Direction ;
-  rdfs:label "North-East" .
-
-:enum:NorthWest a :Direction ;
-  rdfs:label "North-West" .
-
-:enum:Oasis a :Terrain ;
-  rdfs:label "Oasis" .
-
-:enum:Ocean a :Terrain ;
-  rdfs:label "Ocean" .
-
-:enum:River a :Terrain ;
-  rdfs:label "River" .
-
-:enum:South a :Direction ;
-  rdfs:label "South" .
-
-:enum:SouthEast a :Direction ;
-  rdfs:label "South-East" .
-
-:enum:SouthWest a :Direction ;
-  rdfs:label "South-West" .
-
-:enum:Swamp a :Terrain ;
-  rdfs:label "Swamp" .
-
-:enum:Tundra a :Terrain ;
-  rdfs:label "Tundra" .
-
-:enum:Valley a :Terrain ;
-  rdfs:label "Valley" .
-
-:enum:West a :Direction ;
-  rdfs:label "West" .

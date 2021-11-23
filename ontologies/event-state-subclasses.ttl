@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 19 2021
+# Last Modified: November 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -35,6 +35,11 @@
 #  Renamed ReturnAndRelease to ReturnRecoveryAndRelease
 #  Renamed Publication to ActOfPublishing
 #  Updated definitions
+#  Simplified Measurement (removed :ReportedValue)
+#  Indicated that ProductionManufactureAndCreation and 
+#    UtilizationAndConsumption are disjoint
+#  Moved Assessment from environment-subclasses.ttl; Modified 
+#    :has_assessment to :assessment
 ########################################################################
 
 
@@ -81,6 +86,12 @@
   :noun_synonym "performance", "rehearsal" ;
   :verb_synonym "perform", "entertain", "rehearse" .
 
+:Assessment a owl:Class ;
+  rdfs:subClassOf :Measurement ;
+  rdfs:label "Assessment" ;
+  :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." ;
+  :noun_synonym "estimate" .
+
 :Attempt a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Attempt" ;
@@ -120,7 +131,7 @@
 :Change a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Change" ;
-  :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :has_assessment predicate." ;
+  :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :assessment predicate." ;
   :example "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
   :noun_synonym "conversion", "adjustment", "alteration", "adaptation", "trend" ;
   :verb_synonym "change", "adjust", "convert", "alter", "adapt", "trend" .
@@ -140,14 +151,14 @@
 :Competition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Competition" ;
-  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using the :has_assessment predicate." ;
+  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using the :assessment predicate." ;
   :noun_synonym "rivalry", "contest", "rival" ;
   :verb_synonym "compete" .
 
 :Cooperation a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Cooperation" ;
-  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using the :has_assessment predicate." ;
+  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using the :assessment predicate." ;
   :noun_synonym "collaboration", "teamwork", "mutual assistance", "symbiosis", "sharing" ;
   :verb_synonym "cooperate", "collaborate", "share" .
 
@@ -168,7 +179,7 @@
 :Decrease a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease" ;
-  :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :has_assessment predicate." ;
+  :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :assessment predicate." ;
   :noun_synonym "reduction", "drop" ;
   :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop", "decrease" .
 
@@ -332,7 +343,7 @@
 :Increase a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Increase" ;
-  :definition "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using the :has_assessment predicate." ;
+  :definition "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using the :assessment predicate." ;
   :noun_synonym "growth", "rise", "expansion", "escalation", "addition", "broadening" ;
   :verb_synonym "expand", "extend", "raise", "escalate", "add to", "grow", "increase" .
 
@@ -377,7 +388,7 @@
 :Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Measurement" ;
-  :definition "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property." ;
+  :definition "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property." ;
   :noun_synonym "quantification" ;
   :verb_synonym "measure", "quantify", "weigh" .
 
@@ -455,10 +466,6 @@
   :definition "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities" ;
   :noun_synonym "mining", "logging", "drilling", "excavation", "deforestation" ;
   :verb_synonym "mine", "quarry", "excavate", "drill", "tunnel", "cut down trees" .
-
-:ReportedValue a owl:Class ;
-  rdfs:label "Reported Value" ;
-  :definition "A reification of a measurement/measured quantity - where its properties, :reported_numeric and :reported_string, hold the decimal or string value that is 'reported', and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
 
 :ReturnRecoveryAndRelease a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -588,6 +595,9 @@
   owl:members  ( :Possession :Loss ) .
 
 [] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :ProductionManufactureAndCreation :UtilizationAndConsumption ) .
+
+[] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :RemovalAndRestriction :ReturnRecoveryAndRelease ) .
 
 [] rdf:type owl:AllDisjointClasses ;
@@ -598,31 +608,27 @@
 # Datatype Properties
 ########################################################################
 
-:reported_numeric a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "reported numeric value" ;
-  :definition "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." ;
-  rdfs:domain :ReportedValue ;
-  rdfs:range xsd:decimal .
+:assessment a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "assessment" ;
+  :definition "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
+  rdfs:domain :EventAndState ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Very High" "High" "Medium" "Low" "Negigible or None" ) ] .
 
-:reported_string a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "reported string value" ;
-  :definition "Specifies the (string) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." ;
-  rdfs:domain :ReportedValue ;
-  rdfs:range xsd:string .
+:reported_value a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "reported value" ;
+  :definition "Specifies the value of a Measurement as a decimal (where the value's units are defined using the :has_unit predicate) or a string." ;
+  rdfs:domain :Measurement ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:unionOf ( xsd:decimal xsd:string) ].
 
 
 ########################################################################
 # Object Properties
 ########################################################################
 
-:has_reported_value a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has reported value" ;
-  :definition "Associates a value and its units with a Measurement Event which defines its Location, Time and similar information." ;
-  rdfs:domain :Measurement ;
-  rdfs:range :ReportedValue .
-
 :has_unit a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has unit of measure" ;
-  :definition "Associates the units of measure with a Measurement's value/ReportedValue. Units are defined by QUDT.org and can be found at http://qudt.org/2.1/vocab/unit." ;
-  rdfs:domain :ReportedValue ;
+  :definition "Associates the units of a Measurement's :reported_value. Units are defined by QUDT.org and can be searched at http://www.qudt.org/doc/DOC_VOCAB-UNITS.html." ;
+  rdfs:domain :Measurement ;
   rdfs:range <http://qudt.org/schema/qudt/Unit> .

@@ -118,6 +118,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "induce" .
 
 
+###  urn:ontoinsights:dna:cites
+<urn:ontoinsights:dna:cites> rdf:type owl:ObjectProperty ;
+                             rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
+                             rdfs:range <urn:ontoinsights:dna:InformationSource> ;
+                             rdfs:label "cites" ;
+                             <urn:ontoinsights:dna:definition> "Reference from one InformationSource to another indicating that the referenced source is quoted or otherwise relevant." ;
+                             <urn:ontoinsights:dna:noun_synonym> "citation" ,
+                                                                 "quotation" ,
+                                                                 "reference" ;
+                             <urn:ontoinsights:dna:verb_synonym> "cite" ,
+                                                                 "quote" ,
+                                                                 "refer to" .
+
+
 ###  urn:ontoinsights:dna:during
 <urn:ontoinsights:dna:during> rdf:type owl:ObjectProperty ;
                               rdfs:label "during" ;
@@ -182,16 +196,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
 
 
-###  urn:ontoinsights:dna:has_assessment
-<urn:ontoinsights:dna:has_assessment> rdf:type owl:ObjectProperty ;
-                                      rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
-                                      rdf:type owl:FunctionalProperty ;
-                                      rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                      rdfs:range <urn:ontoinsights:dna:Assessment> ;
-                                      rdfs:label "has assessment" ;
-                                      <urn:ontoinsights:dna:definition> "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." .
-
-
 ###  urn:ontoinsights:dna:has_author
 <urn:ontoinsights:dna:has_author> rdf:type owl:ObjectProperty ;
                                   rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
@@ -242,16 +246,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:range <urn:ontoinsights:dna:Location> ;
                                        rdfs:label "has destination location" ;
                                        <urn:ontoinsights:dna:definition> "References the final location when an EventAndState involves movement of persons, goods, information, etc." .
-
-
-###  urn:ontoinsights:dna:has_direction
-<urn:ontoinsights:dna:has_direction> rdf:type owl:ObjectProperty ;
-                                     rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
-                                     rdf:type owl:FunctionalProperty ;
-                                     rdfs:domain <urn:ontoinsights:dna:RelativeDirectionLocation> ;
-                                     rdfs:range <urn:ontoinsights:dna:Direction> ;
-                                     rdfs:label "has direction" ;
-                                     <urn:ontoinsights:dna:definition> "References one of the enumerated values of Direction for a RelativeDirectionLocation." .
 
 
 ###  urn:ontoinsights:dna:has_earliest_beginning
@@ -417,26 +411,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                            rdfs:range <urn:ontoinsights:dna:PointInTime> ;
                                            rdfs:label "has recurrence time" ;
                                            <urn:ontoinsights:dna:definition> "References a PointInTime indicating that a RecurrencePattern repeats at that particular time." ;
-                                           <urn:ontoinsights:dna:example> "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also reference the instance, :Years, using the :has_recurrence_unit property." .
-
-
-###  urn:ontoinsights:dna:has_recurrence_unit
-<urn:ontoinsights:dna:has_recurrence_unit> rdf:type owl:ObjectProperty ;
-                                           rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
-                                           rdf:type owl:FunctionalProperty ;
-                                           rdfs:domain <urn:ontoinsights:dna:RecurrencePattern> ;
-                                           rdfs:range <urn:ontoinsights:dna:TemporalUnit> ;
-                                           rdfs:label "has recurrence unit" ;
-                                           <urn:ontoinsights:dna:definition> "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
-
-
-###  urn:ontoinsights:dna:has_reported_value
-<urn:ontoinsights:dna:has_reported_value> rdf:type owl:ObjectProperty ,
-                                                   owl:FunctionalProperty ;
-                                          rdfs:domain <urn:ontoinsights:dna:Measurement> ;
-                                          rdfs:range <urn:ontoinsights:dna:ReportedValue> ;
-                                          rdfs:label "has reported value" ;
-                                          <urn:ontoinsights:dna:definition> "Associates a value and its units with a Measurement Event which defines its Location, Time and similar information." .
+                                           <urn:ontoinsights:dna:example> "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also indicate the value, 'Years', using the :recurrence_unit property." .
 
 
 ###  urn:ontoinsights:dna:has_resource
@@ -476,26 +451,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:definition> "A reference to an entity that is a topic of an InformationSource." .
 
 
-###  urn:ontoinsights:dna:has_temporal_unit
-<urn:ontoinsights:dna:has_temporal_unit> rdf:type owl:ObjectProperty ;
-                                         rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
-                                         rdf:type owl:FunctionalProperty ;
-                                         rdfs:domain <urn:ontoinsights:dna:Duration> ;
-                                         rdfs:range <urn:ontoinsights:dna:TemporalUnit> ;
-                                         rdfs:label "has temporal unit" ;
-                                         <urn:ontoinsights:dna:definition> "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
-
-
-###  urn:ontoinsights:dna:has_terrain
-<urn:ontoinsights:dna:has_terrain> rdf:type owl:ObjectProperty ;
-                                   rdfs:subPropertyOf <urn:ontoinsights:dna:reference_to_enumerated_value> ;
-                                   rdf:type owl:FunctionalProperty ;
-                                   rdfs:domain <urn:ontoinsights:dna:PhysicalLocation> ;
-                                   rdfs:range <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "has terrain" ;
-                                   <urn:ontoinsights:dna:definition> "References one of the enumerated values of Terrain for a PhysicalLocation." .
-
-
 ###  urn:ontoinsights:dna:has_time
 <urn:ontoinsights:dna:has_time> rdf:type owl:ObjectProperty ;
                                 rdfs:range <urn:ontoinsights:dna:Time> ;
@@ -514,10 +469,10 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:has_unit
 <urn:ontoinsights:dna:has_unit> rdf:type owl:ObjectProperty ,
                                          owl:FunctionalProperty ;
-                                rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
+                                rdfs:domain <urn:ontoinsights:dna:Measurement> ;
                                 rdfs:range <http://qudt.org/schema/qudt/Unit> ;
                                 rdfs:label "has unit of measure" ;
-                                <urn:ontoinsights:dna:definition> "Associates the units of measure with a Measurement's value/ReportedValue. Units are defined by QUDT.org and can be found at http://qudt.org/2.1/vocab/unit." .
+                                <urn:ontoinsights:dna:definition> "Associates the units of a Measurement's :reported_value. Units are defined by QUDT.org and can be searched at http://www.qudt.org/doc/DOC_VOCAB-UNITS.html." .
 
 
 ###  urn:ontoinsights:dna:meets
@@ -614,6 +569,32 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:range xsd:decimal ;
                                        rdfs:label "altitude in meters" ;
                                        <urn:ontoinsights:dna:definition> "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties." .
+
+
+###  urn:ontoinsights:dna:assessment
+<urn:ontoinsights:dna:assessment> rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                  rdfs:range [ rdf:type rdfs:Datatype ;
+                                               owl:oneOf [ rdf:type rdf:List ;
+                                                           rdf:first "High" ;
+                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                      rdf:first "Low" ;
+                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                 rdf:first "Medium" ;
+                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                            rdf:first "Negigible or None" ;
+                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                       rdf:first "Very High" ;
+                                                                                                       rdf:rest rdf:nil
+                                                                                                     ]
+                                                                                          ]
+                                                                               ]
+                                                                    ]
+                                                         ]
+                                             ] ;
+                                  rdfs:label "assessment" ;
+                                  <urn:ontoinsights:dna:definition> "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." .
 
 
 ###  urn:ontoinsights:dna:city_name
@@ -735,6 +716,43 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:definition> "An integer value indicating a specific day of the week, where Sunday is represented by 1, Monday by 2, ... through Saturday which is represented by 7." .
 
 
+###  urn:ontoinsights:dna:direction
+<urn:ontoinsights:dna:direction> rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:domain <urn:ontoinsights:dna:RelativeDirectionLocation> ;
+                                 rdfs:range [ rdf:type rdfs:Datatype ;
+                                              owl:oneOf [ rdf:type rdf:List ;
+                                                          rdf:first "East" ;
+                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                     rdf:first "North" ;
+                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                rdf:first "NorthEast" ;
+                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                           rdf:first "NorthWest" ;
+                                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                                      rdf:first "South" ;
+                                                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                                                 rdf:first "SouthEast" ;
+                                                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                                                            rdf:first "SouthWest" ;
+                                                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                       rdf:first "West" ;
+                                                                                                                                       rdf:rest rdf:nil
+                                                                                                                                     ]
+                                                                                                                          ]
+                                                                                                               ]
+                                                                                                    ]
+                                                                                         ]
+                                                                              ]
+                                                                   ]
+                                                        ]
+                                            ] ;
+                                 rdfs:label "direction" ;
+                                 <urn:ontoinsights:dna:definition> "String indicating a general compass direction, such as 'North' or 'SouthEast'." ;
+                                 <urn:ontoinsights:dna:noun_synonym> "compass direction" ,
+                                                                     "compass orientation" .
+
+
 ###  urn:ontoinsights:dna:distance_meters
 <urn:ontoinsights:dna:distance_meters> rdf:type owl:DatatypeProperty ;
                                        rdfs:domain <urn:ontoinsights:dna:RelativeDirectionLocation> ;
@@ -762,6 +780,29 @@ rdf:label rdf:type owl:AnnotationProperty .
                               rdfs:range xsd:boolean ;
                               rdfs:label "future (boolean)" ;
                               <urn:ontoinsights:dna:definition> "Boolean indicating that the individual describes somthing possible in, or planned for, a 'future' time." .
+
+
+###  urn:ontoinsights:dna:gender
+<urn:ontoinsights:dna:gender> rdf:type owl:DatatypeProperty ,
+                                       owl:FunctionalProperty ;
+                              rdfs:domain <urn:ontoinsights:dna:Agent> ;
+                              rdfs:range [ rdf:type rdfs:Datatype ;
+                                           owl:oneOf [ rdf:type rdf:List ;
+                                                       rdf:first "Agender" ;
+                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                  rdf:first "Bigender" ;
+                                                                  rdf:rest [ rdf:type rdf:List ;
+                                                                             rdf:first "Female" ;
+                                                                             rdf:rest [ rdf:type rdf:List ;
+                                                                                        rdf:first "Male" ;
+                                                                                        rdf:rest rdf:nil
+                                                                                      ]
+                                                                           ]
+                                                                ]
+                                                     ]
+                                         ] ;
+                              rdfs:label "gender" ;
+                              <urn:ontoinsights:dna:definition> "A string enumeration of the values, 'Female', 'Male', 'Agender' and 'Bigender'. Note that this property describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties can be associated with the :gender property." .
 
 
 ###  urn:ontoinsights:dna:highest_altitude_meters
@@ -957,7 +998,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           )
                                                    ] ;
                                         rdfs:label "numeric duration" ;
-                                        <urn:ontoinsights:dna:definition> "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :has_temporal_unit property value." .
+                                        <urn:ontoinsights:dna:definition> "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :temporal_unit property value." .
 
 
 ###  urn:ontoinsights:dna:phone_number
@@ -1028,22 +1069,52 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)." .
 
 
-###  urn:ontoinsights:dna:reported_numeric
-<urn:ontoinsights:dna:reported_numeric> rdf:type owl:DatatypeProperty ,
-                                                 owl:FunctionalProperty ;
-                                        rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
-                                        rdfs:range xsd:decimal ;
-                                        rdfs:label "reported numeric value" ;
-                                        <urn:ontoinsights:dna:definition> "Specifies the (decimal) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
-
-
-###  urn:ontoinsights:dna:reported_string
-<urn:ontoinsights:dna:reported_string> rdf:type owl:DatatypeProperty ,
+###  urn:ontoinsights:dna:recurrence_unit
+<urn:ontoinsights:dna:recurrence_unit> rdf:type owl:DatatypeProperty ,
                                                 owl:FunctionalProperty ;
-                                       rdfs:domain <urn:ontoinsights:dna:ReportedValue> ;
-                                       rdfs:range xsd:string ;
-                                       rdfs:label "reported string value" ;
-                                       <urn:ontoinsights:dna:definition> "Specifies the (string) value of a Measurement (reified as a ReportedValue, where the value's units are defined using the :has_unit predicate)." .
+                                       rdfs:domain <urn:ontoinsights:dna:RecurrencePattern> ;
+                                       rdfs:range [ rdf:type rdfs:Datatype ;
+                                                    owl:oneOf [ rdf:type rdf:List ;
+                                                                rdf:first "Days" ;
+                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                           rdf:first "Hours" ;
+                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                      rdf:first "Minutes" ;
+                                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                                 rdf:first "Months" ;
+                                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                                            rdf:first "Seasonal" ;
+                                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                                       rdf:first "Seconds" ;
+                                                                                                                       rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                  rdf:first "Weeks" ;
+                                                                                                                                  rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                             rdf:first "Years" ;
+                                                                                                                                             rdf:rest rdf:nil
+                                                                                                                                           ]
+                                                                                                                                ]
+                                                                                                                     ]
+                                                                                                          ]
+                                                                                               ]
+                                                                                    ]
+                                                                         ]
+                                                              ]
+                                                  ] ;
+                                       rdfs:label "recurrence unit" ;
+                                       <urn:ontoinsights:dna:definition> "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
+
+
+###  urn:ontoinsights:dna:reported_value
+<urn:ontoinsights:dna:reported_value> rdf:type owl:DatatypeProperty ,
+                                               owl:FunctionalProperty ;
+                                      rdfs:domain <urn:ontoinsights:dna:Measurement> ;
+                                      rdfs:range [ rdf:type rdfs:Datatype ;
+                                                   owl:unionOf ( xsd:decimal
+                                                                 xsd:string
+                                                               )
+                                                 ] ;
+                                      rdfs:label "reported value" ;
+                                      <urn:ontoinsights:dna:definition> "Specifies the value of a Measurement as a decimal (where the value's units are defined using the :has_unit predicate) or a string." .
 
 
 ###  urn:ontoinsights:dna:role
@@ -1110,8 +1181,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                            rdfs:domain <urn:ontoinsights:dna:RecurrencePattern> ;
                                            rdfs:range xsd:decimal ;
                                            rdfs:label "separation interval" ;
-                                           <urn:ontoinsights:dna:definition> "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :has_recurrence_unit property value." ;
-                                           <urn:ontoinsights:dna:example> "For example, to indicate an occurrence every day, :has_recurrence_unit would be set to :Days and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." .
+                                           <urn:ontoinsights:dna:definition> "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :recurrence_unit property value." ;
+                                           <urn:ontoinsights:dna:example> "For example, to indicate an occurrence every day, :recurrence_unit would be set to 'Days' and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." .
 
 
 ###  urn:ontoinsights:dna:shortest_distance_meters
@@ -1167,10 +1238,113 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   <urn:ontoinsights:dna:definition> "Indicates that the referenced Evidence 'supports' the existence and definition of the referencing entity/individual. When used with a subject-predicate-object triple, the property is defined as an RDF* property extension on the predicate." .
 
 
+###  urn:ontoinsights:dna:temporal_unit
+<urn:ontoinsights:dna:temporal_unit> rdf:type owl:DatatypeProperty ,
+                                              owl:FunctionalProperty ;
+                                     rdfs:domain <urn:ontoinsights:dna:Duration> ;
+                                     rdfs:range [ rdf:type rdfs:Datatype ;
+                                                  owl:oneOf [ rdf:type rdf:List ;
+                                                              rdf:first "Days" ;
+                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                         rdf:first "Hours" ;
+                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                    rdf:first "Minutes" ;
+                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                               rdf:first "Months" ;
+                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                          rdf:first "Seasonal" ;
+                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                     rdf:first "Seconds" ;
+                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                rdf:first "Weeks" ;
+                                                                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                           rdf:first "Years" ;
+                                                                                                                                           rdf:rest rdf:nil
+                                                                                                                                         ]
+                                                                                                                              ]
+                                                                                                                   ]
+                                                                                                        ]
+                                                                                             ]
+                                                                                  ]
+                                                                       ]
+                                                            ]
+                                                ] ;
+                                     rdfs:label "temporal unit" ;
+                                     <urn:ontoinsights:dna:definition> "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
+
+
+###  urn:ontoinsights:dna:terrain
+<urn:ontoinsights:dna:terrain> rdf:type owl:DatatypeProperty ;
+                               rdfs:domain <urn:ontoinsights:dna:PhysicalLocation> ;
+                               rdfs:range [ rdf:type rdfs:Datatype ;
+                                            owl:oneOf [ rdf:type rdf:List ;
+                                                        rdf:first "Canyon" ;
+                                                        rdf:rest [ rdf:type rdf:List ;
+                                                                   rdf:first "Desert" ;
+                                                                   rdf:rest [ rdf:type rdf:List ;
+                                                                              rdf:first "Forest" ;
+                                                                              rdf:rest [ rdf:type rdf:List ;
+                                                                                         rdf:first "Glacier" ;
+                                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                                    rdf:first "Grassland" ;
+                                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                                               rdf:first "Hilly" ;
+                                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                                          rdf:first "Marsh" ;
+                                                                                                                          rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                     rdf:first "Mountainous" ;
+                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                rdf:first "Oasis" ;
+                                                                                                                                                rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                           rdf:first "Ocean" ;
+                                                                                                                                                           rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                      rdf:first "River" ;
+                                                                                                                                                                      rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                 rdf:first "Swamp" ;
+                                                                                                                                                                                 rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                            rdf:first "Tundra" ;
+                                                                                                                                                                                            rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                                       rdf:first "Valley" ;
+                                                                                                                                                                                                       rdf:rest rdf:nil
+                                                                                                                                                                                                     ]
+                                                                                                                                                                                          ]
+                                                                                                                                                                               ]
+                                                                                                                                                                    ]
+                                                                                                                                                         ]
+                                                                                                                                              ]
+                                                                                                                                   ]
+                                                                                                                        ]
+                                                                                                             ]
+                                                                                                  ]
+                                                                                       ]
+                                                                            ]
+                                                                 ]
+                                                      ]
+                                          ] ;
+                               rdfs:label "terrain" ;
+                               <urn:ontoinsights:dna:definition> "A string describing the physical characteristics of a Location - whether 'Mountainous', 'River', 'Grassland', etc." .
+
+
 ###  urn:ontoinsights:dna:text
 <urn:ontoinsights:dna:text> rdf:type owl:DatatypeProperty ,
                                      owl:FunctionalProperty ;
                             rdfs:range xsd:string .
+
+
+###  urn:ontoinsights:dna:time_zone
+<urn:ontoinsights:dna:time_zone> rdf:type owl:DatatypeProperty ,
+                                          owl:FunctionalProperty ;
+                                 rdfs:domain <urn:ontoinsights:dna:PointInTime> ;
+                                 rdfs:range [ rdf:type rdfs:Datatype ;
+                                              owl:onDatatype xsd:integer ;
+                                              owl:withRestrictions ( [ xsd:minInclusive -1200
+                                                                     ]
+                                                                     [ xsd:maxInclusive 1400
+                                                                     ]
+                                                                   )
+                                            ] ;
+                                 rdfs:label "time zone" ;
+                                 <urn:ontoinsights:dna:definition> "An integer indicating that time is specified as an offset from Coordinated Universal Time (UTC). Time zone values are specified as positive or negative numbers representing 'hhmm'. They range from −1200 to +1400. The offsets are usually in hours only (e.g., '##00'), but a few zones are offset by 30 or 45 minutes." .
 
 
 ###  urn:ontoinsights:dna:url
@@ -1347,6 +1521,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "twenties" .
 
 
+###  urn:ontoinsights:dna:AdverseCompound
+<urn:ontoinsights:dna:AdverseCompound> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:ChemicalElementAndCompound> ,
+                                                       <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                       rdfs:label "Adverse Compound" ;
+                                       <urn:ontoinsights:dna:definition> "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as GreenhouseGases." .
+
+
 ###  urn:ontoinsights:dna:AdviceAndRecommendation
 <urn:ontoinsights:dna:AdviceAndRecommendation> rdf:type owl:Class ;
                                                rdfs:subClassOf <urn:ontoinsights:dna:CommunicationAndSpeechAct> ;
@@ -1397,7 +1579,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:AgentAspect
 <urn:ontoinsights:dna:AgentAspect> rdf:type owl:Class ;
                                    rdfs:label "Agent Aspect" ;
-                                   <urn:ontoinsights:dna:definition> "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Gender) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
+                                   <urn:ontoinsights:dna:definition> "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
 
 
 ###  urn:ontoinsights:dna:AggressiveOrHostileAct
@@ -1428,6 +1610,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "reach resolution" .
 
 
+###  urn:ontoinsights:dna:AgriculturalLand
+<urn:ontoinsights:dna:AgriculturalLand> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LandAndWaterResource> ;
+                                        rdfs:label "Agricultural Land" ;
+                                        <urn:ontoinsights:dna:definition> "Land that is arable, under permanent crops, or under permanent pastures." .
+
+
 ###  urn:ontoinsights:dna:Agriculture
 <urn:ontoinsights:dna:Agriculture> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -1441,21 +1630,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                                                 rdfs:label "Agriculture, Apiculture and Aquaculture Event" ;
                                                                 <urn:ontoinsights:dna:definition> "Events dealing with farming, ranching, breeding, beekeeping, etc." .
-
-
-###  urn:ontoinsights:dna:AirPollution
-<urn:ontoinsights:dna:AirPollution> rdf:type owl:Class ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
-                                    rdfs:label "Air Pollution" ;
-                                    <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Air_pollution&oldid=1054050398), AirPollution is 'the presence of substances in the atmosphere that are harmful to the health of humans and other living beings, or cause damage to the climate or to materials. There are many different types of air pollutants, such as gases (including ammonia, carbon monoxide, sulfur dioxide, nitrous oxides, methane, carbon dioxide and chlorofluorocarbons), particulates (both organic and inorganic), and biological molecules. Air pollution may cause diseases, allergies and even death to humans; it may also cause harm to other living organisms such as animals and food crops, and may damage the natural environment (for example, climate change, ozone depletion or habitat degradation) or built environment (for example, acid rain). Both human activity and natural processes can generate air pollution.'" .
-
-
-###  urn:ontoinsights:dna:AirborneParticulate
-<urn:ontoinsights:dna:AirborneParticulate> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:AirPollution> ;
-                                           rdfs:label "Airborne Particulate" ;
-                                           <urn:ontoinsights:dna:definition> "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances which can accumulate." ;
-                                           <urn:ontoinsights:dna:noun_synonym> "PM2.5" .
 
 
 ###  urn:ontoinsights:dna:AlcoholAndDrugUse
@@ -1601,6 +1775,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                         "offer thanks" .
 
 
+###  urn:ontoinsights:dna:ArableLand
+<urn:ontoinsights:dna:ArableLand> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:AgriculturalLand> ;
+                                  rdfs:label "Arable Land" ;
+                                  <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Arable_land&oldid=1054005801), ArableLand is 'any land capable of being ploughed and used to grow crops. Alternatively, for the purposes of agricultural statistics, the term often has a more precise definition: [It] is the land under temporary agricultural crops (multiple-cropped areas are counted only once), temporary meadows for mowing or pasture, land under market and kitchen gardens and land temporarily fallow (less than five years)... A more concise definition appearing in the Eurostat glossary similarly refers to actual rather than potential uses: \"land worked (ploughed or tilled) regularly, generally under a system of crop rotation\".'" .
+
+
 ###  urn:ontoinsights:dna:ArmedForce
 <urn:ontoinsights:dna:ArmedForce> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:GovernmentOrganization> ;
@@ -1694,17 +1875,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Assessment
 <urn:ontoinsights:dna:Assessment> rdf:type owl:Class ;
-                                  owl:equivalentClass [ rdf:type owl:Class ;
-                                                        owl:oneOf ( <urn:ontoinsights:dna:enum:High>
-                                                                    <urn:ontoinsights:dna:enum:Low>
-                                                                    <urn:ontoinsights:dna:enum:Medium>
-                                                                    <urn:ontoinsights:dna:enum:NegligibleOrNone>
-                                                                    <urn:ontoinsights:dna:enum:VeryHigh>
-                                                                  )
-                                                      ] ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:Measurement> ;
                                   rdfs:label "Assessment" ;
-                                  <urn:ontoinsights:dna:definition> "An enumeration of values describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'." ;
+                                  <urn:ontoinsights:dna:definition> "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." ;
                                   <urn:ontoinsights:dna:noun_synonym> "estimate" .
 
 
@@ -5919,7 +6092,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Capacity> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
                                 rdfs:label "Capacity" ;
-                                <urn:ontoinsights:dna:definition> "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate." ;
+                                <urn:ontoinsights:dna:definition> "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate." ;
                                 <urn:ontoinsights:dna:noun_synonym> "capability" ,
                                                                     "capacitance" ,
                                                                     "maximum amount" ,
@@ -5928,8 +6101,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:CaptivityAndDetention
 <urn:ontoinsights:dna:CaptivityAndDetention> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                                             owl:disjointWith <urn:ontoinsights:dna:Freedom> ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                              rdfs:label "Captivity and Detention" ;
                                              <urn:ontoinsights:dna:definition> "The condition of an Agent being held captive and confined to a certain location." ;
                                              <urn:ontoinsights:dna:noun_synonym> "bondage" ,
@@ -5985,7 +6157,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:CaringForDependents
 <urn:ontoinsights:dna:CaringForDependents> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                            rdfs:label "Caring for Dependents" ;
                                            <urn:ontoinsights:dna:definition> "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures." ;
                                            <urn:ontoinsights:dna:noun_synonym> "child care" ,
@@ -6028,7 +6200,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Change> rdf:type owl:Class ;
                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                               rdfs:label "Change" ;
-                              <urn:ontoinsights:dna:definition> "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :has_assessment predicate." ;
+                              <urn:ontoinsights:dna:definition> "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :assessment predicate." ;
                               <urn:ontoinsights:dna:example> "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
                               <urn:ontoinsights:dna:noun_synonym> "adaptation" ,
                                                                   "adjustment" ,
@@ -6080,6 +6252,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                             <urn:ontoinsights:dna:noun_synonym> "apparel" ,
                                                                                 "attire" ,
                                                                                 "clothes" .
+
+
+###  urn:ontoinsights:dna:Coal
+<urn:ontoinsights:dna:Coal> rdf:type owl:Class ;
+                            rdfs:subClassOf <urn:ontoinsights:dna:Fuel> ;
+                            rdfs:label "Coal" ;
+                            <urn:ontoinsights:dna:definition> "A type of Fuel." ;
+                            <urn:ontoinsights:dna:noun_synonym> "anthracite" .
 
 
 ###  urn:ontoinsights:dna:CoercionAndIntimidation
@@ -6224,7 +6404,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                    owl:disjointWith <urn:ontoinsights:dna:Cooperation> ;
                                    rdfs:label "Competition" ;
-                                   <urn:ontoinsights:dna:definition> "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using the :has_assessment predicate." ;
+                                   <urn:ontoinsights:dna:definition> "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using the :assessment predicate." ;
                                    <urn:ontoinsights:dna:noun_synonym> "contest" ,
                                                                        "rival" ,
                                                                        "rivalry" ;
@@ -6407,7 +6587,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Cooperation> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
                                    rdfs:label "Cooperation" ;
-                                   <urn:ontoinsights:dna:definition> "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using the :has_assessment predicate." ;
+                                   <urn:ontoinsights:dna:definition> "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using the :assessment predicate." ;
                                    <urn:ontoinsights:dna:noun_synonym> "collaboration" ,
                                                                        "mutual assistance" ,
                                                                        "sharing" ,
@@ -6450,6 +6630,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                           rdfs:label "Criminal Activities" .
 
 
+###  urn:ontoinsights:dna:CrudeOil
+<urn:ontoinsights:dna:CrudeOil> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:Fuel> ;
+                                rdfs:label "Crude Oil" ;
+                                <urn:ontoinsights:dna:definition> "A type of Fuel that is 'a mixture of hydrocarbons that exists in liquid phase in natural underground reservoirs and remains liquid at atmospheric pressure after passing through surface separating facilities' (https://www3.epa.gov/carbon-footprint-calculator/tool/definitions/crude-oil.html)." ;
+                                <urn:ontoinsights:dna:noun_synonym> "petroleum" .
+
+
 ###  urn:ontoinsights:dna:Curiosity
 <urn:ontoinsights:dna:Curiosity> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
@@ -6490,9 +6678,16 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Database
 <urn:ontoinsights:dna:Database> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:Dataset> ;
                                 rdfs:label "Database" ;
                                 <urn:ontoinsights:dna:definition> "Information organized into a collection of tables (e.g., relational databases) or records/triples/etc. (e.g., NoSQL databases), stored on a computer and accessed via specialized query languages." .
+
+
+###  urn:ontoinsights:dna:Dataset
+<urn:ontoinsights:dna:Dataset> rdf:type owl:Class ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:Software> ;
+                               rdfs:label "Dataset" ;
+                               <urn:ontoinsights:dna:definition> "Related information organized into a collection." .
 
 
 ###  urn:ontoinsights:dna:Deafness
@@ -6538,7 +6733,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 rdfs:subClassOf <urn:ontoinsights:dna:Change> ;
                                 owl:disjointWith <urn:ontoinsights:dna:Increase> ;
                                 rdfs:label "Decrease" ;
-                                <urn:ontoinsights:dna:definition> "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :has_assessment predicate." ;
+                                <urn:ontoinsights:dna:definition> "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :assessment predicate." ;
                                 <urn:ontoinsights:dna:noun_synonym> "drop" ,
                                                                     "reduction" ;
                                 <urn:ontoinsights:dna:verb_synonym> "decline" ,
@@ -6718,26 +6913,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:definition> "Diabetes is a condition resulting in high blood sugars. It may be caused by a lack of insulin or a body's inability to absorb glucose. Note that Type 1 diabetes should also be classified as an :AutoimmuneDisease." .
 
 
-###  urn:ontoinsights:dna:Direction
-<urn:ontoinsights:dna:Direction> rdf:type owl:Class ;
-                                 owl:equivalentClass [ rdf:type owl:Class ;
-                                                       owl:oneOf ( <urn:ontoinsights:dna:enum:East>
-                                                                   <urn:ontoinsights:dna:enum:North>
-                                                                   <urn:ontoinsights:dna:enum:NorthEast>
-                                                                   <urn:ontoinsights:dna:enum:NorthWest>
-                                                                   <urn:ontoinsights:dna:enum:South>
-                                                                   <urn:ontoinsights:dna:enum:SouthEast>
-                                                                   <urn:ontoinsights:dna:enum:SouthWest>
-                                                                   <urn:ontoinsights:dna:enum:West>
-                                                                 )
-                                                     ] ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
-                                 rdfs:label "Direction" ;
-                                 <urn:ontoinsights:dna:definition> "An enumeration of values such as :enum:North, :enum:South and :enum:SouthEast." ;
-                                 <urn:ontoinsights:dna:noun_synonym> "compass direction" ,
-                                                                     "compass orientation" .
-
-
 ###  urn:ontoinsights:dna:DisagreementOrDispute
 <urn:ontoinsights:dna:DisagreementOrDispute> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -6802,19 +6977,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "get a divorce" .
 
 
-###  urn:ontoinsights:dna:DrinkableWater
-<urn:ontoinsights:dna:DrinkableWater> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                                      rdfs:label "Drinkable Water" ;
-                                      <urn:ontoinsights:dna:definition> "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate." ;
-                                      <urn:ontoinsights:dna:noun_synonym> "potable water" .
-
-
 ###  urn:ontoinsights:dna:Duration
 <urn:ontoinsights:dna:Duration> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:Time> ;
                                 rdfs:label "Duration of Time" ;
-                                <urn:ontoinsights:dna:definition> "A length of time (such as '2 days') as defined by the :numeric_duration and :has_temporal_unit properties." ;
+                                <urn:ontoinsights:dna:definition> "A length of time (such as '2 days') as defined by the :numeric_duration and :temporal_unit properties." ;
                                 <urn:ontoinsights:dna:noun_synonym> "lifespan" ,
                                                                     "temporal distance" .
 
@@ -6862,7 +7029,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Education
 <urn:ontoinsights:dna:Education> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ,
-                                                 <urn:ontoinsights:dna:LivingConditions> ;
+                                                 <urn:ontoinsights:dna:LivingCondition> ;
                                  rdfs:label "Education" ;
                                  <urn:ontoinsights:dna:definition> "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." ,
                                                                    "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
@@ -6937,6 +7104,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:noun_synonym> "ballot" ;
                                 <urn:ontoinsights:dna:verb_synonym> "elect" ,
                                                                     "vote" .
+
+
+###  urn:ontoinsights:dna:Electricity
+<urn:ontoinsights:dna:Electricity> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
+                                   rdfs:label "Electricity" ;
+                                   <urn:ontoinsights:dna:definition> "Electricity is a type of Resource (inanimate entity that is produced, consumed, bought, sold, ...). It is defined as 'a secondary energy source because it is produced by converting primary sources of energy such as coal, natural gas, nuclear energy, solar energy, and wind energy, into electrical power. Electricity is also referred to as an energy carrier [since] it can be converted to other forms of energy such as mechanical energy or heat.' (https://www.eia.gov/energyexplained/electricity/)" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "electric energy" ,
+                                                                       "electric power" .
 
 
 ###  urn:ontoinsights:dna:ElectronicsAndComputers
@@ -7273,12 +7449,30 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                         "water" .
 
 
+###  urn:ontoinsights:dna:FoodAndNutrition
+<urn:ontoinsights:dna:FoodAndNutrition> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                        rdfs:label "Food and Nutrition" ;
+                                        <urn:ontoinsights:dna:definition> "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
+
+
 ###  urn:ontoinsights:dna:FoodProcessingAndPreparation
 <urn:ontoinsights:dna:FoodProcessingAndPreparation> rdf:type owl:Class ;
                                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
                                                     rdfs:label "Food Processing and Preparation" ;
                                                     <urn:ontoinsights:dna:definition> "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
                                                     <urn:ontoinsights:dna:example> "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
+
+
+###  urn:ontoinsights:dna:Forest
+<urn:ontoinsights:dna:Forest> rdf:type owl:Class ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:AgriculturalLand> ;
+                              rdfs:label "Forest" ;
+                              <urn:ontoinsights:dna:definition> "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
+                              <urn:ontoinsights:dna:noun_synonym> "jungle" ,
+                                                                  "timberland" ,
+                                                                  "wood" ,
+                                                                  "woodland" .
 
 
 ###  urn:ontoinsights:dna:FormationOfOrganization
@@ -7292,15 +7486,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                <urn:ontoinsights:dna:verb_synonym> "establish" ,
                                                                                    "incorporate" ,
                                                                                    "open" .
-
-
-###  urn:ontoinsights:dna:Freedom
-<urn:ontoinsights:dna:Freedom> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                               rdfs:label "Freedom" ;
-                               <urn:ontoinsights:dna:definition> "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." ;
-                               <urn:ontoinsights:dna:noun_synonym> "independence" ,
-                                                                   "liberty" .
 
 
 ###  urn:ontoinsights:dna:FriendlyOrSupportiveAct
@@ -7334,7 +7519,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                             rdfs:subClassOf <urn:ontoinsights:dna:SubstanceAndRawMaterial> ;
                             rdfs:label "Fuel" ;
                             <urn:ontoinsights:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451), a fuel 'is any material that can be made to react with other substances so that it releases energy as heat energy or to be used for work [to provide power]. The concept was originally applied solely to those materials capable of releasing chemical energy but has since also been applied to other sources of heat energy such as nuclear energy (via nuclear fission and nuclear fusion). The heat energy released by reactions of fuels is converted into mechanical energy via a heat engine. Other times the heat itself is valued for warmth, cooking, or industrial processes, as well as the illumination that comes with combustion.'" ;
-                            <urn:ontoinsights:dna:example> "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are other examples of fuels." .
+                            <urn:ontoinsights:dna:example> "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are types of fuels." .
 
 
 ###  urn:ontoinsights:dna:FungusAndPlant
@@ -7371,22 +7556,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                "place a bet" ,
                                                                                "play the horses" ,
                                                                                "wager" .
-
-
-###  urn:ontoinsights:dna:Gender
-<urn:ontoinsights:dna:Gender> rdf:type owl:Class ;
-                              owl:equivalentClass [ rdf:type owl:Class ;
-                                                    owl:oneOf ( <urn:ontoinsights:dna:enum:Agender>
-                                                                <urn:ontoinsights:dna:enum:Bigender>
-                                                                <urn:ontoinsights:dna:enum:Female>
-                                                                <urn:ontoinsights:dna:enum:Male>
-                                                              )
-                                                  ] ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:AgentAspect> ,
-                                              <urn:ontoinsights:dna:Enumeration> ;
-                              rdfs:label "Gender" ;
-                              <urn:ontoinsights:dna:definition> "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_agent_aspect property which references the Gender." ;
-                              <urn:ontoinsights:dna:noun_synonym> "sex" .
 
 
 ###  urn:ontoinsights:dna:GenerosityAndKindness
@@ -7468,6 +7637,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                  "selfishness" ;
                              <urn:ontoinsights:dna:verb_synonym> "be miserly" ,
                                                                  "be selfish" .
+
+
+###  urn:ontoinsights:dna:GreenhouseGas
+<urn:ontoinsights:dna:GreenhouseGas> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
+                                     rdfs:label "Greenhouse Gas" ;
+                                     <urn:ontoinsights:dna:definition> "A GreenhouseGas is 'a gas that \"traps\" infrared radiation in the lower atmosphere causing surface warming' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
+                                     <urn:ontoinsights:dna:example> "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." .
 
 
 ###  urn:ontoinsights:dna:Grooming
@@ -7583,7 +7760,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Healthcare
 <urn:ontoinsights:dna:Healthcare> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                   rdfs:label "Healthcare" ;
                                   <urn:ontoinsights:dna:definition> "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
@@ -7633,7 +7810,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Housing
 <urn:ontoinsights:dna:Housing> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                rdfs:label "Housing and Lodging" ;
                                <urn:ontoinsights:dna:definition> "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
@@ -7813,7 +7990,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Increase> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:Change> ;
                                 rdfs:label "Increase" ;
-                                <urn:ontoinsights:dna:definition> "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using the :has_assessment predicate." ;
+                                <urn:ontoinsights:dna:definition> "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using the :assessment predicate." ;
                                 <urn:ontoinsights:dna:noun_synonym> "addition" ,
                                                                     "broadening" ,
                                                                     "escalation" ,
@@ -7987,6 +8164,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
 
 
+###  urn:ontoinsights:dna:LandAndWaterResource
+<urn:ontoinsights:dna:LandAndWaterResource> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
+                                            rdfs:label "Land and Water Resource" ;
+                                            <urn:ontoinsights:dna:definition> "Parts of the Earth's surface either covered by water, or available for agriculture, building, forests, etc. LandAndWaterResources host different natural habitats and ecosystems" .
+
+
 ###  urn:ontoinsights:dna:LawAndPolicy
 <urn:ontoinsights:dna:LawAndPolicy> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:PoliticalEnvironment> ;
@@ -8089,11 +8273,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       <urn:ontoinsights:dna:definition> "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
 
 
-###  urn:ontoinsights:dna:LivingConditions
-<urn:ontoinsights:dna:LivingConditions> rdf:type owl:Class ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
-                                        rdfs:label "Living Conditions" ;
-                                        <urn:ontoinsights:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
+###  urn:ontoinsights:dna:LivingCondition
+<urn:ontoinsights:dna:LivingCondition> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                       rdfs:label "Living Condition" ;
+                                       <urn:ontoinsights:dna:definition> "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingCondition are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingCondition can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingCondition is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
 
 ###  urn:ontoinsights:dna:Localism
@@ -8168,13 +8352,16 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "squander" .
 
 
-###  urn:ontoinsights:dna:LossOfBiodiversity
-<urn:ontoinsights:dna:LossOfBiodiversity> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
-                                          rdfs:label "Loss of Biodiversity" ;
-                                          <urn:ontoinsights:dna:definition> "LossOfBiodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
-                                          <urn:ontoinsights:dna:noun_synonym> "biological diversity" ,
-                                                                              "extinction" .
+###  urn:ontoinsights:dna:LossOfHabitatAndBiodiversity
+<urn:ontoinsights:dna:LossOfHabitatAndBiodiversity> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                                    rdfs:label "Loss of Habitat and Biodiversity" ;
+                                                    <urn:ontoinsights:dna:definition> "Loss of biodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues). Loss of habitat refers to 'the process by which a natural habitat becomes incapable of supporting its native species. The organisms that previously inhabited the site are displaced or dead, thereby reducing biodiversity and species abundance. Habitat destruction is the leading cause of biodiversity loss' (https://en.wikipedia.org/w/index.php?title=Habitat_destruction&oldid=1054386284)." ;
+                                                    <urn:ontoinsights:dna:noun_synonym> "biodiversity loss" ,
+                                                                                        "extinction" ,
+                                                                                        "habitat destruction" ,
+                                                                                        "habitat loss" ,
+                                                                                        "habitat reduction" .
 
 
 ###  urn:ontoinsights:dna:Love
@@ -8233,7 +8420,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Measurement> rdf:type owl:Class ;
                                    rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                    rdfs:label "Measurement" ;
-                                   <urn:ontoinsights:dna:definition> "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property." ;
+                                   <urn:ontoinsights:dna:definition> "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property." ;
                                    <urn:ontoinsights:dna:noun_synonym> "quantification" ;
                                    <urn:ontoinsights:dna:verb_synonym> "measure" ,
                                                                        "quantify" ,
@@ -8519,6 +8706,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:noun_synonym> "nationalist" .
 
 
+###  urn:ontoinsights:dna:NaturalGas
+<urn:ontoinsights:dna:NaturalGas> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:Fuel> ;
+                                  rdfs:label "Natural Gas" ;
+                                  <urn:ontoinsights:dna:definition> "A type of Fuel that is 'a naturally occurring hydrocarbon gas mixture consisting of methane and commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium. Natural gas is colorless and odorless, and explosive ... The extraction and consumption of natural gas is a major and growing driver of climate change. It is a potent greenhouse gas itself when released into the atmosphere, and creates carbon dioxide when burnt.' (https://en.wikipedia.org/w/index.php?title=Natural_gas&oldid=1056092303)" ;
+                                  <urn:ontoinsights:dna:noun_synonym> "fossil gas" .
+
+
 ###  urn:ontoinsights:dna:NaturalProcess
 <urn:ontoinsights:dna:NaturalProcess> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:dna:Process> ;
@@ -8559,13 +8754,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "homesick" ;
                                  <urn:ontoinsights:dna:verb_synonym> "be homesick" ,
                                                                      "be nostalgic" .
-
-
-###  urn:ontoinsights:dna:Nutrition
-<urn:ontoinsights:dna:Nutrition> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                                 rdfs:label "Food" ;
-                                 <urn:ontoinsights:dna:definition> "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:dna:NutritionalDeficiency
@@ -8683,6 +8871,29 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          rdfs:label "Paramilitary Force" ;
                                          <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'." ;
                                          <urn:ontoinsights:dna:noun_synonym> "quasi military" .
+
+
+###  urn:ontoinsights:dna:ParticulateMatter
+<urn:ontoinsights:dna:ParticulateMatter> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
+                                         rdfs:label "Particulate Matter" ;
+                                         <urn:ontoinsights:dna:definition> "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances." ;
+                                         <urn:ontoinsights:dna:noun_synonym> "PM2.5" ,
+                                                                             "aerosol" .
+
+
+###  urn:ontoinsights:dna:PermanentCrop
+<urn:ontoinsights:dna:PermanentCrop> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:AgriculturalLand> ;
+                                     rdfs:label "Permanent Crop" ;
+                                     <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Permanent_crop&oldid=1034516992), PermanentCrop is 'one produced from plants which last for many seasons, rather than being replanted after each harvest... [It describes] cultivable land that is not being used for annually-harvested crops such as staple grains. In such usage, permanent cropland is a form of agricultural land that includes grasslands and shrublands used to grow grape vines or coffee; orchards used to grow fruit or olives; and forested plantations used to grow nuts or rubber.'" .
+
+
+###  urn:ontoinsights:dna:PermanentPasture
+<urn:ontoinsights:dna:PermanentPasture> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:AgriculturalLand> ;
+                                        rdfs:label "Permanent Pasture and Meadow" ;
+                                        <urn:ontoinsights:dna:definition> "Permanent pastures and meadows are 'used for at least five years or more to grow herbaceous forage, either cultivated or growing naturally' (https://www.cia.gov/the-world-factbook/field/land-use)." .
 
 
 ###  urn:ontoinsights:dna:Permission
@@ -8858,6 +9069,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          "street address" .
 
 
+###  urn:ontoinsights:dna:PotableWater
+<urn:ontoinsights:dna:PotableWater> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                    rdfs:label "Potable Water" ;
+                                    <urn:ontoinsights:dna:definition> "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
+
+
 ###  urn:ontoinsights:dna:PreciousMetalPearlAndGemstone
 <urn:ontoinsights:dna:PreciousMetalPearlAndGemstone> rdf:type owl:Class ;
                                                      rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -8898,6 +9116,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:ProductionManufactureAndCreation
 <urn:ontoinsights:dna:ProductionManufactureAndCreation> rdf:type owl:Class ;
                                                         rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                                        owl:disjointWith <urn:ontoinsights:dna:UtilizationAndConsumption> ;
                                                         rdfs:label "Production, Manufacture and Creation" ;
                                                         <urn:ontoinsights:dna:definition> "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
                                                         <urn:ontoinsights:dna:noun_synonym> "construction" ,
@@ -8987,6 +9206,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "assist" ,
                                                                           "help" ,
                                                                           "provide" .
+
+
+###  urn:ontoinsights:dna:ProvisionOfServices
+<urn:ontoinsights:dna:ProvisionOfServices> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                           rdfs:label "Provision of Services" ;
+                                           <urn:ontoinsights:dna:definition> "Involved with the sale of services to a business, person or group." ;
+                                           <urn:ontoinsights:dna:example> "Examples are companies or individuals that provide education/training or IT/programming services." .
 
 
 ###  urn:ontoinsights:dna:Publication
@@ -9091,7 +9318,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:RealEstate
 <urn:ontoinsights:dna:RealEstate> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                  rdfs:label "Raw Material Processing and Preparation" ;
+                                  rdfs:label "Real Estate" ;
                                   <urn:ontoinsights:dna:definition> "Involved with the maintenance and sale of property/land and buildings." .
 
 
@@ -9118,12 +9345,20 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:RecurrencePattern> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:Time> ;
                                          rdfs:label "Recurrence Pattern" ;
-                                         <urn:ontoinsights:dna:definition> "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
-                                         <urn:ontoinsights:dna:example> "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :has_recurrence_unit property would be set to :Months. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :has_recurrence_unit would be :Weekly and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :has_recurrence_unit of :Seasonal and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
+                                         <urn:ontoinsights:dna:definition> "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
+                                         <urn:ontoinsights:dna:example> "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :recurrence_unit property would be set to 'Months'. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :recurrence_unit would be 'Weeks' and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :recurrence_unit of 'Seasonal' and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
                                          <urn:ontoinsights:dna:noun_synonym> "cadence" ,
                                                                              "cycle" ,
                                                                              "repetition" ,
                                                                              "rhythm" .
+
+
+###  urn:ontoinsights:dna:RefinedPetroleumProduct
+<urn:ontoinsights:dna:RefinedPetroleumProduct> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:Fuel> ;
+                                               rdfs:label "Refined Petroleum Product" ;
+                                               <urn:ontoinsights:dna:definition> "A type of Fuel that is 'derived from crude oils through processes such as catalytic cracking and fractional distillation. These products have physical and chemical characteristics that differ according to the type of crude oil and subsequent refining processes' (https://www.epa.gov/emergency-response/types-refined-petroleum-products)." ;
+                                               <urn:ontoinsights:dna:example> "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." .
 
 
 ###  urn:ontoinsights:dna:RefusalAndRejection
@@ -9250,6 +9485,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                  "tunnel" .
 
 
+###  urn:ontoinsights:dna:RenewableWater
+<urn:ontoinsights:dna:RenewableWater> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:WaterResource> ;
+                                      rdfs:label "Renewable Water" ;
+                                      <urn:ontoinsights:dna:definition> "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
+
+
 ###  urn:ontoinsights:dna:Repair
 <urn:ontoinsights:dna:Repair> rdf:type owl:Class ;
                               rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
@@ -9272,12 +9514,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "repair" ,
                                                                   "revamp" ,
                                                                   "touch up" .
-
-
-###  urn:ontoinsights:dna:ReportedValue
-<urn:ontoinsights:dna:ReportedValue> rdf:type owl:Class ;
-                                     rdfs:label "Reported Value" ;
-                                     <urn:ontoinsights:dna:definition> "A reification of a measurement/measured quantity - where its properties, :reported_numeric and :reported_string, hold the decimal or string value that is 'reported', and :has_units defines the units (such as seconds or meters) in which the value is expressed." .
 
 
 ###  urn:ontoinsights:dna:RequestAndAppeal
@@ -9494,18 +9730,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "disappoint" .
 
 
-###  urn:ontoinsights:dna:SafeConditions
-<urn:ontoinsights:dna:SafeConditions> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                                      rdfs:label "Safe Conditions" ;
-                                      <urn:ontoinsights:dna:definition> "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding SafeConditions can be described using the :has_assessment predicate." .
+###  urn:ontoinsights:dna:Safety
+<urn:ontoinsights:dna:Safety> rdf:type owl:Class ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                              rdfs:label "Safety" ;
+                              <urn:ontoinsights:dna:definition> "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :has_assessment predicate." .
 
 
-###  urn:ontoinsights:dna:SanitaryConditions
-<urn:ontoinsights:dna:SanitaryConditions> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
-                                          rdfs:label "Sanitary Conditions" ;
-                                          <urn:ontoinsights:dna:definition> "A condition describing that sewage is managed and hygiene is maintained for a population/GroupOfAgents. The overall availability and accessibility regarding SanitaryConditions can be described using the :has_assessment predicate." .
+###  urn:ontoinsights:dna:SanitationFacilities
+<urn:ontoinsights:dna:SanitationFacilities> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                            rdfs:label "Santitation Facilities" ;
+                                            <urn:ontoinsights:dna:definition> "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:dna:SarcasmAndDerision
@@ -9702,7 +9938,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                 rdfs:subClassOf <urn:ontoinsights:dna:SubstanceAndRawMaterial> ;
                                                 rdfs:label "Soap and Cleaning Substance" ;
                                                 <urn:ontoinsights:dna:definition> "An entity used to separate dirt, grime, particulates, pathogens, etc. from various articles and environments." ;
-                                                <urn:ontoinsights:dna:example> "Examples are soaps, detergents, solvents, sands and chemicals such as carbon dioxide." .
+                                                <urn:ontoinsights:dna:example> "Examples are soaps, detergents, solvents, sands, etc." .
 
 
 ###  urn:ontoinsights:dna:Socialism
@@ -9715,10 +9951,17 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Software
 <urn:ontoinsights:dna:Software> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
-                                rdfs:label "Software and Data" ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                rdfs:label "Software" ;
                                 <urn:ontoinsights:dna:definition> "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579), Software 'is a collection of instructions and data that tell [a] computer how to work ... In computer science and software engineering, computer software is all information processed by computer systems, including programs and data." ;
                                 <urn:ontoinsights:dna:example> "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" .
+
+
+###  urn:ontoinsights:dna:SoilDegradation
+<urn:ontoinsights:dna:SoilDegradation> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
+                                       rdfs:label "Soil Degradation and Soil Erosion" ;
+                                       <urn:ontoinsights:dna:definition> "SoilDegradation is 'damage to the land's productive capacity because of poor agricultural practices such as the excessive use of pesticides or fertilizers, soil compaction from heavy equipment, or erosion of topsoil, eventually resulting in reduced ability to produce agricultural products'. SoilErosion is 'the removal of soil by the action of water or wind, compounded by poor agricultural practices, deforestation, overgrazing, and desertification'. (https://www.cia.gov/the-world-factbook/field/environment-current-issues)" .
 
 
 ###  urn:ontoinsights:dna:Space
@@ -9754,7 +9997,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Spreadsheet
 <urn:ontoinsights:dna:Spreadsheet> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:Dataset> ;
                                    rdfs:label "Spreadsheet" ;
                                    <urn:ontoinsights:dna:definition> "A computer document where data is organized into labelled rows and columns." ;
                                    <urn:ontoinsights:dna:noun_synonym> "spread sheet" .
@@ -9842,7 +10085,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:SupportForHumanRights
 <urn:ontoinsights:dna:SupportForHumanRights> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                              rdfs:label "Support for Human Rights" ;
                                              <urn:ontoinsights:dna:definition> "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)" .
 
@@ -9937,48 +10180,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "young adult" .
 
 
-###  urn:ontoinsights:dna:TemporalUnit
-<urn:ontoinsights:dna:TemporalUnit> rdf:type owl:Class ;
-                                    owl:equivalentClass [ rdf:type owl:Class ;
-                                                          owl:oneOf ( <urn:ontoinsights:dna:enum:Days>
-                                                                      <urn:ontoinsights:dna:enum:Hours>
-                                                                      <urn:ontoinsights:dna:enum:Minutes>
-                                                                      <urn:ontoinsights:dna:enum:Months>
-                                                                      <urn:ontoinsights:dna:enum:Seasonal>
-                                                                      <urn:ontoinsights:dna:enum:Seconds>
-                                                                      <urn:ontoinsights:dna:enum:Weeks>
-                                                                      <urn:ontoinsights:dna:enum:Years>
-                                                                    )
-                                                        ] ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
-                                    rdfs:label "Temporal Unit" ;
-                                    <urn:ontoinsights:dna:definition> "An enumeration of the values, :Seconds, :Minutes, :Hours, :Days, :Weeks, :Months, :Years or :Seasonal." .
-
-
-###  urn:ontoinsights:dna:Terrain
-<urn:ontoinsights:dna:Terrain> rdf:type owl:Class ;
-                               owl:equivalentClass [ rdf:type owl:Class ;
-                                                     owl:oneOf ( <urn:ontoinsights:dna:enum:Canyon>
-                                                                 <urn:ontoinsights:dna:enum:Desert>
-                                                                 <urn:ontoinsights:dna:enum:Forest>
-                                                                 <urn:ontoinsights:dna:enum:Glacier>
-                                                                 <urn:ontoinsights:dna:enum:Grassland>
-                                                                 <urn:ontoinsights:dna:enum:Hilly>
-                                                                 <urn:ontoinsights:dna:enum:Marsh>
-                                                                 <urn:ontoinsights:dna:enum:Mountainous>
-                                                                 <urn:ontoinsights:dna:enum:Oasis>
-                                                                 <urn:ontoinsights:dna:enum:Ocean>
-                                                                 <urn:ontoinsights:dna:enum:River>
-                                                                 <urn:ontoinsights:dna:enum:Swamp>
-                                                                 <urn:ontoinsights:dna:enum:Tundra>
-                                                                 <urn:ontoinsights:dna:enum:Valley>
-                                                               )
-                                                   ] ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
-                               rdfs:label "Terrain" ;
-                               <urn:ontoinsights:dna:definition> "An enumeration describing the physical characteristics of a Location - whether mountainous, a river, grasslands, etc." .
-
-
 ###  urn:ontoinsights:dna:Thirst
 <urn:ontoinsights:dna:Thirst> rdf:type owl:Class ;
                               rdfs:subClassOf <urn:ontoinsights:dna:SensoryPerception> ;
@@ -10019,7 +10220,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Toleration
 <urn:ontoinsights:dna:Toleration> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingConditions> ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                   rdfs:label "Toleration" ;
                                   <urn:ontoinsights:dna:definition> "A condition describing an environment where differences of opinion or behavior are allowed. The overall situation is described using the :has_assessment property." ;
                                   <urn:ontoinsights:dna:noun_synonym> "forbearance" ,
@@ -10120,6 +10321,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                             <urn:ontoinsights:dna:verb_synonym> "violate" .
 
 
+###  urn:ontoinsights:dna:VolatileOrganicCompound
+<urn:ontoinsights:dna:VolatileOrganicCompound> rdf:type owl:Class ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
+                                               rdfs:label "Volatile Organic Compound" ;
+                                               <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Volatile_organic_compound&oldid=1054374014), VolatileOrganicCompounds (or VOCs) 'are organic chemicals that have a high vapour pressure at room temperature. High vapor pressure correlates with a low boiling point, which relates to the number of the sample's molecules in the surrounding air, a trait known as volatility... VOCs, such as styrene and limonene, can react with nitrogen oxides or with ozone to produce new oxidation products and secondary aerosols, which can cause sensory irritation symptoms. VOCs contribute to the formation of Tropospheric ozone and smog.'" .
+
+
 ###  urn:ontoinsights:dna:War
 <urn:ontoinsights:dna:War> rdf:type owl:Class ;
                            rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
@@ -10142,13 +10350,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:example> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" .
 
 
-###  urn:ontoinsights:dna:WasteManagement
-<urn:ontoinsights:dna:WasteManagement> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
-                                       rdfs:label "Waste Management" ;
-                                       <urn:ontoinsights:dna:definition> "From the European Environment Agency (https://www.eea.europa.eu/publications/signals-2014/articles/waste-a-problem-or-a-resource), WasteManagement refers to any type of discarded materials including 'food and garden waste, construction and demolition waste, mining waste, industrial waste, sludge, old televisions, old cars, batteries, plastic bags, paper, sanitary waste, old clothes and old furniture. Poor waste management contributes to climate change and air pollution, and directly affects many ecosystems and species. Landfills, considered the last resort in the waste hierarchy, release methane, a very powerful greenhouse gas linked to climate change... Some ecosystems, like the marine and coastal ones, can be severely affected by poor management of waste, or by littering. Marine litter is a growing concern, and not only for aesthetic reasons: entanglement and ingestion constitute severe threats to many marine species... Waste also represents an economic loss and burden to our society. Labour and the other inputs (land, energy, etc.) used in its extraction, production, dissemination and consumption phases are also lost when the 'leftovers' are discarded.'" .
-
-
 ###  urn:ontoinsights:dna:WaterFeature
 <urn:ontoinsights:dna:WaterFeature> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
@@ -10157,12 +10358,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:example> "Examples include oceans, rivers, streams, bays, lakes, channels, etc." .
 
 
-###  urn:ontoinsights:dna:WaterPollution
-<urn:ontoinsights:dna:WaterPollution> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
-                                      rdfs:label "Water Pollution" ;
-                                      <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_pollution&oldid=1054178853), WaterPollution '(or aquatic pollution) is the contamination of water bodies, usually as a result of human activities, in such a manner that negatively affects its legitimate uses...  Water pollution results when contaminants are introduced into these water bodies. In addition to damage to many species, water pollution can also lead to water-borne diseases for people. Water pollution traditionally is attributed to four sources... sewage, industry, agriculture [and] urban runoff including stormwater. Water pollution can also be classified as surface water pollution (for example lakes, streams, estuaries, and parts of the ocean in marine pollution) or groundwater pollution.'" ;
-                                      <urn:ontoinsights:dna:noun_synonym> "aquatic pollution" .
+###  urn:ontoinsights:dna:WaterResource
+<urn:ontoinsights:dna:WaterResource> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:LandAndWaterResource> ;
+                                     rdfs:label "Water Resource" ;
+                                     <urn:ontoinsights:dna:definition> "A WaterResource is a source of 'water that [is] useful or potentially useful to humans... uses of water include agricultural, industrial, household, recreational and environmental activities. Virtually all of these human uses require fresh water. Only 2.5% of water on the Earth is fresh water, and over two thirds of this is frozen in glaciers and polar ice caps. Water demand already exceeds supply in many parts of the world, and many more areas are expected to experience this imbalance in the near future.' (https://www.sciencedaily.com/terms/water_resources.htm)" .
 
 
 ###  urn:ontoinsights:dna:WaterScarcity
@@ -10191,7 +10391,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:WebPage
 <urn:ontoinsights:dna:WebPage> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:Software> ;
                                rdfs:label "Web Page" ;
                                <urn:ontoinsights:dna:definition> "A hypertext document available on the World Wide Web, at a URL." ;
                                <urn:ontoinsights:dna:noun_synonym> "webpage" .
@@ -10274,24 +10474,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                               <urn:ontoinsights:dna:definition> "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." .
 
 
-###  urn:ontoinsights:dna:enum:Agender
-<urn:ontoinsights:dna:enum:Agender> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Gender> ;
-                                    rdfs:label "Agender, Gender Neutral or Lack of Gender" .
-
-
-###  urn:ontoinsights:dna:enum:Bigender
-<urn:ontoinsights:dna:enum:Bigender> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:Gender> ;
-                                     rdfs:label "Bigender" .
-
-
-###  urn:ontoinsights:dna:enum:Canyon
-<urn:ontoinsights:dna:enum:Canyon> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "Canyon and deep gorge" .
-
-
 ###  urn:ontoinsights:dna:enum:CompletedDoctoralEducation
 <urn:ontoinsights:dna:enum:CompletedDoctoralEducation> rdf:type owl:NamedIndividual ,
                                                                 <urn:ontoinsights:dna:EducationLevel> ;
@@ -10322,189 +10504,16 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                             rdfs:label "Completed Undergraduate Education" .
 
 
-###  urn:ontoinsights:dna:enum:Days
-<urn:ontoinsights:dna:enum:Days> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:TemporalUnit> ;
-                                 rdfs:label "Days" ;
-                                 <urn:ontoinsights:dna:definition> "A 24-hour interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:Desert
-<urn:ontoinsights:dna:enum:Desert> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "Desert" .
-
-
-###  urn:ontoinsights:dna:enum:East
-<urn:ontoinsights:dna:enum:East> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:Direction> ;
-                                 rdfs:label "East" .
-
-
-###  urn:ontoinsights:dna:enum:Female
-<urn:ontoinsights:dna:enum:Female> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Gender> ;
-                                   rdfs:label "Female" ;
-                                   <urn:ontoinsights:dna:noun_synonym> "Mrs." ,
-                                                                       "Ms." ,
-                                                                       "girl" ,
-                                                                       "lady" ,
-                                                                       "matron" ,
-                                                                       "miss" ,
-                                                                       "woman" .
-
-
-###  urn:ontoinsights:dna:enum:Forest
-<urn:ontoinsights:dna:enum:Forest> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "Forest and Woods" .
-
-
-###  urn:ontoinsights:dna:enum:Glacier
-<urn:ontoinsights:dna:enum:Glacier> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:Terrain> ;
-                                    rdfs:label "Glacier" .
-
-
-###  urn:ontoinsights:dna:enum:Grassland
-<urn:ontoinsights:dna:enum:Grassland> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:Terrain> ;
-                                      rdfs:label "Grassland and Prairie" .
-
-
-###  urn:ontoinsights:dna:enum:High
-<urn:ontoinsights:dna:enum:High> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:Assessment> ;
-                                 rdfs:label "High" .
-
-
-###  urn:ontoinsights:dna:enum:Hilly
-<urn:ontoinsights:dna:enum:Hilly> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "Hilly" .
-
-
-###  urn:ontoinsights:dna:enum:Hours
-<urn:ontoinsights:dna:enum:Hours> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:TemporalUnit> ;
-                                  rdfs:label "Hours" ;
-                                  <urn:ontoinsights:dna:definition> "A 60-minute interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:Low
-<urn:ontoinsights:dna:enum:Low> rdf:type owl:NamedIndividual ,
-                                         <urn:ontoinsights:dna:Assessment> ;
-                                rdfs:label "Low" .
-
-
-###  urn:ontoinsights:dna:enum:Male
-<urn:ontoinsights:dna:enum:Male> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:Gender> ;
-                                 rdfs:label "Male" ;
-                                 <urn:ontoinsights:dna:noun_synonym> "Mr." ,
-                                                                     "boy" ,
-                                                                     "man" ,
-                                                                     "mister" .
-
-
-###  urn:ontoinsights:dna:enum:Marsh
-<urn:ontoinsights:dna:enum:Marsh> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "Marsh" .
-
-
-###  urn:ontoinsights:dna:enum:Medium
-<urn:ontoinsights:dna:enum:Medium> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Assessment> ;
-                                   rdfs:label "Medium" .
-
-
-###  urn:ontoinsights:dna:enum:Minutes
-<urn:ontoinsights:dna:enum:Minutes> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:TemporalUnit> ;
-                                    rdfs:label "Minutes" ;
-                                    <urn:ontoinsights:dna:definition> "A 60-second interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:Months
-<urn:ontoinsights:dna:enum:Months> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:TemporalUnit> ;
-                                   rdfs:label "Months" ;
-                                   <urn:ontoinsights:dna:definition> "A period of time that varies by the type of calendar, typically between 28 and 31 days, and which corresponds to the phases of the Moon." .
-
-
-###  urn:ontoinsights:dna:enum:Mountainous
-<urn:ontoinsights:dna:enum:Mountainous> rdf:type owl:NamedIndividual ,
-                                                 <urn:ontoinsights:dna:Terrain> ;
-                                        rdfs:label "Mountainous" .
-
-
-###  urn:ontoinsights:dna:enum:NegligibleOrNone
-<urn:ontoinsights:dna:enum:NegligibleOrNone> rdf:type owl:NamedIndividual ,
-                                                      <urn:ontoinsights:dna:Assessment> ;
-                                             rdfs:label "Negligible or None" .
-
-
 ###  urn:ontoinsights:dna:enum:NoEducation
 <urn:ontoinsights:dna:enum:NoEducation> rdf:type owl:NamedIndividual ,
                                                  <urn:ontoinsights:dna:EducationLevel> ;
                                         rdfs:label "No Education" .
 
 
-###  urn:ontoinsights:dna:enum:North
-<urn:ontoinsights:dna:enum:North> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Direction> ;
-                                  rdfs:label "North" .
-
-
-###  urn:ontoinsights:dna:enum:NorthEast
-<urn:ontoinsights:dna:enum:NorthEast> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:Direction> ;
-                                      rdfs:label "North-East" .
-
-
-###  urn:ontoinsights:dna:enum:NorthWest
-<urn:ontoinsights:dna:enum:NorthWest> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:Direction> ;
-                                      rdfs:label "North-West" .
-
-
-###  urn:ontoinsights:dna:enum:Oasis
-<urn:ontoinsights:dna:enum:Oasis> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "Oasis" .
-
-
-###  urn:ontoinsights:dna:enum:Ocean
-<urn:ontoinsights:dna:enum:Ocean> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "Ocean" .
-
-
 ###  urn:ontoinsights:dna:enum:PostDoctoralEducation
 <urn:ontoinsights:dna:enum:PostDoctoralEducation> rdf:type owl:NamedIndividual ,
                                                            <urn:ontoinsights:dna:EducationLevel> ;
                                                   rdfs:label "Post-Doctoral Education" .
-
-
-###  urn:ontoinsights:dna:enum:River
-<urn:ontoinsights:dna:enum:River> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "River" .
-
-
-###  urn:ontoinsights:dna:enum:Seasonal
-<urn:ontoinsights:dna:enum:Seasonal> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:TemporalUnit> ;
-                                     rdfs:label "Seasonal" ;
-                                     <urn:ontoinsights:dna:definition> "A period of time characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc., and which is defined differently in various localities and domains of interest." .
-
-
-###  urn:ontoinsights:dna:enum:Seconds
-<urn:ontoinsights:dna:enum:Seconds> rdf:type owl:NamedIndividual ,
-                                             <urn:ontoinsights:dna:TemporalUnit> ;
-                                    rdfs:label "Seconds" ;
-                                    <urn:ontoinsights:dna:definition> "A period of time that is one of the base units in the International System of Units (SI)." .
 
 
 ###  urn:ontoinsights:dna:enum:SomeDoctoralEducation
@@ -10535,68 +10544,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:enum:SomeUndergraduateEducation> rdf:type owl:NamedIndividual ,
                                                                 <urn:ontoinsights:dna:EducationLevel> ;
                                                        rdfs:label "Some Undergraduate Education" .
-
-
-###  urn:ontoinsights:dna:enum:South
-<urn:ontoinsights:dna:enum:South> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Direction> ;
-                                  rdfs:label "South" .
-
-
-###  urn:ontoinsights:dna:enum:SouthEast
-<urn:ontoinsights:dna:enum:SouthEast> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:Direction> ;
-                                      rdfs:label "South-East" .
-
-
-###  urn:ontoinsights:dna:enum:SouthWest
-<urn:ontoinsights:dna:enum:SouthWest> rdf:type owl:NamedIndividual ,
-                                               <urn:ontoinsights:dna:Direction> ;
-                                      rdfs:label "South-West" .
-
-
-###  urn:ontoinsights:dna:enum:Swamp
-<urn:ontoinsights:dna:enum:Swamp> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:Terrain> ;
-                                  rdfs:label "Swamp" .
-
-
-###  urn:ontoinsights:dna:enum:Tundra
-<urn:ontoinsights:dna:enum:Tundra> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "Tundra" .
-
-
-###  urn:ontoinsights:dna:enum:Valley
-<urn:ontoinsights:dna:enum:Valley> rdf:type owl:NamedIndividual ,
-                                            <urn:ontoinsights:dna:Terrain> ;
-                                   rdfs:label "Valley" .
-
-
-###  urn:ontoinsights:dna:enum:VeryHigh
-<urn:ontoinsights:dna:enum:VeryHigh> rdf:type owl:NamedIndividual ,
-                                              <urn:ontoinsights:dna:Assessment> ;
-                                     rdfs:label "Very High" .
-
-
-###  urn:ontoinsights:dna:enum:Weeks
-<urn:ontoinsights:dna:enum:Weeks> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:TemporalUnit> ;
-                                  rdfs:label "Weeks" ;
-                                  <urn:ontoinsights:dna:definition> "A 7-day interval of time." .
-
-
-###  urn:ontoinsights:dna:enum:West
-<urn:ontoinsights:dna:enum:West> rdf:type owl:NamedIndividual ,
-                                          <urn:ontoinsights:dna:Direction> ;
-                                 rdfs:label "West" .
-
-
-###  urn:ontoinsights:dna:enum:Years
-<urn:ontoinsights:dna:enum:Years> rdf:type owl:NamedIndividual ,
-                                           <urn:ontoinsights:dna:TemporalUnit> ;
-                                  rdfs:label "Years" ;
-                                  <urn:ontoinsights:dna:definition> "A interval of time related to the circulation of a planet. For Earth, a year is either 365 or 366 days and is (typically) denoted using a Common Era (CE) convention." .
 
 
 ###  urn:ontoinsights:geonames:CurrencyAED
@@ -14756,12 +14703,12 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
-                                                                 "touch" ;
+                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
+                                                                 "converge" ;
+                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                              rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "meet" ,
-                                                                 "boundary" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" .
 
 

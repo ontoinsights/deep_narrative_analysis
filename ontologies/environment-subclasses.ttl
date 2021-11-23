@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: November 9 2021
+# Last Modified: November 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,13 +26,15 @@
 # Changes:
 #  Moved classes to this file from state-condition-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
-#  Added War and CaringForDependents
 #  Moved PolitialIdeology to agent.ttl
-#  Moved Freedom, CaptivityAndDetention and economic and political 
-#    environments under LivingConditions
-#  Added EnvironmentalIssue and subclasses
-#  Removed subclassing from LivingConditions for Economic and Political
-#    Environments
+#  Renamed LivingConditions to LivingCondition 
+#  Renamed DrinkableWater to PotableWater, SanitaryConditions to
+#    SanitationFacilities, Food to FoodAndNutrition, and SafeConditions to 
+#    Safety
+#  Added EnvironmentalIssue and its subclasses, War and CaringForDependents
+#  Removed LivingCondition as a superclass for several subclasses of 
+#    Economic and Political Environment
+#  Moved Assessment to event-state-subclasses.ttl
 ########################################################################
 
 
@@ -40,40 +42,26 @@
 # Classes
 ########################################################################
 
-:AirborneParticulate a owl:Class ;
-  rdfs:subClassOf :AirPollution ;
-  rdfs:label "Airborne Particulate" ;
-  :definition "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances which can accumulate." ;
-  :noun_synonym "PM2.5" .
-
-:AirPollution a owl:Class ;
-  rdfs:subClassOf :EnvironmentalIssue ;
-  rdfs:label "Air Pollution" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Air_pollution&oldid=1054050398), AirPollution is 'the presence of substances in the atmosphere that are harmful to the health of humans and other living beings, or cause damage to the climate or to materials. There are many different types of air pollutants, such as gases (including ammonia, carbon monoxide, sulfur dioxide, nitrous oxides, methane, carbon dioxide and chlorofluorocarbons), particulates (both organic and inorganic), and biological molecules. Air pollution may cause diseases, allergies and even death to humans; it may also cause harm to other living organisms such as animals and food crops, and may damage the natural environment (for example, climate change, ozone depletion or habitat degradation) or built environment (for example, acid rain). Both human activity and natural processes can generate air pollution.'" .
-
-:Assessment a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
-  rdfs:label "Assessment" ;
-  :definition "An enumeration of values describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:High :enum:Low :enum:Medium :enum:NegligibleOrNone :enum:VeryHigh ) ] ;
-  :noun_synonym "estimate" .
+:AdverseCompound a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue, :ChemicalElementAndCompound ;
+  rdfs:label "Adverse Compound" ;
+  :definition "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as GreenhouseGases." .
 
 :Capacity a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Capacity" ;
-  :definition "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). The Resource is identified using the :has_holding_resource predicate." ;
+  :definition "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate." ;
   :noun_synonym "capability", "volume", "maximum amount", "capacitance" .
 
 :CaptivityAndDetention a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Captivity and Detention" ;
   :definition "The condition of an Agent being held captive and confined to a certain location." ;
   :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery", "captive", "detainee", "slave" ;
   :verb_synonym "imprison", "incarcerate", "intern", "confine", "enslave", "detain" .
 
 :CaringForDependents a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Caring for Dependents" ;
   :definition "The condition of an Agent who is raising children, caring for an elderly parent, etc. This results in increased costs and time pressures." ;
   :noun_synonym "child care", "childcare", "dependent care", "elder care" ;
@@ -109,19 +97,13 @@
   rdfs:label "Deflation" ;
   :definition "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate." .
 
-:DrinkableWater a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Drinkable Water" ;
-  :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean water can be described using the :has_assessment predicate." ;
-  :noun_synonym "potable water" .
-
 :EconomicEnvironment a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Economic Environment" ;
   :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
 
 :Education a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Education" ;
   :definition "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
@@ -143,19 +125,24 @@
   :example "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc." ;
   :noun_synonym "costs" .
 
-:Freedom a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Freedom" ;
-  :definition "The condition of an Agent who/which has control of their activities, and is NOT held captive or confined to a certain location. The overall situation of an Agent's Freedom can be described using the :has_assessment predicate." ;
-  :noun_synonym "liberty", "independence" .
+:FoodAndNutrition a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "Food and Nutrition" ;
+  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
+
+:GreenhouseGas a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "Greenhouse Gas" ;
+  :definition "A GreenhouseGas is 'a gas that \"traps\" infrared radiation in the lower atmosphere causing surface warming' (https://www.cia.gov/the-world-factbook/field/environment-current-issues).";
+  :example "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." .
 
 :Healthcare a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Healthcare" ;
   :definition "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
 :Housing a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Housing and Lodging" ;
   :definition "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
@@ -182,31 +169,37 @@
   :noun_synonym "directive", "legislation", "decree" ;
   :verb_synonym "decree", "legislate" .
 
-:LivingConditions a owl:Class ;
+:LivingCondition a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Living Conditions" ;
-  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingConditions are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingConditions can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingConditions is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
+  rdfs:label "Living Condition" ;
+  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingCondition are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingCondition can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingCondition is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
-:LossOfBiodiversity a owl:Class ;
+:LossOfHabitatAndBiodiversity a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue ;
-  rdfs:label "Loss of Biodiversity" ;
-  :definition "LossOfBiodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
-  :noun_synonym "biological diversity", "extinction" .
-
-:Nutrition a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Food" ;
-  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Food can be described using the :has_assessment predicate." .
+  rdfs:label "Loss of Habitat and Biodiversity" ;
+  :definition "Loss of biodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues). Loss of habitat refers to 'the process by which a natural habitat becomes incapable of supporting its native species. The organisms that previously inhabited the site are displaced or dead, thereby reducing biodiversity and species abundance. Habitat destruction is the leading cause of biodiversity loss' (https://en.wikipedia.org/w/index.php?title=Habitat_destruction&oldid=1054386284)." ;
+  :noun_synonym "extinction", "habitat loss", "habitat reduction", "habitat destruction", "biodiversity loss" .
 
 :OpportunityAndPossibility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Opportunity and Possibility" ;
   :definition "Some entity or group of entities (Agent, Resource, EventAndState, Location, ...) that may exist or occur. The thing(s) that are possible are specified using the :has_topic property. Note that the probability of existence/occurrence can be specified using the :probability predicate." .
 
+:ParticulateMatter a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "Particulate Matter" ;
+  :definition "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances." ;
+  :noun_synonym "PM2.5", "aerosol" .
+
 :PoliticalEnvironment a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Political Environment" ;
   :definition "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics." .
+
+:PotableWater a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "Potable Water" ;
+  :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
 
 :Recession a owl:Class ;
   rdfs:subClassOf :Decrease, :EconomicEnvironment ;
@@ -219,15 +212,15 @@
   :definition "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate." ;
   :noun_synonym "reliance", "need" .
 
-:SafeConditions a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Safe Conditions" ;
-  :definition "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding SafeConditions can be described using the :has_assessment predicate." .
+:Safety a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "Safety" ;
+  :definition "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :has_assessment predicate." .
 
-:SanitaryConditions a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
-  rdfs:label "Sanitary Conditions" ;
-  :definition "A condition describing that sewage is managed and hygiene is maintained for a population/GroupOfAgents. The overall availability and accessibility regarding SanitaryConditions can be described using the :has_assessment predicate." .
+:SanitationFacilities a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "Santitation Facilities" ;
+  :definition "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate." .
 
 :SavingsAndInvestment a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
@@ -235,13 +228,18 @@
   :definition "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate." ;
   :noun_synonym "capital", "nest egg" .
 
+:SoilDegradation a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Soil Degradation and Soil Erosion" ;
+  :definition "SoilDegradation is 'damage to the land's productive capacity because of poor agricultural practices such as the excessive use of pesticides or fertilizers, soil compaction from heavy equipment, or erosion of topsoil, eventually resulting in reduced ability to produce agricultural products'. SoilErosion is 'the removal of soil by the action of water or wind, compounded by poor agricultural practices, deforestation, overgrazing, and desertification'. (https://www.cia.gov/the-world-factbook/field/environment-current-issues)" .
+
 :SupportForGovernment a owl:Class ;
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Support for Government" ;
   :definition "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably." .
 
 :SupportForHumanRights a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Support for Human Rights" ;
   :definition "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)" .
 
@@ -252,7 +250,7 @@
   :noun_synonym "levy", "tariff", "duty", "toll", "tax" .
 
 :Toleration a owl:Class ;
-  rdfs:subClassOf :LivingConditions ;
+  rdfs:subClassOf :LivingCondition ;
   rdfs:label "Toleration" ;
   :definition "A condition describing an environment where differences of opinion or behavior are allowed. The overall situation is described using the :has_assessment property." ;
   :noun_synonym "forbearance", "open-mindedness" .
@@ -262,16 +260,10 @@
   rdfs:label "Unemployment" ;
   :definition "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
 
-:WasteManagement a owl:Class ;
-  rdfs:subClassOf :EnvironmentalIssue ;
-  rdfs:label "Waste Management" ;
-  :definition "From the European Environment Agency (https://www.eea.europa.eu/publications/signals-2014/articles/waste-a-problem-or-a-resource), WasteManagement refers to any type of discarded materials including 'food and garden waste, construction and demolition waste, mining waste, industrial waste, sludge, old televisions, old cars, batteries, plastic bags, paper, sanitary waste, old clothes and old furniture. Poor waste management contributes to climate change and air pollution, and directly affects many ecosystems and species. Landfills, considered the last resort in the waste hierarchy, release methane, a very powerful greenhouse gas linked to climate change... Some ecosystems, like the marine and coastal ones, can be severely affected by poor management of waste, or by littering. Marine litter is a growing concern, and not only for aesthetic reasons: entanglement and ingestion constitute severe threats to many marine species... Waste also represents an economic loss and burden to our society. Labour and the other inputs (land, energy, etc.) used in its extraction, production, dissemination and consumption phases are also lost when the 'leftovers' are discarded.'" .
-
-:WaterPollution a owl:Class ;
-  rdfs:subClassOf :EnvironmentalIssue ;
-  rdfs:label "Water Pollution" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_pollution&oldid=1054178853), WaterPollution '(or aquatic pollution) is the contamination of water bodies, usually as a result of human activities, in such a manner that negatively affects its legitimate uses...  Water pollution results when contaminants are introduced into these water bodies. In addition to damage to many species, water pollution can also lead to water-borne diseases for people. Water pollution traditionally is attributed to four sources... sewage, industry, agriculture [and] urban runoff including stormwater. Water pollution can also be classified as surface water pollution (for example lakes, streams, estuaries, and parts of the ocean in marine pollution) or groundwater pollution.'" ;
-  :noun_synonym "aquatic pollution" .
+:VolatileOrganicCompound a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "Volatile Organic Compound" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Volatile_organic_compound&oldid=1054374014), VolatileOrganicCompounds (or VOCs) 'are organic chemicals that have a high vapour pressure at room temperature. High vapor pressure correlates with a low boiling point, which relates to the number of the sample's molecules in the surrounding air, a trait known as volatility... VOCs, such as styrene and limonene, can react with nitrogen oxides or with ozone to produce new oxidation products and secondary aerosols, which can cause sensory irritation symptoms. VOCs contribute to the formation of Tropospheric ozone and smog.'" .
 
 :WaterScarcity a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue ;
@@ -291,9 +283,6 @@
 ########################################################################
 # Disjointness
 ########################################################################
-
-[] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :CaptivityAndDetention :Freedom ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Deflation :Inflation ) .
@@ -317,29 +306,3 @@
 # Object Properties
 ########################################################################
 
-:has_assessment a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has assessment" ;
-  :definition "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
-  rdfs:domain :EventAndState ;
-  rdfs:range :Assessment .
-
-
-########################################################################
-# Individuals
-########################################################################
-
-:enum:High a :Assessment ;
-  rdfs:label "High" .
-
-:enum:Low a :Assessment ;
-  rdfs:label "Low" .
-
-:enum:Medium a :Assessment ;
-  rdfs:label "Medium" .
-
-:enum:NegligibleOrNone a :Assessment ;
-  rdfs:label "Negligible or None" .
-
-:enum:VeryHigh a :Assessment ;
-  rdfs:label "Very High" .

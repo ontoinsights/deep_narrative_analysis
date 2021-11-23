@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: November 7 2021
+# Last modified: November 22 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -39,8 +39,10 @@
 #  Added GovernmentOrganization and noun synonyms for PoliticalIdeologies
 #  Changed PoliticalIdeology individuals to subclasses
 #  Changed InformationTechnologyServices to InformationTechnology
-#  Added the Technology, MultiIndustry and Space lines of business, and
-#    updated the LOB subclassing hierarchy
+#  Added the Technology, MultiIndustry, ProvisionOfServices and Space 
+#    lines of business, and updated the LOB subclassing hierarchy
+#  Modified :Gender to be a restricted set of string values
+#    (the :gender property)
 ########################################################################
 
 
@@ -58,7 +60,7 @@
 
 :AgentAspect a owl:Class ;
   rdfs:label "Agent Aspect" ;
-  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Gender) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
+  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
 
 :ArmedForce a owl:Class ;
   rdfs:subClassOf :GovernmentOrganization ;
@@ -89,14 +91,6 @@
   rdfs:label "Ethnicity" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
   :noun_synonym "race" .
-  
-:Gender a owl:Class ;
-  rdfs:subClassOf :AgentAspect, :Enumeration ;
-  rdfs:label "Gender" ;
-  :definition "An enumeration of the values, :enum:Female, :enum:Male, :enum:Agender and :enum:Bigender. Note that individuals of the Gender class describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular Gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_agent_aspect property which references the Gender." ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:Female :enum:Male :enum:Agender :enum:Bigender ) ] ;
-  :noun_synonym "sex" .
 
 :GovernmentOrganization a owl:Class ;
   rdfs:subClassOf :Organization ;
@@ -280,6 +274,12 @@
   :definition "Involved with more than one line of business such as an industrial conglomerate." ;
   :noun_synonym "conglomerate" .
 
+:ProvisionOfServices a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Provision of Services" ;
+  :definition "Involved with the sale of services to a business, person or group." ;
+  :example "Examples are companies or individuals that provide education/training or IT/programming services." .
+
 :PublishingAndMedia a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Publishing and Media" ;
@@ -294,7 +294,7 @@
 
 :RealEstate a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Raw Material Processing and Preparation" ;
+  rdfs:label "Real Estate" ;
   :definition "Involved with the maintenance and sale of property/land and buildings." .
 
 :Religion a owl:Class ;
@@ -339,6 +339,13 @@
 ########################################################################
 # Datatype Properties
 ########################################################################
+  
+:gender a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "gender" ;
+  :definition "A string enumeration of the values, 'Female', 'Male', 'Agender' and 'Bigender'. Note that this property describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties can be associated with the :gender property." ;
+  rdfs:domain :Agent ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Female" "Male" "Agender" "Bigender" ) ] .
 
 :line_of_business a owl:DatatypeProperty ;
   rdfs:label "line of business" ;
@@ -423,9 +430,6 @@
 # Individuals
 ########################################################################
 
-:enum:Agender a :Gender ;
-  rdfs:label "Agender, Gender Neutral or Lack of Gender" .
-
 :Anarchism rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Anarchism" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" ;
@@ -435,9 +439,6 @@
   rdfs:label "Authoritarianism" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" ;
   :noun_synonym "authoritarian" .
-
-:enum:Bigender a :Gender ;
-  rdfs:label "Bigender" .
 
 :ColonialismAndImperialism rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Colonialism and Imperialism" ;
@@ -494,10 +495,6 @@
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." ;
   :noun_synonym "facist" .
 
-:enum:Female a :Gender ;
-  rdfs:label "Female" ;
-  :noun_synonym "girl", "woman", "matron", "lady", "miss", "Mrs.", "Ms." .
-
 :Liberalism rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Liberalism" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" ;
@@ -512,10 +509,6 @@
   rdfs:label "Localism" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Localism_(politics)&oldid=1036561541), Localism 'describes a range of political philosophies which prioritize the local. Generally, localism supports local production and consumption of goods, local control of government, and promotion of local history, local culture and local identity. Localism can be contrasted with regionalism and centralized government, with its opposite being found in the unitary state. Localism can also refer to a systematic approach to organizing a national government so that local autonomy is retained rather than following the usual pattern of government and political power becoming centralized over time. On a conceptual level, there are important affinities between localism and deliberative democracy. This concerns mainly the democratic goal of engaging citizens in decisions that affect them. Consequently, localism will encourage stronger democratic and political participatory forums and widening public sphere connectivity.'" ;
   :noun_synonym "localist" .
-
-:enum:Male a :Gender ;
-  rdfs:label "Male" ;
-  :noun_synonym "boy", "man", "mister", "Mr." .
 
 :ModerateIdeology rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Moderate Ideology" ;
