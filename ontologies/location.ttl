@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: November 22 2021
+# Last modified: November 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -29,6 +29,7 @@
 #  Changed :synonym to :noun_synonym
 #  Modified :Terrain and :Direction to be a restricted set of string values
 #    (the :terrain and :direction properties)
+#  Added :area_sq_kms for a PhysicalLocation
 ########################################################################
 
 
@@ -161,6 +162,12 @@
 :altitude_meters a owl:DatatypeProperty ;
   rdfs:label "altitude in meters" ;
   :definition "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties." ;
+  rdfs:domain :PhysicalLocation ;
+  rdfs:range xsd:decimal .
+
+:area_sq_kms a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "area in sq kilometers" ;
+  :definition "Area in square kilometers." ;
   rdfs:domain :PhysicalLocation ;
   rdfs:range xsd:decimal .
 

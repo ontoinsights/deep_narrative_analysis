@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: November 22 2021
+# Last Modified: November 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -40,6 +40,7 @@
 #    UtilizationAndConsumption are disjoint
 #  Moved Assessment from environment-subclasses.ttl; Modified 
 #    :has_assessment to :assessment
+#  Added :defined_for
 ########################################################################
 
 
@@ -626,6 +627,12 @@
 ########################################################################
 # Object Properties
 ########################################################################
+
+:defined_for a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :has_topic ;
+  rdfs:label "defined for" ;
+  :definition "A relationship indicating that a Measurement or Assessment concerns/is 'about' the referenced instance." ;
+  rdfs:domain :Measurement .
 
 :has_unit a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has unit of measure" ;

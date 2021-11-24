@@ -132,6 +132,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                  "refer to" .
 
 
+###  urn:ontoinsights:dna:defined_for
+<urn:ontoinsights:dna:defined_for> rdf:type owl:ObjectProperty ;
+                                   rdfs:subPropertyOf <urn:ontoinsights:dna:has_topic> ;
+                                   rdf:type owl:FunctionalProperty ;
+                                   rdfs:domain <urn:ontoinsights:dna:Measurement> ;
+                                   rdfs:label "defined for" ;
+                                   <urn:ontoinsights:dna:definition> "A relationship indicating that a Measurement or Assessment concerns/is 'about' the referenced instance." .
+
+
 ###  urn:ontoinsights:dna:during
 <urn:ontoinsights:dna:during> rdf:type owl:ObjectProperty ;
                               rdfs:label "during" ;
@@ -569,6 +578,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:range xsd:decimal ;
                                        rdfs:label "altitude in meters" ;
                                        <urn:ontoinsights:dna:definition> "Height in meters, relative to sea level. If an exact altitude is not known, or a range of altitudes is needed, use the :lowest/highest_altitude_meters properties." .
+
+
+###  urn:ontoinsights:dna:area_sq_kms
+<urn:ontoinsights:dna:area_sq_kms> rdf:type owl:DatatypeProperty ,
+                                            owl:FunctionalProperty ;
+                                   rdfs:domain <urn:ontoinsights:dna:PhysicalLocation> ;
+                                   rdfs:range xsd:decimal ;
+                                   rdfs:label "area in sq kilometers" ;
+                                   <urn:ontoinsights:dna:definition> "Area in square kilometers." .
 
 
 ###  urn:ontoinsights:dna:assessment
@@ -7466,7 +7484,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Forest
 <urn:ontoinsights:dna:Forest> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:AgriculturalLand> ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:LandAndWaterResource> ;
                               rdfs:label "Forest" ;
                               <urn:ontoinsights:dna:definition> "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
                               <urn:ontoinsights:dna:noun_synonym> "jungle" ,
@@ -14705,11 +14723,11 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
                              <urn:ontoinsights:dna:verb_synonym> "touch" ,
                                                                  "converge" ;
-                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
+                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
-                             <urn:ontoinsights:dna:verb_synonym> "meet" .
+                             <urn:ontoinsights:dna:verb_synonym> "meet" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" .
 
 
 <urn:ontoinsights:dna:text> rdfs:label "text" ;

@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9, 2020
-# Last modified: November 20 2021
+# Last modified: November 23 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -33,6 +33,7 @@
 #  Added Contract and IdentificationInstrument
 #  Added the property, :cites
 #  Added Electricity, Fuel and LandAndWaterResource (and their subclasses)
+#  Corrected the subclassing of :Forest
 ########################################################################
 
 
@@ -148,7 +149,7 @@
   :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance" .
 
 :Forest a owl:Class ;
-  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:subClassOf :LandAndWaterResource ;
   rdfs:label "Forest" ;
   :definition "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
   :noun_synonym "wood", "woodland", "jungle", "timberland" .
