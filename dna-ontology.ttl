@@ -1635,19 +1635,19 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "Land that is arable, under permanent crops, or under permanent pastures." .
 
 
-###  urn:ontoinsights:dna:Agriculture
-<urn:ontoinsights:dna:Agriculture> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                   rdfs:label "Agriculture, Apiculture and Aquaculture" ;
-                                   <urn:ontoinsights:dna:definition> "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
-                                   <urn:ontoinsights:dna:example> "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." .
-
-
 ###  urn:ontoinsights:dna:AgricultureApicultureAndAquacultureEvent
 <urn:ontoinsights:dna:AgricultureApicultureAndAquacultureEvent> rdf:type owl:Class ;
                                                                 rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                                                 rdfs:label "Agriculture, Apiculture and Aquaculture Event" ;
                                                                 <urn:ontoinsights:dna:definition> "Events dealing with farming, ranching, breeding, beekeeping, etc." .
+
+
+###  urn:ontoinsights:dna:AgricultureBusiness
+<urn:ontoinsights:dna:AgricultureBusiness> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                           rdfs:label "Agriculture, Apiculture and Aquaculture Business" ;
+                                           <urn:ontoinsights:dna:definition> "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
+                                           <urn:ontoinsights:dna:example> "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." .
 
 
 ###  urn:ontoinsights:dna:AlcoholAndDrugUse
@@ -2049,11 +2049,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                  "be timid" .
 
 
-###  urn:ontoinsights:dna:BankingAndFinance
-<urn:ontoinsights:dna:BankingAndFinance> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                         rdfs:label "Banking, Finance and Investment" ;
-                                         <urn:ontoinsights:dna:definition> "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
+###  urn:ontoinsights:dna:BankingAndFinanceBusiness
+<urn:ontoinsights:dna:BankingAndFinanceBusiness> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                 rdfs:label "Banking, Finance and Investment Business" ;
+                                                 <urn:ontoinsights:dna:definition> "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
 
 
 ###  urn:ontoinsights:dna:Battle
@@ -6553,12 +6553,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:noun_synonym> "conservationist" .
 
 
-###  urn:ontoinsights:dna:Construction
-<urn:ontoinsights:dna:Construction> rdf:type owl:Class ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:Manufacturing> ;
-                                    rdfs:label "Construction" ;
-                                    <urn:ontoinsights:dna:definition> "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
-                                    <urn:ontoinsights:dna:example> "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
+###  urn:ontoinsights:dna:ConstructionBusiness
+<urn:ontoinsights:dna:ConstructionBusiness> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:ManufacturingBusiness> ;
+                                            rdfs:label "Construction Business" ;
+                                            <urn:ontoinsights:dna:definition> "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
+                                            <urn:ontoinsights:dna:example> "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
 
 
 ###  urn:ontoinsights:dna:ConsumerConfidence
@@ -6642,10 +6642,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "A viral infection that attacks the respiratory system" .
 
 
-###  urn:ontoinsights:dna:CriminalActivities
-<urn:ontoinsights:dna:CriminalActivities> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                          rdfs:label "Criminal Activities" .
+###  urn:ontoinsights:dna:CriminalBusiness
+<urn:ontoinsights:dna:CriminalBusiness> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                        rdfs:label "Criminal Business" .
 
 
 ###  urn:ontoinsights:dna:CrudeOil
@@ -7046,12 +7046,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:Education
 <urn:ontoinsights:dna:Education> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ,
-                                                 <urn:ontoinsights:dna:LivingCondition> ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
                                  rdfs:label "Education" ;
-                                 <urn:ontoinsights:dna:definition> "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." ,
-                                                                   "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
-                                 <urn:ontoinsights:dna:example> "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
+                                 <urn:ontoinsights:dna:definition> "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:dna:EducationLevel
@@ -7076,6 +7073,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       rdfs:label "Education Level" ;
                                       <urn:ontoinsights:dna:definition> "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation." ;
                                       <urn:ontoinsights:dna:example> "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." .
+
+
+###  urn:ontoinsights:dna:EducationalBusiness
+<urn:ontoinsights:dna:EducationalBusiness> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                           rdfs:label "Educational Business" ;
+                                           <urn:ontoinsights:dna:definition> "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
+                                           <urn:ontoinsights:dna:example> "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
 
 
 ###  urn:ontoinsights:dna:EducationalEvent
@@ -7133,12 +7138,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                        "electric power" .
 
 
-###  urn:ontoinsights:dna:ElectronicsAndComputers
-<urn:ontoinsights:dna:ElectronicsAndComputers> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
-                                               rdfs:label "Electronics and Computers" ;
-                                               <urn:ontoinsights:dna:definition> "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
-                                               <urn:ontoinsights:dna:example> "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
+###  urn:ontoinsights:dna:ElectronicsAndComputersBusiness
+<urn:ontoinsights:dna:ElectronicsAndComputersBusiness> rdf:type owl:Class ;
+                                                       rdfs:subClassOf <urn:ontoinsights:dna:TechnologyBusiness> ;
+                                                       rdfs:label "Electronics and Computers Related Business" ;
+                                                       <urn:ontoinsights:dna:definition> "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
+                                                       <urn:ontoinsights:dna:example> "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
 
 
 ###  urn:ontoinsights:dna:EmotionalResponse
@@ -7198,12 +7203,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                "termination" .
 
 
-###  urn:ontoinsights:dna:EnergyAndUtilities
-<urn:ontoinsights:dna:EnergyAndUtilities> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                          rdfs:label "Energy and Utilities" ;
-                                          <urn:ontoinsights:dna:definition> "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
-                                          <urn:ontoinsights:dna:example> "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
+###  urn:ontoinsights:dna:EnergyAndUtilitiesBusiness
+<urn:ontoinsights:dna:EnergyAndUtilitiesBusiness> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                  rdfs:label "Energy and Utilities Business" ;
+                                                  <urn:ontoinsights:dna:definition> "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
+                                                  <urn:ontoinsights:dna:example> "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
 
 
 ###  urn:ontoinsights:dna:Enforcement
@@ -7223,12 +7228,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                           <urn:ontoinsights:dna:definition> "A Machine that converts different types of energy into mechanical or electrical energy. An engine/motor generates mechanical energy for motion, while generators typically create electricity/electrical energy." .
 
 
-###  urn:ontoinsights:dna:Entertainment
-<urn:ontoinsights:dna:Entertainment> rdf:type owl:Class ;
-                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                     rdfs:label "Entertainment" ;
-                                     <urn:ontoinsights:dna:definition> "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
-                                     <urn:ontoinsights:dna:example> "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." .
+###  urn:ontoinsights:dna:EntertainmentBusiness
+<urn:ontoinsights:dna:EntertainmentBusiness> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                             rdfs:label "Entertainment Business" ;
+                                             <urn:ontoinsights:dna:definition> "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
+                                             <urn:ontoinsights:dna:example> "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." .
 
 
 ###  urn:ontoinsights:dna:Enumeration
@@ -7252,11 +7257,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                           <urn:ontoinsights:dna:definition> "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate." .
 
 
-###  urn:ontoinsights:dna:EnvironmentalOrEcologicalActivities
-<urn:ontoinsights:dna:EnvironmentalOrEcologicalActivities> rdf:type owl:Class ;
-                                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                                           rdfs:label "Environmental or Ecological Activities" ;
-                                                           <urn:ontoinsights:dna:definition> "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
+###  urn:ontoinsights:dna:EnvironmentalOrEcologicalBusiness
+<urn:ontoinsights:dna:EnvironmentalOrEcologicalBusiness> rdf:type owl:Class ;
+                                                         rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                         rdfs:label "Environmental or Ecological Business" ;
+                                                         <urn:ontoinsights:dna:definition> "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
 
 
 ###  urn:ontoinsights:dna:EnvironmentalOrEcologicalEvent
@@ -7409,12 +7414,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
 
 
-###  urn:ontoinsights:dna:Fashion
-<urn:ontoinsights:dna:Fashion> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                               rdfs:label "Fashion" ;
-                               <urn:ontoinsights:dna:definition> "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
-                               <urn:ontoinsights:dna:example> "Examples include beauty and nail salons and their workers, alteration/seamstress activities, jewelry and clothing design and sales, etc." .
+###  urn:ontoinsights:dna:FashionBusiness
+<urn:ontoinsights:dna:FashionBusiness> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                       rdfs:label "Fashion Related Business" ;
+                                       <urn:ontoinsights:dna:definition> "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
+                                       <urn:ontoinsights:dna:example> "Examples include beauty and nail salons and their workers, alteration/seamstress activities, jewelry and clothing design and sales, etc." .
 
 
 ###  urn:ontoinsights:dna:FearAndDistrust
@@ -7474,12 +7479,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
 
 
-###  urn:ontoinsights:dna:FoodProcessingAndPreparation
-<urn:ontoinsights:dna:FoodProcessingAndPreparation> rdf:type owl:Class ;
-                                                    rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                                    rdfs:label "Food Processing and Preparation" ;
-                                                    <urn:ontoinsights:dna:definition> "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
-                                                    <urn:ontoinsights:dna:example> "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
+###  urn:ontoinsights:dna:FoodProcessingAndPreparationBusiness
+<urn:ontoinsights:dna:FoodProcessingAndPreparationBusiness> rdf:type owl:Class ;
+                                                            rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                            rdfs:label "Food Processing and Preparation Business" ;
+                                                            <urn:ontoinsights:dna:definition> "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
+                                                            <urn:ontoinsights:dna:example> "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
 
 
 ###  urn:ontoinsights:dna:Forest
@@ -7631,11 +7636,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                "procedure" .
 
 
-###  urn:ontoinsights:dna:GovernmentAndPolitics
-<urn:ontoinsights:dna:GovernmentAndPolitics> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                             rdfs:label "Government and Politics" ;
-                                             <urn:ontoinsights:dna:definition> "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
+###  urn:ontoinsights:dna:GovernmentAndPoliticsBusiness
+<urn:ontoinsights:dna:GovernmentAndPoliticsBusiness> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                     rdfs:label "Government and Politics Business" ;
+                                                     <urn:ontoinsights:dna:definition> "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
 
 
 ###  urn:ontoinsights:dna:GovernmentOrganization
@@ -7783,12 +7788,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   <urn:ontoinsights:dna:definition> "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
 
-###  urn:ontoinsights:dna:HealthcareAndMedical
-<urn:ontoinsights:dna:HealthcareAndMedical> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                            rdfs:label "Healthcare and Medical" ;
-                                            <urn:ontoinsights:dna:definition> "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
-                                            <urn:ontoinsights:dna:example> "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." .
+###  urn:ontoinsights:dna:HealthcareAndMedicalBusiness
+<urn:ontoinsights:dna:HealthcareAndMedicalBusiness> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                    rdfs:label "Healthcare and Medical Business" ;
+                                                    <urn:ontoinsights:dna:definition> "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
+                                                    <urn:ontoinsights:dna:example> "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." .
 
 
 ###  urn:ontoinsights:dna:Healthy
@@ -7819,11 +7824,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "hope" .
 
 
-###  urn:ontoinsights:dna:Hospitality
-<urn:ontoinsights:dna:Hospitality> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                   rdfs:label "Hospitality" ;
-                                   <urn:ontoinsights:dna:definition> "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." .
+###  urn:ontoinsights:dna:HospitalityBusiness
+<urn:ontoinsights:dna:HospitalityBusiness> rdf:type owl:Class ;
+                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                           rdfs:label "Hospitality Business" ;
+                                           <urn:ontoinsights:dna:definition> "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." .
 
 
 ###  urn:ontoinsights:dna:Housing
@@ -7833,11 +7838,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
 
-###  urn:ontoinsights:dna:HumanitarianActivities
-<urn:ontoinsights:dna:HumanitarianActivities> rdf:type owl:Class ;
-                                              rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                              rdfs:label "Humanitarian Activities" ;
-                                              <urn:ontoinsights:dna:definition> "Involved with providing direct services or materials to people and areas in need." .
+###  urn:ontoinsights:dna:HumanitarianBusiness
+<urn:ontoinsights:dna:HumanitarianBusiness> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                            rdfs:label "Humanitarian Business" ;
+                                            <urn:ontoinsights:dna:definition> "Involved with providing direct services or materials to people and areas in need." .
 
 
 ###  urn:ontoinsights:dna:Humility
@@ -8054,12 +8059,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:definition> "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content." .
 
 
-###  urn:ontoinsights:dna:InformationTechnology
-<urn:ontoinsights:dna:InformationTechnology> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
-                                             rdfs:label "Information Technology" ;
-                                             <urn:ontoinsights:dna:definition> "Involved with the collection, analysis, storage and communication of data." ;
-                                             <urn:ontoinsights:dna:example> "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+###  urn:ontoinsights:dna:InformationTechnologyBusiness
+<urn:ontoinsights:dna:InformationTechnologyBusiness> rdf:type owl:Class ;
+                                                     rdfs:subClassOf <urn:ontoinsights:dna:TechnologyBusiness> ;
+                                                     rdfs:label "Information Technology Business" ;
+                                                     <urn:ontoinsights:dna:definition> "Involved with the collection, analysis, storage and communication of data." ;
+                                                     <urn:ontoinsights:dna:example> "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
 
 
 ###  urn:ontoinsights:dna:Inquiry
@@ -8086,12 +8091,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "question" .
 
 
-###  urn:ontoinsights:dna:Insurance
-<urn:ontoinsights:dna:Insurance> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                 rdfs:label "Insurance" ;
-                                 <urn:ontoinsights:dna:definition> "Involved with protecting against financial loss related to damage to an asset or person." ;
-                                 <urn:ontoinsights:dna:example> "Examples include insurance agencies, underwriters, etc." .
+###  urn:ontoinsights:dna:InsuranceBusiness
+<urn:ontoinsights:dna:InsuranceBusiness> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                         rdfs:label "Insurance Business" ;
+                                         <urn:ontoinsights:dna:definition> "Involved with protecting against financial loss related to damage to an asset or person." ;
+                                         <urn:ontoinsights:dna:example> "Examples include insurance agencies, underwriters, etc." .
 
 
 ###  urn:ontoinsights:dna:IntentionAndGoal
@@ -8175,11 +8180,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "understand" .
 
 
-###  urn:ontoinsights:dna:LaborAndStaffing
-<urn:ontoinsights:dna:LaborAndStaffing> rdf:type owl:Class ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                        rdfs:label "Labor and Staffing" ;
-                                        <urn:ontoinsights:dna:definition> "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
+###  urn:ontoinsights:dna:LaborAndStaffingBusiness
+<urn:ontoinsights:dna:LaborAndStaffingBusiness> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                rdfs:label "Labor and Staffing Business" ;
+                                                <urn:ontoinsights:dna:definition> "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
 
 
 ###  urn:ontoinsights:dna:LandAndWaterResource
@@ -8219,11 +8224,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                     "train" .
 
 
-###  urn:ontoinsights:dna:LegalAndJudicialActivities
-<urn:ontoinsights:dna:LegalAndJudicialActivities> rdf:type owl:Class ;
-                                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                                  rdfs:label "Legal and Judicial Activities" ;
-                                                  <urn:ontoinsights:dna:definition> "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." .
+###  urn:ontoinsights:dna:LegalAndJudicialBusiness
+<urn:ontoinsights:dna:LegalAndJudicialBusiness> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                rdfs:label "Legal and Judicial Business" ;
+                                                <urn:ontoinsights:dna:definition> "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." .
 
 
 ###  urn:ontoinsights:dna:LegalEvent
@@ -8410,11 +8415,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "device" .
 
 
-###  urn:ontoinsights:dna:Manufacturing
-<urn:ontoinsights:dna:Manufacturing> rdf:type owl:Class ;
-                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                     rdfs:label "Manufacturing" ;
-                                     <urn:ontoinsights:dna:definition> "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
+###  urn:ontoinsights:dna:ManufacturingBusiness
+<urn:ontoinsights:dna:ManufacturingBusiness> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                             rdfs:label "Manufacturing Business" ;
+                                             <urn:ontoinsights:dna:definition> "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
 
 
 ###  urn:ontoinsights:dna:Marriage
@@ -8525,11 +8530,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "tweet" .
 
 
-###  urn:ontoinsights:dna:Military
-<urn:ontoinsights:dna:Military> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                rdfs:label "Military" ;
-                                <urn:ontoinsights:dna:definition> "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
+###  urn:ontoinsights:dna:MilitaryBusiness
+<urn:ontoinsights:dna:MilitaryBusiness> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                        rdfs:label "Military Related Business" ;
+                                        <urn:ontoinsights:dna:definition> "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
 
 
 ###  urn:ontoinsights:dna:MissingLimb
@@ -8635,12 +8640,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "walk out" .
 
 
-###  urn:ontoinsights:dna:MultiIndustry
-<urn:ontoinsights:dna:MultiIndustry> rdf:type owl:Class ;
-                                     rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                     rdfs:label "Multiple Industries" ;
-                                     <urn:ontoinsights:dna:definition> "Involved with more than one line of business such as an industrial conglomerate." ;
-                                     <urn:ontoinsights:dna:noun_synonym> "conglomerate" .
+###  urn:ontoinsights:dna:MultiIndustryBusiness
+<urn:ontoinsights:dna:MultiIndustryBusiness> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                             rdfs:label "Multiple Industries Business" ;
+                                             <urn:ontoinsights:dna:definition> "Involved with more than one line of business such as an industrial conglomerate." ;
+                                             <urn:ontoinsights:dna:noun_synonym> "conglomerate" .
 
 
 ###  urn:ontoinsights:dna:MultipleSclerosis
@@ -9226,12 +9231,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "provide" .
 
 
-###  urn:ontoinsights:dna:ProvisionOfServices
-<urn:ontoinsights:dna:ProvisionOfServices> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                           rdfs:label "Provision of Services" ;
-                                           <urn:ontoinsights:dna:definition> "Involved with the sale of services to a business, person or group." ;
-                                           <urn:ontoinsights:dna:example> "Examples are companies or individuals that provide education/training or IT/programming services." .
+###  urn:ontoinsights:dna:ProvisionOfServicesBusiness
+<urn:ontoinsights:dna:ProvisionOfServicesBusiness> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                   rdfs:label "Provision of Services Business" ;
+                                                   <urn:ontoinsights:dna:definition> "Involved with the sale of services to a business, person or group." ;
+                                                   <urn:ontoinsights:dna:example> "Examples are companies or individuals that provide education/training or IT/programming services." .
 
 
 ###  urn:ontoinsights:dna:Publication
@@ -9262,12 +9267,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                        "yearbook" .
 
 
-###  urn:ontoinsights:dna:PublishingAndMedia
-<urn:ontoinsights:dna:PublishingAndMedia> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                          rdfs:label "Publishing and Media" ;
-                                          <urn:ontoinsights:dna:definition> "Involved with the creation, production, marketing and distribution of written and visual material." ;
-                                          <urn:ontoinsights:dna:example> "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." .
+###  urn:ontoinsights:dna:PublishingAndMediaBusiness
+<urn:ontoinsights:dna:PublishingAndMediaBusiness> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                  rdfs:label "Publishing and Media Business" ;
+                                                  <urn:ontoinsights:dna:definition> "Involved with the creation, production, marketing and distribution of written and visual material." ;
+                                                  <urn:ontoinsights:dna:example> "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." .
 
 
 ###  urn:ontoinsights:dna:Punishment
@@ -9317,12 +9322,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "rape" .
 
 
-###  urn:ontoinsights:dna:RawMaterialProcessingAndPreparation
-<urn:ontoinsights:dna:RawMaterialProcessingAndPreparation> rdf:type owl:Class ;
-                                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                                           rdfs:label "Raw Material Processing and Preparation" ;
-                                                           <urn:ontoinsights:dna:definition> "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
-                                                           <urn:ontoinsights:dna:example> "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
+###  urn:ontoinsights:dna:RawMaterialProcessingAndPreparationBusiness
+<urn:ontoinsights:dna:RawMaterialProcessingAndPreparationBusiness> rdf:type owl:Class ;
+                                                                   rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                                                   rdfs:label "Raw Material Processing and Preparation Business" ;
+                                                                   <urn:ontoinsights:dna:definition> "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
+                                                                   <urn:ontoinsights:dna:example> "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
 
 
 ###  urn:ontoinsights:dna:Reactionism
@@ -9333,11 +9338,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    <urn:ontoinsights:dna:noun_synonym> "reactionist" .
 
 
-###  urn:ontoinsights:dna:RealEstate
-<urn:ontoinsights:dna:RealEstate> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                  rdfs:label "Real Estate" ;
-                                  <urn:ontoinsights:dna:definition> "Involved with the maintenance and sale of property/land and buildings." .
+###  urn:ontoinsights:dna:RealEstateBusiness
+<urn:ontoinsights:dna:RealEstateBusiness> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                          rdfs:label "Real Estate Business" ;
+                                          <urn:ontoinsights:dna:definition> "Involved with the maintenance and sale of property/land and buildings." .
 
 
 ###  urn:ontoinsights:dna:Recession
@@ -9441,20 +9446,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                  "be relaxed" .
 
 
-###  urn:ontoinsights:dna:Religion
-<urn:ontoinsights:dna:Religion> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                rdfs:label "Religion" ;
-                                <urn:ontoinsights:dna:definition> "Involved with activities related to spirituality, faith and worship." ;
-                                <urn:ontoinsights:dna:example> "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." .
-
-
 ###  urn:ontoinsights:dna:ReligiousBelief
 <urn:ontoinsights:dna:ReligiousBelief> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:AgentAspect> ,
                                                        <urn:ontoinsights:dna:Belief> ;
                                        rdfs:label "Religious Belief" ;
                                        <urn:ontoinsights:dna:definition> "A superclass of the various world religions as well as no religion (nonreligion)." .
+
+
+###  urn:ontoinsights:dna:ReligiousBusiness
+<urn:ontoinsights:dna:ReligiousBusiness> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                         rdfs:label "Religious/Religion Related Business" ;
+                                         <urn:ontoinsights:dna:definition> "Involved with activities related to spirituality, faith and worship." ;
+                                         <urn:ontoinsights:dna:example> "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." .
 
 
 ###  urn:ontoinsights:dna:RemovalAndRestriction
@@ -9601,12 +9606,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                           "chronic obstructive pulmonary disease" .
 
 
-###  urn:ontoinsights:dna:Retail
-<urn:ontoinsights:dna:Retail> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                              rdfs:label "Retail" ;
-                              <urn:ontoinsights:dna:definition> "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
-                              <urn:ontoinsights:dna:example> "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." .
+###  urn:ontoinsights:dna:RetailBusiness
+<urn:ontoinsights:dna:RetailBusiness> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                      rdfs:label "Retail Business" ;
+                                      <urn:ontoinsights:dna:definition> "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
+                                      <urn:ontoinsights:dna:example> "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." .
 
 
 ###  urn:ontoinsights:dna:ReturnRecoveryAndRelease
@@ -9858,11 +9863,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                               <urn:ontoinsights:dna:example> "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
 
 
-###  urn:ontoinsights:dna:Security
-<urn:ontoinsights:dna:Security> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                rdfs:label "Security" ;
-                                <urn:ontoinsights:dna:definition> "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
+###  urn:ontoinsights:dna:SecurityBusiness
+<urn:ontoinsights:dna:SecurityBusiness> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                        rdfs:label "Security Related Business" ;
+                                        <urn:ontoinsights:dna:definition> "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
 
 
 ###  urn:ontoinsights:dna:SeizureAndSpasm
@@ -9982,16 +9987,16 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:definition> "SoilDegradation is 'damage to the land's productive capacity because of poor agricultural practices such as the excessive use of pesticides or fertilizers, soil compaction from heavy equipment, or erosion of topsoil, eventually resulting in reduced ability to produce agricultural products'. SoilErosion is 'the removal of soil by the action of water or wind, compounded by poor agricultural practices, deforestation, overgrazing, and desertification'. (https://www.cia.gov/the-world-factbook/field/environment-current-issues)" .
 
 
-###  urn:ontoinsights:dna:Space
-<urn:ontoinsights:dna:Space> rdf:type owl:Class ;
-                             rdfs:subClassOf <urn:ontoinsights:dna:Technology> ;
-                             rdfs:label "Space" ;
-                             <urn:ontoinsights:dna:definition> "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
-                             <urn:ontoinsights:dna:noun_synonym> "astronaut" ,
-                                                                 "astronautics" ,
-                                                                 "interstellar travel" ,
-                                                                 "outer space" ,
-                                                                 "spaceflight" .
+###  urn:ontoinsights:dna:SpaceBusiness
+<urn:ontoinsights:dna:SpaceBusiness> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:TechnologyBusiness> ;
+                                     rdfs:label "Space Related Business" ;
+                                     <urn:ontoinsights:dna:definition> "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
+                                     <urn:ontoinsights:dna:noun_synonym> "astronaut" ,
+                                                                         "astronautics" ,
+                                                                         "interstellar travel" ,
+                                                                         "outer space" ,
+                                                                         "spaceflight" .
 
 
 ###  urn:ontoinsights:dna:SpaceEvent
@@ -10181,11 +10186,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                  "toll" .
 
 
-###  urn:ontoinsights:dna:Technology
-<urn:ontoinsights:dna:Technology> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                  rdfs:label "Technology" ;
-                                  <urn:ontoinsights:dna:definition> "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+###  urn:ontoinsights:dna:TechnologyBusiness
+<urn:ontoinsights:dna:TechnologyBusiness> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                          rdfs:label "Technology Business" ;
+                                          <urn:ontoinsights:dna:definition> "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
 
 
 ###  urn:ontoinsights:dna:TeenAge
@@ -10260,11 +10265,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:example> "Examples of toys are dolls, gaming boards, playing cards, balls, etc." .
 
 
-###  urn:ontoinsights:dna:Transport
-<urn:ontoinsights:dna:Transport> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
-                                 rdfs:label "Transport" ;
-                                 <urn:ontoinsights:dna:definition> "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .
+###  urn:ontoinsights:dna:TransportBusiness
+<urn:ontoinsights:dna:TransportBusiness> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
+                                         rdfs:label "Transport Related Business" ;
+                                         <urn:ontoinsights:dna:definition> "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .
 
 
 ###  urn:ontoinsights:dna:TransportationFeeature
@@ -14723,9 +14728,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
                              <urn:ontoinsights:dna:verb_synonym> "touch" ,
                                                                  "converge" ;
+                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
-                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:noun_synonym> "boundary" .
 
