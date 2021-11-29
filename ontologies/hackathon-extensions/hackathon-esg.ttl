@@ -8,7 +8,7 @@
 # the "Creating Business Models for the Future" topic
 # 
 # Created: November 23 2021
-# Last Modified: November 23 2021
+# Last Modified: November 27 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -140,9 +140,9 @@
   :definition "The amount of municipal solid waste (trash or garbage) generated for the year indicated by the :reported_year property, in the Country specified by the :defined_for property. Note that the Measurement values are given in tons (as defined by the :has_unit property)." .
 
 :MunicipalWasteRecycled a owl:Class ;
-  rdfs:label "Municipal Solid Waste Recycled (tons)" ;
+  rdfs:label "Municipal Solid Waste Recycled (%)" ;
   rdfs:subClassOf :Measurement ;
-  :definition "The amount of municipal solid waste (trash or garbage) that is recycled for the year indicated by the :reported_year property, in the Country specified by the :defined_for property. Note that the Measurement values are given in tons (as defined by the :has_unit property)." .
+  :definition "The percent of the MunicipalWasteGenerated that is recycled for the year indicated by the :reported_year property, in the Country specified by the :defined_for property. Note that the Measurement values are given in percents, % (as defined by the :has_unit property)." .
 
 :NaturalGasConsumption a owl:Class ;
   rdfs:label "Natural Gas Consumption (cubic meters)" ;
