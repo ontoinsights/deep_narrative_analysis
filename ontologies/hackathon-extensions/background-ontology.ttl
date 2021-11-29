@@ -1,0 +1,373 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+
+########################################################################
+# Classes
+########################################################################
+
+:Agent a owl:Class ;
+  rdfs:label "Agent/Actor" ;
+  :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in, are affected by or are the holders of EventAndState occurrences and conditions." ;
+  :noun_synonym "legal entity", "doer", "actor", "performer", "participant", "role player", "character" .
+
+:Assessment a owl:Class ;
+  rdfs:subClassOf :Measurement ;
+  rdfs:label "Assessment" ;
+  :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." ;
+  :noun_synonym "estimate" .
+
+:Collection a owl:Class ;
+  rdfs:label "Collection/Group" ;
+  :definition "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property." ;
+  :noun_synonym "assemblage", "assortment", "compilation", "set", "compendium", "accumulation", "aggregation", "bevy", "pack", "herd" .
+
+:Continent a owl:Class ;
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Continent" ;
+  :definition "One of the 7 large landmasses (Africa, Antarctica, Asia, Australia, Europe, North America, South America). The continents are instantiated using their GeoName idenfitiers in the file, geonames_countries.ttl." .
+
+:Country a owl:Class ;
+  rdfs:subClassOf :GeopoliticalEntity ;
+  rdfs:label "Country" ;
+  :definition "Describes the government of a nation, the people living in the nation and the land area that is governed." ;
+  :noun_synonym "nation", "commonwealth", "nationality" .
+
+:Currency a owl:Class ;
+  rdfs:subClassOf :MonetaryAndFinancialInstrument ;
+  rdfs:label "Currency" ;
+  :definition "A metal or paper medium of exchange that is used as money in a country." .
+
+:EventAndState a owl:Class ;
+  rdfs:label "Event and State" ;
+  :definition "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties). A state is a factor, situation or condition that an Agent (defined using the :has_agent property) or Resouce (defined using the :has_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
+  :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation", "status", "condition" .
+
+:GeopoliticalEntity a owl:Class ;
+  rdfs:subClassOf :Agent, :PhysicalLocation ;
+  rdfs:label "Geopolitical Entity" ;
+  :definition "A point or site on/in the Earth, related to a political entity (such as a country or city), as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites. Note that GeopoliticalEntity is defined as both a PhysicalLocation and an Agent. This is due to its usage in text and conversation." ;
+  :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
+  :noun_synonym "political region", "body politic" .
+
+:GroupOfAgents a owl:Class ;
+  rdfs:subClassOf :Agent, :Collection ;
+  rdfs:label "Group/Collection of Agents" ;
+  :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
+  :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
+  :noun_synonym "consortium", "society", "crowd", "alliance", "band", "troupe", "troop" .
+
+:LineOfBusiness a owl:Class ;
+  rdfs:label "Line/Type of Business" ;
+  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
+
+:Location a owl:Class ;
+  rdfs:label "Location" ;
+  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
+  :noun_synonym "locale", "site", "venue", "placement", "locality", "setting" .
+
+:Measurement a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Measurement" ;
+  :definition "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property." ;
+  :noun_synonym "quantification" ;
+  :verb_synonym "measure", "quantify", "weigh" .
+
+:MonetaryAndFinancialInstrument a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Monetary and Financial Instrument" ;
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+
+:Organization a owl:Class ;
+  rdfs:subClassOf :GroupOfAgents ;
+  rdfs:label "Organization" ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
+  :noun_synonym "organisation", "association", "corporation", "institution", "company" .
+
+:PhysicalLocation a owl:Class ;
+  rdfs:subClassOf :Location ;
+  rdfs:label "Physical Location" ;
+  :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
+
+:Resource a owl:Class ;
+  rdfs:label "Resource" ;
+  :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold." ;
+  :noun_synonym "instrument", "tool", "asset", "supply", "commodity" .
+
+
+########################################################################
+# Subclasses of LineOfBusiness
+########################################################################
+
+:AgricultureBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Agriculture, Apiculture and Aquaculture Business" ;
+  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
+  :example "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." .
+
+:BankingAndFinanceBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Banking, Finance and Investment Business" ;
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
+
+:ConstructionBusiness a owl:Class ;
+  rdfs:subClassOf :ManufacturingBusiness ;
+  rdfs:label "Construction Business" ;
+  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
+  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
+
+:CriminalBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Criminal Business" .
+
+:EducationalBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Educational Business" ;
+  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
+  :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
+
+:ElectronicsAndComputersBusiness a owl:Class ;
+  rdfs:subClassOf :TechnologyBusiness ;
+  rdfs:label "Electronics and Computers Related Business" ;
+  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
+  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
+
+:EnergyAndUtilitiesBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Energy and Utilities Business" ;
+  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
+  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
+
+:EntertainmentBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Entertainment Business" ;
+  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
+  :example "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." .
+
+:EnvironmentalOrEcologicalBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Environmental or Ecological Business" ;
+  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
+
+:FashionBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Fashion Related Business" ;
+  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
+  :example "Examples include beauty and nail salons and their workers, alteration/seamstress activities, jewelry and clothing design and sales, etc." .
+
+:FoodProcessingAndPreparationBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Food Processing and Preparation Business" ;
+  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
+  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
+
+:GovernmentAndPoliticsBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Government and Politics Business" ;
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
+
+:HealthcareAndMedicalBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Healthcare and Medical Business" ;
+  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." .
+
+:HospitalityBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Hospitality Business" ;
+  :definition "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." .
+
+:HumanitarianBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Humanitarian Business" ;
+  :definition "Involved with providing direct services or materials to people and areas in need." .
+
+:InformationTechnologyBusiness a owl:Class ;
+  rdfs:subClassOf :TechnologyBusiness ;
+  rdfs:label "Information Technology Business" ;
+  :definition "Involved with the collection, analysis, storage and communication of data." ;
+  :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+
+:InsuranceBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Insurance Business" ;
+  :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
+  :example "Examples include insurance agencies, underwriters, etc." .
+
+:LaborAndStaffingBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Labor and Staffing Business" ;
+  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
+
+:LegalAndJudicialBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Legal and Judicial Business" ;
+  :definition "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." .
+
+:ManufacturingBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Manufacturing Business" ;
+  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
+
+:MilitaryBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Military Related Business" ;
+  :definition "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
+
+:MultiIndustryBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Multiple Industries Business" ;
+  :definition "Involved with more than one line of business such as an industrial conglomerate." ;
+  :noun_synonym "conglomerate" .
+
+:ProvisionOfServicesBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Provision of Services Business" ;
+  :definition "Involved with the sale of services to a business, person or group." ;
+  :example "Examples are companies or individuals that provide education/training or IT/programming services." .
+
+:PublishingAndMediaBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Publishing and Media Business" ;
+  :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
+  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." .
+
+:RawMaterialProcessingAndPreparationBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Raw Material Processing and Preparation Business" ;
+  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
+  :example "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
+
+:RealEstateBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Real Estate Business" ;
+  :definition "Involved with the maintenance and sale of property/land and buildings." .
+
+:ReligiousBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Religious/Religion Related Business" ;
+  :definition "Involved with activities related to spirituality, faith and worship." ;
+  :example "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." .
+
+:RetailBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Retail Business" ;
+  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
+  :example "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." .
+
+:SecurityBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Security Related Business" ;
+  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
+
+:SpaceBusiness a owl:Class ;
+  rdfs:subClassOf :TechnologyBusiness ;
+  rdfs:label "Space Related Business" ;
+  :definition "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
+  :noun_synonym "astronautics", "astronaut", "interstellar travel", "outer space", "spaceflight" .
+
+:TechnologyBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Technology Business" ;
+  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+
+:TransportBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Transport Related Business" ;
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+:area_sq_kms a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "area in sq kilometers" ;
+  :definition "Area in square kilometers." ;
+  rdfs:domain :PhysicalLocation ;
+  rdfs:range xsd:decimal .
+
+:assessment a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "assessment" ;
+  :definition "Used to indicate how an EventAndState (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is evaluated - ranging from negligible/non-existent to very high." ;
+  rdfs:domain :EventAndState ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:oneOf ( "Very High" "High" "Medium" "Low" "Negigible or None" ) ] .
+
+:iso_alpha2 a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "ISO 2-character alpha code" ;
+  :definition "A string specifying the 2 character ISO 3166 code of a country." ;
+  rdfs:domain :Country ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:withRestrictions ( [ xsd:pattern "^[A-Z]{2}$" ] ) ] .
+
+:iso_alpha3 a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "ISO 3-character alpha code" ;
+  :definition "A string specifying the 3 character ISO 3166 code of a country." ;
+  rdfs:domain :Country ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:withRestrictions ( [ xsd:pattern "^[A-Z]{3}$" ] ) ] .
+
+:reported_value a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "reported value" ;
+  :definition "Specifies the value of a Measurement as a decimal (where the value's units are defined using the :has_unit predicate) or a string." ;
+  rdfs:domain :Measurement ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:unionOf ( xsd:decimal xsd:string) ].
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:defined_for a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :has_topic ;
+  rdfs:label "defined for" ;
+  :definition "A relationship indicating that a Measurement or Assessment concerns/is 'about' the referenced instance." ;
+  rdfs:domain :Measurement .
+
+:has_component a owl:ObjectProperty ;
+  rdfs:label "has component" ;
+  :definition "Defines a whole-part relationship." ;
+  :verb_synonym "is part of" .
+
+:has_currency a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has currency" ;
+  :definition "References the currency unit of a Country." ;
+  rdfs:domain :Country ;
+  rdfs:range :Currency .
+
+:has_line_of_business a owl:ObjectProperty ;
+  rdfs:label "has line of business" ;
+  rdfs:domain :Agent ;
+  rdfs:range :LineOfBusiness ;
+  :definition "References a particular type/line of business that is the focus of an Agent (typically a Person or Organization). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" .
+
+:has_location a owl:ObjectProperty ;
+  rdfs:label "has location" ;
+  rdfs:range :Location ;
+  :definition "References where an entity is placed/positioned/resides/occurs/etc. The time of placement, positioning, etc. can be specified using RDF* edge properties or can be reified using an instance of EventAndState." .
+
+:has_topic a owl:ObjectProperty ;
+  rdfs:label "has topic" ;
+  rdfs:domain :EventAndState ;
+  :definition "References the subject/topic of an EventAndState." ;
+  :example "For example, if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_topic property. As another example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_agent property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property." .
+
+:has_unit a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has unit of measure" ;
+  :definition "Associates the units of a Measurement's :reported_value. Units are defined by QUDT.org and can be searched at http://www.qudt.org/doc/DOC_VOCAB-UNITS.html." ;
+  rdfs:domain :Measurement ;
+  rdfs:range <http://qudt.org/schema/qudt/Unit> .
+
+:meets a owl:ObjectProperty ;
+  rdfs:label "meets" ;
+  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." ;
+  :noun_synonym "convergence", "boundary", "meet" ;
+  :verb_synonym "converge", "touch", "meet" .

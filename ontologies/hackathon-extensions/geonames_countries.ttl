@@ -1,0 +1,3121 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix geo: <urn:ontoinsights:geonames:> . 
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining continent and country instances, and their 
+# currency and neighbors (all data pulled from the GeoNames repository
+# or using their APIs - see https://www.geonames.org/)
+# 
+# Created: February 14, 2020
+# Last modified: September 15 2021
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  Updated the default and dna prefixes
+#  Corrected prefix for the 'labels' of continents
+#  Changed multiple labels to 1 label and noun_synonyms
+########################################################################
+
+
+########################################################################
+# Individuals (identified by geonameId)
+########################################################################
+
+geo:6255146 a :Continent ;
+   rdfs:label "Africa" .
+
+geo:6255147 a :Continent ;
+   rdfs:label "Asia" .
+
+geo:6255148 a :Continent ;
+   rdfs:label "Europe" .
+
+geo:6255149 a :Continent ;
+   rdfs:label "North America" .
+
+geo:6255150 a :Continent ;
+   rdfs:label "South America" .
+
+geo:6255151 a :Continent ;
+   rdfs:label "Oceania" .
+
+geo:6255152 a :Continent ;
+   rdfs:label "Antarctica" .
+
+geo:3041565 a :Country ;
+  rdfs:label "Andorra" ;
+  :noun_synonym "Principality of Andorra" , "Principality of the Valleys of Andorra" ;
+  :iso_alpha2 "AD" ;
+  :iso_alpha3 "AND" .
+geo:3041565 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3041565 .
+
+geo:290557 a :Country ;
+  rdfs:label "United Arab Emirates" ;
+  :noun_synonym "The Emirates" , "U.A.E." , "UAE" ;
+  :iso_alpha2 "AE" ;
+  :iso_alpha3 "ARE" .
+geo:290557 :has_currency geo:CurrencyAED .
+geo:6255147 :has_component geo:290557 .
+
+geo:1149361 a :Country ;
+  rdfs:label "Afghanistan" ;
+  :noun_synonym "Islamic Republic of Afghanistan"  ;
+  :iso_alpha2 "AF" ;
+  :iso_alpha3 "AFG" .
+geo:1149361 :has_currency geo:CurrencyAFN .
+geo:6255147 :has_component geo:1149361 .
+
+geo:3576396 a :Country ;
+  rdfs:label "Antigua and Barbuda" ;
+  :noun_synonym "Antigua" , "Barbuda" ;
+  :iso_alpha2 "AG" ;
+  :iso_alpha3 "ATG" .
+geo:3576396 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3576396 .
+
+geo:3573511 a :Country ;
+  rdfs:label "Anguilla" ;
+  :iso_alpha2 "AI" ;
+  :iso_alpha3 "AIA" .
+geo:3573511 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3573511 .
+
+geo:783754 a :Country ;
+  rdfs:label "Albania" ;
+  :noun_synonym "Arbanon" , "Republic of Albania" ;
+  :iso_alpha2 "AL" ;
+  :iso_alpha3 "ALB" .
+geo:783754 :has_currency geo:CurrencyALL .
+geo:6255148 :has_component geo:783754 .
+
+geo:174982 a :Country ;
+  rdfs:label "Armenia" ;
+  :noun_synonym "Republic of Armenia" ;
+  :iso_alpha2 "AM" ;
+  :iso_alpha3 "ARM" .
+geo:174982 :has_currency geo:CurrencyAMD .
+geo:6255147 :has_component geo:174982 .
+
+geo:3351879 a :Country ;
+  rdfs:label "Angola" ;
+  :noun_synonym "Republic of Angola" ;
+  :iso_alpha2 "AO" ;
+  :iso_alpha3 "AGO" .
+geo:3351879 :has_currency geo:CurrencyAOA .
+geo:1149361 :has_component geo:3351879 .
+
+geo:6697173 a :Country ;
+  rdfs:label "Antarctica" ;
+  :iso_alpha2 "AQ" ;
+  :iso_alpha3 "ATA" .
+geo:6255152 :has_component geo:6697173 .
+
+geo:3865483 a :Country ;
+  rdfs:label "Argentina" ;
+  :noun_synonym "Argentine Confederation" , "Argentine Nation" , "Argentine Republic" , "United Provinces of the Río de la Plata" ;
+  :iso_alpha2 "AR" ;
+  :iso_alpha3 "ARG" .
+geo:3865483 :has_currency geo:CurrencyARS .
+geo:6255150 :has_component geo:3865483 .
+
+geo:5880801 a :Country ;
+  rdfs:label "American Samoa" ;
+  :iso_alpha2 "AS" ;
+  :iso_alpha3 "ASM" .
+geo:5880801 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:5880801 .
+
+geo:2782113 a :Country ;
+  rdfs:label "Austria" ;
+  :noun_synonym "Republic of Austria" ;
+  :iso_alpha2 "AT" ;
+  :iso_alpha3 "AUT" .
+geo:2782113 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2782113 .
+
+geo:2077456 a :Country ;
+  rdfs:label "Australia" ;
+  :noun_synonym "Commonwealth of Australia" , "New Holland" ;
+  :iso_alpha2 "AU" ;
+  :iso_alpha3 "AUS" .
+geo:2077456 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:2077456 .
+
+geo:3577279 a :Country ;
+  rdfs:label "Aruba" ;
+  :iso_alpha2 "AW" ;
+  :iso_alpha3 "ABW" .
+geo:3577279 :has_currency geo:CurrencyAWG .
+geo:6255149 :has_component geo:3577279 .
+
+geo:661882 a :Country ;
+  rdfs:label "Aland Islands" ;
+  :iso_alpha2 "AX" ;
+  :iso_alpha3 "ALA" .
+geo:661882 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:661882 .
+
+geo:587116 a :Country ;
+  rdfs:label "Azerbaijan" ;
+  :noun_synonym "Republic of Azerbaijan" ;
+  :iso_alpha2 "AZ" ;
+  :iso_alpha3 "AZE" .
+geo:587116 :has_currency geo:CurrencyAZN .
+geo:5880801 :has_component geo:587116 .
+
+geo:3277605 a :Country ;
+  rdfs:label "Bosnia and Herzegovina" ;
+  :noun_synonym "Bosnia" , "Herzegovina" ;
+  :iso_alpha2 "BA" ;
+  :iso_alpha3 "BIH" .
+geo:3277605 :has_currency geo:CurrencyBAM .
+geo:6255148 :has_component geo:3277605 .
+
+geo:3374084 a :Country ;
+  rdfs:label "Barbados" ;
+  :iso_alpha2 "BB" ;
+  :iso_alpha3 "BRB" .
+geo:3374084 :has_currency geo:CurrencyBBD .
+geo:6255149 :has_component geo:3374084 .
+
+geo:1210997 a :Country ;
+  rdfs:label "Bangladesh" ;
+  :noun_synonym "People's Republic of Bangladesh" ;
+  :iso_alpha2 "BD" ;
+  :iso_alpha3 "BGD" .
+geo:1210997 :has_currency geo:CurrencyBDT .
+geo:5880801 :has_component geo:1210997 .
+
+geo:2802361 a :Country ;
+  rdfs:label "Belgium" ;
+  :noun_synonym "Kingdom of Belgium" ;
+  :iso_alpha2 "BE" ;
+  :iso_alpha3 "BEL" .
+geo:2802361 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2802361 .
+
+geo:2361809 a :Country ;
+  rdfs:label "Burkina Faso" ;
+  :noun_synonym "Upper Volta" ;
+  :iso_alpha2 "BF" ;
+  :iso_alpha3 "BFA" .
+geo:2361809 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2361809 .
+
+geo:732800 a :Country ;
+  rdfs:label "Bulgaria" ;
+  :noun_synonym "People's Republic of Bulgaria" , "Republic of Bulgaria" ;
+  :iso_alpha2 "BG" ;
+  :iso_alpha3 "BGR" .
+geo:732800 :has_currency geo:CurrencyBGN .
+geo:6255148 :has_component geo:732800 .
+
+geo:290291 a :Country ;
+  rdfs:label "Bahrain" ;
+  :noun_synonym "Kingdom of Bahrain" , "State of Bahrain" ;
+  :iso_alpha2 "BH" ;
+  :iso_alpha3 "BHR" .
+geo:290291 :has_currency geo:CurrencyBHD .
+geo:5880801 :has_component geo:290291 .
+
+geo:433561 a :Country ;
+  rdfs:label "Burundi" ;
+  :noun_synonym "Kingdom of Burundi" , "Republic of Burundi" ;
+  :iso_alpha2 "BI" ;
+  :iso_alpha3 "BDI" .
+geo:433561 :has_currency geo:CurrencyBIF .
+geo:1149361 :has_component geo:433561 .
+
+geo:2395170 a :Country ;
+  rdfs:label "Benin" ;
+  :noun_synonym "Dahomey" , "Republic of Benin" ;
+  :iso_alpha2 "BJ" ;
+  :iso_alpha3 "BEN" .
+geo:2395170 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2395170 .
+
+geo:3578476 a :Country ;
+  rdfs:label "Saint Barthelemy" ;
+  :noun_synonym "Saint Bartholomew" , "St Barth's" , "St Barthelemy" , "St Bartholomew" , "St Barts" , "St. Barth's" , "St. Barthelemy" , "St. Bartholomew" , "St. Barts" ;
+  :iso_alpha2 "BL" ;
+  :iso_alpha3 "BLM" .
+geo:3578476 :has_currency geo:CurrencyEUR .
+geo:6255149 :has_component geo:3578476 .
+
+geo:3573345 a :Country ;
+  rdfs:label "Bermuda" ;
+  :iso_alpha2 "BM" ;
+  :iso_alpha3 "BMU" .
+geo:3573345 :has_currency geo:CurrencyBMD .
+geo:6255149 :has_component geo:3573345 .
+
+geo:1820814 a :Country ;
+  rdfs:label "Brunei" ;
+  :noun_synonym "Brunei Darussalam" , "State of Brunei" ;
+  :iso_alpha2 "BN" ;
+  :iso_alpha3 "BRN" .
+geo:1820814 :has_currency geo:CurrencyBND .
+geo:5880801 :has_component geo:1820814 .
+
+geo:3923057 a :Country ;
+  rdfs:label "Bolivia" ;
+  :noun_synonym "Plurinational State of Bolivia" , "Republic of Bolivar" , "Republic of Bolivia" ;
+  :iso_alpha2 "BO" ;
+  :iso_alpha3 "BOL" .
+geo:3923057 :has_currency geo:CurrencyBOB .
+geo:6255150 :has_component geo:3923057 .
+
+geo:7626844 a :Country ;
+  rdfs:label "Bonaire and Sint Eustatius and Saba" ;
+  :noun_synonym "Bonaire" , "Saba" , "Sint Eustatius" ;
+  :iso_alpha2 "BQ" ;
+  :iso_alpha3 "BES" .
+geo:7626844 :has_currency geo:CurrencyUSD .
+geo:6255149 :has_component geo:7626844 .
+
+geo:3469034 a :Country ;
+  rdfs:label "Brazil" ;
+  :noun_synonym "Empire of Brazil" , "Federative Republic of Brazil" , "United States of Brazil" ;
+  :iso_alpha2 "BR" ;
+  :iso_alpha3 "BRA" .
+geo:3469034 :has_currency geo:CurrencyBRL .
+geo:6255150 :has_component geo:3469034 .
+
+geo:3572887 a :Country ;
+  rdfs:label "Bahama Islands" ;
+  :noun_synonym "Commonwealth of The Bahamas" , "Commonwealth of the Bahama Islands" , "The Bahamas" ;
+  :iso_alpha2 "BS" ;
+  :iso_alpha3 "BHS" .
+geo:3572887 :has_currency geo:CurrencyBSD .
+geo:6255149 :has_component geo:3572887 .
+
+geo:1252634 a :Country ;
+  rdfs:label "Bhutan" ;
+  :noun_synonym "Kingdom of Bhutan" ;
+  :iso_alpha2 "BT" ;
+  :iso_alpha3 "BTN" .
+geo:1252634 :has_currency geo:CurrencyBTN .
+geo:5880801 :has_component geo:1252634 .
+
+geo:3371123 a :Country ;
+  rdfs:label "Bouvet Island" ;
+  :iso_alpha2 "BV" ;
+  :iso_alpha3 "BVT" .
+geo:3371123 :has_currency geo:CurrencyNOK .
+geo:6255152 :has_component geo:3371123 .
+
+geo:933860 a :Country ;
+  rdfs:label "Botswana" ;
+  :noun_synonym "Bechuanaland" , "Republic of Botswana" ;
+  :iso_alpha2 "BW" ;
+  :iso_alpha3 "BWA" .
+geo:933860 :has_currency geo:CurrencyBWP .
+geo:1149361 :has_component geo:933860 .
+
+geo:630336 a :Country ;
+  rdfs:label "Belarus" ;
+  :noun_synonym "Byelorussia" , "Republic of Belarus" ;
+  :iso_alpha2 "BY" ;
+  :iso_alpha3 "BLR" .
+geo:630336 :has_currency geo:CurrencyBYN .
+geo:6255148 :has_component geo:630336 .
+
+geo:3582678 a :Country ;
+  rdfs:label "Belize" ;
+  :noun_synonym "British Honduras" ;
+  :iso_alpha2 "BZ" ;
+  :iso_alpha3 "BLZ" .
+geo:3582678 :has_currency geo:CurrencyBZD .
+geo:6255149 :has_component geo:3582678 .
+
+geo:6251999 a :Country ;
+  rdfs:label "Canada" ;
+  :noun_synonym "Dominion of Canada" ;
+  :iso_alpha2 "CA" ;
+  :iso_alpha3 "CAN" .
+geo:6251999 :has_currency geo:CurrencyCAD .
+geo:6255149 :has_component geo:6251999 .
+
+geo:1547376 a :Country ;
+  rdfs:label "Cocos Islands" ;
+  :noun_synonym "Keeling Islands" ;
+  :iso_alpha2 "CC" ;
+  :iso_alpha3 "CCK" .
+geo:1547376 :has_currency geo:CurrencyAUD .
+geo:5880801 :has_component geo:1547376 .
+
+geo:203312 a :Country ;
+  rdfs:label "Democratic Republic of the Congo" ;
+  :noun_synonym "Democratic Republic of Congo" , "Congo Kinshasa" , "Zaire" ;
+  :iso_alpha2 "CD" ;
+  :iso_alpha3 "COD" .
+geo:203312 :has_currency geo:CurrencyCDF .
+geo:1149361 :has_component geo:203312 .
+
+geo:239880 a :Country ;
+  rdfs:label "Central African Republic" ;
+  :noun_synonym "Central African Empire" , "Ubangi-Shari" ;
+  :iso_alpha2 "CF" ;
+  :iso_alpha3 "CAF" .
+geo:239880 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:239880 .
+
+geo:2260494 a :Country ;
+  rdfs:label "Republic of the Congo" ;
+  :noun_synonym "Congo" , "Congo Brazzaville" ;
+  :iso_alpha2 "CG" ;
+  :iso_alpha3 "COG" .
+geo:2260494 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:2260494 .
+
+geo:2658434 a :Country ;
+  rdfs:label "Switzerland" ;
+  :noun_synonym "Swiss Confederation" ;
+  :iso_alpha2 "CH" ;
+  :iso_alpha3 "CHE" .
+geo:2658434 :has_currency geo:CurrencyCHF .
+geo:6255148 :has_component geo:2658434 .
+
+geo:2287781 a :Country ;
+  rdfs:label "Cote d'Ivoire" ;
+  :noun_synonym "Ivory Coast" , "Republic of Cote d'Ivoire" ;
+  :iso_alpha2 "CI" ;
+  :iso_alpha3 "CIV" .
+geo:2287781 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2287781 .
+
+geo:1899402 a :Country ;
+  rdfs:label "Cook Islands" ;
+  :iso_alpha2 "CK" ;
+  :iso_alpha3 "COK" .
+geo:1899402 :has_currency geo:CurrencyNZD .
+geo:6255151 :has_component geo:1899402 .
+
+geo:3895114 a :Country ;
+  rdfs:label "Chile" ;
+  :noun_synonym "Republic of Chile" ;
+  :iso_alpha2 "CL" ;
+  :iso_alpha3 "CHL" .
+geo:3895114 :has_currency geo:CurrencyCLP .
+geo:6255150 :has_component geo:3895114 .
+
+geo:2233387 a :Country ;
+  rdfs:label "Cameroon" ;
+  :noun_synonym "Republic of Cameroon" , "United Republic of Cameroon" ;
+  :iso_alpha2 "CM" ;
+  :iso_alpha3 "CMR" .
+geo:2233387 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:2233387 .
+
+geo:1814991 a :Country ;
+  rdfs:label "China" ;
+  :noun_synonym "People's Republic of China" ;
+  :iso_alpha2 "CN" ;
+  :iso_alpha3 "CHN" .
+geo:1814991 :has_currency geo:CurrencyCNY .
+geo:5880801 :has_component geo:1814991 .
+
+geo:3686110 a :Country ;
+  rdfs:label "Colombia" ;
+  :noun_synonym "Republic of Colombia" ;
+  :iso_alpha2 "CO" ;
+  :iso_alpha3 "COL" .
+geo:3686110 :has_currency geo:CurrencyCOP .
+geo:6255150 :has_component geo:3686110 .
+
+geo:3624060 a :Country ;
+  rdfs:label "Costa Rica" ;
+  :noun_synonym "Republic of Costa Rica" ;
+  :iso_alpha2 "CR" ;
+  :iso_alpha3 "CRI" .
+geo:3624060 :has_currency geo:CurrencyCRC .
+geo:6255149 :has_component geo:3624060 .
+
+geo:3562981 a :Country ;
+  rdfs:label "Cuba" ;
+  :noun_synonym "Republic of Cuba" ;
+  :iso_alpha2 "CU" ;
+  :iso_alpha3 "CUB" .
+geo:3562981 :has_currency geo:CurrencyCUP .
+geo:6255149 :has_component geo:3562981 .
+
+geo:3374766 a :Country ;
+  rdfs:label "Cape Verde" ;
+  :noun_synonym "Cabo Verde" ;
+  :iso_alpha2 "CV" ;
+  :iso_alpha3 "CPV" .
+geo:3374766 :has_currency geo:CurrencyCVE .
+geo:1149361 :has_component geo:3374766 .
+
+geo:7626836 a :Country ;
+  rdfs:label "Curacao" ;
+  :iso_alpha2 "CW" ;
+  :iso_alpha3 "CUW" .
+geo:7626836 :has_currency geo:CurrencyANG .
+geo:6255149 :has_component geo:7626836 .
+
+geo:2078138 a :Country ;
+  rdfs:label "Christmas Island" ;
+  :iso_alpha2 "CX" ;
+  :iso_alpha3 "CXR" .
+geo:2078138 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:2078138 .
+
+geo:146669 a :Country ;
+  rdfs:label "Cyprus" ;
+  :iso_alpha2 "CY" ;
+  :iso_alpha3 "CYP" .
+geo:146669 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:146669 .
+
+geo:3077311 a :Country ;
+  rdfs:label "Czechia" ;
+  :noun_synonym "Bohemia" , "Czech Republic" , "Czechland" , "Czechlands", "Czechoslovakia" ;
+  :iso_alpha2 "CZ" ;
+  :iso_alpha3 "CZE" .
+geo:3077311 :has_currency geo:CurrencyCZK .
+geo:6255148 :has_component geo:3077311 .
+
+geo:2921044 a :Country ;
+  rdfs:label "Germany" ;
+  :noun_synonym "Federal Republic of Germany" ;
+  :iso_alpha2 "DE" ;
+  :iso_alpha3 "DEU" .
+geo:2921044 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2921044 .
+
+geo:223816 a :Country ;
+  rdfs:label "Djibouti" ;
+  :noun_synonym "French Somaliland" , "French Territory of the Afars and the Issas" , "Obock Territory" , "Republic of Djibouti" ;
+  :iso_alpha2 "DJ" ;
+  :iso_alpha3 "DJI" .
+geo:223816 :has_currency geo:CurrencyDJF .
+geo:1149361 :has_component geo:223816 .
+
+geo:2623032 a :Country ;
+  rdfs:label "Denmark" ;
+  :noun_synonym "Kingdom of Denmark" ;
+  :iso_alpha2 "DK" ;
+  :iso_alpha3 "DNK" .
+geo:2623032 :has_currency geo:CurrencyDKK .
+geo:6255148 :has_component geo:2623032 .
+
+geo:3575830 a :Country ;
+  rdfs:label "Dominica" ;
+  :iso_alpha2 "DM" ;
+  :iso_alpha3 "DMA" .
+geo:3575830 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3575830 .
+
+geo:3508796 a :Country ;
+  rdfs:label "Dominican Republic" ;
+  :iso_alpha2 "DO" ;
+  :iso_alpha3 "DOM" .
+geo:3508796 :has_currency geo:CurrencyDOP .
+geo:6255149 :has_component geo:3508796 .
+
+geo:2589581 a :Country ;
+  rdfs:label "Algeria" ;
+  :noun_synonym "People's Democratic Republic of Algeria" ;
+  :iso_alpha2 "DZ" ;
+  :iso_alpha3 "DZA" .
+geo:2589581 :has_currency geo:CurrencyDZD .
+geo:1149361 :has_component geo:2589581 .
+
+geo:3658394 a :Country ;
+  rdfs:label "Ecuador" ;
+  :iso_alpha2 "EC" ;
+  :iso_alpha3 "ECU" .
+geo:3658394 :has_currency geo:CurrencyUSD .
+geo:6255150 :has_component geo:3658394 .
+
+geo:453733 a :Country ;
+  rdfs:label "Estonia" ;
+  :iso_alpha2 "EE" ;
+  :iso_alpha3 "EST" .
+geo:453733 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:453733 .
+
+geo:357994 a :Country ;
+  rdfs:label "Egypt" ;
+  :noun_synonym "Arab Republic of Egypt" ;
+  :iso_alpha2 "EG" ;
+  :iso_alpha3 "EGY" .
+geo:357994 :has_currency geo:CurrencyEGP .
+geo:1149361 :has_component geo:357994 .
+
+geo:2461445 a :Country ;
+  rdfs:label "Western Sahara" ;
+  :iso_alpha2 "EH" ;
+  :iso_alpha3 "ESH" .
+geo:2461445 :has_currency geo:CurrencyMAD .
+geo:1149361 :has_component geo:2461445 .
+
+geo:338010 a :Country ;
+  rdfs:label "Eritrea" ;
+  :iso_alpha2 "ER" ;
+  :iso_alpha3 "ERI" .
+geo:338010 :has_currency geo:CurrencyERN .
+geo:1149361 :has_component geo:338010 .
+
+geo:2510769 a :Country ;
+  rdfs:label "Spain" ;
+  :noun_synonym "Kingdom of Spain" ;
+  :iso_alpha2 "ES" ;
+  :iso_alpha3 "ESP" .
+geo:2510769 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2510769 .
+
+geo:337996 a :Country ;
+  rdfs:label "Ethiopia" ;
+  :noun_synonym "Abyssinia" , "Federal Democratic Republic of Ethiopia" ;
+  :iso_alpha2 "ET" ;
+  :iso_alpha3 "ETH" .
+geo:337996 :has_currency geo:CurrencyETB .
+geo:1149361 :has_component geo:337996 .
+
+geo:660013 a :Country ;
+  rdfs:label "Finland" ;
+  :noun_synonym "Republic of Finland" ;
+  :iso_alpha2 "FI" ;
+  :iso_alpha3 "FIN" .
+geo:660013 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:660013 .
+
+geo:2205218 a :Country ;
+  rdfs:label "Fiji" ;
+  :iso_alpha2 "FJ" ;
+  :iso_alpha3 "FJI" .
+geo:2205218 :has_currency geo:CurrencyFJD .
+geo:6255151 :has_component geo:2205218 .
+
+geo:3474414 a :Country ;
+  rdfs:label "Falkland Islands" ;
+  :noun_synonym "Falkland Islands (Malvinas)" , "Malvinas" ;
+  :iso_alpha2 "FK" ;
+  :iso_alpha3 "FLK" .
+geo:3474414 :has_currency geo:CurrencyFKP .
+geo:6255150 :has_component geo:3474414 .
+
+geo:2081918 a :Country ;
+  rdfs:label "Micronesia" ;
+  :noun_synonym "Federated States of Micronesia" ;
+  :iso_alpha2 "FM" ;
+  :iso_alpha3 "FSM" .
+geo:2081918 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:2081918 .
+
+geo:2622320 a :Country ;
+  rdfs:label "Faroe Islands" ;
+  :iso_alpha2 "FO" ;
+  :iso_alpha3 "FRO" .
+geo:2622320 :has_currency geo:CurrencyDKK .
+geo:6255148 :has_component geo:2622320 .
+
+geo:3017382 a :Country ;
+  rdfs:label "France" ;
+  :noun_synonym "French Republic" ;
+  :iso_alpha2 "FR" ;
+  :iso_alpha3 "FRA" .
+geo:3017382 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3017382 .
+
+geo:2400553 a :Country ;
+  rdfs:label "Gabon" ;
+  :noun_synonym "Gabonese Republic" ;
+  :iso_alpha2 "GA" ;
+  :iso_alpha3 "GAB" .
+geo:2400553 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:2400553 .
+
+geo:2635167 a :Country ;
+  rdfs:label  "United Kingdom" ;
+  :noun_synonym "Britain" , "Great Britain" , "U.K." , "UK" , "United Kingdom of Great Britain and Northern Ireland" ;
+  :iso_alpha2 "GB" ;
+  :iso_alpha3 "GBR" .
+geo:2635167 :has_currency geo:CurrencyGBP .
+geo:6255148 :has_component geo:2635167 .
+
+geo:3580239 a :Country ;
+  rdfs:label "Grenada" ;
+  :iso_alpha2 "GD" ;
+  :iso_alpha3 "GRD" .
+geo:3580239 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3580239 .
+
+geo:614540 a :Country ;
+  rdfs:label  "Georgia" ;
+  :noun_synonym "Colchis" , "Iberia" , "Republic of Georgia" ;
+  :iso_alpha2 "GE" ;
+  :iso_alpha3 "GEO" .
+geo:614540 :has_currency geo:CurrencyGEL .
+geo:5880801 :has_component geo:614540 .
+
+geo:3381670 a :Country ;
+  rdfs:label "French Guiana" ;
+  :iso_alpha2 "GF" ;
+  :iso_alpha3 "GUF" .
+geo:3381670 :has_currency geo:CurrencyEUR .
+geo:6255150 :has_component geo:3381670 .
+
+geo:3042362 a :Country ;
+  rdfs:label "Guernsey" ;
+  :iso_alpha2 "GG" ;
+  :iso_alpha3 "GGY" .
+geo:3042362 :has_currency geo:CurrencyGBP .
+geo:6255148 :has_component geo:3042362 .
+
+geo:2300660 a :Country ;
+  rdfs:label "Ghana" ;
+  :noun_synonym "Gold Coast" ;
+  :iso_alpha2 "GH" ;
+  :iso_alpha3 "GHA" .
+geo:2300660 :has_currency geo:CurrencyGHS .
+geo:1149361 :has_component geo:2300660 .
+
+geo:2411586 a :Country ;
+  rdfs:label "Gibraltar" ;
+  :iso_alpha2 "GI" ;
+  :iso_alpha3 "GIB" .
+geo:2411586 :has_currency geo:CurrencyGIP .
+geo:6255148 :has_component geo:2411586 .
+
+geo:3425505 a :Country ;
+  rdfs:label "Greenland" ;
+  :iso_alpha2 "GL" ;
+  :iso_alpha3 "GRL" .
+geo:3425505 :has_currency geo:CurrencyDKK .
+geo:6255149 :has_component geo:3425505 .
+
+geo:2413451 a :Country ;
+  rdfs:label "Gambia" ;
+  :iso_alpha2 "GM" ;
+  :iso_alpha3 "GMB" .
+geo:2413451 :has_currency geo:CurrencyGMD .
+geo:1149361 :has_component geo:2413451 .
+
+geo:2420477 a :Country ;
+  rdfs:label "French Guinea" ;
+  :noun_synonym "Guinea" , "Guinea-Conakry" , "Republic of Guinea" ;
+  :iso_alpha2 "GN" ;
+  :iso_alpha3 "GIN" .
+geo:2420477 :has_currency geo:CurrencyGNF .
+geo:1149361 :has_component geo:2420477 .
+
+geo:3579143 a :Country ;
+  rdfs:label "Guadeloupe" ;
+  :iso_alpha2 "GP" ;
+  :iso_alpha3 "GLP" .
+geo:3579143 :has_currency geo:CurrencyEUR .
+geo:6255149 :has_component geo:3579143 .
+
+geo:2309096 a :Country ;
+  rdfs:label "Equatorial Guinea" ;
+  :iso_alpha2 "GQ" ;
+  :iso_alpha3 "GNQ" .
+geo:2309096 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:2309096 .
+
+geo:390903 a :Country ;
+  rdfs:label "Greece" ;
+  :noun_synonym "Hellas" , "Hellenic Republic" ;
+  :iso_alpha2 "GR" ;
+  :iso_alpha3 "GRC" .
+geo:390903 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:390903 .
+
+geo:3474415 a :Country ;
+  rdfs:label "South Georgia and the South Sandwich Islands" ;
+  :noun_synonym "Sandwich Islands" ;
+  :iso_alpha2 "GS" ;
+  :iso_alpha3 "SGS" .
+geo:3474415 :has_currency geo:CurrencyGBP .
+geo:6255152 :has_component geo:3474415 .
+
+geo:3595528 a :Country ;
+  rdfs:label "Guatemala" ;
+  :noun_synonym "Republic of Guatemala" ;
+  :iso_alpha2 "GT" ;
+  :iso_alpha3 "GTM" .
+geo:3595528 :has_currency geo:CurrencyGTQ .
+geo:6255149 :has_component geo:3595528 .
+
+geo:4043988 a :Country ;
+  rdfs:label "Guam" ;
+  :iso_alpha2 "GU" ;
+  :iso_alpha3 "GUM" .
+geo:4043988 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:4043988 .
+
+geo:2372248 a :Country ;
+  rdfs:label "Guinea-Bissau" ;
+  :noun_synonym "Portuguese Guinea" , "Republic of Guinea-Bissau" ;
+  :iso_alpha2 "GW" ;
+  :iso_alpha3 "GNB" .
+geo:2372248 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2372248 .
+
+geo:3378535 a :Country ;
+  rdfs:label "Guyana" ;
+  :noun_synonym "Co‑operative Republic of Guyana" ;
+  :iso_alpha2 "GY" ;
+  :iso_alpha3 "GUY" .
+geo:3378535 :has_currency geo:CurrencyGYD .
+geo:6255150 :has_component geo:3378535 .
+
+geo:1819730 a :Country ;
+  rdfs:label "Hong Kong" ;
+  :iso_alpha2 "HK" ;
+  :iso_alpha3 "HKG" .
+geo:1819730 :has_currency geo:CurrencyHKD .
+geo:5880801 :has_component geo:1819730 .
+
+geo:1547314 a :Country ;
+  rdfs:label "Heard Island and McDonald Islands" ;
+  :noun_synonym "Heard Island" , "McDonald Islands" ;
+  :iso_alpha2 "HM" ;
+  :iso_alpha3 "HMD" .
+geo:1547314 :has_currency geo:CurrencyAUD .
+geo:6255152 :has_component geo:1547314 .
+
+geo:3608932 a :Country ;
+  rdfs:label "Honduras" ;
+  :iso_alpha2 "HN" ;
+  :iso_alpha3 "HND" .
+geo:3608932 :has_currency geo:CurrencyHNL .
+geo:6255149 :has_component geo:3608932 .
+
+geo:3202326 a :Country ;
+  rdfs:label "Croatia" ;
+  :noun_synonym "Republic of Croatia" ;
+  :iso_alpha2 "HR" ;
+  :iso_alpha3 "HRV" .
+geo:3202326 :has_currency geo:CurrencyHRK .
+geo:6255148 :has_component geo:3202326 .
+
+geo:3723988 a :Country ;
+  rdfs:label "Haiti" ;
+  :noun_synonym "Hayti" , "Republic of Haiti" ;
+  :iso_alpha2 "HT" ;
+  :iso_alpha3 "HTI" .
+geo:3723988 :has_currency geo:CurrencyHTG .
+geo:6255149 :has_component geo:3723988 .
+
+geo:719819 a :Country ;
+  rdfs:label "Hungary" ;
+  :noun_synonym "Hungarian People's Republic" , "Republic of Hungary" ;
+  :iso_alpha2 "HU" ;
+  :iso_alpha3 "HUN" .
+geo:719819 :has_currency geo:CurrencyHUF .
+geo:6255148 :has_component geo:719819 .
+
+geo:1643084 a :Country ;
+  rdfs:label "Indonesia" ;
+  :noun_synonym "Dutch East Indies" , "Netherlands East-Indies" , "Republic of Indonesia" ;
+  :iso_alpha2 "ID" ;
+  :iso_alpha3 "IDN" .
+geo:1643084 :has_currency geo:CurrencyIDR .
+geo:5880801 :has_component geo:1643084 .
+
+geo:2963597 a :Country ;
+  rdfs:label "Ireland" ;
+  :iso_alpha2 "IE" ;
+  :iso_alpha3 "IRL" .
+geo:2963597 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2963597 .
+
+geo:294640 a :Country ;
+  rdfs:label "Israel" ;
+  :noun_synonym "State of Israel" , "Hebrew State" , "Jewish State" ;
+  :iso_alpha2 "IL" ;
+  :iso_alpha3 "ISR" .
+geo:294640 :has_currency geo:CurrencyILS .
+geo:5880801 :has_component geo:294640 .
+
+geo:3042225 a :Country ;
+  rdfs:label "Isle of Man" ;
+  :iso_alpha2 "IM" ;
+  :iso_alpha3 "IMN" .
+geo:3042225 :has_currency geo:CurrencyGBP .
+geo:6255148 :has_component geo:3042225 .
+
+geo:1269750 a :Country ;
+  rdfs:label "India" ;
+  :noun_synonym "Republic of India" , "Union of India" ;
+  :iso_alpha2 "IN" ;
+  :iso_alpha3 "IND" .
+geo:1269750 :has_currency geo:CurrencyINR .
+geo:5880801 :has_component geo:1269750 .
+
+geo:1282588 a :Country ;
+  rdfs:label "British Indian Ocean Territory" ;
+  :iso_alpha2 "IO" ;
+  :iso_alpha3 "IOT" .
+geo:1282588 :has_currency geo:CurrencyUSD .
+geo:5880801 :has_component geo:1282588 .
+
+geo:99237 a :Country ;
+  rdfs:label "Iraq" ;
+  :noun_synonym "Assyria" , "Mesopotamia" , "Republic of Iraq" ;
+  :iso_alpha2 "IQ" ;
+  :iso_alpha3 "IRQ" .
+geo:99237 :has_currency geo:CurrencyIQD .
+geo:5880801 :has_component geo:99237 .
+
+geo:130758 a :Country ;
+  rdfs:label "Iran" ;
+  :noun_synonym "Islamic Republic of Iran" ;
+  :iso_alpha2 "IR" ;
+  :iso_alpha3 "IRN" .
+geo:130758 :has_currency geo:CurrencyIRR .
+geo:5880801 :has_component geo:130758 .
+
+geo:2629691 a :Country ;
+  rdfs:label "Iceland" ;
+  :noun_synonym "Republic of Iceland" ;
+  :iso_alpha2 "IS" ;
+  :iso_alpha3 "ISL" .
+geo:2629691 :has_currency geo:CurrencyISK .
+geo:6255148 :has_component geo:2629691 .
+
+geo:3175395 a :Country ;
+  rdfs:label "Italy" ;
+  :iso_alpha2 "IT" ;
+  :iso_alpha3 "ITA" .
+geo:3175395 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3175395 .
+
+geo:3042142 a :Country ;
+  rdfs:label "Jersey" ;
+  :iso_alpha2 "JE" ;
+  :iso_alpha3 "JEY" .
+geo:3042142 :has_currency geo:CurrencyGBP .
+geo:6255148 :has_component geo:3042142 .
+
+geo:3489940 a :Country ;
+  rdfs:label "Jamaica" ;
+  :iso_alpha2 "JM" ;
+  :iso_alpha3 "JAM" .
+geo:3489940 :has_currency geo:CurrencyJMD .
+geo:6255149 :has_component geo:3489940 .
+
+geo:248816 a :Country ;
+  rdfs:label "Jordan" ;
+  :noun_synonym "Hashemite Kingdom of Jordan" ;
+  :iso_alpha2 "JO" ;
+  :iso_alpha3 "JOR" .
+geo:248816 :has_currency geo:CurrencyJOD .
+geo:5880801 :has_component geo:248816 .
+
+geo:1861060 a :Country ;
+  rdfs:label "Japan" ;
+  :noun_synonym "Nippon" ;
+  :iso_alpha2 "JP" ;
+  :iso_alpha3 "JPN" .
+geo:1861060 :has_currency geo:CurrencyJPY .
+geo:5880801 :has_component geo:1861060 .
+
+geo:192950 a :Country ;
+  rdfs:label "Kenya" ;
+  :noun_synonym "Republic of Kenya" ;
+  :iso_alpha2 "KE" ;
+  :iso_alpha3 "KEN" .
+geo:192950 :has_currency geo:CurrencyKES .
+geo:1149361 :has_component geo:192950 .
+
+geo:1527747 a :Country ;
+  rdfs:label "Kyrgyzstan" ;
+  :noun_synonym "Kyrgyz Republic", "Republic of Kyrgyzstan" ;
+  :iso_alpha2 "KG" ;
+  :iso_alpha3 "KGZ" .
+geo:1527747 :has_currency geo:CurrencyKGS .
+geo:5880801 :has_component geo:1527747 .
+
+geo:1831722 a :Country ;
+  rdfs:label "Cambodia" ;
+  :noun_synonym "Democratic Kampuchea" , "Kampuchea" , "Khmer Republic" , "Kingdom of Cambodia" , "People's Republic of Kampuchea" , "State of Cambodia";
+  :iso_alpha2 "KH" ;
+  :iso_alpha3 "KHM" .
+geo:1831722 :has_currency geo:CurrencyKHR .
+geo:5880801 :has_component geo:1831722 .
+
+geo:4030945 a :Country ;
+  rdfs:label "Kiribati" ;
+  :iso_alpha2 "KI" ;
+  :iso_alpha3 "KIR" .
+geo:4030945 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:4030945 .
+
+geo:921929 a :Country ;
+  rdfs:label "Comoros" ;
+  :noun_synonym "Union of the Comoros" , "United Republic of the Commoros" ;
+  :iso_alpha2 "KM" ;
+  :iso_alpha3 "COM" .
+geo:921929 :has_currency geo:CurrencyKMF .
+geo:1149361 :has_component geo:921929 .
+
+geo:3575174 a :Country ;
+  rdfs:label "Saint Christopher and Nevis" ;
+  :noun_synonym "Federation of Saint Christopher and Nevis" , "Federation of Saint Kitts and Nevis" , "Nevis" , "Saint Christopher" , "Saint Kitts" , "Saint Kitts and Nevis" , "St Kitts" , "St. Kitts" , "St. Kitts Nevis" ;
+  :iso_alpha2 "KN" ;
+  :iso_alpha3 "KNA" .
+geo:3575174 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3575174 .
+
+geo:1873107 a :Country ;
+  rdfs:label "Democratic People's Republic of Korea" ;
+  :noun_synonym "North Korea" ;
+  :iso_alpha2 "KP" ;
+  :iso_alpha3 "PRK" .
+geo:1873107 :has_currency geo:CurrencyKPW .
+geo:5880801 :has_component geo:1873107 .
+
+geo:1835841 a :Country ;
+  rdfs:label "Republic of Korea" ;
+  :noun_synonym "South Korea" ;
+  :iso_alpha2 "KR" ;
+  :iso_alpha3 "KOR" .
+geo:1835841 :has_currency geo:CurrencyKRW .
+geo:5880801 :has_component geo:1835841 .
+
+geo:831053 a :Country ;
+  rdfs:label "Kosovo" ;
+  :iso_alpha2 "XK" ;
+  :iso_alpha3 "XKX" .
+geo:831053 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:831053 .
+
+geo:285570 a :Country ;
+  rdfs:label "Kuwait" ;
+  :iso_alpha2 "KW" ;
+  :iso_alpha3 "KWT" .
+geo:285570 :has_currency geo:CurrencyKWD .
+geo:5880801 :has_component geo:285570 .
+
+geo:3580718 a :Country ;
+  rdfs:label "Cayman Islands" ;
+  :iso_alpha2 "KY" ;
+  :iso_alpha3 "CYM" .
+geo:3580718 :has_currency geo:CurrencyKYD .
+geo:6255149 :has_component geo:3580718 .
+
+geo:1522867 a :Country ;
+  rdfs:label "Kazakhstan" ;
+  :noun_synonym "Republic of Kazakhstan" ;
+  :iso_alpha2 "KZ" ;
+  :iso_alpha3 "KAZ" .
+geo:1522867 :has_currency geo:CurrencyKZT .
+geo:5880801 :has_component geo:1522867 .
+
+geo:1655842 a :Country ;
+  rdfs:label "Laos" ;
+  :noun_synonym"Lao People's Democratic Republic" ;
+  :iso_alpha2 "LA" ;
+  :iso_alpha3 "LAO" .
+geo:1655842 :has_currency geo:CurrencyLAK .
+geo:5880801 :has_component geo:1655842 .
+
+geo:272103 a :Country ;
+  rdfs:label "Lebanon" ;
+  :noun_synonym "The Lebanese Republic" ;
+  :iso_alpha2 "LB" ;
+  :iso_alpha3 "LBN" .
+geo:272103 :has_currency geo:CurrencyLBP .
+geo:5880801 :has_component geo:272103 .
+
+geo:3576468 a :Country ;
+  rdfs:label "Saint Lucia" ;
+  :noun_synonym "St Lucia" , "St. Lucia" ;
+  :iso_alpha2 "LC" ;
+  :iso_alpha3 "LCA" .
+geo:3576468 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3576468 .
+
+geo:3042058 a :Country ;
+  rdfs:label "Liechtenstein" ;
+  :iso_alpha2 "LI" ;
+  :iso_alpha3 "LIE" .
+geo:3042058 :has_currency geo:CurrencyCHF .
+geo:6255148 :has_component geo:3042058 .
+
+geo:1227603 a :Country ;
+  rdfs:label "Sri Lanka" ;
+  :noun_synonym "Ceylon" , "Democratic Socialist Republic of Sri Lanka" ;
+  :iso_alpha2 "LK" ;
+  :iso_alpha3 "LKA" .
+geo:1227603 :has_currency geo:CurrencyLKR .
+geo:5880801 :has_component geo:1227603 .
+
+geo:2275384 a :Country ;
+  rdfs:label "Liberia" ;
+  :iso_alpha2 "LR" ;
+  :iso_alpha3 "LBR" .
+geo:2275384 :has_currency geo:CurrencyLRD .
+geo:1149361 :has_component geo:2275384 .
+
+geo:932692 a :Country ;
+  rdfs:label "Lesotho" ;
+  :noun_synonym "Basutoland" , "Kingdom of Lesotho" ;
+  :iso_alpha2 "LS" ;
+  :iso_alpha3 "LSO" .
+geo:932692 :has_currency geo:CurrencyLSL .
+geo:1149361 :has_component geo:932692 .
+
+geo:597427 a :Country ;
+  rdfs:label "Lithuania" ;
+  :iso_alpha2 "LT" ;
+  :iso_alpha3 "LTU" .
+geo:597427 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:597427 .
+
+geo:2960313 a :Country ;
+  rdfs:label "Luxembourg" ;
+  :noun_synonym "Grand Duchy of Luxembourg" ;
+  :iso_alpha2 "LU" ;
+  :iso_alpha3 "LUX" .
+geo:2960313 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2960313 .
+
+geo:458258 a :Country ;
+  rdfs:label "Latvia" ;
+  :iso_alpha2 "LV" ;
+  :iso_alpha3 "LVA" .
+geo:458258 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:458258 .
+
+geo:2215636 a :Country ;
+  rdfs:label "Libya" ;
+  :iso_alpha2 "LY" ;
+  :iso_alpha3 "LBY" .
+geo:2215636 :has_currency geo:CurrencyLYD .
+geo:1149361 :has_component geo:2215636 .
+
+geo:2542007 a :Country ;
+  rdfs:label "Morocco" ;
+  :noun_synonym "Kingdom of Morocco" ;
+  :iso_alpha2 "MA" ;
+  :iso_alpha3 "MAR" .
+geo:2542007 :has_currency geo:CurrencyMAD .
+geo:1149361 :has_component geo:2542007 .
+
+geo:2993457 a :Country ;
+  rdfs:label "Monaco" ;
+  :iso_alpha2 "MC" ;
+  :iso_alpha3 "MCO" .
+geo:2993457 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2993457 .
+
+geo:617790 a :Country ;
+  rdfs:label "Moldova" ;
+  :noun_synonym "Moldavia" , "Republic of Moldova" ;
+  :iso_alpha2 "MD" ;
+  :iso_alpha3 "MDA" .
+geo:617790 :has_currency geo:CurrencyMDL .
+geo:6255148 :has_component geo:617790 .
+
+geo:3194884 a :Country ;
+  rdfs:label "Montenegro" ;
+  :iso_alpha2 "ME" ;
+  :iso_alpha3 "MNE" .
+geo:3194884 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3194884 .
+
+geo:3578421 a :Country ;
+  rdfs:label "Saint Martin (French part)" ;
+  :noun_synonym "St Martin" , "St. Martin" ;
+  :iso_alpha2 "MF" ;
+  :iso_alpha3 "MAF" .
+geo:3578421 :has_currency geo:CurrencyEUR .
+geo:6255149 :has_component geo:3578421 .
+
+geo:1062947 a :Country ;
+  rdfs:label "Madagascar" ;
+  :noun_synonym "Republic of Madagascar" ;
+  :iso_alpha2 "MG" ;
+  :iso_alpha3 "MDG" .
+geo:1062947 :has_currency geo:CurrencyMGA .
+geo:1149361 :has_component geo:1062947 .
+
+geo:2080185 a :Country ;
+  rdfs:label "Marshall Islands" ;
+  :iso_alpha2 "MH" ;
+  :iso_alpha3 "MHL" .
+geo:2080185 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:2080185 .
+
+geo:718075 a :Country ;
+  rdfs:label "Macedonia" ;
+  :noun_synonym "North Macedonia" , "Republic of North Macedonia" , "Former Yugoslav Republic of Macedonia" ;
+  :iso_alpha2 "MK" ;
+  :iso_alpha3 "MKD" .
+geo:718075 :has_currency geo:CurrencyMKD .
+geo:6255148 :has_component geo:718075 .
+
+geo:2453866 a :Country ;
+  rdfs:label "Mali" ;
+  :noun_synonym "Republic of Mali" ;
+  :iso_alpha2 "ML" ;
+  :iso_alpha3 "MLI" .
+geo:2453866 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2453866 .
+
+geo:1327865 a :Country ;
+  rdfs:label "Myanmar" ;
+  :noun_synonym "Burma" , "Republic of the Union of Myanmar" ;
+  :iso_alpha2 "MM" ;
+  :iso_alpha3 "MMR" .
+geo:1327865 :has_currency geo:CurrencyMMK .
+geo:5880801 :has_component geo:1327865 .
+
+geo:2029969 a :Country ;
+  rdfs:label "Mongolia" ;
+  :iso_alpha2 "MN" ;
+  :iso_alpha3 "MNG" .
+geo:2029969 :has_currency geo:CurrencyMNT .
+geo:5880801 :has_component geo:2029969 .
+
+geo:1821275 a :Country ;
+  rdfs:label "Macao" ;
+  :iso_alpha2 "MO" ;
+  :iso_alpha3 "MAC" .
+geo:1821275 :has_currency geo:CurrencyMOP .
+geo:5880801 :has_component geo:1821275 .
+
+geo:4041468 a :Country ;
+  rdfs:label "Northern Mariana Islands" ;
+  :iso_alpha2 "MP" ;
+  :iso_alpha3 "MNP" .
+geo:4041468 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:4041468 .
+
+geo:3570311 a :Country ;
+  rdfs:label "Martinique" ;
+  :iso_alpha2 "MQ" ;
+  :iso_alpha3 "MTQ" .
+geo:3570311 :has_currency geo:CurrencyEUR .
+geo:6255149 :has_component geo:3570311 .
+
+geo:2378080 a :Country ;
+  rdfs:label "Mauritania" ;
+  :noun_synonym "Islamic Republic of Mauritania" ;
+  :iso_alpha2 "MR" ;
+  :iso_alpha3 "MRT" .
+geo:2378080 :has_currency geo:CurrencyMRO .
+geo:1149361 :has_component geo:2378080 .
+
+geo:3578097 a :Country ;
+  rdfs:label "Montserrat" ;
+  :iso_alpha2 "MS" ;
+  :iso_alpha3 "MSR" .
+geo:3578097 :has_currency geo:CurrencyXCD .
+geo:6255149 :has_component geo:3578097 .
+
+geo:2562770 a :Country ;
+  rdfs:label "Malta" ;
+  :iso_alpha2 "MT" ;
+  :iso_alpha3 "MLT" .
+geo:2562770 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2562770 .
+
+geo:934292 a :Country ;
+  rdfs:label "Mauritius" ;
+  :iso_alpha2 "MU" ;
+  :iso_alpha3 "MUS" .
+geo:934292 :has_currency geo:CurrencyMUR .
+geo:1149361 :has_component geo:934292 .
+
+geo:1282028 a :Country ;
+  rdfs:label "Maldives" ;
+  :noun_synonym "Republic of the Maldives" , "The Maldive Islands" ;
+  :iso_alpha2 "MV" ;
+  :iso_alpha3 "MDV" .
+geo:1282028 :has_currency geo:CurrencyMVR .
+geo:5880801 :has_component geo:1282028 .
+
+geo:927384 a :Country ;
+  rdfs:label "Malawi" ;
+  :noun_synonym "Nyasaland" , "Republic of Malawi" ;
+  :iso_alpha2 "MW" ;
+  :iso_alpha3 "MWI" .
+geo:927384 :has_currency geo:CurrencyMWK .
+geo:1149361 :has_component geo:927384 .
+
+geo:3996063 a :Country ;
+  rdfs:label "Mexico" ;
+  :noun_synonym "United Mexican States" ;
+  :iso_alpha2 "MX" ;
+  :iso_alpha3 "MEX" .
+geo:3996063 :has_currency geo:CurrencyMXN .
+geo:6255149 :has_component geo:3996063 .
+
+geo:1733045 a :Country ;
+  rdfs:label "Malaysia" ;
+  :noun_synonym "Federation of Malaysia" ;
+  :iso_alpha2 "MY" ;
+  :iso_alpha3 "MYS" .
+geo:1733045 :has_currency geo:CurrencyMYR .
+geo:5880801 :has_component geo:1733045 .
+
+geo:1036973 a :Country ;
+  rdfs:label "Mozambique" ;
+  :noun_synonym "Republic of Mozambique" ;
+  :iso_alpha2 "MZ" ;
+  :iso_alpha3 "MOZ" .
+geo:1036973 :has_currency geo:CurrencyMZN .
+geo:1149361 :has_component geo:1036973 .
+
+geo:3355338 a :Country ;
+  rdfs:label "Namibia" ;
+  :iso_alpha2 "NA" ;
+  :iso_alpha3 "NAM" .
+geo:3355338 :has_currency geo:CurrencyNAD .
+geo:1149361 :has_component geo:3355338 .
+
+geo:2139685 a :Country ;
+  rdfs:label "New Caledonia" ;
+  :iso_alpha2 "NC" ;
+  :iso_alpha3 "NCL" .
+geo:2139685 :has_currency geo:CurrencyXPF .
+geo:6255151 :has_component geo:2139685 .
+
+geo:2440476 a :Country ;
+  rdfs:label "Niger" ;
+  :noun_synonym "Republic of the Niger" ;
+  :iso_alpha2 "NE" ;
+  :iso_alpha3 "NER" .
+geo:2440476 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2440476 .
+
+geo:2155115 a :Country ;
+  rdfs:label "Norfolk Island" ;
+  :iso_alpha2 "NF" ;
+  :iso_alpha3 "NFK" .
+geo:2155115 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:2155115 .
+
+geo:2328926 a :Country ;
+  rdfs:label "Nigeria" ;
+  :noun_synonym "Federal Republic of Nigeria" ;
+  :iso_alpha2 "NG" ;
+  :iso_alpha3 "NGA" .
+geo:2328926 :has_currency geo:CurrencyNGN .
+geo:1149361 :has_component geo:2328926 .
+
+geo:3617476 a :Country ;
+  rdfs:label "Nicaragua" ;
+  :iso_alpha2 "NI" ;
+  :iso_alpha3 "NIC" .
+geo:3617476 :has_currency geo:CurrencyNIO .
+geo:3355338 :has_component geo:3617476 .
+
+geo:2750405 a :Country ;
+  rdfs:label "Netherlands" ;
+  :noun_synonym "Batavia" , "Holland" , "Kingdom of the Netherlands" ;
+  :iso_alpha2 "NL" ;
+  :iso_alpha3 "NLD" .
+geo:2750405 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2750405 .
+
+geo:3144096 a :Country ;
+  rdfs:label "Norway" ;
+  :noun_synonym "Kingdom of Norwy" ;
+  :iso_alpha2 "NO" ;
+  :iso_alpha3 "NOR" .
+geo:3144096 :has_currency geo:CurrencyNOK .
+geo:6255148 :has_component geo:3144096 .
+
+geo:1282988 a :Country ;
+  rdfs:label "Nepal" ;
+  :noun_synonym "Federal Democratic Republic Of Nepal" ;
+  :iso_alpha2 "NP" ;
+  :iso_alpha3 "NPL" .
+geo:1282988 :has_currency geo:CurrencyNPR .
+geo:5880801 :has_component geo:1282988 .
+
+geo:2110425 a :Country ;
+  rdfs:label "Nauru" ;
+  :iso_alpha2 "NR" ;
+  :iso_alpha3 "NRU" .
+geo:2110425 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:2110425 .
+
+geo:4036232 a :Country ;
+  rdfs:label "Niue" ;
+  :iso_alpha2 "NU" ;
+  :iso_alpha3 "NIU" .
+geo:4036232 :has_currency geo:CurrencyNZD .
+geo:6255151 :has_component geo:4036232 .
+
+geo:2186224 a :Country ;
+  rdfs:label "New Zealand" ;
+  :noun_synonym "Dominion of New Zealand" ;
+  :iso_alpha2 "NZ" ;
+  :iso_alpha3 "NZL" .
+geo:2186224 :has_currency geo:CurrencyNZD .
+geo:6255151 :has_component geo:2186224 .
+
+geo:286963 a :Country ;
+  rdfs:label "Oman" ;
+  :noun_synonym "Sultanate of Oman" ;
+  :iso_alpha2 "OM" ;
+  :iso_alpha3 "OMN" .
+geo:286963 :has_currency geo:CurrencyOMR .
+geo:5880801 :has_component geo:286963 .
+
+geo:3703430 a :Country ;
+  rdfs:label "Panama" ;
+  :iso_alpha2 "PA" ;
+  :iso_alpha3 "PAN" .
+geo:3703430 :has_currency geo:CurrencyPAB .
+geo:3355338 :has_component geo:3703430 .
+
+geo:3932488 a :Country ;
+  rdfs:label "Peru" ;
+  :noun_synonym "Peruvian Republic" , "Republic of Peru" ;
+  :iso_alpha2 "PE" ;
+  :iso_alpha3 "PER" .
+geo:3932488 :has_currency geo:CurrencyPEN .
+geo:6255150 :has_component geo:3932488 .
+
+geo:4030656 a :Country ;
+  rdfs:label "French Polynesia" ;
+  :iso_alpha2 "PF" ;
+  :iso_alpha3 "PYF" .
+geo:4030656 :has_currency geo:CurrencyXPF .
+geo:6255151 :has_component geo:4030656 .
+
+geo:2088628 a :Country ;
+  rdfs:label "Papua New Guinea" ;
+  :iso_alpha2 "PG" ;
+  :iso_alpha3 "PNG" .
+geo:2088628 :has_currency geo:CurrencyPGK .
+geo:6255151 :has_component geo:2088628 .
+
+geo:1694008 a :Country ;
+  rdfs:label "Philippine Islands" ;
+  :noun_synonym "Philippines" , "Republic of the Philippines" ;
+  :iso_alpha2 "PH" ;
+  :iso_alpha3 "PHL" .
+geo:1694008 :has_currency geo:CurrencyPHP .
+geo:5880801 :has_component geo:1694008 .
+
+geo:1168579 a :Country ;
+  rdfs:label "Pakistan" ;
+  :noun_synonym "Dominion of Pakistan" , "Federation of Pakistan" , "Islamic Republic of Pakistan" ;
+  :iso_alpha2 "PK" ;
+  :iso_alpha3 "PAK" .
+geo:1168579 :has_currency geo:CurrencyPKR .
+geo:5880801 :has_component geo:1168579 .
+
+geo:798544 a :Country ;
+  rdfs:label "Poland" ;
+  :noun_synonym "Republic of Poland" ;
+  :iso_alpha2 "PL" ;
+  :iso_alpha3 "POL" .
+geo:798544 :has_currency geo:CurrencyPLN .
+geo:6255148 :has_component geo:798544 .
+
+geo:3424932 a :Country ;
+  rdfs:label "Saint Pierre and Miquelon" ;
+  :noun_synonym "Miquelon" , "Saint Pierre" , "St Pierre" , "St. Pierre" ;
+  :iso_alpha2 "PM" ;
+  :iso_alpha3 "SPM" .
+geo:3424932 :has_currency geo:CurrencyEUR .
+geo:3355338 :has_component geo:3424932 .
+
+geo:4030699 a :Country ;
+  rdfs:label "Pitcairn" ;
+  :iso_alpha2 "PN" ;
+  :iso_alpha3 "PCN" .
+geo:4030699 :has_currency geo:CurrencyNZD .
+geo:6255151 :has_component geo:4030699 .
+
+geo:4566966 a :Country ;
+  rdfs:label "Puerto Rico" ;
+  :noun_synonym "Associated Free State of Puerto Rico" , "Commonwealth of Puerto Rico" ;
+  :iso_alpha2 "PR" ;
+  :iso_alpha3 "PRI" .
+geo:4566966 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:4566966 .
+
+geo:6254930 a :Country ;
+  rdfs:label "Palestine" ;
+  :noun_synonym "Gaza Strip" , "Occupied Palestinian Territories" , "Occupied Palestinian Territory" , "Palestinian National Authority" , "Palestinian territories" , "State of Palestine" , "West Bank" ;
+  :iso_alpha2 "PS" ;
+  :iso_alpha3 "PSE" .
+geo:6254930 :has_currency geo:CurrencyILS .
+geo:5880801 :has_component geo:6254930 .
+
+geo:2264397 a :Country ;
+  rdfs:label "Portugal" ;
+  :noun_synonym "Portuguese Republic" ;
+  :iso_alpha2 "PT" ;
+  :iso_alpha3 "PRT" .
+geo:2264397 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:2264397 .
+
+geo:1559582 a :Country ;
+  rdfs:label "Palau" ;
+  :noun_synonym "Republic of Palau" ;
+  :iso_alpha2 "PW" ;
+  :iso_alpha3 "PLW" .
+geo:1559582 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:1559582 .
+
+geo:3437598 a :Country ;
+  rdfs:label "Paraguay" ;
+  :noun_synonym "Republic of Paraguay" ;
+  :iso_alpha2 "PY" ;
+  :iso_alpha3 "PRY" .
+geo:3437598 :has_currency geo:CurrencyPYG .
+geo:6255150 :has_component geo:3437598 .
+
+geo:289688 a :Country ;
+  rdfs:label "Qatar" ;
+  :iso_alpha2 "QA" ;
+  :iso_alpha3 "QAT" .
+geo:289688 :has_currency geo:CurrencyQAR .
+geo:5880801 :has_component geo:289688 .
+
+geo:935317 a :Country ;
+  rdfs:label "Reunion" ;
+  :iso_alpha2 "RE" ;
+  :iso_alpha3 "REU" .
+geo:935317 :has_currency geo:CurrencyEUR .
+geo:1149361 :has_component geo:935317 .
+
+geo:798549 a :Country ;
+  rdfs:label "Romania" ;
+  :iso_alpha2 "RO" ;
+  :iso_alpha3 "ROU" .
+geo:798549 :has_currency geo:CurrencyRON .
+geo:6255148 :has_component geo:798549 .
+
+geo:6290252 a :Country ;
+  rdfs:label "Serbia" ;
+  :noun_synonym "Republic of Serbia" , "Yugoslavia" ;
+  :iso_alpha2 "RS" ;
+  :iso_alpha3 "SRB" .
+geo:6290252 :has_currency geo:CurrencyRSD .
+geo:6255148 :has_component geo:6290252 .
+
+geo:2017370 a :Country ;
+  rdfs:label "Russia" ;
+  :noun_synonym "Russian Federation" , "Soviet Union" , "U.S.S.R." , "USSR" , "Union of Soviet Socialist Republics" ;
+  :iso_alpha2 "RU" ;
+  :iso_alpha3 "RUS" .
+geo:2017370 :has_currency geo:CurrencyRUB .
+geo:6255148 :has_component geo:2017370 .
+
+geo:49518 a :Country ;
+  rdfs:label "Rwanda" ;
+  :noun_synonym "Republic of Rwanda" , "Rwandese Republic" ;
+  :iso_alpha2 "RW" ;
+  :iso_alpha3 "RWA" .
+geo:49518 :has_currency geo:CurrencyRWF .
+geo:1149361 :has_component geo:49518 .
+
+geo:102358 a :Country ;
+  rdfs:label "Saudi Arabia" ;
+  :noun_synonym "Kingdom of Saudi Arabia" , "Saudia";
+  :iso_alpha2 "SA" ;
+  :iso_alpha3 "SAU" .
+geo:102358 :has_currency geo:CurrencySAR .
+geo:5880801 :has_component geo:102358 .
+
+geo:2103350 a :Country ;
+  rdfs:label "Solomon Islands" ;
+  :iso_alpha2 "SB" ;
+  :iso_alpha3 "SLB" .
+geo:2103350 :has_currency geo:CurrencySBD .
+geo:6255151 :has_component geo:2103350 .
+
+geo:241170 a :Country ;
+  rdfs:label "Seychelles" ;
+  :iso_alpha2 "SC" ;
+  :iso_alpha3 "SYC" .
+geo:241170 :has_currency geo:CurrencySCR .
+geo:1149361 :has_component geo:241170 .
+
+geo:366755 a :Country ;
+  rdfs:label "Sudan" ;
+  :noun_synonym "Republic of the Sudan" ;
+  :iso_alpha2 "SD" ;
+  :iso_alpha3 "SDN" .
+geo:366755 :has_currency geo:CurrencySDG .
+geo:1149361 :has_component geo:366755 .
+
+geo:7909807 a :Country ;
+  rdfs:label "South Sudan" ;
+  :noun_synonym "Republic of South Sudan" ;
+  :iso_alpha2 "SS" ;
+  :iso_alpha3 "SSD" .
+geo:7909807 :has_currency geo:CurrencySSP .
+geo:1149361 :has_component geo:7909807 .
+
+geo:2661886 a :Country ;
+  rdfs:label "Sweden" ;
+  :noun_synonym "Kingdom of Sweden" ;
+  :iso_alpha2 "SE" ;
+  :iso_alpha3 "SWE" .
+geo:2661886 :has_currency geo:CurrencySEK .
+geo:6255148 :has_component geo:2661886 .
+
+geo:1880251 a :Country ;
+  rdfs:label "Singapore" ;
+  :noun_synonym "Republic of Singapore" ;
+  :iso_alpha2 "SG" ;
+  :iso_alpha3 "SGP" .
+geo:1880251 :has_currency geo:CurrencySGD .
+geo:5880801 :has_component geo:1880251 .
+
+geo:3370751 a :Country ;
+  rdfs:label "Saint Helena and Ascension and Tristan da Cunha" ;
+  :noun_synonym "Ascension" , "Saint Helena" , "St Helena" , "St. Helena" , "Tristan da Cunha" ;
+  :iso_alpha2 "SH" ;
+  :iso_alpha3 "SHN" .
+geo:3370751 :has_currency geo:CurrencySHP .
+geo:1149361 :has_component geo:3370751 .
+
+geo:3190538 a :Country ;
+  rdfs:label "Slovenia" ;
+  :noun_synonym "Republic of Slovenia" ;
+  :iso_alpha2 "SI" ;
+  :iso_alpha3 "SVN" .
+geo:3190538 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3190538 .
+
+geo:607072 a :Country ;
+  rdfs:label "Svalbard and Jan Mayen" ;
+  :noun_synonym "Jan Mayen Islands" , "Svalbard" ;
+  :iso_alpha2 "SJ" ;
+  :iso_alpha3 "SJM" .
+geo:607072 :has_currency geo:CurrencyNOK .
+geo:6255148 :has_component geo:607072 .
+
+geo:3057568 a :Country ;
+  rdfs:label "Slovakia" ;
+  :noun_synonym "Slovak Republic" ;
+  :iso_alpha2 "SK" ;
+  :iso_alpha3 "SVK" .
+geo:3057568 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3057568 .
+
+geo:2403846 a :Country ;
+  rdfs:label "Sierra Leone" ;
+  :iso_alpha2 "SL" ;
+  :iso_alpha3 "SLE" .
+geo:2403846 :has_currency geo:CurrencySLL .
+geo:1149361 :has_component geo:2403846 .
+
+geo:3168068 a :Country ;
+  rdfs:label "San Marino" ;
+  :iso_alpha2 "SM" ;
+  :iso_alpha3 "SMR" .
+geo:3168068 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3168068 .
+
+geo:2245662 a :Country ;
+  rdfs:label "Senegal" ;
+  :noun_synonym "Republic of Senegal" ;
+  :iso_alpha2 "SN" ;
+  :iso_alpha3 "SEN" .
+geo:2245662 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2245662 .
+
+geo:51537 a :Country ;
+  rdfs:label "Somalia" ;
+  :noun_synonym "Federal Republic of Somalia" ;
+  :iso_alpha2 "SO" ;
+  :iso_alpha3 "SOM" .
+geo:51537 :has_currency geo:CurrencySOS .
+geo:1149361 :has_component geo:51537 .
+
+geo:3382998 a :Country ;
+  rdfs:label "Suriname" ;
+  :noun_synonym "Dutch Guiana" , "Netherlands Guiana" , "Republic of Suriname" ;
+  :iso_alpha2 "SR" ;
+  :iso_alpha3 "SUR" .
+geo:3382998 :has_currency geo:CurrencySRD .
+geo:102358 :has_component geo:3382998 .
+
+geo:2410758 a :Country ;
+  rdfs:label "Sao Tome and Principe" ;
+  :noun_synonym "Principe" , "Sao Tome" ;
+  :iso_alpha2 "ST" ;
+  :iso_alpha3 "STP" .
+geo:2410758 :has_currency geo:CurrencySTD .
+geo:1149361 :has_component geo:2410758 .
+
+geo:3585968 a :Country ;
+  rdfs:label "El Salvador" ;
+  :iso_alpha2 "SV" ;
+  :iso_alpha3 "SLV" .
+geo:3585968 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:3585968 .
+
+geo:7609695 a :Country ;
+  rdfs:label "Sint Maarten" ;
+  :noun_synonym "Sint Maarten (Dutch part)" ;
+  :iso_alpha2 "SX" ;
+  :iso_alpha3 "SXM" .
+geo:7609695 :has_currency geo:CurrencyANG .
+geo:3355338 :has_component geo:7609695 .
+
+geo:163843 a :Country ;
+  rdfs:label "Syria" ;
+  :noun_synonym "Syrian Arab Republic" ;
+  :iso_alpha2 "SY" ;
+  :iso_alpha3 "SYR" .
+geo:163843 :has_currency geo:CurrencySYP .
+geo:5880801 :has_component geo:163843 .
+
+geo:934841 a :Country ;
+  rdfs:label "Eswatini" ;
+  :noun_synonym "Kingdom of Eswatini" , "Swaziland" ;
+  :iso_alpha2 "SZ" ;
+  :iso_alpha3 "SWZ" .
+geo:934841 :has_currency geo:CurrencySZL .
+geo:1149361 :has_component geo:934841 .
+
+geo:3576916 a :Country ;
+  rdfs:label "Turks and Caicos Islands" ;
+  :noun_synonym "Caicos Islands" , "Turks Islands" ;
+  :iso_alpha2 "TC" ;
+  :iso_alpha3 "TCA" .
+geo:3576916 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:3576916 .
+
+geo:2434508 a :Country ;
+  rdfs:label "Chad" ;
+  :noun_synonym "Republic of Chad" ;
+  :iso_alpha2 "TD" ;
+  :iso_alpha3 "TCD" .
+geo:2434508 :has_currency geo:CurrencyXAF .
+geo:1149361 :has_component geo:2434508 .
+
+geo:1546748 a :Country ;
+  rdfs:label "French Southern Territories" ;
+  :iso_alpha2 "TF" ;
+  :iso_alpha3 "ATF" .
+geo:1546748 :has_currency geo:CurrencyEUR .
+geo:6255152 :has_component geo:1546748 .
+
+geo:2363686 a :Country ;
+  rdfs:label "Togo" ;
+  :iso_alpha2 "TG" ;
+  :iso_alpha3 "TGO" .
+geo:2363686 :has_currency geo:CurrencyXOF .
+geo:1149361 :has_component geo:2363686 .
+
+geo:1605651 a :Country ;
+  rdfs:label "Thailand" ;
+  :noun_synonym"Kingdom of Thailand" , "Siam" ;
+  :iso_alpha2 "TH" ;
+  :iso_alpha3 "THA" .
+geo:1605651 :has_currency geo:CurrencyTHB .
+geo:5880801 :has_component geo:1605651 .
+
+geo:1220409 a :Country ;
+  rdfs:label "Tajikistan" ;
+  :noun_synonym "Republic of Tajikistan" ;
+  :iso_alpha2 "TJ" ;
+  :iso_alpha3 "TJK" .
+geo:1220409 :has_currency geo:CurrencyTJS .
+geo:5880801 :has_component geo:1220409 .
+
+geo:4031074 a :Country ;
+  rdfs:label "Tokelau" ;
+  :iso_alpha2 "TK" ;
+  :iso_alpha3 "TKL" .
+geo:4031074 :has_currency geo:CurrencyNZD .
+geo:6255151 :has_component geo:4031074 .
+
+geo:1966436 a :Country ;
+  rdfs:label "Timor-Leste" ;
+  :noun_synonym "Democratic Republic of Timor-Leste" , "East Timor" ;
+  :iso_alpha2 "TL" ;
+  :iso_alpha3 "TLS" .
+geo:1966436 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:1966436 .
+
+geo:1218197 a :Country ;
+  rdfs:label "Turkmenistan" ;
+  :iso_alpha2 "TM" ;
+  :iso_alpha3 "TKM" .
+geo:1218197 :has_currency geo:CurrencyTMT .
+geo:5880801 :has_component geo:1218197 .
+
+geo:2464461 a :Country ;
+  rdfs:label "Tunisia" ;
+  :noun_synonym "Republic of Tunisia" ;
+  :iso_alpha2 "TN" ;
+  :iso_alpha3 "TUN" .
+geo:2464461 :has_currency geo:CurrencyTND .
+geo:1149361 :has_component geo:2464461 .
+
+geo:4032283 a :Country ;
+  rdfs:label "Tonga" ;
+  :iso_alpha2 "TO" ;
+  :iso_alpha3 "TON" .
+geo:4032283 :has_currency geo:CurrencyTOP .
+geo:6255151 :has_component geo:4032283 .
+
+geo:298795 a :Country ;
+  rdfs:label "Turkey" ;
+  :noun_synonym"Anatolia" , "Asia Minor" , "Republic of Turkey" ;
+  :iso_alpha2 "TR" ;
+  :iso_alpha3 "TUR" .
+geo:298795 :has_currency geo:CurrencyTRY .
+geo:5880801 :has_component geo:298795 .
+
+geo:3573591 a :Country ;
+  rdfs:label "Trinidad and Tobago" ;
+  :noun_synonym "Republic of Trinidad and Tobago" , "Tobago" , "Trinbago" , "Trinidad" ;
+  :iso_alpha2 "TT" ;
+  :iso_alpha3 "TTO" .
+geo:3573591 :has_currency geo:CurrencyTTD .
+geo:3355338 :has_component geo:3573591 .
+
+geo:2110297 a :Country ;
+  rdfs:label "Tuvalu" ;
+  :noun_synonym "Ellice Islands" ;
+  :iso_alpha2 "TV" ;
+  :iso_alpha3 "TUV" .
+geo:2110297 :has_currency geo:CurrencyAUD .
+geo:6255151 :has_component geo:2110297 .
+
+geo:1668284 a :Country ;
+  rdfs:label "Taiwan" ;
+  :noun_synonym "Formosa" , "Republic of China" , "Taiwan, Province of China" ;
+  :iso_alpha2 "TW" ;
+  :iso_alpha3 "TWN" .
+geo:1668284 :has_currency geo:CurrencyTWD .
+geo:5880801 :has_component geo:1668284 .
+
+geo:149590 a :Country ;
+  rdfs:label "Tanzania" ;
+  :noun_synonym "United Republic of Tanganyika and Zanzibar" , "United Republic of Tanzania" , "Zanzibar" ;
+  :iso_alpha2 "TZ" ;
+  :iso_alpha3 "TZA" .
+geo:149590 :has_currency geo:CurrencyTZS .
+geo:1149361 :has_component geo:149590 .
+
+geo:690791 a :Country ;
+  rdfs:label "Ukraine" ;
+  :iso_alpha2 "UA" ;
+  :iso_alpha3 "UKR" .
+geo:690791 :has_currency geo:CurrencyUAH .
+geo:6255148 :has_component geo:690791 .
+
+geo:226074 a :Country ;
+  rdfs:label "Uganda" ;
+  :noun_synonym"Republic of Uganda" ;
+  :iso_alpha2 "UG" ;
+  :iso_alpha3 "UGA" .
+geo:226074 :has_currency geo:CurrencyUGX .
+geo:1149361 :has_component geo:226074 .
+
+geo:5854968 a :Country ;
+  rdfs:label "United States Minor Outlying Islands" ;
+  :iso_alpha2 "UM" ;
+  :iso_alpha3 "UMI" .
+geo:5854968 :has_currency geo:CurrencyUSD .
+geo:6255151 :has_component geo:5854968 .
+
+geo:6252001 a :Country ;
+  rdfs:label "United States of America" ;
+  :noun_synonym "America" , "U.S.A." , "United States" ;
+  :iso_alpha2 "US" ;
+  :iso_alpha3 "USA" .
+geo:6252001 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:6252001 .
+
+geo:3439705 a :Country ;
+  rdfs:label "Uruguay" ;
+  :noun_synonym "Oriental Republic of Uruguay" ;
+  :iso_alpha2 "UY" ;
+  :iso_alpha3 "URY" .
+geo:3439705 :has_currency geo:CurrencyUYU .
+geo:102358 :has_component geo:3439705 .
+
+geo:1512440 a :Country ;
+  rdfs:label "Uzbekistan" ;
+  :noun_synonym "Republic of Uzbekistan" ;
+  :iso_alpha2 "UZ" ;
+  :iso_alpha3 "UZB" .
+geo:1512440 :has_currency geo:CurrencyUZS .
+geo:5880801 :has_component geo:1512440 .
+
+geo:3164670 a :Country ;
+  rdfs:label "Holy See (Vatican City State)" ;
+  :noun_synonym "Holy See" , "Vatican City State" ;
+  :iso_alpha2 "VA" ;
+  :iso_alpha3 "VAT" .
+geo:3164670 :has_currency geo:CurrencyEUR .
+geo:6255148 :has_component geo:3164670 .
+
+geo:3577815 a :Country ;
+  rdfs:label "Saint Vincent and the Grenadines" ;
+  :noun_synonym "St Vincent" , "St. Vincent" ;
+  :iso_alpha2 "VC" ;
+  :iso_alpha3 "VCT" .
+geo:3577815 :has_currency geo:CurrencyXCD .
+geo:3355338 :has_component geo:3577815 .
+
+geo:3625428 a :Country ;
+  rdfs:label "Venezuela" ;
+  :noun_synonym "Bolivarian Republic of Venezuela" ;
+  :iso_alpha2 "VE" ;
+  :iso_alpha3 "VEN" .
+geo:3625428 :has_currency geo:CurrencyVES .
+geo:102358 :has_component geo:3625428 .
+
+geo:3577718 a :Country ;
+  rdfs:label "British Virgin Islands" ;
+  :noun_synonym "Virgin Islands (British)" ;
+  :iso_alpha2 "VG" ;
+  :iso_alpha3 "VGB" .
+geo:3577718 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:3577718 .
+
+geo:4796775 a :Country ;
+  rdfs:label "US Virgin Islands" ;
+  :noun_synonym "Virgin Islands (U.S.)" ;
+  :iso_alpha2 "VI" ;
+  :iso_alpha3 "VIR" .
+geo:4796775 :has_currency geo:CurrencyUSD .
+geo:3355338 :has_component geo:4796775 .
+
+geo:1562822 a :Country ;
+  rdfs:label "Vietnam" ;
+  :noun_synonym "Socialist Republic of Vietnam" , "Viet Nam" ;
+  :iso_alpha2 "VN" ;
+  :iso_alpha3 "VNM" .
+geo:1562822 :has_currency geo:CurrencyVND .
+geo:5880801 :has_component geo:1562822 .
+
+geo:2134431 a :Country ;
+  rdfs:label "Vanuatu" ;
+  :noun_synonym "New Hebrides" ;
+  :iso_alpha2 "VU" ;
+  :iso_alpha3 "VUT" .
+geo:2134431 :has_currency geo:CurrencyVUV .
+geo:6255151 :has_component geo:2134431 .
+
+geo:4034749 a :Country ;
+  rdfs:label "Wallis and Futuna" ;
+  :iso_alpha2 "WF" ;
+  :iso_alpha3 "WLF" .
+geo:4034749 :has_currency geo:CurrencyXPF .
+geo:6255151 :has_component geo:4034749 .
+
+geo:4034894 a :Country ;
+  rdfs:label "Samoa" ;
+  :iso_alpha2 "WS" ;
+  :iso_alpha3 "WSM" .
+geo:4034894 :has_currency geo:CurrencyWST .
+geo:6255151 :has_component geo:4034894 .
+
+geo:69543 a :Country ;
+  rdfs:label "Yemen" ;
+  :noun_synonym "Republic of Yemen" ;
+  :iso_alpha2 "YE" ;
+  :iso_alpha3 "YEM" .
+geo:69543 :has_currency geo:CurrencyYER .
+geo:5880801 :has_component geo:69543 .
+
+geo:1024031 a :Country ;
+  rdfs:label "Mayotte" ;
+  :iso_alpha2 "YT" ;
+  :iso_alpha3 "MYT" .
+geo:1024031 :has_currency geo:CurrencyEUR .
+geo:1149361 :has_component geo:1024031 .
+
+geo:953987 a :Country ;
+  rdfs:label "South Africa" ;
+  :iso_alpha2 "ZA" ;
+  :iso_alpha3 "ZAF" .
+geo:953987 :has_currency geo:CurrencyZAR .
+geo:1149361 :has_component geo:953987 .
+
+geo:895949 a :Country ;
+  rdfs:label "Zambia" ;
+  :noun_synonym "Northern Rhodesia" , "Republic of Zambia" ;
+  :iso_alpha2 "ZM" ;
+  :iso_alpha3 "ZMB" .
+geo:895949 :has_currency geo:CurrencyZMW .
+geo:1149361 :has_component geo:895949 .
+
+geo:878675 a :Country ;
+  rdfs:label "Zimbabwe" ;
+  :noun_synonym "Republic of Zimbabwe" , "Southern Rhodesia" ;
+  :iso_alpha2 "ZW" ;
+  :iso_alpha3 "ZWE" .
+geo:878675 :has_currency geo:CurrencyZWL .
+geo:1149361 :has_component geo:878675 .
+
+geo:8505033 a :Country ;
+  rdfs:label "Serbia and Montenegro" ;
+  :iso_alpha2 "CS" ;
+  :iso_alpha3 "SCG" .
+geo:8505033 :has_currency geo:CurrencyRSD .
+geo:6255148 :has_component geo:8505033 .
+
+geo:8505032 a :Country ;
+  rdfs:label "Netherlands Antilles" ;
+  :iso_alpha2 "AN" ;
+  :iso_alpha3 "ANT" .
+geo:8505032 :has_currency geo:CurrencyANG .
+geo:3355338 :has_component geo:8505032 .
+
+########################################################################
+# Currencies
+########################################################################
+
+geo:CurrencyAMD a :Currency ;
+  rdfs:label "Dram" .
+
+geo:CurrencyPAB a :Currency ;
+  rdfs:label "Balboa" .
+
+geo:CurrencySHP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyRSD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyXCD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyGEL a :Currency ;
+  rdfs:label "Lari" .
+
+geo:CurrencyFKP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyBZD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyIDR a :Currency ;
+  rdfs:label "Rupiah" .
+
+geo:CurrencyVUV a :Currency ;
+  rdfs:label "Vatu" .
+
+geo:CurrencyMAD a :Currency ;
+  rdfs:label "Dirham" .
+
+geo:CurrencyBYN a :Currency ;
+  rdfs:label "Belarusian ruble" .
+
+geo:CurrencyMXN a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyTRY a :Currency ;
+  rdfs:label "Lira" .
+
+geo:CurrencyNGN a :Currency ;
+  rdfs:label "Naira" .
+
+geo:CurrencyHTG a :Currency ;
+  rdfs:label "Gourde" .
+
+geo:CurrencyHKD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyGMD a :Currency ;
+  rdfs:label "Dalasi" .
+
+geo:CurrencyLAK a :Currency ;
+  rdfs:label "Kip" .
+
+geo:CurrencyRON a :Currency ;
+  rdfs:label "Leu" .
+
+geo:CurrencyNZD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyQAR a :Currency ;
+  rdfs:label "Rial" .
+
+geo:CurrencyTHB a :Currency ;
+  rdfs:label "Baht" .
+
+geo:CurrencyHRK a :Currency ;
+  rdfs:label "Kuna" .
+
+geo:CurrencyBDT a :Currency ;
+  rdfs:label "Taka" .
+
+geo:CurrencyIRR a :Currency ;
+  rdfs:label "Rial" .
+
+geo:CurrencyKYD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencySCR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencyNAD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyAZN a :Currency ;
+  rdfs:label "Manat" .
+
+geo:CurrencySOS a :Currency ;
+  rdfs:label "Shilling" .
+
+geo:CurrencyARS a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyTMT a :Currency ;
+  rdfs:label "Manat" .
+
+geo:CurrencyYER a :Currency ;
+  rdfs:label "Rial" .
+
+geo:CurrencyBHD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyDKK a :Currency ;
+  rdfs:label "Krone" .
+
+geo:CurrencyMVR a :Currency ;
+  rdfs:label "Rufiyaa" .
+
+geo:CurrencyDZD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencySDG a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyMOP a :Currency ;
+  rdfs:label "Pataca" .
+
+geo:CurrencyUSD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyPEN a :Currency ;
+  rdfs:label "Sol" .
+
+geo:CurrencyLKR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencyMUR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencyCHF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyTND a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyEUR a :Currency ;
+  rdfs:label "Euro" .
+
+geo:CurrencySAR a :Currency ;
+  rdfs:label "Rial" .
+
+geo:CurrencyINR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencyBTN a :Currency ;
+  rdfs:label "Ngultrum" .
+
+geo:CurrencyLSL a :Currency ;
+  rdfs:label "Loti" .
+
+geo:CurrencyGIP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyGYD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyTTD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyNIO a :Currency ;
+  rdfs:label "Cordoba" .
+
+geo:CurrencyPYG a :Currency ;
+  rdfs:label "Guarani" .
+
+geo:CurrencyIQD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyAED a :Currency ;
+  rdfs:label "Dirham" .
+
+geo:CurrencyXOF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyJPY a :Currency ;
+  rdfs:label "Yen" .
+
+geo:CurrencyMDL a :Currency ;
+  rdfs:label "Leu" .
+
+geo:CurrencyRUB a :Currency ;
+  rdfs:label "Ruble" .
+
+geo:CurrencyMYR a :Currency ;
+  rdfs:label "Ringgit" .
+
+geo:CurrencyZAR a :Currency ;
+  rdfs:label "Rand" .
+
+geo:CurrencyHNL a :Currency ;
+  rdfs:label "Lempira" .
+
+geo:CurrencyKPW a :Currency ;
+  rdfs:label "Won" .
+
+geo:CurrencyKHR a :Currency ;
+  rdfs:label "Riels" .
+
+geo:CurrencyLYD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyPGK a :Currency ;
+  rdfs:label "Kina" .
+
+geo:CurrencyMMK a :Currency ;
+  rdfs:label "Kyat" .
+
+geo:CurrencyCVE a :Currency ;
+  rdfs:label "Escudo" .
+
+geo:CurrencyDOP a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyKES a :Currency ;
+  rdfs:label "Shilling" .
+
+geo:CurrencyTJS a :Currency ;
+  rdfs:label "Somoni" .
+
+geo:CurrencyNOK a :Currency ;
+  rdfs:label "Krone" .
+
+geo:CurrencyCLP a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyTZS a :Currency ;
+  rdfs:label "Shilling" .
+
+geo:CurrencyCNY a :Currency ;
+  rdfs:label "Yuan Renminbi" .
+
+geo:CurrencySEK a :Currency ;
+  rdfs:label "Krona" .
+
+geo:CurrencySBD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyBIF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyEGP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyOMR a :Currency ;
+  rdfs:label "Rial" .
+
+geo:CurrencyCUP a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyETB a :Currency ;
+  rdfs:label "Birr" .
+
+geo:CurrencyUGX a :Currency ;
+  rdfs:label "Shilling" .
+
+geo:CurrencySLL a :Currency ;
+  rdfs:label "Leone" .
+
+geo:CurrencyFJD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyVES a :Currency ;
+  rdfs:label "Bolivar Soberano" .
+
+geo:CurrencyCAD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencySZL a :Currency ;
+  rdfs:label "Lilangeni" .
+
+geo:CurrencyTOP a :Currency ;
+  rdfs:label "Pa'anga" .
+
+geo:CurrencyJOD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyERN a :Currency ;
+  rdfs:label "Nakfa" .
+
+geo:CurrencyGBP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyBSD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyBRL a :Currency ;
+  rdfs:label "Real" .
+
+geo:CurrencyUAH a :Currency ;
+  rdfs:label "Hryvnia" .
+
+geo:CurrencyXPF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyBOB a :Currency ;
+  rdfs:label "Boliviano" .
+
+geo:CurrencyBMD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyHUF a :Currency ;
+  rdfs:label "Forint" .
+
+geo:CurrencyAUD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyPHP a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyTWD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyUYU a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyVND a :Currency ;
+  rdfs:label "Dong" .
+
+geo:CurrencyBWP a :Currency ;
+  rdfs:label "Pula" .
+
+geo:CurrencyJMD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyMRO a :Currency ;
+  rdfs:label "Ouguiya" .
+
+geo:CurrencyCZK a :Currency ;
+  rdfs:label "Koruna" .
+
+geo:CurrencyANG a :Currency ;
+  rdfs:label "Guilder" .
+
+geo:CurrencyPKR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencySGD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyBBD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyDJF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyCDF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyKRW a :Currency ;
+  rdfs:label "Won" .
+
+geo:CurrencyKWD a :Currency ;
+  rdfs:label "Dinar" .
+
+geo:CurrencyISK a :Currency ;
+  rdfs:label "Krona" .
+
+geo:CurrencyUZS a :Currency ;
+  rdfs:label "Som" .
+
+geo:CurrencyMKD a :Currency ;
+  rdfs:label "Denar" .
+
+geo:CurrencyRWF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyXAF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyMNT a :Currency ;
+  rdfs:label "Tugrik" .
+
+geo:CurrencyPLN a :Currency ;
+  rdfs:label "Zloty" .
+
+geo:CurrencyAOA a :Currency ;
+  rdfs:label "Kwanza" .
+
+geo:CurrencyBND a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencySTD a :Currency ;
+  rdfs:label "Dobra" .
+
+geo:CurrencyMZN a :Currency ;
+  rdfs:label "Metical" .
+
+geo:CurrencyZMW a :Currency ;
+  rdfs:label "Kwacha" .
+
+geo:CurrencyALL a :Currency ;
+  rdfs:label "Lek" .
+
+geo:CurrencyLBP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencySSP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyMWK a :Currency ;
+  rdfs:label "Kwacha" .
+
+geo:CurrencyBGN a :Currency ;
+  rdfs:label "Lev" .
+
+geo:CurrencySYP a :Currency ;
+  rdfs:label "Pound" .
+
+geo:CurrencyCRC a :Currency ;
+  rdfs:label "Colon" .
+
+geo:CurrencyKGS a :Currency ;
+  rdfs:label "Som" .
+
+geo:CurrencyLRD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyKZT a :Currency ;
+  rdfs:label "Tenge" .
+
+geo:CurrencySRD a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyNPR a :Currency ;
+  rdfs:label "Rupee" .
+
+geo:CurrencyCOP a :Currency ;
+  rdfs:label "Peso" .
+
+geo:CurrencyWST a :Currency ;
+  rdfs:label "Tala" .
+
+geo:CurrencyGHS a :Currency ;
+  rdfs:label "Cedi" .
+
+geo:CurrencyGNF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyZWL a :Currency ;
+  rdfs:label "Dollar" .
+
+geo:CurrencyAWG a :Currency ;
+  rdfs:label "Guilder" .
+
+geo:CurrencyMGA a :Currency ;
+  rdfs:label "Ariary" .
+
+geo:CurrencyBAM a :Currency ;
+  rdfs:label "Marka" .
+
+geo:CurrencyAFN a :Currency ;
+  rdfs:label "Afghani" .
+
+geo:CurrencyKMF a :Currency ;
+  rdfs:label "Franc" .
+
+geo:CurrencyILS a :Currency ;
+  rdfs:label "Shekel" .
+
+geo:CurrencyGTQ a :Currency ;
+  rdfs:label "Quetzal" .
+
+########################################################################
+# Bordering Neighbors
+########################################################################
+
+geo:163843 :meets geo:298795 .
+
+geo:2993457 :meets geo:3017382 .
+
+geo:783754 :meets geo:3194884 .
+
+geo:1562822 :meets geo:1814991 .
+
+geo:878675 :meets geo:953987 .
+
+geo:366755 :meets geo:2434508 .
+
+geo:2017370 :meets geo:3144096 .
+
+geo:223816 :meets geo:338010 .
+
+geo:2921044 :meets geo:2960313 .
+
+geo:3382998 :meets geo:3469034 .
+
+geo:2510769 :meets geo:3041565 .
+
+geo:2378080 :meets geo:2453866 .
+
+geo:927384 :meets geo:1036973 .
+
+geo:1327865 :meets geo:1814991 .
+
+geo:2782113 :meets geo:3057568 .
+
+geo:690791 :meets geo:2017370 .
+
+geo:99237 :meets geo:130758 .
+
+geo:337996 :meets geo:366755 .
+
+geo:1733045 :meets geo:1820814 .
+
+geo:3658394 :meets geo:3686110 .
+
+geo:174982 :meets geo:614540 .
+
+geo:2275384 :meets geo:2420477 .
+
+geo:2378080 :meets geo:2461445 .
+
+geo:3175395 :meets geo:3190538 .
+
+geo:3439705 :meets geo:3865483 .
+
+geo:2300660 :meets geo:2361809 .
+
+geo:2215636 :meets geo:2440476 .
+
+geo:2260494 :meets geo:2400553 .
+
+geo:102358 :meets geo:285570 .
+
+geo:49518 :meets geo:226074 .
+
+geo:895949 :meets geo:1036973 .
+
+geo:69543 :meets geo:102358 .
+
+geo:102358 :meets geo:286963 .
+
+geo:130758 :meets geo:1218197 .
+
+geo:99237 :meets geo:285570 .
+
+geo:1269750 :meets geo:1814991 .
+
+geo:2782113 :meets geo:3190538 .
+
+geo:203312 :meets geo:2260494 .
+
+geo:1149361 :meets geo:1168579 .
+
+geo:3469034 :meets geo:3686110 .
+
+geo:3381670 :meets geo:3382998 .
+
+geo:2233387 :meets geo:2309096 .
+
+geo:2361809 :meets geo:2363686 .
+
+geo:719819 :meets geo:2782113 .
+
+geo:878675 :meets geo:895949 .
+
+geo:783754 :meets geo:831053 .
+
+geo:49518 :meets geo:203312 .
+
+geo:1252634 :meets geo:1269750 .
+
+geo:2802361 :meets geo:2960313 .
+
+geo:3017382 :meets geo:3041565 .
+
+geo:690791 :meets geo:798544 .
+
+geo:2464461 :meets geo:2589581 .
+
+geo:2461445 :meets geo:2589581 .
+
+geo:1655842 :meets geo:1831722 .
+
+geo:933860 :meets geo:3355338 .
+
+geo:99237 :meets geo:102358 .
+
+geo:130758 :meets geo:1149361 .
+
+geo:294640 :meets geo:357994 .
+
+geo:617790 :meets geo:798549 .
+
+geo:2510769 :meets geo:2542007 .
+
+geo:2782113 :meets geo:3077311 .
+
+geo:3202326 :meets geo:3277605 .
+
+geo:248816 :meets geo:294640 .
+
+geo:878675 :meets geo:1036973 .
+
+geo:3585968 :meets geo:3595528 .
+
+geo:2802361 :meets geo:3017382 .
+
+geo:2921044 :meets geo:3017382 .
+
+geo:798544 :meets geo:2921044 .
+
+geo:2215636 :meets geo:2434508 .
+
+geo:1522867 :meets geo:1527747 .
+
+geo:458258 :meets geo:2017370 .
+
+geo:51537 :meets geo:337996 .
+
+geo:719819 :meets geo:798549 .
+
+geo:203312 :meets geo:433561 .
+
+geo:337996 :meets geo:338010 .
+
+geo:149590 :meets geo:192950 .
+
+geo:2395170 :meets geo:2440476 .
+
+geo:895949 :meets geo:927384 .
+
+geo:3469034 :meets geo:3865483 .
+
+geo:934841 :meets geo:953987 .
+
+geo:1220409 :meets geo:1814991 .
+
+geo:719819 :meets geo:3057568 .
+
+geo:3895114 :meets geo:3932488 .
+
+geo:2750405 :meets geo:2921044 .
+
+geo:3686110 :meets geo:3932488 .
+
+geo:630336 :meets geo:690791 .
+
+geo:3017382 :meets geo:3175395 .
+
+geo:783754 :meets geo:6290252 .
+
+geo:1512440 :meets geo:1522867 .
+
+geo:2245662 :meets geo:2372248 .
+
+geo:337996 :meets geo:7909807 .
+
+geo:2453866 :meets geo:2589581 .
+
+geo:1327865 :meets geo:1655842 .
+
+geo:3351879 :meets geo:3355338 .
+
+geo:895949 :meets geo:3355338 .
+
+geo:2245662 :meets geo:2453866 .
+
+geo:953987 :meets geo:1036973 .
+
+geo:2287781 :meets geo:2361809 .
+
+geo:203312 :meets geo:895949 .
+
+geo:2264397 :meets geo:2510769 .
+
+geo:1252634 :meets geo:1814991 .
+
+geo:2658434 :meets geo:3017382 .
+
+geo:2378080 :meets geo:2589581 .
+
+geo:248816 :meets geo:6254930 .
+
+geo:3190538 :meets geo:3202326 .
+
+geo:1220409 :meets geo:1512440 .
+
+geo:3625428 :meets geo:3686110 .
+
+geo:2440476 :meets geo:2589581 .
+
+geo:1562822 :meets geo:1831722 .
+
+geo:1605651 :meets geo:1655842 .
+
+geo:718075 :meets geo:732800 .
+
+geo:163843 :meets geo:248816 .
+
+geo:2287781 :meets geo:2300660 .
+
+geo:3437598 :meets geo:3469034 .
+
+geo:3378535 :meets geo:3469034 .
+
+geo:223816 :meets geo:337996 .
+
+geo:2275384 :meets geo:2287781 .
+
+geo:2233387 :meets geo:2434508 .
+
+geo:51537 :meets geo:192950 .
+
+geo:3582678 :meets geo:3996063 .
+
+geo:298795 :meets geo:732800 .
+
+geo:2300660 :meets geo:2363686 .
+
+geo:2461445 :meets geo:2542007 .
+
+geo:102358 :meets geo:289688 .
+
+geo:3437598 :meets geo:3923057 .
+
+geo:49518 :meets geo:433561 .
+
+geo:719819 :meets geo:8505033 .
+
+geo:690791 :meets geo:798549 .
+
+geo:718075 :meets geo:8505033 .
+
+geo:102358 :meets geo:248816 .
+
+geo:163843 :meets geo:294640 .
+
+geo:3923057 :meets geo:3932488 .
+
+geo:1814991 :meets geo:1873107 .
+
+geo:587116 :meets geo:2017370 .
+
+geo:1643084 :meets geo:2088628 .
+
+geo:99237 :meets geo:248816 .
+
+geo:357994 :meets geo:366755 .
+
+geo:1168579 :meets geo:1814991 .
+
+geo:192950 :meets geo:226074 .
+
+geo:366755 :meets geo:7909807 .
+
+geo:2782113 :meets geo:2921044 .
+
+geo:458258 :meets geo:630336 .
+
+geo:149590 :meets geo:433561 .
+
+geo:3378535 :meets geo:3625428 .
+
+geo:1210997 :meets geo:1327865 .
+
+geo:798549 :meets geo:8505033 .
+
+geo:3595528 :meets geo:3608932 .
+
+geo:130758 :meets geo:298795 .
+
+geo:357994 :meets geo:6254930 .
+
+geo:3168068 :meets geo:3175395 .
+
+geo:3164670 :meets geo:3175395 .
+
+geo:1814991 :meets geo:2017370 .
+
+geo:2960313 :meets geo:3017382 .
+
+geo:2287781 :meets geo:2420477 .
+
+geo:338010 :meets geo:366755 .
+
+geo:2782113 :meets geo:3042058 .
+
+geo:3508796 :meets geo:3723988 .
+
+geo:3624060 :meets geo:3703430 .
+
+geo:3582678 :meets geo:3595528 .
+
+geo:1149361 :meets geo:1512440 .
+
+geo:174982 :meets geo:298795 .
+
+geo:298795 :meets geo:587116 .
+
+geo:3617476 :meets geo:3624060 .
+
+geo:1562822 :meets geo:1655842 .
+
+geo:239880 :meets geo:2233387 .
+
+geo:630336 :meets geo:798544 .
+
+geo:597427 :meets geo:798544 .
+
+geo:3194884 :meets geo:3277605 .
+
+geo:1210997 :meets geo:1269750 .
+
+geo:719819 :meets geo:3190538 .
+
+geo:3378535 :meets geo:3382998 .
+
+geo:1643084 :meets geo:1966436 .
+
+geo:895949 :meets geo:3351879 .
+
+geo:272103 :meets geo:294640 .
+
+geo:99237 :meets geo:298795 .
+
+geo:1655842 :meets geo:1814991 .
+
+geo:587116 :meets geo:614540 .
+
+geo:2363686 :meets geo:2395170 .
+
+geo:2361809 :meets geo:2440476 .
+
+geo:203312 :meets geo:7909807 .
+
+geo:597427 :meets geo:2017370 .
+
+geo:453733 :meets geo:2017370 .
+
+geo:2542007 :meets geo:2589581 .
+
+geo:718075 :meets geo:831053 .
+
+geo:2215636 :meets geo:2589581 .
+
+geo:878675 :meets geo:933860 .
+
+geo:239880 :meets geo:2260494 .
+
+geo:1149361 :meets geo:1218197 .
+
+geo:2750405 :meets geo:2802361 .
+
+geo:203312 :meets geo:226074 .
+
+geo:690791 :meets geo:3057568 .
+
+geo:130758 :meets geo:587116 .
+
+geo:2328926 :meets geo:2440476 .
+
+geo:6251999 :meets geo:6252001 .
+
+geo:1605651 :meets geo:1733045 .
+
+geo:1282988 :meets geo:1814991 .
+
+geo:2782113 :meets geo:3175395 .
+
+geo:1220409 :meets geo:1527747 .
+
+geo:1327865 :meets geo:1605651 .
+
+geo:1522867 :meets geo:2017370 .
+
+geo:2233387 :meets geo:2400553 .
+
+geo:149590 :meets geo:203312 .
+
+geo:660013 :meets geo:2017370 .
+
+geo:458258 :meets geo:597427 .
+
+geo:149590 :meets geo:1036973 .
+
+geo:3194884 :meets geo:6290252 .
+
+geo:390903 :meets geo:718075 .
+
+geo:3578421 :meets geo:7609695 .
+
+geo:2361809 :meets geo:2453866 .
+
+geo:3381670 :meets geo:3469034 .
+
+geo:3595528 :meets geo:3996063 .
+
+geo:831053 :meets geo:3194884 .
+
+geo:239880 :meets geo:2434508 .
+
+geo:298795 :meets geo:390903 .
+
+geo:2309096 :meets geo:2400553 .
+
+geo:798544 :meets geo:3077311 .
+
+geo:1269750 :meets geo:1282988 .
+
+geo:732800 :meets geo:798549 .
+
+geo:149590 :meets geo:895949 .
+
+geo:3686110 :meets geo:3703430 .
+
+geo:2233387 :meets geo:2260494 .
+
+geo:226074 :meets geo:7909807 .
+
+geo:1218197 :meets geo:1512440 .
+
+geo:149590 :meets geo:226074 .
+
+geo:2635167 :meets geo:2963597 .
+
+geo:1527747 :meets geo:1814991 .
+
+geo:2017370 :meets geo:2029969 .
+
+geo:390903 :meets geo:732800 .
+
+geo:3194884 :meets geo:3202326 .
+
+geo:660013 :meets geo:3144096 .
+
+geo:3439705 :meets geo:3469034 .
+
+geo:1149361 :meets geo:1814991 .
+
+geo:3437598 :meets geo:3865483 .
+
+geo:2233387 :meets geo:2328926 .
+
+geo:366755 :meets geo:2215636 .
+
+geo:3579143 :meets geo:8505032 .
+
+geo:1218197 :meets geo:1522867 .
+
+geo:934841 :meets geo:1036973 .
+
+geo:2361809 :meets geo:2395170 .
+
+geo:2215636 :meets geo:2464461 .
+
+geo:1269750 :meets geo:1327865 .
+
+geo:3469034 :meets geo:3932488 .
+
+geo:294640 :meets geo:6254930 .
+
+geo:203312 :meets geo:3351879 .
+
+geo:453733 :meets geo:458258 .
+
+geo:3865483 :meets geo:3895114 .
+
+geo:3202326 :meets geo:8505033 .
+
+geo:2403846 :meets geo:2420477 .
+
+geo:3562981 :meets geo:6252001 .
+
+geo:3057568 :meets geo:3077311 .
+
+geo:718075 :meets geo:6290252 .
+
+geo:798544 :meets geo:2017370 .
+
+geo:174982 :meets geo:587116 .
+
+geo:3608932 :meets geo:3617476 .
+
+geo:2440476 :meets geo:2453866 .
+
+geo:3469034 :meets geo:3923057 .
+
+geo:2245662 :meets geo:2378080 .
+
+geo:933860 :meets geo:953987 .
+
+geo:3202326 :meets geo:6290252 .
+
+geo:3277605 :meets geo:6290252 .
+
+geo:102358 :meets geo:290557 .
+
+geo:2658434 :meets geo:2782113 .
+
+geo:783754 :meets geo:8505033 .
+
+geo:690791 :meets geo:719819 .
+
+geo:2245662 :meets geo:2420477 .
+
+geo:239880 :meets geo:7909807 .
+
+geo:2328926 :meets geo:2395170 .
+
+geo:3469034 :meets geo:3625428 .
+
+geo:163843 :meets geo:272103 .
+
+geo:51537 :meets geo:223816 .
+
+geo:2287781 :meets geo:2453866 .
+
+geo:3277605 :meets geo:8505033 .
+
+geo:2245662 :meets geo:2413451 .
+
+geo:798544 :meets geo:3057568 .
+
+geo:49518 :meets geo:149590 .
+
+geo:130758 :meets geo:1168579 .
+
+geo:1512440 :meets geo:1527747 .
+
+geo:1835841 :meets geo:1873107 .
+
+geo:953987 :meets geo:3355338 .
+
+geo:69543 :meets geo:286963 .
+
+geo:3996063 :meets geo:6252001 .
+
+geo:357994 :meets geo:2215636 .
+
+geo:2275384 :meets geo:2403846 .
+
+geo:1522867 :meets geo:1814991 .
+
+geo:630336 :meets geo:2017370 .
+
+geo:130758 :meets geo:174982 .
+
+geo:2658434 :meets geo:3042058 .
+
+geo:2510769 :meets geo:3017382 .
+
+geo:3865483 :meets geo:3923057 .
+
+geo:203312 :meets geo:239880 .
+
+geo:3585968 :meets geo:3608932 .
+
+geo:932692 :meets geo:953987 .
+
+geo:2661886 :meets geo:3144096 .
+
+geo:1873107 :meets geo:2017370 .
+
+geo:99237 :meets geo:163843 .
+
+geo:390903 :meets geo:783754 .
+
+geo:2328926 :meets geo:2434508 .
+
+geo:2260494 :meets geo:3351879 .
+
+geo:2420477 :meets geo:2453866 .
+
+geo:719819 :meets geo:6290252 .
+
+geo:3895114 :meets geo:3923057 .
+
+geo:2372248 :meets geo:2420477 .
+
+geo:614540 :meets geo:2017370 .
+
+geo:2411586 :meets geo:2510769 .
+
+geo:1814991 :meets geo:2029969 .
+
+geo:617790 :meets geo:690791 .
+
+geo:1149361 :meets geo:1220409 .
+
+geo:2658434 :meets geo:2921044 .
+
+geo:2658434 :meets geo:3175395 .
+
+geo:732800 :meets geo:6290252 .
+
+geo:286963 :meets geo:290557 .
+
+geo:2802361 :meets geo:2921044 .
+
+geo:3658394 :meets geo:3932488 .
+
+geo:831053 :meets geo:6290252 .
+
+geo:798549 :meets geo:6290252 .
+
+geo:719819 :meets geo:3202326 .
+
+geo:2434508 :meets geo:2440476 .
+
+geo:597427 :meets geo:630336 .
+
+geo:192950 :meets geo:337996 .
+
+geo:2921044 :meets geo:3077311 .
+
+geo:1643084 :meets geo:1733045 .
+
+geo:239880 :meets geo:366755 .
+
+geo:149590 :meets geo:927384 .
+
+geo:298795 :meets geo:614540 .
+
+geo:718075 :meets geo:783754 .
+
+geo:192950 :meets geo:7909807 .
+
+geo:2623032 :meets geo:2921044 .
+
+geo:1605651 :meets geo:1831722 .
+
+geo:732800 :meets geo:8505033 .
+
+geo:1168579 :meets geo:1269750 .
+
+geo:660013 :meets geo:2661886 .
+
+
+

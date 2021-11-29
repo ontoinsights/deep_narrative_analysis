@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: October 5 2021
+# Last modified: November 29 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,7 +25,7 @@
 #  Added temporal aspects
 #  Simplified superclassing by removing Event and StateAndCondition
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added several
-#  Moved the property, :sentiment, to top.ttl
+#  Moved the properties, :has_location and :sentiment, to top.ttl
 ########################################################################
 
 
@@ -105,12 +105,6 @@
   rdfs:domain :EventAndState ;
   rdfs:range :Resource ;
   :definition "References an inanimate entity (weapon, tool, etc.) that is/was used in an EventAndState." .
-
-:has_location a owl:ObjectProperty ;
-  rdfs:label "has location" ;
-  rdfs:domain :EventAndState ;
-  rdfs:range :Location ;
-  :definition "References where an EventAndState occurs/occurred." .
 
 :has_origin a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;

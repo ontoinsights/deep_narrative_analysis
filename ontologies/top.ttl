@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: November 7 2021
+# Last modified: November 29 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -31,7 +31,7 @@
 #  Removed :mentioned_in in lieu of using :sourced_from
 #  Renamed :record_identifier to :data_identifier
 #  Added :alternatives, :has_author and the annotation property, :processing
-#  Added the properties, :negation and :sentiment
+#  Added the properties, :negation, :sentiment and :has_location
 #  Generalized :has_goal
 #  Corrected :sentence_offset domain (to be anything)
 ########################################################################
@@ -354,6 +354,11 @@
   rdfs:range :EventAndState ;
   :definition "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process." .
 
+:has_location a owl:ObjectProperty ;
+  rdfs:label "has location" ;
+  rdfs:range :Location ;
+  :definition "References where an entity is placed/positioned/resides/occurs/etc. The time of placement, positioning, etc. can be specified using RDF* edge properties or can be reified using an instance of EventAndState." .
+
 :has_member a owl:ObjectProperty ;
   rdfs:label "has member" ;
   :definition "Defines an entity that is in a (is a member of a) grouping/Collection." ;
@@ -377,7 +382,7 @@
 
 :meets a owl:ObjectProperty ;
   rdfs:label "meets" ;
-  :definition "Indicates that the boundaries of an entity touch/join with another." ;
+  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." ;
   :noun_synonym "convergence", "boundary", "meet" ;
   :verb_synonym "converge", "touch", "meet" .
 
