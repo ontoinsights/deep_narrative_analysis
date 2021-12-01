@@ -10,16 +10,48 @@
 # Classes
 ########################################################################
 
+:AdverseCompound a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue, :ChemicalElementAndCompound ;
+  rdfs:label "(Presence of) Adverse Compound" ;
+  :definition "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as greenhouse gases." .
+
 :Agent a owl:Class ;
   rdfs:label "Agent/Actor" ;
   :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in, are affected by or are the holders of EventAndState occurrences and conditions." ;
   :noun_synonym "legal entity", "doer", "actor", "performer", "participant", "role player", "character" .
+
+:AgriculturalLand a owl:Class ;
+  rdfs:subClassOf :LandAndWaterResource ;
+  rdfs:label "Agricultural Land" ;
+  :definition "Land that is arable, under permanent crops, or under permanent pastures." .
+
+:ArableLand a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Arable Land" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Arable_land&oldid=1054005801), ArableLand is 'any land capable of being ploughed and used to grow crops. Alternatively, for the purposes of agricultural statistics, the term often has a more precise definition: [It] is the land under temporary agricultural crops (multiple-cropped areas are counted only once), temporary meadows for mowing or pasture, land under market and kitchen gardens and land temporarily fallow (less than five years)... A more concise definition appearing in the Eurostat glossary similarly refers to actual rather than potential uses: \"land worked (ploughed or tilled) regularly, generally under a system of crop rotation\".'" .
 
 :Assessment a owl:Class ;
   rdfs:subClassOf :Measurement ;
   rdfs:label "Assessment" ;
   :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." ;
   :noun_synonym "estimate" .
+
+:Capacity a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Capacity" ;
+  :definition "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate." ;
+  :noun_synonym "capability", "volume", "maximum amount", "capacitance" .
+
+:ChemicalElementAndCompound a owl:Class ;
+  rdfs:subClassOf :SubstanceAndRawMaterial ;
+  rdfs:label "Chemical Element and Compound" ;
+  :definition "A ChemicalElement is any is substance consisting only of atoms from a single entry in the Periodic Table. Alternately, a chemical compound is a 'substance composed of many identical molecules (or molecular entities) composed of atoms from more than one element [in the Periodic Table] held together by chemical bonds. Two atoms of the same element bonded in a molecule do not form a chemical compound, since this would require two different elements. There are four types of compounds, depending on how the constituent atoms are held together: (1) molecules held together by covalent bonds; (2) ionic compounds held together by ionic bonds; (3) intermetallic compounds held together by metallic bonds; and, (4) certain complexes held together by coordinate covalent bonds.' (https://en.wikipedia.org/w/index.php?title=Chemical_compound&oldid=935156698)" .
+
+:ClimateChange a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Climate Change" ;
+  :definition "From the United Nations (https://www.un.org/en/climatechange/what-is-climate-change), ClimateChange 'refers to long-term shifts in temperatures and weather patterns. These shifts may be natural, such as through variations in the solar cycle. But since the 1800s, human activities have been the main driver of climate change, primarily due to burning fossil fuels like coal, oil and gas. Burning fossil fuels generates greenhouse gas emissions that act like a blanket wrapped around the Earth, trapping the sun’s heat and raising temperatures.'" ;
+  :noun_synonym "global warming" .
 
 :Collection a owl:Class ;
   rdfs:label "Collection/Group" ;
@@ -37,15 +69,66 @@
   :definition "Describes the government of a nation, the people living in the nation and the land area that is governed." ;
   :noun_synonym "nation", "commonwealth", "nationality" .
 
+:CrudeOil a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Crude Oil" ;
+  :definition "A type of Fuel that is 'a mixture of hydrocarbons that exists in liquid phase in natural underground reservoirs and remains liquid at atmospheric pressure after passing through surface separating facilities' (https://www3.epa.gov/carbon-footprint-calculator/tool/definitions/crude-oil.html)." ;
+  :noun_synonym "petroleum" .
+
 :Currency a owl:Class ;
   rdfs:subClassOf :MonetaryAndFinancialInstrument ;
   rdfs:label "Currency" ;
   :definition "A metal or paper medium of exchange that is used as money in a country." .
 
+:EconomicEnvironment a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Economic Environment" ;
+  :definition "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy." .
+
+:Electricity a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Electricity" ;
+  :definition "Electricity is a type of Resource (inanimate entity that is produced, consumed, bought, sold, ...). It is defined as 'a secondary energy source because it is produced by converting primary sources of energy such as coal, natural gas, nuclear energy, solar energy, and wind energy, into electrical power. Electricity is also referred to as an energy carrier [since] it can be converted to other forms of energy such as mechanical energy or heat.' (https://www.eia.gov/energyexplained/electricity/)" ;
+  :noun_synonym "electric power", "electric energy" .
+
+:Employment a owl:Class ;
+  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:label "Employment" ;
+  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
+  :noun_synonym "job", "position", "work", "post" .
+
+:EnvironmentalIssue a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Environmental Issue" ;
+  :definition "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate." .
+
+:EnvironmentAndCondition a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Environment and Condition" ;
+  :definition "A factor, situation or condition related to an Agent's (defined using the :has_holder property) or Resource's (defined using the :has_resource predicate) living conditions, external circumstances or physical environment at some time (defined using the :has_time property or its sub-properties) and place (defined using the :has_location property)." ;
+  :example "For example, when hypothesizing about possible (or impossible), future scenarios, one can use a sub-class of EnvironmentAndCondition (OpportunityOrPossibility or Impossibility) to create this world/'environment'. Or, a sub-class (DrinkableWater) can describe that a Person or community lives in an area without potable water." .
+
 :EventAndState a owl:Class ;
   rdfs:label "Event and State" ;
   :definition "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties). A state is a factor, situation or condition that an Agent (defined using the :has_agent property) or Resouce (defined using the :has_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
   :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation", "status", "condition" .
+
+:FoodAndNutrition a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "(Access to) Food and Nutrition" ;
+  :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
+
+:Forest a owl:Class ;
+  rdfs:subClassOf :LandAndWaterResource ;
+  rdfs:label "Forest" ;
+  :definition "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
+  :noun_synonym "wood", "woodland", "jungle", "timberland" .
+
+:Fuel a owl:Class ;
+  rdfs:subClassOf :SubstanceAndRawMaterial ;
+  rdfs:label "Fuel" ;
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451), a fuel 'is any material that can be made to react with other substances so that it releases energy as heat energy or to be used for work [to provide power]. The concept was originally applied solely to those materials capable of releasing chemical energy but has since also been applied to other sources of heat energy such as nuclear energy (via nuclear fission and nuclear fusion). The heat energy released by reactions of fuels is converted into mechanical energy via a heat engine. Other times the heat itself is valued for warmth, cooking, or industrial processes, as well as the illumination that comes with combustion.'" ;
+  :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are types of fuels." .
 
 :GeopoliticalEntity a owl:Class ;
   rdfs:subClassOf :Agent, :PhysicalLocation ;
@@ -54,6 +137,12 @@
   :example "For example, one may say 'California is in the western United States, and is considered to be quite liberal.' In that sentence, California is both a location, and an entity (Agent) that has a political orientation. Distinguishing the difference between these semantics is quite difficult, and usually unnecessary." ;
   :noun_synonym "political region", "body politic" .
 
+:GreenhouseGas a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "(Presence of) Greenhouse Gas" ;
+  :definition "A GreenhouseGas is 'a gas that \"traps\" infrared radiation in the lower atmosphere causing surface warming' (https://www.cia.gov/the-world-factbook/field/environment-current-issues).";
+  :example "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." .
+
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
   rdfs:label "Group/Collection of Agents" ;
@@ -61,14 +150,53 @@
   :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
   :noun_synonym "consortium", "society", "crowd", "alliance", "band", "troupe", "troop" .
 
+:HealthAndDiseaseRelated a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Health and Disease Related" ;
+  :definition "Any event or condition concerning disease or illness (and recovery from such) by humans, plants and animals. The disease, illness, etc. are indicated using the :has_topic property. Note that this class is also typed as an AgentAspect to allow it to define 'some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them'. When used in that sense, the instance is related to a Person using the :has_agent_aspect property." ;
+  :noun_synonym "illness", "injury", "sickness", "infection", "ailment", "malady", "disorder", "deformation", "affliction", "impairment", "contagion", "cure", "vaccine" ;
+  :verb_synonym "infect", "cure", "heal", "vaccinate" .
+
+:Healthcare a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "(Access to) Healthcare" ;
+  :definition "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
+
+:Income a owl:Class ;
+  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:label "Income" ;
+  :definition "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate." ;
+  :example "Examples of incomes are salaries, received payments for sales of crops, etc." .
+
+:Inflation a owl:Class ;
+  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:label "Inflation" ;
+  :definition "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate." .
+
+:LandAndWaterResource a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Land and Water Resource" ;
+  :definition "Parts of the Earth's surface either covered by water, or available for agriculture, building, forests, etc. LandAndWaterResources host different natural habitats and ecosystems" .
+
 :LineOfBusiness a owl:Class ;
   rdfs:label "Line/Type of Business" ;
   :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
+
+:LivingCondition a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Living Condition" ;
+  :definition "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingCondition are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingCondition can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingCondition is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics." .
 
 :Location a owl:Class ;
   rdfs:label "Location" ;
   :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
   :noun_synonym "locale", "site", "venue", "placement", "locality", "setting" .
+
+:LossOfHabitatAndBiodiversity a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Loss of Habitat and Biodiversity" ;
+  :definition "Loss of biodiversity refers to a reduction in the relative number of species 'at the genetic, organism, community, and ecosystem level; loss of biodiversity reduces an ecosystem's ability to recover from natural or man-induced disruption' (https://www.cia.gov/the-world-factbook/field/environment-current-issues). Loss of habitat refers to 'the process by which a natural habitat becomes incapable of supporting its native species. The organisms that previously inhabited the site are displaced or dead, thereby reducing biodiversity and species abundance. Habitat destruction is the leading cause of biodiversity loss' (https://en.wikipedia.org/w/index.php?title=Habitat_destruction&oldid=1054386284)." ;
+  :noun_synonym "extinction", "habitat loss", "habitat reduction", "habitat destruction", "biodiversity loss" .
 
 :Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -82,21 +210,111 @@
   rdfs:label "Monetary and Financial Instrument" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
 
+:NaturalGas a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Natural Gas" ;
+  :definition "A type of Fuel that is 'a naturally occurring hydrocarbon gas mixture consisting of methane and commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium. Natural gas is colorless and odorless, and explosive ... The extraction and consumption of natural gas is a major and growing driver of climate change. It is a potent greenhouse gas itself when released into the atmosphere, and creates carbon dioxide when burnt.' (https://en.wikipedia.org/w/index.php?title=Natural_gas&oldid=1056092303)" ;
+  :noun_synonym "fossil gas" .
+
 :Organization a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Organization" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
   :noun_synonym "organisation", "association", "corporation", "institution", "company" .
 
+:ParticulateMatter a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "(Presence of) Particulate Matter" ;
+  :definition "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances." ;
+  :noun_synonym "PM2.5", "aerosol" .
+
+:PermanentCrop a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Permanent Crop" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Permanent_crop&oldid=1034516992), PermanentCrop is 'one produced from plants which last for many seasons, rather than being replanted after each harvest... [It describes] cultivable land that is not being used for annually-harvested crops such as staple grains. In such usage, permanent cropland is a form of agricultural land that includes grasslands and shrublands used to grow grape vines or coffee; orchards used to grow fruit or olives; and forested plantations used to grow nuts or rubber.'" .
+
+:PermanentPasture a owl:Class ;
+  rdfs:subClassOf :AgriculturalLand ;
+  rdfs:label "Permanent Pasture and Meadow" ;
+  :definition "Permanent pastures and meadows are 'used for at least five years or more to grow herbaceous forage, either cultivated or growing naturally' (https://www.cia.gov/the-world-factbook/field/land-use)." .
+
 :PhysicalLocation a owl:Class ;
   rdfs:subClassOf :Location ;
   rdfs:label "Physical Location" ;
   :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
 
+:PotableWater a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "(Access to) Potable Water" ;
+  :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
+
+:ProductionManufactureAndCreation a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Production, Manufacture and Creation" ;
+  :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
+  :noun_synonym "construction", "fabrication", "manufacturing", "model", "modeling" ;
+  :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "model" .
+
+:RefinedPetroleumProduct a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Refined Petroleum Product" ;
+  :definition "A type of Fuel that is 'derived from crude oils through processes such as catalytic cracking and fractional distillation. These products have physical and chemical characteristics that differ according to the type of crude oil and subsequent refining processes' (https://www.epa.gov/emergency-response/types-refined-petroleum-products)." ;
+  :example "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." .
+
+:RenewableWater a owl:Class ;
+  rdfs:subClassOf :WaterResource ;
+  rdfs:label "Renewable Water" ;
+  :definition "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
+
 :Resource a owl:Class ;
   rdfs:label "Resource" ;
   :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold." ;
   :noun_synonym "instrument", "tool", "asset", "supply", "commodity" .
+
+:SanitationFacilities a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "(Access to) Santitation Facilities" ;
+  :definition "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate." .
+
+:SubstanceAndRawMaterial a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Substance and Raw Material" ;
+  :definition "Raw materials are the basic constituents/matter which make up something or from which something is made. This semantic is aligned with WordNet 3.1's definition of 'substance'." ;
+  :example "Examples of raw materials are chemical elements and compounds, wood, rubber, cement, gemstones, soap, etc." .
+
+:Unemployment a owl:Class ;
+  rdfs:subClassOf :EconomicEnvironment ;
+  rdfs:label "Unemployment" ;
+  :definition "An environmental condition describing the overall state of unemployment (for example, high vs low) for an Agent (GeopoliticalEntity, Organization, etc.). Note that the Agent is identified using the :has_holder property. Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Unemployment can be described using the :has_assessment predicate." .
+
+:UtilizationAndConsumption a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Utilization And Consumption" ;
+  :definition "Any act that uses something or someone." ;
+  :noun_synonym "usage", "use" ;
+  :verb_synonym "use", "consume", "utilize", "consume" .
+
+:VolatileOrganicCompound a owl:Class ;
+  rdfs:subClassOf :AdverseCompound ;
+  rdfs:label "(Presence of) Volatile Organic Compound" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Volatile_organic_compound&oldid=1054374014), VolatileOrganicCompounds (or VOCs) 'are organic chemicals that have a high vapour pressure at room temperature. High vapor pressure correlates with a low boiling point, which relates to the number of the sample's molecules in the surrounding air, a trait known as volatility... VOCs, such as styrene and limonene, can react with nitrogen oxides or with ozone to produce new oxidation products and secondary aerosols, which can cause sensory irritation symptoms. VOCs contribute to the formation of Tropospheric ozone and smog.'" .
+
+:WaterResource a owl:Class ;
+  rdfs:subClassOf :LandAndWaterResource ;
+  rdfs:label "Water Resource" ;
+  :definition "A WaterResource is a source of 'water that [is] useful or potentially useful to humans... uses of water include agricultural, industrial, household, recreational and environmental activities. Virtually all of these human uses require fresh water. Only 2.5% of water on the Earth is fresh water, and over two thirds of this is frozen in glaciers and polar ice caps. Water demand already exceeds supply in many parts of the world, and many more areas are expected to experience this imbalance in the near future.' (https://www.sciencedaily.com/terms/water_resources.htm)" .
+
+:WaterScarcity a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Water Scarcity" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Water_scarcity&oldid=1054040280), WaterScarcity '(closely related to water stress or water crisis) is the lack of fresh water resources to meet the standard water demand. Two types of water scarcity have been defined: physical or economic water scarcity. Physical water scarcity is where there is not enough water to meet all demands, including that needed for ecosystems to function effectively. Arid areas (for example Central and West Asia, and North Africa) often suffer from physical water scarcity. On the other hand, economic water scarcity is caused by a lack of investment in infrastructure or technology to draw water from rivers, aquifers, or other water sources, or insufficient human capacity to satisfy the demand for water. Much of Sub-Saharan Africa is characterized by economic water scarcity. The essence of global water scarcity is the geographic and temporal mismatch between fresh water demand and availability... The main driving forces for the rising global demand for water are the increasing world population, improving living standards, changing consumption patterns (for example a dietary shift toward more animal products), and expansion of irrigated agriculture. Climate change (including droughts or floods), deforestation, increased water pollution and wasteful use of water can also cause insufficient water supply. Scarcity varies over time as a result of natural hydrological variability, but varies even more so as a function of prevailing economic policy, planning and management approaches. Scarcity can be expected to intensify with most forms of economic development'." ;
+  :noun_synonym "water stress", "water crisis" .
+
+:WasteAndResidue a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Waste and Residue" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), waste and residue 'are unwanted or unusable materials. Waste is any substance which is discarded after primary use, or is worthless, defective and of no use. A by-product by contrast is a joint product of relatively minor economic value. A waste product may become a by-product, joint product or resource through an invention that raises a waste product's value above zero.'" ;
+  :example "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" .
 
 
 ########################################################################

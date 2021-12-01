@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: November 22 2021
+# Last Modified: November 30 2021
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,7 +25,7 @@
 # 
 # Changes:
 #  Moved classes to this file from state-condition-subclasses.ttl
-#  Added and clarified noun/verb_synonyms
+#  Added and clarified noun/verb_synonyms, and updated labels
 #  Moved PolitialIdeology to agent.ttl
 #  Renamed LivingConditions to LivingCondition 
 #  Renamed DrinkableWater to PotableWater, SanitaryConditions to
@@ -44,8 +44,8 @@
 
 :AdverseCompound a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue, :ChemicalElementAndCompound ;
-  rdfs:label "Adverse Compound" ;
-  :definition "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as GreenhouseGases." .
+  rdfs:label "(Presence of) Adverse Compound" ;
+  :definition "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as greenhouse gases." .
 
 :Capacity a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -104,7 +104,7 @@
 
 :Education a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Education" ;
+  rdfs:label "(Access to) Education" ;
   :definition "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
 :Employment a owl:Class ;
@@ -127,23 +127,23 @@
 
 :FoodAndNutrition a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Food and Nutrition" ;
+  rdfs:label "(Access to) Food and Nutrition" ;
   :definition "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
 
 :GreenhouseGas a owl:Class ;
   rdfs:subClassOf :AdverseCompound ;
-  rdfs:label "Greenhouse Gas" ;
+  rdfs:label "(Presence of) Greenhouse Gas" ;
   :definition "A GreenhouseGas is 'a gas that \"traps\" infrared radiation in the lower atmosphere causing surface warming' (https://www.cia.gov/the-world-factbook/field/environment-current-issues).";
   :example "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." .
 
 :Healthcare a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Healthcare" ;
+  rdfs:label "(Access to) Healthcare" ;
   :definition "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
 :Housing a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Housing and Lodging" ;
+  rdfs:label "(Access to) Housing and Lodging" ;
   :definition "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
 :Impossibility a owl:Class ;
@@ -187,7 +187,7 @@
 
 :ParticulateMatter a owl:Class ;
   rdfs:subClassOf :AdverseCompound ;
-  rdfs:label "Particulate Matter" ;
+  rdfs:label "(Presence of) Particulate Matter" ;
   :definition "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances." ;
   :noun_synonym "PM2.5", "aerosol" .
 
@@ -198,7 +198,7 @@
 
 :PotableWater a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Potable Water" ;
+  rdfs:label "(Access to) Potable Water" ;
   :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
 
 :Recession a owl:Class ;
@@ -214,12 +214,12 @@
 
 :Safety a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Safety" ;
+  rdfs:label "Safety and Safe Conditions" ;
   :definition "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :has_assessment predicate." .
 
 :SanitationFacilities a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Santitation Facilities" ;
+  rdfs:label "(Access to) Santitation Facilities" ;
   :definition "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate." .
 
 :SavingsAndInvestment a owl:Class ;
@@ -262,7 +262,7 @@
 
 :VolatileOrganicCompound a owl:Class ;
   rdfs:subClassOf :AdverseCompound ;
-  rdfs:label "Volatile Organic Compound" ;
+  rdfs:label "(Presence of) Volatile Organic Compound" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Volatile_organic_compound&oldid=1054374014), VolatileOrganicCompounds (or VOCs) 'are organic chemicals that have a high vapour pressure at room temperature. High vapor pressure correlates with a low boiling point, which relates to the number of the sample's molecules in the surrounding air, a trait known as volatility... VOCs, such as styrene and limonene, can react with nitrogen oxides or with ozone to produce new oxidation products and secondary aerosols, which can cause sensory irritation symptoms. VOCs contribute to the formation of Tropospheric ozone and smog.'" .
 
 :WaterScarcity a owl:Class ;

@@ -349,10 +349,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:has_location
 <urn:ontoinsights:dna:has_location> rdf:type owl:ObjectProperty ;
-                                    rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
                                     rdfs:range <urn:ontoinsights:dna:Location> ;
                                     rdfs:label "has location" ;
-                                    <urn:ontoinsights:dna:definition> "References where an EventAndState occurs/occurred." .
+                                    <urn:ontoinsights:dna:definition> "References where an entity is placed/positioned/resides/occurs/etc. The time of placement, positioning, etc. can be specified using RDF* edge properties or can be reified using an instance of EventAndState." .
 
 
 ###  urn:ontoinsights:dna:has_member
@@ -1543,8 +1542,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:AdverseCompound> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:ChemicalElementAndCompound> ,
                                                        <urn:ontoinsights:dna:EnvironmentalIssue> ;
-                                       rdfs:label "Adverse Compound" ;
-                                       <urn:ontoinsights:dna:definition> "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as GreenhouseGases." .
+                                       rdfs:label "(Presence of) Adverse Compound" ;
+                                       <urn:ontoinsights:dna:definition> "Dangerous, harmful or hazardous chemicals and compounds released into the air or water, and thereby polluting or negatively affecting them. Subclasses define several categories of AdverseCompounds, such as greenhouse gases." .
 
 
 ###  urn:ontoinsights:dna:AdviceAndRecommendation
@@ -7047,7 +7046,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Education
 <urn:ontoinsights:dna:Education> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                 rdfs:label "Education" ;
+                                 rdfs:label "(Access to) Education" ;
                                  <urn:ontoinsights:dna:definition> "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate." .
 
 
@@ -7475,7 +7474,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:FoodAndNutrition
 <urn:ontoinsights:dna:FoodAndNutrition> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                        rdfs:label "Food and Nutrition" ;
+                                        rdfs:label "(Access to) Food and Nutrition" ;
                                         <urn:ontoinsights:dna:definition> "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate." .
 
 
@@ -7665,7 +7664,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:GreenhouseGas
 <urn:ontoinsights:dna:GreenhouseGas> rdf:type owl:Class ;
                                      rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
-                                     rdfs:label "Greenhouse Gas" ;
+                                     rdfs:label "(Presence of) Greenhouse Gas" ;
                                      <urn:ontoinsights:dna:definition> "A GreenhouseGas is 'a gas that \"traps\" infrared radiation in the lower atmosphere causing surface warming' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." ;
                                      <urn:ontoinsights:dna:example> "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)." .
 
@@ -7784,7 +7783,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Healthcare
 <urn:ontoinsights:dna:Healthcare> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                  rdfs:label "Healthcare" ;
+                                  rdfs:label "(Access to) Healthcare" ;
                                   <urn:ontoinsights:dna:definition> "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate." .
 
 
@@ -7834,7 +7833,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Housing
 <urn:ontoinsights:dna:Housing> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                               rdfs:label "Housing and Lodging" ;
+                               rdfs:label "(Access to) Housing and Lodging" ;
                                <urn:ontoinsights:dna:definition> "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate." .
 
 
@@ -8899,7 +8898,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:ParticulateMatter
 <urn:ontoinsights:dna:ParticulateMatter> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
-                                         rdfs:label "Particulate Matter" ;
+                                         rdfs:label "(Presence of) Particulate Matter" ;
                                          <urn:ontoinsights:dna:definition> "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances." ;
                                          <urn:ontoinsights:dna:noun_synonym> "PM2.5" ,
                                                                              "aerosol" .
@@ -9095,7 +9094,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:PotableWater
 <urn:ontoinsights:dna:PotableWater> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                    rdfs:label "Potable Water" ;
+                                    rdfs:label "(Access to) Potable Water" ;
                                     <urn:ontoinsights:dna:definition> "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
 
 
@@ -9756,14 +9755,14 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Safety
 <urn:ontoinsights:dna:Safety> rdf:type owl:Class ;
                               rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                              rdfs:label "Safety" ;
+                              rdfs:label "Safety and Safe Conditions" ;
                               <urn:ontoinsights:dna:definition> "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :has_assessment predicate." .
 
 
 ###  urn:ontoinsights:dna:SanitationFacilities
 <urn:ontoinsights:dna:SanitationFacilities> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                            rdfs:label "Santitation Facilities" ;
+                                            rdfs:label "(Access to) Santitation Facilities" ;
                                             <urn:ontoinsights:dna:definition> "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate." .
 
 
@@ -10347,7 +10346,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:VolatileOrganicCompound
 <urn:ontoinsights:dna:VolatileOrganicCompound> rdf:type owl:Class ;
                                                rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
-                                               rdfs:label "Volatile Organic Compound" ;
+                                               rdfs:label "(Presence of) Volatile Organic Compound" ;
                                                <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Volatile_organic_compound&oldid=1054374014), VolatileOrganicCompounds (or VOCs) 'are organic chemicals that have a high vapour pressure at room temperature. High vapor pressure correlates with a low boiling point, which relates to the number of the sample's molecules in the surrounding air, a trait known as volatility... VOCs, such as styrene and limonene, can react with nitrogen oxides or with ozone to produce new oxidation products and secondary aerosols, which can cause sensory irritation symptoms. VOCs contribute to the formation of Tropospheric ozone and smog.'" .
 
 
@@ -14726,13 +14725,13 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                 "converge" ;
-                             rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another." ;
+                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                 "touch" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
+                             rdfs:label "meets" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" .
+                             <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 
 
 <urn:ontoinsights:dna:text> rdfs:label "text" ;
