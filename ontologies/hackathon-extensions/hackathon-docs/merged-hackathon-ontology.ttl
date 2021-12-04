@@ -71,7 +71,8 @@
 <urn:ontoinsights:dna:has_headquarters> rdf:type owl:ObjectProperty ;
                                         rdfs:subPropertyOf <urn:ontoinsights:dna:has_location> ;
                                         rdf:type owl:FunctionalProperty ;
-                                        rdfs:domain <urn:ontoinsights:dna:Organization> .
+                                        rdfs:domain <urn:ontoinsights:dna:Organization> ;
+                                        rdfs:range <urn:ontoinsights:dna:Country> .
 
 
 ###  urn:ontoinsights:dna:has_line_of_business
@@ -174,12 +175,6 @@
                                             rdfs:range xsd:string ;
                                             rdfs:label "environmental issues" ;
                                             <urn:ontoinsights:dna:definition> "A string describing the 'most pressing and important environmental problems' (https://www.cia.gov/the-world-factbook/field/environment-current-issues) for the referencing Country." .
-
-
-###  urn:ontoinsights:dna:has_headquarters
-<urn:ontoinsights:dna:has_headquarters> rdf:type owl:DatatypeProperty ,
-                                                 owl:FunctionalProperty ;
-                                        rdfs:range <urn:ontoinsights:dna:Country> .
 
 
 ###  urn:ontoinsights:dna:iso_alpha2

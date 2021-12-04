@@ -488,7 +488,7 @@ p {
 
 	// attributes for each class
 	var attributes = {
-  "urn:hanken:esg": {},
+  "urn:ontoinsights:dna": {},
   "Country": {
     "iri": "urn:ontoinsights:dna:Country",
     "urn:ontoinsights:dna:definition": [
@@ -587,8 +587,8 @@ p {
       "assemblage",
       "assortment",
       "herd",
-      "aggregation",
-      "set"
+      "set",
+      "aggregation"
     ]
   },
   "Crude Oil Reserves (barrels)": {
@@ -630,8 +630,8 @@ p {
       "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate."
     ],
     "urn:ontoinsights:dna:noun_synonym": [
-      "capability",
       "maximum amount",
+      "capability",
       "volume",
       "capacitance"
     ],
@@ -1220,13 +1220,13 @@ p {
       "vaccine",
       "injury",
       "affliction",
-      "deformation",
       "contagion",
+      "deformation",
       "cure",
       "impairment",
       "malady",
-      "illness",
       "disorder",
+      "illness",
       "ailment"
     ],
     "urn:ontoinsights:dna:verb_synonym": [
@@ -1524,9 +1524,9 @@ p {
       "factor",
       "happening",
       "occurrence",
-      "act",
+      "incident",
       "status",
-      "incident"
+      "act"
     ]
   },
   "Agriculture, Apiculture and Aquaculture Business": {
@@ -2633,9 +2633,9 @@ p {
     "urn:ontoinsights:dna:noun_synonym": [
       "spaceflight",
       "astronautics",
+      "interstellar travel",
       "outer space",
-      "astronaut",
-      "interstellar travel"
+      "astronaut"
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Technology Business')\">'Technology Business'</a>"
@@ -2795,8 +2795,8 @@ p {
     ],
     "urn:ontoinsights:dna:noun_synonym": [
       "woodland",
-      "jungle",
       "wood",
+      "jungle",
       "timberland"
     ],
     "SubClass Of": [
@@ -3002,15 +3002,6 @@ p {
       "Functional"
     ]
   },
-  "has headquarters": {
-    "iri": "urn:ontoinsights:dna:has_headquarters",
-    "urn:ontoinsights:dna:definition": [
-      "A relationship indicating that an Organization is based in/has its headquarters in the referenced Country."
-    ],
-    "Characteristics": [
-      "Functional"
-    ]
-  },
   "ISO 2-character alpha code": {
     "iri": "urn:ontoinsights:dna:iso_alpha2",
     "urn:ontoinsights:dna:definition": [
@@ -3155,6 +3146,24 @@ p {
       "<a href=\"javascript:jumpTo('Line/Type of Business')\">'Line/Type of Business'</a>"
     ]
   },
+  "has headquarters": {
+    "iri": "urn:ontoinsights:dna:has_headquarters",
+    "urn:ontoinsights:dna:definition": [
+      "A relationship indicating that an Organization is based in/has its headquarters in the referenced Country."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has location')\">'has location'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Organization')\">Organization</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Country')\">Country</a>"
+    ],
+    "Characteristics": [
+      "Functional"
+    ]
+  },
   "has location": {
     "iri": "urn:ontoinsights:dna:has_location",
     "urn:ontoinsights:dna:definition": [
@@ -3262,8 +3271,8 @@ p {
 		// Class ID, text (label), and children
 		data: [
   {
-    "id": "urn:hanken:esg",
-    "text": "urn:hanken:esg"
+    "id": "urn:ontoinsights:dna",
+    "text": "urn:ontoinsights:dna"
   },
   {
     "id": "http://www.w3.org/2002/07/owl#Thing",
@@ -4711,9 +4720,6 @@ p {
       },
       {
         "id": "environmental issues"
-      },
-      {
-        "id": "has headquarters"
       },
       {
         "id": "ISO 2-character alpha code"
