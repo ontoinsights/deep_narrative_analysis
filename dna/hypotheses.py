@@ -19,7 +19,7 @@ def display_hypotheses(store_name: str):
     :return: TBD
     """
     logging.info(f'Displaying hypotheses in {store_name}')
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     # TODO: Hypothesis creation
     layout = [[sg.Text("Not yet implemented.",

@@ -112,8 +112,8 @@ def _check_family(entity: str, family_dict: dict) -> (str, str, str):
     :param entity: The string representing the noun or possessive
     :param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    :return 3 strings representing the entity's relationship (if a family member), gender
-            and type (= PERSON if a family member or NOUN otherwise)
+    :return: 3 strings representing the entity's relationship (if a family member), gender
+             and type (= PERSON if a family member or NOUN otherwise)
     """
     gender = empty_string
     ent_type = 'NOUN'

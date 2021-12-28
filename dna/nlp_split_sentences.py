@@ -2,8 +2,7 @@
 # Needs the nlp Language model from nlp.py passed as a parameter into the main function, split_clauses
 # Called by nlp.py
 
-import copy
-import logging
+from typing import Union
 
 from spacy.language import Language
 from spacy.tokens import Span, Token
@@ -11,26 +10,27 @@ from spacy.tokens import Span, Token
 from utilities import cause_connectors, effect_connectors
 
 
-def get_chunks(verb: Token, connector: list, chunk_sentence: Span, is_conj: bool) -> list:
+def get_chunks(verb: Token, connector: Union[Token, None], chunk_sentence: Span, processing_type: str) -> list:
     """
-    Given a conjunctive verb, a connector token relating that verb to the root verb
-    (such as 'and', 'but', ...) and the sentence that contains these tokens, determine if
-    the sentence can be separated into clauses. Also separate sentences that are two clauses
-    split by a semi-colon.
+    Given a conjunctive or clausal verb, an optional connector token relating that verb to the root
+    verb (such as 'and', 'but', ...) and the sentence that contains these tokens, determine if
+    the sentence can be separated into clauses. The sentence is separated if the clause has its own
+    subject and verb.
 
-    :param verb: The token of the conjunctive verb
-    :param connector: Tokens of the connectors between the root and conjunctive verbs
-                      (if is_conj is true) or adverb modifiers of the conjunctive verb
-                      (if is_conj is false)
+    :param verb: The token of the conjunctive or clausal verb
+    :param connector: Token of the connector between the root and conjunctive or clausal verb,
+                      or None (which may occur if this is a clausal complement - e.g., "He said
+                      Joe is ill.")
     :param chunk_sentence: A Span representing the parsed sentence
-    :param is_conj: A boolean indicating whether the connector is related to terms such as
-                    'and', 'but', 'or' or is related to an adverbial clause
+    :param processing_type: A string indicating whether this is for a conjunctive verb ('conj'),
+                            adverbial clause verb ('advcl') or a clausal complement ('comp')
+
     :return: A list of the text of the clauses of the sentence (split if indicated by the
              logic below) or just the original sentence returned
     """
     chunks = []
     # Is there a subject of the other clause's verb? That is required to split the sentence
-    # An 'expl' is the word, 'there'
+    # A subject is identified in a dependency parse as an 'nsubj', 'nsubjpass' or 'expl' (e.g., the word 'there')
     subj2 = [subj for subj in verb.children if ('subj' in subj.dep_ or subj.dep_ == 'expl')]
     if len(subj2):
         # Yes ... Separate clauses
@@ -39,23 +39,29 @@ def get_chunks(verb: Token, connector: list, chunk_sentence: Span, is_conj: bool
         seen_chunk = ' '.join([ww.text for ww in seen]).strip() + '.'
         unseen = [ww for ww in chunk_sentence if ww not in seen and ww.pos_ != 'PUNCT']
         unseen_chunk = ' '.join([ww.text for ww in unseen]).strip() + '.'
-        for conn in connector:
-            if is_conj:
+        if connector:
+            if processing_type == 'conj':
                 # Remove the connector words (to prevent cycles and sentences such as 'Mary biked to the market and.')
-                unseen_chunk = unseen_chunk.replace(f' {conn.text} ', ' ').replace(f' {conn.text}.', '.')
+                # The connector is always associated with the 'unseen' chunk
+                unseen_chunk = unseen_chunk.replace(f' {connector.text} ', ' ').replace(f' {connector.text}.', '.')
+                # Store the unseen and seen clauses in that order
+                chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))
             else:
-                # Remove the connector words (to prevent cycles) but NOT if there is a single auxiliary verb
-                # If so, then the advmod is needed
-                # For example, 'my daughter is home' (is = auxiliary verb, home = adverbial modifier)
-                if not any([ww for ww in seen if ww.pos_ == 'AUX']) or any([ww for ww in seen if ww.pos_ == 'VERB']):
-                    seen_chunk = _remove_startswith(seen_chunk, conn.text)
-                    seen_chunk = seen_chunk.replace(f' {conn.text} ', ' ').replace(f' {conn.text}.', '.')
-                if not any([ww for ww in unseen if ww.pos_ == 'AUX']) or any(
-                        [ww for ww in unseen if ww.pos_ == 'VERB']):
-                    unseen_chunk = _remove_startswith(unseen_chunk, conn.text)
-        # Store the seen and unseen clauses as separate sentences
-        chunks.append(unseen_chunk)
-        chunks.append(seen_chunk)
+                # Remove the connector word (to prevent cycles)
+                # It may be in either the seen or unseen chunks
+                seen_chunk = _remove_startswith(seen_chunk, connector.text)
+                seen_chunk = seen_chunk.replace(f' {connector.text} ', ' ').replace(f' {connector.text}.', '.')
+                unseen_chunk = _remove_startswith(unseen_chunk, connector.text)
+                unseen_chunk = unseen_chunk.replace(f' {connector.text} ', ' ').replace(f' {connector.text}.', '.')
+                if processing_type == 'advcl':
+                    if connector.text.lower() in cause_connectors:
+                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, True))  # Store the clauses
+                    elif connector.text.lower() in effect_connectors:
+                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
+                else:
+                    chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
+        else:
+            chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
     if len(chunks) > 0:
         return chunks
     else:
@@ -65,87 +71,29 @@ def get_chunks(verb: Token, connector: list, chunk_sentence: Span, is_conj: bool
 def split_clauses(sent_text: str, nlp: Language) -> list:
     """
     Perform splitting of sentences first by splitting by coordinating conjunctions (calling the function,
-    split_by_conjunctions) and second by adverbial clauses and clausal complements.
+    split_by_conjunctions), second splitting by adverbial clauses and then by clausal complements. Lastly,
+    check for conjunctions within the adverbial or complement clauses.
 
     :param sent_text: The sentence to be split (as a string)
     :param nlp: A spaCy Language model
-    :return: A list of new sentences/Spans created from the split
+    :return: A list of new sentences (text only) created from the splits
     """
-    orig_sents = [sent_text]
-    # Iterate until the sentences cannot be further decomposed/split
-    while True:
-        new_sents = []
-        # Go through each sentence in the array
-        for orig_sent in orig_sents:
-            # Semi-colons automatically split sentences
-            if '; ' in orig_sent:
-                semicolon_index = orig_sent.index('; ')
-                new_sents = [f'{orig_sent[:semicolon_index]}.', f'{orig_sent[semicolon_index + 2:]}.']
-                break
-            # First split by words such as 'and', 'but', 'or', ... related to the 'root' verb
-            for chunk_sent in nlp(orig_sent).sents:
-                # nlp(orig_sent) creates a new Document to allow .sents processing of ROOT verbs
-                # TODO: Capture 'or', 'nor' as the splitting word (e.g., as an alternative)
-                intermed_sents, splitting_word = _split_by_conjunctions(chunk_sent)
-                # Split by advcl and xcomp IF these have their own subject/verb
-                # Example: 'When I went to the store, I met George.' ('when ...' is an adverbial clause)
-                for intermed_sent in intermed_sents:
-                    for chunk_sent2 in nlp(intermed_sent).sents:
-                        # nlp(intermed_sent) 're-tokenizes' in order to create a new Document, as above
-                        clausal_verbs, connectors = _check_subject_in_clause(chunk_sent2)
-                        # Need to have both a clause and a connector/modifier for this logic
-                        if len(clausal_verbs) > 0:
-                            new_sents.extend(get_chunks(clausal_verbs[0], connectors, chunk_sent2, False))
-                        else:
-                            new_sents.append(intermed_sent)
-        # Check if the processing has resulted in new sentence clauses
-        if len(orig_sents) == len(new_sents):
-            # If not, break out of the while loop
-            break
-        else:
-            # New clauses, so keep processing
-            orig_sents = copy.deepcopy(new_sents)
-    return new_sents
+    new_sents = _split_by_conjunctions(sent_text, nlp)
+    split_sents = []
+    for sent in new_sents:
+        # Split by advcl IF these have their own subject/verb
+        # Example: 'When I went to the store, I met George.' ('when ...' is an adverbial clause)
+        adv_sents = _split_advcl_clauses(sent, nlp)
+        # Split by ccomp and xcomp IF these hae their own subject/verb
+        # Example: 'He said Joe is ill.' (a clausal complement)
+        for adv_sent in adv_sents:
+            comp_sents = _split_complement_clauses(adv_sent, nlp)
+            for comp_sent in comp_sents:
+                split_sents.extend(_split_by_conjunctions(comp_sent, nlp))
+    return split_sents
 
 
 # Functions internal to the module
-def _check_subject_in_clause(cls_sentence: Span) -> (list, list):
-    """
-    Return a list of the verb and connector tokens in a sentence/Span IF the sentence
-    has dependent clauses with their own subject and verb (and a few other conditions are
-    met as documented below).
-
-    :param cls_sentence: The sentence/Span to be analyzed
-    :return: Two lists - the first with the independent verbs and the second with any connectors
-    """
-    # Returns a list of the verb and connector tokens
-    # Check for adverbial clauses, which will have the advmod in the clause
-    clausal_verbs = [child for child in cls_sentence.root.children if child.dep_ == 'advcl']
-    connectors = []
-    keep_separate_clauses = False
-    if len(clausal_verbs) > 0:
-        connectors = [conn for conn in clausal_verbs[0].children if conn.dep_ in ('advmod', 'mark')]
-        # Only keep the verbs and connectors under certain circumstances
-        for conn in connectors:
-            if conn.text.lower() in cause_connectors:
-                keep_separate_clauses = True
-    if not keep_separate_clauses:
-        connectors = []
-    # Also check for clausal complement, where we want the advmod (or mark) in the original/root verb clause
-    new_verbs = [child for child in cls_sentence.root.children if child.dep_ == 'ccomp']
-    if new_verbs:
-        new_connectors = [conn for conn in cls_sentence.root.children if conn.dep_ in ('advmod', 'mark')]
-        if new_connectors:
-            keep_separate_clauses = False
-            for new_conn in new_connectors:
-                if new_conn.text.lower() in effect_connectors:
-                    keep_separate_clauses = True
-            if keep_separate_clauses:
-                clausal_verbs.extend(new_verbs)
-                connectors.extend(new_connectors)
-    return clausal_verbs, connectors
-
-
 def _remove_startswith(chunk: str, connector: str) -> str:
     """
     Returns first string with the second string removed from its start.
@@ -161,23 +109,90 @@ def _remove_startswith(chunk: str, connector: str) -> str:
     return chunk
 
 
-def _split_by_conjunctions(conj_sentence: Span) -> (list, str):
+def _split_advcl_clauses(sentence: str, nlp: Language) -> list:
+    """
+    Split the adverbial clauses of a sentence into separate sentences, if the clauses have their
+    own subject and verb.
+
+    :param sentence The sentence which is analyzed
+    :return: An array of simpler sentence(s) (note that only the text of the sentences is
+             returned, not the spacy tokens) or the original sentence if there is no advcl verb
+             or if the verb is not one of the cause_ or effect_connectors
+    """
+    sent_span = next(nlp(sentence).sents)    # There should only be 1 sentence for each function call
+    advcl_verbs = [child for child in sent_span.root.children if child.dep_ == 'advcl']
+    for advcl_verb in advcl_verbs:
+        connectors = [conn for conn in advcl_verb.children if conn.dep_ in ('advmod', 'mark')]
+        # Process the verb and the first connector (there should only be 1)
+        if connectors:
+            chunks = get_chunks(advcl_verb, connectors[0], sent_span, 'advcl')
+            return chunks
+    return [sentence]
+
+
+def _split_by_conjunctions(sentence: str, nlp: Language) -> list:
     """
     Split the clauses of a sentence into separate sentences, if they are connected by a coordinating
     conjunction (for, and, but, or, nor, yet, so). For example,"Mary and John walked to the store." would
     NOT be split, but "Mary biked to the market and John walked to the store." should be split.
 
-    :param conj_sentence The sentence which is analyzed
+    :param sentence The sentence which is analyzed
     :return: An array of simpler sentence(s) (note that only the text of the sentences is
-             returned, not the spacy tokens) and the coordinating conjunction. The latter is
-             needed to process or/nor alternatives.
+             returned, not the spacy tokens) or the original sentence if there are no
+             conjunctive verbs
     """
-    conj_sents = []
-    conj_verb = [child for child in conj_sentence.root.children if child.dep_ == 'conj']
-    connectors = [conn for conn in conj_sentence.root.children if conn.dep_ == 'cc']
-    if len(conj_verb) > 0:
-        for chunk in get_chunks(conj_verb[0], connectors, conj_sentence, True):
-            conj_sents.append(str(chunk))
+    sent_span = next(nlp(sentence).sents)    # There should only be 1 sentence for each function call
+    new_sents = []
+    conj_verbs = [child for child in sent_span.root.children if child.dep_ == 'conj']
+    connectors = [conn for conn in sent_span.root.children if conn.dep_ == 'cc']
+    if conj_verbs and len(conj_verbs) == len(connectors):
+        # Process the first 'chunk' and then return - Subsequent iterations will process the complete text
+        chunks = get_chunks(conj_verbs[0], connectors[0], sent_span, 'conj')
+        if len(chunks) > 1:
+            for chunk in chunks:
+                new_sents.extend(_split_by_conjunctions(chunk, nlp))
+        else:
+            return [chunks[0]]
     else:
-        conj_sents = [conj_sentence.text]
-    return conj_sents, ('' if not connectors else connectors[0].text)
+        return [sentence]
+    return new_sents
+
+
+def _split_complement_clauses(sentence: str, nlp: Language) -> list:
+    """
+    Split the clausal complements of a sentence into separate sentences, if the clauses have their
+    own subject and verb.
+
+    :param sentence The sentence which is analyzed
+    :return: An array of simpler sentence(s) (note that only the text of the sentences is
+             returned, not the spacy tokens) or the original sentence if there is no ccomp or xcomp
+             verb
+    """
+    sent_span = next(nlp(sentence).sents)    # There should only be 1 sentence for each function call
+    comp_verbs = [child for child in sent_span.root.children if child.dep_ in ('ccomp', 'xcomp')]
+    for comp_verb in comp_verbs:
+        connectors = [conn for conn in comp_verb.children if conn.dep_ in ('advmod', 'mark')]
+        # Process the verb and the first connector (there may not be any)
+        if connectors:
+            chunks = get_chunks(comp_verb, connectors[0], sent_span, 'comp')
+        else:
+            chunks = get_chunks(comp_verb, None, sent_span, 'comp')
+        return chunks
+    else:
+        return [sentence]
+
+
+def _store_chunks_in_order(seen: str, unseen: str, seen_first: bool) -> list:
+    """
+    Save two strings (a 'seen' and an 'unseen' string) in an array where the 'seen' string is
+    the first element if the seen_first parameter is True.
+
+    :param seen: The 'seen' string
+    :param unseen: The 'unseen' string
+    :return: An array where either the seen or unseen strings are the first/second element
+             depending on the value of the seen_first parameter.
+    """
+    if seen_first:
+        return [seen, unseen]
+    else:
+        return [unseen, seen]

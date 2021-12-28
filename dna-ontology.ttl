@@ -1677,7 +1677,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "antagonism" ,
                                                                              "bitterness" ,
                                                                              "enmity" ,
+                                                                             "enragement" ,
                                                                              "exasperation" ,
+                                                                             "ferocity" ,
                                                                              "fury" ,
                                                                              "hostility" ,
                                                                              "impatience" ,
@@ -1690,14 +1692,17 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "outrage" ,
                                                                              "peevishness" ,
                                                                              "rage" ,
+                                                                             "vexation" ,
                                                                              "wrath" ;
                                          <urn:ontoinsights:dna:verb_synonym> "aggravate" ,
                                                                              "anatagonize" ,
                                                                              "annoy" ,
                                                                              "be angry" ,
+                                                                             "enrage" ,
                                                                              "exasperate" ,
                                                                              "get tired of" ,
-                                                                             "irritate" .
+                                                                             "irritate" ,
+                                                                             "vex" .
 
 
 ###  urn:ontoinsights:dna:Animal
@@ -1728,10 +1733,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "angst" ,
                                                                    "apprehension" ,
                                                                    "concern" ,
-                                                                   "discontent" ,
                                                                    "discontentment" ,
                                                                    "dismay" ,
                                                                    "disquiet" ,
+                                                                   "disquietude" ,
                                                                    "fretfulness" ,
                                                                    "jitters" ,
                                                                    "nervousness" ,
@@ -6814,12 +6819,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                             <urn:ontoinsights:dna:SadnessAndDisappointment> ;
                                            rdfs:label "Delight and happiness" ;
                                            <urn:ontoinsights:dna:noun_synonym> "amusement" ,
-                                                                               "bliss" ,
                                                                                "cheerfulness" ,
                                                                                "ecstacy" ,
                                                                                "elation" ,
                                                                                "enjoyment" ,
                                                                                "euphoria" ,
+                                                                               "felicity" ,
                                                                                "gaiety" ,
                                                                                "gladness" ,
                                                                                "glee" ,
@@ -7350,6 +7355,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   rdfs:label "Excitement" ;
                                   <urn:ontoinsights:dna:noun_synonym> "enthusiasm" ,
                                                                       "exhilaration" ,
+                                                                      "fervor" ,
                                                                       "thrill" ,
                                                                       "zeal" ;
                                   <urn:ontoinsights:dna:verb_synonym> "be excited" ,
@@ -7427,6 +7433,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        owl:disjointWith <urn:ontoinsights:dna:TrustAndTolerance> ;
                                        rdfs:label "Fear and Distrust" ;
                                        <urn:ontoinsights:dna:noun_synonym> "alarm" ,
+                                                                           "angst" ,
                                                                            "dread" ,
                                                                            "fright" ,
                                                                            "horror" ,
@@ -7551,8 +7558,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       rdfs:label "Fungus and Plant" ;
                                       <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
                                       <urn:ontoinsights:dna:noun_synonym> "flora" ,
+                                                                          "fruit" ,
                                                                           "mold" ,
                                                                           "mushroom" ,
+                                                                          "tree" ,
+                                                                          "vegetable" ,
                                                                           "vegetation" .
 
 
@@ -7737,19 +7747,23 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                   rdfs:subClassOf <urn:ontoinsights:dna:NegativeEmotion> ;
                                                   owl:disjointWith <urn:ontoinsights:dna:Love> ;
                                                   rdfs:label "Hatred, Bitterness and Disgust" ;
-                                                  <urn:ontoinsights:dna:noun_synonym> "animosity" ,
+                                                  <urn:ontoinsights:dna:noun_synonym> "abhorrence" ,
+                                                                                      "animosity" ,
                                                                                       "aversion" ,
                                                                                       "contempt" ,
+                                                                                      "detestation" ,
                                                                                       "hostility" ,
                                                                                       "ill will" ,
                                                                                       "loathing" ,
                                                                                       "malice" ,
+                                                                                      "repugnance" ,
                                                                                       "resentment" ,
                                                                                       "revulsion" ,
                                                                                       "scorn" ,
                                                                                       "spite" ,
                                                                                       "vengefulness" ;
                                                   <urn:ontoinsights:dna:verb_synonym> "despise" ,
+                                                                                      "detest" ,
                                                                                       "hate" ,
                                                                                       "loathe" ,
                                                                                       "spite" .
@@ -7817,6 +7831,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "dreams" ,
                                                                 "eagerness" ,
                                                                 "expectancy" ,
+                                                                "keenness" ,
                                                                 "optimism" ;
                             <urn:ontoinsights:dna:verb_synonym> "anticipate" ,
                                                                 "be hopeful" ,
@@ -8316,6 +8331,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:definition> "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
                                 <urn:ontoinsights:dna:noun_synonym> "locale" ,
                                                                     "locality" ,
+                                                                    "place" ,
                                                                     "placement" ,
                                                                     "setting" ,
                                                                     "site" ,
@@ -8390,15 +8406,21 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Love> rdf:type owl:Class ;
                             rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
                             rdfs:label "Love" ;
-                            <urn:ontoinsights:dna:noun_synonym> "affection" ,
+                            <urn:ontoinsights:dna:noun_synonym> "adoreation" ,
+                                                                "affection" ,
                                                                 "attraction" ,
                                                                 "caring" ,
+                                                                "devotion" ,
+                                                                "enthrallment" ,
                                                                 "fondness" ,
                                                                 "liking" ,
                                                                 "romance" ,
                                                                 "sentimentality" ,
                                                                 "tenderness" ;
-                            <urn:ontoinsights:dna:verb_synonym> "care" ,
+                            <urn:ontoinsights:dna:verb_synonym> "adore" ,
+                                                                "be devoted" ,
+                                                                "care" ,
+                                                                "enthrall" ,
                                                                 "like" ,
                                                                 "love" ,
                                                                 "romance" .
@@ -9430,12 +9452,17 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:RelaxationAndSerenity> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
                                              rdfs:label "Serenity" ;
-                                             <urn:ontoinsights:dna:noun_synonym> "calmness" ,
+                                             <urn:ontoinsights:dna:noun_synonym> "bliss" ,
+                                                                                 "calmness" ,
                                                                                  "composure" ,
                                                                                  "contentment" ,
                                                                                  "patience" ,
                                                                                  "peace of mind" ,
+                                                                                 "peacefulness" ,
+                                                                                 "placidity" ,
+                                                                                 "quietude" ,
                                                                                  "relief" ,
+                                                                                 "restfulness" ,
                                                                                  "tranquility" ;
                                              <urn:ontoinsights:dna:verb_synonym> "be at peace" ,
                                                                                  "be calm" ,
@@ -9725,10 +9752,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                 <urn:ontoinsights:dna:noun_synonym> "agony" ,
                                                                                     "anguish" ,
                                                                                     "anguishment" ,
+                                                                                    "broken-heartedness" ,
                                                                                     "defeatism" ,
                                                                                     "dejection" ,
                                                                                     "depression" ,
                                                                                     "despair" ,
+                                                                                    "desperation" ,
                                                                                     "dismay" ,
                                                                                     "displeasure" ,
                                                                                     "gloom" ,
@@ -11502,9 +11531,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:102358> rdf:type owl:NamedIndividual ,
                                             <urn:ontoinsights:dna:Country> ;
                                    rdfs:label "Saudi Arabia" ;
-                                   <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:3382998> ,
-                                                                        <urn:ontoinsights:geonames:3439705> ,
-                                                                        <urn:ontoinsights:geonames:3625428> ;
                                    <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencySAR> ;
                                    <urn:ontoinsights:dna:iso_alpha2> "SA" ;
                                    <urn:ontoinsights:dna:iso_alpha3> "SAU" ;
@@ -11550,64 +11576,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:1149361> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Country> ;
                                     rdfs:label "Afghanistan" ;
-                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:1024031> ,
-                                                                         <urn:ontoinsights:geonames:1036973> ,
-                                                                         <urn:ontoinsights:geonames:1062947> ,
-                                                                         <urn:ontoinsights:geonames:149590> ,
-                                                                         <urn:ontoinsights:geonames:192950> ,
-                                                                         <urn:ontoinsights:geonames:203312> ,
-                                                                         <urn:ontoinsights:geonames:2215636> ,
-                                                                         <urn:ontoinsights:geonames:2233387> ,
-                                                                         <urn:ontoinsights:geonames:223816> ,
-                                                                         <urn:ontoinsights:geonames:2245662> ,
-                                                                         <urn:ontoinsights:geonames:2260494> ,
-                                                                         <urn:ontoinsights:geonames:226074> ,
-                                                                         <urn:ontoinsights:geonames:2275384> ,
-                                                                         <urn:ontoinsights:geonames:2287781> ,
-                                                                         <urn:ontoinsights:geonames:2300660> ,
-                                                                         <urn:ontoinsights:geonames:2309096> ,
-                                                                         <urn:ontoinsights:geonames:2328926> ,
-                                                                         <urn:ontoinsights:geonames:2361809> ,
-                                                                         <urn:ontoinsights:geonames:2363686> ,
-                                                                         <urn:ontoinsights:geonames:2372248> ,
-                                                                         <urn:ontoinsights:geonames:2378080> ,
-                                                                         <urn:ontoinsights:geonames:2395170> ,
-                                                                         <urn:ontoinsights:geonames:239880> ,
-                                                                         <urn:ontoinsights:geonames:2400553> ,
-                                                                         <urn:ontoinsights:geonames:2403846> ,
-                                                                         <urn:ontoinsights:geonames:2410758> ,
-                                                                         <urn:ontoinsights:geonames:241170> ,
-                                                                         <urn:ontoinsights:geonames:2413451> ,
-                                                                         <urn:ontoinsights:geonames:2420477> ,
-                                                                         <urn:ontoinsights:geonames:2434508> ,
-                                                                         <urn:ontoinsights:geonames:2440476> ,
-                                                                         <urn:ontoinsights:geonames:2453866> ,
-                                                                         <urn:ontoinsights:geonames:2461445> ,
-                                                                         <urn:ontoinsights:geonames:2464461> ,
-                                                                         <urn:ontoinsights:geonames:2542007> ,
-                                                                         <urn:ontoinsights:geonames:2589581> ,
-                                                                         <urn:ontoinsights:geonames:3351879> ,
-                                                                         <urn:ontoinsights:geonames:3355338> ,
-                                                                         <urn:ontoinsights:geonames:3370751> ,
-                                                                         <urn:ontoinsights:geonames:3374766> ,
-                                                                         <urn:ontoinsights:geonames:337996> ,
-                                                                         <urn:ontoinsights:geonames:338010> ,
-                                                                         <urn:ontoinsights:geonames:357994> ,
-                                                                         <urn:ontoinsights:geonames:366755> ,
-                                                                         <urn:ontoinsights:geonames:433561> ,
-                                                                         <urn:ontoinsights:geonames:49518> ,
-                                                                         <urn:ontoinsights:geonames:51537> ,
-                                                                         <urn:ontoinsights:geonames:7909807> ,
-                                                                         <urn:ontoinsights:geonames:878675> ,
-                                                                         <urn:ontoinsights:geonames:895949> ,
-                                                                         <urn:ontoinsights:geonames:921929> ,
-                                                                         <urn:ontoinsights:geonames:927384> ,
-                                                                         <urn:ontoinsights:geonames:932692> ,
-                                                                         <urn:ontoinsights:geonames:933860> ,
-                                                                         <urn:ontoinsights:geonames:934292> ,
-                                                                         <urn:ontoinsights:geonames:934841> ,
-                                                                         <urn:ontoinsights:geonames:935317> ,
-                                                                         <urn:ontoinsights:geonames:953987> ;
                                     <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencyAFN> ;
                                     <urn:ontoinsights:dna:iso_alpha2> "AF" ;
                                     <urn:ontoinsights:dna:iso_alpha3> "AFG" ;
@@ -13143,19 +13111,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:3355338> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Country> ;
                                     rdfs:label "Namibia" ;
-                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:3424932> ,
-                                                                         <urn:ontoinsights:geonames:3573591> ,
-                                                                         <urn:ontoinsights:geonames:3576916> ,
-                                                                         <urn:ontoinsights:geonames:3577718> ,
-                                                                         <urn:ontoinsights:geonames:3577815> ,
-                                                                         <urn:ontoinsights:geonames:3585968> ,
-                                                                         <urn:ontoinsights:geonames:3617476> ,
-                                                                         <urn:ontoinsights:geonames:3703430> ,
-                                                                         <urn:ontoinsights:geonames:4566966> ,
-                                                                         <urn:ontoinsights:geonames:4796775> ,
-                                                                         <urn:ontoinsights:geonames:6252001> ,
-                                                                         <urn:ontoinsights:geonames:7609695> ,
-                                                                         <urn:ontoinsights:geonames:8505032> ;
                                     <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencyNAD> ;
                                     <urn:ontoinsights:dna:iso_alpha2> "NA" ;
                                     <urn:ontoinsights:dna:iso_alpha3> "NAM" .
@@ -14008,54 +13963,6 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:geonames:5880801> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Country> ;
                                     rdfs:label "American Samoa" ;
-                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:102358> ,
-                                                                         <urn:ontoinsights:geonames:1168579> ,
-                                                                         <urn:ontoinsights:geonames:1210997> ,
-                                                                         <urn:ontoinsights:geonames:1218197> ,
-                                                                         <urn:ontoinsights:geonames:1220409> ,
-                                                                         <urn:ontoinsights:geonames:1227603> ,
-                                                                         <urn:ontoinsights:geonames:1252634> ,
-                                                                         <urn:ontoinsights:geonames:1269750> ,
-                                                                         <urn:ontoinsights:geonames:1282028> ,
-                                                                         <urn:ontoinsights:geonames:1282588> ,
-                                                                         <urn:ontoinsights:geonames:1282988> ,
-                                                                         <urn:ontoinsights:geonames:130758> ,
-                                                                         <urn:ontoinsights:geonames:1327865> ,
-                                                                         <urn:ontoinsights:geonames:1512440> ,
-                                                                         <urn:ontoinsights:geonames:1522867> ,
-                                                                         <urn:ontoinsights:geonames:1527747> ,
-                                                                         <urn:ontoinsights:geonames:1547376> ,
-                                                                         <urn:ontoinsights:geonames:1562822> ,
-                                                                         <urn:ontoinsights:geonames:1605651> ,
-                                                                         <urn:ontoinsights:geonames:163843> ,
-                                                                         <urn:ontoinsights:geonames:1643084> ,
-                                                                         <urn:ontoinsights:geonames:1655842> ,
-                                                                         <urn:ontoinsights:geonames:1668284> ,
-                                                                         <urn:ontoinsights:geonames:1694008> ,
-                                                                         <urn:ontoinsights:geonames:1733045> ,
-                                                                         <urn:ontoinsights:geonames:1814991> ,
-                                                                         <urn:ontoinsights:geonames:1819730> ,
-                                                                         <urn:ontoinsights:geonames:1820814> ,
-                                                                         <urn:ontoinsights:geonames:1821275> ,
-                                                                         <urn:ontoinsights:geonames:1831722> ,
-                                                                         <urn:ontoinsights:geonames:1835841> ,
-                                                                         <urn:ontoinsights:geonames:1861060> ,
-                                                                         <urn:ontoinsights:geonames:1873107> ,
-                                                                         <urn:ontoinsights:geonames:1880251> ,
-                                                                         <urn:ontoinsights:geonames:2029969> ,
-                                                                         <urn:ontoinsights:geonames:248816> ,
-                                                                         <urn:ontoinsights:geonames:272103> ,
-                                                                         <urn:ontoinsights:geonames:285570> ,
-                                                                         <urn:ontoinsights:geonames:286963> ,
-                                                                         <urn:ontoinsights:geonames:289688> ,
-                                                                         <urn:ontoinsights:geonames:290291> ,
-                                                                         <urn:ontoinsights:geonames:294640> ,
-                                                                         <urn:ontoinsights:geonames:298795> ,
-                                                                         <urn:ontoinsights:geonames:587116> ,
-                                                                         <urn:ontoinsights:geonames:614540> ,
-                                                                         <urn:ontoinsights:geonames:6254930> ,
-                                                                         <urn:ontoinsights:geonames:69543> ,
-                                                                         <urn:ontoinsights:geonames:99237> ;
                                     <urn:ontoinsights:dna:has_currency> <urn:ontoinsights:geonames:CurrencyUSD> ;
                                     <urn:ontoinsights:dna:iso_alpha2> "AS" ;
                                     <urn:ontoinsights:dna:iso_alpha3> "ASM" .
@@ -14152,16 +14059,122 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:geonames:6255146
 <urn:ontoinsights:geonames:6255146> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Continent> ;
-                                    rdfs:label "Africa" .
+                                    rdfs:label "Africa" ;
+                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:1024031> ,
+                                                                         <urn:ontoinsights:geonames:1036973> ,
+                                                                         <urn:ontoinsights:geonames:1062947> ,
+                                                                         <urn:ontoinsights:geonames:149590> ,
+                                                                         <urn:ontoinsights:geonames:192950> ,
+                                                                         <urn:ontoinsights:geonames:203312> ,
+                                                                         <urn:ontoinsights:geonames:2215636> ,
+                                                                         <urn:ontoinsights:geonames:2233387> ,
+                                                                         <urn:ontoinsights:geonames:223816> ,
+                                                                         <urn:ontoinsights:geonames:2245662> ,
+                                                                         <urn:ontoinsights:geonames:2260494> ,
+                                                                         <urn:ontoinsights:geonames:226074> ,
+                                                                         <urn:ontoinsights:geonames:2275384> ,
+                                                                         <urn:ontoinsights:geonames:2287781> ,
+                                                                         <urn:ontoinsights:geonames:2300660> ,
+                                                                         <urn:ontoinsights:geonames:2309096> ,
+                                                                         <urn:ontoinsights:geonames:2328926> ,
+                                                                         <urn:ontoinsights:geonames:2361809> ,
+                                                                         <urn:ontoinsights:geonames:2363686> ,
+                                                                         <urn:ontoinsights:geonames:2372248> ,
+                                                                         <urn:ontoinsights:geonames:2378080> ,
+                                                                         <urn:ontoinsights:geonames:2395170> ,
+                                                                         <urn:ontoinsights:geonames:239880> ,
+                                                                         <urn:ontoinsights:geonames:2400553> ,
+                                                                         <urn:ontoinsights:geonames:2403846> ,
+                                                                         <urn:ontoinsights:geonames:2410758> ,
+                                                                         <urn:ontoinsights:geonames:241170> ,
+                                                                         <urn:ontoinsights:geonames:2413451> ,
+                                                                         <urn:ontoinsights:geonames:2420477> ,
+                                                                         <urn:ontoinsights:geonames:2434508> ,
+                                                                         <urn:ontoinsights:geonames:2440476> ,
+                                                                         <urn:ontoinsights:geonames:2453866> ,
+                                                                         <urn:ontoinsights:geonames:2461445> ,
+                                                                         <urn:ontoinsights:geonames:2464461> ,
+                                                                         <urn:ontoinsights:geonames:2542007> ,
+                                                                         <urn:ontoinsights:geonames:2589581> ,
+                                                                         <urn:ontoinsights:geonames:3351879> ,
+                                                                         <urn:ontoinsights:geonames:3355338> ,
+                                                                         <urn:ontoinsights:geonames:3370751> ,
+                                                                         <urn:ontoinsights:geonames:3374766> ,
+                                                                         <urn:ontoinsights:geonames:337996> ,
+                                                                         <urn:ontoinsights:geonames:338010> ,
+                                                                         <urn:ontoinsights:geonames:357994> ,
+                                                                         <urn:ontoinsights:geonames:366755> ,
+                                                                         <urn:ontoinsights:geonames:433561> ,
+                                                                         <urn:ontoinsights:geonames:49518> ,
+                                                                         <urn:ontoinsights:geonames:51537> ,
+                                                                         <urn:ontoinsights:geonames:7909807> ,
+                                                                         <urn:ontoinsights:geonames:878675> ,
+                                                                         <urn:ontoinsights:geonames:895949> ,
+                                                                         <urn:ontoinsights:geonames:921929> ,
+                                                                         <urn:ontoinsights:geonames:927384> ,
+                                                                         <urn:ontoinsights:geonames:932692> ,
+                                                                         <urn:ontoinsights:geonames:933860> ,
+                                                                         <urn:ontoinsights:geonames:934292> ,
+                                                                         <urn:ontoinsights:geonames:934841> ,
+                                                                         <urn:ontoinsights:geonames:935317> ,
+                                                                         <urn:ontoinsights:geonames:953987> .
 
 
 ###  urn:ontoinsights:geonames:6255147
 <urn:ontoinsights:geonames:6255147> rdf:type owl:NamedIndividual ,
                                              <urn:ontoinsights:dna:Continent> ;
                                     rdfs:label "Asia" ;
-                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:1149361> ,
+                                    <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:102358> ,
+                                                                         <urn:ontoinsights:geonames:1149361> ,
+                                                                         <urn:ontoinsights:geonames:1168579> ,
+                                                                         <urn:ontoinsights:geonames:1210997> ,
+                                                                         <urn:ontoinsights:geonames:1218197> ,
+                                                                         <urn:ontoinsights:geonames:1220409> ,
+                                                                         <urn:ontoinsights:geonames:1227603> ,
+                                                                         <urn:ontoinsights:geonames:1252634> ,
+                                                                         <urn:ontoinsights:geonames:1269750> ,
+                                                                         <urn:ontoinsights:geonames:1282028> ,
+                                                                         <urn:ontoinsights:geonames:1282588> ,
+                                                                         <urn:ontoinsights:geonames:1282988> ,
+                                                                         <urn:ontoinsights:geonames:130758> ,
+                                                                         <urn:ontoinsights:geonames:1327865> ,
+                                                                         <urn:ontoinsights:geonames:1512440> ,
+                                                                         <urn:ontoinsights:geonames:1522867> ,
+                                                                         <urn:ontoinsights:geonames:1527747> ,
+                                                                         <urn:ontoinsights:geonames:1547376> ,
+                                                                         <urn:ontoinsights:geonames:1562822> ,
+                                                                         <urn:ontoinsights:geonames:1605651> ,
+                                                                         <urn:ontoinsights:geonames:163843> ,
+                                                                         <urn:ontoinsights:geonames:1643084> ,
+                                                                         <urn:ontoinsights:geonames:1655842> ,
+                                                                         <urn:ontoinsights:geonames:1668284> ,
+                                                                         <urn:ontoinsights:geonames:1694008> ,
+                                                                         <urn:ontoinsights:geonames:1733045> ,
                                                                          <urn:ontoinsights:geonames:174982> ,
-                                                                         <urn:ontoinsights:geonames:290557> .
+                                                                         <urn:ontoinsights:geonames:1814991> ,
+                                                                         <urn:ontoinsights:geonames:1819730> ,
+                                                                         <urn:ontoinsights:geonames:1820814> ,
+                                                                         <urn:ontoinsights:geonames:1821275> ,
+                                                                         <urn:ontoinsights:geonames:1831722> ,
+                                                                         <urn:ontoinsights:geonames:1835841> ,
+                                                                         <urn:ontoinsights:geonames:1861060> ,
+                                                                         <urn:ontoinsights:geonames:1873107> ,
+                                                                         <urn:ontoinsights:geonames:1880251> ,
+                                                                         <urn:ontoinsights:geonames:2029969> ,
+                                                                         <urn:ontoinsights:geonames:248816> ,
+                                                                         <urn:ontoinsights:geonames:272103> ,
+                                                                         <urn:ontoinsights:geonames:285570> ,
+                                                                         <urn:ontoinsights:geonames:286963> ,
+                                                                         <urn:ontoinsights:geonames:289688> ,
+                                                                         <urn:ontoinsights:geonames:290291> ,
+                                                                         <urn:ontoinsights:geonames:290557> ,
+                                                                         <urn:ontoinsights:geonames:294640> ,
+                                                                         <urn:ontoinsights:geonames:298795> ,
+                                                                         <urn:ontoinsights:geonames:587116> ,
+                                                                         <urn:ontoinsights:geonames:614540> ,
+                                                                         <urn:ontoinsights:geonames:6254930> ,
+                                                                         <urn:ontoinsights:geonames:69543> ,
+                                                                         <urn:ontoinsights:geonames:99237> .
 
 
 ###  urn:ontoinsights:geonames:6255148
@@ -14169,6 +14182,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:Continent> ;
                                     rdfs:label "Europe" ;
                                     <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:146669> ,
+                                                                         <urn:ontoinsights:geonames:1522867> ,
+                                                                         <urn:ontoinsights:geonames:174982> ,
                                                                          <urn:ontoinsights:geonames:2017370> ,
                                                                          <urn:ontoinsights:geonames:2264397> ,
                                                                          <urn:ontoinsights:geonames:2411586> ,
@@ -14186,13 +14201,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:2921044> ,
                                                                          <urn:ontoinsights:geonames:2960313> ,
                                                                          <urn:ontoinsights:geonames:2963597> ,
+                                                                         <urn:ontoinsights:geonames:298795> ,
                                                                          <urn:ontoinsights:geonames:2993457> ,
                                                                          <urn:ontoinsights:geonames:3017382> ,
                                                                          <urn:ontoinsights:geonames:3041565> ,
                                                                          <urn:ontoinsights:geonames:3042058> ,
-                                                                         <urn:ontoinsights:geonames:3042142> ,
-                                                                         <urn:ontoinsights:geonames:3042225> ,
-                                                                         <urn:ontoinsights:geonames:3042362> ,
                                                                          <urn:ontoinsights:geonames:3057568> ,
                                                                          <urn:ontoinsights:geonames:3077311> ,
                                                                          <urn:ontoinsights:geonames:3144096> ,
@@ -14206,8 +14219,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:390903> ,
                                                                          <urn:ontoinsights:geonames:453733> ,
                                                                          <urn:ontoinsights:geonames:458258> ,
+                                                                         <urn:ontoinsights:geonames:587116> ,
                                                                          <urn:ontoinsights:geonames:597427> ,
                                                                          <urn:ontoinsights:geonames:607072> ,
+                                                                         <urn:ontoinsights:geonames:614540> ,
                                                                          <urn:ontoinsights:geonames:617790> ,
                                                                          <urn:ontoinsights:geonames:6290252> ,
                                                                          <urn:ontoinsights:geonames:630336> ,
@@ -14220,8 +14235,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:783754> ,
                                                                          <urn:ontoinsights:geonames:798544> ,
                                                                          <urn:ontoinsights:geonames:798549> ,
-                                                                         <urn:ontoinsights:geonames:831053> ,
-                                                                         <urn:ontoinsights:geonames:8505033> .
+                                                                         <urn:ontoinsights:geonames:831053> .
 
 
 ###  urn:ontoinsights:geonames:6255149
@@ -14229,6 +14243,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:Continent> ;
                                     rdfs:label "North America" ;
                                     <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:3374084> ,
+                                                                         <urn:ontoinsights:geonames:3424932> ,
                                                                          <urn:ontoinsights:geonames:3425505> ,
                                                                          <urn:ontoinsights:geonames:3489940> ,
                                                                          <urn:ontoinsights:geonames:3508796> ,
@@ -14241,7 +14256,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:3575830> ,
                                                                          <urn:ontoinsights:geonames:3576396> ,
                                                                          <urn:ontoinsights:geonames:3576468> ,
-                                                                         <urn:ontoinsights:geonames:3577279> ,
+                                                                         <urn:ontoinsights:geonames:3576916> ,
+                                                                         <urn:ontoinsights:geonames:3577718> ,
+                                                                         <urn:ontoinsights:geonames:3577815> ,
                                                                          <urn:ontoinsights:geonames:3578097> ,
                                                                          <urn:ontoinsights:geonames:3578421> ,
                                                                          <urn:ontoinsights:geonames:3578476> ,
@@ -14249,14 +14266,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:3580239> ,
                                                                          <urn:ontoinsights:geonames:3580718> ,
                                                                          <urn:ontoinsights:geonames:3582678> ,
+                                                                         <urn:ontoinsights:geonames:3585968> ,
                                                                          <urn:ontoinsights:geonames:3595528> ,
                                                                          <urn:ontoinsights:geonames:3608932> ,
+                                                                         <urn:ontoinsights:geonames:3617476> ,
                                                                          <urn:ontoinsights:geonames:3624060> ,
+                                                                         <urn:ontoinsights:geonames:3703430> ,
                                                                          <urn:ontoinsights:geonames:3723988> ,
                                                                          <urn:ontoinsights:geonames:3996063> ,
+                                                                         <urn:ontoinsights:geonames:4566966> ,
+                                                                         <urn:ontoinsights:geonames:4796775> ,
+                                                                         <urn:ontoinsights:geonames:5854968> ,
                                                                          <urn:ontoinsights:geonames:6251999> ,
-                                                                         <urn:ontoinsights:geonames:7626836> ,
-                                                                         <urn:ontoinsights:geonames:7626844> .
+                                                                         <urn:ontoinsights:geonames:6252001> ,
+                                                                         <urn:ontoinsights:geonames:7609695> .
 
 
 ###  urn:ontoinsights:geonames:6255150
@@ -14265,15 +14288,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:label "South America" ;
                                     <urn:ontoinsights:dna:has_component> <urn:ontoinsights:geonames:3378535> ,
                                                                          <urn:ontoinsights:geonames:3381670> ,
+                                                                         <urn:ontoinsights:geonames:3382998> ,
                                                                          <urn:ontoinsights:geonames:3437598> ,
+                                                                         <urn:ontoinsights:geonames:3439705> ,
                                                                          <urn:ontoinsights:geonames:3469034> ,
                                                                          <urn:ontoinsights:geonames:3474414> ,
+                                                                         <urn:ontoinsights:geonames:3573591> ,
+                                                                         <urn:ontoinsights:geonames:3577279> ,
+                                                                         <urn:ontoinsights:geonames:3625428> ,
                                                                          <urn:ontoinsights:geonames:3658394> ,
                                                                          <urn:ontoinsights:geonames:3686110> ,
                                                                          <urn:ontoinsights:geonames:3865483> ,
                                                                          <urn:ontoinsights:geonames:3895114> ,
                                                                          <urn:ontoinsights:geonames:3923057> ,
-                                                                         <urn:ontoinsights:geonames:3932488> .
+                                                                         <urn:ontoinsights:geonames:3932488> ,
+                                                                         <urn:ontoinsights:geonames:7626836> ,
+                                                                         <urn:ontoinsights:geonames:7626844> .
 
 
 ###  urn:ontoinsights:geonames:6255151
@@ -14284,6 +14314,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:1899402> ,
                                                                          <urn:ontoinsights:geonames:1966436> ,
                                                                          <urn:ontoinsights:geonames:2077456> ,
+                                                                         <urn:ontoinsights:geonames:2077507> ,
                                                                          <urn:ontoinsights:geonames:2078138> ,
                                                                          <urn:ontoinsights:geonames:2080185> ,
                                                                          <urn:ontoinsights:geonames:2081918> ,
@@ -14294,6 +14325,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:2134431> ,
                                                                          <urn:ontoinsights:geonames:2139685> ,
                                                                          <urn:ontoinsights:geonames:2155115> ,
+                                                                         <urn:ontoinsights:geonames:2170371> ,
                                                                          <urn:ontoinsights:geonames:2186224> ,
                                                                          <urn:ontoinsights:geonames:2205218> ,
                                                                          <urn:ontoinsights:geonames:4030656> ,
@@ -14306,8 +14338,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          <urn:ontoinsights:geonames:4036232> ,
                                                                          <urn:ontoinsights:geonames:4041468> ,
                                                                          <urn:ontoinsights:geonames:4043988> ,
-                                                                         <urn:ontoinsights:geonames:5854968> ,
-                                                                         <urn:ontoinsights:geonames:5880801> .
+                                                                         <urn:ontoinsights:geonames:5880801> ,
+                                                                         <urn:ontoinsights:geonames:8335033> .
 
 
 ###  urn:ontoinsights:geonames:6255152
@@ -14727,9 +14759,9 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
                              <urn:ontoinsights:dna:verb_synonym> "converge" ,
                                                                  "touch" ;
-                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
+                             <urn:ontoinsights:dna:noun_synonym> "meet" ,
+                                                                 "boundary" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 

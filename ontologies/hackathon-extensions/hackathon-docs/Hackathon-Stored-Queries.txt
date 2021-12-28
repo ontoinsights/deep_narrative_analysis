@@ -1,0 +1,134 @@
+Companies-by-Country
+SELECT distinct ?country_name ?country_id ?company_name ?company_id
+WHERE { ?company_id dna:has_headquarters ?country_id ; rdfs:label ?company_name .
+        ?country_id rdfs:label ?country_name } 
+ORDER BY ?country_name ?country_id ?company_name LIMIT 5000
+
+
+Companies-by-Country-and-Industry
+SELECT distinct ?industry ?country_name ?company_name ?country_id ?company_id 
+WHERE { ?company_id dna:is_in_industry ?ind ; rdfs:label ?company_name ;
+                    dna:has_headquarters ?country_id .
+        ?country_id rdfs:label ?country_name .
+        ?ind rdfs:subClassOf* ?industry } 
+ORDER BY ?industry ?country_name ?company_name LIMIT 5000
+
+
+Companies-by-Industry
+SELECT distinct ?industry ?company_name ?company_id
+WHERE { ?company_id dna:is_in_industry ?ind ; rdfs:label ?company_name .
+        ?ind rdfs:subClassOf* ?industry } 
+ORDER BY ?industry ?company_name LIMIT 10000
+
+
+Companies-Impacts-by-UN-Goals
+SELECT distinct ?un_goals ?meas ?year ?impact_USDollars ?company_name ?company_id 
+WHERE { ?company_id a dna:Organization ; rdfs:label ?company_name .
+        VALUES ?meas { dna:ImpactToHabitatsAndBiodiversity dna:ImpactToResilienceToEvents 
+                       dna:ImpactToReductionOfDiseaseAndMortality dna:ImpactToAccessToFood
+                       dna:ImpactToAgriculturalProduction dna:ImpactToPotableWaterAndSanitation }
+        ?measurement a ?meas ; dna:defined_for ?company_id ; 
+                     dna:reported_value ?impact_USDollars ; dna:reported_year ?year .
+        BIND(IF(?meas = dna:ImpactToHabitatsAndBiodiversity, "UN Goals 14.1-14.3, 14.c, 15.1-15.3, 15.5",
+                IF(?meas = dna:ImpactToResilienceToEvents, "UN Goal 1.5",
+                IF(?meas = dna:ImpactToReductionOfDiseaseAndMortality, "UN Goals 3.3, 3.4, 3.9",
+                IF(?meas = dna:ImpactToAccessToFood, "UN Goals 2.1, 2.2",
+                IF(?meas = dna:ImpactToAgriculturalProduction, "UN Goals 2.3, 2.4", "UN Goal 6"))))) as ?un_goals) }
+ORDER BY ?un_goals DESC(?impact_USDollars) ?company_name LIMIT 50000
+
+
+Companies-Impacts-by-UN-Goals-Yearly-Comparison
+SELECT distinct ?un_goals ?diff_yr1_to_yr2_USDollars ?year1 ?year2 ?company_name ?company_id 
+WHERE { ?company_id a dna:Organization ; rdfs:label ?company_name .
+        VALUES ?meas { dna:ImpactToHabitatsAndBiodiversity dna:ImpactToResilienceToEvents 
+                       dna:ImpactToReductionOfDiseaseAndMortality dna:ImpactToAccessToFood
+                       dna:ImpactToAgriculturalProduction dna:ImpactToPotableWaterAndSanitation }
+        ?measurement1 a ?meas ; dna:defined_for ?company_id ; 
+                     dna:reported_value ?impact_USDollars1 ; dna:reported_year ?year1 .
+        BIND(?year1 + 1 as ?year2) .
+        ?measurement2 a ?meas ; dna:defined_for ?company_id ; 
+                     dna:reported_value ?impact_USDollars2 ; dna:reported_year ?year2 .
+        BIND(?impact_USDollars2 - ?impact_USDollars1 as ?diff_yr1_to_yr2_USDollars)
+        BIND(IF(?meas = dna:ImpactToHabitatsAndBiodiversity, "UN Goals 14.1-14.3, 14.c, 15.1-15.3, 15.5",
+                IF(?meas = dna:ImpactToResilienceToEvents, "UN Goal 1.5",
+                IF(?meas = dna:ImpactToReductionOfDiseaseAndMortality, "UN Goals 3.3, 3.4, 3.9",
+                IF(?meas = dna:ImpactToAccessToFood, "UN Goals 2.1, 2.2",
+                IF(?meas = dna:ImpactToAgriculturalProduction, "UN Goals 2.3, 2.4", "UN Goal 6"))))) as ?un_goals) }
+ORDER BY ?un_goals DESC(?diff_yr1_to_yr2_USDollars) ?company_name LIMIT 50000
+
+
+Companies-with-Positive-Impacts-to-UN-Goals
+SELECT distinct ?un_goals ?company_name ?company_id ?meas ?impact_USDollars ?year 
+WHERE { ?company_id a dna:Organization ; rdfs:label ?company_name .
+        VALUES ?meas { dna:ImpactToHabitatsAndBiodiversity dna:ImpactToResilienceToEvents 
+                       dna:ImpactToReductionOfDiseaseAndMortality dna:ImpactToAccessToFood
+                       dna:ImpactToAgriculturalProduction dna:ImpactToPotableWaterAndSanitation }
+        ?measurement a ?meas ; dna:defined_for ?company_id ; 
+                     dna:reported_value ?impact_USDollars ; dna:reported_year ?year .
+        FILTER(?impact_USDollars > 0.0) .
+        BIND(IF(?meas = dna:ImpactToHabitatsAndBiodiversity, "UN Goals 14.1-14.3, 14.c, 15.1-15.3, 15.5",
+                IF(?meas = dna:ImpactToResilienceToEvents, "UN Goal 1.5",
+                IF(?meas = dna:ImpactToReductionOfDiseaseAndMortality, "UN Goals 3.3, 3.4, 3.9",
+                IF(?meas = dna:ImpactToAccessToFood, "UN Goals 2.1, 2.2",
+                IF(?meas = dna:ImpactToAgriculturalProduction, "UN Goals 2.3, 2.4", "UN Goal 6"))))) as ?un_goals) }
+ORDER BY DESC(?impact_USDollars) ?company_name LIMIT 50000
+
+
+Countries-Economic-Indicators
+SELECT distinct ?country_name ?country_id ?meas ?year ?value ?unit
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name .
+        VALUES ?meas { dna:GDP-OER dna:GDP-PPP dna:InflationRate dna:LaborForce dna:UnemploymentRate 
+                        dna:TotalPopulation dna:PopulationInPoverty }
+        ?measurement a ?meas ; dna:defined_for ?country_id ; 
+                     dna:reported_value ?value ; dna:reported_year ?year .
+        OPTIONAL{ ?measurement dna:has_unit ?unit } }
+ORDER BY ?country_name ?meas DESC(?year) LIMIT 5000
+
+
+Countries-Electrical-Consumption
+SELECT distinct ?country_name ?country_id ?meas ?year ?meas_value ?unit
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name .
+        VALUES ?meas { dna:ElectricityGeneratingCapacity dna:ElectricityProduction 
+                       dna:ElectricityConsumption dna:ElectricityFromFossilFuels 
+                       dna:ElectricityFromNuclearFuels dna:ElectricityFromRenewableSources
+                       dna:TotalPopulation dna:PopulationWithoutElectricity }
+        ?measurement a ?meas ; dna:defined_for ?country_id ; 
+                     dna:reported_value ?meas_value ; dna:reported_year ?year .
+        OPTIONAL{?measurement dna:has_unit ?unit} }
+ORDER BY ?country_name ?meas DESC(?year) LIMIT 5000
+
+
+Countries-Env-Issues
+SELECT distinct ?country_name ?country_id ?env_issues
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name ; dna:environmental_issues ?env_issues }
+ORDER BY ?country_name 
+
+
+Countries-Env-Issues-by-Keyword
+SELECT distinct ?country_name ?country_id ?keyword ?env_issues
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name ; dna:environmental_issues ?env_issues .
+        BIND("erosion" as ?keyword)
+        FILTER(CONTAINS(?env_issues, ?keyword)) }
+ORDER BY ?country_name 
+
+
+Countries-Land-Use
+SELECT distinct ?country_name ?country_id ?meas ?year ?percent_value ?value_sq_kms
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name ; dna:land_area_sq_kms ?land_sq_kms .
+        VALUES ?meas { dna:AmountOfArableLand dna:AmountOfPermanentCrops 
+                       dna:AmountOfPermanentPastures dna:AmountOfForest }
+        ?measurement a ?meas ; dna:defined_for ?country_id ; 
+                     dna:reported_value ?percent_value ; dna:reported_year ?year .
+        BIND(?land_sq_kms * ?percent_value as ?value_sq_kms) }
+ORDER BY ?country_name ?meas DESC(?year) LIMIT 5000
+
+
+Countries-Water-Details
+SELECT distinct ?country_name ?country_id ?year ?water_area_sq_kms ?water_percent_of_country ?renewable_water_cubic_meters
+WHERE { ?country_id a dna:Country ; rdfs:label ?country_name ; 
+                    dna:area_sq_kms ?area ; dna:land_area_sq_kms ?land_area .
+        BIND(?area - ?land_area as ?water_area_sq_kms) .
+        BIND(?water_area_sq_kms / ?area as ?water_percent_of_country) .
+        OPTIONAL{ ?measurement a dna:AmountOfRenewableWaterResources ; dna:defined_for ?country_id ; 
+                               dna:reported_value ?renewable_water_cubic_meters ; dna:reported_year ?year } }
+ORDER BY ?country_name DESC(?year) LIMIT 5000

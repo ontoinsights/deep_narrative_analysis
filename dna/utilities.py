@@ -50,7 +50,7 @@ processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in', 'ins
 # Words that introduce a 'causal' clause, where the main clause is the effect
 cause_connectors = ['when', 'because', 'since', 'as']
 # Words that introduce a 'causal' effect in the main clause, where the other clause is the cause
-effect_connectors = ['so', 'therefore ', 'consequently ']
+effect_connectors = ['so', 'therefore', 'consequently']
 # If - then only is cause-effect when the tenses of the main and other clause are the same
 cause_effect_pairs = [('if', 'then')]
 # Prepositions that introduce a cause in the form of a noun phrase
@@ -64,7 +64,7 @@ with open('../dna/resources/country_names.txt', 'r') as names_file:
 
 def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):
     """
-    Add the value (cast using the value_type parameter) for the specified key in the dictionary
+    Add the value (cast using the value_type parameter) for the specified key in the dictionary,
     if that key exists, or create a new dictionary entry for the key (where the value is a list).
 
     :param dictionary: The dictionary to be updated
@@ -72,7 +72,7 @@ def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):
     :param value: The value to be added to the current list of values of the dictionary entry, or
                   a new list is created with the value
     :param value_type: The type of the value
-    :return: None (Dictionary is updated)
+    :return None (Dictionary is updated)
     """
     values = []
     if key in dictionary.keys():

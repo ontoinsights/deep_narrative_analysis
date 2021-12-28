@@ -13,19 +13,24 @@ query_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT ?name ?narrator WHER
 
 query_events_in_range = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?event ?label ?year ?month ?day ' \
                         'FROM <urn:narr_graph> FROM <tag:stardog:api:context:default> WHERE ' \
-                        '{ ?event a ?type ; rdfs:label ?label . ?type rdfs:subClassOf+ :EventAndState . ' \
-                        '{ { ?event :has_time ?time } UNION { ?event :has_beginning ?time } } ' \
-                        '?time :year ?year . FILTER(?year >= beginning_year) . FILTER(?year <= ending_year) . ' \
+                        '{ ?event a ?type ; rdfs:label ?label ; :sentence_offset ?offset . ' \
+                        '?type rdfs:subClassOf* :EventAndState . ' \
+                        '{ { ?event :has_time ?time } UNION { ?event :has_beginning ?time } UNION ' \
+                        '{ ?event :has_earliest_beginning ?time } UNION { ?event :has_end ?time } UNION ' \
+                        '{ ?event :has_latest_end ?time } } ?time :year ?year . ' \
+                        'FILTER(?year >= beginning_year) . FILTER(?year <= ending_year) . ' \
                         'OPTIONAL { ?time :month_of_year ?month . OPTIONAL { ?time :day_of_month ?day } } } ' \
-                        'ORDER BY ?year ?month ?day '
+                        'ORDER BY ?year ?month ?day ?offset '
 
 query_events = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?event ?label ?year ?month ?day ' \
                'FROM <urn:narr_graph> FROM <tag:stardog:api:context:default> WHERE ' \
-               '{ ?event a ?type ; rdfs:label ?label . ?type rdfs:subClassOf+ :EventAndState . ' \
-               '{ { ?event :has_time ?time } UNION { ?event :has_beginning ?time } } ' \
-               '?time :year ?year . ' \
+               '{ ?event a ?type ; rdfs:label ?label ; :sentence_offset ?offset . ' \
+               '?type rdfs:subClassOf* :EventAndState . ' \
+               '{ { ?event :has_time ?time } UNION { ?event :has_beginning ?time } UNION ' \
+               '{ ?event :has_earliest_beginning ?time } UNION { ?event :has_end ?time } UNION ' \
+               '{ ?event :has_latest_end ?time } } ?time :year ?year . ' \
                'OPTIONAL { ?time :month_of_year ?month . OPTIONAL { ?time :day_of_month ?day } } } ' \
-               'ORDER BY ?year ?month ?day'
+               'ORDER BY ?year ?month ?day ?offset'
 
 
 def display_narratives(store_name: str):
@@ -44,7 +49,7 @@ def display_narratives(store_name: str):
     else:
         return
 
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     # TODO: Remove the window's reference to the domain timeline if not relevant for a use case
     layout = [[sg.Text("Select a narrative or 'Domain Events'.", font=('Arial', 16))],
@@ -131,7 +136,7 @@ def get_narratives(store_name: str) -> dict:
     Query the specified database for ingested narratives.
 
     :param store_name: The database/data store name
-    :return A dictionary with keys = narrative title and values = narrator name
+    :return: A dictionary with keys = narrative title and values = narrator name
     """
     narrative_dict = dict()
     try:

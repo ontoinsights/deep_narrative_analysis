@@ -1,9 +1,9 @@
 # Processes one or more narratives as described in a CSV file
-# Displays one of two windows to: a) load new narratives from a CSV or b) load narratives already ingested
+# Displays one of two windows to load new narratives from a CSV or to load narratives already ingested
 # If new narratives are ingested (a):
 # 1) The text is loaded and simplified/cleaned
 # 2) Narrative text and metadata are saved to the specified database/store name
-# 3) nlp's parse_narrative is called to do the spaCy parsing and create a dictionary of the sentence details
+# 3) spaCy's parse_narrative is called to do the spaCy parsing and create a dictionary of the sentence details
 # 4) create_event_turtle is called to turn the dictionary into Turtle
 # 5) The Turtle from (4) is loaded to a named graph identified by the narrative metadata's title
 # 6) A check for multiple narrator names (due to aliases/maiden and married names/etc.) is performed and
@@ -57,7 +57,7 @@ def ingest_narratives() -> (str, int):   # pragma: no cover
     """
     store_list = get_databases()
 
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Select CSV file:", font=('Arial', 16)),
                sg.FileBrowse(target='csv_file', button_color='dark blue'),
@@ -126,7 +126,7 @@ def select_store() -> str:    # pragma: no cover
                     button_color='dark blue', icon=encoded_logo)
         return empty_string
 
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Select a store name and then press 'OK'.", font=('Arial', 16))],
               [sg.Text("To exit without making a selection, press 'End' or close the window.",

@@ -53,7 +53,7 @@ def display_statistics(store_name: str):
     :return: None (Window is displayed)
     """
     logging.info(f'Displaying metadata statistics for {store_name}')
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Click one or more of the buttons to display various summary statistics.",
                        font=('Arial', 16))],

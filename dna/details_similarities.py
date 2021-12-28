@@ -18,7 +18,7 @@ def display_similarities(store_name: str):
     :return: TBD
     """
     logging.info(f'Displaying similarities in {store_name}')
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Not yet implemented.",
                        font=('Arial', 16))],

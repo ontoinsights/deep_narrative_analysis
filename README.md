@@ -48,7 +48,12 @@ The Stardog triple store (downloadable from https://www.stardog.com/get-started/
 * "ontologies" with the files from the _ontologies_ directory
 * "domain-specific" with the files from the _ontologies/domain-specific_ subdirectory
 
-In addition to downloading the spaCy library (which is addressed in requirements.txt), spaCy's transformer language model also needs to be installed. This is accomplished by executing "python3 -m spacy download en_core_web_trf".
+In addition to downloading the spaCy and NLTK libraries (which are addressed in requirements.txt), spaCy's transformer language model and NLTK data also need to be installed. The former is accomplished by executing "python3 -m spacy download en_core_web_trf". And, the latter is installed by starting a Python session and executing:
+
+import nltk
+nltk.download()
+
+The download instruction opens a window showing the NLTK Data Collections. Select "all" and then press the "Download" button in the lower left corner.
 
 These environment variables need to be set for the DNA application:
 

@@ -156,7 +156,7 @@ def query_ontology(text: str, query: str, domain_query: str) -> str:
     :param text: Text to match
     :param query: String holding the query to execute for the core ontologies
     :param domain_query: String holding the query to execute for the domain ontologies
-    :return The highest probability class name returned by the query
+    :return: The highest probability class name returned by the query
     """
     domain_query_replaced = domain_query.replace('domain-database', domain_database).\
         replace('ontologies-database', ontologies_database)

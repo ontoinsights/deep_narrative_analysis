@@ -29,7 +29,7 @@ def display_horiz_histogram(y_values: tuple, x_values: tuple, x_label: str, titl
     :param title: The title of the histogram chart
     :return: None (Histogram is displayed)
     """
-    # Setup the histogram
+    # Define the histogram
     plt.rcdefaults()
     fig, ax = plt.subplots()
     y_pos = np.arange(len(y_values))

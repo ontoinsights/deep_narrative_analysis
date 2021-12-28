@@ -26,7 +26,7 @@ if __name__ == '__main__':
     # Application is a minimal GUI that exercises narrative ingest and NLP/NLU components
     logging.info('Opened DNA GUI')
 
-    # Setup the PySimpleGUI window
+    # Create the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Image(r'resources/DNA2.png'),
                sg.Text('Deep Narrative Analysis', font=('Arial', 24, 'bold'))],

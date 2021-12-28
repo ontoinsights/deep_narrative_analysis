@@ -65,10 +65,10 @@ replacement_words = {
 
 def get_birth_family_details(narrative: str) -> (list, list, dict):
     """
-    Use spaCy Dependency Parsing and rules-based matching to get the birth date and place details,
+    Use spaCy Dependency Parsing and rules-based matching to get the birthdate and place details,
     and family member names from a narrative.
 
-    :param narrative: String holding the narrative
+    :param narrative String holding the narrative
     :return: Two lists where the first contains the tokens related to date and the second
              contains the tokens related to location, and a dictionary containing the names
              of family members and their relationship to the narrator/subject
@@ -104,7 +104,7 @@ def get_synonym(text: str) -> list:
     Get the synonyms/lemma of the input text.
 
     :param text: String to be lemmatized
-    :return An array holding the synonyms/lemmas of the input text
+    :return: An array holding the synonyms/lemmas of the input text
     """
     words = []
     syns = wn.synsets(text)
@@ -120,9 +120,9 @@ def get_named_entity_in_string(text: str) -> (str, str):
     entities, ...) or Events in the input text.
 
     :param text: The text to be parsed
-    :return Two strings - the first is the named entity's text and the second string is its
-            type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
-            does not contain any Named Entities, then two empty strings are returned
+    :return: Two strings - the first is the named entity's text and the second string is its
+             type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
+             does not contain any Named Entities, then two empty strings are returned
     """
     doc = nlp(text)
     for ent in doc.ents:
@@ -182,7 +182,7 @@ def get_proper_nouns(text: str) -> str:
     would return "New York City".
 
     :param text: The text string to be parsed
-    :return A string of the proper nouns
+    :return: A string of the proper nouns
     """
     phrase = nlp(text)
     proper_nouns = []
@@ -201,7 +201,7 @@ def get_sentence_sentiment(sentence: str) -> float:
     Use TextBlob to get sentence polarity/sentiment.
 
     :param sentence: The sentence to be analyzed.
-    :return The polarity (-1 for negative, 1 for positive) of the sentence
+    :return: The polarity (-1 for negative, 1 for positive) of the sentence
     """
     blob = TextBlob(sentence)
     # TextBlob's sentiment property returns a namedtuple of the form, (polarity, subjectivity).
@@ -215,7 +215,7 @@ def get_time_details(phrase: str) -> (int, str):
     For a phrase (such as 'a year later'), get the time increment and number of increments.
 
     :param phrase: String to be processed
-    :return A tuple of the number of increments and the increment length (for example, 'year')
+    :return: A tuple of the number of increments and the increment length (for example, 'year')
     """
     number = 0
     increment = ''
@@ -287,7 +287,7 @@ def _replace_words(sentence: str) -> str:
     Replace specific phrases/terms with simpler ones - such as replacing 'as well as' with the word, 'and'.
 
     :param sentence: The sentence whose text should be updated
-    :return The updated sentence
+    :return: The updated sentence
     """
     for key, value in replacement_words.items():
         if key in sentence:

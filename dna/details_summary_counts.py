@@ -19,7 +19,7 @@ def display_dates_events(narratives: str):
     :return: None (Table of locations and counts is displayed)
     """
     logging.info(f'Displaying dates in narratives')
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Not yet implemented.",
                        font=('Arial', 16))],
@@ -61,7 +61,7 @@ def display_locations(narratives: str):
     :return: None (Table of locations and counts is displayed)
     """
     logging.info(f'Displaying locations in narratives')
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Not yet implemented.",
                        font=('Arial', 16))],
@@ -106,8 +106,8 @@ def get_y_x_values(number_narrators: int, variable: str, query: str, store_name:
     :param query: String holding the query to run to get the count
     :param store_name: String holding the database/data store name with the narratives and narrator details
     :return: Two tuples of integers - for the y and x axes of a horizontal bar chart ...
-             The y axis is the list of genders, birth countries and birth years,
-             and the x axis is the number of narrators
+             The y-axis is the list of genders, birth countries and birth years,
+             and the x-axis is the number of narrators
     """
     dictionary = dict()
     # Get count

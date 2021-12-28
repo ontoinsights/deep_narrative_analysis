@@ -35,7 +35,7 @@ def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Languag
     :param family_dict: A dictionary containing the names of family members and their relationship
                         to the narrator/subject
     :param sentence_offset: Integer indicating the order of the sentence in the overall narrative
-    :return None (the sentence_dicts array is updated)
+    :return: None (the sentence_dicts array is updated)
     """
     logging.info(f'Creating sentence dictionary for {sentence}')
     # Store details for each sentence, starting from the ROOT verb

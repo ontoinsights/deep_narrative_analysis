@@ -30,7 +30,7 @@ def display_edit_table(title: str, data_list: list, store_name: str):
     :param data_list: Array of lists holding 1) either a noun/concept or event URI, 2) a predicate
                       for that noun/event individual, 3) the object of the predicate
     :param store_name: String holding the database/store details when saving changes
-    :return N/A
+    :return: None
     """
     cols_list = ['Identifier', 'Predicate', 'Object/Value', 'Delete']
     # TODO: Add ability to create new triples
@@ -148,7 +148,7 @@ def display_narratives_for_edit(store_name: str):
     else:
         narrative_list = [narr.replace('_', '') for narr in narrative_dict.keys()]
 
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Select a narrative and either choose to edit nouns or events.", font=('Arial', 16))],
               [sg.Text("Press 'OK' to edit the narrative, or press 'End' (or close the window) to exit.",
@@ -233,7 +233,7 @@ def display_row_for_edit(subj: str, pred: str, obj: str, del_flag: bool) -> (str
     :param pred: String holding the predicate of a triple
     :param obj: String holding the object of a triple
     :param del_flag: Boolean indicating that the triple should be removed from the store
-    :return A tuple consisting of the window's predicate and object strings
+    :return: A tuple consisting of the window's predicate and object strings
     """
     # Determine the height of the 'Object' text
     if len(obj) > 2000:

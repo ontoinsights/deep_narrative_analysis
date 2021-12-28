@@ -31,7 +31,7 @@ def check_nouns(narr_gender: str, sent_dictionary: dict, key: str, last_nouns: l
                             sentence in a narrative)
     :param key: Either 'subjects' or 'objects'
     :param last_nouns: The list/array of tuples defining the noun text and its type
-    :return Array of tuples that are the noun text and type for subjects or objects
+    :return: Array of tuples that are the noun text and type for subjects or objects
     """
     # TODO: Use previous sentence to give context to nouns (ex: bloody attacks => during the violence)
     nouns = set()
@@ -87,7 +87,7 @@ def _check_criteria(last_nouns: list, looking_for_singular: Union[bool, None],
     :param looking_for_person: Boolean indicating that a Person is needed from last_nouns
     :param is_exact: Boolean indicating that the gender and number MUST match when the looking_for
                      parameters are not None
-    :return A list/array of tuples of subjects/objects (text and type) from last_nouns that fit the
+    :return: A list/array of tuples of subjects/objects (text and type) from last_nouns that fit the
             criteria defined by the parameters
     """
     poss_nouns = []
@@ -148,7 +148,7 @@ def _check_last_nouns(last_nouns: list, looking_for_singular: Union[bool, None],
     :param looking_for_singular: Boolean indicating that a singular noun is needed from last_nouns
     :param looking_for_female: Boolean indicating that a female gender noun is needed from last_nouns
     :param looking_for_person: Boolean indicating that a Person is needed from last_nouns
-    :return None (last_nouns is updated)
+    :return: None (last_nouns is updated)
     """
     possible_nouns = _check_criteria(last_nouns, looking_for_singular, looking_for_female,
                                      looking_for_person, True)        # Exact
@@ -165,7 +165,7 @@ def _get_noun_preposition_text(dictionary: dict, text: str) -> str:
 
     :param dictionary: Dictionary holding the details to be added
     :param text: Input noun text
-    :return The updated noun text or the original text if no change is warranted
+    :return: The updated noun text or the original text if no change is warranted
     """
     new_text = text
     preps = dictionary['preps']

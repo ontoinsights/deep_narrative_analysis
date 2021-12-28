@@ -41,7 +41,7 @@ def check_to_loc(dictionary: dict, list_locs: list, new_locs: list):
     :param dictionary: A verb dictionary
     :param list_locs: An array of location entities
     :param new_locs: An array of location entities whose associating preposition is 'to'
-    :return None (new_locs is updated)
+    :return: None (new_locs is updated)
     """
     for prep in dictionary:
         prep_str = str(prep)
@@ -60,7 +60,7 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     :param sent_date: The event text
     :param time: The current time details (at this point, only the string, 'before', 'after' or
                  an empty string
-    :return The time as defined by an Event's :has_time, :has_beginning or :has_end predicates
+    :return: The time as defined by an Event's :has_time, :has_beginning or :has_end predicates
     """
     # SHOULD find the event in the domain ontology modules
     results = query_database(
@@ -101,8 +101,8 @@ def get_location_uri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
     :param loc: Input location string
     :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
                            all locations already processed
-    :return A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
-            array of strings that are the Turtle for a new location
+    :return: A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
+             array of strings that are the Turtle for a new location
     """
     loc_ttl = []
     if loc in names_to_geo_dict.keys():   # Location is a country name
@@ -160,7 +160,7 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
 
     :param sentence_dictionary: The sentence dictionary
     :param last_loc: The location from the previous sentence
-    :return A new location or the empty string (if there is no new location)
+    :return: A new location or the empty string (if there is no new location)
     """
     # TODO: Imprecise location (home, house, town, village, ...)
     new_locs = []
@@ -172,7 +172,7 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
     if len(new_locs) == 1:
         return new_locs[0]
     elif len(new_locs) > 1:
-        # Try to reduce locations to only ones associated directly with the main verb using the preposition, to
+        # Try to reduce locations to only ones associated directly with the main verb using the preposition 'to'
         revised_locs = []
         for verb in sentence_dictionary[verbs_string]:
             if preps_string in verb.keys():
@@ -202,9 +202,9 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
     :param last_date: The inferred (or explicit) time of the event, formatted as:
                       ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
     :param processed_dates: A list of all dates whose Turtle has already been created
-    :return A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_URI),
-            and the Turtle for any new date/event instances. In addition, the processed_dates array may
-            be updated.
+    :return: A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_URI),
+             and the Turtle for any new date/event instances. In addition, the processed_dates array may
+             be updated.
     """
     # TODO: Imprecise time (morning, evening, day, night, ...)
     new_dates = []
@@ -316,8 +316,8 @@ def update_time(last_date: str, number: int, increment: str) -> str:
                       ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
     :param number: Positive or negative integer indicating whether the month, day or year is updated
     :param increment: String specifying year, month, day
-    :return String specifying the updated last_date as a URI (or the last_date is returned if the update
-            cannot be performed)
+    :return: String specifying the updated last_date as a URI (or the last_date is returned if the update
+             cannot be performed)
     """
     if ':PiT' in last_date:
         year_search = year_pattern.search(last_date)
@@ -355,7 +355,7 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
     'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': 'June', 'detail_type': 'DATE'}]},
     {'prep_text': 'in', 'prep_details': [{'detail_text': 'Znojmo', 'detail_type': 'SINGGPE'}]}]}]}.
 
-    If the function parameters are the sentence dictionary (from above), 'TIMES', and an array of dates),
+    If the function parameters are the sentence dictionary (from above), 'TIMES', and an array of dates,
     then the text, 'June 12 1928' will be retained in the array, 'new_dates'. But, the text, 'thirteenth
     century', will not be kept as it is not found in the 'verbs' details in the sentence dictionary.
 
@@ -363,7 +363,7 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
                             sentence in a narrative)
     :param key: A string specifying the dictionary key whose values are checked
     :param array: The list/array to be updated
-    :return None (the specified array is updated if the conditions specified above are met)
+    :return: None (the specified array is updated if the conditions specified above are met)
     """
     check_str = str(sent_dictionary[verbs_string])  # String with all the details for the verb(s)
     for elem in sent_dictionary[key]:
@@ -405,8 +405,8 @@ def _create_geonames_ttl(loc_uri: str, loc_text: str) -> list:
 
     :param loc_uri: String holding the URI to be assigned to the location
     :param loc_text: The location text
-    :return An array holding the Turtle for the location/location URI if the information is
-            obtainable from GeoNames or an empty array
+    :return: An array holding the Turtle for the location/location URI if the information is
+             obtainable from GeoNames or an empty array
     """
     geonames_ttl = []
     class_type, country, admin_level = get_geonames_location(loc_text)
@@ -428,8 +428,8 @@ def _get_before_after(prep_str: str, element: str) -> str:
 
     :param prep_str: String holding the dictionary entry for the preposition
     :param element: String holding the named entity element text
-    :return A string of either the element_text (if 'before'/'after' is not found) or the element_text
-            preceded by 'before' or 'after'
+    :return: A string of either the element_text (if 'before'/'after' is not found) or the element_text
+             preceded by 'before' or 'after'
     """
     elem_text = element
     prep_str = prep_str.split("prep_text': '")[-1].lower()

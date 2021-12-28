@@ -38,7 +38,7 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
     :param narrative_name: The narrative title
     :param narrator: The URI with the narrator's metadata
     :param store_name: The database/store to be queried for data
-    :return None
+    :return: None
     """
     logging.info(f'Displaying metadata and text for {narrative_name}')
     narrator_names = []
@@ -86,7 +86,7 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
         capture_error(f'Exception getting narrator details from {store_name}: {str(e)}', True)
         return
 
-    # Setup the PySimpleGUI window
+    # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Narrative Title:", font=('Arial', 16)),
                sg.Text(narrative_name, font=('Arial', 16))],
@@ -163,7 +163,7 @@ def display_timeline(narrative_name: str, event_list: list, store_name: str):
     ax.xaxis.set_major_locator(mdates.YearLocator())
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%Y-%m"))
     plt.setp(ax.get_xticklabels(), rotation=30, ha="right", fontsize='small')
-    # Remove y axis and spines
+    # Remove y-axis and spines
     ax.yaxis.set_visible(False)
     ax.spines[["left", "top", "right"]].set_visible(False)
     ax.margins(y=0.1)

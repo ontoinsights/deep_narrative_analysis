@@ -92,7 +92,7 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
             node_set.add(f'evt{event_name}$${str(sentiment)}')  # Capture the sentiment with the node name
             node_set.add(obj_node_name)
 
-    # Associate the color red with 'bad' Events/States and green with 'good' ones
+    # Associate the color red with 'bad' and green with 'good' Events/States
     # Associate the color purple with class types, blue with other URIs, and orange with strings/literals
     nodes = []
     node_colors = []
@@ -168,7 +168,7 @@ def get_event_data(narrative_name: str, store_name: str, event_uri: str) -> list
     :param store_name: String holding the database/store name from which the event data is retrieved
     :param event_uri: The URI of the event in the database/data store
     :return: An array of tuples of (predicate value, object uri, object value, object type) for the
-             related entities and properties of the event
+            related entities and properties of the event
     """
     results = []
     try:
@@ -209,7 +209,7 @@ def get_sentiment(event_uri: str, narrative_name: str, store_name: str) -> float
     :param event_uri: String holding the URI to be queries
     :param narrative_name: String holding the narrative where the event is defined
     :param store_name: String holding the database where the narrative is stored
-    :return Float that is the event's sentiment
+    :return: Float that is the event's sentiment
     """
     sentiment_details = query_database(
         'select',
