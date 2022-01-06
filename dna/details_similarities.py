@@ -14,8 +14,8 @@ def display_similarities(store_name: str):
     """
     Display a window to show 'similar' narratives.
 
-    :param store_name: The database/data store name holding the narratives
-    :return: TBD
+    @param store_name: The database/data store name holding the narratives
+    @return: TBD
     """
     logging.info(f'Displaying similarities in {store_name}')
     # Define the PySimpleGUI window

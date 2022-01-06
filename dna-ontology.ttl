@@ -6113,6 +6113,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:Capacity
 <urn:ontoinsights:dna:Capacity> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                owl:disjointWith <urn:ontoinsights:dna:Deficiency> ;
                                 rdfs:label "Capacity" ;
                                 <urn:ontoinsights:dna:definition> "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate." ;
                                 <urn:ontoinsights:dna:noun_synonym> "capability" ,
@@ -6783,6 +6784,24 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "protect" ,
                                                                                     "safeguard" ,
                                                                                     "secure" .
+
+
+###  urn:ontoinsights:dna:Deficiency
+<urn:ontoinsights:dna:Deficiency> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                  rdfs:label "Deficiency" ;
+                                  <urn:ontoinsights:dna:definition> "A lack or shortage of some entity. The thing that is lacking is specified using the :has_topic property." ;
+                                  <urn:ontoinsights:dna:noun_synonym> "dearth" ,
+                                                                      "deficit" ,
+                                                                      "insufficiency" ,
+                                                                      "lack" ,
+                                                                      "paucity" ,
+                                                                      "scantiness" ,
+                                                                      "scarcity" ,
+                                                                      "shortage" ;
+                                  <urn:ontoinsights:dna:verb_synonym> "be deficient" ,
+                                                                      "be insufficient" ,
+                                                                      "lack" .
 
 
 ###  urn:ontoinsights:dna:Deflation
@@ -10085,7 +10104,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "warehousing" ;
                                <urn:ontoinsights:dna:verb_synonym> "cache" ,
                                                                    "hoard" ,
-                                                                   "hold in reserve" ,
+                                                                   "hold" ,
                                                                    "keep" ,
                                                                    "reserve" ,
                                                                    "set aside" ,
@@ -14757,12 +14776,12 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
-                                                                 "touch" ;
+                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
+                                                                 "converge" ;
                              rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "meet" ,
-                                                                 "boundary" ;
+                             <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 
 

@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: November 30 2021
+# Last Modified: January 1 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -35,6 +35,7 @@
 #  Removed LivingCondition as a superclass for several subclasses of 
 #    Economic and Political Environment
 #  Moved Assessment to event-state-subclasses.ttl
+#  Added Deficiency
 ########################################################################
 
 
@@ -91,6 +92,13 @@
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Consumer Confidence" ;
   :definition "An economic indicator that is defined 'as the degree of optimism on the state of [an] economy that consumers are expressing through their activities of savings and spending ... In an interconnected global economy, tracking international consumer confidence is a lead indicator of economic trends.' (https://en.wikipedia.org/w/index.php?title=Consumer_confidence_index&oldid=1009942282) The overall  situation regarding ConsumerConfidence can be described using the :has_assessment predicate." .
+
+:Deficiency a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Deficiency" ;
+  :definition "A lack or shortage of some entity. The thing that is lacking is specified using the :has_topic property." ;
+  :noun_synonym "insufficiency", "lack", "shortage", "dearth", "deficit", "scarcity", "scantiness", "paucity" ;
+  :verb_synonym "lack", "be deficient", "be insufficient" .
 
 :Deflation a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment, :Decrease ;
@@ -283,6 +291,9 @@
 ########################################################################
 # Disjointness
 ########################################################################
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Capacity :Deficiency ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Deflation :Inflation ) .

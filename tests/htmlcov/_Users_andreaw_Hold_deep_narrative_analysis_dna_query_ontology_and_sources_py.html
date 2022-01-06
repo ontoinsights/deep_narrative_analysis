@@ -150,11 +150,11 @@
     <p id="t95" class="pln"><span class="n"><a href="#t95">95</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t96" class="pln"><span class="n"><a href="#t96">96</a></span><span class="t"><span class="str">    Creates the Turtle for an Affiliation.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t97" class="pln"><span class="n"><a href="#t97">97</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t"><span class="str">    :param noun_uri: String holding the entity/URI to be affiliated</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t99" class="pln"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="str">    :param noun_text: String holding the sentence text for the entity</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t"><span class="str">    :param affiliated_text: String specifying the entity (organization, group, etc.) to which the</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t"><span class="str">    @param noun_uri: String holding the entity/URI to be affiliated</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t99" class="pln"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="str">    @param noun_text: String holding the sentence text for the entity</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t"><span class="str">    @param affiliated_text: String specifying the entity (organization, group, etc.) to which the</span>&nbsp;</span><span class="r"></span></p>
     <p id="t101" class="pln"><span class="n"><a href="#t101">101</a></span><span class="t"><span class="str">                            noun is affiliated</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t102" class="pln"><span class="n"><a href="#t102">102</a></span><span class="t"><span class="str">    :param affiliated_type: String specifying the class type of the entity</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t102" class="pln"><span class="n"><a href="#t102">102</a></span><span class="t"><span class="str">    @param affiliated_type: String specifying the class type of the entity</span>&nbsp;</span><span class="r"></span></p>
     <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t"><span class="str">    :return An array of strings holding the Turtle representation of the Affiliation</span>&nbsp;</span><span class="r"></span></p>
     <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t105" class="mis show_mis"><span class="n"><a href="#t105">105</a></span><span class="t">    <span class="nam">affiliated_uri</span> <span class="op">=</span> <span class="str">f':{affiliated_text.replace(" ", "_")}'</span>&nbsp;</span><span class="r"></span></p>
@@ -173,8 +173,8 @@
     <p id="t118" class="pln"><span class="n"><a href="#t118">118</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t"><span class="str">    Check dictionary for an unmapped term and see if a mapping can be created.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t121" class="pln"><span class="n"><a href="#t121">121</a></span><span class="t"><span class="str">    :param word: The term to be mapped</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t"><span class="str">    :param is_noun: Boolean indicating if the word/term should be checked as a noun first</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t121" class="pln"><span class="n"><a href="#t121">121</a></span><span class="t"><span class="str">    @param word: The term to be mapped</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t"><span class="str">    @param is_noun: Boolean indicating if the word/term should be checked as a noun first</span>&nbsp;</span><span class="r"></span></p>
     <p id="t123" class="pln"><span class="n"><a href="#t123">123</a></span><span class="t"><span class="str">    :return String holding the concept's class name</span>&nbsp;</span><span class="r"></span></p>
     <p id="t124" class="pln"><span class="n"><a href="#t124">124</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t125" class="mis show_mis"><span class="n"><a href="#t125">125</a></span><span class="t">    <span class="key">try</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -215,8 +215,8 @@
     <p id="t160" class="pln"><span class="n"><a href="#t160">160</a></span><span class="t"><span class="str">    Determines if one of the 'words' in the input tuple is found in the 'text' string. Returns</span>&nbsp;</span><span class="r"></span></p>
     <p id="t161" class="pln"><span class="n"><a href="#t161">161</a></span><span class="t"><span class="str">    True if so.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t162" class="pln"><span class="n"><a href="#t162">162</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t163" class="pln"><span class="n"><a href="#t163">163</a></span><span class="t"><span class="str">    :param text: The string to be checked</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t164" class="pln"><span class="n"><a href="#t164">164</a></span><span class="t"><span class="str">    :param words: A tuple holding words to be searched for</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t163" class="pln"><span class="n"><a href="#t163">163</a></span><span class="t"><span class="str">    @param text: The string to be checked</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t164" class="pln"><span class="n"><a href="#t164">164</a></span><span class="t"><span class="str">    @param words: A tuple holding words to be searched for</span>&nbsp;</span><span class="r"></span></p>
     <p id="t165" class="pln"><span class="n"><a href="#t165">165</a></span><span class="t"><span class="str">    :return True if one of the 'words' is found in the 'text; False otherwise</span>&nbsp;</span><span class="r"></span></p>
     <p id="t166" class="pln"><span class="n"><a href="#t166">166</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t167" class="mis show_mis"><span class="n"><a href="#t167">167</a></span><span class="t">    <span class="key">for</span> <span class="nam">word</span> <span class="key">in</span> <span class="nam">words</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -231,10 +231,10 @@
     <p id="t176" class="pln"><span class="n"><a href="#t176">176</a></span><span class="t"><span class="str">    the verb and create the resulting Turtle. If the semantics are defined by idiom processing,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t177" class="pln"><span class="n"><a href="#t177">177</a></span><span class="t"><span class="str">    return any triples dictated by the idiom processing.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t178" class="pln"><span class="n"><a href="#t178">178</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t179" class="pln"><span class="n"><a href="#t179">179</a></span><span class="t"><span class="str">    :param sentence_text: String holding the text of the sentence</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t180" class="pln"><span class="n"><a href="#t180">180</a></span><span class="t"><span class="str">    :param event_uri: The URI identifying the event for the verb, in the resulting Turtle file</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t181" class="pln"><span class="n"><a href="#t181">181</a></span><span class="t"><span class="str">    :param verb_dict: Dictionary holding the verb details</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t182" class="pln"><span class="n"><a href="#t182">182</a></span><span class="t"><span class="str">    :param processing: String holding the processing 'rule' for the verb/event/state</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t179" class="pln"><span class="n"><a href="#t179">179</a></span><span class="t"><span class="str">    @param sentence_text: String holding the text of the sentence</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t180" class="pln"><span class="n"><a href="#t180">180</a></span><span class="t"><span class="str">    @param event_uri: The URI identifying the event for the verb, in the resulting Turtle file</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t181" class="pln"><span class="n"><a href="#t181">181</a></span><span class="t"><span class="str">    @param verb_dict: Dictionary holding the verb details</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t182" class="pln"><span class="n"><a href="#t182">182</a></span><span class="t"><span class="str">    @param processing: String holding the processing 'rule' for the verb/event/state</span>&nbsp;</span><span class="r"></span></p>
     <p id="t183" class="pln"><span class="n"><a href="#t183">183</a></span><span class="t"><span class="str">    :return Mapping of the verb/sentence semantics to the DNA ontology, returning the Turtle details</span>&nbsp;</span><span class="r"></span></p>
     <p id="t184" class="pln"><span class="n"><a href="#t184">184</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t185" class="mis show_mis"><span class="n"><a href="#t185">185</a></span><span class="t">    <span class="key">if</span> <span class="nam">processing</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
@@ -263,7 +263,7 @@
     <p id="t208" class="pln"><span class="n"><a href="#t208">208</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t209" class="pln"><span class="n"><a href="#t209">209</a></span><span class="t"><span class="str">    Get the type of location from its text as well as its country and administrative level (if relevant).</span>&nbsp;</span><span class="r"></span></p>
     <p id="t210" class="pln"><span class="n"><a href="#t210">210</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t211" class="pln"><span class="n"><a href="#t211">211</a></span><span class="t"><span class="str">    :param loc_text: Location text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t211" class="pln"><span class="n"><a href="#t211">211</a></span><span class="t"><span class="str">    @param loc_text: Location text</span>&nbsp;</span><span class="r"></span></p>
     <p id="t212" class="pln"><span class="n"><a href="#t212">212</a></span><span class="t"><span class="str">    :return A tuple holding the location's class type, country name (or an empty string or None),</span>&nbsp;</span><span class="r"></span></p>
     <p id="t213" class="pln"><span class="n"><a href="#t213">213</a></span><span class="t"><span class="str">            and an administrative level (if 0, then admin level is not applicable) or GeoNames ID</span>&nbsp;</span><span class="r"></span></p>
     <p id="t214" class="pln"><span class="n"><a href="#t214">214</a></span><span class="t"><span class="str">            (for a Country)</span>&nbsp;</span><span class="r"></span></p>
@@ -311,10 +311,10 @@
     <p id="t256" class="pln"><span class="n"><a href="#t256">256</a></span><span class="t"><span class="str">    First check for people, locations/GPEs, ethnicities, religions, etc., then for idioms and lastly</span>&nbsp;</span><span class="r"></span></p>
     <p id="t257" class="pln"><span class="n"><a href="#t257">257</a></span><span class="t"><span class="str">    for word matches, definition matches and event/state class matches.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t258" class="pln"><span class="n"><a href="#t258">258</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t259" class="pln"><span class="n"><a href="#t259">259</a></span><span class="t"><span class="str">    :param noun_uri: String identifying the URI/URL/individual associated with the noun_text</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t260" class="pln"><span class="n"><a href="#t260">260</a></span><span class="t"><span class="str">    :param noun_text: String specifying the noun text from the original narrative sentence</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t261" class="pln"><span class="n"><a href="#t261">261</a></span><span class="t"><span class="str">    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t262" class="pln"><span class="n"><a href="#t262">262</a></span><span class="t"><span class="str">    :param sentence_text: The full text of the sentence (needed for checking for idioms)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t259" class="pln"><span class="n"><a href="#t259">259</a></span><span class="t"><span class="str">    @param noun_uri: String identifying the URI/URL/individual associated with the noun_text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t260" class="pln"><span class="n"><a href="#t260">260</a></span><span class="t"><span class="str">    @param noun_text: String specifying the noun text from the original narrative sentence</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t261" class="pln"><span class="n"><a href="#t261">261</a></span><span class="t"><span class="str">    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t262" class="pln"><span class="n"><a href="#t262">262</a></span><span class="t"><span class="str">    @param sentence_text: The full text of the sentence (needed for checking for idioms)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t263" class="pln"><span class="n"><a href="#t263">263</a></span><span class="t"><span class="str">    :return An array of the resulting Turtle for a mapping of the semantics to a DNA ontology class</span>&nbsp;</span><span class="r"></span></p>
     <p id="t264" class="pln"><span class="n"><a href="#t264">264</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t265" class="mis show_mis"><span class="n"><a href="#t265">265</a></span><span class="t">    <span class="nam">class_name</span> <span class="op">=</span> <span class="nam">empty_string</span>&nbsp;</span><span class="r"></span></p>
@@ -389,7 +389,7 @@
     <p id="t334" class="pln"><span class="n"><a href="#t334">334</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t335" class="pln"><span class="n"><a href="#t335">335</a></span><span class="t"><span class="str">    Get the first paragraph of the Wikipedia web page for the specified organization, group, ...</span>&nbsp;</span><span class="r"></span></p>
     <p id="t336" class="pln"><span class="n"><a href="#t336">336</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t337" class="pln"><span class="n"><a href="#t337">337</a></span><span class="t"><span class="str">    :param noun: String holding the organization/group name</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t337" class="pln"><span class="n"><a href="#t337">337</a></span><span class="t"><span class="str">    @param noun: String holding the organization/group name</span>&nbsp;</span><span class="r"></span></p>
     <p id="t338" class="pln"><span class="n"><a href="#t338">338</a></span><span class="t"><span class="str">    :return String that is the first paragraph of the Wikipedia page (if the org/group is found);</span>&nbsp;</span><span class="r"></span></p>
     <p id="t339" class="pln"><span class="n"><a href="#t339">339</a></span><span class="t"><span class="str">            otherwise, an empty string</span>&nbsp;</span><span class="r"></span></p>
     <p id="t340" class="pln"><span class="n"><a href="#t340">340</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
@@ -410,11 +410,11 @@
     <p id="t355" class="pln"><span class="n"><a href="#t355">355</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t356" class="pln"><span class="n"><a href="#t356">356</a></span><span class="t"><span class="str">    Processing to determine if a "noun" idiom has been defined.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t357" class="pln"><span class="n"><a href="#t357">357</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t358" class="pln"><span class="n"><a href="#t358">358</a></span><span class="t"><span class="str">    :param noun_text: String holding the noun text</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t359" class="pln"><span class="n"><a href="#t359">359</a></span><span class="t"><span class="str">    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t360" class="pln"><span class="n"><a href="#t360">360</a></span><span class="t"><span class="str">    :param sentence_text: The full text of the sentence (needed for checking for some idioms)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t361" class="pln"><span class="n"><a href="#t361">361</a></span><span class="t"><span class="str">    :param noun_uri: String identifying the noun concept as a URI/IRI</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t362" class="pln"><span class="n"><a href="#t362">362</a></span><span class="t"><span class="str">    :param use_first_noun: Boolean indicating that the first noun in the text should be used</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t358" class="pln"><span class="n"><a href="#t358">358</a></span><span class="t"><span class="str">    @param noun_text: String holding the noun text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t359" class="pln"><span class="n"><a href="#t359">359</a></span><span class="t"><span class="str">    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t360" class="pln"><span class="n"><a href="#t360">360</a></span><span class="t"><span class="str">    @param sentence_text: The full text of the sentence (needed for checking for some idioms)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t361" class="pln"><span class="n"><a href="#t361">361</a></span><span class="t"><span class="str">    @param noun_uri: String identifying the noun concept as a URI/IRI</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t362" class="pln"><span class="n"><a href="#t362">362</a></span><span class="t"><span class="str">    @param use_first_noun: Boolean indicating that the first noun in the text should be used</span>&nbsp;</span><span class="r"></span></p>
     <p id="t363" class="pln"><span class="n"><a href="#t363">363</a></span><span class="t"><span class="str">                           (if True); otherwise, the last noun is processed</span>&nbsp;</span><span class="r"></span></p>
     <p id="t364" class="pln"><span class="n"><a href="#t364">364</a></span><span class="t"><span class="str">    :return An array holding the Turtle statements that are generated if a noun idiom is found</span>&nbsp;</span><span class="r"></span></p>
     <p id="t365" class="pln"><span class="n"><a href="#t365">365</a></span><span class="t"><span class="str">            (or an empty list otherwise)</span>&nbsp;</span><span class="r"></span></p>
@@ -436,7 +436,7 @@
     <p id="t381" class="pln"><span class="n"><a href="#t381">381</a></span><span class="t"><span class="str">    Query the ontology to determine the appropriate class in the DNA ontology, that matches the</span>&nbsp;</span><span class="r"></span></p>
     <p id="t382" class="pln"><span class="n"><a href="#t382">382</a></span><span class="t"><span class="str">    semantics of the noun_text. Check for word matches, definition matches and event/state class matches.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t383" class="pln"><span class="n"><a href="#t383">383</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t384" class="pln"><span class="n"><a href="#t384">384</a></span><span class="t"><span class="str">    :param noun_text: String holding the text to be matched</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t384" class="pln"><span class="n"><a href="#t384">384</a></span><span class="t"><span class="str">    @param noun_text: String holding the text to be matched</span>&nbsp;</span><span class="r"></span></p>
     <p id="t385" class="pln"><span class="n"><a href="#t385">385</a></span><span class="t"><span class="str">    :return The class name that matches the semantics of the noun, or a reference to owl:Thing</span>&nbsp;</span><span class="r"></span></p>
     <p id="t386" class="pln"><span class="n"><a href="#t386">386</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t387" class="pln"><span class="n"><a href="#t387">387</a></span><span class="t">    <span class="com"># First check for an exact match</span>&nbsp;</span><span class="r"></span></p>
@@ -462,8 +462,8 @@
     <p id="t407" class="pln"><span class="n"><a href="#t407">407</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t408" class="pln"><span class="n"><a href="#t408">408</a></span><span class="t"><span class="str">    Uses an xpath string to access specific elements in an XML tree.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t409" class="pln"><span class="n"><a href="#t409">409</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t410" class="pln"><span class="n"><a href="#t410">410</a></span><span class="t"><span class="str">    :param xpath: String identifying the path to the element to be retrieved</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t411" class="pln"><span class="n"><a href="#t411">411</a></span><span class="t"><span class="str">    :param root: The root element of the XML tree</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t410" class="pln"><span class="n"><a href="#t410">410</a></span><span class="t"><span class="str">    @param xpath: String identifying the path to the element to be retrieved</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t411" class="pln"><span class="n"><a href="#t411">411</a></span><span class="t"><span class="str">    @param root: The root element of the XML tree</span>&nbsp;</span><span class="r"></span></p>
     <p id="t412" class="pln"><span class="n"><a href="#t412">412</a></span><span class="t"><span class="str">    :return String representing the value of the specified element or an empty string</span>&nbsp;</span><span class="r"></span></p>
     <p id="t413" class="pln"><span class="n"><a href="#t413">413</a></span><span class="t"><span class="str">            (if not defined)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t414" class="pln"><span class="n"><a href="#t414">414</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
@@ -478,8 +478,8 @@
     <p id="t423" class="pln"><span class="n"><a href="#t423">423</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t424" class="pln"><span class="n"><a href="#t424">424</a></span><span class="t"><span class="str">    Check if the event/class_name is a subclass of :MovementTravelAndTransportation.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t425" class="pln"><span class="n"><a href="#t425">425</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t426" class="pln"><span class="n"><a href="#t426">426</a></span><span class="t"><span class="str">    :param class_name: The type of event as defined by its class name</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t427" class="pln"><span class="n"><a href="#t427">427</a></span><span class="t"><span class="str">    :param for_movement: Boolean indicating that the query is for subclasses of</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t426" class="pln"><span class="n"><a href="#t426">426</a></span><span class="t"><span class="str">    @param class_name: The type of event as defined by its class name</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t427" class="pln"><span class="n"><a href="#t427">427</a></span><span class="t"><span class="str">    @param for_movement: Boolean indicating that the query is for subclasses of</span>&nbsp;</span><span class="r"></span></p>
     <p id="t428" class="pln"><span class="n"><a href="#t428">428</a></span><span class="t"><span class="str">                         :MovementTravelAndTransportation if true, and for subclasses of :Location</span>&nbsp;</span><span class="r"></span></p>
     <p id="t429" class="pln"><span class="n"><a href="#t429">429</a></span><span class="t"><span class="str">                         if false</span>&nbsp;</span><span class="r"></span></p>
     <p id="t430" class="pln"><span class="n"><a href="#t430">430</a></span><span class="t"><span class="str">    :return Boolean of True if a subclass of :MovementTravelAndTransportation or :Location</span>&nbsp;</span><span class="r"></span></p>
@@ -501,10 +501,10 @@
     <p id="t446" class="pln"><span class="n"><a href="#t446">446</a></span><span class="t"><span class="str">    Definition of the Turtle for an Person, Group or Organization that was identified by SpaCy as a</span>&nbsp;</span><span class="r"></span></p>
     <p id="t447" class="pln"><span class="n"><a href="#t447">447</a></span><span class="t"><span class="str">    'NORP' (nationality, religion, political party, ...).</span>&nbsp;</span><span class="r"></span></p>
     <p id="t448" class="pln"><span class="n"><a href="#t448">448</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t449" class="pln"><span class="n"><a href="#t449">449</a></span><span class="t"><span class="str">    :param noun_text: String holding the noun text</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t450" class="pln"><span class="n"><a href="#t450">450</a></span><span class="t"><span class="str">    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t451" class="pln"><span class="n"><a href="#t451">451</a></span><span class="t"><span class="str">    :param noun_uri: String identifying the noun concept as a URI/IRI</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t452" class="pln"><span class="n"><a href="#t452">452</a></span><span class="t"><span class="str">    :param wikipedia_desc: String holding the definition/description of the noun from Wikipedia</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t449" class="pln"><span class="n"><a href="#t449">449</a></span><span class="t"><span class="str">    @param noun_text: String holding the noun text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t450" class="pln"><span class="n"><a href="#t450">450</a></span><span class="t"><span class="str">    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t451" class="pln"><span class="n"><a href="#t451">451</a></span><span class="t"><span class="str">    @param noun_uri: String identifying the noun concept as a URI/IRI</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t452" class="pln"><span class="n"><a href="#t452">452</a></span><span class="t"><span class="str">    @param wikipedia_desc: String holding the definition/description of the noun from Wikipedia</span>&nbsp;</span><span class="r"></span></p>
     <p id="t453" class="pln"><span class="n"><a href="#t453">453</a></span><span class="t"><span class="str">    :return A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of</span>&nbsp;</span><span class="r"></span></p>
     <p id="t454" class="pln"><span class="n"><a href="#t454">454</a></span><span class="t"><span class="str">            the defining Turtle (if appropriate)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t455" class="pln"><span class="n"><a href="#t455">455</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>

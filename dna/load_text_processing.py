@@ -13,10 +13,10 @@ def clean_text(narrative: str, narr_metadata: dict) -> str:
       * Removing headers/footers (if they exist)
     This is typically only needed for pdf inputs, AND IS CUSTOMIZED for the specific pdf style.
 
-    :param narrative: String holding the text to be processed
-    :param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
+    @param narrative: String holding the text to be processed
+    @param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
                           Given,Given2,Surname,Maiden,Maiden2,Gender,Start,End,Remove,Header,Footer
-    :return: Updated narrative text
+    @return: Updated narrative text
     """
     new_text = empty_string
     # Split the text by the new lines/CRs since these are added by the PDF->text conversion
@@ -62,10 +62,10 @@ def simplify_text(narrative: str, narr_metadata: dict) -> str:
     given name + surname to 'Narrator', and to change instances of 'the {maiden_name}s' and 'the
     {surname}s' to 'family'. This is done to try to minimize co-reference problems.
 
-    :param narrative: String holding the text to be processed
-    :param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
+    @param narrative: String holding the text to be processed
+    @param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
                           Given,Given2,Surname,Maiden,Maiden2,Gender,Start,End,Remove,Header,Footer
-    :return: Updated narrative text
+    @return: Updated narrative text
     """
     new_text = narrative
     # If third person, simplify name to be 'Narrator'
@@ -91,9 +91,9 @@ def _check_header_footer_match(line: str, terms: list) -> bool:
     """
     Check the line of text if it includes all occurrences of the specified terms.
 
-    :param line: String holding the line of text
-    :param terms: Terms whose presence in the line are validated
-    :return: True if all the specified terms are in the line (or if there are no terms defined)
+    @param line: String holding the line of text
+    @param terms: Terms whose presence in the line are validated
+    @return: True if all the specified terms are in the line (or if there are no terms defined)
              False otherwise
     """
     if len(terms) == 0:
@@ -113,11 +113,11 @@ def _replace_third_person(narrative: str, given_name: str, narr_metadata: dict) 
     Update the text to change 3rd person instances of full name, given name + maiden name and
     given name + surname to "Narrator", and the possessive form to "Narrator's".
 
-    :param narrative: String holding the narrative text
-    :param given_name: The narrator's given name
-    :param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
+    @param narrative: String holding the narrative text
+    @param given_name: The narrator's given name
+    @param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
                           Given,Given2,Surname,Maiden,Maiden2,Gender,Start,End,Remove,Header,Footer
-    :return: String with the updated text
+    @return: String with the updated text
     """
     new_text = narrative
     maiden_name = narr_metadata['Maiden']

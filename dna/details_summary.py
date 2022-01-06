@@ -49,8 +49,8 @@ def display_statistics(store_name: str):
     Display a window with buttons to show various graphs and charts, and/or output files with the
     top xx 'unknown to the ontology' nouns and verbs.
 
-    :param store_name: The database/data store name
-    :return: None (Window is displayed)
+    @param store_name: The database/data store name
+    @return: None (Window is displayed)
     """
     logging.info(f'Displaying metadata statistics for {store_name}')
     # Define the PySimpleGUI window
@@ -214,9 +214,9 @@ def _display_word_cloud(narratives: str, words_in_cloud: int):
     """
     Display a Word Cloud based on the texts of the narratives.
 
-    :param narratives: String consisting of all the narratives' texts
-    :param words_in_cloud: Integer value indicating the number of words to be displayed
-    :return: None (Word cloud is displayed)
+    @param narratives: String consisting of all the narratives' texts
+    @param words_in_cloud: Integer value indicating the number of words to be displayed
+    @return: None (Word cloud is displayed)
     """
     # Size the WordCloud plot
     plt.rcdefaults()

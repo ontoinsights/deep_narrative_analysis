@@ -11,10 +11,10 @@ def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, l
     """
     Create Turtle capturing the narrative text and metadata information.
 
-    :param narrative: String consisting of the full narrative text
-    :param narr_metadata: Dictionary of metadata information - Keys are:
+    @param narrative: String consisting of the full narrative text
+    @param narr_metadata: Dictionary of metadata information - Keys are:
                           Source,Title,Person,Type,Given,Surname,Maiden,Gender,Start,End,Remove,Header,Footer
-    :return: 3 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise) -
+    @return: 3 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise) -
              gender is one of AGENDER, BIGENDER, FEMALE or MALE, 2) a dictionary containing the family member
              roles mentioned in the narrative and the members' proper names (if provided), and 3) a list of
              Turtle statements to add to the database with the narrative and metadata information
@@ -52,11 +52,11 @@ def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) 
     the narrator/subject was born, and if proper names can be associated with family
     members. If so, generate Turtle to capture this info.
 
-    :param narrative: String holding the narrative text
-    :param given_name: String holding the narrator's/subject's name (to avoid including that name
+    @param narrative: String holding the narrative text
+    @param given_name: String holding the narrator's/subject's name (to avoid including that name
                        as a location)
-    :param iri_narrator: String holding the IRI defined for the narrator/subject
-    :return: List holding strings of the new triples to add and a dictionary containing the names
+    @param iri_narrator: String holding the IRI defined for the narrator/subject
+    @return: List holding strings of the new triples to add and a dictionary containing the names
              of family members and their relationship to the narrator/subject
     """
     logging.info('Getting birth and family details')
@@ -123,9 +123,9 @@ def get_narrator_names(narr_metadata: dict) -> str:
     given-maiden, given-maiden2, given-maiden-surname, given-maiden2-surname, given-surname,
     given2-maiden, given2-maiden2, given2-maiden-surname, given2-maiden2-surname, given2-surname
 
-    :param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
+    @param narr_metadata: Dictionary of metadata information - Keys are: Source,Title,Person,Type,
                           Given,Given2,Surname,Maiden,Maiden2,Gender,Start,End,Remove,Header,Footer
-    :return: String holding names ('labels') for the narrator/subject, separated appropriately
+    @return: String holding names ('labels') for the narrator/subject, separated appropriately
              for inclusion as a comma-separated set of strings
     """
     given = narr_metadata['Given']  # Will always be present

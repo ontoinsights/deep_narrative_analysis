@@ -33,8 +33,8 @@ def get_norp_emotion_or_enum(noun_text: str) -> (str, str):
     """
     Check if the input text is a kind of ethnicity, religion, line of work or political ideology.
 
-    :param noun_text: String holding the text to be categorized.
-    :return: A tuple consisting of a string indicating either 'Ethnicity', 'ReligiousBelief',
+    @param noun_text: String holding the text to be categorized.
+    @return: A tuple consisting of a string indicating either 'Ethnicity', 'ReligiousBelief',
              'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass
     """
     for class_type in ('Ethnicity', 'ReligiousBelief', 'LineOfBusiness', 'PoliticalIdeology'):

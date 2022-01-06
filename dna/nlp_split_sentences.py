@@ -17,15 +17,15 @@ def get_chunks(verb: Token, connector: Union[Token, None], chunk_sentence: Span,
     the sentence can be separated into clauses. The sentence is separated if the clause has its own
     subject and verb.
 
-    :param verb: The token of the conjunctive or clausal verb
-    :param connector: Token of the connector between the root and conjunctive or clausal verb,
+    @param verb: The token of the conjunctive or clausal verb
+    @param connector: Token of the connector between the root and conjunctive or clausal verb,
                       or None (which may occur if this is a clausal complement - e.g., "He said
                       Joe is ill.")
-    :param chunk_sentence: A Span representing the parsed sentence
-    :param processing_type: A string indicating whether this is for a conjunctive verb ('conj'),
+    @param chunk_sentence: A Span representing the parsed sentence
+    @param processing_type: A string indicating whether this is for a conjunctive verb ('conj'),
                             adverbial clause verb ('advcl') or a clausal complement ('comp')
 
-    :return: A list of the text of the clauses of the sentence (split if indicated by the
+    @return: A list of the text of the clauses of the sentence (split if indicated by the
              logic below) or just the original sentence returned
     """
     chunks = []
@@ -74,9 +74,9 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
     split_by_conjunctions), second splitting by adverbial clauses and then by clausal complements. Lastly,
     check for conjunctions within the adverbial or complement clauses.
 
-    :param sent_text: The sentence to be split (as a string)
-    :param nlp: A spaCy Language model
-    :return: A list of new sentences (text only) created from the splits
+    @param sent_text: The sentence to be split (as a string)
+    @param nlp: A spaCy Language model
+    @return: A list of new sentences (text only) created from the splits
     """
     new_sents = _split_by_conjunctions(sent_text, nlp)
     split_sents = []
@@ -84,7 +84,7 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
         # Split by advcl IF these have their own subject/verb
         # Example: 'When I went to the store, I met George.' ('when ...' is an adverbial clause)
         adv_sents = _split_advcl_clauses(sent, nlp)
-        # Split by ccomp and xcomp IF these hae their own subject/verb
+        # Split by ccomp IF these hae their own subject/verb
         # Example: 'He said Joe is ill.' (a clausal complement)
         for adv_sent in adv_sents:
             comp_sents = _split_complement_clauses(adv_sent, nlp)
@@ -98,9 +98,9 @@ def _remove_startswith(chunk: str, connector: str) -> str:
     """
     Returns first string with the second string removed from its start.
 
-    :param chunk: String to be updated
-    :param connector: String to be removed from the beginning of the chunk
-    :return: Updated 'chunk' string
+    @param chunk: String to be updated
+    @param connector: String to be removed from the beginning of the chunk
+    @return: Updated 'chunk' string
     """
     if chunk.startswith(f'{connector} '):
         chunk = chunk[len(connector) + 1:]
@@ -114,8 +114,8 @@ def _split_advcl_clauses(sentence: str, nlp: Language) -> list:
     Split the adverbial clauses of a sentence into separate sentences, if the clauses have their
     own subject and verb.
 
-    :param sentence The sentence which is analyzed
-    :return: An array of simpler sentence(s) (note that only the text of the sentences is
+    @param sentence The sentence which is analyzed
+    @return: An array of simpler sentence(s) (note that only the text of the sentences is
              returned, not the spacy tokens) or the original sentence if there is no advcl verb
              or if the verb is not one of the cause_ or effect_connectors
     """
@@ -136,8 +136,8 @@ def _split_by_conjunctions(sentence: str, nlp: Language) -> list:
     conjunction (for, and, but, or, nor, yet, so). For example,"Mary and John walked to the store." would
     NOT be split, but "Mary biked to the market and John walked to the store." should be split.
 
-    :param sentence The sentence which is analyzed
-    :return: An array of simpler sentence(s) (note that only the text of the sentences is
+    @param sentence The sentence which is analyzed
+    @return: An array of simpler sentence(s) (note that only the text of the sentences is
              returned, not the spacy tokens) or the original sentence if there are no
              conjunctive verbs
     """
@@ -163,13 +163,12 @@ def _split_complement_clauses(sentence: str, nlp: Language) -> list:
     Split the clausal complements of a sentence into separate sentences, if the clauses have their
     own subject and verb.
 
-    :param sentence The sentence which is analyzed
-    :return: An array of simpler sentence(s) (note that only the text of the sentences is
-             returned, not the spacy tokens) or the original sentence if there is no ccomp or xcomp
-             verb
+    @param sentence The sentence which is analyzed
+    @return: An array of simpler sentence(s) (note that only the text of the sentences is
+             returned, not the spacy tokens) or the original sentence if there is no ccomp verb
     """
     sent_span = next(nlp(sentence).sents)    # There should only be 1 sentence for each function call
-    comp_verbs = [child for child in sent_span.root.children if child.dep_ in ('ccomp', 'xcomp')]
+    comp_verbs = [child for child in sent_span.root.children if child.dep_ == 'ccomp']
     for comp_verb in comp_verbs:
         connectors = [conn for conn in comp_verb.children if conn.dep_ in ('advmod', 'mark')]
         # Process the verb and the first connector (there may not be any)
@@ -187,9 +186,9 @@ def _store_chunks_in_order(seen: str, unseen: str, seen_first: bool) -> list:
     Save two strings (a 'seen' and an 'unseen' string) in an array where the 'seen' string is
     the first element if the seen_first parameter is True.
 
-    :param seen: The 'seen' string
-    :param unseen: The 'unseen' string
-    :return: An array where either the seen or unseen strings are the first/second element
+    @param seen: The 'seen' string
+    @param unseen: The 'unseen' string
+    @return: An array where either the seen or unseen strings are the first/second element
              depending on the value of the seen_first parameter.
     """
     if seen_first:

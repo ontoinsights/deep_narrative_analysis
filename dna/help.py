@@ -164,11 +164,11 @@ def display_popup_help(event: str):
     """
     Displays 'scrolled' help text in a popup window.
 
-    :param event: String indicating the specific help text that should be displayed where
+    @param event: String indicating the specific help text that should be displayed where
                   the value is taken from the layout's 'key' indicating which button was pressed,
                   and is then mapped to the window's title (using this module's title_dict) and
                   to the specific text (using this module's text_dict)
-    :return: No info returned. This method returns upon closing the popup
+    @return: No info returned. This method returns upon closing the popup
     """
     sg.popup_scrolled(text_dict[event], font=('Arial', 14),
                       size=(72, 15), text_color='black',

@@ -27,14 +27,14 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
     Expand/clarify the token text, get the token's entity type (or define one if blank), and
     add the token details to the specified dictionary key.
 
-    :param token: Token from spacy parse
-    :param dictionary: Dictionary that the token details should be added to
-    :param token_key: Dictionary key where the details are added
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+    @param token: Token from spacy parse
+    @param dictionary: Dictionary that the token details should be added to
+    @param token_key: Dictionary key where the details are added
+    @param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
                         MALE - indicating the gender of the narrator
-    :param family_dict: A dictionary containing the names of family members and their
+    @param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    :return: None (Specified dictionary is updated)
+    @return: None (Specified dictionary is updated)
     """
     ent = token.text
     if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
@@ -109,10 +109,10 @@ def _check_family(entity: str, family_dict: dict) -> (str, str, str):
     Determines if a reference is to a family member and returns the member's relationship,
     gender and type (= PERSON if a family member or NOUN otherwise).
 
-    :param entity: The string representing the noun or possessive
-    :param family_dict: A dictionary containing the names of family members and their
+    @param entity: The string representing the noun or possessive
+    @param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    :return: 3 strings representing the entity's relationship (if a family member), gender
+    @return: 3 strings representing the entity's relationship (if a family member), gender
              and type (= PERSON if a family member or NOUN otherwise)
     """
     gender = empty_string
@@ -129,9 +129,9 @@ def _process_noun(token: Token, ent_type: str) -> (str, str):
     """
     When processing a token (in add_token_details) that is a noun, capture its number, gender, etc.
 
-    :param token: Token of the noun
-    :param ent_type: Input ent_type (which may be empty)
-    :return: Two strings, the entity text and type
+    @param token: Token of the noun
+    @param ent_type: Input ent_type (which may be empty)
+    @return: Two strings, the entity text and type
     """
     # Retrieve the full text with adjectives, etc.
     token_text = token.text.lower()
@@ -143,7 +143,11 @@ def _process_noun(token: Token, ent_type: str) -> (str, str):
         ent = token.text
     # Get gender
     gender = empty_string
-    if token_text in family_roles:
+    if token_text.endswith('s'):     # Avoid having to check for plurals for all family member types
+        check_text = token_text[:-1]
+    else:
+        check_text = token_text
+    if check_text in family_roles:
         gender = family_members[token_text]
         ent_type = 'PERSON'
     else:
@@ -168,10 +172,10 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     When processing a token (in add_token_details or recursively here), capture prepositions
     and their objects.
 
-    :param token: Token of the preposition
-    :param dictionary: Dictionary that the token details should be added to
-    :param prep_key: Dictionary key where the details are added
-    :return: None (Specified dictionary is updated)
+    @param token: Token of the preposition
+    @param dictionary: Dictionary that the token details should be added to
+    @param prep_key: Dictionary key where the details are added
+    @return: None (Specified dictionary is updated)
     """
     # Retrieve the text for nouns (including adjectives and compound nouns)
     prep_ent, prep_ent_type = _process_noun(token, token.ent_type_)
@@ -191,10 +195,10 @@ def _process_personal_pronoun(token: Token, narr_gender: str) -> (str, str):
     When processing a token that is a personal pronoun, return the text that identifies
     the person and their 'type' (gender + single/plural + PERSON).
 
-    :param token: Token of the personal pronoun
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+    @param token: Token of the personal pronoun
+    @param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
                         MALE - indicating the gender of the narrator
-    :return: A tuple holding the text that identifies the person and their 'type'
+    @return: A tuple holding the text that identifies the person and their 'type'
             (gender + single/plural + PERSON).
     """
     entity = token.text
@@ -225,12 +229,12 @@ def _process_proper_noun(token: Token, narr_gender: str, family_dict: dict) -> (
     When processing a token that is a proper noun, return the text of the noun and its
     'type' (gender + single/plural + PERSON).
 
-    :param token: Token of the proper noun
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+    @param token: Token of the proper noun
+    @param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
                         MALE - indicating the gender of the narrator
-    :param family_dict: A dictionary containing the names of family members and their
+    @param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    :return: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
+    @return: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
              GPE/LOC/EVENT/...).
     """
     entity = token.text

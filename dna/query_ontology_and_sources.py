@@ -4,15 +4,13 @@
 
 import configparser as cp
 import logging
-import os
-import pickle
 import requests
 import xml.etree.ElementTree as etree
 
 from PyDictionary import PyDictionary
 
 from database import query_ontology
-from idiom_processing import process_idiom_detail, get_noun_idiom
+from idiom_processing import get_noun_idiom
 from nlp import get_synonym, get_named_entity_in_string, get_noun
 from query_ontology_specific_classes import get_norp_emotion_or_enum
 from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, owl_thing, \
@@ -27,10 +25,6 @@ dictionary = PyDictionary()
 
 explicit_plural = ('group', 'people')
 part_of_group = ('member', 'group', 'citizen', 'people', 'affiliate', 'representative', 'associate', 'comrade')
-
-nouns_file = os.path.join(resources_root, 'verb-idioms.pickle')
-with open(nouns_file, 'rb') as inFile:
-    nouns_dict = pickle.load(inFile)
 
 domain_query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
                      '{ SERVICE <db://ontologies-database> { ?class rdfs:subClassOf+ :searchClass } } ' \
@@ -95,12 +89,12 @@ def create_affiliation_ttl(noun_uri: str, noun_text: str, affiliated_text: str, 
     """
     Creates the Turtle for an Affiliation.
 
-    :param noun_uri: String holding the entity/URI to be affiliated
-    :param noun_text: String holding the sentence text for the entity
-    :param affiliated_text: String specifying the entity (organization, group, etc.) to which the
+    @param noun_uri: String holding the entity/URI to be affiliated
+    @param noun_text: String holding the sentence text for the entity
+    @param affiliated_text: String specifying the entity (organization, group, etc.) to which the
                             noun is affiliated
-    :param affiliated_type: String specifying the class type of the entity
-    :return: An array of strings holding the Turtle representation of the Affiliation
+    @param affiliated_type: String specifying the class type of the entity
+    @return: An array of strings holding the Turtle representation of the Affiliation
     """
     affiliated_uri = f':{affiliated_text.replace(" ", "_")}'
     affiliation_uri = f'{noun_uri}{affiliated_text.replace(" ", "_")}Affiliation'
@@ -118,9 +112,9 @@ def check_dictionary(word: str, is_noun: bool) -> str:
     """
     Check dictionary for an unmapped term and see if a mapping can be created.
 
-    :param word: The term to be mapped
-    :param is_noun: Boolean indicating if the word/term should be checked as a noun first
-    :return: String holding the concept's class name
+    @param word: The term to be mapped
+    @param is_noun: Boolean indicating if the word/term should be checked as a noun first
+    @return: String holding the concept's class name
     """
     try:
         word_def = dictionary.meaning(word, disable_errors=True)
@@ -160,9 +154,9 @@ def check_text(text: str, words: tuple) -> bool:
     Determines if one of the 'words' in the input tuple is found in the 'text' string. Returns
     True if so.
 
-    :param text: The string to be checked
-    :param words: A tuple holding words to be searched for
-    :return: True if one of the 'words' is found in the 'text; False otherwise
+    @param text: The string to be checked
+    @param words: A tuple holding words to be searched for
+    @return: True if one of the 'words' is found in the 'text; False otherwise
     """
     for word in words:
         if word in text:
@@ -170,24 +164,16 @@ def check_text(text: str, words: tuple) -> bool:
     return False
 
 
-def get_event_state_ttl(sentence_text: str, event_uri: str, verb_dict: dict, processing: str) -> list:
+def get_event_state_ttl(event_uri: str, lemma: str) -> str:
     """
     Determine the appropriate event or state in the DNA ontology, that matches the semantics of
-    the verb and create the resulting Turtle. If the semantics are defined by idiom processing,
-    return any triples dictated by the idiom processing.
+    the verb and create the resulting Turtle.
 
-    :param sentence_text: String holding the text of the sentence
-    :param event_uri: The URI identifying the event for the verb, in the resulting Turtle file
-    :param verb_dict: Dictionary holding the verb details
-    :param processing: String holding the processing 'rule' for the verb/event/state
-    :return: Mapping of the verb/sentence semantics to the DNA ontology, returning the Turtle details
+    @param event_uri: The URI identifying the event for the verb, in the resulting Turtle file
+    @param lemma: The verb lemma
+    @return: Mapping of the verb/sentence semantics to the DNA ontology, returning the Turtle details
     """
-    if processing:
-        ttl_list = process_idiom_detail(processing, sentence_text, event_uri, verb_dict)
-        if ttl_list:
-            return ttl_list
     # First check for an exact match
-    lemma = verb_dict['verb_lemma']
     class_name = query_ontology(lemma, query_match, query_match)
     if class_name == owl_thing:
         class_name = query_ontology(lemma, query_event, domain_query_event)
@@ -201,15 +187,15 @@ def get_event_state_ttl(sentence_text: str, event_uri: str, verb_dict: dict, pro
         class_name = f'{class_name}>, <{dna_prefix}MovementTravelAndTransportation'
     if class_name == owl_thing:   # Simplified return from _query_ontology but need to correct for a verb
         class_name = event_and_state_class
-    return [f'{event_uri} a <{class_name}> .']
+    return f'{event_uri} a <{class_name}> .'
 
 
 def get_geonames_location(loc_text: str) -> (str, str, int):
     """
     Get the type of location from its text as well as its country and administrative level (if relevant).
 
-    :param loc_text: Location text
-    :return: A tuple holding the location's class type, country name (or an empty string or None),
+    @param loc_text: Location text
+    @return: A tuple holding the location's class type, country name (or an empty string or None),
              and an administrative level (if 0, then admin level is not applicable) or GeoNames ID
              (for a Country)
     """
@@ -256,11 +242,11 @@ def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: s
     First check for people, locations/GPEs, ethnicities, religions, etc., then for idioms and lastly
     for word matches, definition matches and event/state class matches.
 
-    :param noun_uri: String identifying the URI/URL/individual associated with the noun_text
-    :param noun_text: String specifying the noun text from the original narrative sentence
-    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
-    :param sentence_text: The full text of the sentence (needed for checking for idioms)
-    :return: An array of the resulting Turtle for a mapping of the semantics to a DNA ontology class
+    @param noun_uri: String identifying the URI/URL/individual associated with the noun_text
+    @param noun_text: String specifying the noun text from the original narrative sentence
+    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
+    @param sentence_text: The full text of the sentence (needed for checking for idioms)
+    @return: An array of the resulting Turtle for a mapping of the semantics to a DNA ontology class
     """
     class_name = empty_string
     noun = empty_string
@@ -334,8 +320,8 @@ def get_wikipedia_description(noun: str) -> str:
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
 
-    :param noun: String holding the organization/group name
-    :return: String that is the first paragraph of the Wikipedia page (if the org/group is found);
+    @param noun: String holding the organization/group name
+    @return: String that is the first paragraph of the Wikipedia page (if the org/group is found);
             otherwise, an empty string
     """
     logging.info(f'Getting wikipedia details for {noun}')
@@ -355,13 +341,13 @@ def _check_for_noun_idiom(noun_text: str, noun_type: str, sentence_text: str, no
     """
     Processing to determine if a "noun" idiom has been defined.
 
-    :param noun_text: String holding the noun text
-    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
-    :param sentence_text: The full text of the sentence (needed for checking for some idioms)
-    :param noun_uri: String identifying the noun concept as a URI/IRI
-    :param use_first_noun: Boolean indicating that the first noun in the text should be used
+    @param noun_text: String holding the noun text
+    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
+    @param sentence_text: The full text of the sentence (needed for checking for some idioms)
+    @param noun_uri: String identifying the noun concept as a URI/IRI
+    @param use_first_noun: Boolean indicating that the first noun in the text should be used
                            (if True); otherwise, the last noun is processed
-    :return: An array holding the Turtle statements that are generated if a noun idiom is found
+    @return: An array holding the Turtle statements that are generated if a noun idiom is found
             (or an empty list otherwise)
     """
     noun = get_noun(noun_text, use_first_noun)
@@ -381,8 +367,8 @@ def _get_noun_class(noun_text: str) -> str:
     Query the ontology to determine the appropriate class in the DNA ontology, that matches the
     semantics of the noun_text. Check for word matches, definition matches and event/state class matches.
 
-    :param noun_text: String holding the text to be matched
-    :return: The class name that matches the semantics of the noun, or a reference to owl:Thing
+    @param noun_text: String holding the text to be matched
+    @return: The class name that matches the semantics of the noun, or a reference to owl:Thing
     """
     # First check for an exact match
     class_name = query_ontology(noun_text, query_match, query_match)
@@ -405,11 +391,11 @@ def _get_noun_class(noun_text: str) -> str:
 
 def _get_xml_value(xpath: str, root: etree.Element) -> str:
     """
-    Uses an xpath string to access specific elements in an XML tree.
+    Use the input xpath string to access specific elements in an XML tree.
 
-    :param xpath: String identifying the path to the element to be retrieved
-    :param root: The root element of the XML tree
-    :return: String representing the value of the specified element or an empty string
+    @param xpath: String identifying the path to the element to be retrieved
+    @param root: The root element of the XML tree
+    @return: String representing the value of the specified element or an empty string
              (if not defined)
     """
     elems = root.findall(xpath)
@@ -423,11 +409,11 @@ def _indicate_location_or_movement(class_name: str, for_movement: bool) -> bool:
     """
     Check if the event/class_name is a subclass of :MovementTravelAndTransportation.
 
-    :param class_name: The type of event as defined by its class name
-    :param for_movement: Boolean indicating that the query is for subclasses of
+    @param class_name: The type of event as defined by its class name
+    @param for_movement: Boolean indicating that the query is for subclasses of
                          :MovementTravelAndTransportation if true, and for subclasses of :Location
                          if false
-    :return: Boolean of True if a subclass of :MovementTravelAndTransportation or :Location
+    @return: Boolean of True if a subclass of :MovementTravelAndTransportation or :Location
              (depending on the value of the for_movement boolean) and False otherwise
     """
     query_str = query_class.replace('searchClass', 'Location')
@@ -446,11 +432,11 @@ def _process_norp_aspect(noun_text: str, noun_type: str, noun_uri: str, wikipedi
     Definition of the Turtle for a Person, Group or Organization that was identified by SpaCy as a
     'NORP' (nationality, religion, political party, ...).
 
-    :param noun_text: String holding the noun text
-    :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
-    :param noun_uri: String identifying the noun concept as a URI/IRI
-    :param wikipedia_desc: String holding the definition/description of the noun from Wikipedia
-    :return: A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of
+    @param noun_text: String holding the noun text
+    @param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
+    @param noun_uri: String identifying the noun concept as a URI/IRI
+    @param wikipedia_desc: String holding the definition/description of the noun from Wikipedia
+    @return: A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of
              the defining Turtle (if appropriate)
     """
     class_name = 'urn:ontoinsights:dna:Person'

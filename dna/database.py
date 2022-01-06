@@ -29,11 +29,11 @@ def add_remove_data(op_type: str, triples: str, database: str, graph: str = empt
     """
     Add or remove data to/from the database/store
 
-    :param op_type: A string = 'add' or 'remove'
-    :param triples: A string with the triples to be inserted/removed
-    :param database: The database name
-    :param graph: An optional named graph in which to insert/remove the triples
-    :return: True if successful; False otherwise
+    @param op_type: A string = 'add' or 'remove'
+    @param triples: A string with the triples to be inserted/removed
+    @param database: The database name
+    @param graph: An optional named graph in which to insert/remove the triples
+    @return: True if successful; False otherwise
     """
     logging.info(f'Data {"added to" if op_type == "add" else "removed from"} {database}'
                  f'{" and graph, " if graph else ""}{graph}')
@@ -66,9 +66,9 @@ def create_delete_database(op_type: str, database: str) -> str:
     """
     Create or delete a database. If created, add the DNA ontologies.
 
-    :param op_type: A string = 'create' or 'delete'
-    :param database: The database name
-    :return: Empty string if successful or the details of an exception
+    @param op_type: A string = 'create' or 'delete'
+    @param database: The database name
+    @return: Empty string if successful or the details of an exception
     """
     logging.info(f'Database {database} being {op_type}d')
     if op_type != 'create' and op_type != 'delete':
@@ -101,7 +101,7 @@ def get_databases() -> list:
     """
     Return a list of all the databases/stores of narratives
 
-    :return: List of database/store names
+    @return: List of database/store names
     """
     try:
         admin = stardog.Admin(**sd_conn_details)
@@ -121,10 +121,10 @@ def query_database(query_type: str, query: str, database: str) -> list:
     """
     Process a SELECT or UPDATE query
 
-    :param query_type: A string = 'select' or 'update'
-    :param query: The text of a SPARQL query
-    :param database: The database (name) to be queried
-    :return: The bindings array from the query results
+    @param query_type: A string = 'select' or 'update'
+    @param query: The text of a SPARQL query
+    @param database: The database (name) to be queried
+    @return: The bindings array from the query results
     """
     logging.info(f'Querying database, {database}, using {query_type}, with query, {query}')
     if query_type != 'select' and query_type != 'update':
@@ -153,10 +153,10 @@ def query_ontology(text: str, query: str, domain_query: str) -> str:
     Attempts to match the input text to verb/noun_synonyms, labels and definitions in the ontology
     AND domain-specific ontology using the specified queries.
 
-    :param text: Text to match
-    :param query: String holding the query to execute for the core ontologies
-    :param domain_query: String holding the query to execute for the domain ontologies
-    :return: The highest probability class name returned by the query
+    @param text: Text to match
+    @param query: String holding the query to execute for the core ontologies
+    @param domain_query: String holding the query to execute for the domain ontologies
+    @return: The highest probability class name returned by the query
     """
     domain_query_replaced = domain_query.replace('domain-database', domain_database).\
         replace('ontologies-database', ontologies_database)
@@ -175,9 +175,9 @@ def _load_directory_to_database(directory_name, conn):
     Loads the DNA files to a new database/data store. Domain-specific content is added
     to the 'urn:Domain_Events' named graph.
 
-    :param directory_name: String holding the directory name
-    :param conn: The connection to the Stardog DB for the database
-    :return: None
+    @param directory_name: String holding the directory name
+    @param conn: The connection to the Stardog DB for the database
+    @return: None
     """
     try:
         list_files = os.listdir(directory_name)

@@ -1,0 +1,43 @@
+start: rule+
+ 
+rule: class_name
+    | complex_rule
+    | keyword_rule
+    | obj_rule
+    | preposition_rule
+    | xcomp_rule
+
+class_name: ":" WORD
+
+complex_rule: paren_rule ("|" paren_rule)*
+paren_rule: "(" rule ")"
+
+keyword_rule: "'" text "'" ["&" object] ">" class_name (property_text)*
+
+obj_rule: [entity_type] object ["&" object] ">" class_name (property_or_verb)*
+
+preposition_rule: "prep_" WORD complex_rule
+
+xcomp_rule: "xcomp >" class_name other_verb
+
+prop_name: WORD ("_" WORD)+
+
+entity_type: agent | location
+agent: "Agent"
+location: "Location"
+
+property_or_verb: other_verb 
+                | property_text
+other_verb: "," (dobj | xcomp) text
+property_text: "; :" prop_name object
+
+object: dobj | pobj
+dobj: "dobj"
+pobj: "pobj"
+xcomp: "xcomp"
+
+text: WORD (WORD)*
+ 
+%import common.WORD
+%import common.WS
+%ignore WS

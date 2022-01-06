@@ -123,8 +123,8 @@
     <p id="t68" class="pln"><span class="n"><a href="#t68">68</a></span><span class="t"><span class="str">    Use spaCy Dependency Parsing and rules-based matching to get the birth date and place details,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t69" class="pln"><span class="n"><a href="#t69">69</a></span><span class="t"><span class="str">    and family member names from a narrative.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t70" class="pln"><span class="n"><a href="#t70">70</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t71" class="pln"><span class="n"><a href="#t71">71</a></span><span class="t"><span class="str">    :param narrative: String holding the narrative</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t72" class="pln"><span class="n"><a href="#t72">72</a></span><span class="t"><span class="str">    :return: Two lists where the first contains the tokens related to date and the second</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t71" class="pln"><span class="n"><a href="#t71">71</a></span><span class="t"><span class="str">    @param narrative: String holding the narrative</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t72" class="pln"><span class="n"><a href="#t72">72</a></span><span class="t"><span class="str">    @return: Two lists where the first contains the tokens related to date and the second</span>&nbsp;</span><span class="r"></span></p>
     <p id="t73" class="pln"><span class="n"><a href="#t73">73</a></span><span class="t"><span class="str">             contains the tokens related to location, and a dictionary containing the names</span>&nbsp;</span><span class="r"></span></p>
     <p id="t74" class="pln"><span class="n"><a href="#t74">74</a></span><span class="t"><span class="str">             of family members and their relationship to the narrator/subject</span>&nbsp;</span><span class="r"></span></p>
     <p id="t75" class="pln"><span class="n"><a href="#t75">75</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
@@ -158,7 +158,7 @@
     <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t"><span class="str">    Get the synonyms/lemma of the input text.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t"><span class="str">    :param text: String to be lemmatized</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t"><span class="str">    @param text: String to be lemmatized</span>&nbsp;</span><span class="r"></span></p>
     <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t"><span class="str">    :return An array holding the synonyms/lemmas of the input text</span>&nbsp;</span><span class="r"></span></p>
     <p id="t108" class="pln"><span class="n"><a href="#t108">108</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t109" class="mis show_mis"><span class="n"><a href="#t109">109</a></span><span class="t">    <span class="nam">words</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
@@ -174,7 +174,7 @@
     <p id="t119" class="pln"><span class="n"><a href="#t119">119</a></span><span class="t"><span class="str">    Returns information on any Named Entity that are Agents (people, organizations, geopolitical</span>&nbsp;</span><span class="r"></span></p>
     <p id="t120" class="pln"><span class="n"><a href="#t120">120</a></span><span class="t"><span class="str">    entities, ...) or Events in the input text.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t121" class="pln"><span class="n"><a href="#t121">121</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t"><span class="str">    :param text: The text to be parsed</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t122" class="pln"><span class="n"><a href="#t122">122</a></span><span class="t"><span class="str">    @param text: The text to be parsed</span>&nbsp;</span><span class="r"></span></p>
     <p id="t123" class="pln"><span class="n"><a href="#t123">123</a></span><span class="t"><span class="str">    :return Two strings - the first is the named entity's text and the second string is its</span>&nbsp;</span><span class="r"></span></p>
     <p id="t124" class="pln"><span class="n"><a href="#t124">124</a></span><span class="t"><span class="str">            type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text</span>&nbsp;</span><span class="r"></span></p>
     <p id="t125" class="pln"><span class="n"><a href="#t125">125</a></span><span class="t"><span class="str">            does not contain any Named Entities, then two empty strings are returned</span>&nbsp;</span><span class="r"></span></p>
@@ -190,10 +190,10 @@
     <p id="t135" class="pln"><span class="n"><a href="#t135">135</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t136" class="pln"><span class="n"><a href="#t136">136</a></span><span class="t"><span class="str">    Creates a spacy Doc from the input text and returns the first (or last) noun found.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t137" class="pln"><span class="n"><a href="#t137">137</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t138" class="pln"><span class="n"><a href="#t138">138</a></span><span class="t"><span class="str">    :param text: The text to parse</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t139" class="pln"><span class="n"><a href="#t139">139</a></span><span class="t"><span class="str">    :param get_first_occurrence: Boolean indicating that the first noun is returned (if True);</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t138" class="pln"><span class="n"><a href="#t138">138</a></span><span class="t"><span class="str">    @param text: The text to parse</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t139" class="pln"><span class="n"><a href="#t139">139</a></span><span class="t"><span class="str">    @param get_first_occurrence: Boolean indicating that the first noun is returned (if True);</span>&nbsp;</span><span class="r"></span></p>
     <p id="t140" class="pln"><span class="n"><a href="#t140">140</a></span><span class="t"><span class="str">                                 otherwise, the last noun is returned</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t"><span class="str">    :return: The first or last (depending on whether the first variable is True or False) noun</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t141" class="pln"><span class="n"><a href="#t141">141</a></span><span class="t"><span class="str">    @return: The first or last (depending on whether the first variable is True or False) noun</span>&nbsp;</span><span class="r"></span></p>
     <p id="t142" class="pln"><span class="n"><a href="#t142">142</a></span><span class="t"><span class="str">             in the input text, or an empty string if no noun is found</span>&nbsp;</span><span class="r"></span></p>
     <p id="t143" class="pln"><span class="n"><a href="#t143">143</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t144" class="mis show_mis"><span class="n"><a href="#t144">144</a></span><span class="t">    <span class="nam">doc</span> <span class="op">=</span> <span class="nam">nlp</span><span class="op">(</span><span class="nam">text</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -213,8 +213,8 @@
     <p id="t158" class="pln"><span class="n"><a href="#t158">158</a></span><span class="t"><span class="str">    Parses all the sentences in the input parameter to return counts of each distinct</span>&nbsp;</span><span class="r"></span></p>
     <p id="t159" class="pln"><span class="n"><a href="#t159">159</a></span><span class="t"><span class="str">    noun and verb.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t160" class="pln"><span class="n"><a href="#t160">160</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t161" class="pln"><span class="n"><a href="#t161">161</a></span><span class="t"><span class="str">    :param sentences: String with the text of one or more sentences</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t162" class="pln"><span class="n"><a href="#t162">162</a></span><span class="t"><span class="str">    :return: Two dictionaries of the counts of the noun/verb lemmas where the noun</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t161" class="pln"><span class="n"><a href="#t161">161</a></span><span class="t"><span class="str">    @param sentences: String with the text of one or more sentences</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t162" class="pln"><span class="n"><a href="#t162">162</a></span><span class="t"><span class="str">    @return: Two dictionaries of the counts of the noun/verb lemmas where the noun</span>&nbsp;</span><span class="r"></span></p>
     <p id="t163" class="pln"><span class="n"><a href="#t163">163</a></span><span class="t"><span class="str">             dictionary is returned first</span>&nbsp;</span><span class="r"></span></p>
     <p id="t164" class="pln"><span class="n"><a href="#t164">164</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t165" class="mis show_mis"><span class="n"><a href="#t165">165</a></span><span class="t">    <span class="nam">noun_dict</span> <span class="op">=</span> <span class="nam">dict</span><span class="op">(</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -236,7 +236,7 @@
     <p id="t181" class="pln"><span class="n"><a href="#t181">181</a></span><span class="t"><span class="str">    Extract a string consisting of the proper nouns in a text string. For example, "New York City ghetto"</span>&nbsp;</span><span class="r"></span></p>
     <p id="t182" class="pln"><span class="n"><a href="#t182">182</a></span><span class="t"><span class="str">    would return "New York City".</span>&nbsp;</span><span class="r"></span></p>
     <p id="t183" class="pln"><span class="n"><a href="#t183">183</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t184" class="pln"><span class="n"><a href="#t184">184</a></span><span class="t"><span class="str">    :param text: The text string to be parsed</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t184" class="pln"><span class="n"><a href="#t184">184</a></span><span class="t"><span class="str">    @param text: The text string to be parsed</span>&nbsp;</span><span class="r"></span></p>
     <p id="t185" class="pln"><span class="n"><a href="#t185">185</a></span><span class="t"><span class="str">    :return A string of the proper nouns</span>&nbsp;</span><span class="r"></span></p>
     <p id="t186" class="pln"><span class="n"><a href="#t186">186</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t187" class="mis show_mis"><span class="n"><a href="#t187">187</a></span><span class="t">    <span class="nam">phrase</span> <span class="op">=</span> <span class="nam">nlp</span><span class="op">(</span><span class="nam">text</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -255,7 +255,7 @@
     <p id="t200" class="pln"><span class="n"><a href="#t200">200</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t201" class="pln"><span class="n"><a href="#t201">201</a></span><span class="t"><span class="str">    Use TextBlob to get sentence polarity/sentiment.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t202" class="pln"><span class="n"><a href="#t202">202</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t203" class="pln"><span class="n"><a href="#t203">203</a></span><span class="t"><span class="str">    :param sentence: The sentence to be analyzed.</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t203" class="pln"><span class="n"><a href="#t203">203</a></span><span class="t"><span class="str">    @param sentence: The sentence to be analyzed.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t204" class="pln"><span class="n"><a href="#t204">204</a></span><span class="t"><span class="str">    :return The polarity (-1 for negative, 1 for positive) of the sentence</span>&nbsp;</span><span class="r"></span></p>
     <p id="t205" class="pln"><span class="n"><a href="#t205">205</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t206" class="mis show_mis"><span class="n"><a href="#t206">206</a></span><span class="t">    <span class="nam">blob</span> <span class="op">=</span> <span class="nam">TextBlob</span><span class="op">(</span><span class="nam">sentence</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -269,7 +269,7 @@
     <p id="t214" class="pln"><span class="n"><a href="#t214">214</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t215" class="pln"><span class="n"><a href="#t215">215</a></span><span class="t"><span class="str">    For a phrase (such as 'a year later'), get the time increment and number of increments.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t216" class="pln"><span class="n"><a href="#t216">216</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t217" class="pln"><span class="n"><a href="#t217">217</a></span><span class="t"><span class="str">    :param phrase: String to be processed</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t217" class="pln"><span class="n"><a href="#t217">217</a></span><span class="t"><span class="str">    @param phrase: String to be processed</span>&nbsp;</span><span class="r"></span></p>
     <p id="t218" class="pln"><span class="n"><a href="#t218">218</a></span><span class="t"><span class="str">    :return A tuple of the number of increments and the increment length (for example, 'year')</span>&nbsp;</span><span class="r"></span></p>
     <p id="t219" class="pln"><span class="n"><a href="#t219">219</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t220" class="mis show_mis"><span class="n"><a href="#t220">220</a></span><span class="t">    <span class="nam">number</span> <span class="op">=</span> <span class="num">0</span>&nbsp;</span><span class="r"></span></p>
@@ -295,12 +295,12 @@
     <p id="t240" class="pln"><span class="n"><a href="#t240">240</a></span><span class="t"><span class="str">    dictionary holding the subject/verb/object/preposition/... details. Each of the sentence</span>&nbsp;</span><span class="r"></span></p>
     <p id="t241" class="pln"><span class="n"><a href="#t241">241</a></span><span class="t"><span class="str">    dictionaries are added to an array, which is returned.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t242" class="pln"><span class="n"><a href="#t242">242</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t243" class="pln"><span class="n"><a href="#t243">243</a></span><span class="t"><span class="str">    :param narr_text: The narrative text</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t244" class="pln"><span class="n"><a href="#t244">244</a></span><span class="t"><span class="str">    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t243" class="pln"><span class="n"><a href="#t243">243</a></span><span class="t"><span class="str">    @param narr_text: The narrative text</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t244" class="pln"><span class="n"><a href="#t244">244</a></span><span class="t"><span class="str">    @param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or</span>&nbsp;</span><span class="r"></span></p>
     <p id="t245" class="pln"><span class="n"><a href="#t245">245</a></span><span class="t"><span class="str">                   MALE - indicating the gender of the narrator</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t246" class="pln"><span class="n"><a href="#t246">246</a></span><span class="t"><span class="str">    :param family_dict: A dictionary containing the names of family members and their</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t246" class="pln"><span class="n"><a href="#t246">246</a></span><span class="t"><span class="str">    @param family_dict: A dictionary containing the names of family members and their</span>&nbsp;</span><span class="r"></span></p>
     <p id="t247" class="pln"><span class="n"><a href="#t247">247</a></span><span class="t"><span class="str">                        relationship to the narrator/subject</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t248" class="pln"><span class="n"><a href="#t248">248</a></span><span class="t"><span class="str">    :return: An array of dictionaries holding the details of each sentence (after splitting)</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t248" class="pln"><span class="n"><a href="#t248">248</a></span><span class="t"><span class="str">    @return: An array of dictionaries holding the details of each sentence (after splitting)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t249" class="pln"><span class="n"><a href="#t249">249</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t250" class="mis show_mis"><span class="n"><a href="#t250">250</a></span><span class="t">    <span class="nam">doc</span> <span class="op">=</span> <span class="nam">nlp</span><span class="op">(</span><span class="nam">narr_text</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t251" class="mis show_mis"><span class="n"><a href="#t251">251</a></span><span class="t">    <span class="nam">split_sentences</span> <span class="op">=</span> <span class="op">[</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
@@ -341,7 +341,7 @@
     <p id="t286" class="pln"><span class="n"><a href="#t286">286</a></span><span class="t">    <span class="str">"""</span>&nbsp;</span><span class="r"></span></p>
     <p id="t287" class="pln"><span class="n"><a href="#t287">287</a></span><span class="t"><span class="str">    Replace specific phrases/terms with simpler ones - such as replacing 'as well as' with the word, 'and'.</span>&nbsp;</span><span class="r"></span></p>
     <p id="t288" class="pln"><span class="n"><a href="#t288">288</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t289" class="pln"><span class="n"><a href="#t289">289</a></span><span class="t"><span class="str">    :param sentence: The sentence whose text should be updated</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t289" class="pln"><span class="n"><a href="#t289">289</a></span><span class="t"><span class="str">    @param sentence: The sentence whose text should be updated</span>&nbsp;</span><span class="r"></span></p>
     <p id="t290" class="pln"><span class="n"><a href="#t290">290</a></span><span class="t"><span class="str">    :return The updated sentence</span>&nbsp;</span><span class="r"></span></p>
     <p id="t291" class="pln"><span class="n"><a href="#t291">291</a></span><span class="t"><span class="str">    """</span>&nbsp;</span><span class="r"></span></p>
     <p id="t292" class="mis show_mis"><span class="n"><a href="#t292">292</a></span><span class="t">    <span class="key">for</span> <span class="nam">key</span><span class="op">,</span> <span class="nam">value</span> <span class="key">in</span> <span class="nam">replacement_words</span><span class="op">.</span><span class="nam">items</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>

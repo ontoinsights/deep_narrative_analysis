@@ -15,8 +15,8 @@ def display_hypotheses(store_name: str):
     Display a window to show currently defined hypotheses, and allow selection of one
     for display and possibly edit, or permit definition of a new hypothesis.
 
-    :param store_name: The database/data store name holding the hypotheses
-    :return: TBD
+    @param store_name: The database/data store name holding the hypotheses
+    @return: TBD
     """
     logging.info(f'Displaying hypotheses in {store_name}')
     # Define the PySimpleGUI window

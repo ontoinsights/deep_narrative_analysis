@@ -44,7 +44,7 @@ family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'bro
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
 
-processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in', 'inside',
+processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in', 'inside', 'into',
                           'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with', 'without')
 
 # Words that introduce a 'causal' clause, where the main clause is the effect
@@ -67,11 +67,11 @@ def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):
     Add the value (cast using the value_type parameter) for the specified key in the dictionary,
     if that key exists, or create a new dictionary entry for the key (where the value is a list).
 
-    :param dictionary: The dictionary to be updated
-    :param key: String holding the dictionary key
-    :param value: The value to be added to the current list of values of the dictionary entry, or
+    @param dictionary: The dictionary to be updated
+    @param key: String holding the dictionary key
+    @param value: The value to be added to the current list of values of the dictionary entry, or
                   a new list is created with the value
-    :param value_type: The type of the value
+    @param value_type: The type of the value
     :return None (Dictionary is updated)
     """
     values = []
@@ -86,8 +86,8 @@ def add_unique_to_array(new_array: list, array: list):
     """
     Adds any unique elements from new_array to array.
 
-    :param new_array: An array of elements
-    :param array: The array to be updated with any 'new'/unique elements
+    @param new_array: An array of elements
+    @param array: The array to be updated with any 'new'/unique elements
     :return None (array is updated)
     """
     for new_elem in new_array:
@@ -100,10 +100,10 @@ def capture_error(message: str, notify: bool):
     """
     Both log and popup the error message.
 
-    :param message: The text to be logged/displayed
-    :param notify: Boolean indicating that the text, 'Please notify a system administrator.'
+    @param message: The text to be logged/displayed
+    @param notify: Boolean indicating that the text, 'Please notify a system administrator.'
                    should be added
-    :return: None (Message is logged and displayed)
+    @return: None (Message is logged and displayed)
     """
     logging.error(message)
     if notify:
@@ -118,9 +118,9 @@ def update_dictionary_count(dictionary: dict, key: str):
     """
     Add 1 to the specified dictionary key or create a dictionary entry for that key.
 
-    :param dictionary: The dictionary to be updated
-    :param key: String holding the dictionary key
-    :return: None (Dictionary is updated)
+    @param dictionary: The dictionary to be updated
+    @param key: String holding the dictionary key
+    @return: None (Dictionary is updated)
     """
     dictionary[key] = dictionary[key] + 1 if key in dictionary.keys() else 1
     return
