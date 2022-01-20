@@ -1455,8 +1455,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    owl:disjointWith <urn:ontoinsights:dna:Avoidance> ;
                                    rdfs:label "Acquisition" ;
                                    <urn:ontoinsights:dna:definition> "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
+                                   <urn:ontoinsights:dna:noun_synonym> "discovery" ,
+                                                                       "find" ;
                                    <urn:ontoinsights:dna:verb_synonym> "acquire" ,
+                                                                       "discover" ,
                                                                        "equip" ,
+                                                                       "find" ,
                                                                        "obtain" .
 
 
@@ -1969,10 +1973,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
                                <urn:ontoinsights:dna:verb_synonym> "attempt" ,
                                                                    "endeavor" ,
+                                                                   "endeavour" ,
                                                                    "seek to" ,
-                                                                   "strive to" ,
+                                                                   "strive" ,
                                                                    "try" ,
-                                                                   "undertake" .
+                                                                   "undertake" ,
+                                                                   "venture to" .
 
 
 ###  urn:ontoinsights:dna:AttentionAndFocus
@@ -6203,7 +6209,20 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Ceremony> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
                                 rdfs:label "Ceremony" ;
-                                <urn:ontoinsights:dna:definition> "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." .
+                                <urn:ontoinsights:dna:definition> "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." ;
+                                <urn:ontoinsights:dna:noun_synonym> "celebration" ,
+                                                                    "commemoration" ,
+                                                                    "commencement" ,
+                                                                    "fundraiser" ,
+                                                                    "funeral" ,
+                                                                    "graduation" ,
+                                                                    "inaugural" ,
+                                                                    "inauguration" ,
+                                                                    "rededication" ;
+                                <urn:ontoinsights:dna:verb_synonym> "celebrate" ,
+                                                                    "commemorate" ,
+                                                                    "inaugurate" ,
+                                                                    "rededicate" .
 
 
 ###  urn:ontoinsights:dna:Challenge
@@ -6346,13 +6365,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                rdfs:subClassOf <urn:ontoinsights:dna:RequestAndAppeal> ;
                                rdfs:label "Command" ;
                                <urn:ontoinsights:dna:definition> "A communication that issues orders, instructions, etc." ;
-                               <urn:ontoinsights:dna:noun_synonym> "direction" ,
+                               <urn:ontoinsights:dna:noun_synonym> "assignment" ,
+                                                                   "direction" ,
                                                                    "instruction" ,
                                                                    "mandate" ,
                                                                    "order" ,
                                                                    "rule" ,
                                                                    "summons" ;
-                               <urn:ontoinsights:dna:verb_synonym> "command" ,
+                               <urn:ontoinsights:dna:verb_synonym> "assign" ,
+                                                                   "command" ,
                                                                    "direct" ,
                                                                    "instruct" ,
                                                                    "mandate" ,
@@ -8232,9 +8253,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:subClassOf <urn:ontoinsights:dna:PoliticalEnvironment> ;
                                     rdfs:label "Law and Policy" ;
                                     <urn:ontoinsights:dna:definition> "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents." ;
-                                    <urn:ontoinsights:dna:noun_synonym> "decree" ,
+                                    <urn:ontoinsights:dna:noun_synonym> "constitution" ,
+                                                                        "decree" ,
                                                                         "directive" ,
-                                                                        "legislation" ;
+                                                                        "legislation" ,
+                                                                        "statute" ,
+                                                                        "treaty" ;
                                     <urn:ontoinsights:dna:verb_synonym> "decree" ,
                                                                         "legislate" .
 
@@ -8660,7 +8684,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "transport" ,
                                                                                            "trip" ,
                                                                                            "vacation" ;
-                                                       <urn:ontoinsights:dna:verb_synonym> "arrive" ,
+                                                       <urn:ontoinsights:dna:verb_synonym> "approach" ,
+                                                                                           "arrive" ,
                                                                                            "bring" ,
                                                                                            "carry" ,
                                                                                            "convey" ,
@@ -8922,7 +8947,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                 "suffering" ,
                                                                 "third degree burn" ,
                                                                 "throb" ,
-                                                                "throbbing" ;
+                                                                "throbbing" ,
+                                                                "torment" ;
                             <urn:ontoinsights:dna:verb_synonym> "ache" ,
                                                                 "suffer" ,
                                                                 "throb" .
@@ -9105,10 +9131,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                   rdfs:label "Possession" ;
                                   <urn:ontoinsights:dna:definition> "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-                                  <urn:ontoinsights:dna:noun_synonym> "belongings" ,
+                                  <urn:ontoinsights:dna:noun_synonym> "asset" ,
+                                                                      "belongings" ,
                                                                       "control" ,
                                                                       "custody" ,
                                                                       "guardianship" ,
+                                                                      "hoard" ,
                                                                       "keeping" ,
                                                                       "proprietorship" ;
                                   <urn:ontoinsights:dna:verb_synonym> "belong to" ,
@@ -9117,6 +9145,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "control" ,
                                                                       "get hold of" ,
                                                                       "get one's hands on" ,
+                                                                      "have" ,
+                                                                      "hoard" ,
                                                                       "impound" ,
                                                                       "keep" ,
                                                                       "possess" ,
@@ -9184,6 +9214,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                         <urn:ontoinsights:dna:definition> "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
                                                         <urn:ontoinsights:dna:noun_synonym> "construction" ,
                                                                                             "fabrication" ,
+                                                                                            "invention" ,
                                                                                             "manufacturing" ,
                                                                                             "model" ,
                                                                                             "modeling" ;
@@ -9192,6 +9223,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                             "construct" ,
                                                                                             "create" ,
                                                                                             "fabricate" ,
+                                                                                            "invent" ,
                                                                                             "manufacture" ,
                                                                                             "model" ,
                                                                                             "produce" .
@@ -9398,7 +9430,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                        rdfs:label "Recreation Event" ;
                                        <urn:ontoinsights:dna:definition> "Any activity done for relaxation and enjoyment (not an Agent's job or business)." ;
-                                       <urn:ontoinsights:dna:noun_synonym> "leisure" ,
+                                       <urn:ontoinsights:dna:noun_synonym> "game" ,
+                                                                           "leisure" ,
                                                                            "relaxation" ;
                                        <urn:ontoinsights:dna:verb_synonym> "play" ,
                                                                            "relax" .
@@ -10237,7 +10270,10 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:TechnologyBusiness> rdf:type owl:Class ;
                                           rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
                                           rdfs:label "Technology Business" ;
-                                          <urn:ontoinsights:dna:definition> "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+                                          <urn:ontoinsights:dna:definition> "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" ;
+                                          <urn:ontoinsights:dna:noun_synonym> "inventor" ,
+                                                                              "research and development" ,
+                                                                              "scientist" .
 
 
 ###  urn:ontoinsights:dna:TeenAge
@@ -10380,7 +10416,23 @@ rdf:label rdf:type owl:AnnotationProperty .
                                rdfs:subClassOf <urn:ontoinsights:dna:Machine> ;
                                rdfs:label "Vehicle" ;
                                <urn:ontoinsights:dna:definition> "A Machine used for transporting people and/or goods. Vehicles operate on land or sea, and in the air or space." ;
-                               <urn:ontoinsights:dna:noun_synonym> "conveyance" .
+                               <urn:ontoinsights:dna:noun_synonym> "aircraft" ,
+                                                                   "airplane" ,
+                                                                   "automobile" ,
+                                                                   "bicycle" ,
+                                                                   "bike" ,
+                                                                   "boat" ,
+                                                                   "car" ,
+                                                                   "conveyance" ,
+                                                                   "helicopter" ,
+                                                                   "motorcycle" ,
+                                                                   "railroad car" ,
+                                                                   "rocket" ,
+                                                                   "ship" ,
+                                                                   "train" ,
+                                                                   "truck" ,
+                                                                   "van" ,
+                                                                   "vessel" .
 
 
 ###  urn:ontoinsights:dna:ViolationOfAgreement
@@ -10456,7 +10508,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalOrEcologicalEvent> ;
                                     rdfs:label "Weather Event" ;
                                     <urn:ontoinsights:dna:definition> "Any environmental occurrence related to atmospheric conditions in an area." ;
-                                    <urn:ontoinsights:dna:example> "Examples include high/low temperatures, high winds, precipitation, etc." .
+                                    <urn:ontoinsights:dna:example> "Examples include high/low temperatures, high winds, thunder and lightening, precipitation/drizzle/rain/snow, fog, storms (cyclones, tornadoes, hurricanes, sandstorms, typhoons, ...), etc." .
 
 
 ###  urn:ontoinsights:dna:WebPage
@@ -14778,10 +14830,10 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
                              <urn:ontoinsights:dna:verb_synonym> "touch" ,
                                                                  "converge" ;
-                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
-                             <urn:ontoinsights:dna:verb_synonym> "meet" ;
+                             rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "boundary" ;
+                             <urn:ontoinsights:dna:verb_synonym> "meet" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 
 

@@ -29,15 +29,15 @@ query_norp_emotion_or_enum = \
     '} ORDER BY DESC(?prob)'
 
 
-def get_norp_emotion_or_enum(noun_text: str) -> (str, str):
+def get_norp_emotion_or_lob(noun_text: str) -> (str, str):
     """
-    Check if the input text is a kind of ethnicity, religion, line of work or political ideology.
+    Check if the input text is a kind of emotion, ethnicity, religion, line of work or political ideology.
 
-    @param noun_text: String holding the text to be categorized.
-    @return: A tuple consisting of a string indicating either 'Ethnicity', 'ReligiousBelief',
-             'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass
+    :param noun_text: String holding the text to be categorized.
+    :returns: A tuple consisting of a string indicating either 'EmotionalResponse', 'Ethnicity',
+             'ReligiousBelief', 'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass
     """
-    for class_type in ('Ethnicity', 'ReligiousBelief', 'LineOfBusiness', 'PoliticalIdeology'):
+    for class_type in ('EmotionalResponse', 'Ethnicity', 'ReligiousBelief', 'LineOfBusiness', 'PoliticalIdeology'):
         result = query_ontology(
             noun_text, query_norp_emotion_or_enum.replace('class_type', class_type),
             domain_query_norp_emotion_or_enum.replace('class_type', class_type))

@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: November 24 2021
+# Last modified: January 19 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -24,7 +24,7 @@
 #  Updated to the Mar 2021 semantics
 #  Changed LineOfBusiness from an enumeration to the top of a class hierarchy
 #    and clarified its definition
-#  Added :ArmedForce, @paramilitaryForce, :PoliceForce and :PoliticalParty
+#  Added :ArmedForce, :ParamilitaryForce, :PoliceForce and :PoliticalParty
 #  Updated the default and dna prefixes
 #  Renamed Characteristic to AgentAspect
 #  Added subProperty to :has_agent_aspect
@@ -330,7 +330,8 @@
 :TechnologyBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Technology Business" ;
-  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" .
+  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" ;
+  :noun_synonym "research and development", "inventor", "scientist" .
 
 :TransportBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;

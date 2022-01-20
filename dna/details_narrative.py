@@ -39,8 +39,8 @@ def display_narratives(store_name: str):
     and allow selection of one. Also allow a year range to be defined for events to display. If no year
     range is specified, then all events are displayed.
 
-    @param store_name: The database/data store name
-    @return: None (Narrative timeline is displayed)
+    :param store_name: The database/data store name
+    :returns: None (Narrative timeline is displayed)
     """
     # Get the list of narratives
     narrative_dict = get_narratives(store_name)
@@ -135,8 +135,8 @@ def get_narratives(store_name: str) -> dict:
     """
     Query the specified database for ingested narratives.
 
-    @param store_name: The database/data store name
-    @return: A dictionary with keys = narrative title and values = narrator name
+    :param store_name: The database/data store name
+    :returns: A dictionary with keys = narrative title and values = narrator name
     """
     narrative_dict = dict()
     try:

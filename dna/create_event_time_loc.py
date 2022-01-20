@@ -38,10 +38,10 @@ def check_to_loc(dictionary: dict, list_locs: list, new_locs: list):
     """
     Identify locations associated with a verb using the preposition, 'to'.
 
-    @param dictionary: A verb dictionary
-    @param list_locs: An array of location entities
-    @param new_locs: An array of location entities whose associating preposition is 'to'
-    @return: None (new_locs is updated)
+    :param dictionary: A verb dictionary
+    :param list_locs: An array of location entities
+    :param new_locs: An array of location entities whose associating preposition is 'to'
+    :returns: None (new_locs is updated)
     """
     for prep in dictionary:
         prep_str = str(prep)
@@ -57,10 +57,10 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     Check if an Event mentioned in the sentence details (and extracted as a named entity) is found
     in the domain ontology files.
 
-    @param sent_date: The event text
-    @param time: The current time details (at this point, only the string, 'before', 'after' or
+    :param sent_date: The event text
+    :param time: The current time details (at this point, only the string, 'before', 'after' or
                  an empty string
-    @return: The time as defined by an Event's :has_time, :has_beginning or :has_end predicates
+    :returns: The time as defined by an Event's :has_time, :has_beginning or :has_end predicates
     """
     # SHOULD find the event in the domain ontology modules
     results = query_database(
@@ -98,10 +98,10 @@ def get_location_uri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
     Get a location URI based on the input string and if appropriate, add the Turtle explaining/
     defining that location.
 
-    @param loc: Input location string
-    @param processed_locs: A dictionary of location texts (keys) and their URI (values) of
+    :param loc: Input location string
+    :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
                            all locations already processed
-    @return: A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
+    :returns: A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
              array of strings that are the Turtle for a new location
     """
     loc_ttl = []
@@ -158,9 +158,9 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
     prepositions, 'in', 'at', 'to', 'from'), then they are retained. Subsequent processing
     (in this function) tries to select a single string as the main location for the sentence.
 
-    @param sentence_dictionary: The sentence dictionary
-    @param last_loc: The location from the previous sentence
-    @return: A new location or the empty string (if there is no new location)
+    :param sentence_dictionary: The sentence dictionary
+    :param last_loc: The location from the previous sentence
+    :returns: A new location or the empty string (if there is no new location)
     """
     # TODO: Imprecise location (home, house, town, village, ...)
     new_locs = []
@@ -198,11 +198,11 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
     'after'), then they are retained. Subsequent processing (in this function) tries to select
     a single string as the defining time for the sentence.
 
-    @param sentence_dictionary: The sentence dictionary
-    @param last_date: The inferred (or explicit) time of the event, formatted as:
+    :param sentence_dictionary: The sentence dictionary
+    :param last_date: The inferred (or explicit) time of the event, formatted as:
                       ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
-    @param processed_dates: A list of all dates whose Turtle has already been created
-    @return: A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_URI),
+    :param processed_dates: A list of all dates whose Turtle has already been created
+    :returns: A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_URI),
              and the Turtle for any new date/event instances. In addition, the processed_dates array may
              be updated.
     """
@@ -312,11 +312,11 @@ def update_time(last_date: str, number: int, increment: str) -> str:
     """
     Update a PointInTime date by the specified 'number' of months/years/days (as defined by the increment).
 
-    @param last_date: The inferred (or explicit) time of the event, formatted as:
+    :param last_date: The inferred (or explicit) time of the event, formatted as:
                       ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
-    @param number: Positive or negative integer indicating whether the month, day or year is updated
-    @param increment: String specifying year, month, day
-    @return: String specifying the updated last_date as a URI (or the last_date is returned if the update
+    :param number: Positive or negative integer indicating whether the month, day or year is updated
+    :param increment: String specifying year, month, day
+    :returns: String specifying the updated last_date as a URI (or the last_date is returned if the update
              cannot be performed)
     """
     if ':PiT' in last_date:
@@ -359,11 +359,11 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
     then the text, 'June 12 1928' will be retained in the array, 'new_dates'. But, the text, 'thirteenth
     century', will not be kept as it is not found in the 'verbs' details in the sentence dictionary.
 
-    @param sent_dictionary: The dictionary (which are the details from the nlp parse of a
+    :param sent_dictionary: The dictionary (which are the details from the nlp parse of a
                             sentence in a narrative)
-    @param key: A string specifying the dictionary key whose values are checked
-    @param array: The list/array to be updated
-    @return: None (the specified array is updated if the conditions specified above are met)
+    :param key: A string specifying the dictionary key whose values are checked
+    :param array: The list/array to be updated
+    :returns: None (the specified array is updated if the conditions specified above are met)
     """
     check_str = str(sent_dictionary[verbs_string])  # String with all the details for the verb(s)
     for elem in sent_dictionary[key]:
@@ -403,9 +403,9 @@ def _create_geonames_ttl(loc_uri: str, loc_text: str) -> list:
     """
     Create the Turtle for a location that is a populated place.
 
-    @param loc_uri: String holding the URI to be assigned to the location
-    @param loc_text: The location text
-    @return: An array holding the Turtle for the location/location URI if the information is
+    :param loc_uri: String holding the URI to be assigned to the location
+    :param loc_text: The location text
+    :returns: An array holding the Turtle for the location/location URI if the information is
              obtainable from GeoNames or an empty array
     """
     geonames_ttl = []
@@ -426,9 +426,9 @@ def _get_before_after(prep_str: str, element: str) -> str:
     Add the text, 'before' or 'after', if these words are the prepositions related to the TIME or EVENT.
     These words are NOT included in SpaCy's NER date/time/event named entity extractions.
 
-    @param prep_str: String holding the dictionary entry for the preposition
-    @param element: String holding the named entity element text
-    @return: A string of either the element_text (if 'before'/'after' is not found) or the element_text
+    :param prep_str: String holding the dictionary entry for the preposition
+    :param element: String holding the named entity element text
+    :returns: A string of either the element_text (if 'before'/'after' is not found) or the element_text
              preceded by 'before' or 'after'
     """
     elem_text = element

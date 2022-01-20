@@ -18,12 +18,12 @@
 
 import logging
 import spacy
+import requests
+from bs4 import BeautifulSoup
 
-from nltk.corpus import wordnet as wn
 from spacy.matcher import DependencyMatcher
 from textblob import TextBlob
 from word2number import w2n
-
 
 from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
 from nlp_sentence_dictionary import extract_dictionary_details
@@ -68,8 +68,8 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     Use spaCy Dependency Parsing and rules-based matching to get the birthdate and place details,
     and family member names from a narrative.
 
-    @param narrative String holding the narrative
-    @return: Two lists where the first contains the tokens related to date and the second
+    :param narrative String holding the narrative
+    :returns: Two lists where the first contains the tokens related to date and the second
              contains the tokens related to location, and a dictionary containing the names
              of family members and their relationship to the narrator/subject
     """
@@ -99,19 +99,22 @@ def get_birth_family_details(narrative: str) -> (list, list, dict):
     return list(born_on_date), list(born_in_place), family_dict
 
 
-def get_synonym(text: str) -> list:
+def get_synonym(text: str, for_noun: bool) -> list:
     """
-    Get the synonyms/lemma of the input text.
+    Get the synonyms of the input text.
 
-    @param text: String to be lemmatized
-    @return: An array holding the synonyms/lemmas of the input text
+    :param text: Text whose synonyms are needed
+    :param for_noun: Boolean indicating that noun synonyms are needed (if true) or verb synonyms (if false)
+    :returns: An array holding the synonyms/lemmas of the input text
     """
-    words = []
-    syns = wn.synsets(text)
-    for syn in syns:
-        text = str(syn)
-        words.append(text[text.index("'") + 1:text.index('.')])
-    return words
+    response = requests.get('https://www.thesaurus.com/browse/{}'.format(text))
+    soup = BeautifulSoup(response.text, 'html.parser')
+    soup.find('section', {'class': 'css-191l5o0-ClassicContentCard e1qo4u830'})
+    if for_noun:
+        class_id = 'css-1kg1yv8 eh475bn0'
+    else:
+        class_id = 'css-1n6g4vv eh475bn0'
+    return [span.text for span in soup.findAll('a', {'class': class_id})]
 
 
 def get_named_entity_in_string(text: str) -> (str, str):
@@ -119,8 +122,8 @@ def get_named_entity_in_string(text: str) -> (str, str):
     Returns information on any Named Entity that are Agents (people, organizations, geopolitical
     entities, ...) or Events in the input text.
 
-    @param text: The text to be parsed
-    @return: Two strings - the first is the named entity's text and the second string is its
+    :param text: The text to be parsed
+    :returns: Two strings - the first is the named entity's text and the second string is its
              type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
              does not contain any Named Entities, then two empty strings are returned
     """
@@ -131,26 +134,17 @@ def get_named_entity_in_string(text: str) -> (str, str):
     return empty_string, empty_string
 
 
-def get_noun(text: str, get_first_occurrence: bool) -> str:
+def get_head_noun(text: str) -> str:
     """
-    Creates a spacy Doc from the input text and returns the first (or last) noun found.
+    Creates a spacy Doc from the input text and returns the 'head' noun.
 
-    @param text: The text to parse
-    @param get_first_occurrence: Boolean indicating that the first noun is returned (if True);
-                                 otherwise, the last noun is returned
-    @return: The first or last (depending on whether the first variable is True or False) noun
-             in the input text, or an empty string if no noun is found
+    :param text: The text to parse
+    :returns: The lemma of the head noun in the input text
     """
     doc = nlp(text)
-    word = empty_string
     for token in doc:
-        if token.pos_ in ('NOUN', 'PROPN'):
-            if token.dep_ == 'compound':
-                continue
-            word = token.text
-            if get_first_occurrence:
-                break
-    return word
+        if token.dep_ == 'ROOT':
+            return token.lemma_
 
 
 def get_nouns_verbs(sentences: str) -> (dict, dict):
@@ -158,8 +152,8 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     Parses all the sentences in the input parameter to return counts of each distinct
     noun and verb.
 
-    @param sentences: String with the text of one or more sentences
-    @return: Two dictionaries of the counts of the noun/verb lemmas where the noun
+    :param sentences: String with the text of one or more sentences
+    :returns: Two dictionaries of the counts of the noun/verb lemmas where the noun
              dictionary is returned first
     """
     noun_dict = dict()
@@ -181,8 +175,8 @@ def get_proper_nouns(text: str) -> str:
     Extract a string consisting of the proper nouns in a text string. For example, "New York City ghetto"
     would return "New York City".
 
-    @param text: The text string to be parsed
-    @return: A string of the proper nouns
+    :param text: The text string to be parsed
+    :returns: A string of the proper nouns
     """
     phrase = nlp(text)
     proper_nouns = []
@@ -200,8 +194,8 @@ def get_sentence_sentiment(sentence: str) -> float:
     """
     Use TextBlob to get sentence polarity/sentiment.
 
-    @param sentence: The sentence to be analyzed.
-    @return: The polarity (-1 for negative, 1 for positive) of the sentence
+    :param sentence: The sentence to be analyzed.
+    :returns: The polarity (-1 for negative, 1 for positive) of the sentence
     """
     blob = TextBlob(sentence)
     # TextBlob's sentiment property returns a namedtuple of the form, (polarity, subjectivity).
@@ -214,8 +208,8 @@ def get_time_details(phrase: str) -> (int, str):
     """
     For a phrase (such as 'a year later'), get the time increment and number of increments.
 
-    @param phrase: String to be processed
-    @return: A tuple of the number of increments and the increment length (for example, 'year')
+    :param phrase: String to be processed
+    :returns: A tuple of the number of increments and the increment length (for example, 'year')
     """
     number = 0
     increment = ''
@@ -240,12 +234,12 @@ def parse_narrative(narr_text: str, gender: str, family_dict: dict) -> list:
     dictionary holding the subject/verb/object/preposition/... details. Each of the sentence
     dictionaries are added to an array, which is returned.
 
-    @param narr_text: The narrative text
-    @param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+    :param narr_text: The narrative text
+    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
                    MALE - indicating the gender of the narrator
-    @param family_dict: A dictionary containing the names of family members and their
+    :param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    @return: An array of dictionaries holding the details of each sentence (after splitting)
+    :returns: An array of dictionaries holding the details of each sentence (after splitting)
     """
     doc = nlp(narr_text)
     split_sentences = []
@@ -286,8 +280,8 @@ def _replace_words(sentence: str) -> str:
     """
     Replace specific phrases/terms with simpler ones - such as replacing 'as well as' with the word, 'and'.
 
-    @param sentence: The sentence whose text should be updated
-    @return: The updated sentence
+    :param sentence: The sentence whose text should be updated
+    :returns: The updated sentence
     """
     for key, value in replacement_words.items():
         if key in sentence:

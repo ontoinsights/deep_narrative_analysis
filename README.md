@@ -48,12 +48,7 @@ The Stardog triple store (downloadable from https://www.stardog.com/get-started/
 * "ontologies" with the files from the _ontologies_ directory
 * "domain-specific" with the files from the _ontologies/domain-specific_ subdirectory
 
-In addition to downloading the spaCy and NLTK libraries (which are addressed in requirements.txt), spaCy's transformer language model and NLTK data also need to be installed. The former is accomplished by executing "python3 -m spacy download en_core_web_trf". And, the latter is installed by starting a Python session and executing:
-
-import nltk
-nltk.download()
-
-The download instruction opens a window showing the NLTK Data Collections. Select "all" and then press the "Download" button in the lower left corner.
+In addition to downloading the spaCy library (which is addressed in requirements.txt), spaCy's transformer language model also need to be installed. The former is accomplished by executing "python3 -m spacy download en_core_web_trf". 
 
 These environment variables need to be set for the DNA application:
 
@@ -63,10 +58,3 @@ These environment variables need to be set for the DNA application:
 Furthermore, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name.
 
 To run the application, cd to the dna directory and execute python3 app.py (making sure to have installed the Python libraries specified in the requirements.txt file).
-
-### Execution Errors
-
-When executing the application on a Mac, the following error may occur ... "Error loading wordnet: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:unable to get local issuer certificate (_ssl.c:1108)>". NLTK is the culprit (that is how WordNet is accessed) along with changes in Python. Python 3.6+ does not rely on/have access to MacOS' root certificates, and so certificate verification fails. To correct this:
-
-* Follow the instructions at https://stackoverflow.com/questions/38916452/nltk-download-ssl-certificate-verify-failed - OR -
-* Execute the _Install Certificates.command_ in the /Applications/Python 3.x directory

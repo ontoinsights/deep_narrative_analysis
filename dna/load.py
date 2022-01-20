@@ -52,7 +52,7 @@ def ingest_narratives() -> (str, int):   # pragma: no cover
     Allow the user to select a CSV file for processing and to then select an existing
     database/store (or define a new store name) to which the described narratives are added.
 
-    @return: String indicating the data store to which narratives were added
+    :returns: String indicating the data store to which narratives were added
              Integer indicating the number of narratives added
     """
     store_list = get_databases()
@@ -118,7 +118,7 @@ def select_store() -> str:    # pragma: no cover
     """
     Display a list of all database/store names and allow selection of one.
 
-    @return: Either an empty string or the name of the selected data store
+    :returns: Either an empty string or the name of the selected data store
     """
     store_list = get_databases()
     if not store_list:
@@ -168,11 +168,11 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
     The format of the CSV MUST be:
        Source,Title,Person,Type,Given,Given2,Surname,Maiden,Maiden2,Gender,Start,End,Remove,Header,Footer
 
-    @param csv_file: CSV file name
-    @param store_name: Database/data store name
-    @param store_list: List of the existing dbs -
+    :param csv_file: CSV file name
+    :param store_name: Database/data store name
+    :param store_list: List of the existing dbs -
                        Need to determine if a db name is new or existing
-    @return: Count of the number of narratives ingested
+    :returns: Count of the number of narratives ingested
     """
     logging.info(f'Processing the CSV, {csv_file}')
     count = 0
@@ -268,8 +268,8 @@ def unify_narrators(store_name: str) -> list:
     Determine if any of the narrators should be 'unified' (are the same person but have
     different names).
 
-    @param store_name: The database/data store name
-    @return: List holding strings of the new triples to add
+    :param store_name: The database/data store name
+    :returns: List holding strings of the new triples to add
     """
     new_triples = []
     results = query_database('select', query_for_unification, store_name)

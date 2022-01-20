@@ -21,8 +21,6 @@ from spacy.tokens import Doc, Token
 from nlp_sentence_tokens import add_token_details
 from utilities import objects_string, resources_root, subjects_string, add_to_dictionary_values, processed_prepositions
 
-attempt_synonyms = ["try", "strive", "venture", "endeavor", "endeavour", "seek", "undertake"]
-
 verb_prt_file = os.path.join(resources_root, 'verb-prt-idioms.pickle')
 with open(verb_prt_file, 'rb') as inFile:
     verb_prt_dict = pickle.load(inFile)
@@ -38,15 +36,15 @@ def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Languag
     Extract the subject, verb, object details from a sentence and store these in a dictionary for
     further processing (and rendering in Turtle).
 
-    @param sentence: The sentence to be processed
-    @param sentence_dicts: An array of dictionaries holding the subject/verb/object details of each sentence
-    @param nlp: A spaCy Language model
-    @param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
+    :param sentence: The sentence to be processed
+    :param sentence_dicts: An array of dictionaries holding the subject/verb/object details of each sentence
+    :param nlp: A spaCy Language model
+    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
                    indicating the gender of the narrator
-    @param family_dict: A dictionary containing the names of family members and their relationship
+    :param family_dict: A dictionary containing the names of family members and their relationship
                         to the narrator/subject
-    @param sentence_offset: Integer indicating the order of the sentence in the overall narrative
-    @return: None (the sentence_dicts array is updated)
+    :param sentence_offset: Integer indicating the order of the sentence in the overall narrative
+    :returns: None (the sentence_dicts array is updated)
     """
     logging.info(f'Creating sentence dictionary for {sentence}')
     # Store details for each sentence, starting from the ROOT verb
@@ -69,9 +67,9 @@ def get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
     """
     Get the GPE, LOC (location), EVENT, DATE and TIME entities from the input sentence.
 
-    @param nlp_sentence: The sentence (a spaCy Doc)
-    @param sentence_dict: A dictionary that is updated with time-, location- and/or event-related details
-    @return: None (sentence_dict is updated with the text of the named entities, where the
+    :param nlp_sentence: The sentence (a spaCy Doc)
+    :param sentence_dict: A dictionary that is updated with time-, location- and/or event-related details
+    :returns: None (sentence_dict is updated with the text of the named entities, where the
              key is either 'LOCS' or 'TIMES')
     """
     for ent in nlp_sentence.ents:
@@ -89,14 +87,14 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     When processing a token (that is a verb), capture its details. Note that all processing
     of a narrative is based on the sentences and their ROOT verbs.
 
-    @param token: Verb token from spacy parse
-    @param dictionary: Dictionary that the token details should be added to
-    @param nlp: A spaCy Language model
-    @param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
+    :param token: Verb token from spacy parse
+    :param dictionary: Dictionary that the token details should be added to
+    :param nlp: A spaCy Language model
+    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
                    MALE - indicating the gender of the narrator
-    @param family_dict: A dictionary containing the names of family members and their
+    :param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    @return: None (Specified dictionary is updated)
+    :returns: None (Specified dictionary is updated)
     """
     logging.info(f'Processing the verb, {token.text}')
     ent = token.text
@@ -109,15 +107,14 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
     for child in token.children:
         if child.dep_ == 'xcomp':   # Clausal complement - e.g., 'he attempted robbing the bank' (xcomp = robbing)
-            if token.lemma_ in attempt_synonyms:
-                token.lemma_ = "attempt"
             if token.lemma_ in verb_xcomp_dict.keys():
-                verb_dict['verb_processing'] = verb_xcomp_dict[token.lemma_].split(' > ')[1].\
-                    replace('verb', child.lemma_)
+                first_verb = verb_xcomp_dict[token.lemma_].split(' > :')[1].split(' ')[0].lower()
             else:
-                # Verb was not found in the dictionary - log this for manual addition
-                logging.warning(f'Verb + Xcomp not found, {token.lemma_} {child.text}')
+                first_verb = token.lemma_
+            verb_dict['verb_processing'] = f'xcomp > :{first_verb}, {child.lemma_}'
+            process_verb(child, dictionary, nlp, gender, family_dict)
         elif 'prt' in child.dep_:     # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
+            verb_dict['verb_text'] = f'{ent} {child.text}'
             # Check for a substitution in the verb_idioms dictionary
             check_text = f'{token.lemma_} {child.text}'
             if check_text in verb_prt_dict.keys():

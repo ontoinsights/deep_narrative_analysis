@@ -35,10 +35,10 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
     """
     Display the metadata for a narrator (such as gender and birth year) and the narrative text.
 
-    @param narrative_name: The narrative title
-    @param narrator: The URI with the narrator's metadata
-    @param store_name: The database/store to be queried for data
-    @return: None
+    :param narrative_name: The narrative title
+    :param narrator: The URI with the narrator's metadata
+    :param store_name: The database/store to be queried for data
+    :returns: None
     """
     logging.info(f'Displaying metadata and text for {narrative_name}')
     narrator_names = []
@@ -118,11 +118,11 @@ def display_timeline(narrative_name: str, event_list: list, store_name: str):
     """
     Displays a timeline of the narrative or domain events using a matplotlib stem plot.
 
-    @param narrative_name: The name/label of the narrative
-    @param event_list: An array of the binding results for the query, query_timeline_events,
+    :param narrative_name: The name/label of the narrative
+    :param event_list: An array of the binding results for the query, query_timeline_events,
                        for the specified narrative
-    @param store_name: The database/store to be queried for data
-    @return: None (timeline is displayed)
+    :param store_name: The database/store to be queried for data
+    :returns: None (timeline is displayed)
     """
     logging.info(f'Displaying narrative timeline for {narrative_name}')
     event_dict = dict()

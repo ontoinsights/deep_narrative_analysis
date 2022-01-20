@@ -34,13 +34,13 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
     """
     Displays a graph of the narrative events using NetworkX.
 
-    @param narrative_name: The name/label of the narrative
-    @param event_list: An array of the binding results for the query, query_timeline_events, for the
+    :param narrative_name: The name/label of the narrative
+    :param event_list: An array of the binding results for the query, query_timeline_events, for the
                        specified narrative
-    @param store_name: The database/store that holds the narrative's knowledge graph
-    @param event_date: A string in YYYY-mm format indicating which events (events with times in that
+    :param store_name: The database/store that holds the narrative's knowledge graph
+    :param event_date: A string in YYYY-mm format indicating which events (events with times in that
                        month) should be shown in the graph
-    @return: None (graph is displayed)
+    :returns: None (graph is displayed)
     """
     logging.info(f'Displaying narrative graph for {narrative_name}')
     # Get the details (predicates and objects) for each event individual
@@ -164,10 +164,10 @@ def get_event_data(narrative_name: str, store_name: str, event_uri: str) -> list
     """
     Get details (predicates and objects) for an event.
 
-    @param narrative_name: String holding the narrative title/label
-    @param store_name: String holding the database/store name from which the event data is retrieved
-    @param event_uri: The URI of the event in the database/data store
-    @return: An array of tuples of (predicate value, object uri, object value, object type) for the
+    :param narrative_name: String holding the narrative title/label
+    :param store_name: String holding the database/store name from which the event data is retrieved
+    :param event_uri: The URI of the event in the database/data store
+    :returns: An array of tuples of (predicate value, object uri, object value, object type) for the
             related entities and properties of the event
     """
     results = []
@@ -206,10 +206,10 @@ def get_sentiment(event_uri: str, narrative_name: str, store_name: str) -> float
     """
     Get the value of the :sentiment predicate for the event.
 
-    @param event_uri: String holding the URI to be queries
-    @param narrative_name: String holding the narrative where the event is defined
-    @param store_name: String holding the database where the narrative is stored
-    @return: Float that is the event's sentiment
+    :param event_uri: String holding the URI to be queries
+    :param narrative_name: String holding the narrative where the event is defined
+    :param store_name: String holding the database where the narrative is stored
+    :returns: Float that is the event's sentiment
     """
     sentiment_details = query_database(
         'select',

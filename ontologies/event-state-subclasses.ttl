@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: December 29 2021
+# Last Modified: January 19 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -52,7 +52,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Acquisition" ;
   :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
-  :verb_synonym "acquire", "equip", "obtain" .
+  :noun_synonym "discovery", "find" ;
+  :verb_synonym "acquire", "equip", "obtain", "discover", "find" .
 
 :ActOfPublishing a owl:Class ;
   rdfs:subClassOf :ReturnRecoveryAndRelease ;
@@ -97,7 +98,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Attempt" ;
   :definition "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
-  :verb_synonym "try", "seek to", "endeavor", "strive to", "undertake", "attempt" .
+  :verb_synonym "try", "seek to", "endeavor", "strive", "undertake", "attempt", "venture to", "endeavour" .
 
 :Avoidance a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -127,7 +128,9 @@
 :Ceremony a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter ;
   rdfs:label "Ceremony" ;
-  :definition "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." .
+  :definition "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." ;
+  :noun_synonym "celebration", "commemoration", "commencement", "fundraiser", "funeral", "graduation", "inaugural", "inauguration", "rededication" ;
+  :verb_synonym "celebrate", "commemorate", "inaugurate", "rededicate" .
 
 :Change a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -405,7 +408,7 @@
   rdfs:label "Movement, Travel and Transportation" ;
   :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
   :noun_synonym "motion", "move", "moving", "arrival", "departure", "shipment", "trip", "transit", "transport", "haulage", "conveyance", "vacation", "cargo", "immigration", "emigration" ;
-  :verb_synonym "send", "bring", "drive", "leave", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate" .
+  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate" .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -416,15 +419,15 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Possession" ;
   :definition "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings" ;
-  :verb_synonym "confiscate", "impound", "take possession", "possess", "get hold of", "get one's hands on", "commandeer", "belong to", "keep", "control" .
+  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "asset", "hoard" ;
+  :verb_synonym "confiscate", "impound", "take possession", "possess", "get hold of", "get one's hands on", "commandeer", "belong to", "keep", "control", "have", "hoard" .
 
 :ProductionManufactureAndCreation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Production, Manufacture and Creation" ;
   :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
-  :noun_synonym "construction", "fabrication", "manufacturing", "model", "modeling" ;
-  :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "model" .
+  :noun_synonym "construction", "fabrication", "manufacturing", "model", "modeling", "invention" ;
+  :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "model", "invent" .
 
 :ProjectAndCampaign a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -451,7 +454,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Recreation Event" ;
   :definition "Any activity done for relaxation and enjoyment (not an Agent's job or business)." ;
-  :noun_synonym "leisure", "relaxation" ;
+  :noun_synonym "leisure", "relaxation", "game" ;
   :verb_synonym "relax", "play" .
 
 :RemovalAndRestriction a owl:Class ;
@@ -561,7 +564,7 @@
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Weather Event" ;
   :definition "Any environmental occurrence related to atmospheric conditions in an area." ;
-  :example "Examples include high/low temperatures, high winds, precipitation, etc." .
+  :example "Examples include high/low temperatures, high winds, thunder and lightening, precipitation/drizzle/rain/snow, fog, storms (cyclones, tornadoes, hurricanes, sandstorms, typhoons, ...), etc." .
 
 
 ########################################################################

@@ -4,6 +4,7 @@ rule: class_name
     | complex_rule
     | keyword_rule
     | obj_rule
+    | subj_rule
     | preposition_rule
     | xcomp_rule
 
@@ -16,11 +17,13 @@ keyword_rule: "'" text "'" ["&" object] ">" class_name (property_text)*
 
 obj_rule: [entity_type] object ["&" object] ">" class_name (property_or_verb)*
 
+subj_rule: "subj >" class_name (topic_or_word_detail)+
+
 preposition_rule: "prep_" WORD complex_rule
 
-xcomp_rule: "xcomp >" class_name other_verb
+xcomp_rule: "xcomp >" class_name "," WORD
 
-prop_name: WORD ("_" WORD)+
+prop_name: WORD ("_" WORD)*
 
 entity_type: agent | location
 agent: "Agent"
@@ -28,8 +31,12 @@ location: "Location"
 
 property_or_verb: other_verb 
                 | property_text
-other_verb: "," (dobj | xcomp) text
+other_verb: "," dobj text
 property_text: "; :" prop_name object
+
+topic_or_word_detail: topic | word_detail
+topic: "; :has_topic :" WORD
+word_detail: "; :word_detail '" WORD "'"
 
 object: dobj | pobj
 dobj: "dobj"

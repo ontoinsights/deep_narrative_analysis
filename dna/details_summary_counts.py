@@ -15,8 +15,8 @@ def display_dates_events(narratives: str):
     """
     Display a table of years and counts of their occurrences in the narratives.
 
-    @param narratives: String consisting of all the narratives' texts
-    @return: None (Table of locations and counts is displayed)
+    :param narratives: String consisting of all the narratives' texts
+    :returns: None (Table of locations and counts is displayed)
     """
     logging.info(f'Displaying dates in narratives')
     # Define the PySimpleGUI window
@@ -57,8 +57,8 @@ def display_locations(narratives: str):
     """
     Display a table of locations and counts of their occurrences in the narratives.
 
-    @param narratives: String consisting of all the narratives' texts
-    @return: None (Table of locations and counts is displayed)
+    :param narratives: String consisting of all the narratives' texts
+    :returns: None (Table of locations and counts is displayed)
     """
     logging.info(f'Displaying locations in narratives')
     # Define the PySimpleGUI window
@@ -100,12 +100,12 @@ def get_y_x_values(number_narrators: int, variable: str, query: str, store_name:
     Get the count of narrators by gender, birth country and birth year. Also provide counts where
     this info is not known.
 
-    @param number_narrators: Total number of narrators
-    @param variable: String indicating the name of the returned SPARQL query variable - either
+    :param number_narrators: Total number of narrators
+    :param variable: String indicating the name of the returned SPARQL query variable - either
                      'gender', 'year' or 'country'
-    @param query: String holding the query to run to get the count
-    @param store_name: String holding the database/data store name with the narratives and narrator details
-    @return: Two tuples of integers - for the y and x axes of a horizontal bar chart ...
+    :param query: String holding the query to run to get the count
+    :param store_name: String holding the database/data store name with the narratives and narrator details
+    :returns: Two tuples of integers - for the y and x axes of a horizontal bar chart ...
              The y-axis is the list of genders, birth countries and birth years,
              and the x-axis is the number of narrators
     """
@@ -138,12 +138,12 @@ def output_words_in_csv(narratives: str, nouns_in_csv: int, verbs_in_csv: int, d
     to the files, <directory_name>/Nouns.csv and <directory_name>/Verbs.csv.
     The nouns, verbs and a count of their occurrences is returned.
 
-    @param narratives: String consisting of all the narratives' texts
-    @param nouns_in_csv: Integer value indicating the number of nouns to be output
-    @param verbs_in_csv: Integer value indicating the number of verbs to be output
-    @param directory_name: String indicating the base file name to which the nouns, verbs and
+    :param narratives: String consisting of all the narratives' texts
+    :param nouns_in_csv: Integer value indicating the number of nouns to be output
+    :param verbs_in_csv: Integer value indicating the number of verbs to be output
+    :param directory_name: String indicating the base file name to which the nouns, verbs and
                            their frequencies are output
-    @return: None (.csv files are generated)
+    :returns: None (.csv files are generated)
     """
     sorted_nouns, sorted_verbs = get_nouns_verbs(narratives)
     # TODO: Only report words with 'unknown' semantics

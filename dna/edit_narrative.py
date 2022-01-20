@@ -26,11 +26,11 @@ def display_edit_table(title: str, data_list: list, store_name: str):
     """
     Display a PySimpleGUI window with a table of nouns/concepts, events or both from a narrative.
 
-    @param title: String holding the window title
-    @param data_list: Array of lists holding 1) either a noun/concept or event URI, 2) a predicate
+    :param title: String holding the window title
+    :param data_list: Array of lists holding 1) either a noun/concept or event URI, 2) a predicate
                       for that noun/event individual, 3) the object of the predicate
-    @param store_name: String holding the database/store details when saving changes
-    @return: None
+    :param store_name: String holding the database/store details when saving changes
+    :returns: None
     """
     cols_list = ['Identifier', 'Predicate', 'Object/Value', 'Delete']
     # TODO: Add ability to create new triples
@@ -132,8 +132,8 @@ def display_narratives_for_edit(store_name: str):
     and allow selection of one. Then, display the subj-pred-obj details for individuals (nouns and events)
     that are discussed within it.
 
-    @param store_name: The database/data store name
-    @return: None (Narrative timeline is displayed)
+    :param store_name: The database/data store name
+    :returns: None (Narrative timeline is displayed)
     """
     logging.info('Narrative selection for edit')
     # Get the list of narratives
@@ -229,11 +229,11 @@ def display_narratives_for_edit(store_name: str):
 
 def display_row_for_edit(subj: str, pred: str, obj: str, del_flag: bool) -> (str, str, bool):
     """
-    @param subj: String holding the subject of a triple
-    @param pred: String holding the predicate of a triple
-    @param obj: String holding the object of a triple
-    @param del_flag: Boolean indicating that the triple should be removed from the store
-    @return: A tuple consisting of the window's predicate and object strings
+    :param subj: String holding the subject of a triple
+    :param pred: String holding the predicate of a triple
+    :param obj: String holding the object of a triple
+    :param del_flag: Boolean indicating that the triple should be removed from the store
+    :returns: A tuple consisting of the window's predicate and object strings
     """
     # Determine the height of the 'Object' text
     if len(obj) > 2000:

@@ -18,8 +18,8 @@ def evaluate_hypothesis(store_name: str):
     Display a window to show currently defined hypotheses, and allow selection and test
     of one of them.
 
-    @param store_name: The database/data store name holding the hypotheses and narratives
-    @return: TBD
+    :param store_name: The database/data store name holding the hypotheses and narratives
+    :returns: TBD
     """
     logging.info(f'Test hypothesis in {store_name}')
     # Define the PySimpleGUI window
