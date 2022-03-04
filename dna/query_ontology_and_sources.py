@@ -9,12 +9,12 @@ import xml.etree.ElementTree as etree
 
 from PyDictionary import PyDictionary
 
-from database import query_ontology
+from database import query_database, query_ontology
 from idiom_processing import get_noun_idiom
 from nlp import get_synonym, get_named_entity_in_string, get_head_noun
 from query_ontology_specific_classes import get_norp_emotion_or_lob
-from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, owl_thing, \
-    processed_prepositions
+from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, ontologies_database, \
+    owl_thing, processed_prepositions
 
 config = cp.RawConfigParser()
 config.read(f'{resources_root}dna.config')
@@ -30,6 +30,9 @@ domain_query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
                      '{ SERVICE <db://ontologies-database> { ?class rdfs:subClassOf+ :searchClass } } ' \
                      '{ { SERVICE <db://domain-database> { <keyword> rdfs:subClassOf* ?class } } UNION ' \
                      '{ SERVICE <db://ontologies-database> { <keyword> rdfs:subClassOf* ?class } } } }'
+
+query_emotion = 'prefix : <urn:ontoinsights:dna:> SELECT ?superClass WHERE { ' \
+                'keyword rdfs:subClassOf+ :EmotionalResponse }'
 
 query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '<keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'
@@ -47,8 +50,8 @@ domain_query_event = \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
     'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
-    'UNION { ?class :verb_synonym ?nsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
-    'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } } ' \
+    'UNION { ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
+    'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } } ' \
     '} ORDER BY DESC(?prob)'
 
 query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
@@ -57,8 +60,8 @@ query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
               '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
               'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
-              'UNION { ?class :verb_synonym ?nsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
-              'UNION { ?class :noun_synonym ?vsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
+              'UNION { ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
+              'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
               '} ORDER BY DESC(?prob)'
 
 domain_query_noun = \
@@ -117,7 +120,7 @@ def check_dictionary(word: str, is_noun: bool) -> str:
     :returns: String holding the concept's class name
     """
     if ' ' in word:
-        word = get_head_noun(word)
+        word = get_head_noun(word)[0]  # In this case, we don't care about plurals, etc. (the orig_text)
     try:
         word_def = dictionary.meaning(word)
         if word_def:
@@ -131,7 +134,7 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                             break
                         for sub_clause in clause.split(';'):
                             if term_type == 'Noun':
-                                word = get_head_noun(sub_clause)
+                                word = get_head_noun(sub_clause)[0]
                                 query_str = query_noun
                                 domain_query_str = domain_query_noun
                             else:
@@ -151,6 +154,19 @@ def check_dictionary(word: str, is_noun: bool) -> str:
         return owl_thing
 
 
+def check_emotion(class_name: str) -> bool:
+    """
+    Determines if the class_name is a positive or negative emotion, or not an emotion.
+
+    :param class_name: The class_name to be analyzed
+    :returns: Boolean indicating that the class is a type of EmotionalResponse (true) or not (false)
+    """
+    results = query_database('select', query_emotion.replace('keyword', class_name), ontologies_database)
+    if results:
+        return True
+    return False
+
+
 def check_presence_of_words(text: str, words: tuple) -> bool:
     """
     Determines if one of the 'words' in the input tuple is found in the 'text' string. Returns
@@ -166,13 +182,13 @@ def check_presence_of_words(text: str, words: tuple) -> bool:
     return False
 
 
-def get_event_state_ttl(lemma: str) -> str:
+def get_event_state_class(lemma: str) -> str:
     """
     Determine the appropriate event or state in the DNA ontology, that matches the semantics of
     the verb.
 
     :param lemma: The verb lemma or noun indicating an action/event
-    :returns: Mapping of the verb/sentence semantics to the DNA ontology, returning the class details
+    :returns: Mapping of the verb/sentence semantics to the DNA ontology, returning the class name
     """
     # First check for an exact match
     class_name = query_ontology(lemma, query_match, query_match)
@@ -253,18 +269,17 @@ def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: s
     class_name = empty_string
     noun = empty_string
     wikipedia_desc = empty_string
-    if noun_type.endswith('GPE') or noun_type.endswith('ORG') or noun_type.endswith('NORP'):
+    # TODO: Update logic if more than Countries are defined in the core DNA ontologies
+    if noun_type.endswith('GPE') or noun_type.endswith('ORG'):
         wikipedia_desc = get_wikipedia_description(noun_text)
     if 'PERSON' in noun_type or noun_text == 'Narrator':
         class_name = 'urn:ontoinsights:dna:Person'
         if 'PLURAL' in noun_type:
-            class_name = 'urn:ontoinsights:dna:GroupOfAgents'
+            class_name = 'urn:ontoinsights:dna:Person>, <urn:ontoinsights:dna:Collection'
     elif noun_type.endswith('GPE'):
         class_name = 'urn:ontoinsights:dna:GeopoliticalEntity'
     elif noun_type.endswith('NORP'):   # Nationalities, religious or political groups
-        class_name, new_ttl = _process_norp_aspect(noun_text, noun_type, noun_uri, wikipedia_desc)
-        if new_ttl:
-            return new_ttl
+        return _process_norp_aspect(noun_text, noun_type, noun_uri, wikipedia_desc)
     elif noun_type.endswith('ORG'):
         class_name = 'urn:ontoinsights:dna:Organization'
     else:
@@ -278,7 +293,7 @@ def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: s
         if found_prep:
             if check_presence_of_words(noun_text, part_of_group):
                 if 'PLURAL' in noun_type or check_presence_of_words(noun_text, explicit_plural):
-                    class_name = 'urn:ontoinsights:dna:GroupOfAgents'
+                    class_name = 'urn:ontoinsights:dna:Person>, <urn:ontoinsights:dna:Collection'
                 else:
                     class_name = 'urn:ontoinsights:dna:Person'
                 # Check if the org, group, ... is mentioned
@@ -293,12 +308,12 @@ def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: s
                 new_ttl = _check_for_noun_idiom(noun_text, noun_type, sentence_text, noun_uri)
                 if new_ttl:
                     return new_ttl
-                noun = get_head_noun(noun_text)
+                noun = get_head_noun(noun_text)[0]
         else:
             new_ttl = _check_for_noun_idiom(noun_text, noun_type, sentence_text, noun_uri)
             if new_ttl:
                 return new_ttl
-            noun = get_head_noun(noun_text)
+            noun = get_head_noun(noun_text)[0]
     if not noun:
         noun = noun_text
     if not class_name:
@@ -348,8 +363,11 @@ def _check_for_noun_idiom(noun_text: str, noun_type: str, sentence_text: str, no
     :returns: An array holding the Turtle statements that are generated if a noun idiom is found
             (or an empty list otherwise)
     """
-    noun = get_head_noun(noun_text)
+    noun, orig_text = get_head_noun(noun_text)
     noun_ttl = get_noun_idiom(noun, noun_text, noun_type, sentence_text, noun_uri)
+    if not noun_ttl:
+        # The mapping may be specific to a plural
+        noun_ttl = get_noun_idiom(orig_text, noun_text, noun_type, sentence_text, noun_uri)
     if noun_ttl:
         return noun_ttl
     noun_syns = get_synonym(noun, True)
@@ -414,6 +432,8 @@ def _indicate_location_or_movement(class_name: str, for_movement: bool) -> bool:
     :returns: Boolean of True if a subclass of :MovementTravelAndTransportation or :Location
              (depending on the value of the for_movement boolean) and False otherwise
     """
+    if ', ' in class_name:
+        return False
     query_str = query_class.replace('searchClass', 'Location')
     domain_query_str = domain_query_class.replace('searchClass', 'Location')
     if for_movement:
@@ -437,36 +457,37 @@ def _process_norp_aspect(noun_text: str, noun_type: str, noun_uri: str, wikipedi
     :returns: A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of
              the defining Turtle (if appropriate)
     """
-    class_name = 'urn:ontoinsights:dna:Person'
-    norp_ttl = []
-    if 'PLURAL' in noun_type:
-        class_name = 'urn:ontoinsights:dna:GroupOfAgents'
-    # Check if ethnic group
-    norp_type, norp_class = get_norp_emotion_or_lob(noun_text)
-    if norp_type == 'Ethnicity':
-        norp_ttl = [f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .',
-                    f'{noun_uri} :has_agent_aspect <{norp_class}> .']
-        if noun_type.startswith('NEG'):
-            norp_ttl = [f'{noun_uri} :negation true .']
-    # Check if religious or political groups by getting description from Wikidata
-    elif wikipedia_desc:
-        if 'political' in wikipedia_desc.lower():
-            class_name = 'urn:ontoinsights:dna::PoliticalParty'
-        elif 'religio' in wikipedia_desc.lower():
-            words = wikipedia_desc.split(' ')
-            for word in words:
-                norp_type, norp_class = get_norp_emotion_or_enum(word)
-                if norp_type == 'ReligiousBelief':
-                    norp_ttl = [f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .',
-                                f'{noun_uri} :has_agent_aspect <{norp_class}> .']
-                    if noun_type.startswith('NEG'):
-                        norp_ttl.append(f'{noun_uri} :negation true .')
+    # Check if ethnic group, religious group, ... that is already defined in the DNA ontology
+    norp_type, norp_class = get_norp_emotion_or_lob(noun_text)   # TODO: Optimize to not check for emotion or lob
+    if not norp_type or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
+        # Check if a type of ethnic, religious or political group by checking the Wikipedia description
+        if wikipedia_desc:
+            wikipedia_lower = wikipedia_desc.lower()
+            if 'political' in wikipedia_lower or 'religio' in wikipedia_lower or 'ethnic' in wikipedia_lower:
+                words = wikipedia_desc.split(' ')
+                for word in words:
+                    if not word.istitle():   # Word is likely capitalized, so ignore lower cased words
+                        continue
+                    norp_type, norp_class = get_norp_emotion_or_lob(word)
+                    if norp_type and norp_type != 'EmotionalResponse' and norp_type != 'LineOfBusiness':
                         break
-            if not norp_ttl:
-                class_name = 'urn:ontoinsights:dna::ReligiousBelief'   # Default is a top-level religious belief
-        else:
-            class_name = 'urn:ontoinsights:dna:Organization'   # Default is an Organization
+    # Did not find match of the word or its description
+    if not norp_type or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
+        type_str = ':Organization'
+        if 'PLURAL' in noun_type:
+            type_str = ':Organization, :Collection'
+        norp_ttl = [f'{noun_uri} a <{type_str}> ; rdfs:label "{noun_text}" .']
+        if wikipedia_desc:
+            norp_ttl.append(f'{noun_uri} :description "{wikipedia_desc}" .')
     else:
-        class_name = 'urn:ontoinsights:dna:Organization'   # Default is an Organization
-    # TODO: Should LOB or PoliticalIdeology also be handled?
-    return class_name, norp_ttl
+        type_str = ':Person'
+        if 'PLURAL' in noun_type:
+            type_str = ':Person, :Collection'
+        norp_ttl = [f'{noun_uri} a {type_str} ; rdfs:label "{noun_text}" .']
+        if norp_type == 'ReligiousBelief' or norp_type == 'Ethnicity':
+            norp_ttl.append(f'{noun_uri} :has_agent_aspect <{norp_class}> .')
+        elif norp_type == 'PoliticalIdeology':
+            norp_ttl.append(f'{noun_uri} :has_political_ideology <{norp_class}> .')
+    if noun_type.startswith('NEG'):
+        norp_ttl.append(f'{noun_uri} :negation true .')
+    return norp_ttl

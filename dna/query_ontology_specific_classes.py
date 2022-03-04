@@ -13,8 +13,10 @@ domain_query_norp_emotion_or_enum = \
     '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(80 as ?prob) } UNION ' \
-    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } } } ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(80 as ?prob) } UNION ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(75 as ?prob) } UNION ' \
+    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(70 as ?prob) } UNION ' \
+    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(65 as ?prob) } } } } ' \
     '} ORDER BY DESC(?prob)'
 
 query_norp_emotion_or_enum = \
@@ -24,8 +26,10 @@ query_norp_emotion_or_enum = \
     '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(80 as ?prob) } UNION ' \
-    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(75 as ?prob) } } ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(80 as ?prob) } UNION ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(75 as ?prob) } UNION ' \
+    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), " keyword ")) . BIND(70 as ?prob) } UNION ' \
+    '{ ?class :definition ?defn . FILTER(CONTAINS(lcase(?defn), "keyword")) . BIND(65 as ?prob) } } ' \
     '} ORDER BY DESC(?prob)'
 
 

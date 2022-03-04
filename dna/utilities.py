@@ -105,7 +105,7 @@ def capture_error(message: str, notify: bool):
                    should be added
     :returns: None (Message is logged and displayed)
     """
-    logging.error(message)
+    logging.exception(message)
     if notify:
         sg.popup_error(f'{message} \nPlease notify a system administrator.',
                        font=('Arial', 14), button_color='dark blue', icon=encoded_logo)

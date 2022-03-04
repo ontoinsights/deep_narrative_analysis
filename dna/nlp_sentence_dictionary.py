@@ -129,15 +129,17 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
                 if 'pobj' == child2.dep_:    # The real subject is the object of the preposition, 'by'
                     add_token_details(child2, dictionary, subjects_string, gender, family_dict)
         elif 'aux' == child.dep_:
-            # Care about the tense of the primary auxiliaries (be, do, have)
-            # TODO: Semantics of aux such as "enjoyed being with" vs "hated being with"
+            # Care about modals, tense of the primary auxiliaries (be, do, have), and semantics of mood
             if 'will' == child.text:
+                # TODO: Is it ok to ignore other modals ('could/would/should', 'shall/must/may', 'can', 'might')?
                 verb_dict['tense'] = 'Fut'
             elif child.lemma_ in ('be', 'do', 'have'):
                 child_tense = child.morph.get('Tense')
                 if verb_dict['tense'] == 'Pres' and child_tense and child_tense == 'Past':
                     verb_dict['tense'] = 'Past'
-            # TODO: What to do with the modals ('would', 'should')?
+            else:
+                # Aux is likely expressing mood, such as "enjoyed/hated being with"
+                verb_dict['verb_aux'] = child.text
         elif 'conj' == child.dep_:   # Another verb related via a coordinating conjunction
             process_verb(child, dictionary, nlp, gender, family_dict)
         elif 'neg' == child.dep_:   # Verb is negated

@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 19 2022
+# Last Modified: February 23 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -41,6 +41,7 @@
 #  Moved Assessment from environment-subclasses.ttl; Modified 
 #    :has_assessment to :assessment
 #  Added :defined_for
+#  Renamed InProcessPlacement to Placement
 ########################################################################
 
 
@@ -357,12 +358,6 @@
   :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." ;
   :noun_synonym "IT", "information technology" .
 
-:InProcessPlacement a owl:Class ;
-  rdfs:subClassOf :MovementTravelAndTransportation ;
-  rdfs:label "In-Process Placement" ;
-  :definition "Any act that changes the location of something by incremental amounts or makes a small change to the placement of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which moves the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
-  :verb_synonym "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "slide", "push", "throw", "run", "roll" .
-
 :LegalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Legal Event" ;
@@ -407,8 +402,14 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Movement, Travel and Transportation" ;
   :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
-  :noun_synonym "motion", "move", "moving", "arrival", "departure", "shipment", "trip", "transit", "transport", "haulage", "conveyance", "vacation", "cargo", "immigration", "emigration" ;
-  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate" .
+  :noun_synonym "motion", "move", "moving", "arrival", "departure", "shipment", "trip", "transit", "transport", "haulage", "conveyance", "vacation", "cargo", "immigration", "emigration", "transfer" ;
+  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate", "put", "funnel", "push", "pull", "throw", "run", "roll", "transfer" .
+
+:Placement a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Placement" ;
+  :definition "Any act that changes the location of something by incremental amounts or makes a small change to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
+  :verb_synonym "place", "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "slide", "push", "throw", "run", "roll" .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;

@@ -1,5 +1,5 @@
 # Handles querying the idiom details and returning information on special processing
-# Called by create_event_turtle and nlp_sentence_dictionary.py
+# Called by create_event_turtle and nlp_sentence_dictionary.py (latter is a minor usage)
 
 import logging
 import os
@@ -119,8 +119,8 @@ def get_verb_processing(verb_dict: dict) -> list:
             looking_for = f'{lemma} {preposition}'
             if looking_for in verb_prep_idiom_dict.keys():
                 processing.append(verb_prep_idiom_dict[looking_for])
-    if lemma in verb_dict.keys():
-        processing.append(verb_dict[lemma])
+    if lemma in verb_idiom_dict.keys():
+        processing.append(verb_idiom_dict[lemma])
     return processing
 
 

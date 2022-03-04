@@ -7868,7 +7868,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                             owl:disjointWith <urn:ontoinsights:dna:Pessimism> ;
                             rdfs:label "Hope" ;
                             <urn:ontoinsights:dna:noun_synonym> "anticipation" ,
-                                                                "dreams" ,
+                                                                "dream" ,
                                                                 "eagerness" ,
                                                                 "expectancy" ,
                                                                 "keenness" ,
@@ -8002,25 +8002,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                      owl:disjointWith <urn:ontoinsights:dna:OpportunityAndPossibility> ;
                                      rdfs:label "Impossibility" ;
                                      <urn:ontoinsights:dna:definition> "Some entity or collection of entities (Agent, Resource, EventAndState, Location, ...) that cannot exist or occur. The thing(s) that are impossible are specified using the :has_topic property." .
-
-
-###  urn:ontoinsights:dna:InProcessPlacement
-<urn:ontoinsights:dna:InProcessPlacement> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:MovementTravelAndTransportation> ;
-                                          rdfs:label "In-Process Placement" ;
-                                          <urn:ontoinsights:dna:definition> "Any act that changes the location of something by incremental amounts or makes a small change to the placement of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which moves the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
-                                          <urn:ontoinsights:dna:verb_synonym> "coil" ,
-                                                                              "fill" ,
-                                                                              "funnel" ,
-                                                                              "pocket" ,
-                                                                              "pour" ,
-                                                                              "push" ,
-                                                                              "put" ,
-                                                                              "roll" ,
-                                                                              "run" ,
-                                                                              "slide" ,
-                                                                              "spray" ,
-                                                                              "throw" .
 
 
 ###  urn:ontoinsights:dna:InclusionAttachmentAndUnification
@@ -8680,6 +8661,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "move" ,
                                                                                            "moving" ,
                                                                                            "shipment" ,
+                                                                                           "transfer" ,
                                                                                            "transit" ,
                                                                                            "transport" ,
                                                                                            "trip" ,
@@ -8692,14 +8674,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "depart" ,
                                                                                            "drive" ,
                                                                                            "emigrate" ,
+                                                                                           "funnel" ,
                                                                                            "haul" ,
                                                                                            "immigrate" ,
                                                                                            "leave" ,
                                                                                            "move" ,
+                                                                                           "pull" ,
+                                                                                           "push" ,
+                                                                                           "put" ,
+                                                                                           "roll" ,
+                                                                                           "run" ,
                                                                                            "send" ,
                                                                                            "ship" ,
                                                                                            "take a trip" ,
                                                                                            "take a vacation" ,
+                                                                                           "throw" ,
+                                                                                           "transfer" ,
                                                                                            "transport" ,
                                                                                            "travel" ,
                                                                                            "walk out" .
@@ -9051,6 +9041,26 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         rdfs:subClassOf <urn:ontoinsights:dna:Location> ;
                                         rdfs:label "Physical Location" ;
                                         <urn:ontoinsights:dna:definition> "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
+
+
+###  urn:ontoinsights:dna:Placement
+<urn:ontoinsights:dna:Placement> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                 rdfs:label "Placement" ;
+                                 <urn:ontoinsights:dna:definition> "Any act that changes the location of something by incremental amounts or makes a small change to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
+                                 <urn:ontoinsights:dna:verb_synonym> "coil" ,
+                                                                     "fill" ,
+                                                                     "funnel" ,
+                                                                     "place" ,
+                                                                     "pocket" ,
+                                                                     "pour" ,
+                                                                     "push" ,
+                                                                     "put" ,
+                                                                     "roll" ,
+                                                                     "run" ,
+                                                                     "slide" ,
+                                                                     "spray" ,
+                                                                     "throw" .
 
 
 ###  urn:ontoinsights:dna:PointInTime
@@ -14828,12 +14838,12 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                 "converge" ;
+                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                 "touch" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              rdfs:label "meets" ;
-                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;
+                             <urn:ontoinsights:dna:noun_synonym> "boundary" ;
                              <urn:ontoinsights:dna:definition> "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 
 

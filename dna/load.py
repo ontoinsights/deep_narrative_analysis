@@ -38,14 +38,6 @@ query_for_unification = 'prefix : <urn:ontoinsights:dna:> ' \
                         'OPTIONAL {?unify1 a :UnifyingCollection ; :has_member ?narr1 } ' \
                         'OPTIONAL {?unify2 a :UnifyingCollection ; :has_member ?narr2 } }'
 
-# TODO: Remove stranded triples
-remove_stranded_triples = 'prefix : <urn:ontoinsights:dna:> ' \
-                          'DELETE { graph <urn:Erika_Eckstut> { ?inst ?p ?o } } WHERE ' \
-                          '{ { graph <urn:narr_graph> { ?inst a ?type ; ?p ?o . ' \
-                          'FILTER NOT EXISTS { ?inst2 ?pred ?inst } } } ' \
-                          'FILTER NOT EXISTS { { graph <tag:stardog:api:context:default> { ' \
-                          '?type rdfs:subClassOf* :EventAndState } } } FILTER(!(CONTAINS(str(?type), "Idiom"))) }'
-
 
 def ingest_narratives() -> (str, int):   # pragma: no cover
     """
@@ -236,6 +228,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
                         capture_error(
                             f'Exception adding ({narr_meta["Title"]}) metadata to store: {str(e)}', True)
                     sentence_dicts = parse_narrative(narrative, gender, family_dict)
+                    # TODO: Remove prints
                     print(sentence_dicts)
                     event_turtle_list = create_event_turtle(gender, sentence_dicts)
                     print(event_turtle_list)
@@ -258,6 +251,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
             # Add the triples to the data store
             add_remove_data('add', ' '.join(unified_triples), store_name)
     except Exception as e:
+        # TODO: Remove stdout
         traceback.print_exc(file=sys.stdout)
         capture_error(f'Exception ingesting narratives: {str(e)}', True)
     return count
