@@ -3,6 +3,7 @@
 import base64
 import logging
 import os
+import pickle
 
 import PySimpleGUI as sg
 
@@ -16,6 +17,11 @@ with open(image_file_logo, "rb") as im_file:
     encoded_logo = base64.b64encode(im_file.read())
 with open(image_file_question, "rb") as im_file:
     encoded_question = base64.b64encode(im_file.read())
+
+# A dictionary where the keys are country names and the values are the GeoNames country codes
+geocodes_file = os.path.join(resources_root, 'country_names_mapped_to_geo_codes.pickle')
+with open(geocodes_file, 'rb') as inFile:
+    names_to_geo_dict = pickle.load(inFile)
 
 empty_string = ''
 space = ' '
@@ -32,6 +38,8 @@ event_and_state_class = 'urn:ontoinsights:dna:EventAndState'
 
 domain_database = "domain-specific"
 ontologies_database = 'ontologies'
+
+dark_blue = 'dark blue'   # Used in the GUI definitions
 
 gender_dict = {'A': ':Agender', 'B': ':Bigender',
                'F': ':Female', 'M': ':Male'}
@@ -108,9 +116,9 @@ def capture_error(message: str, notify: bool):
     logging.exception(message)
     if notify:
         sg.popup_error(f'{message} \nPlease notify a system administrator.',
-                       font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                       font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
     else:
-        sg.popup_error(message, font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+        sg.popup_error(message, font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
     return
 
 

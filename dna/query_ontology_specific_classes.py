@@ -3,7 +3,7 @@
 # Called by create_event_turtle.py
 
 from database import query_ontology
-from utilities import empty_string, owl_thing
+from utilities import dna_prefix, empty_string, owl_thing
 
 domain_query_norp_emotion_or_enum = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
@@ -46,5 +46,5 @@ def get_norp_emotion_or_lob(noun_text: str) -> (str, str):
             noun_text, query_norp_emotion_or_enum.replace('class_type', class_type),
             domain_query_norp_emotion_or_enum.replace('class_type', class_type))
         if result != owl_thing:
-            return class_type, result
+            return class_type.replace(dna_prefix, ':'), result
     return empty_string, empty_string

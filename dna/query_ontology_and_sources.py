@@ -14,12 +14,16 @@ from idiom_processing import get_noun_idiom
 from nlp import get_synonym, get_named_entity_in_string, get_head_noun
 from query_ontology_specific_classes import get_norp_emotion_or_lob
 from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, ontologies_database, \
-    owl_thing, processed_prepositions
+    owl_thing, space
 
 config = cp.RawConfigParser()
 config.read(f'{resources_root}dna.config')
 # Set geoname user id
 geonamesUser = config.get('GeoNamesConfig', 'geonamesUser')
+
+owl_thing2 = 'owl:Thing'
+person = ':Person'
+person_collection = ':Person, :Collection'
 
 dictionary = PyDictionary()
 
@@ -32,7 +36,7 @@ domain_query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
                      '{ SERVICE <db://ontologies-database> { <keyword> rdfs:subClassOf* ?class } } } }'
 
 query_emotion = 'prefix : <urn:ontoinsights:dna:> SELECT ?superClass WHERE { ' \
-                'keyword rdfs:subClassOf+ :EmotionalResponse }'
+                'keyword rdfs:subClassOf+ :EmotionalResponse . BIND("keyword" as ?superClass) }'
 
 query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '<keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'
@@ -46,31 +50,34 @@ domain_query_event = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
     '{ SERVICE <db://ontologies-database> { ?domain_class_type rdfs:subClassOf+ :EventAndState } } ' \
     '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
-    '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
-    'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
-    'UNION { ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
-    'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } } ' \
+    '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(100 as ?prob) } UNION ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(95 as ?prob) } UNION ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(90 as ?prob) } UNION ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(85 as ?prob) } UNION ' \
+    '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } UNION ' \
+    '{ ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } UNION ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } } } ' \
     '} ORDER BY DESC(?prob)'
 
 query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
               '?class rdfs:subClassOf+ :EventAndState . ' \
-              '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
-              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
-              '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(75 as ?prob) } ' \
-              'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(70 as ?prob) } ' \
-              'UNION { ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } ' \
-              'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
+              '{ { ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(100 as ?prob) } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(95 as ?prob) } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(90 as ?prob) } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(85 as ?prob) } UNION ' \
+              '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } UNION ' \
+              '{ ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(65 as ?prob) } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
               '} ORDER BY DESC(?prob)'
 
 domain_query_noun = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
-    '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . ' \
-    '{ { ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(65 as ?prob) } } } } ' \
+    '{ SERVICE <db://domain-database> { ?class rdfs:subClassOf* ?domain_class_type . { ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(100 as ?prob) } UNION ' \
+    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(95 as ?prob) } UNION ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
+    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
+    '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } } } } ' \
     '{ SERVICE <db://ontologies-database> { ?domain_class_type a owl:Class . ' \
     'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :EventAndState } ' \
     'FILTER NOT EXISTS { ?domain_class_type rdfs:subClassOf+ :Ethnicity } ' \
@@ -78,36 +85,37 @@ domain_query_noun = \
     '} ORDER BY DESC(?prob)'
 
 query_noun = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-             '{ ?class a owl:Class ' \
-             '{ { ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
-             '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } ' \
-             'UNION { ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } ' \
-             'UNION { ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(65 as ?prob) } } ' \
+             '{ ?class a owl:Class { ' \
+             '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(100 as ?prob) } UNION ' \
+             '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(95 as ?prob) } UNION ' \
+             '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
+             '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(85 as ?prob) } UNION ' \
+             '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Ethnicity } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } } ORDER BY DESC(?prob)'
 
 
-def create_affiliation_ttl(noun_uri: str, noun_text: str, affiliated_text: str, affiliated_type: str) -> list:
+def create_affiliation_ttl(noun_iri: str, noun_text: str, affiliated_text: str, affiliated_type: str) -> list:
     """
     Creates the Turtle for an Affiliation.
 
-    :param noun_uri: String holding the entity/URI to be affiliated
+    :param noun_iri: String holding the entity/IRI to be affiliated
     :param noun_text: String holding the sentence text for the entity
     :param affiliated_text: String specifying the entity (organization, group, etc.) to which the
                             noun is affiliated
     :param affiliated_type: String specifying the class type of the entity
     :returns: An array of strings holding the Turtle representation of the Affiliation
     """
-    affiliated_uri = f':{affiliated_text.replace(" ", "_")}'
-    affiliation_uri = f'{noun_uri}{affiliated_text.replace(" ", "_")}Affiliation'
+    affiliated_iri = f':{affiliated_text.replace(" ", "_")}'
+    affiliation_iri = f'{noun_iri}{affiliated_text.replace(" ", "_")}Affiliation'
     noun_str = f"'{noun_text}'"
-    ttl = [f'{affiliation_uri} a :Affiliation ; :affiliated_with {affiliated_uri} ; :affiliated_agent {noun_uri} .',
-           f'{affiliation_uri} rdfs:label "Relationship based on the text, {noun_str}" .',
-           f'{affiliated_uri} a {affiliated_type} ; rdfs:label "{affiliated_text}" .']
-    wikidata_desc = get_wikipedia_description(affiliated_text)
-    if wikidata_desc:
-        ttl.append(f'{affiliated_uri} :definition "{wikidata_desc}" .')
+    ttl = [f'{affiliation_iri} a :Affiliation ; :affiliated_with {affiliated_iri} ; :affiliated_agent {noun_iri} .',
+           f'{affiliation_iri} rdfs:label "Relationship based on the text, {noun_str}" .',
+           f'{affiliated_iri} a {affiliated_type} ; rdfs:label "{affiliated_text}" .']
+    wikipedia_desc = get_wikipedia_description(affiliated_text)
+    if wikipedia_desc:
+        ttl.append(f'{affiliated_iri} :definition "{wikipedia_desc}" .')
     return ttl
 
 
@@ -119,7 +127,7 @@ def check_dictionary(word: str, is_noun: bool) -> str:
     :param is_noun: Boolean indicating if the word/term should be checked as a noun first
     :returns: String holding the concept's class name
     """
-    if ' ' in word:
+    if space in word:
         word = get_head_noun(word)[0]  # In this case, we don't care about plurals, etc. (the orig_text)
     try:
         word_def = dictionary.meaning(word)
@@ -138,7 +146,7 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                                 query_str = query_noun
                                 domain_query_str = domain_query_noun
                             else:
-                                word = sub_clause.split(' ')[0]
+                                word = sub_clause.split(space)[0]
                                 query_str = query_event
                                 domain_query_str = domain_query_event
                             # First check for exact match
@@ -148,10 +156,10 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                             class_name = query_ontology(word, query_str, domain_query_str)
                             if class_name != owl_thing:
                                 return class_name
-        return owl_thing
     except Exception as e:
         logging.error(f'Exception when getting noun class for {word}: {e}')
-        return owl_thing
+        return owl_thing2
+    return owl_thing2
 
 
 def check_emotion(class_name: str) -> bool:
@@ -163,6 +171,7 @@ def check_emotion(class_name: str) -> bool:
     """
     results = query_database('select', query_emotion.replace('keyword', class_name), ontologies_database)
     if results:
+        # TODO: Positive or negative or either
         return True
     return False
 
@@ -197,15 +206,14 @@ def get_event_state_class(lemma: str) -> str:
         if class_name == owl_thing:
             # Applicable class not found, check dictionary and synonyms
             class_name = check_dictionary(lemma, False)   # False = Not a noun
-            if class_name == owl_thing:
+            if class_name == owl_thing or class_name == owl_thing2:
                 logging.warning(f'Could not map the verb, {lemma}, to the ontology')
     # Check if this is a movement/travel/transportation event
     if class_name != owl_thing and _indicate_location_or_movement(class_name, True):
-        class_name = f'{class_name}>, <{dna_prefix}MovementTravelAndTransportation'
-    if class_name == owl_thing:   # Simplified return from _query_ontology but need to correct for a verb
+        class_name = f'{class_name.replace(dna_prefix, ":")}, :MovementTravelAndTransportation'
+    if class_name == owl_thing:   # Generic return from query_ontology but need to correct for a verb
         class_name = event_and_state_class
-    return class_name.replace('urn:ontoinsights:dna', empty_string).replace('>', empty_string).\
-        replace('<', empty_string)
+    return class_name.replace(dna_prefix, ':')
 
 
 def get_geonames_location(loc_text: str) -> (str, str, int):
@@ -242,94 +250,69 @@ def get_geonames_location(loc_text: str) -> (str, str, int):
         elif fcode.startswith('L') or fcode.startswith('Z'):
             # Leased area usually for military installations or a zone, such as a demilitarized zone
             return empty_string, empty_string, admin_level
-    elif feature == 'P':   # Populated Place
-        if fcode.startswith('PPLA'):
-            class_type += ', :AdministrativeDivision'
-            # Get administrative level
-            admin_levels = [int(i) for i in fcode if i.isdigit()]
-            if admin_levels:
-                admin_level = admin_levels[0]
-            else:
-                admin_level = 1
+    elif feature == 'P' and fcode.startswith('PPLA'):  # PopulatedPlace that is an administrative division
+        class_type += ', :AdministrativeDivision'
+        # Get administrative level
+        admin_levels = [int(i) for i in fcode if i.isdigit()]
+        if admin_levels:
+            admin_level = admin_levels[0]
+        else:
+            admin_level = 1
     return class_type, country, admin_level
 
 
-def get_noun_ttl(noun_uri: str, noun_text: str, noun_type: str, sentence_text: str) -> list:
+def get_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, sentence_text: str, last_nouns: list,
+                 processed_locs: dict) -> list:
     """
     Determine the appropriate class in the DNA ontology, that matches the semantics of the noun_text.
     First check for people, locations/GPEs, ethnicities, religions, etc., then for idioms and lastly
     for word matches, definition matches and event/state class matches.
 
-    :param noun_uri: String identifying the URI/URL/individual associated with the noun_text
+    :param noun_iri: String identifying the IRI/URL/individual associated with the noun_text
     :param noun_text: String specifying the noun text from the original narrative sentence
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
     :param sentence_text: The full text of the sentence (needed for checking for idioms)
-    :returns: An array of the resulting Turtle for a mapping of the semantics to a DNA ontology class
+    :param last_nouns: A list of all noun text, type and IRI tuples that have been defined
+                       (also used for co-reference resolution)
+    :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
+                           all locations already processed
+    :returns: An array of the resulting Turtle for a mapping of the noun semantics to a DNA ontology class.
+              The results may be empty if the noun is already captured (e.g., is in last_nouns)
     """
-    class_name = empty_string
-    noun = empty_string
-    wikipedia_desc = empty_string
-    # TODO: Update logic if more than Countries are defined in the core DNA ontologies
-    if noun_type.endswith('GPE') or noun_type.endswith('ORG'):
-        wikipedia_desc = get_wikipedia_description(noun_text)
+    for last_text, last_type, last_iri in last_nouns:
+        if last_iri == noun_iri:   # Already defined
+            return []
     if 'PERSON' in noun_type or noun_text == 'Narrator':
-        class_name = 'urn:ontoinsights:dna:Person'
+        class_name = person
         if 'PLURAL' in noun_type:
-            class_name = 'urn:ontoinsights:dna:Person>, <urn:ontoinsights:dna:Collection'
+            class_name = person_collection
     elif noun_type.endswith('GPE'):
-        class_name = 'urn:ontoinsights:dna:GeopoliticalEntity'
+        class_name = ':GeopoliticalEntity'
     elif noun_type.endswith('NORP'):   # Nationalities, religious or political groups
-        return _process_norp_aspect(noun_text, noun_type, noun_uri, wikipedia_desc)
+        return _process_norp_aspect(noun_text, noun_type, noun_iri)
     elif noun_type.endswith('ORG'):
-        class_name = 'urn:ontoinsights:dna:Organization'
-    else:
+        class_name = ':Organization'
+    elif check_presence_of_words(noun_text, part_of_group):
         # Could be a reference to 'members OF'/'people IN'/... an org, group, ...
-        found_prep = False
-        for prep in processed_prepositions:
+        if 'PLURAL' in noun_type or check_presence_of_words(noun_text, explicit_plural):
+            class_name = person_collection
+        else:
+            class_name = person
+        # Check if an org, group, ... is mentioned
+        for prep in ('of', 'in', 'from', 'with'):
             found_prep = (True if noun_text.lower().startswith(f'{prep} ') else False) or \
                          (True if f' {prep} ' in noun_text.lower() else False)
             if found_prep:
-                break
-        if found_prep:
-            if check_presence_of_words(noun_text, part_of_group):
-                if 'PLURAL' in noun_type or check_presence_of_words(noun_text, explicit_plural):
-                    class_name = 'urn:ontoinsights:dna:Person>, <urn:ontoinsights:dna:Collection'
-                else:
-                    class_name = 'urn:ontoinsights:dna:Person'
-                # Check if the org, group, ... is mentioned
-                if ' of ' in noun_text or ' in ' in noun_text or ' from ' in noun_text:
-                    # TODO: Handle general group reference (ex: 'soldiers in the Soviet army')
-                    agent_text, agent_type = get_named_entity_in_string(noun_text)
-                    if agent_text:    # Found a named entity that is an affiliated agent
-                        new_ttl = create_affiliation_ttl(noun_uri, noun_text, agent_text, agent_type)
-                        new_ttl.append(f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .')
-                        return new_ttl
-            else:
-                new_ttl = _check_for_noun_idiom(noun_text, noun_type, sentence_text, noun_uri)
-                if new_ttl:
+                # TODO: Handle general group reference (ex: 'soldiers in the Soviet army')
+                agent_text, agent_type = get_named_entity_in_string(noun_text)
+                if agent_text:    # Found a named entity that is an affiliated agent
+                    new_ttl = create_affiliation_ttl(noun_iri, noun_text, agent_text, agent_type)
+                    new_ttl.append(f'{noun_iri} a {class_name} ; rdfs:label "{noun_text}" .')
                     return new_ttl
-                noun = get_head_noun(noun_text)[0]
-        else:
-            new_ttl = _check_for_noun_idiom(noun_text, noun_type, sentence_text, noun_uri)
-            if new_ttl:
-                return new_ttl
-            noun = get_head_noun(noun_text)[0]
-    if not noun:
-        noun = noun_text
-    if not class_name:
-        class_name = _get_noun_class(noun)
-    if class_name == owl_thing:
-        logging.warning(f'Could not map the noun, {noun_text}, to the ontology')
-    if class_name != owl_thing and _indicate_location_or_movement(class_name, False):
-        class_name = f'{class_name}>, <{dna_prefix}Location'
-    if 'PLURAL' in noun_type and 'PERSON' not in noun_type:
-        class_name = f'{class_name}>, <urn:ontoinsights:dna:Collection'
-    ttl_list = [f'{noun_uri} a <{class_name}> ; rdfs:label "{noun_text}" .']
-    if noun_type.startswith('NEG'):
-        ttl_list.append(f'{noun_uri} :negation true .')
-    if wikipedia_desc:
-        ttl_list.append(f'{noun_uri} :description "{wikipedia_desc}" .')
-    return ttl_list
+    else:
+        new_ttl = _check_for_noun_idiom_or_class(noun_text, noun_type, sentence_text, noun_iri, processed_locs, True)
+        return new_ttl
+    return _get_ttl_for_noun_class(noun_text, noun_type, noun_iri, class_name, processed_locs)
 
 
 def get_wikipedia_description(noun: str) -> str:
@@ -344,7 +327,7 @@ def get_wikipedia_description(noun: str) -> str:
     resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/{noun.replace(" ", "_")}')
     wikipedia = resp.json()
     if "extract" in wikipedia.keys():
-        wiki_text = wikipedia['extract'].replace('"', "'").replace('\xa0', ' ').\
+        wiki_text = wikipedia['extract'].replace('"', "'").replace('\xa0', space).\
             encode('ASCII', errors='replace').decode('utf-8')
         wiki_text = f"'{wiki_text}'"
         return f'From Wikipedia (wikibase_item: {wikipedia["wikibase_item"]}): {wiki_text}'
@@ -352,57 +335,100 @@ def get_wikipedia_description(noun: str) -> str:
 
 
 # Functions internal to the module
-def _check_for_noun_idiom(noun_text: str, noun_type: str, sentence_text: str, noun_uri: str) -> list:
+def _check_for_noun_idiom_or_class(noun_text: str, noun_type: str, sentence_text: str,
+                                   noun_iri: str, processed_locs: dict, check_syns: bool) -> list:
     """
-    Processing to determine if a "noun" idiom has been defined.
+    Processing to determine if a "noun" idiom has been defined, or if the noun is an instance of
+    a class in the DNA ontologies (generic or domain). Word matches, synonym matches, definition matches
+    are all examined.
 
     :param noun_text: String holding the noun text
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
     :param sentence_text: The full text of the sentence (needed for checking for some idioms)
-    :param noun_uri: String identifying the noun concept as a URI/IRI
+    :param noun_iri: String identifying the noun concept as a IRI
+    :param check_syns: Boolean indicating that synonyms should be checked if true, or not (if false)
+    :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
+                           all locations already processed
     :returns: An array holding the Turtle statements that are generated if a noun idiom is found
-            (or an empty list otherwise)
+              (or an empty list otherwise)
     """
-    noun, orig_text = get_head_noun(noun_text)
-    noun_ttl = get_noun_idiom(noun, noun_text, noun_type, sentence_text, noun_uri)
+    # First check idioms for the 'full' noun text
+    noun_ttl = get_noun_idiom(noun_text, noun_text, noun_type, sentence_text, noun_iri)
     if not noun_ttl:
-        # The mapping may be specific to a plural
-        noun_ttl = get_noun_idiom(orig_text, noun_text, noun_type, sentence_text, noun_uri)
+        # Not found, so try the head word
+        noun, orig_text = get_head_noun(noun_text)   # Returns the lemma of the head word and the word itself
+        noun_ttl = get_noun_idiom(orig_text, noun_text, noun_type, sentence_text, noun_iri)
+        if not noun_ttl:
+            # Try the lemma
+            noun_ttl = get_noun_idiom(noun, noun_text, noun_type, sentence_text, noun_iri)
     if noun_ttl:
-        return noun_ttl
-    noun_syns = get_synonym(noun, True)
-    for noun_syn in noun_syns:
-        noun_ttl = get_noun_idiom(noun_syn, noun_text, noun_type, sentence_text, noun_uri)
-        if noun_ttl:
+        noun_str = str(noun_ttl)
+        if 'noun_end' in noun_str or 'noun_iri' in noun_str:
+            # For example, the idiom for "soldier" is ":Person noun_end noun_iriSoldierAffiliation a :Affiliation ;
+            #   :affiliated_with :ArmedForcenoun_iri ; :affiliated_agent noun_iri ."
+            new_noun_ttl = []
+            for ttl_stmt in noun_ttl:
+                if 'noun_iri' in ttl_stmt:
+                    ttl_stmt = ttl_stmt.replace('noun_iri', noun_iri)
+                if 'noun_end' in ttl_stmt:
+                    ttl_stmt = ttl_stmt.replace('noun_end', '.')
+                new_noun_ttl.append(ttl_stmt)
+            return new_noun_ttl
+        else:
             return noun_ttl
-    return []
-
-
-def _get_noun_class(noun_text: str) -> str:
-    """
-    Query the ontology to determine the appropriate class in the DNA ontology, that matches the
-    semantics of the noun_text. Check for word matches, definition matches and event/state class matches.
-
-    :param noun_text: String holding the text to be matched
-    :returns: The class name that matches the semantics of the noun, or a reference to owl:Thing
-    """
-    # First check for an exact match
-    class_name = query_ontology(noun_text, query_match, query_match)
+    # Noun not found in idioms, so check the ontologies
+    class_name = query_ontology(noun_text, query_match, query_match)   # Check for exact match
     if class_name == owl_thing:
-        class_name = query_ontology(noun_text, query_noun, domain_query_noun)
-        if class_name == owl_thing:   # Nothing found for the word as a noun
-            words = get_synonym(noun_text, True)   # Get synonyms
-            for word in words:
-                class_name = query_ontology(word, query_noun, domain_query_noun)
-                if class_name == owl_thing:
-                    # Check for event/state
-                    class_name = query_ontology(word, query_event, domain_query_event)
-                if class_name != owl_thing:
+        class_name = query_ontology(noun_text, query_noun, domain_query_noun)         # Check for more general match
+        if class_name == owl_thing:
+            class_name = query_ontology(noun_text, query_event, domain_query_event)   # Check for event/verb match
+    if class_name != owl_thing:
+        return _get_ttl_for_noun_class(noun_text, noun_type, noun_iri, class_name, processed_locs)
+    if class_name == owl_thing and check_syns:      # Nothing found for the word as a noun
+        for word in get_synonym(noun_text, True):   # Check synonyms
+            word_ttl = _check_for_noun_idiom_or_class(word, noun_type, sentence_text, noun_iri, processed_locs, False)
+            if word_ttl:
+                return word_ttl
+        # Nothing found for the word synonyms - Check the dictionary for alternate terms
+        class_name = check_dictionary(noun_text, True)    # True = Check nouns first
+    return _get_ttl_for_noun_class(noun_text, noun_type, noun_iri, class_name, processed_locs)
+
+
+def _get_ttl_for_noun_class(noun_text: str, noun_type: str, noun_iri: str, class_name: str,
+                            processed_locs: dict) -> list:
+    """
+    Get the Turtle statements for the specified noun details.
+
+    :param noun_text: String holding the text that identifies the noun
+    :param noun_type: String holding the entity type for the noun, from spaCy
+    :param noun_iri: String identifying the noun concept as a IRI
+    :param class_name: String holding the identifying class name from the DNA ontology, or owl:Thing
+    :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
+                           all locations already processed
+    :returns: An array of Turtle statements
+    """
+    noun_turtle = []
+    if class_name != owl_thing and class_name != owl_thing2 and _indicate_location_or_movement(class_name, False):
+        class_name = f'{class_name}, :Location'
+        if space in noun_text:
+            for poss_loc in noun_text.split(space):
+                # Check if the noun_text references a known location, of which this would be a part
+                # (e.g, "Prague ghetto")
+                if poss_loc in processed_locs.keys():
+                    noun_turtle.append(f'{processed_locs[poss_loc]} :has_component {noun_iri} .')
                     break
-        if class_name == owl_thing:   # Nothing found for the word synonyms
-            # Check the dictionary for alternate terms
-            class_name = check_dictionary(noun_text, True)    # True = Check nouns first
-    return class_name
+    if 'PLURAL' in noun_type and 'PERSON' not in noun_type:
+        class_name = f'{class_name}, :Collection'
+    noun_turtle.append(f'{noun_iri} a {class_name.replace(dna_prefix, ":")} ; rdfs:label "{noun_text}" .')
+    if noun_type.startswith('NEG'):
+        noun_turtle.append(f'{noun_iri} :negation true .')
+    # TODO: Update logic if more than Countries are defined in the core DNA ontologies
+    wikipedia_desc = empty_string
+    if not noun_iri.startswith('geo:') and (noun_type.endswith('GPE') or noun_type.endswith('ORG')):
+        wikipedia_desc = get_wikipedia_description(noun_text)
+    if wikipedia_desc:
+        noun_turtle.append(f'{noun_iri} :description "{wikipedia_desc}" .')
+    return noun_turtle
 
 
 def _get_xml_value(xpath: str, root: etree.Element) -> str:
@@ -423,7 +449,9 @@ def _get_xml_value(xpath: str, root: etree.Element) -> str:
 
 def _indicate_location_or_movement(class_name: str, for_movement: bool) -> bool:
     """
-    Check if the event/class_name is a subclass of :MovementTravelAndTransportation.
+    Check if the event/class_name is a subclass of :MovementTravelAndTransportation or of :Location.
+    Add these types directly to the Turtle in order to simplify checking later (for making decisions
+    about predicates and other Turtle statements to add).
 
     :param class_name: The type of event as defined by its class name
     :param for_movement: Boolean indicating that the query is for subclasses of
@@ -445,49 +473,54 @@ def _indicate_location_or_movement(class_name: str, for_movement: bool) -> bool:
     return True
 
 
-def _process_norp_aspect(noun_text: str, noun_type: str, noun_uri: str, wikipedia_desc: str) -> (str, list):
+def _process_norp_aspect(noun_text: str, noun_type: str, noun_iri: str) -> (str, list):
     """
     Definition of the Turtle for a Person, Group or Organization that was identified by SpaCy as a
     'NORP' (nationality, religion, political party, ...).
 
     :param noun_text: String holding the noun text
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
-    :param noun_uri: String identifying the noun concept as a URI/IRI
-    :param wikipedia_desc: String holding the definition/description of the noun from Wikipedia
+    :param noun_iri: String identifying the noun concept as a IRI
     :returns: A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of
              the defining Turtle (if appropriate)
     """
     # Check if ethnic group, religious group, ... that is already defined in the DNA ontology
-    norp_type, norp_class = get_norp_emotion_or_lob(noun_text)   # TODO: Optimize to not check for emotion or lob
-    if not norp_type or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
+    norp_type, norp_class = get_norp_emotion_or_lob(noun_text)
+    wikipedia_desc = empty_string
+    retrieved_desc = False
+    if not norp_class or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
         # Check if a type of ethnic, religious or political group by checking the Wikipedia description
+        wikipedia_desc = get_wikipedia_description(noun_text)
+        retrieved_desc = True
         if wikipedia_desc:
             wikipedia_lower = wikipedia_desc.lower()
             if 'political' in wikipedia_lower or 'religio' in wikipedia_lower or 'ethnic' in wikipedia_lower:
-                words = wikipedia_desc.split(' ')
+                words = wikipedia_desc.split(space)
                 for word in words:
                     if not word.istitle():   # Word is likely capitalized, so ignore lower cased words
                         continue
                     norp_type, norp_class = get_norp_emotion_or_lob(word)
-                    if norp_type and norp_type != 'EmotionalResponse' and norp_type != 'LineOfBusiness':
+                    if norp_class and norp_type != 'EmotionalResponse' and norp_type != 'LineOfBusiness':
                         break
-    # Did not find match of the word or its description
-    if not norp_type or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
+    # Did not find match of the word or any details from its definition
+    if not norp_class or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
         type_str = ':Organization'
         if 'PLURAL' in noun_type:
             type_str = ':Organization, :Collection'
-        norp_ttl = [f'{noun_uri} a <{type_str}> ; rdfs:label "{noun_text}" .']
+        norp_ttl = [f'{noun_iri} a {type_str} ; rdfs:label "{noun_text}" .']
+        if not retrieved_desc:
+            wikipedia_desc = get_wikipedia_description(noun_text)
         if wikipedia_desc:
-            norp_ttl.append(f'{noun_uri} :description "{wikipedia_desc}" .')
+            norp_ttl.append(f'{noun_iri} :description "{wikipedia_desc}" .')
     else:
-        type_str = ':Person'
+        type_str = person
         if 'PLURAL' in noun_type:
-            type_str = ':Person, :Collection'
-        norp_ttl = [f'{noun_uri} a {type_str} ; rdfs:label "{noun_text}" .']
+            type_str = person_collection
+        norp_ttl = [f'{noun_iri} a {type_str} ; rdfs:label "{noun_text}" .']
         if norp_type == 'ReligiousBelief' or norp_type == 'Ethnicity':
-            norp_ttl.append(f'{noun_uri} :has_agent_aspect <{norp_class}> .')
+            norp_ttl.append(f'{noun_iri} :has_agent_aspect <{norp_class}> .')
         elif norp_type == 'PoliticalIdeology':
-            norp_ttl.append(f'{noun_uri} :has_political_ideology <{norp_class}> .')
+            norp_ttl.append(f'{noun_iri} :has_political_ideology <{norp_class}> .')
     if noun_type.startswith('NEG'):
-        norp_ttl.append(f'{noun_uri} :negation true .')
+        norp_ttl.append(f'{noun_iri} :negation true .')
     return norp_ttl

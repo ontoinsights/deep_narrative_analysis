@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: September 14 2021
+# Last Modified: March 23 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -26,6 +26,7 @@
 #  Moved classes to this file from event-subclasses.ttl
 #  Added and clarified noun/verb_synonyms
 #  Added :Healthy
+#  Updated synonyms
 ########################################################################
 
 
@@ -37,7 +38,7 @@
   rdfs:subClassOf :MentalDisorder ;
   rdfs:label "Addiction" ;
   :definition "A condition related to being dependent on (and unable to stop taking/using) a substance such as drugs or alcohol, or an activity (such as being addicted to video gaming or online activity). The substance or activity is indicated using the :has_topic property." ;
-  :noun_synonym "alcoholism", "drug abuse", "alcohol abuse", "substance abuse", "addict" ;
+  :noun_synonym "alcoholism" ;
   :verb_synonym "addict" .
 
 :ADHD a owl:Class ;
@@ -50,7 +51,7 @@
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Alcohol and Drug Use" ;
   :definition "A condition related to 'over-use' of drugs or alcohol, such that the use affects the performance of normal life activities. The substance is indicated using the :has_topic property." ;
-  :noun_synonym "drug abuse", "alcohol abuse" .
+  :noun_synonym "drug abuse", "alcohol abuse", "substance abuse" .
 
 :Arthritis a owl:Class ;
   rdfs:subClassOf :MobilityImpairment ;
@@ -78,7 +79,8 @@
 :Blindness a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Blindness" ;
-  :definition "Loss of vision due to neurological or physical issues." .
+  :definition "Loss of vision due to neurological or physical issues." ;
+  :noun_synonym "loss of sight" .
 
 :BloodDisorder a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;

@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 
 from database import query_database
 from details_narrative_timeline import display_metadata, display_timeline
-from utilities import capture_error, encoded_logo
+from utilities import capture_error, dark_blue, encoded_logo
 
 query_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT ?name ?narrator WHERE ' \
                    '{ ?narr a :Narrative ; rdfs:label ?name ; :has_author ?narrator }'
@@ -68,8 +68,8 @@ def display_narratives(store_name: str):
                sg.InputText(text_color='black', background_color='#ede8e8', size=(8, 1),
                             font=('Arial', 16), key='end_year', do_not_clear=True)],
               [sg.Text()],
-              [sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))]]
+              [sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))]]
 
     # Create the GUI Window
     window_narrative_list = sg.Window('Select Narrative or Domain Timeline', layout, icon=encoded_logo).Finalize()
@@ -87,7 +87,7 @@ def display_narratives(store_name: str):
             if len(values['narrative_list']) != 1:
                 ok_to_continue = False
                 sg.popup_error('Either nothing was selected, or more than one selection was made.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             begin_year = values['begin_year']
             end_year = values['end_year']
             if (begin_year and not end_year) or (end_year and not begin_year) or \
@@ -95,7 +95,7 @@ def display_narratives(store_name: str):
                 ok_to_continue = False
                 sg.popup_error('If a year range is specified, select both a beginning and ending year, '
                                'and ensure that the beginning year is <= the ending year.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             if ok_to_continue:
                 narrative_name = values['narrative_list'][0]
                 if narrative_name != 'Domain Events':
@@ -117,7 +117,7 @@ def display_narratives(store_name: str):
                     if not events_list:
                         sg.popup_error(f'No events are defined for the narrative, {narrative_name}. '
                                        f'Narrative timeline and graph cannot be displayed.',
-                                       font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                                       font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 except Exception as e:
                     capture_error(
                         f'Exception getting events for {narrative_name} in the {store_name}: {str(e)}', True)
@@ -150,5 +150,5 @@ def get_narratives(store_name: str) -> dict:
     if not len(narrative_dict):
         sg.popup_ok(f'No narratives were found in {store_name}. '
                     f'Please select a different store or ingest one or more using the "Load Narratives" button.',
-                    font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                    font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
     return narrative_dict

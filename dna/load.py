@@ -22,7 +22,7 @@ from create_metadata_turtle import create_metadata_turtle
 from database import get_databases, add_remove_data, create_delete_database, query_database
 from load_text_processing import clean_text, simplify_text
 from nlp import parse_narrative
-from utilities import empty_string, resources_root, capture_error, encoded_logo
+from utilities import dark_blue, dna_prefix, empty_string, resources_root, capture_error, encoded_logo
 
 merge_delete = 'prefix : <urn:ontoinsights:dna:> DELETE { <unify2> ?p ?o } ' \
                'WHERE { <unify2> ?p ?o }'
@@ -52,7 +52,7 @@ def ingest_narratives() -> (str, int):   # pragma: no cover
     # Define the PySimpleGUI window
     sg.theme('Material2')
     layout = [[sg.Text("Select CSV file:", font=('Arial', 16)),
-               sg.FileBrowse(target='csv_file', button_color='dark blue'),
+               sg.FileBrowse(target='csv_file', button_color=dark_blue),
                sg.InputText(text_color='black', background_color='#ede8e8',
                             font=('Arial', 16), key='csv_file', do_not_clear=True)],
               [sg.Text()],
@@ -73,8 +73,8 @@ def ingest_narratives() -> (str, int):   # pragma: no cover
               [sg.Text("To exit without making a selection, press 'End' or close the window.",
                        font=('Arial', 16))],
               [sg.Text()],
-              [sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))]]
+              [sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))]]
 
     # Create the GUI Window
     window_csv = sg.Window('Select CSV File and Store', layout, icon=encoded_logo).Finalize()
@@ -94,7 +94,7 @@ def ingest_narratives() -> (str, int):   # pragma: no cover
         if event_csv == 'OK':
             if not values['csv_file'] or not values['store_name']:
                 sg.popup_error('Both a CSV file and data store must be specified.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 selected_csv = values['csv_file'].strip()
                 selected_store = values['store_name'].strip()
@@ -115,7 +115,7 @@ def select_store() -> str:    # pragma: no cover
     store_list = get_databases()
     if not store_list:
         sg.popup_ok('No stores are currently available.', font=('Arial', 14),
-                    button_color='dark blue', icon=encoded_logo)
+                    button_color=dark_blue, icon=encoded_logo)
         return empty_string
 
     # Define the PySimpleGUI window
@@ -127,8 +127,8 @@ def select_store() -> str:    # pragma: no cover
                           background_color='#fafafa', highlight_background_color='light grey',
                           highlight_text_color='black', text_color='black')],
               [sg.Text()],
-              [sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))]]
+              [sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))]]
 
     # Create the GUI Window
     window_store_list = sg.Window('Select Narrative Store', layout, icon=encoded_logo).Finalize()
@@ -143,7 +143,7 @@ def select_store() -> str:    # pragma: no cover
         if event_store_list == 'OK':
             if len(values['store_list']) != 1:
                 sg.popup_error('Either no store is selected, or more than one store is selected.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 selected_store = values['store_list'][0]
                 break
@@ -195,7 +195,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
                     sg.popup_error(f'For any source, the Source, Title, Person and Gender details MUST be '
                                    f'provided. This is not true for the CSV record with source file, '
                                    f'{source}, and narrative title, {title}. That record is skipped.',
-                                   font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                                   font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                     continue
                 if source.endswith('.pdf'):
                     # Capture each narrative text from the metadata details in the CSV
@@ -203,9 +203,9 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
                         sg.popup_error(f'For PDF source files, the Start and End page details MUST be '
                                        f'provided. This is not true for the CSV record with source file, '
                                        f'{source}, and narrative title, {title}. That record is skipped.',
-                                       font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                                       font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                         continue
-                    # TODO: If the text is multi-page, the first line of all pages but the first is lost
+                    # TODO: If the text is multi-page, the first line of all pages from the second page onwards is lost
                     in_file = f'{resources_root}{title}.txt'
                     subprocess.run(['../tools/pdftotext', '-f', narr_meta['Start'], '-l', narr_meta['End'],
                                     '-simple', f'{resources_root}{source}', in_file])
@@ -274,8 +274,8 @@ def unify_narrators(store_name: str) -> list:
         unify2 = result['unify2']['value'] if 'unify2' in result.keys() else empty_string
         if not unify1 and not unify2:
             # Create new UnifyingCollection
-            iri_collection = f'{narr1}{narr2.split("urn:ontoinsights:dna:")[-1]}'
-            new_triples.append(f'@prefix : <urn:ontoinsights:dna:> . '
+            iri_collection = f'{narr1}{narr2.split(dna_prefix)[-1]}'
+            new_triples.append(f'@prefix : <{dna_prefix}> . '
                                f'<{iri_collection}> a :UnifyingCollection ; :has_member <{narr1}>, <{narr2}> .')
         elif unify1 and unify2 and unify1 != unify2:
             # Move unify2 members to unify1 via SPARQL UPDATE and delete unify2
@@ -283,8 +283,8 @@ def unify_narrators(store_name: str) -> list:
             query_database('update', merge_delete.replace('unify2', unify2), store_name)
         elif unify1 and not unify2:
             # Add narr2 to unify1
-            new_triples.append(f'@prefix : <urn:ontoinsights:dna:> . <{unify1}> :has_member <{narr2}> .')
+            new_triples.append(f'@prefix : <{dna_prefix}> . <{unify1}> :has_member <{narr2}> .')
         elif unify2 and not unify1:
             # Add narr1` to unify2
-            new_triples.append(f'@prefix : <urn:ontoinsights:dna:> . <{unify2}> :has_member <{narr1}> .')
+            new_triples.append(f'@prefix : <{dna_prefix}> . <{unify2}> :has_member <{narr1}> .')
     return new_triples

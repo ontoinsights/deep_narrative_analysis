@@ -3,6 +3,9 @@
 
 from utilities import empty_string, new_line, double_new_line
 
+narrator = 'Narrator '
+narrators = "Narrator's "
+
 
 def clean_text(narrative: str, narr_metadata: dict) -> str:
     """
@@ -123,17 +126,17 @@ def _replace_third_person(narrative: str, given_name: str, narr_metadata: dict) 
     maiden_name = narr_metadata['Maiden']
     maiden2_name = narr_metadata['Maiden2']
     surname = narr_metadata['Surname']
-    new_text = new_text.replace(f"{given_name}'s ", "Narrator's ")
+    new_text = new_text.replace(f"{given_name}'s ", narrators)
     if maiden_name and surname:
-        new_text = new_text.replace(f"{given_name} ({maiden_name}) {surname}'s ", "Narrator's ").\
-            replace(f"{given_name} {maiden_name} {surname}'s ", "Narrator's ")
-        new_text = new_text.replace(f"{given_name} ({maiden_name}) {surname} ", 'Narrator ').\
-            replace(f"{given_name} {maiden_name} {surname} ", 'Narrator ')
+        new_text = new_text.replace(f"{given_name} ({maiden_name}) {surname}'s ", narrators).\
+            replace(f"{given_name} {maiden_name} {surname}'s ", narrators)
+        new_text = new_text.replace(f"{given_name} ({maiden_name}) {surname} ", narrator).\
+            replace(f"{given_name} {maiden_name} {surname} ", narrator)
     if maiden2_name and surname:
-        new_text = new_text.replace(f"{given_name} ({maiden2_name}) {surname}'s ", "Narrator's ").\
-            replace(f"{given_name} {maiden2_name} {surname}'s ", "Narrator's ")
+        new_text = new_text.replace(f"{given_name} ({maiden2_name}) {surname}'s ", narrators).\
+            replace(f"{given_name} {maiden2_name} {surname}'s ", narrators)
     if surname and not maiden_name and not maiden2_name:
-        new_text = new_text.replace(f"{given_name} {surname}'s ", "Narrator's ").\
-            replace(f"{given_name} {surname} ", 'Narrator ')
-    new_text = new_text.replace(f"{given_name} ", 'Narrator ')
+        new_text = new_text.replace(f"{given_name} {surname}'s ", narrators).\
+            replace(f"{given_name} {surname} ", narrator)
+    new_text = new_text.replace(f"{given_name} ", narrator)
     return new_text

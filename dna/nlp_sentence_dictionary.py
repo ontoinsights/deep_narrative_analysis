@@ -147,7 +147,7 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
         elif 'nsubj' == child.dep_:   # Subject of the verb
             add_token_details(child, dictionary, subjects_string, gender, family_dict)
         elif 'nsubjpass' == child.dep_:   # Subject of a passive verb -> Which means that it is an object
-            # TODO: What if more than one verb is used, connected by a conjunction?
+            # TODO: Problem if > one verb is used, connected by a conjunction; Obj needs to be associated with both
             add_token_details(child, verb_dict, objects_string, gender, family_dict)
         # TODO: Handle subjects that are themselves clauses (csubj and csubjpass)
         elif 'obj' in child.dep_ or 'attr' in child.dep_:  # Object or attribute of the verb

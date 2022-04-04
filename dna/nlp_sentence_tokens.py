@@ -159,9 +159,11 @@ def _process_noun(token: Token, ent_type: str) -> (str, str):
             gender = 'MALE'
     if ent_type == empty_string:
         ent_type = 'NOUN'
-    # Get number/plurality
-    ent_type = f'PLURAL{ent_type}' if 'Plur' in token.morph.get('Number') else \
-        (f'SING{ent_type}' if 'Sing' in token.morph.get('Number') else ent_type)
+    # Include plurality in ent_type
+    if 'Plur' in token.morph.get('Number'):
+        ent_type = f'PLURAL{ent_type}'
+    elif 'Sing' in token.morph.get('Number'):
+        ent_type = f'SING{ent_type}'
     ent_type = f'{gender}{ent_type}' if gender else ent_type
     # Account for a determiner of 'no' - i.e., nothing (for ex, 'no information was found')
     if any([tc for tc in token.children if tc.dep_ == 'det' and tc.text == 'no']):
@@ -214,15 +216,15 @@ def _process_personal_pronoun(token: Token, narr_gender: str) -> (str, str):
     elif '2' in token.morph.get('Person'):
         entity_type = 'AUDIENCE'
     elif '3' in token.morph.get('Person'):
-        gender = empty_string
-        entity_type = 'NOUN'
+        # Include gender and plurality in ent_type
+        if 'Plur' in token.morph.get('Number'):
+            entity_type = f'PLURAL{entity_type}'
+        elif 'Sing' in token.morph.get('Number'):
+            entity_type = f'SING{entity_type}'
         if 'Fem' in token.morph.get('Gender'):
-            gender = 'FEMALE'
+            entity_type = f'FEMALE{entity_type}'
         elif 'Masc' in token.morph.get('Gender'):
-            gender = 'MALE'
-        entity_type = f'{gender}PLURAL{entity_type}' if 'Plur' in token.morph.get('Number') else \
-            (f'SING{entity_type}' if 'Sing' in token.morph.get('Number') else entity_type)
-        entity_type = f'{gender}{entity_type}' if gender else entity_type
+            entity_type = f'MALE{entity_type}'
     return entity, entity_type
 
 
@@ -232,8 +234,8 @@ def _process_proper_noun(token: Token, family_dict: dict) -> (str, str):
     'type' (gender + single/plural + PERSON).
 
     :param token: Token of the proper noun
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
-                        MALE - indicating the gender of the narrator
+    :param family_dict: A dictionary containing the names of family members and their relationship
+                        to the narrator/subject
     :returns: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
              GPE/LOC/EVENT/...).
     """

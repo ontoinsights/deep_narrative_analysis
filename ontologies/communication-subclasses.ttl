@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 11 2022
+# Last Modified: March 23 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -29,6 +29,7 @@
 #  Removed JudicialDeclaration
 #  Renamed Derision to SarcasmAndDerision
 #  Added AppointmentAndNomination, Boast and Joke
+#  Updated synonyms
 ########################################################################
 
 
@@ -40,141 +41,141 @@
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Acknowledgment" ;
   :definition "An admission of responsibility or guilt for some act. The Agent making the admission is indicated using the :has_active_agent property, while the thing that is confessed is defined using :has_topic." ;
-  :noun_synonym "admission", "taking responsibility", "confirmation", "admission", "avowal", "confession" ;
-  :verb_synonym "confirm", "admit", "take responsibility", "confess", "acknowledge", "admit", "avow" .
+  :noun_synonym "admission", "taking responsibility", "confirmation", "avowal", "confession", "acknowledging", "admitting", "confirming", "avowing", "confessing" ;
+  :verb_synonym "confirm", "admit", "take responsibility", "confess", "acknowledge", "avow" .
 
 :AdviceAndRecommendation a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Advice and Recommendation" ;
   :definition "An act of recommending or suggesting something. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity being advised is defined using :has_affected_agent." ;
-  :noun_synonym "guidance", "suggestion", "consultation", "counsel" ;
+  :noun_synonym "guidance", "suggestion", "consultation", "counsel", "advising", "recommending", "guiding", "suggesting", "consulting", "counseling" ;
   :verb_synonym "provide guidance", "guide", "suggest", "consult", "counsel", "advise", "recommend" .
 
 :AppointmentAndNomination a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Appointment and Nomination" ;
-  :definition "An act of assigning an Agent to, or proposing an Agent for, a task or position. The Agent doing the assigning is indicated using the :has_active_agent property, while the Agent being appointed/nominated is defined using :has_affected_agent." ;
-  :noun_synonym "commissioning", "selection" ;
+  :definition "An act of proposing an Agent for a task or position. The Agent doing the proposing is indicated using the :has_active_agent property, while the Agent being appointed/nominated is defined using :has_affected_agent." ;
+  :noun_synonym "commissioning", "selection", "appointing", "nominating", "selecting" ;
   :verb_synonym "appoint", "nominate", "commission", "select" .
 
 :AssertionAndDeclaration a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Assertion and Declaration" ;
   :definition "A claim or statement of fact or of belief. The Agent making the declaration is indicated using the :has_active_agent property, while the entity discussed is defined using :has_topic." ;
-  :noun_synonym "claim", "affirmation", "announcement", "description", "attestation", "deposition", "explanation", "lecture", "disclosure", "proclamation", "accusation" ;
-  :verb_synonym "assert", "declare", "affirm", "announce", "describe", "attest", "explain", "disclose", "proclaim", "accuse" .
+  :noun_synonym "claim", "affirmation", "announcement", "description", "attestation", "deposition", "explanation", "lecture", "disclosure", "proclamation", "accusation", "asserting", "declaring", "claiming", "affirming", "announcing", "describing", "attesting", "explaining", "lecturing", "disclosing", "proclaiming", "accusing" ;
+  :verb_synonym "assert", "declare", "affirm", "announce", "describe", "attest", "explain", "disclose", "proclaim", "accuse", "lecture" .
 
 :Boast a owl:Class ;
   rdfs:subClassOf :ExpressiveAndExclamation ;
   rdfs:label "Boast" ;
   :definition "A statement expressing excessive pride in oneself or one's possessions, achievements, etc. The Agent making the declaration is indicated using the :has_active_agent property." ;
-  :noun_synonym "brag", "self-praise", "overstatement", "exaggeration" ;
-  :verb_synonym "crow", "swagger", "be boastful", "brag", "gloat", "attest", "explain", "disclose", "proclaim", "accuse" .
+  :noun_synonym "brag", "self-praise", "overstatement", "exaggeration", "bragging", "crowing", "swaggering", "overstating", "exaggerating", "gloating" ;
+  :verb_synonym "crow", "swagger", "be boastful", "brag", "gloat" .
 
 :Challenge a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Challenge" ;
   :definition "A request/invitation to take part in a contest or competition. The Agent issuing the challenge is indicated using the :has_active_agent property, while the Person who is challenged is defined using :has_affected_agent." ;
-  :noun_synonym "dare", "ultimatum", "duel" ;
+  :noun_synonym "dare", "ultimatum", "duel", "challenging", "daring", "dueling" ;
   :verb_synonym "dare", "challenge", "duel" .
 
 :Command a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Command" ;
-  :definition "A communication that issues orders, instructions, etc." ;
-  :noun_synonym "order", "summons", "mandate", "rule", "direction", "instruction", "assignment" ;
-  :verb_synonym "summon", "mandate", "rule", "direct", "instruct", "command", "assign" .
+  :definition "A communication that issues orders, mandates, etc." ;
+  :noun_synonym "order", "summons", "mandate", "rule", "direction", "assignment", "commanding", "ordering", "summoning", "mandating", "ruling", "directing", "assigning" ;
+  :verb_synonym "summon", "mandate", "rule", "direct", "command", "assign" .
 
 :Complaint a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Complaint" ;
   :definition "An expression of displeasure or annoyance about something. The Agent doing the complaining is indicated using the :has_active_agent property, while the thing complained about is defined using :has_topic." ;
-  :noun_synonym "criticism", "grievance", "gripe", "reproachment", "displeasure", "annoyance" ;
-  :verb_synonym "grumble", "whine", "complain", "criticize", "gripe", "reproach", "displease", "annoy" .
+  :noun_synonym "criticism", "grievance", "gripe", "reproachment", "displeasure", "complaining", "criticizing", "griping", "grumble", "grumbling", "whining", "reproaching" ;
+  :verb_synonym "grumble", "whine", "complain", "criticize", "gripe", "reproach" .
 
 :Demand a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Demand" ;
   :definition "A communication insisting on immediate attention. The Agent making the demand is indicated using the :has_active_agent property, while the Person with whom the Agent is communicating is defined using :has_affected_agent. The subject of the demand is specified using the :has_topic property." ;
-  :noun_synonym "insistence", "requirement" ;
+  :noun_synonym "insistence", "requirement", "demanding", "insisting", "requiring" ;
   :verb_synonym "demand", "insist", "require" .
 
 :Denial a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Denial" ;
   :definition "A claim that something is untrue. The Agent making the declaration is indicated using the :has_active_agent property, while the entity discussed is defined using :has_topic." ;
-  :noun_synonym "refutation", "repudiation", "rebuttal", "retraction", "dissent" ;
-  :verb_synonym "refute", "repudiate", "rebut", "retract", "dissent", "deny" .
+  :noun_synonym "refutation", "repudiation", "rebuttal", "retraction", "denying", "refuting", "repudiating", "rebutting", "retracting" ;
+  :verb_synonym "refute", "repudiate", "rebut", "retract", "deny" .
 
 :ExpressiveAndExclamation a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdf:label "Expressive and Exclamation" ;
   :definition "Any statements that express attitude or emotion. The Agent making the declaration is indicated using the :has_active_agent property. The instance is also defined as a sub-class of EmotionalResponse to indicate the emotion that is expressed. Note that this kind of statement/sentence may include an exclamation point (!)." ;
-  :noun_synonym "greeting", "apology", "congratulation", "condolence", "thanksgiving" ;
+  :noun_synonym "greeting", "apology", "congratulation", "condolence", "thanksgiving", "apologizing", "congratulating", "exclaiming" ;
   :verb_synonym "greet", "apologize", "congratulate", "give thanks", "exclaim" .
 
 :Inquiry a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Inquiry" ;
   :definition "A CommunicationAndSpeechAct involving asking questions/for information. The Agent making the inquiry is indicated using the :has_active_agent property. The thing that is inquired about is indicated using :has_topic." ;
-  :noun_synonym "interrogation", "investigation", "probe", "query", "question", "asking", "inquest", "cross-examination" ;
-  :verb_synonym "interrogate", "investigate", "probe", "query", "question", "ask", "cross-examination", "inquire", "enquire" .
+  :noun_synonym "interrogation", "investigation", "probe", "query", "question", "asking", "inquest", "cross-examination", "inquiring", "interrogating", "investigating", "probing", "questioning", "querying", "cross-examining" ;
+  :verb_synonym "interrogate", "investigate", "probe", "query", "question", "ask", "cross-examine", "inquire", "enquire" .
 
 :Joke a owl:Class ;
   rdfs:subClassOf :ExpressiveAndExclamation ;
   rdfs:label "Joke" ;
   :definition "A CommunicationAndSpeechAct intended to amuse and be humorous. The Agent telling the joke is indicated using the :has_active_agent property. The thing that is joked about is indicated using :has_topic." ;
-  :noun_synonym "jest", "witticism", "quip", "pun", "wisecrack" ;
+  :noun_synonym "jest", "witticism", "quip", "pun", "wisecrack", "joking", "jesting", "quipping", "wisecracking" ;
   :verb_synonym "joke", "jest", "wisecrack", "tell a joke", "crack a joke" .
 
 :Permission a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Permission" ;
   :definition "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property." ;
-  :noun_synonym "authorization", "consent", "allowing", "approval", "dispensation", "license" ;
-  :verb_synonym "assent", "consent", "allow", "approve", "authorize", "let", "permit" .
+  :noun_synonym "authorization", "consent", "allowing", "approval", "dispensation", "license", "permitting", "authorizing", "consenting", "approving", "licensing" ;
+  :verb_synonym "assent", "consent", "allow", "approve", "authorize", "let", "permit", "license" .
 
 :PromiseAndOath a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Promise and Oath" ;
   :definition "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property." ;
-  :noun_synonym "vow", "commitment", "guarantee", "pledge", "betrothal", "bond", "contract", "covenant", "marriage", "word of honor" ;
+  :noun_synonym "vow", "commitment", "guarantee", "pledge", "betrothal", "bond", "contract", "covenant", "word of honor", "promising", "vowing", "committing", "guaranteeing", "pledging", "contracting" ;
   :verb_synonym "vow", "commit", "guarantee", "pledge", "bond", "give one's word" .
 
 :RefusalAndRejection a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Refusal and Rejection" ;
   :definition "An act related to not accepting or acknowledging something, someone, or some Event or StateAndCondition. The entity that is not acknowledged/accepted is identified using the :has_topic predicate." ;
-  :noun_synonym "nonacceptance", "forbidding", "ban", "veto", "disapproval", "dissent", "nixing", "nonacceptance", "renounciation", "prohibition", "turndown", "nonconsent", "cold shoulder", "brush-off", "no go", "no way", "objection" ;
+  :noun_synonym "nonacceptance", "forbidding", "ban", "veto", "disapproval", "dissent", "nixing", "renounciation", "prohibition", "turndown", "nonconsent", "cold shoulder", "brush-off", "no go", "no way", "objection", "refusing", "rejecting", "banning", "vetoing", "disapproving", "dissenting", "renouncing", "prohibiting", "turning down", "brushing off", "objecting" ;
    :verb_synonym "refuse", "reject", "forbid", "ban", "veto", "diapprove", "dissent", "nix", "nonaccept", "renounce", "prohibit", "brush-off", "object" .
 
 :RequestAndAppeal a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Request and Appeal" ;
   :definition "A CommunicationAndSpeechAct that expresses a need or desire for something or someone, or that some event or condition occur. Note that who/what is requested is identified using the :has_topic predicate." ;
-  :noun_synonym "entreaty", "plea", "petition", "solicitation", "supplication", "urging", "begging", "invitation" ;
+  :noun_synonym "entreaty", "plea", "petition", "solicitation", "supplication", "urging", "begging", "invitation", "requesting", "entreating", "pleading", "petitioning", "soliciting", "supplicating" ;
   :verb_synonym "request", "make an appeal", "appeal", "ask for", "plead", "petition", "solicit", "urge", "beg", "invite" .
 
 :SarcasmAndDerision a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Sarcasm and Derision" ;
   :definition "A CommunicationAndSpeechAct that is intended to ridicule or mock something or someone. Note that who/what is mocked is identified using the :has_topic predicate." ;
-  :noun_synonym "mockery", "ridicule", "jeer", "taunt", "disrespect", "denigration" ;
+  :noun_synonym "mockery", "ridicule", "jeer", "taunt", "disrespect", "denigration", "deriding", "ridiculing", "jeering", "taunting", "disrespecting", "denigrating" ;
   :verb_synonym "mock", "ridicule", "jeer", "taunt", "disrespect", "denigrate", "be sarcastic", "deride" .
 
 :SurrenderAndYielding a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Surrender and Yielding" ;
   :definition "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "capitulation", "succombing", "giving in", "giving way", "abdication", "relenting", "relinquishment", "resigning", "acquiescense" ;
+  :noun_synonym "capitulation", "succombing", "giving in", "giving way", "abdication", "relenting", "relinquishment", "resigning", "acquiescense", "surrendering", "yielding", "capitulating", "abdicating", "relinquishing", "acquiescing" ;
   :verb_synonym "surrender", "yield", "capitulate", "succomb", "give in", "give way", "abdicate", "relent", "relinquish", "resign", "acquisce" .
 
 :ThreatAndWarning a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Threat and Warning" ;
   :definition "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_agent, while the threatened Agent is identified using :has_affected_agent." ;
-  :noun_synonym "ultimatum", "menacing", "browbeating", "intimidation", "menace", "blackmail", "bluff" ;
-  :verb_synonym "threaten", "warn", "menace", "browbeat", "intimidate", "menace", "blackmail", "bluff" .
+  :noun_synonym "ultimatum", "menacing", "browbeating", "intimidation", "menace", "blackmail", "threatening", "intimidating", "blackmailing" ;
+  :verb_synonym "threaten", "warn", "menace", "browbeat", "intimidate", "menace", "blackmail" .
 
 
 ########################################################################

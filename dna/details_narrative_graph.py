@@ -17,7 +17,7 @@ query_graph_individuals = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?pre
                           'WHERE { VALUES ?pred { rdf:type rdfs:label :has_agent :has_holder :has_active_agent ' \
                           ':has_affected_agent :has_location :has_origin :has_destination :has_time :has_end ' \
                           ':has_beginning :has_topic :has_component :cause :enable :prevent } ' \
-                          '<uri> ?pred ?obj . OPTIONAL { ?obj a ?obj_type ; rdfs:label ?obj_label .' \
+                          '<iri> ?pred ?obj . OPTIONAL { ?obj a ?obj_type ; rdfs:label ?obj_label .' \
                           'OPTIONAL { { ?obj_type rdfs:subClassOf* :EventAndState . BIND("Event" as ?e_type) } ' \
                           'UNION { { { ?obj_type rdfs:subClassOf* :Agent } UNION { ?obj_type rdfs:subClassOf* ' \
                           ':Location } } BIND("Agent" as ?a_type) } ' \
@@ -25,7 +25,7 @@ query_graph_individuals = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?pre
                           'UNION { ?obj_type rdfs:subClassOf* :Resource . BIND("Resource" as ?r_type) } } } }'
 
 query_event_sentiment = 'prefix : <urn:ontoinsights:dna:> SELECT ?sentiment FROM <urn:narr_graph> ' \
-                        'WHERE { <uri> :sentiment ?sentiment }'
+                        'WHERE { <iri> :sentiment ?sentiment }'
 
 year_list = list(range(1933, 1946))  # TODO: Check if dates in range?
 
@@ -48,8 +48,8 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
     edges = []
     edge_label_dict = dict()
     for binding in event_list:
-        event_uri = binding['event']['value']
-        event_name = event_uri.split(':')[-1]
+        event_iri = binding['event']['value']
+        event_name = event_iri.split(':')[-1]
         event_time = binding['year']['value']
         if 'month' in binding.keys():
             month = binding['month']['value']
@@ -60,8 +60,8 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
             event_time = f'{event_time}-01'
         if event_time != event_date:
             continue
-        sentiment = get_sentiment(event_uri, narrative_name, store_name)
-        event_tuples = get_event_data(narrative_name, store_name, event_uri)
+        sentiment = get_sentiment(event_iri, narrative_name, store_name)
+        event_tuples = get_event_data(narrative_name, store_name, event_iri)
         for event_tuple in event_tuples:
             if len(event_tuple) == 4:
                 pred, obj, obj_label, obj_type = event_tuple
@@ -82,7 +82,7 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
                 elif obj_type == 'Class':
                     obj_node_name = f'cls{obj_label}'
                 else:
-                    obj_node_name = f'uri{obj_label}'
+                    obj_node_name = f'iri{obj_label}'
             if '#' in pred:
                 pred_name = pred.split('#')[-1]
             else:
@@ -93,7 +93,7 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
             node_set.add(obj_node_name)
 
     # Associate the color red with 'bad' and green with 'good' Events/States
-    # Associate the color purple with class types, blue with other URIs, and orange with strings/literals
+    # Associate the color purple with class types, blue with other IRIs, and orange with strings/literals
     nodes = []
     node_colors = []
     node_sizes = []
@@ -110,7 +110,7 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
             nodes.append(node[3:])
             node_colors.append('purple')
             node_sizes.append(200)
-        elif node.startswith('uri'):
+        elif node.startswith('iri'):
             nodes.append(node[3:])
             node_colors.append('blue')
             node_sizes.append(350)
@@ -160,28 +160,28 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
     return
 
 
-def get_event_data(narrative_name: str, store_name: str, event_uri: str) -> list:
+def get_event_data(narrative_name: str, store_name: str, event_iri: str) -> list:
     """
     Get details (predicates and objects) for an event.
 
     :param narrative_name: String holding the narrative title/label
     :param store_name: String holding the database/store name from which the event data is retrieved
-    :param event_uri: The URI of the event in the database/data store
-    :returns: An array of tuples of (predicate value, object uri, object value, object type) for the
+    :param event_iri: The IRI of the event in the database/data store
+    :returns: An array of tuples of (predicate value, object IRI, object value, object type) for the
             related entities and properties of the event
     """
     results = []
     try:
-        query_str = query_graph_individuals.replace('uri', event_uri).\
+        query_str = query_graph_individuals.replace('iri', event_iri).\
             replace('narr_graph', narrative_name.replace(' ', '_'))
         event_details = query_database('select', query_str, store_name)
         if not event_details:
-            capture_error(f'No event triples were returned for the uri, {event_uri}, in '
+            capture_error(f'No event triples were returned for the IRI, {event_iri}, in '
                           f'the narrative, {narrative_name}, in the database, {store_name}.', True)
             return results
     except Exception as e:
         capture_error(
-            f'Exception getting event details for {event_uri} for the narrative, {narrative_name}, '
+            f'Exception getting event details for {event_iri} for the narrative, {narrative_name}, '
             f'in the database, {store_name}: {str(e)}', True)
         return []
     for binding in event_details:
@@ -202,18 +202,18 @@ def get_event_data(narrative_name: str, store_name: str, event_uri: str) -> list
     return results
 
 
-def get_sentiment(event_uri: str, narrative_name: str, store_name: str) -> float:
+def get_sentiment(event_iri: str, narrative_name: str, store_name: str) -> float:
     """
     Get the value of the :sentiment predicate for the event.
 
-    :param event_uri: String holding the URI to be queries
+    :param event_iri: String holding the IRI to be queries
     :param narrative_name: String holding the narrative where the event is defined
     :param store_name: String holding the database where the narrative is stored
     :returns: Float that is the event's sentiment
     """
     sentiment_details = query_database(
         'select',
-        query_event_sentiment.replace('uri', event_uri).replace('narr_graph', narrative_name.replace(' ', '_')),
+        query_event_sentiment.replace('iri', event_iri).replace('narr_graph', narrative_name.replace(' ', '_')),
         store_name)
     if sentiment_details:
         return sentiment_details[0]['sentiment']['value']

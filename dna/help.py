@@ -5,7 +5,7 @@ import PySimpleGUI as sg
 
 from utilities import encoded_logo
 
-# Help text, Each line should be 70 chars or less
+# Help text, Each line should be 70 chars or fewer
 scrolled_existing = \
     "Choose the 'Load Narratives From Existing Store' option when narratives have \n" \
     "already been ingested to the backing store. A list of the currently available \n" \

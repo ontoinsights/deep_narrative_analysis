@@ -12,7 +12,7 @@ from help import display_popup_help
 from hypotheses import display_hypotheses
 from load import select_store, ingest_narratives
 from evaluate_hypothesis import evaluate_hypothesis
-from utilities import empty_string, capture_error, encoded_logo, encoded_question
+from utilities import dark_blue, empty_string, capture_error, encoded_logo, encoded_question
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
@@ -35,12 +35,12 @@ if __name__ == '__main__':
                        font=('Arial', 20, 'bold'))],
               [sg.Text()],
               [sg.Text("Load Narratives:", font=('Arial', 16))],
-              [sg.Button('From Existing Store', font=('Arial', 14), button_color='dark blue',
+              [sg.Button('From Existing Store', font=('Arial', 14), button_color=dark_blue,
                          size=(22, 1), pad=((25, 0), 3)),
                sg.Button(empty_string, image_data=encoded_question,
                          button_color=(sg.theme_background_color(), sg.theme_background_color()),
                          border_width=0, key='existing_question', pad=(1, 1))],
-              [sg.Button('New, From CSV Metadata', font=('Arial', 14), button_color='dark blue',
+              [sg.Button('New, From CSV Metadata', font=('Arial', 14), button_color=dark_blue,
                          size=(22, 1), pad=((25, 0), 3)),
                sg.Button(empty_string, image_data=encoded_question,
                          button_color=(sg.theme_background_color(), sg.theme_background_color()),
@@ -87,7 +87,7 @@ if __name__ == '__main__':
                          button_color=(sg.theme_background_color(), sg.theme_background_color()),
                          border_width=0, key='test_question', pad=(1, 1))],
               [sg.Text()],
-              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+              [sg.Button('End', button_color=dark_blue, size=(5, 1), font=('Arial', 14))]]
 
     # Create the GUI Window
     store_name = empty_string
@@ -124,19 +124,19 @@ if __name__ == '__main__':
         elif event == 'Summary Statistics':
             if not store_name:
                 sg.popup_error("A narrative store must be loaded before selecting 'Summary Statistics'.",
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 display_statistics(store_name)
         elif event == 'Narrative Timeline':
             if not store_name:
                 sg.popup_error("A narrative store must be loaded before selecting 'Narrative Timeline'.",
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 display_narratives(store_name)
         elif event == 'Narrative Similarities':
             if not store_name:
                 sg.popup_error("A narrative store must be loaded before selecting 'Narrative Similarities'.",
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 display_similarities(store_name)
         elif event == 'Edit Narrative':

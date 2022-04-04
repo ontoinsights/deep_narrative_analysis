@@ -177,8 +177,7 @@ def _split_complement_clauses(sentence: str, nlp: Language) -> list:
         else:
             chunks = get_chunks(comp_verb, None, sent_span, 'comp')
         return chunks
-    else:
-        return [sentence]
+    return [sentence]
 
 
 def _store_chunks_in_order(seen: str, unseen: str, seen_first: bool) -> list:

@@ -6,7 +6,7 @@ import PySimpleGUI as sg
 
 from database import query_database
 from details_narrative import get_narratives
-from utilities import empty_string, new_line, resources_root, capture_error, encoded_logo
+from utilities import dark_blue, empty_string, new_line, resources_root, capture_error, encoded_logo
 
 query_events = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?event ?pred ?obj ' \
                'FROM <urn:narr_graph> WHERE ' \
@@ -54,7 +54,7 @@ def display_edit_table(title: str, data_list: list, store_name: str):
                sg.Text(".csv", font=('Arial', 16))],
               [sg.Text("Click 'OK' to obtain the window to edit the row, or to output the CSV file.",
                        font=('Arial', 16)),
-               sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1))],
+               sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1))],
               [sg.Text()],
               [sg.Column(layout=[[sg.Table(key='edit-table', values=data_list, headings=cols_list,
                                            auto_size_columns=True, display_row_numbers=True,
@@ -69,9 +69,9 @@ def display_edit_table(title: str, data_list: list, store_name: str):
                        "the beginning of this edit session or since the last 'Save'.", font=('Arial', 16))],
               [sg.Text("Press 'End' (or close the window) to exit. If the window is exited, all "
                        "pending changes will be lost.", font=('Arial', 16))],
-              [sg.Button('Save', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
+              [sg.Button('Save', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
                sg.Button('Reset', button_color='red', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))],
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))],
               [sg.Text()]]
 
     # Create the GUI Window
@@ -102,7 +102,7 @@ def display_edit_table(title: str, data_list: list, store_name: str):
             if values['row_number'] and values['csv_file']:
                 sg.popup_error('Both a row number and a CSV output file cannot be specified. '
                                'Remove the text in one of the fields.', font=('Arial', 14),
-                               button_color='dark blue', icon=encoded_logo)
+                               button_color=dark_blue, icon=encoded_logo)
             else:
                 if values['row_number']:
                     row_number = int(values['row_number'])
@@ -143,7 +143,7 @@ def display_narratives_for_edit(store_name: str):
     if len(narrative_dict) == 0:
         sg.popup_ok(f'No narratives were found in {store_name}. '
                     f'Please select a different store or ingest one or more using the "Load Narratives" button.',
-                    font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                    font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
         return
     else:
         narrative_list = [narr.replace('_', '') for narr in narrative_dict.keys()]
@@ -162,8 +162,8 @@ def display_narratives_for_edit(store_name: str):
               [sg.Checkbox('Edit Nouns', default=False, key='edit-nouns', font=('Arial', 16)),
                sg.Checkbox('Edit Events', default=True, key='edit-events', font=('Arial', 16))],
               [sg.Text()],
-              [sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))]]
+              [sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))]]
 
     # Create the GUI Window
     window_edit = sg.Window('Select Narrative for Edit', layout, icon=encoded_logo).Finalize()
@@ -177,7 +177,7 @@ def display_narratives_for_edit(store_name: str):
         if edit_events == 'OK':
             if len(values['narrative_list']) != 1:
                 sg.popup_error('Either no narrative was selected, or more than one selection was made.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             else:
                 narrative_name = values['narrative_list'][0]
                 edit_nouns = True if values['edit-nouns'] else False
@@ -195,14 +195,14 @@ def display_narratives_for_edit(store_name: str):
                         if not event_bindings:
                             sg.popup_error(f'No events are defined for the narrative, {narrative_name}. '
                                            f'There is nothing to edit.',
-                                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                                           font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                     if edit_nouns:
                         noun_bindings = query_database(
                             'select', query_nouns.replace('narr_graph', narrative_name.replace(' ', '_')), store_name)
                         if not noun_bindings:
                             sg.popup_error(f'No concepts/nouns are defined for the narrative, {narrative_name}. '
                                            f'There is nothing to edit.',
-                                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                                           font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 except Exception as e:
                     capture_error(
                         f'Exception getting events for {narrative_name} in the {store_name}: {str(e)}', True)
@@ -264,8 +264,8 @@ def display_row_for_edit(subj: str, pred: str, obj: str, del_flag: bool) -> (str
                             text_color='black')],
               [sg.Checkbox('Delete triple: ', key='delete', font=('Arial', 14), default=del_flag)],
               [sg.Text()],
-              [sg.Button('OK', button_color='dark blue', font=('Arial', 14), size=(5, 1)),
-               sg.Button('End', button_color='dark blue', font=('Arial', 14), size=(5, 1))]]
+              [sg.Button('OK', button_color=dark_blue, font=('Arial', 14), size=(5, 1)),
+               sg.Button('End', button_color=dark_blue, font=('Arial', 14), size=(5, 1))]]
 
     # Create the GUI Window
     window_triples = sg.Window('Edit Triple', layout, icon=encoded_logo).Finalize()

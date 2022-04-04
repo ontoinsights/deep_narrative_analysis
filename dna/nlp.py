@@ -114,7 +114,7 @@ def get_synonym(text: str, for_noun: bool) -> list:
         class_id = 'css-1kg1yv8 eh475bn0'
     else:
         class_id = 'css-1n6g4vv eh475bn0'
-    return [span.text for span in soup.findAll('a', {'class': class_id})]
+    return [span.text.strip() for span in soup.findAll('a', {'class': class_id})]
 
 
 def get_named_entity_in_string(text: str) -> (str, str):
@@ -141,6 +141,7 @@ def get_head_noun(text: str) -> (str, str):
     :param text: The text to parse
     :returns: The lemma of the head noun in the input text and its full text
     """
+    # TODO: Use more efficient way to get the lemma if there is only a single word in the text
     doc = nlp(text)
     for token in doc:
         if token.dep_ == 'ROOT':
@@ -168,26 +169,6 @@ def get_nouns_verbs(sentences: str) -> (dict, dict):
     sorted_nouns = dict(sorted(noun_dict.items(), key=lambda item: item[1], reverse=True))
     sorted_verbs = dict(sorted(verb_dict.items(), key=lambda item: item[1], reverse=True))
     return sorted_nouns, sorted_verbs
-
-
-def get_proper_nouns(text: str) -> str:
-    """
-    Extract a string consisting of the proper nouns in a text string. For example, "New York City ghetto"
-    would return "New York City".
-
-    :param text: The text string to be parsed
-    :returns: A string of the proper nouns
-    """
-    phrase = nlp(text)
-    proper_nouns = []
-    for token in phrase:
-        noun_type = token.morph.get('NounType')
-        if noun_type and noun_type[0] == 'Prop':   # Have a proper noun
-            proper_nouns.append(token.text)
-    if proper_nouns:
-        return ' '.join(proper_nouns)
-    else:
-        return empty_string
 
 
 def get_sentence_sentiment(sentence: str) -> float:

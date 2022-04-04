@@ -24,6 +24,8 @@ ontol_path = config.get('OntologiesConfig', 'ontolPath')
 if not ontol_path.endswith('/'):
     ontol_path = f'{ontol_path}/'
 
+text_turtle = 'text/turtle'
+
 
 def add_remove_data(op_type: str, triples: str, database: str, graph: str = empty_string) -> bool:
     """
@@ -46,15 +48,15 @@ def add_remove_data(op_type: str, triples: str, database: str, graph: str = empt
         if op_type == 'add':
             # Add to the database
             if graph:
-                conn.add(stardog.content.Raw(triples, 'text/turtle'), graph_uri=graph)
+                conn.add(stardog.content.Raw(triples, text_turtle), graph_uri=graph)
             else:
-                conn.add(stardog.content.Raw(triples, 'text/turtle'))
+                conn.add(stardog.content.Raw(triples, text_turtle))
         else:
             # Remove from the database
             if graph:
-                conn.remove(stardog.content.Raw(triples, 'text/turtle'), graph_uri=graph)
+                conn.remove(stardog.content.Raw(triples, text_turtle), graph_uri=graph)
             else:
-                conn.remove(stardog.content.Raw(triples, 'text/turtle'))
+                conn.remove(stardog.content.Raw(triples, text_turtle))
         conn.commit()
         return True
     except Exception as e:

@@ -8,7 +8,7 @@ import PySimpleGUI as sg
 
 from database import query_database
 from nlp import get_nouns_verbs
-from utilities import new_line, encoded_logo, update_dictionary_count
+from utilities import dark_blue, new_line, encoded_logo, update_dictionary_count
 
 
 def display_dates_events(narratives: str):
@@ -26,7 +26,7 @@ def display_dates_events(narratives: str):
               [sg.Text("To exit, press 'End' or close the window.",
                        font=('Arial', 16))],
               [sg.Text()],
-              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+              [sg.Button('End', button_color=dark_blue, size=(5, 1), font=('Arial', 14))]]
 
     # Get the data for the window
     # TODO: Get dates and events in narratives
@@ -68,7 +68,7 @@ def display_locations(narratives: str):
               [sg.Text("To exit, press 'End' or close the window.",
                        font=('Arial', 16))],
               [sg.Text()],
-              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+              [sg.Button('End', button_color=dark_blue, size=(5, 1), font=('Arial', 14))]]
 
     # Get the data for the window
     # TODO: Get locations in narratives

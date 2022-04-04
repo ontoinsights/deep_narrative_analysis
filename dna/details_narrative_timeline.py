@@ -13,8 +13,10 @@ from datetime import datetime
 
 from database import query_database
 from details_narrative_graph import display_graph
-from utilities import empty_string, add_to_dictionary_values, capture_error, encoded_logo
+from utilities import dark_blue, empty_string, add_to_dictionary_values, capture_error, encoded_logo
 from utilities_matplotlib import draw_figure_with_toolbar
+
+narrator_var = "?narrator"
 
 query_narrative_text = 'prefix : <urn:ontoinsights:dna:> SELECT ?text WHERE ' \
                        '{ ?narr a :Narrative ; rdfs:label "narrative_name" ; :text ?text . }'
@@ -36,7 +38,7 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
     Display the metadata for a narrator (such as gender and birth year) and the narrative text.
 
     :param narrative_name: The narrative title
-    :param narrator: The URI with the narrator's metadata
+    :param narrator: The IRI with the narrator's metadata
     :param store_name: The database/store to be queried for data
     :returns: None
     """
@@ -51,11 +53,11 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
         else:
             narrative_text = 'Error retrieving the narrative text. It cannot be displayed.'
         metadata1_results = query_database(
-            'select', query_metadata1.replace("?narrator", f':{narrator}'), store_name)
+            'select', query_metadata1.replace(narrator_var, f':{narrator}'), store_name)
         for binding in metadata1_results:
             narrator_names.append(binding['name']['value'])
         metadata2_results = query_database(
-            'select', query_metadata2.replace("?narrator", f':{narrator}'), store_name)
+            'select', query_metadata2.replace(narrator_var, f':{narrator}'), store_name)
         if metadata2_results:
             for binding in metadata2_results:
                 # There should only be one result / one set of metadata for the narrator
@@ -65,7 +67,7 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
             metadata_dict['country'] = 'Unknown'
             metadata_dict['year'] = 'Unknown'
         metadata3_results = query_database(
-            'select', query_metadata3.replace("?narrator", f':{narrator}'), store_name)
+            'select', query_metadata3.replace(narrator_var, f':{narrator}'), store_name)
         if metadata3_results:
             gender = empty_string
             for binding in metadata3_results:
@@ -81,7 +83,7 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
         if not (metadata1_results or metadata2_results or metadata3_results):
             sg.popup_error(f'Limited or no metadata was found for the narrator, {narrator.split(":")[-1]}. '
                            f'The narrative text will be displayed, if available.',
-                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                           font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
     except Exception as e:
         capture_error(f'Exception getting narrator details from {store_name}: {str(e)}', True)
         return
@@ -175,7 +177,7 @@ def display_timeline(narrative_name: str, event_list: list, store_name: str):
     layout = [[sg.Text('Display Event Network for Date (YYYY-mm): ', font=('Arial', 14)),
                sg.InputText(text_color='black', background_color='#ede8e8', size=(10, 1),
                             font=('Arial', 14), key='event_date', do_not_clear=True),
-               sg.Button('Graph', button_color='dark blue', font=('Arial', 14), size=(6, 1))],
+               sg.Button('Graph', button_color=dark_blue, font=('Arial', 14), size=(6, 1))],
               [sg.Text('Controls:', font=('Arial', 14)),
                sg.Canvas(key='controls_cv')],
               [sg.Column(layout=[[sg.Canvas(key='fig_cv', size=(800 * 2, 800))]], pad=(0, 0))]]

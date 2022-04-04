@@ -2,19 +2,13 @@
 # Called from create_event_turtle.py
 
 import logging
-import os
-import pickle
 import re
 
 from database import query_database
 from query_ontology_and_sources import get_geonames_location
-from nlp import get_named_entity_in_string, get_proper_nouns, get_time_details
-from utilities import domain_database, empty_string, months, preps_string, resources_root, space, verbs_string
-
-# A dictionary where the keys are country names and the values are the GeoNames country codes
-geocodes_file = os.path.join(resources_root, 'country_names_mapped_to_geo_codes.pickle')
-with open(geocodes_file, 'rb') as inFile:
-    names_to_geo_dict = pickle.load(inFile)
+from nlp import get_named_entity_in_string, get_time_details
+from utilities import domain_database, empty_string, months, names_to_geo_dict, objects_string, \
+    preps_string, space, subjects_string, verbs_string
 
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
@@ -30,8 +24,8 @@ query_domain_event = \
     'ORDER BY DESC(?prob)'
 
 query_event_time = 'prefix : <urn:ontoinsights:dna:> SELECT ?time ?begin ?end WHERE ' \
-                   '{ uri a ?type . OPTIONAL { uri :has_time ?time } ' \
-                   'OPTIONAL { uri :has_beginning ?begin } OPTIONAL { uri :has_end ?end } }'
+                   '{ iri a ?type . OPTIONAL { iri :has_time ?time } ' \
+                   'OPTIONAL { iri :has_beginning ?begin } OPTIONAL { iri :has_end ?end } }'
 
 
 def check_to_loc(dictionary: dict, list_locs: list, new_locs: list):
@@ -66,10 +60,10 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     results = query_database(
         'select', query_domain_event.replace('keyword', sent_date), domain_database)
     if results:
-        event_uri = f":{results[0]['inst']['value'].split(':')[-1]}"
+        event_iri = f":{results[0]['inst']['value'].split(':')[-1]}"
         # Get the :has_time, :has_beginning or :has_end details for the event
         time_results = query_database(
-            'select', query_event_time.replace('uri', event_uri), domain_database)
+            'select', query_event_time.replace('iri', event_iri), domain_database)
         if time_results:
             time_result = time_results[0]
             time_result_keys = time_result.keys()
@@ -93,60 +87,56 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     return time
 
 
-def get_location_uri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
+def get_location_iri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
     """
-    Get a location URI based on the input string and if appropriate, add the Turtle explaining/
-    defining that location.
+    Get a location IRI based on the input string and if appropriate, add the Turtle explaining/
+    defining that location. (Before this function is called, the current ontologies - both general
+    and domain - have already been checked for the location details.)
 
     :param loc: Input location string
-    :param processed_locs: A dictionary of location texts (keys) and their URI (values) of
+    :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
                            all locations already processed
-    :returns: A string holding the location URI using a GeoNames prefix or the DNA prefix, and an
+    :returns: A string holding the location IRI using a GeoNames prefix or the DNA prefix, and an
              array of strings that are the Turtle for a new location
     """
     loc_ttl = []
-    if loc in names_to_geo_dict.keys():   # Location is a country name
-        return f'geo:{names_to_geo_dict[loc]}', loc_ttl
-    if loc in processed_locs.keys():      # Location is already captured
-        return processed_locs[loc], loc_ttl
+    loc_iri = _check_if_loc_is_known(loc, processed_locs)
+    if loc_iri:
+        return loc_iri, loc_ttl
+    # Location is not already defined/known, so determine its IRI, and check for city/town names
     split_locs = loc.split(space)
     if len(split_locs) == 1:
-        loc_uri = f':{loc}'
+        loc_iri = f':{loc}'
     else:
         if loc.lower().startswith('the '):
             loc = space.join(split_locs[1:])
-        loc_uri = f':{loc.replace(space,"_")}'
-    # Check if the location is known - May be a city/town name
-    loc_ttl = _create_geonames_ttl(loc_uri, loc)
-    if not loc_ttl:
-        containing_uri = empty_string
-        # Need to get strings that are the Proper Nouns
-        # Can't parse "loc" text directly since there is a problem in the NLP results
-        # For example, the phrase, "Czernowitz ghetto", is completely returned as a GPE
-        # But the text, "New York City ghetto", only returns "New York City" as the GPE
-        proper_nouns = get_proper_nouns(loc)
-        if proper_nouns:
-            if proper_nouns in processed_locs.keys():
-                containing_uri = processed_locs[proper_nouns]
+        loc_iri = f':{loc.replace(space,"_")}'
+    # Determine if the location includes a proper noun (begins with capital letter)
+    proper_noun = empty_string
+    for word in loc.split(space):
+        if word[0].isupper():
+            proper_noun += word + space
+    if proper_noun:
+        proper_noun = proper_noun.strip()
+        proper_noun_iri = _check_if_loc_is_known(proper_noun, processed_locs)   # Do we know about this text?
+        if not proper_noun_iri:
+            proper_noun_iri = f':{proper_noun.replace(space, "_")}'
+            proper_noun_ttl = _create_geonames_ttl(proper_noun_iri, proper_noun)
+            if proper_noun_ttl:
+                loc_ttl.extend(proper_noun_ttl)
             else:
-                containing_uri = proper_nouns.replace(space, "_")
-                containing_ttl = _create_geonames_ttl(containing_uri, proper_nouns)
-                if containing_ttl:
-                    loc_ttl.extend(containing_ttl)
-                    processed_locs[proper_nouns] = containing_uri
-                else:
-                    # Could not get geonames definition
-                    containing_uri = empty_string
-        # TODO: Generalize a part of a city beyond ghetto
-        if 'ghetto' in loc:
-            loc_ttl.append(f'{loc_uri} a :Ghetto ; rdfs:label "{loc}" .')
-        else:
-            loc_ttl.append(f'{loc_uri} a :PopulatedPlace ; rdfs:label "{loc}" .')
-        if containing_uri:
-            loc_ttl.append(f'{containing_uri} :has_component {loc_uri} .')
+                loc_ttl.append(f'{proper_noun_iri} a :Location .')
+        if proper_noun != loc:
+            # Location has more text than just the proper noun - likely that it describes a part of a city/town/...
+            loc_ttl.append(f'{proper_noun_iri} :has_component {loc_iri} .')
+            # TODO: Generalize a part of a city beyond ghetto (in the ontology)
+            if 'ghetto' in loc.lower():
+                loc_ttl.append(f'{loc_iri} a :Ghetto, :Location ; rdfs:label "{loc}" .')
+            else:
+                loc_ttl.append(f'{loc_iri} a :PopulatedPlace ; rdfs:label "{loc}" .')
     # Record location text in processed_locs so that the details are not added again
-    processed_locs[loc] = loc_uri
-    return loc_uri, loc_ttl
+    processed_locs[loc] = loc_iri
+    return loc_iri, loc_ttl
 
 
 def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
@@ -169,10 +159,23 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
         # There is no location in the verb prepositions, and there is no previous loc
         # So, use the LOCS value despite it not being in the verb prepositions
         new_locs.extend(sentence_dictionary['LOCS'])
-    if len(new_locs) == 1:
+    if not new_locs:  # Check if the sentence subject is a location, or the sentence object if a passive verb
+        if subjects_string in sentence_dictionary.keys():
+            for subj in sentence_dictionary[subjects_string]:
+                subj_type = subj['subject_type']
+                if subj_type.endswith('GPE') or subj_type.endswith('LOC') or subj_type.endswith('FAC'):
+                    return subj['subject_text']
+        if objects_string in sentence_dictionary.keys():
+            # Check if the subject of a passive verb is a location (it is an object in the dictionary)
+            for obj in sentence_dictionary[objects_string]:
+                obj_type = obj['object_type']
+                if obj_type.endswith('GPE') or obj_type.endswith('LOC') or obj_type.endswith('FAC'):
+                    return obj['object_text']
+        return empty_string
+    elif len(new_locs) == 1:
         return new_locs[0]
     elif len(new_locs) > 1:
-        # Try to reduce locations to only ones associated directly with the main verb using the preposition 'to'
+        # Try to reduce locations to ones associated with the main verb using the preposition, 'to'
         revised_locs = []
         for verb in sentence_dictionary[verbs_string]:
             if preps_string in verb.keys():
@@ -185,8 +188,6 @@ def get_sentence_location(sentence_dictionary: dict, last_loc: str) -> str:
             return revised_locs[0]
         else:
             return new_locs[0]
-    else:
-        return empty_string
 
 
 def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates: list) -> (str, list):
@@ -200,9 +201,9 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
 
     :param sentence_dictionary: The sentence dictionary
     :param last_date: The inferred (or explicit) time of the event, formatted as:
-                      ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
+                      ('before'|'after'|'') (PointInTime_date|Existing_Event_iri)
     :param processed_dates: A list of all dates whose Turtle has already been created
-    :returns: A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_URI),
+    :returns: A tuple consisting of the string, ('before'|'after'|'') (PointInTime_date|Existing_Event_iri),
              and the Turtle for any new date/event instances. In addition, the processed_dates array may
              be updated.
     """
@@ -236,7 +237,7 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
                 sent_date = new_date
                 break
     # Set up variable to hold time details using the format,
-    # ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
+    # ('before'|'after'|'') (PointInTime_date|Existing_Event_iri)
     if 'before' in sent_date:
         time = 'before '
         sent_date = sent_date[7:]
@@ -276,11 +277,11 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
     # Check if a new date instance should be created
     if ':' not in time:
         return last_date, []
-    instance_uri = f':{time.split(":")[-1]}'
-    if instance_uri in processed_dates:
+    instance_iri = f':{time.split(":")[-1]}'
+    if instance_iri in processed_dates:
         return time, []
     else:
-        processed_dates.append(instance_uri)    # Track that the Turtle details have been created
+        processed_dates.append(instance_iri)    # Track that the Turtle details have been created
         if ':ontoinsights:dna' in time:         # Note that the time is 'related' to the event
             if time.startswith('after'):
                 new_label = f'Related to after {sent_date}'
@@ -292,19 +293,19 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
             new_label = sent_date
         # Update the time (which is returned) to be consistent with the processed_dates
         if time.startswith('after'):
-            time = f'after {instance_uri}'
+            time = f'after {instance_iri}'
         elif time.startswith('before'):
-            time = f'before {instance_uri}'
+            time = f'before {instance_iri}'
         else:
-            time = instance_uri
+            time = instance_iri
         # Need to create the Turtle for the time or event instance
-        time_ttl = [f'{instance_uri} a :PointInTime ; rdfs:label "{new_label}" .']
-        new_year_search = year_pattern.search(instance_uri)   # New search since the URI may be updated
-        new_month_search = month_pattern.search(instance_uri)
+        time_ttl = [f'{instance_iri} a :PointInTime ; rdfs:label "{new_label}" .']
+        new_year_search = year_pattern.search(instance_iri)   # New search since the IRI may be updated
+        new_month_search = month_pattern.search(instance_iri)
         if new_month_search:
-            time_ttl.append(f'{instance_uri} :month_of_year {str(months.index(new_month_search.group()) + 1)} .')
+            time_ttl.append(f'{instance_iri} :month_of_year {str(months.index(new_month_search.group()) + 1)} .')
         if new_year_search:
-            time_ttl.append(f'{instance_uri} :year {str(new_year_search.group())} .')
+            time_ttl.append(f'{instance_iri} :year {str(new_year_search.group())} .')
         return time, time_ttl
 
 
@@ -313,10 +314,10 @@ def update_time(last_date: str, number: int, increment: str) -> str:
     Update a PointInTime date by the specified 'number' of months/years/days (as defined by the increment).
 
     :param last_date: The inferred (or explicit) time of the event, formatted as:
-                      ('before'|'after'|'') (PointInTime_date|Existing_Event_URI)
+                      ('before'|'after'|'') (PointInTime_date|Existing_Event_iri)
     :param number: Positive or negative integer indicating whether the month, day or year is updated
     :param increment: String specifying year, month, day
-    :returns: String specifying the updated last_date as a URI (or the last_date is returned if the update
+    :returns: String specifying the updated last_date as a IRI (or the last_date is returned if the update
              cannot be performed)
     """
     if ':PiT' in last_date:
@@ -399,25 +400,42 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
     return
 
 
-def _create_geonames_ttl(loc_uri: str, loc_text: str) -> list:
+def _check_if_loc_is_known(loc_text: str, processed_locs: dict) -> str:
+    """
+    Determines if the location is already known/defined in either the geo-names country list or if
+    it has been already processed.
+
+    :param loc_text: Input location string
+    :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
+                           all locations already processed
+    :returns: The IRI of a country or already processed location, or an empty string
+    """
+    if loc_text in names_to_geo_dict.keys():   # Location is a country name
+        return f'geo:{names_to_geo_dict[loc_text]}'
+    if loc_text in processed_locs.keys():      # Location is already captured
+        return processed_locs[loc_text]
+    return empty_string
+
+
+def _create_geonames_ttl(loc_iri: str, loc_text: str) -> list:
     """
     Create the Turtle for a location that is a populated place.
 
-    :param loc_uri: String holding the URI to be assigned to the location
+    :param loc_iri: String holding the IRI to be assigned to the location
     :param loc_text: The location text
-    :returns: An array holding the Turtle for the location/location URI if the information is
+    :returns: An array holding the Turtle for the location/location IRI if the information is
              obtainable from GeoNames or an empty array
     """
     geonames_ttl = []
     class_type, country, admin_level = get_geonames_location(loc_text)
     if class_type:
-        geonames_ttl.append(f'{loc_uri} a {class_type} ; rdfs:label "{loc_text.strip()}" .')
+        geonames_ttl.append(f'{loc_iri} a {class_type} ; rdfs:label "{loc_text.strip()}" .')
         if admin_level > 0:
-            geonames_ttl.append(f'{loc_uri} :admin_level {str(admin_level)} .')
+            geonames_ttl.append(f'{loc_iri} :admin_level {str(admin_level)} .')
         if country and country != "None":
-            geonames_ttl.append(f'{loc_uri} :country_name "{country}" .')
+            geonames_ttl.append(f'{loc_iri} :country_name "{country}" .')
             if country in names_to_geo_dict.keys():
-                geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_uri} .')
+                geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_iri} .')
     return geonames_ttl
 
 

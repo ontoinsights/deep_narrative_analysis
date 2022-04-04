@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 19 2022
+# Last Modified: March 29 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -36,6 +36,7 @@
 #    Economic and Political Environment
 #  Moved Assessment to event-state-subclasses.ttl
 #  Added Deficiency
+#  Updated synonyms
 ########################################################################
 
 
@@ -58,7 +59,7 @@
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Captivity and Detention" ;
   :definition "The condition of an Agent being held captive and confined to a certain location." ;
-  :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery", "captive", "detainee", "slave" ;
+  :noun_synonym "incarceration", "internment", "confinement", "imprisonment", "enslavement", "bondage", "slavery", "captive", "detainee", "slave", "capturing", "detaining", "imprisoning", "incarcerating", "confining", "enslaving" ;
   :verb_synonym "imprison", "incarcerate", "intern", "confine", "enslave", "detain" .
 
 :CaringForDependents a owl:Class ;
@@ -78,14 +79,14 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Compatibility" ;
   :definition "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate." ;
-  :noun_synonym "coexistence" ;
+  :noun_synonym "coexistence", "coexisting" ;
   :verb_synonym "coexist", "is compatible with" .
 
 :Compliance a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Compliance" ;
   :definition "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." ;
-  :noun_synonym "conformity" ;
+  :noun_synonym "conformity", "complying", "conforming" ;
   :verb_synonym "is in compliance", "compliant", "conform" .
 
 :ConsumerConfidence a owl:Class ;
@@ -97,7 +98,7 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Deficiency" ;
   :definition "A lack or shortage of some entity. The thing that is lacking is specified using the :has_topic property." ;
-  :noun_synonym "insufficiency", "lack", "shortage", "dearth", "deficit", "scarcity", "scantiness", "paucity" ;
+  :noun_synonym "insufficiency", "lack", "shortage", "dearth", "deficit", "scarcity", "scantiness", "paucity", "lacking" ;
   :verb_synonym "lack", "be deficient", "be insufficient" .
 
 :Deflation a owl:Class ;
@@ -118,8 +119,10 @@
 :Employment a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment ;
   rdfs:label "Employment" ;
-  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, etc.). Specific Events (hiring, lay offs, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
-  :noun_synonym "job", "position", "work", "post" .
+  :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.). Specific Events (hiring, lay offs, promotions, etc.) are captured as EmploymentEvents and can serve as Evidence for this condition. The overall situation regarding Employment can be described using the :has_assessment predicate." ;
+  :example "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment or labor rates." ;
+  :noun_synonym "job", "position", "work", "post", "employing" ;
+  :verb_synonym "employ" .
 
 :EnvironmentalIssue a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -174,7 +177,7 @@
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Law and Policy" ;
   :definition "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents." ;
-  :noun_synonym "directive", "legislation", "decree", "constitution", "statute", "treaty" ;
+  :noun_synonym "directive", "legislation", "decree", "constitution", "statute", "treaty", "legislating", "decreeing" ;
   :verb_synonym "decree", "legislate" .
 
 :LivingCondition a owl:Class ;

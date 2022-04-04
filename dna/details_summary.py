@@ -8,8 +8,10 @@ from wordcloud import WordCloud, STOPWORDS
 
 from database import query_database
 from details_summary_counts import display_dates_events, display_locations, get_y_x_values, output_words_in_csv
-from utilities import empty_string, resources_root, capture_error, encoded_logo
+from utilities import dark_blue, empty_string, resources_root, capture_error, encoded_logo
 from utilities_matplotlib import draw_figure, display_horiz_histogram
+
+blue = 'blue'
 
 query_countries = 'prefix : <urn:ontoinsights:dna:> SELECT distinct ?s ?country WHERE ' \
                   '{ ?narr a :Narrative ; :has_author ?narrator . ?event a :Birth ; ' \
@@ -61,26 +63,26 @@ def display_statistics(store_name: str):
                        font=('Arial', 16))],
               [sg.Text()],
               [sg.Text("Narrator Characteristics:", font=('Arial', 16))],
-              [sg.Button('Gender Details', font=('Arial', 14), button_color='dark blue', size=(20, 1),
+              [sg.Button('Gender Details', font=('Arial', 14), button_color=dark_blue, size=(20, 1),
                          pad=((25, 0), 3))],
-              [sg.Button('Birth Year Details', font=('Arial', 14), button_color='dark blue', size=(20, 1),
+              [sg.Button('Birth Year Details', font=('Arial', 14), button_color=dark_blue, size=(20, 1),
                          pad=((25, 0), 3))],
-              [sg.Button('Birth Country Details', font=('Arial', 14), button_color='dark blue', size=(20, 1),
+              [sg.Button('Birth Country Details', font=('Arial', 14), button_color=dark_blue, size=(20, 1),
                          pad=((25, 0), 3))],
               [sg.Text()],
               [sg.Text("Narrative Information:", font=('Arial', 16))],
-              [sg.Button('Locations Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Locations Mentioned', font=('Arial', 14), button_color=blue, size=(24, 1),
                          pad=((25, 0), 3))],
-              [sg.Button('Years Mentioned', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Years Mentioned', font=('Arial', 14), button_color=blue, size=(24, 1),
                          pad=((25, 0), 3))],
               [sg.Text()],
               [sg.Text("Frequent Words:", font=('Arial', 16))],
-              [sg.Button('Word Cloud', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Word Cloud', font=('Arial', 14), button_color=blue, size=(24, 1),
                          pad=((25, 0), 3)),
                sg.Text('Number of words:', font=('Arial', 16)),
                sg.InputText(text_color='black', background_color='#ede8e8', size=(5, 1),
                             font=('Arial', 16), key='words_in_cloud', do_not_clear=True)],
-              [sg.Button('Output "Unknown" Nouns/Verbs', font=('Arial', 14), button_color='blue', size=(24, 1),
+              [sg.Button('Output "Unknown" Nouns/Verbs', font=('Arial', 14), button_color=blue, size=(24, 1),
                          pad=((25, 0), 3)),
                sg.Text('Number of nouns:', font=('Arial', 16)),
                sg.InputText(text_color='black', background_color='#ede8e8', size=(5, 1),
@@ -89,7 +91,7 @@ def display_statistics(store_name: str):
                sg.InputText(text_color='black', background_color='#ede8e8', size=(5, 1),
                             font=('Arial', 16), key='verbs_in_csv', do_not_clear=True)],
               [sg.Text("Directory:", font=('Arial', 16), pad=((125, 0), 3)),
-               sg.FolderBrowse(target='directory_name', button_color='dark blue'),
+               sg.FolderBrowse(target='directory_name', button_color=dark_blue),
                sg.InputText(text_color='black', background_color='#ede8e8',
                             font=('Arial', 16), key='directory_name', do_not_clear=True)],
               [sg.Text("The files, 'Nouns.csv' and 'Verbs.csv', will be written to the specified directory.",
@@ -97,7 +99,7 @@ def display_statistics(store_name: str):
               [sg.Text("This processing takes SEVERAL MINUTES if a large number of narratives are analyzed.",
                        font=('Arial', 16))],
               [sg.Text()],
-              [sg.Button('End', button_color='dark blue', size=(5, 1), font=('Arial', 14))]]
+              [sg.Button('End', button_color=dark_blue, size=(5, 1), font=('Arial', 14))]]
 
     # Create the GUI Window
     try:
@@ -107,7 +109,7 @@ def display_statistics(store_name: str):
         else:
             sg.popup_error(f'No narrators are defined in {store_name}. '
                            f'Gender and birth details cannot be displayed.',
-                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                           font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             number_narrators = 0
         narrative_text_results = query_database('select', query_narrative_text, store_name)
         if narrative_text_results:
@@ -117,7 +119,7 @@ def display_statistics(store_name: str):
         else:
             sg.popup_error(f'No narrators are defined in {store_name}. '
                            f'Summary graphs, charts and word frequencies cannot be generated.',
-                           font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                           font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
             narratives = empty_string
     except Exception as e:
         capture_error(f'Exception getting initial narrative details from {store_name}: {str(e)}', True)
@@ -145,7 +147,7 @@ def display_statistics(store_name: str):
             else:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'The gender histogram cannot be displayed.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
         elif event_stats_list == 'Birth Year Details':
             if number_narrators:
                 y_values, x_values = get_y_x_values(number_narrators, 'year', query_years, store_name)
@@ -154,7 +156,7 @@ def display_statistics(store_name: str):
             else:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'The birth histograms cannot be displayed.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
         elif event_stats_list == 'Birth Country Details':
             if number_narrators:
                 y_values, x_values = get_y_x_values(number_narrators, 'country', query_countries, store_name)
@@ -163,43 +165,43 @@ def display_statistics(store_name: str):
             else:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'The birth histograms cannot be displayed.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
         elif event_stats_list == 'Locations Mentioned':
             if not narratives:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'A list of locations cannot be extracted.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 continue
             display_locations(narratives)
         elif event_stats_list == 'Years Mentioned':
             if not narratives:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'A list of years cannot be extracted.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 continue
             display_dates_events(narratives)
         elif event_stats_list == 'Word Cloud':
             if not values['words_in_cloud']:
                 sg.popup_error('A word count MUST be specified to configure the word cloud output. '
-                               'Please provide a value.', font=('Arial', 14), button_color='dark blue',
+                               'Please provide a value.', font=('Arial', 14), button_color=dark_blue,
                                icon=encoded_logo)
                 continue
             if not narratives:
                 sg.popup_error(f'No narrators are defined in {store_name}. '
                                f'The word cloud cannot be displayed.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 continue
             _display_word_cloud(narratives, int(values['words_in_cloud']))
         elif event_stats_list == 'Output Top "Unknown" Nouns and Verbs':
             if not values['directory_name'] and not values['nouns_in_csv'] and not values['verbs_in_csv']:
                 sg.popup_error('A directory name and noun/verb word counts MUST be specified to save '
                                'the unknown words and their frequency counts. Please provide all of these values.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 continue
             if not narratives:
                 sg.popup_error(f'No narratives were found in {store_name}. '
                                f'The word frequencies cannot be output.',
-                               font=('Arial', 14), button_color='dark blue', icon=encoded_logo)
+                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                 continue
             output_words_in_csv(narratives, int(values['nouns_in_csv']), int(values['verbs_in_csv']),
                                 values['directory_name'])
