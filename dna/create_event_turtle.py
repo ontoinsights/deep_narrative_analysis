@@ -18,7 +18,8 @@ import uuid
 from clean_turtle import create_using_details, create_verb_label, handle_environment_cleanup, \
     handle_event_state_idiosyncrasies, handle_xcomp_cleanup
 from coreference_resolution import check_specific_match, check_nouns
-from create_event_time_loc import get_location_iri_and_ttl, get_sentence_location, get_sentence_time
+from create_event_time_loc import get_location_iri_and_ttl, get_sentence_location, get_sentence_time, \
+    process_event_date
 from idiom_processing import get_verb_processing, process_idiom_detail
 from nlp import get_sentence_sentiment
 from query_ontology_and_sources import check_emotion, get_noun_ttl, get_event_state_class
@@ -61,9 +62,9 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
     # Track all locations mentioned in the Turtle to only define once
     processed_locs = dict()   # Keys are location strings and the values are their IRIs
     last_nouns = []    # List of tuples (noun text, type and IRI) from previous sentence - Used for coref resolution
-    graph_ttl_list = ttl_prefixes
+    graph_ttl_list = []
+    graph_ttl_list.extend(ttl_prefixes)
     for sent_dict in sentence_dicts:
-        graph_ttl_list = ttl_prefixes
         sentence_text = sent_dict['text']
         if not sentence_text[0].isalnum():
             continue                # Parse can return a verb_text of punctuation or new line; Ignore this
@@ -90,7 +91,7 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
         # Processing below adds object details to this array
         all_objects = []
         # Get xcomp details - for ex, 'she loved to play with her sister' => 'love' is the root verb,
-        #   'play' is the xcomp, and the overall processing is "xcomp > :love, play"
+        #   'play' is the xcomp, and the overall processing is "xcomp > love, play"
         # Note that 'play' has the prepositional details; So the verbs need to be handled together when dealing
         #   with the xcomp verb; Need a dictionary in case there is more than 1 xcomp verb
         xcomp_dict = dict()
@@ -251,27 +252,6 @@ def process_aux_verb(verb_dict: dict, sent_text: str) -> (str, str):
             if not emotion:
                 logging.warning(f'Found aux verb that was not "be"/"have"/"did" or an emotion, {sent_text}')
     return aux_label, emotion
-
-
-def process_event_date(sent_text: str, event_iri: str, last_date: str, ttl_list: list):
-    """
-    Creates the Turtle for an event's date.
-
-    :param sent_text: The text of the sentence being processed
-    :param event_iri: IRI identifying the event
-    :param last_date: A string holding the date text
-    :param ttl_list: An array of the Turtle statements for the event (updated in this function)
-    :returns: None (ttl_list is updated)
-    """
-    date_iri = f":{last_date.split(':')[1]}"   # Format of last_date: ('before'|'after'|'') (PointInTime date)
-    if last_date.startswith('before'):
-        ttl_list.append(f'{event_iri} :has_latest_end {date_iri} .')
-    elif last_date.startswith('after') or 'eventually' in sent_text.lower() \
-            or 'afterwards' in sent_text.lower() or 'finally' in sent_text.lower():
-        ttl_list.append(f'{event_iri} :has_earliest_beginning {date_iri} .')
-    else:
-        ttl_list.append(f'{event_iri} :has_time {date_iri} .')
-    return
 
 
 def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: dict, is_xcomp_subjects: bool,

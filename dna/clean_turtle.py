@@ -140,14 +140,7 @@ def handle_event_state_idiosyncrasies(event_state_turtle: str, sentence: str, ve
         for subj_text, subj_type, subj_iri in subj_tuples:
             subj_iris.append(subj_iri)
         iri_str = ', '.join(subj_iris)
-        if 'Ethnicity' in event_state_turtle:
-            return _clean_environment_condition(event_state_turtle, 'Ethnicity', iri_str)
-        elif 'PoliticalIdeology' in event_state_turtle:
-            return _clean_environment_condition(event_state_turtle, 'PoliticalIdeology', iri_str)
-        elif 'LineOfBusiness' in event_state_turtle:
-            return _clean_environment_condition(event_state_turtle, 'LineOfBusiness', iri_str)
-        else:
-            return f'{event_state_turtle.replace("subj", iri_str)} .'
+        event_state_turtle = _clean_environment_condition(event_state_turtle, obj_tuples, iri_str)
     if 'xcomp' in event_state_turtle:
         if ', ' in event_state_turtle:
             verb1_text = event_state_turtle.split('(')[1].split(', ')[0]
@@ -259,7 +252,7 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
     new_turtle = [f'{new_iri} :has_topic {event_iri}.']
     for turtle_stmt in turtle:
         if turtle_stmt.startswith(':Event'):
-            if ' a ' in turtle_stmt:
+            if ' a xcomp' in turtle_stmt:
                 verb1_class = turtle_stmt.split('(')[1].split(',')[0].strip()
                 verb2_class = turtle_stmt.split(', ')[1].split(')')[0].strip()
                 if verb2_class.endswith(' .'):
@@ -272,6 +265,19 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
                 time_iri = turtle_stmt.split(':has_latest_end ')[1]
                 new_turtle.append(f'{event_iri} :has_time {time_iri}')
                 new_turtle.append(f'{new_iri} :has_latest_end {time_iri}')
+                new_turtle.append(f'{new_iri} :before {event_iri} .')
+                continue
+            elif ':has_earliest_beginning ' in turtle_stmt:
+                time_iri = turtle_stmt.split(':has_earliest_beginning ')[1]
+                new_turtle.append(f'{event_iri} :has_time {time_iri}')
+                new_turtle.append(f'{new_iri} :has_earliest_beginning {time_iri}')
+                new_turtle.append(f'{new_iri} :before {event_iri} .')
+                continue
+            elif ':has_time ' in turtle_stmt:
+                time_iri = turtle_stmt.split(':has_time ')[1]
+                new_turtle.append(f'{event_iri} :has_earliest_beginning {time_iri}')
+                new_turtle.append(f'{new_iri} :has_time {time_iri}')
+                new_turtle.append(f'{new_iri} :before {event_iri} .')
                 continue
             elif has_location in turtle_stmt and ignore_has_location:
                 continue
@@ -280,11 +286,6 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
                 new_turtle.append(f'{new_iri} :text {turtle_stmt.split(":text ")[1]}')
             elif 'rdfs:label ' in turtle_stmt:
                 new_turtle.append(f'{new_iri} rdfs:label {turtle_stmt.split("rdfs:label ")[1]}')
-            elif ':has_earliest_beginning ' in turtle_stmt:
-                new_turtle.append(f'{new_iri} :has_earliest_beginning '
-                                  f'{turtle_stmt.split(":has_earliest_beginning ")[1]}')
-            elif ':has_time ' in turtle_stmt:
-                new_turtle.append(f'{new_iri} :has_earliest_beginning {turtle_stmt.split(":has_time ")[1]}')
             elif ':has_active_agent ' in turtle_stmt:
                 if is_xcomp_subjects:
                     new_turtle.append(f'{new_iri} :has_affected_agent {turtle_stmt.split(":has_active_agent ")[1]}')
@@ -303,26 +304,32 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
 
 
 # Functions internal to the module
-def _clean_environment_condition(turtle: str, condition_type: str, iri: str) -> str:
+def _clean_environment_condition(turtle: str, object_tuples: list, iri: str) -> str:
     """
     Updates the Turtle for a subject/EnvironmentAndCondition statement.
 
     :param turtle: The original Turtle from idiom processing
-    :param condition_type: The type of EnvironmentAndCondition ('Ethnicity', "PoliticalIdeology' or
-                           'LineOfBusiness')
+    :param object_tuples: An array of tuples consisting of the verb's objects' text, type and IRI
     :param iri: The IRI identifying the subject/holder of the environment/condition
-    :returns: The update Turtle statement
+    :returns: The updated Turtle statement
     """
-    topic = empty_string
-    if 'has_topic' in turtle:
-        topic = turtle.split('has_topic ')[1].split(space)[0]
+    topic = 'owl:Thing'
+    word = 'unknown'
+    if 'has_topic ' in turtle:
+        if ' dobj' not in turtle:
+            topic = turtle.split('has_topic ')[1].split(space)[0]
+        elif ' dobj' in turtle and not object_tuples:    # Possible for a verb to have no objects, just adverbs
+            turtle = turtle.replace(':has_topic dobj ; ', empty_string)   # So, remove the triple
     if 'word_detail' in turtle:
         word = turtle.split('word_detail ')[1].split(space)[0]
-    if condition_type == 'LineOfBusiness':
-        turtle = f'{turtle.replace(condition_type, empty_string).replace(":word_detail", "rdfs:label")} . ' \
+    if 'LineOfBusiness' in turtle:
+        turtle = f'{turtle.replace("LineOfBusiness", empty_string).replace(":word_detail", "rdfs:label")} . ' \
                  f'subj :has_line_of_business {topic} ; :line_of_business {word} .'
-    else:
-        turtle = f'{turtle.replace(condition_type, empty_string).replace(":word_detail", "rdfs:label")} . ' \
+    elif 'PoliticalIdeology' in turtle:
+        turtle = f'{turtle.replace("PoliticalIdeology", empty_string).replace(":word_detail", "rdfs:label")} . ' \
+                 f'subj :has_agent_aspect {topic} .'
+    elif 'Ethnicity' in turtle:
+        turtle = f'{turtle.replace("Ethnicity", empty_string).replace(":word_detail", "rdfs:label")} . ' \
                  f'subj :has_agent_aspect {topic} .'
     return turtle.replace('subj', iri).replace("'", '"')
 

@@ -9,7 +9,8 @@ import logging
 import os
 import stardog
 
-from utilities import domain_database, empty_string, ontologies_database, owl_thing, resources_root, capture_error
+from utilities import domain_database, empty_string, ontologies_database, owl_thing, owl_thing2, \
+    resources_root, capture_error
 
 # Get details from the dna.config file, stored in the resources directory
 # And set the connection details
@@ -23,6 +24,11 @@ sd_conn_details = {
 ontol_path = config.get('OntologiesConfig', 'ontolPath')
 if not ontol_path.endswith('/'):
     ontol_path = f'{ontol_path}/'
+
+query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
+              '{ ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(lcase(?label) = "keyword") } }'
 
 text_turtle = 'text/turtle'
 
@@ -148,6 +154,29 @@ def query_database(query_type: str, query: str, database: str) -> list:
     except Exception as e:
         capture_error(f'Database ({database}) query exception for {query}: {str(e)}', True)
         return []
+
+
+def query_exact_and_approx_match(text: str, query_str: str, domain_query_str: str) -> str:
+    """
+    Executes a query_match and then approximate matches (identified by the query and domain_query strings)
+    for the text. An "approximate" match uses CONTAINS processing.
+
+    :param text: Text to match
+    :param query_str: String holding the "approximate" query to execute for the core ontologies
+    :param domain_query_str: String holding the "approximate" query to execute for the domain ontologies
+    :returns: The highest probability class name returned by the query
+    """
+    class_name = query_ontology(text, query_match, query_match)   # Query exact match
+    if class_name != owl_thing:
+        return class_name
+    if len(text) < 5:      # Avoid false matches if the word is less than 5 characters
+        return owl_thing2
+    class_name = query_ontology(text, query_str, domain_query_str)      # Query approximate match
+    # Avoid false matches if the matched class is less than 5 characters (for ex, 'friend' would match ':End')
+    if class_name != owl_thing or len(class_name.split(':')[-1]) > 5:
+        return class_name
+    else:
+        return owl_thing2
 
 
 def query_ontology(text: str, query: str, domain_query: str) -> str:

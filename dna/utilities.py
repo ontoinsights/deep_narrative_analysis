@@ -34,7 +34,8 @@ preps_string = 'preps'
 
 dna_prefix = 'urn:ontoinsights:dna:'
 owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
-event_and_state_class = 'urn:ontoinsights:dna:EventAndState'
+owl_thing2 = 'owl:Thing'
+event_and_state_class = ':EventAndState'
 
 domain_database = "domain-specific"
 ontologies_database = 'ontologies'

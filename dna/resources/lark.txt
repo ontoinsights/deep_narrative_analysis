@@ -32,11 +32,11 @@ property_detail: ";" entity_name object
 verb_preposition_rule: "prep_" WORD complex_rule
 
 verb_subject_rule: "subj >" class_names (topic | word_detail | holder)+
-topic: "; :has_topic" entity_name
+topic: "; :has_topic" (entity_name | dobj)
 word_detail: "; :word_detail '" WORD "'"
 holder: "; :has_holder" WORD
 
-xcomp_rule: "xcomp >" class_names ", xcomp" WORD
+xcomp_rule: "xcomp > " WORD "," WORD
 
 text: WORD (WORD)*
  

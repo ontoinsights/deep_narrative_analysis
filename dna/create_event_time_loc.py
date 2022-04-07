@@ -309,6 +309,27 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
         return time, time_ttl
 
 
+def process_event_date(sent_text: str, event_iri: str, last_date: str, ttl_list: list):
+    """
+    Creates the Turtle for an event's date.
+
+    :param sent_text: The text of the sentence being processed
+    :param event_iri: IRI identifying the event
+    :param last_date: A string holding the date text
+    :param ttl_list: An array of the Turtle statements for the event (updated in this function)
+    :returns: None (ttl_list is updated)
+    """
+    date_iri = f":{last_date.split(':')[1]}"   # Format of last_date: ('before'|'after'|'') (PointInTime date)
+    if last_date.startswith('before'):
+        ttl_list.append(f'{event_iri} :has_latest_end {date_iri} .')
+    elif last_date.startswith('after') or 'eventually' in sent_text.lower() \
+            or 'afterwards' in sent_text.lower() or 'finally' in sent_text.lower():
+        ttl_list.append(f'{event_iri} :has_earliest_beginning {date_iri} .')
+    else:
+        ttl_list.append(f'{event_iri} :has_time {date_iri} .')
+    return
+
+
 def update_time(last_date: str, number: int, increment: str) -> str:
     """
     Update a PointInTime date by the specified 'number' of months/years/days (as defined by the increment).

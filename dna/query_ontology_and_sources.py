@@ -9,19 +9,18 @@ import xml.etree.ElementTree as etree
 
 from PyDictionary import PyDictionary
 
-from database import query_database, query_ontology
+from database import query_database, query_exact_and_approx_match, query_ontology
 from idiom_processing import get_noun_idiom
 from nlp import get_synonym, get_named_entity_in_string, get_head_noun
 from query_ontology_specific_classes import get_norp_emotion_or_lob
 from utilities import dna_prefix, empty_string, resources_root, event_and_state_class, ontologies_database, \
-    owl_thing, space
+    owl_thing, owl_thing2, space
 
 config = cp.RawConfigParser()
 config.read(f'{resources_root}dna.config')
 # Set geoname user id
 geonamesUser = config.get('GeoNamesConfig', 'geonamesUser')
 
-owl_thing2 = 'owl:Thing'
 person = ':Person'
 person_collection = ':Person, :Collection'
 
@@ -40,11 +39,6 @@ query_emotion = 'prefix : <urn:ontoinsights:dna:> SELECT ?superClass WHERE { ' \
 
 query_class = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '<keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'
-
-query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
-              '{ ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
-              '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") } UNION ' \
-              '{ ?class rdfs:label ?label . FILTER(lcase(?label) = "keyword") } }'
 
 domain_query_event = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
@@ -127,6 +121,7 @@ def check_dictionary(word: str, is_noun: bool) -> str:
     :param is_noun: Boolean indicating if the word/term should be checked as a noun first
     :returns: String holding the concept's class name
     """
+    class_name = owl_thing2
     if space in word:
         word = get_head_noun(word)[0]  # In this case, we don't care about plurals, etc. (the orig_text)
     try:
@@ -150,16 +145,11 @@ def check_dictionary(word: str, is_noun: bool) -> str:
                                 query_str = query_event
                                 domain_query_str = domain_query_event
                             # First check for exact match
-                            class_name = query_ontology(word, query_match, query_match)
-                            if class_name != owl_thing:
-                                return class_name
-                            class_name = query_ontology(word, query_str, domain_query_str)
-                            if class_name != owl_thing:
-                                return class_name
+                            class_name = query_exact_and_approx_match(word, query_str, domain_query_str)
     except Exception as e:
         logging.error(f'Exception when getting noun class for {word}: {e}')
         return owl_thing2
-    return owl_thing2
+    return class_name   # Is already defined (in query_exact_and_approx_match) as a DNA class or owl_thing2
 
 
 def check_emotion(class_name: str) -> bool:
@@ -200,19 +190,17 @@ def get_event_state_class(lemma: str) -> str:
     :returns: Mapping of the verb/sentence semantics to the DNA ontology, returning the class name
     """
     # First check for an exact match
-    class_name = query_ontology(lemma, query_match, query_match)
-    if class_name == owl_thing:
-        class_name = query_ontology(lemma, query_event, domain_query_event)
-        if class_name == owl_thing:
-            # Applicable class not found, check dictionary and synonyms
-            class_name = check_dictionary(lemma, False)   # False = Not a noun
-            if class_name == owl_thing or class_name == owl_thing2:
-                logging.warning(f'Could not map the verb, {lemma}, to the ontology')
+    class_name = query_exact_and_approx_match(lemma, query_event, domain_query_event)
+    if class_name == owl_thing2:
+        # Applicable class not found, check dictionary and synonyms
+        class_name = check_dictionary(lemma, False)   # False = Not a noun
+        if class_name == owl_thing2:
+            logging.warning(f'Could not map the verb, {lemma}, to the ontology')
     # Check if this is a movement/travel/transportation event
-    if class_name != owl_thing and _indicate_location_or_movement(class_name, True):
+    if class_name != owl_thing2 and _indicate_location_or_movement(class_name, True):
         class_name = f'{class_name.replace(dna_prefix, ":")}, :MovementTravelAndTransportation'
-    if class_name == owl_thing:   # Generic return from query_ontology but need to correct for a verb
-        class_name = event_and_state_class
+    if class_name == owl_thing2:   # Generic return from query_exact but need to correct for a verb
+        return event_and_state_class
     return class_name.replace(dna_prefix, ':')
 
 
@@ -363,31 +351,32 @@ def _check_for_noun_idiom_or_class(noun_text: str, noun_type: str, sentence_text
             noun_ttl = get_noun_idiom(noun, noun_text, noun_type, sentence_text, noun_iri)
     if noun_ttl:
         noun_str = str(noun_ttl)
-        if 'noun_end' in noun_str or 'noun_iri' in noun_str:
-            # For example, the idiom for "soldier" is ":Person noun_end noun_iriSoldierAffiliation a :Affiliation ;
-            #   :affiliated_with :ArmedForcenoun_iri ; :affiliated_agent noun_iri ."
+        if 'noun_iri' in noun_str:
+            # For example, the idiom for 'soldier' (:Person . affiliation Soldier ArmedForce) results in the
+            #    Turtle, ":Person . noun_iriSoldierAffiliation a :Affiliation ; "
+            #    :affiliated_agent noun_iri ; :affiliated_with noun_iriArmedForce ."
             new_noun_ttl = []
             for ttl_stmt in noun_ttl:
                 if 'noun_iri' in ttl_stmt:
+                    if 'Affiliation' in noun_str:
+                        affiliated_with = noun_str.split(':affiliated_with noun_iri')[1].split(' .')[0]
+                        ttl_stmt += f' noun_iri{affiliated_with} a :{affiliated_with} .'
                     ttl_stmt = ttl_stmt.replace('noun_iri', noun_iri)
-                if 'noun_end' in ttl_stmt:
-                    ttl_stmt = ttl_stmt.replace('noun_end', '.')
                 new_noun_ttl.append(ttl_stmt)
             return new_noun_ttl
         else:
             return noun_ttl
     # Noun not found in idioms, so check the ontologies
-    class_name = query_ontology(noun_text, query_match, query_match)   # Check for exact match
-    if class_name == owl_thing:
-        class_name = query_ontology(noun_text, query_noun, domain_query_noun)         # Check for more general match
-        if class_name == owl_thing:
-            class_name = query_ontology(noun_text, query_event, domain_query_event)   # Check for event/verb match
-    if class_name != owl_thing:
+    class_name = query_exact_and_approx_match(noun_text, query_noun, domain_query_noun)   # Check as a noun
+    if class_name == owl_thing2:
+        class_name = query_exact_and_approx_match(noun_text, query_event, domain_query_event)  # Check as an event/verb
+    if class_name != owl_thing2:
         return _get_ttl_for_noun_class(noun_text, noun_type, noun_iri, class_name, processed_locs)
-    if class_name == owl_thing and check_syns:      # Nothing found for the word as a noun
-        for word in get_synonym(noun_text, True):   # Check synonyms
+    if class_name == owl_thing2 and check_syns:      # Nothing found for the word as a noun
+        for word in get_synonym(noun_text, True):    # Check synonyms
+            # False below indicates NOT to check synonyms of synonyms!
             word_ttl = _check_for_noun_idiom_or_class(word, noun_type, sentence_text, noun_iri, processed_locs, False)
-            if word_ttl:
+            if word_ttl and owl_thing2 not in str(word_ttl):
                 return word_ttl
         # Nothing found for the word synonyms - Check the dictionary for alternate terms
         class_name = check_dictionary(noun_text, True)    # True = Check nouns first
@@ -419,6 +408,8 @@ def _get_ttl_for_noun_class(noun_text: str, noun_type: str, noun_iri: str, class
                     break
     if 'PLURAL' in noun_type and 'PERSON' not in noun_type:
         class_name = f'{class_name}, :Collection'
+    if class_name == owl_thing:
+        class_name = owl_thing2
     noun_turtle.append(f'{noun_iri} a {class_name.replace(dna_prefix, ":")} ; rdfs:label "{noun_text}" .')
     if noun_type.startswith('NEG'):
         noun_turtle.append(f'{noun_iri} :negation true .')

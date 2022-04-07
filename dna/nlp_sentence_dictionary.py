@@ -25,10 +25,6 @@ verb_prt_file = os.path.join(resources_root, 'verb-prt-idioms.pickle')
 with open(verb_prt_file, 'rb') as inFile:
     verb_prt_dict = pickle.load(inFile)
 
-verb_xcomp_file = os.path.join(resources_root, 'verb-xcomp-idioms.pickle')
-with open(verb_xcomp_file, 'rb') as inFile:
-    verb_xcomp_dict = pickle.load(inFile)
-
 
 def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Language, gender: str,
                                family_dict: dict, sentence_offset: int):
@@ -107,11 +103,7 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
     for child in token.children:
         if child.dep_ == 'xcomp':   # Clausal complement - e.g., 'he attempted robbing the bank' (xcomp = robbing)
-            if token.lemma_ in verb_xcomp_dict.keys():
-                first_verb = verb_xcomp_dict[token.lemma_].split(' > :')[1].split(' ')[0].lower()
-            else:
-                first_verb = token.lemma_
-            verb_dict['verb_processing'] = f'xcomp > :{first_verb}, {child.lemma_}'
+            verb_dict['verb_processing'] = f'xcomp > {token.lemma_}, {child.lemma_}'
             process_verb(child, dictionary, nlp, gender, family_dict)
         elif 'prt' in child.dep_:     # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
             verb_dict['verb_text'] = f'{ent} {child.text}'

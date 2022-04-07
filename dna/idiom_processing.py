@@ -71,7 +71,7 @@ def determine_processing_be(verb_dict: dict) -> list:
                         break
         if dsl:
             return dsl
-    return ['subj > :EnvironmentAndCondition ; :has_holder subj']
+    return ['subj > :EnvironmentAndCondition ; :has_topic dobj ; :has_holder subj']
 
 
 def get_class_names(tree: Tree) -> str:
@@ -126,6 +126,10 @@ def get_noun_idiom(noun: str, noun_phrase: str, noun_type: str, sentence: str, n
             process_ttl.append(f'{noun_iri} rdfs:label "{noun_phrase}" .')
             if noun_type.startswith('NEG'):
                 process_ttl.append(f'{noun_iri} :negation true .')
+    else:
+        if space in noun:
+            head_noun = get_head_noun(noun)
+            process_ttl = get_noun_idiom(head_noun, noun, noun_type, sentence, noun_iri)
     return process_ttl
 
 
@@ -199,7 +203,7 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
             else:
                 result = noun_classes
         if result and affiliation_details:
-            result += f'. noun_iri{affiliation_details[0]}Affiliation ; :affiliated_agent noun_iri ; ' \
+            result += f' . noun_iri{affiliation_details[0]}Affiliation a :Affiliation ; :affiliated_agent noun_iri ; ' \
                       f':affiliated_with noun_iri{affiliation_details[1]}'
     elif tree.data == 'verb_rule':        # Example: "Agent dobj > :CaringForDependents ; :has_affected_agent dobj"
         objects = []
@@ -264,7 +268,10 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
         result = get_class_names(tree.children[0])
         for i in range(1, len(tree.children)):
             if tree.children[i].data == 'topic':
-                result += f'; :has_topic :{tree.children[i].children[0].children[0].children[0].value} '
+                if tree.children[i].children[0].data == 'dobj':
+                    result += '; :has_topic dobj '
+                else:
+                    result += f'; :has_topic :{tree.children[i].children[0].children[0].children[0].value} '
             elif tree.children[i].data == 'word_detail':
                 result += f"; :word_detail '{tree.children[i].children[0].value}' "
             elif tree.children[i].data == 'holder':
@@ -283,13 +290,13 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
         if prep_found:        # Preposition must be found in the sentence to continue
             result = parse_idiom(complex_rule, sentence, term_dict, preps)
             result = result.replace('pobj', f'pobj(prep_{preposition})')
-    elif tree.data == 'xcomp_rule':                              # Example: "xcomp > :Attempt, xcompattack"
-        verb_classes = get_class_names(tree.children[0])
-        verb = {tree.children[1].value}
-        if ":Ignore" in result:
-            result = f'xcomp({verb})'
+    elif tree.data == 'xcomp_rule':                              # Example: "xcomp > attempt, xcompattack"
+        verb1 = tree.children[0].value
+        verb2 = tree.children[1].value
+        if "ignore" in result.lower():
+            result = f'xcomp({verb2})'
         else:
-            result = f'xcomp({verb_classes}, {verb})'
+            result = f'xcomp({verb1}, {verb2})'
     return result
 
 
