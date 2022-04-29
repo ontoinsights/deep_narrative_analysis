@@ -11,7 +11,6 @@
 #                          # If so, following the 'detail_type' entry would be another 'preps' element
 #                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_SINGNOUN'}]}]}]}]}]}
 
-import copy
 import logging
 import uuid
 
@@ -77,7 +76,9 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
             new_loc = get_sentence_location(sent_dict, last_loc)
             if not last_loc:
                 last_loc = new_loc
+        have_date_info = False
         if 'TIMES' in sent_keys or 'EVENTS' in sent_keys:
+            have_date_info = True
             # Format of last_date: ('before'|'after'|'') (PointInTime date)
             last_date, date_ttl = get_sentence_time(sent_dict, last_date, processed_dates)
             if date_ttl:
@@ -105,7 +106,8 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
                     xcomp_dict[objects_string] = verb[objects_string]
         for verb in sent_dict[verbs_string]:
             objects = []   # Objects are unique to the verb
-            sent_details = [sentence_text, sent_dict['offset'], empty_string, last_date, last_loc, new_loc]
+            sent_details = [sentence_text, sent_dict['offset'], empty_string, last_date, have_date_info,
+                            last_loc, new_loc]
             if 'verb_processing' in verb.keys() and 'xcomp >' in verb['verb_processing']:  # Is xcomp's ROOT verb
                 # Can ignore the root verb since we have the xcomp processing
                 continue
@@ -125,9 +127,6 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
                 all_objects.extend(objects)   # Retain all objects, since they are associated with the verb
             sentence_ttl_list.extend(new_ttl_list)
         graph_ttl_list.extend(sentence_ttl_list)
-        # Update last_nouns to all the subjects/objects of the sentence
-        add_unique_to_array(all_objects, subjects)   # Add objects -> subjects
-        last_nouns = copy.deepcopy(subjects)     # Reset last_nouns to the nouns from the current sentence
         # Update the last_loc
         if new_loc:
             last_loc = new_loc
@@ -137,7 +136,7 @@ def create_event_turtle(narr_gender: str, sentence_dicts: list) -> list:
 
 # Functions internal to the module but accessible to testing
 def create_ttl_for_prep_detail(prep_details: list, prepositions: list, event_iri: str, narr_gender: str,
-                               last_nouns: list, processed_locs: dict, sentence_text: str, turtle: list) -> list:
+                               last_nouns: list, processed_locs: dict, sentence_text: str) -> list:
     """
     Parse the details for a verb's prepositions and create the corresponding Turtle. Note that
     dates/times are not handled in this code, but for the sentence overall (in create_event_turtle).
@@ -153,8 +152,6 @@ def create_ttl_for_prep_detail(prep_details: list, prepositions: list, event_iri
     :param processed_locs: A dictionary of location texts (keys) and their IRI (values) of
                            all locations already processed
     :param sentence_text: The full text of the sentence (needed for checking for idioms)
-    :param turtle: The current Turtle rendering of the sentence to which the preposition object
-                   details are added
     :returns: An array holding the tuples for the preposition and its object
     """
     prep_turtle = []
@@ -174,9 +171,10 @@ def create_ttl_for_prep_detail(prep_details: list, prepositions: list, event_iri
             prep_turtle.append(f'{event_iri} {prep_to_predicate_for_locs[prep_text]} {loc_iri} .')
             prepositions.append((prep_text, obj_text, obj_type, loc_iri))
             continue
-        # Resolve any co-reference and get object's IRI (from check_nouns)
+        # Resolve any co-reference and get object's IRI (from s)
         prep_dict = {'objects': [{'object_text': obj_text,
                                   'object_type': obj_type}]}
+        # True indicates that x
         obj_text, obj_type, obj_iri = check_nouns(narr_gender, prep_dict, objects_string, last_nouns)[0]
         noun_ttl = get_noun_ttl(obj_iri, obj_text, obj_type, sentence_text, last_nouns, processed_locs)
         if noun_ttl:
@@ -201,8 +199,6 @@ def create_ttl_for_prep_detail(prep_details: list, prepositions: list, event_iri
                 prep_turtle.append(f'{event_iri} {prep_to_predicate_for_locs[prep_text]} {obj_iri} .')
             elif prep_text in ('about', 'from', 'in', 'of', 'to'):
                 prep_turtle.append(f'{event_iri} :has_topic {obj_iri} .')
-    if prep_turtle:
-        turtle.extend(prep_turtle)
     return prep_turtle
 
 
@@ -263,8 +259,9 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
     :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
                         indicating the gender of the narrator
     :param sentence_details: An array holding the strings, sentence_text (index 0), offset (index 1),
-                             xcomp_processing idiom rule (index 2), last_date (index 3), last_loc (index 4)
-                             and new_loc (index 5)
+                             xcomp_processing idiom rule (index 2), last_date (index 3),
+                             have_date_info (index 4, indicating that last_date is new),
+                             last_loc (index 5) and new_loc (index 6)
     :param verb_dict: The verb details from the sentence dictionary
     :param is_xcomp_subjects: Boolean indicating that the subjects come from the root verb, which is passive
     :param subjects: Array of tuples that are the subject text, type and IRI
@@ -286,7 +283,7 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
     if 'negation' in verb_dict.keys():
         negated = True
         ttl_list.append(f'{event_iri} :negation true .')
-    process_event_date(sentence_text, event_iri, sentence_details[3], ttl_list)    # Process the date of the event
+    process_event_date(sentence_text, event_iri, sentence_details[3], sentence_details[4], ttl_list)
     # Have subject details already; Get object details
     if objects_string in verb_dict.keys():
         # Check previous and current sentence nouns
@@ -296,14 +293,15 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
     _process_subjects_and_objects(objects, sentence_text, ttl_list, last_nouns, processed_locs)
     # Get and process the prepositions and their objects
     prepositions = []        # List of tuples (preposition text, object text, object type, object IRI)
-    prep_ttl = []            # Expediency for idiom processing
+    prep_ttl = []            # Turtle related to prepositional objects
     if preps_string in verb_dict.keys():
         for prep_dict in verb_dict[preps_string]:
             prep_details = get_preposition_tuples(prep_dict)  # An array of tuples of the prep and object text/type
             # Get IRI and add Turtle for the object (if new)
             if prep_details:
                 prep_ttl.extend(create_ttl_for_prep_detail(prep_details, prepositions, event_iri, narr_gender,
-                                                           last_nouns, processed_locs, sentence_text, ttl_list))
+                                                           last_nouns, processed_locs, sentence_text))
+        ttl_list.extend(prep_ttl)
     # Map verbs and related details to the ontology - Starting with idioms
     if sentence_details[2]:
         processing = [sentence_details[2]]
@@ -332,7 +330,7 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
     # Origin is the location defined by the preposition 'from' OR the last location/from the previous sentence
     ttl_str = str(ttl_list)
     if ':Movement' in ttl_str and preps_string in verb_dict.keys() and "'from'" not in str(verb_dict[preps_string]):
-        loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[4], processed_locs)
+        loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[5], processed_locs)
         # Will use the location returned, and that Turtle is already defined - no need to use loc_ttl
         ttl_list.append(f'{event_iri} :has_origin {loc_iri} .')
     verb_label = verb_dict['verb_text']
@@ -367,10 +365,10 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
             location_ttl.replace('location', 'has_destination') in ttl_str):
         # No location from the sentence dictionary, so use/persist the last location
         # That Turtle is already defined - no need to check loc_ttl
-        if sentence_details[5]:
-            loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[5], processed_locs)
+        if sentence_details[6]:
+            loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[6], processed_locs)
         else:
-            loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[4], processed_locs)
+            loc_iri, loc_ttl = get_location_iri_and_ttl(sentence_details[5], processed_locs)
         ttl_list.append(f'{event_iri} :has_location {loc_iri} .')
     # Finish up by adding the label and sentiment and doing final xcomp cleanup
     labels = [verb_label, xcomp_label, using_label, aux_label]
@@ -380,11 +378,6 @@ def process_sentence_verb(narr_gender: str, sentence_details: list, verb_dict: d
     ttl_list.append(f'{event_iri} :sentiment {get_sentence_sentiment(sentence_text)} .')
     if xcomp_label:
         ttl_list = handle_xcomp_cleanup(ttl_list, event_iri, subjects, is_xcomp_subjects)
-    # Lastly, add the prepositional objects to the objects array (which is then added to last_nouns)
-    prep_objs = []
-    for prep_text, prep_obj_text, prep_obj_type, prep_obj_iri in prepositions:
-        prep_objs.append((prep_obj_text, prep_obj_type, prep_obj_iri))
-    add_unique_to_array(prep_objs, objects)
     return event_iri, ttl_list
 
 
@@ -413,4 +406,3 @@ def _process_subjects_and_objects(nouns: list, sentence_text: str, turtle: list,
         noun_ttl = get_noun_ttl(noun_iri, noun_text, noun_type, sentence_text, last_nouns, processed_locs)
         if noun_ttl:
             turtle.extend(noun_ttl)
-    return

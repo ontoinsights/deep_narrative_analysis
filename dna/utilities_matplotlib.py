@@ -47,7 +47,6 @@ def display_horiz_histogram(y_values: tuple, x_values: tuple, x_label: str, titl
     draw_figure(window_histogram["-CANVAS-"].TKCanvas, fig)
     # Non-blocking window
     window_histogram.read(timeout=0)
-    return
 
 
 def draw_figure(canvas, figure) -> FigureCanvasTkAgg:

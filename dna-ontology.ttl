@@ -2029,7 +2029,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:AttackDamageAndAssault
 <urn:ontoinsights:dna:AttackDamageAndAssault> rdf:type owl:Class ;
                                               rdfs:subClassOf <urn:ontoinsights:dna:AggressiveOrHostileAct> ;
-                                              owl:disjointWith <urn:ontoinsights:dna:Repair> ;
+                                              owl:disjointWith <urn:ontoinsights:dna:MaintenanceAndRepair> ;
                                               rdfs:label "Attack, Damage and Assault" ;
                                               <urn:ontoinsights:dna:definition> "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
                                               <urn:ontoinsights:dna:noun_synonym> "assailant" ,
@@ -2326,7 +2326,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                            rdfs:subClassOf <urn:ontoinsights:dna:AnthropogenicFeature> ;
                                            rdfs:label "Building and Dwelling" ;
                                            <urn:ontoinsights:dna:definition> "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
-                                           <urn:ontoinsights:dna:example> "Examples of BuildingAndDwelling include a house, factory, hospital, apartments, etc." .
+                                           <urn:ontoinsights:dna:example> "Examples of BuildingAndDwelling include a house, factory, hospital, apartments, shops/stores, etc." .
 
 
 ###  urn:ontoinsights:dna:BuildingMaterialAndStone
@@ -6379,7 +6379,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                               rdfs:label "Change" ;
                               <urn:ontoinsights:dna:definition> "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :assessment predicate." ;
-                              <urn:ontoinsights:dna:example> "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
+                              <urn:ontoinsights:dna:example> "Examples are changes in the amount of something (such as food, water or schools), an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
                               <urn:ontoinsights:dna:noun_synonym> "adaptation" ,
                                                                   "adapting" ,
                                                                   "adjusting" ,
@@ -6969,6 +6969,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                     "deflating" ,
                                                                     "drop" ,
                                                                     "dropping" ,
+                                                                    "eroding" ,
                                                                     "lessening" ,
                                                                     "lowering" ,
                                                                     "reducing" ,
@@ -6978,6 +6979,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                     "decrease" ,
                                                                     "deflate" ,
                                                                     "drop" ,
+                                                                    "eat away" ,
+                                                                    "erode" ,
                                                                     "lessen" ,
                                                                     "lower" ,
                                                                     "reduce" ,
@@ -7344,6 +7347,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "coaching" ,
                                                                             "college" ,
                                                                             "course" ,
+                                                                            "degree" ,
                                                                             "diploma" ,
                                                                             "education" ,
                                                                             "faculty" ,
@@ -7667,7 +7671,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 owl:disjointWith <urn:ontoinsights:dna:Income> ;
                                 rdfs:label "Expenses" ;
                                 <urn:ontoinsights:dna:definition> "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate." ;
-                                <urn:ontoinsights:dna:example> "Examples of expenses are rent or mortgage payments, tuition at schools, money spent to buy foood or water, etc." ;
+                                <urn:ontoinsights:dna:example> "Examples of expenses are rent or mortgage payments, tuition for education, money spent to buy food or water, etc." ;
                                 <urn:ontoinsights:dna:noun_synonym> "costs" .
 
 
@@ -8833,6 +8837,41 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "device" .
 
 
+###  urn:ontoinsights:dna:MaintenanceAndRepair
+<urn:ontoinsights:dna:MaintenanceAndRepair> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
+                                            rdfs:label "Maintenance and Repair" ;
+                                            <urn:ontoinsights:dna:definition> "Any act that maintains/fixes/mends/adjusts/restores an entity." ;
+                                            <urn:ontoinsights:dna:noun_synonym> "fixing" ,
+                                                                                "maintaining" ,
+                                                                                "mending" ,
+                                                                                "patch" ,
+                                                                                "patching" ,
+                                                                                "rebuilding" ,
+                                                                                "reconditioning" ,
+                                                                                "renewal" ,
+                                                                                "renewing" ,
+                                                                                "renovating" ,
+                                                                                "renovation" ,
+                                                                                "repairing" ,
+                                                                                "restoration" ,
+                                                                                "revamping" ;
+                                            <urn:ontoinsights:dna:verb_synonym> "fix" ,
+                                                                                "maintain" ,
+                                                                                "mend" ,
+                                                                                "patch" ,
+                                                                                "put back together" ,
+                                                                                "rebuild" ,
+                                                                                "recondition" ,
+                                                                                "renew" ,
+                                                                                "renovate" ,
+                                                                                "repair" ,
+                                                                                "restore" ,
+                                                                                "revamp" ,
+                                                                                "take care of" ,
+                                                                                "touch up" .
+
+
 ###  urn:ontoinsights:dna:ManufacturingBusiness
 <urn:ontoinsights:dna:ManufacturingBusiness> rdf:type owl:Class ;
                                              rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -9332,10 +9371,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:label "Organization" ;
                                     <urn:ontoinsights:dna:definition> "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
                                     <urn:ontoinsights:dna:noun_synonym> "association" ,
+                                                                        "business" ,
                                                                         "company" ,
+                                                                        "consortium" ,
                                                                         "corporation" ,
+                                                                        "firm" ,
                                                                         "institution" ,
-                                                                        "organisation" .
+                                                                        "organisation" ,
+                                                                        "syndicate" .
 
 
 ###  urn:ontoinsights:dna:PTSD
@@ -10100,38 +10143,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       <urn:ontoinsights:dna:definition> "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
 
 
-###  urn:ontoinsights:dna:Repair
-<urn:ontoinsights:dna:Repair> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
-                              rdfs:label "Repair" ;
-                              <urn:ontoinsights:dna:definition> "Any act that fixes/mends/adjusts/restores an entity that is broken, damaged or faulty." ;
-                              <urn:ontoinsights:dna:noun_synonym> "fixing" ,
-                                                                  "mending" ,
-                                                                  "patch" ,
-                                                                  "patching" ,
-                                                                  "rebuilding" ,
-                                                                  "reconditioning" ,
-                                                                  "renewal" ,
-                                                                  "renewing" ,
-                                                                  "renovating" ,
-                                                                  "renovation" ,
-                                                                  "repairing" ,
-                                                                  "restoration" ,
-                                                                  "revamping" ;
-                              <urn:ontoinsights:dna:verb_synonym> "fix" ,
-                                                                  "mend" ,
-                                                                  "patch" ,
-                                                                  "put back together" ,
-                                                                  "rebuild" ,
-                                                                  "recondition" ,
-                                                                  "renew" ,
-                                                                  "renovate" ,
-                                                                  "repair" ,
-                                                                  "restore" ,
-                                                                  "revamp" ,
-                                                                  "touch up" .
-
-
 ###  urn:ontoinsights:dna:RequestAndAppeal
 <urn:ontoinsights:dna:RequestAndAppeal> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:CommunicationAndSpeechAct> ;
@@ -10786,6 +10797,21 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "The act of an individual (animal or Person) taking their own life." ;
                                <urn:ontoinsights:dna:verb_synonym> "kill oneself" ,
                                                                    "take one's life" .
+
+
+###  urn:ontoinsights:dna:Supervision
+<urn:ontoinsights:dna:Supervision> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:AttentionAndFocus> ;
+                                   rdfs:label "Supervision" ;
+                                   <urn:ontoinsights:dna:definition> "The act of a Person paying attention to/overseeing/monitoring someone or something. The entity who/which is supervised is indicated by the :has_topic property." ;
+                                   <urn:ontoinsights:dna:noun_synonym> "managing" ,
+                                                                       "monitoring" ,
+                                                                       "overseeing" ,
+                                                                       "supervising" ;
+                                   <urn:ontoinsights:dna:verb_synonym> "mange" ,
+                                                                       "monitor" ,
+                                                                       "oversee" ,
+                                                                       "supervise" .
 
 
 ###  urn:ontoinsights:dna:SupportForGovernment
@@ -15453,8 +15479,8 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 
 <urn:ontoinsights:dna:meets> <urn:ontoinsights:dna:noun_synonym> "convergence" ;
-                             <urn:ontoinsights:dna:verb_synonym> "touch" ,
-                                                                 "converge" ;
+                             <urn:ontoinsights:dna:verb_synonym> "converge" ,
+                                                                 "touch" ;
                              rdfs:label "meets" ;
                              <urn:ontoinsights:dna:noun_synonym> "meet" ;
                              <urn:ontoinsights:dna:verb_synonym> "meet" ;

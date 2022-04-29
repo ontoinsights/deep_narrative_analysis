@@ -43,7 +43,6 @@ def check_to_loc(dictionary: dict, list_locs: list, new_locs: list):
             for loc in list_locs:
                 if loc in prep_str:
                     new_locs.append(loc)
-    return
 
 
 def get_event_time_from_domain(sent_date: str, time: str) -> str:
@@ -100,6 +99,8 @@ def get_location_iri_and_ttl(loc: str, processed_locs: dict) -> (str, list):
              array of strings that are the Turtle for a new location
     """
     loc_ttl = []
+    if loc.startswith('the '):
+        loc = loc.replace('the ', empty_string)
     loc_iri = _check_if_loc_is_known(loc, processed_locs)
     if loc_iri:
         return loc_iri, loc_ttl
@@ -309,13 +310,15 @@ def get_sentence_time(sentence_dictionary: dict, last_date: str, processed_dates
         return time, time_ttl
 
 
-def process_event_date(sent_text: str, event_iri: str, last_date: str, ttl_list: list):
+def process_event_date(sent_text: str, event_iri: str, last_date: str, have_new_date: bool, ttl_list: list):
     """
     Creates the Turtle for an event's date.
 
     :param sent_text: The text of the sentence being processed
     :param event_iri: IRI identifying the event
     :param last_date: A string holding the date text
+    :param have_new_date: A boolean indicating that the sentence text included new time information (if
+                          true); Otherwise, the time is determined from an earlier sentence
     :param ttl_list: An array of the Turtle statements for the event (updated in this function)
     :returns: None (ttl_list is updated)
     """
@@ -325,9 +328,10 @@ def process_event_date(sent_text: str, event_iri: str, last_date: str, ttl_list:
     elif last_date.startswith('after') or 'eventually' in sent_text.lower() \
             or 'afterwards' in sent_text.lower() or 'finally' in sent_text.lower():
         ttl_list.append(f'{event_iri} :has_earliest_beginning {date_iri} .')
-    else:
+    elif have_new_date:
         ttl_list.append(f'{event_iri} :has_time {date_iri} .')
-    return
+    else:
+        ttl_list.append(f'{event_iri} :has_earliest_beginning {date_iri} .')
 
 
 def update_time(last_date: str, number: int, increment: str) -> str:
@@ -418,7 +422,6 @@ def _add_str_to_array(sent_dictionary: dict, key: str, array: list):
                         break
         if array_text and array_text not in array:
             array.append(array_text)
-    return
 
 
 def _check_if_loc_is_known(loc_text: str, processed_locs: dict) -> str:

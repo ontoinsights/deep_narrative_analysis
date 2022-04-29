@@ -53,7 +53,7 @@ family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'bro
 months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December']
 
-processed_prepositions = ('about', 'after', 'at', 'before', 'during', 'in', 'inside', 'into',
+processed_prepositions = ('about', 'after', 'as', 'at', 'before', 'during', 'in', 'inside', 'into',
                           'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with', 'without')
 
 # Words that introduce a 'causal' clause, where the main clause is the effect
@@ -88,7 +88,6 @@ def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):
         values = dictionary[key]
     values.append(value_type(value))
     dictionary[key] = values
-    return
 
 
 def add_unique_to_array(new_array: list, array: list):
@@ -102,7 +101,6 @@ def add_unique_to_array(new_array: list, array: list):
     for new_elem in new_array:
         if new_elem not in array:      # Element is NOT in the array
             array.append(new_elem)     # So, add it
-    return
 
 
 def capture_error(message: str, notify: bool):
@@ -120,7 +118,6 @@ def capture_error(message: str, notify: bool):
                        font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
     else:
         sg.popup_error(message, font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
-    return
 
 
 def update_dictionary_count(dictionary: dict, key: str):
@@ -132,4 +129,3 @@ def update_dictionary_count(dictionary: dict, key: str):
     :returns: None (Dictionary is updated)
     """
     dictionary[key] = dictionary[key] + 1 if key in dictionary.keys() else 1
-    return

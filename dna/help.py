@@ -174,4 +174,3 @@ def display_popup_help(event: str):
                       size=(72, 15), text_color='black',
                       title=title_dict[event], background_color='white',
                       button_color='dark blue', icon=encoded_logo)
-    return

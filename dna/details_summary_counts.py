@@ -50,7 +50,6 @@ def display_dates_events(narratives: str):
 
     # Done
     window_years_events.close()
-    return
 
 
 def display_locations(narratives: str):
@@ -92,7 +91,6 @@ def display_locations(narratives: str):
 
     # Done
     window_locations.close()
-    return
 
 
 def get_y_x_values(number_narrators: int, variable: str, query: str, store_name: str) -> (tuple, tuple):
@@ -167,4 +165,3 @@ def output_words_in_csv(narratives: str, nouns_in_csv: int, verbs_in_csv: int, d
                 verb_writer.writerow([key, value])
             else:
                 break
-    return

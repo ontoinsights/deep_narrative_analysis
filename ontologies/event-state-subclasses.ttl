@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 5 2022
+# Last Modified: April 17 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -141,7 +141,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Change" ;
   :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :assessment predicate." ;
-  :example "Examples are changes in the amount of food, water or schools, an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
+  :example "Examples are changes in the amount of something (such as food, water or schools), an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
   :noun_synonym "conversion", "adjustment", "alteration", "adaptation", "trend", "changing", "adjusting", "converting", "altering", "adapting", "trending" ;
   :verb_synonym "change", "adjust", "convert", "alter", "adapt", "trend" .
 
@@ -189,8 +189,8 @@
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease" ;
   :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :assessment predicate." ;
-  :noun_synonym "reduction", "drop", "lessening", "lowering", "declining", "deflating", "subsiding", "dropping", "decreasing", "reducing" ;
-  :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop", "decrease", "reduce" .
+  :noun_synonym "reduction", "drop", "lessening", "lowering", "declining", "deflating", "subsiding", "dropping", "decreasing", "reducing", "eroding" ;
+  :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop", "decrease", "reduce", "erode", "eat away" .
 
 :DelayAndWait a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -244,7 +244,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Educational Event" ;
   :definition "An Event involved with teaching such as a specific class/course, the hiring of teachers or a new approach to testing." ;
-  :noun_synonym "education", "class", "course", "test", "teacher", "faculty", "teaching", "student", "professor", "training", "schooling", "tutoring", "instruction", "instructing", "coaching", "learning", "college", "diploma" ;
+  :noun_synonym "education", "class", "course", "test", "teacher", "faculty", "teaching", "student", "professor", "training", "schooling", "tutoring", "instruction", "instructing", "coaching", "learning", "college", "diploma", "degree" ;
   :verb_synonym "educate", "teach", "test", "train", "tutor", "instruct", "coach", "learn", "take a class", "attend school/college", "go to school/college" .
 
 :Election a owl:Class ;

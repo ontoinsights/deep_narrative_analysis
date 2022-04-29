@@ -49,4 +49,3 @@ def display_hypotheses(store_name: str):
 
     # Done
     window_hypotheses_list.close()
-    return

@@ -134,12 +134,12 @@ def get_named_entity_in_string(text: str) -> (str, str):
     return empty_string, empty_string
 
 
-def get_head_noun(text: str) -> (str, str):
+def get_head_word(text: str) -> (str, str):
     """
-    Creates a spacy Doc from the input text and returns the 'head' noun.
+    Creates a spacy Doc from the input text and returns the lemma and text of the 'head'/root noun/verb.
 
     :param text: The text to parse
-    :returns: The lemma of the head noun in the input text and its full text
+    :returns: The lemma of the root word in the input text and its actual text
     """
     # TODO: Use more efficient way to get the lemma if there is only a single word in the text
     doc = nlp(text)

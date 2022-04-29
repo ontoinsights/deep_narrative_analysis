@@ -157,7 +157,6 @@ def display_graph(narrative_name: str, event_list: list, store_name: str, event_
         if event == sg.WIN_CLOSED:
             break
     window_graph.close()
-    return
 
 
 def get_event_data(narrative_name: str, store_name: str, event_iri: str) -> list:

@@ -208,7 +208,6 @@ def display_statistics(store_name: str):
 
     # Done
     window_stats_list.close()
-    return
 
 
 # Functions internal to the module
@@ -238,4 +237,3 @@ def _display_word_cloud(narratives: str, words_in_cloud: int):
                              icon=encoded_logo, element_justification='center').Finalize()
     draw_figure(window_cloud["-CANVAS-"].TKCanvas, fig)
     window_cloud.read()
-    return

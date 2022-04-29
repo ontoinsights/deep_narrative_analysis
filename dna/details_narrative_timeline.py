@@ -113,7 +113,6 @@ def display_metadata(narrative_name: str, narrator: str, store_name: str):
     window_metadata_list.find_element('narr_text', True).Widget.configure()
     # Non-blocking window
     window_metadata_list.read(timeout=0)
-    return
 
 
 def display_timeline(narrative_name: str, event_list: list, store_name: str):
@@ -194,4 +193,3 @@ def display_timeline(narrative_name: str, event_list: list, store_name: str):
         if event == sg.WIN_CLOSED:
             break
     window_timeline.close()
-    return

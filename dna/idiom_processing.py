@@ -8,9 +8,10 @@ import pickle
 from lark import Lark, Tree
 from lark import exceptions as lark_exceptions
 
-from nlp import get_head_noun
+from nlp import get_head_word
 from query_ontology_specific_classes import get_norp_emotion_or_lob
-from utilities import dna_prefix, empty_string, objects_string, preps_string, resources_root, space
+from utilities import dna_prefix, empty_string, event_and_state_class, objects_string, owl_thing2, preps_string, \
+    resources_root, space
 
 lark_file = os.path.join(resources_root, 'lark.txt')
 with open(lark_file, 'r') as inFile:
@@ -59,7 +60,7 @@ def determine_processing_be(verb_dict: dict) -> list:
         word_dicts = verb_dict[key_term]   # Acomp or object details are an array
         for word_dict in word_dicts:
             word_text = word_dict[word_dict_term]
-            word_ttl = _determine_norp_emotion_or_lob(get_head_noun(word_text)[0])
+            word_ttl = _determine_norp_emotion_or_lob(get_head_word(word_text)[0])
             if word_ttl:
                 dsl.append(word_ttl)
                 continue
@@ -71,7 +72,10 @@ def determine_processing_be(verb_dict: dict) -> list:
                         break
         if dsl:
             return dsl
-    return ['subj > :EnvironmentAndCondition ; :has_topic dobj ; :has_holder subj']
+        # TODO: Default processing for some text similar to 'She is tall' (e.g., not an emotion, ethnicity, ...)
+        if objects_string in verb_keys:
+            return ['subj > :EnvironmentAndCondition ; :has_topic dobj ; :has_holder subj']
+    return ['subj > :EnvironmentAndCondition ; :has_holder subj']
 
 
 def get_class_names(tree: Tree) -> str:
@@ -128,7 +132,7 @@ def get_noun_idiom(noun: str, noun_phrase: str, noun_type: str, sentence: str, n
                 process_ttl.append(f'{noun_iri} :negation true .')
     else:
         if space in noun:
-            head_noun = get_head_noun(noun)
+            head_noun = get_head_word(noun)
             process_ttl = get_noun_idiom(head_noun, noun, noun_type, sentence, noun_iri)
     return process_ttl
 
@@ -185,31 +189,38 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
             if result:                             # First non-empty result should be chosen
                 break
     elif tree.data == 'noun_rule':
-        # Example: "'back' & dobj > :ReturnRecoveryAndRelease ; :has_topic dobj"
+        # Example: "secretary": ":Person . affiliation Secretary Organization"
+        result = owl_thing2    # Default
         increment = 0
-        needed_text = ''
+        needed_text = empty_string
         affiliation_details = []
+        lob_detail = empty_string
         if tree.children[0].data == 'text':  # May have text to check for
             increment = 1
             needed_text = get_needed_text(tree.children[0])
         if not needed_text or needed_text in sentence:  # For the rule to be valid, needed_text must be in the sentence
             noun_classes = get_class_names(tree.children[increment])
             if (needed_text and len(tree.children) == 3) or (not needed_text and len(tree.children) == 2):
-                affiliation_details.append(tree.children[increment + 1].children[0].children[0].value)
-                affiliation_details.append(tree.children[increment + 1].children[1].children[0].value)
-            if needed_text:
-                if needed_text in sentence:     # For the rule to be valid, needed_text must be in the sentence
-                    result = noun_classes
-            else:
-                result = noun_classes
-        if result and affiliation_details:
-            result += f' . noun_iri{affiliation_details[0]}Affiliation a :Affiliation ; :affiliated_agent noun_iri ; ' \
-                      f':affiliated_with noun_iri{affiliation_details[1]}'
+                if tree.children[increment + 1].data == "affiliation_statement":
+                    affiliation_details.append(tree.children[increment + 1].children[0].children[0].value)
+                    affiliation_details.append(tree.children[increment + 1].children[1].children[0].value)
+                else:  # lob_statement
+                    lob_detail = tree.children[increment + 1].children[0].children[0].value
+            result = noun_classes
+        if result:
+            if affiliation_details:
+                result += f' . noun_iri{affiliation_details[0]}Affiliation a :Affiliation ; ' \
+                          f':affiliated_agent noun_iri ; ' \
+                          f':affiliated_with noun_iri{affiliation_details[1]}'
+            if lob_detail:
+                result += f'; :has_line_of_business :{lob_detail}'
     elif tree.data == 'verb_rule':        # Example: "Agent dobj > :CaringForDependents ; :has_affected_agent dobj"
+        result = event_and_state_class
         objects = []
         verbs = empty_string
         other_verb = empty_string
         property_details = []
+        property_refs = []
         for j in range(0, len(tree.children)):
             child = tree.children[j]
             if child.data == 'text':  # May have text to check for
@@ -229,6 +240,10 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
             elif child.data == 'property_detail':
                 property_details.append(
                     f'; :{child.children[0].children[0].children[0].value} {child.children[1].children[0].data}')
+            elif child.data == 'property_ref':
+                property_refs.append(
+                    f'; :{child.children[0].children[0].children[0].value} '
+                    f':{child.children[1].children[0].children[0].value}')
             elif child.data == 'other_verb':
                 other_verb = f'dobj {child.children[0].value}'
         if verbs:    # Might have broken out of the above loop, since the need_text was not in the sentence
@@ -262,6 +277,11 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
                         result += prop_detail.replace('dobj', obj_dict['dobj'])
                     if 'pobj' in prop_detail:
                         result += prop_detail.replace('pobj', obj_dict['pobj'])
+                for prop_detail in property_details:    # Example from above: ":has_affected_agent dobj"
+                    if 'dobj' in prop_detail:
+                        result += prop_detail.replace('dobj', obj_dict['dobj'])
+                for prop_ref in property_refs:    # Example ":has_topic :PoliticalEnvironment"
+                    result += prop_ref
     elif tree.data == 'verb_subject_rule':
         # Example: "subj > :EnvironmentAndConditionLineOfBusiness ; :has_topic :Judiciary ;
         #    :has_holder subj ; :word_detail 'attorney'"
@@ -290,13 +310,16 @@ def parse_idiom(tree: Tree, sentence: str, term_dict: dict, preps: list) -> str:
         if prep_found:        # Preposition must be found in the sentence to continue
             result = parse_idiom(complex_rule, sentence, term_dict, preps)
             result = result.replace('pobj', f'pobj(prep_{preposition})')
-    elif tree.data == 'xcomp_rule':                              # Example: "xcomp > attempt, xcompattack"
-        verb1 = tree.children[0].value
-        verb2 = tree.children[1].value
-        if "ignore" in result.lower():
-            result = f'xcomp({verb2})'
         else:
-            result = f'xcomp({verb1}, {verb2})'
+            result = event_and_state_class
+    elif tree.data == 'verb_xcomp_rule':          # Example: "xcomp > attempt, attack"
+        if len(tree.children) == 2:
+            verb1 = tree.children[0].value
+            verb2 = tree.children[1].value
+        else:
+            verb1 = f'{tree.children[0].value} {tree.children[1].value}'
+            verb2 = tree.children[2].value
+        result = f'xcomp({verb1}, {verb2})'
     return result
 
 

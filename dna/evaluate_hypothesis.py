@@ -67,4 +67,3 @@ def evaluate_hypothesis(store_name: str):
 
     # Done
     window_test_list.close()
-    return

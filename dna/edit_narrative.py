@@ -123,7 +123,6 @@ def display_edit_table(title: str, data_list: list, store_name: str):
 
     # Done
     window_table.close()
-    return
 
 
 def display_narratives_for_edit(store_name: str):
@@ -224,7 +223,6 @@ def display_narratives_for_edit(store_name: str):
 
     # Done
     window_edit.close()
-    return
 
 
 def display_row_for_edit(subj: str, pred: str, obj: str, del_flag: bool) -> (str, str, bool):

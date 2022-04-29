@@ -128,7 +128,6 @@ def display_narratives(store_name: str):
 
     # Done
     window_narrative_list.close()
-    return
 
 
 def get_narratives(store_name: str) -> dict:

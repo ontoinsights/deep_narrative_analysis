@@ -2,15 +2,25 @@
 # Called by create_event_turtle.py
 
 import logging
+import os
+import pickle
 import uuid
 
+from database import query_database
 from idiom_processing import get_verb_processing, process_idiom_detail
-from nlp import get_head_noun
+from nlp import get_head_word
 from query_ontology_and_sources import get_event_state_class, get_noun_ttl
-from utilities import empty_string, preps_string, space
+from utilities import empty_string, ontologies_database, preps_string, resources_root, space
 
 dobj_verb = 'dobj(verb)'
 has_location = ':has_location'
+
+query_permission = 'prefix : <urn:ontoinsights:dna:> SELECT ?permission WHERE { ' \
+                   'className rdfs:subClassOf* :Permission . BIND("true" as ?permission) } '
+
+verb_xcomp_file = os.path.join(resources_root, 'verb-xcomp-idioms.pickle')
+with open(verb_xcomp_file, 'rb') as inFile:
+    verb_xcomp_dict = pickle.load(inFile)
 
 
 def create_using_details(verb_dict: dict, event_iri: str, sent_text: str, turtle: list,
@@ -84,7 +94,9 @@ def create_verb_label(labels: list, subj_tuples: list, obj_tuples: list, prep_tu
     for prep_text, obj_text, obj_type, obj_iri in prep_tuples:
         if not prep_text or not obj_text:
             continue
-        if not (obj_type.endswith('GPE') or obj_type.endswith('LOC') or obj_type.endswith('FAC')):
+        if prep_text != 'after' and not (obj_type.endswith('GPE') or obj_type.endswith('LOC')
+                                         or obj_type.endswith('FAC')):
+            # "after xxx" designates a time which may not be part of the main subject/verb and likely confusing
             event_label += f' {prep_text} {obj_text}'
     if labels[2]:
         event_label += labels[2]
@@ -141,32 +153,28 @@ def handle_event_state_idiosyncrasies(event_state_turtle: str, sentence: str, ve
             subj_iris.append(subj_iri)
         iri_str = ', '.join(subj_iris)
         event_state_turtle = _clean_environment_condition(event_state_turtle, obj_tuples, iri_str)
-    if 'xcomp' in event_state_turtle:
-        if ', ' in event_state_turtle:
-            verb1_text = event_state_turtle.split('(')[1].split(', ')[0]
-            verb2_text = event_state_turtle.split(', ')[1].split(')')[0]
+    if 'xcomp' in event_state_turtle:    # Appears as ':Event_xyz a xcomp(root_verb_text, xcomp_verb_text)'
+        # Should always have 2 verbs, the root and the xcomp
+        verb1_text = event_state_turtle.split('(')[1].split(', ')[0]
+        verb2_text = event_state_turtle.split(', ')[1].split(')')[0]
+        # Determine if the first verb has an idiom defined
+        if verb1_text in verb_xcomp_dict.keys():
+            verb1_class = verb_xcomp_dict[verb1_text]
         else:
-            verb1_text = event_state_turtle.split('(')[1].split(')')[0]
-            verb2_text = empty_string
-        verb1_class = get_event_state_class(verb1_text)  # Get the Event/State class for the text
-        if verb2_text:
-            # Check for idiom (already handled the idiom for the first verb)
-            # This second verb is the xcomp and has not yet been handled by the idiom processing
-            xcomp_verb_dict = dict()
-            xcomp_verb_dict['verb_lemma'] = verb2_text
-            if preps_string in verb_dict.keys():
-                xcomp_verb_dict[preps_string] = verb_dict[preps_string]
-            verb2_processing = get_verb_processing(xcomp_verb_dict)
-            if verb2_processing:
-                # TODO: Is it sufficient to take the first result?
-                verb2_class = process_idiom_detail(verb2_processing, sentence, xcomp_verb_dict, prep_tuples)[0]
-                verb2_class = handle_event_state_idiosyncrasies(verb2_class, sentence, verb_dict, subj_tuples,
-                                                                obj_tuples, prep_tuples)
-            else:
-                verb2_class = get_event_state_class(verb2_text)  # Get the Event/State class for the text
+            verb1_class = get_event_state_class(verb1_text)  # Get the Event/State class for the text
+        # Check for second verb having an idiom (already handled the idiom for the first verb)
+        xcomp_verb_dict = dict()
+        xcomp_verb_dict['verb_lemma'] = verb2_text
+        if preps_string in verb_dict.keys():
+            xcomp_verb_dict[preps_string] = verb_dict[preps_string]
+        verb2_processing = get_verb_processing(xcomp_verb_dict)
+        if verb2_processing:
+            # TODO: Is it sufficient to take the first result?
+            verb2_class = process_idiom_detail(verb2_processing, sentence, xcomp_verb_dict, prep_tuples)[0]
+            verb2_class = handle_event_state_idiosyncrasies(verb2_class, sentence, verb_dict, subj_tuples,
+                                                            obj_tuples, prep_tuples)
         else:
-            # Only have the single verb (due to Ignore), return it
-            return f'{event_state_turtle.split("(")[0]}({verb1_class}) .'
+            verb2_class = get_event_state_class(verb2_text)  # Get the Event/State class for the text
         return f'{event_state_turtle.split("(")[0]}({verb1_class}, {verb2_class}) .'
     if 'dobj' in event_state_turtle:
         # Appears as dobj(Agent), dobj(Location), dobj(verb) or dobj (mutually exclusive)
@@ -175,7 +183,7 @@ def handle_event_state_idiosyncrasies(event_state_turtle: str, sentence: str, ve
             if dobj_verb in event_state_turtle:
                 # Get the class name for the dobj
                 if space in obj_text:
-                    obj_text = get_head_noun(obj_text)[0]
+                    obj_text = get_head_word(obj_text)[0]
                 obj_iris.append(get_event_state_class(obj_text))
             elif 'dobj(Agent)' not in event_state_turtle and 'dobj(Location)' not in event_state_turtle and \
                     dobj_verb not in event_state_turtle:
@@ -232,11 +240,14 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
                               which is passive
     :returns: An array of the revised Turtle statements and any new object details
     """
-    if 'xcomp(' in str(turtle) and ':Attempt' in str(turtle):
+    # Attempt or Ignore as the first verb means that a scoping root event is not needed
+    if 'xcomp(:Attempt, ' in str(turtle) or 'xcomp(:Ignore, ' in str(turtle):
         new_turtle = []
         for turtle_stmt in turtle:
             if 'xcomp(:Attempt, ' in turtle_stmt:
                 new_turtle.append(turtle_stmt.replace('xcomp(', empty_string).replace(')', empty_string))
+            elif 'xcomp(:Ignore, ' in turtle_stmt:
+                new_turtle.append(turtle_stmt.replace('xcomp(:Ignore, ', empty_string).replace(')', empty_string))
             else:
                 new_turtle.append(turtle_stmt)
         return new_turtle
@@ -250,6 +261,16 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
     #   but need the event for love)
     new_iri = f':Event_{str(uuid.uuid4())[:13]}'
     new_turtle = [f'{new_iri} :has_topic {event_iri}.']
+    # Get the type of ROOT event
+    scope_permission = False
+    for turtle_stmt in turtle:
+        if ' a xcomp' in turtle_stmt:
+            verb1_class = turtle_stmt.split('(')[1].split(',')[0].strip()
+            if query_database('select', query_permission.replace('className', verb1_class), ontologies_database):
+                scope_permission = True
+                # TODO: Not permitted, negates the event - Either RefusalAndRejection or negated Permission
+            break
+    # Update the Turtle and add the new scoping event
     for turtle_stmt in turtle:
         if turtle_stmt.startswith(':Event'):
             if ' a xcomp' in turtle_stmt:
@@ -263,21 +284,30 @@ def handle_xcomp_cleanup(turtle: list, event_iri: str, subj_tuples: list, is_xco
                 continue
             elif ':has_latest_end ' in turtle_stmt:
                 time_iri = turtle_stmt.split(':has_latest_end ')[1]
-                new_turtle.append(f'{event_iri} :has_time {time_iri}')
-                new_turtle.append(f'{new_iri} :has_latest_end {time_iri}')
-                new_turtle.append(f'{new_iri} :before {event_iri} .')
+                if scope_permission:
+                    new_turtle.append(f'{new_iri} :before {event_iri} .')
+                    new_turtle.append(f'{event_iri} :has_time {time_iri}')
+                    new_turtle.append(f'{new_iri} :has_latest_end {time_iri}')
+                else:
+                    new_turtle.append(turtle_stmt)
+                    new_turtle.append(f'{new_iri} :has_latest_end {time_iri}')
                 continue
             elif ':has_earliest_beginning ' in turtle_stmt:
                 time_iri = turtle_stmt.split(':has_earliest_beginning ')[1]
-                new_turtle.append(f'{event_iri} :has_time {time_iri}')
+                if scope_permission:
+                    new_turtle.append(f'{new_iri} :before {event_iri} .')
+                new_turtle.append(turtle_stmt)
                 new_turtle.append(f'{new_iri} :has_earliest_beginning {time_iri}')
-                new_turtle.append(f'{new_iri} :before {event_iri} .')
                 continue
             elif ':has_time ' in turtle_stmt:
                 time_iri = turtle_stmt.split(':has_time ')[1]
-                new_turtle.append(f'{event_iri} :has_earliest_beginning {time_iri}')
-                new_turtle.append(f'{new_iri} :has_time {time_iri}')
-                new_turtle.append(f'{new_iri} :before {event_iri} .')
+                if scope_permission:
+                    new_turtle.append(f'{new_iri} :before {event_iri} .')
+                    new_turtle.append(f'{event_iri} :has_earliest_beginning {time_iri}')
+                    new_turtle.append(f'{new_iri} :has_time {time_iri}')
+                else:
+                    new_turtle.append(turtle_stmt)
+                    new_turtle.append(f'{new_iri} :has_time {time_iri}')
                 continue
             elif has_location in turtle_stmt and ignore_has_location:
                 continue
@@ -348,5 +378,5 @@ def _verify_iri_requirements(event_state_turtle: str, noun_type: str) -> bool:
             ('(Location)' in event_state_turtle and
              (noun_type.endswith('GPE') or noun_type.endswith('LOC') or noun_type.endswith('FAC'))):
         return True
-    # TODO: May have a type of NOUN but its definition could indicate an agent or location
+    # TODO: May have a NOUN but its definition could indicate an agent or location / Does using WordNet address this?
     return False

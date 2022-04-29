@@ -6,7 +6,7 @@ rule: class_names
     | verb_rule
     | verb_preposition_rule
     | verb_subject_rule
-    | xcomp_rule
+    | verb_xcomp_rule
 
 class_names: entity_name ("," entity_name)*
 entity_name: ":" entity_text
@@ -15,10 +15,11 @@ entity_text: /[A-Za-z0-9_]+/
 complex_rule: paren_rule ("|" paren_rule)*
 paren_rule: "(" rule ")"
 
-noun_rule: ("'" text "' >")? class_names (affiliation_statement)?
+noun_rule: ("'" text "' >")? class_names (affiliation_statement | lob_statement)?
 affiliation_statement: ". affiliation" entity_text~2 
+lob_statement: ". lineofbusiness" entity_text
 
-verb_rule: ("'" text "'")? ("&")? (obj_detail ("&" obj_detail)*)? ">"? class_names (other_verb | property_detail)*
+verb_rule: ("'" text "'")? ("&")? (obj_detail ("&" obj_detail)*)? ">"? class_names (other_verb | property_detail | property_ref)*
 obj_detail: (entity_type)? object
 entity_type: agent | location
 agent: "Agent"
@@ -28,6 +29,7 @@ dobj: "dobj"
 pobj: "pobj"
 other_verb: ", dobj" WORD
 property_detail: ";" entity_name object
+property_ref: ";" entity_name entity_name
 
 verb_preposition_rule: "prep_" WORD complex_rule
 
@@ -36,7 +38,7 @@ topic: "; :has_topic" (entity_name | dobj)
 word_detail: "; :word_detail '" WORD "'"
 holder: "; :has_holder" WORD
 
-xcomp_rule: "xcomp > " WORD "," WORD
+verb_xcomp_rule: "xcomp > " WORD WORD? "," WORD
 
 text: WORD (WORD)*
  

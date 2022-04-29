@@ -19,7 +19,8 @@ from spacy.language import Language
 from spacy.tokens import Doc, Token
 
 from nlp_sentence_tokens import add_token_details
-from utilities import objects_string, resources_root, subjects_string, add_to_dictionary_values, processed_prepositions
+from utilities import empty_string, objects_string, resources_root, subjects_string, \
+    add_to_dictionary_values, processed_prepositions
 
 verb_prt_file = os.path.join(resources_root, 'verb-prt-idioms.pickle')
 with open(verb_prt_file, 'rb') as inFile:
@@ -56,7 +57,6 @@ def extract_dictionary_details(sentence: str, sentence_dicts: list, nlp: Languag
         if token.dep_ == 'ROOT':
             process_verb(token, sentence_dict, nlp, gender, family_dict)
     sentence_dicts.append(sentence_dict)
-    return
 
 
 def get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
@@ -75,7 +75,6 @@ def get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
             add_to_dictionary_values(sentence_dict, 'TIMES', ent.text, str)
         elif ent.label_ == 'EVENT':
             add_to_dictionary_values(sentence_dict, 'EVENTS', ent.text, str)
-    return
 
 
 def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, family_dict: dict):
@@ -101,12 +100,16 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
     verb_dict['tense'] = tense[0] if tense else 'Pres'
     # Processing is based on dependency parsing
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
+    prt = empty_string
+    xcomp = empty_string
     for child in token.children:
         if child.dep_ == 'xcomp':   # Clausal complement - e.g., 'he attempted robbing the bank' (xcomp = robbing)
-            verb_dict['verb_processing'] = f'xcomp > {token.lemma_}, {child.lemma_}'
+            xcomp = f'xcomp > {token.lemma_}, {child.lemma_}'
+            verb_dict['verb_processing'] = xcomp
             process_verb(child, dictionary, nlp, gender, family_dict)
         elif 'prt' in child.dep_:     # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
-            verb_dict['verb_text'] = f'{ent} {child.text}'
+            prt = f'{ent} {child.text}'
+            verb_dict['verb_text'] = prt
             # Check for a substitution in the verb_idioms dictionary
             check_text = f'{token.lemma_} {child.text}'
             if check_text in verb_prt_dict.keys():
@@ -154,5 +157,9 @@ def process_verb(token: Token, dictionary: dict, nlp: Language, gender: str, fam
             for prep_dep in child.children:
                 add_token_details(prep_dep, prep_dict, 'prep_details', gender, family_dict)
             add_to_dictionary_values(verb_dict, 'preps', prep_dict, dict)
+    # Need to adjust the processing if have both prt and xcomp children
+    if prt and xcomp:
+        # Replace the verb lemma with the prt text in the 'verb_processing' entry in the verb dictionary
+        verb2 = xcomp.split(', ')[1]
+        verb_dict['verb_processing'] = f'xcomp > {prt}, {verb2}'
     add_to_dictionary_values(dictionary, 'verbs', verb_dict, dict)
-    return

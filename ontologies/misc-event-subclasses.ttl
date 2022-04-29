@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 5 2022
+# Last Modified: April 15 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -38,6 +38,7 @@
 #  Added EmotionalResponse as a subclass of Cognition and changed Desire
 #   to be additional synonyms on LongingAndPassition (in emotion-subclasses.ttl)
 #  Updated the superclass of IntentionAndGoal
+#  Renamed Repair to MaintenanceAndRepair; Added Supervision
 ########################################################################
 
 
@@ -206,6 +207,13 @@
   :noun_synonym "studying", "practicing", "training", "memorization", "memorizing" ;
   :verb_synonym "study", "practice", "train", "memorize", "learn" .
 
+:MaintenanceAndRepair a owl:Class ;
+  rdfs:subClassOf :FriendlyOrSupportiveAct ;
+  rdfs:label "Maintenance and Repair" ;
+  :definition "Any act that maintains/fixes/mends/adjusts/restores an entity." ;
+  :noun_synonym "maintaining", "restoration", "renovation", "patch", "fixing", "revamping", "renewal", "repairing",  "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing" ;
+  :verb_synonym "maintain", "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of" .
+
 :Memory a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Memory" ;
@@ -262,13 +270,6 @@
   :noun_synonym "sexual assault", "sexual abuse", "molestation", "raping", "molesting" ;
   :verb_synonym "rape", "molest" .
 
-:Repair a owl:Class ;
-  rdfs:subClassOf :FriendlyOrSupportiveAct ;
-  rdfs:label "Repair" ;
-  :definition "Any act that fixes/mends/adjusts/restores an entity that is broken, damaged or faulty." ;
-  :noun_synonym "restoration", "renovation", "patch", "fixing", "revamping", "renewal", "repairing",  "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing" ;
-  :verb_synonym "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up" .
-
 :Resistance a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct, :RefusalAndRejection ;
   rdfs:label "Resistance" ;
@@ -290,6 +291,13 @@
   :noun_synonym "sight", "smell", "taste", "touch", "hearing", "sense", "seeing", "smelling", "tasting", "touching", "sensing", "listening", "feeling" ;
   :verb_synonym "see", "hear", "touch", "taste", "smell", "listen", "feel" .
 
+:Supervision a owl:Class ;
+  rdfs:subClassOf :AttentionAndFocus ;
+  rdfs:label "Supervision" ;
+  :definition "The act of a Person paying attention to/overseeing/monitoring someone or something. The entity who/which is supervised is indicated by the :has_topic property." ;
+  :noun_synonym "supervising", "overseeing", "monitoring", "managing" ;
+  :verb_synonym "supervise", "mange", "oversee", "monitor" .
+
 :Thirst a owl:Class ;
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Thirst" ;
@@ -303,7 +311,7 @@
 ########################################################################
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :AttackDamageAndAssault :Repair ) .
+  owl:members  ( :AttackDamageAndAssault :MaintenanceAndRepair ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :AttentionAndFocus :IgnoringAndOverlooking ) .

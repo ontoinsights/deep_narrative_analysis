@@ -173,7 +173,7 @@ def query_exact_and_approx_match(text: str, query_str: str, domain_query_str: st
         return owl_thing2
     class_name = query_ontology(text, query_str, domain_query_str)      # Query approximate match
     # Avoid false matches if the matched class is less than 5 characters (for ex, 'friend' would match ':End')
-    if class_name != owl_thing or len(class_name.split(':')[-1]) > 5:
+    if class_name != owl_thing and len(class_name.split(':')[-1]) > 5:
         return class_name
     else:
         return owl_thing2
@@ -220,4 +220,3 @@ def _load_directory_to_database(directory_name, conn):
                     conn.add(stardog.content.File(f'{directory_name}{file}'))
     except Exception as e:
         capture_error(f'Exception loading ontologies from {directory_name}: {str(e)}', True)
-    return

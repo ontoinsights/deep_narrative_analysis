@@ -51,4 +51,3 @@ def display_similarities(store_name: str):
 
     # Done
     window_similarities_list.close()
-    return

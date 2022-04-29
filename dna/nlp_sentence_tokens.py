@@ -102,7 +102,6 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
                                          (token_key[0:-1] if token_key.endswith("s") else token_key))
             add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
     add_to_dictionary_values(dictionary, token_key, ent_dict, dict)
-    return
 
 
 # Functions internal to the module
@@ -191,7 +190,6 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
         if 'conj' == child.dep_:
             _process_prep_object(child, dictionary, prep_key)
     add_to_dictionary_values(dictionary, 'prep_details', prep_ent_detail, dict)
-    return
 
 
 def _process_personal_pronoun(token: Token, narr_gender: str) -> (str, str):
