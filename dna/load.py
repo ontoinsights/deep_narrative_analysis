@@ -205,7 +205,7 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
                                        f'{source}, and narrative title, {title}. That record is skipped.',
                                        font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
                         continue
-                    # TODO: If the text is multi-page, the first line of all pages from the second page onwards is lost
+                    # TODO + Bug: If text is multi-page, first line of all pages from second onwards is lost
                     in_file = f'{resources_root}{title}.txt'
                     subprocess.run(['../tools/pdftotext', '-f', narr_meta['Start'], '-l', narr_meta['End'],
                                     '-simple', f'{resources_root}{source}', in_file])
@@ -219,27 +219,26 @@ def process_csv(csv_file: str, store_name: str, store_list: list) -> int:  # pra
                     narrative = simplify_text(text, narr_meta)
                     # Get the narrator's gender (if possible), a list of family members mentioned
                     # (and their proper names, if possible) and the narrative + metadata Turtle
-                    gender, family_dict, turtle_list = \
+                    gender, family_dict, graph_name, turtle_list = \
                         create_metadata_turtle(narrative.replace('"', "'"), narr_meta)
                     # Add the triples to the data store, default graph
                     try:
                         add_remove_data('add', ' '.join(turtle_list), store_name)
                     except Exception as e:
                         capture_error(
-                            f'Exception adding ({narr_meta["Title"]}) metadata to store: {str(e)}', True)
+                            f'Exception adding ({title}) metadata to store: {str(e)}', True)
                     sentence_dicts = parse_narrative(narrative, gender, family_dict)
                     # TODO: Remove prints
                     print(sentence_dicts)
                     event_turtle_list = create_event_turtle(gender, sentence_dicts)
                     print(event_turtle_list)
-                    # Add the triples to the data store, to a named graph with name = metadata title
+                    # Add the triples to the data store, to a named graph with name = graph_name
                     try:
                         add_remove_data('add', ' '.join(event_turtle_list), store_name,
-                                        f'urn:{title}')
-
+                                        f'urn:{graph_name}')
                     except Exception as e:
                         capture_error(
-                            f'Exception adding ({narr_meta["Title"]}) events to store: {str(e)}', True)
+                            f'Exception adding ({title}) events to store: {str(e)}', True)
                 if source.endswith('.pdf'):
                     # Cleanup - Delete the text file created by pdftotext
                     os.remove(in_file)

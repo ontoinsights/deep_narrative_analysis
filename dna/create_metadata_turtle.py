@@ -1,23 +1,25 @@
 # Processing to create the narrative metadata Turtle
 
 import logging
+from datetime import datetime
 
 from nlp import get_birth_family_details
 from query_ontology_and_sources import get_geonames_location
 from utilities import empty_string, space, family_members, gender_dict, months, countries
 
 
-def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, list):
+def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, str, list):
     """
     Create Turtle capturing the narrative text and metadata information.
 
     :param narrative: String consisting of the full narrative text
     :param narr_metadata: Dictionary of metadata information - Keys are:
                           Source,Title,Person,Type,Given,Surname,Maiden,Gender,Start,End,Remove,Header,Footer
-    :returns: 3 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise) -
+    :returns: 4 items: 1) String identifying the gender of the narrator if known (or an empty string otherwise) -
              gender is one of AGENDER, BIGENDER, FEMALE or MALE, 2) a dictionary containing the family member
-             roles mentioned in the narrative and the members' proper names (if provided), and 3) a list of
-             Turtle statements to add to the database with the narrative and metadata information
+             roles mentioned in the narrative and the members' proper names (if provided), 3) the name of
+             the graph where the triples are stored (= title + dateTime data), and 4) a list of Turtle
+             statements to add to the database with the narrative and metadata information
     """
     # Construct the narrator's/subject's identifier
     if narr_metadata['Maiden'] and narr_metadata['Surname']:
@@ -29,10 +31,12 @@ def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, l
     # Create the reference to the doc in the db store
     title = narr_metadata["Title"]
     title_text = title.replace('_', ' ')
+    now = datetime.now()    # Current date and time
+    graph_name = f':{title}_{now.strftime("%Y_%b_%d_%H_%M_%S")}'
     iri_narrator = narrator.replace(space, empty_string)
     # Create triples describing the narrative and narrator/subject
     triples_list = [f'@prefix : <urn:ontoinsights:dna:> .',
-                    f':{title} a :Narrative ; rdfs:label "{title_text}" ; '
+                    f':{graph_name} a :Narrative ; rdfs:label "{title_text}" ; '
                     f':text "{narrative}" ; :has_author :{iri_narrator} .',
                     f':{iri_narrator} a :Person ; rdfs:label "{get_narrator_names(narr_metadata)}" .']
     gender = narr_metadata['Gender']
@@ -43,7 +47,7 @@ def create_metadata_turtle(narrative: str, narr_metadata: dict) -> (str, dict, l
     new_triples, family_dict = get_birth_family_turtle(narrative, narr_metadata['Given'], iri_narrator)
     if new_triples:
         triples_list.extend(new_triples)
-    return gender[1:].upper(), family_dict, triples_list
+    return gender[1:].upper(), family_dict, graph_name, triples_list
 
 
 def get_birth_family_turtle(narrative: str, given_name: str, iri_narrator: str) -> (list, dict):
