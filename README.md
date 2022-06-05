@@ -50,16 +50,18 @@ The Stardog triple store (downloadable from https://www.stardog.com/get-started/
 
 In addition to downloading the spaCy and NLTK libraries (which are addressed in requirements.txt), spaCy's transformer language model and NLTK data also need to be installed. The former is accomplished by executing "python3 -m spacy download en_core_web_trf". And, the latter is installed by starting a Python session and executing:
 
+```python
 import nltk
 nltk.download()
+```
 
 The download instruction opens a window showing the NLTK Data Collections. Select "all-corpora" and then press the "Download" button in the lower left corner.
 
 These environment variables need to be set for the DNA application:
 
-* PATH needs to specifically include the GitHub project's dna directory (for testing)
-* TOKENIZERS_PARALLELISM = false (to resolve warning from HuggingFace transformers and their use in spaCy)
+* `PATH` needs to specifically include the GitHub project's dna directory (for testing)
+* `TOKENIZERS_PARALLELISM = false` (to resolve warning from HuggingFace transformers and their use in spaCy)
 
 Furthermore, the dna.config file in the dna/resources directory should be updated to supply your Stardog username/password and GeoNames user name. At this time, these are defined as open text, although that will be addressed in a future release.
 
-To run the application, cd to the dna directory and execute python3 app.py (making sure to have installed the Python libraries specified in the requirements.txt file).
+To run the application, cd to the dna directory and execute python3 app.py (making sure to have installed the Python libraries specified in the `requirements.txt` file).
