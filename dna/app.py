@@ -1,150 +1,117 @@
 # Main application processing
 
+import argparse
+from argparse import ArgumentParser, Namespace
 import logging
-import PySimpleGUI as sg
 
 from database import query_database
-from details_narrative import display_narratives
-from details_similarities import display_similarities
-from details_summary import display_statistics
-from edit_narrative import display_narratives_for_edit
-from help import display_popup_help
-from hypotheses import display_hypotheses
-from load import select_store, ingest_narratives
-from evaluate_hypothesis import evaluate_hypothesis
-from utilities import dark_blue, empty_string, capture_error, encoded_logo, encoded_question
+from display_details import display_timeline, display_visualization, display_word_cloud
+from nlp import ingest_narratives
+from utilities import dna_root
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
 
-query_number_narratives = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(distinct ?narr) as ?cnt) ' \
-                          'WHERE { ?narr a :Narrative } '
+ingest_dir = "/dna/resources/ingest"
+graph_query = "SELECT DISTINCT ?g WHERE { GRAPH ?g { ?s ?p ?o } }"
+
+
+def check_arguments(arg_details: Namespace) -> bool:
+    """
+    Verifies that only 1 action is requested - either ingest narratives, list current narratives
+    already ingested, edit a narrative, display a timeline or display a word cloud.
+
+    :param arg_details: Argparse's Namespace with the argument details
+    :return: True if only 1 action is requested, False otherwise
+    """
+    count = 0
+    if arg_details.ingest:
+        count += 1
+    if arg_details.list:
+        count += 1
+    if arg_details.narr_edit:
+        count += 1
+    if arg_details.narr_graph:
+        count += 1
+    if arg_details.narr_timeline:
+        count += 1
+    if arg_details.narr_wordcloud:
+        count += 1
+    if count == 1:
+        return True
+    else:
+        return False
+
+
+def define_arguments(parser: ArgumentParser):
+    """
+    Specifies the arguments of the DNA CLI.
+
+    :param parser: Argparse's ArgumentParser handling the CLI
+    :return: None
+    """
+    parser.add_argument(
+        '-d', dest='database', action='store', nargs="?",
+        help='(optional) database name holding narrative parses (default: narratives)')
+    parser.add_argument(
+        '-e', dest='narr_edit', action='store', nargs=1,
+        help='edit the specified narrative from the database')
+    parser.add_argument(
+        '-i', dest='ingest', action='store', nargs=1,
+        help='ingest .txt narratives to the database, from the directory, dna/resources/ingest')
+    parser.add_argument(
+        '-g', dest='narr_graph', action='store', nargs=1,
+        help='open Stardog to create graph visualization of the specified narrative')
+    parser.add_argument(
+        '-l', dest='list', action='store_true',
+        help='show list of narratives stored in the database')
+    parser.add_argument(
+        '-t', dest='narr_timeline', action='store', nargs=1,
+        help='display timeline for the specified narrative from the database')
+    parser.add_argument(
+        '-w', dest='narr_wordcloud', action='store', nargs=1,
+        help='display 75 element word cloud for "all" or the specified narrative from the database')
 
 
 # Main
 if __name__ == '__main__':
-    # Application is a minimal GUI that exercises narrative ingest and NLP/NLU components
-    logging.info('Opened DNA GUI')
-
-    # Create the PySimpleGUI window
-    sg.theme('Material2')
-    layout = [[sg.Image(r'resources/DNA2.png'),
-               sg.Text('Deep Narrative Analysis', font=('Arial', 24, 'bold'))],
-              [sg.Text()],
-              [sg.Text('Minimal GUI to demo ingest and natural language understanding (NLU)',
-                       font=('Arial', 20, 'bold'))],
-              [sg.Text()],
-              [sg.Text("Load Narratives:", font=('Arial', 16))],
-              [sg.Button('From Existing Store', font=('Arial', 14), button_color=dark_blue,
-                         size=(22, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='existing_question', pad=(1, 1))],
-              [sg.Button('New, From CSV Metadata', font=('Arial', 14), button_color=dark_blue,
-                         size=(22, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='csv_question', pad=(1, 1))],
-              [sg.Text('No narratives/store currently selected', size=(70, 1),
-                       key='text-selected', font=('Arial', 14))],
-              [sg.Text()],
-              [sg.Text('One or more narratives MUST be loaded in order to select any buttons below.',
-                       font=('Arial', 16))],
-              [sg.Text()],
-              [sg.Text("Edit Narrative Details:", font=('Arial', 16))],
-              [sg.Button('Edit Narrative', font=('Arial', 14), button_color='blue', size=(20, 1),
-                         pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='edit_question', pad=(1, 1))],
-              [sg.Text()],
-              [sg.Text("Display Narrative Details:", font=('Arial', 16))],
-              [sg.Button('Summary Statistics', font=('Arial', 14), button_color='blue', size=(20, 1),
-                         pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='stats_question', pad=(1, 1))],
-              [sg.Button('Narrative Timeline', font=('Arial', 14), button_color='blue',
-                         size=(20, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='timeline_question', pad=(1, 1))],
-              [sg.Button('Narrative Similarities', font=('Arial', 14), button_color='blue',
-                         size=(20, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='similarities_question', pad=(1, 1))],
-              [sg.Text()],
-              [sg.Text("Run Analysis:", font=('Arial', 16))],
-              [sg.Button('Hypothesis Search/Edit', font=('Arial', 14), button_color='blue',
-                         size=(24, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='hypothesis_question', pad=(1, 1))],
-              [sg.Button('Hypothesis Test', font=('Arial', 14), button_color='blue',
-                         size=(24, 1), pad=((25, 0), 3)),
-               sg.Button(empty_string, image_data=encoded_question,
-                         button_color=(sg.theme_background_color(), sg.theme_background_color()),
-                         border_width=0, key='test_question', pad=(1, 1))],
-              [sg.Text()],
-              [sg.Button('End', button_color=dark_blue, size=(5, 1), font=('Arial', 14))]]
-
-    # Create the GUI Window
-    store_name = empty_string
-    window = sg.Window('Deep Narrative Analysis', layout, icon=encoded_logo).Finalize()
-
-    # Loop to process window "events"
-    while True:
-        event, values = window.read()
-        if event in (sg.WIN_CLOSED, 'End'):
-            # If user closes window or clicks 'End'
-            break
-        # Help for various buttons
-        elif event in ('existing_question', 'csv_question', 'edit_question', 'similarities_question',
-                       'timeline_question', 'stats_question', 'hypothesis_question', 'test_question'):
-            display_popup_help(event)
-        # New windows to process narratives
-        # TODO: Remove reference to the domain timeline (from the next 2 events) if not applicable
-        elif event == 'From Existing Store':
-            store_name = select_store()
-            if store_name:
-                count_results = query_database('select', query_number_narratives, store_name)
-                if count_results:
-                    count = int(count_results[0]['cnt']['value'])
-                    window['text-selected'].\
-                        update(f'The data store, {store_name}, holds {count-1} narratives and the domain timeline.')
-                else:
-                    capture_error('The query for narrative count failed.', True)
-        elif event == 'New, From CSV Metadata':
-            store_name, count = ingest_narratives()
-            if store_name:
-                window['text-selected'].\
-                    update(f'{count} narratives and the domain timeline were added '
-                           f'to the data store, {store_name}')
-        elif event == 'Summary Statistics':
-            if not store_name:
-                sg.popup_error("A narrative store must be loaded before selecting 'Summary Statistics'.",
-                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
-            else:
-                display_statistics(store_name)
-        elif event == 'Narrative Timeline':
-            if not store_name:
-                sg.popup_error("A narrative store must be loaded before selecting 'Narrative Timeline'.",
-                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
-            else:
-                display_narratives(store_name)
-        elif event == 'Narrative Similarities':
-            if not store_name:
-                sg.popup_error("A narrative store must be loaded before selecting 'Narrative Similarities'.",
-                               font=('Arial', 14), button_color=dark_blue, icon=encoded_logo)
-            else:
-                display_similarities(store_name)
-        elif event == 'Edit Narrative':
-            display_narratives_for_edit(store_name)
-        elif event == 'Hypothesis Search/Edit':
-            display_hypotheses(store_name)
-        elif event == 'Hypothesis Test':
-            evaluate_hypothesis(store_name)
-
-    # Done
-    window.close()
+    arg_parser = argparse.ArgumentParser(
+        description='Interface to ingest and analyze narratives. '
+                    'Specify a database using the -d option (or the default, "narratives", will be used). '
+                    'You must also select one of the instructions: -i, -l, -e, -t or -w.')
+    define_arguments(arg_parser)
+    args = arg_parser.parse_args()
+    if not check_arguments(args):
+        print("*** Invalid number of arguments. Please see the usage information below. ***")
+        arg_parser.print_help()
+    else:
+        # Process the command
+        if args.database:
+            db = args.database
+        else:
+            db = 'narratives'
+        if args.ingest:
+            logging.info(f'Ingest from {ingest_dir} to {db}')
+            print(f'Ingested {ingest_narratives(ingest_dir, db)} narrative(s)')
+        if args.list:
+            logging.info(f'Narrative list for {db}')
+            print(f'Narratives in the database, {db}:')
+            narratives = query_database('select', graph_query, db)
+            for binding in narratives:
+                print(f"  {binding['g']['value'][4:]}")
+        if args.narr_graph:
+            narr_detail = args.narr_graph[0]
+            logging.info(f'Visualize {narr_detail} from {db}')
+            display_visualization(narr_detail, db)
+        if args.narr_wordcloud:
+            narr_detail = args.narr_wordcloud[0]
+            logging.info(f'Word cloud for {narr_detail} in {db}')
+            display_word_cloud(narr_detail, db)
+        if args.narr_edit:
+            narr_detail = args.narr_edit[0]
+            logging.info(f'Edit {narr_detail} in {db}')
+            edit_narrative(narr_detail, db)
+        if args.narr_timeline:
+            narr_detail = args.narr_timeline[0]
+            logging.info(f'Timeline for {narr_detail} from {db}')
+            display_timeline(narr_detail, db)

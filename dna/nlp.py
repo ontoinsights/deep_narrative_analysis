@@ -1,9 +1,7 @@
-# Entry points for all spaCy processing:
-# 1) Pattern matching (in get_birth_family_details)
-# 2) Noun/verb details (in get_nouns_verbs)
-# 3) Processing for phrases in the form, 'a'|'the'|# 'years'|'months'|'days'|... 'earlier'|'later'|'prior'|...
-#    (in get_time_details)
-# 4) Parses the sentences from a narrative into dictionary elements with the following form:
+# Entry points for all spaCy processing and creation of the KG from the text parse
+# Includes functions for getting family details, head words, sentiment, named entities, relative time, etc.
+# Key functions: ingest_narratives -> parse_narratives
+#  Where a narrative's sentences are parsed into dictionary elements with the following form:
 #    'text': 'narrative_text',
 #    'LOCS': ['location1', ...], 'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'subjects': [{'subject_text': 'subject_text', 'subject_type': 'type_such_as_SINGNOUN'},
@@ -14,21 +12,21 @@
 #                          # Preposition object may also have a preposition - for ex, 'with the aid of the police'
 #                          # If so, following the 'detail_type' entry would be another 'preps' element
 #                          'objects': [{'object_text': 'verb_object_text', 'object_type': 'type_eg_NOUN'}]}]}]}]}]}
-#    (in parse_narrative)
+#    (ingest_narrative -> parse_narrative)
+# Sentence dictionaries are evaluated to produce the KG Turtle output
+#    (ingest_narrative -> create_narrative_turtle's create_turtle)
 
-import logging
+from os import listdir
+from os.path import isfile, join
 import spacy
-import requests
-from bs4 import BeautifulSoup
-
 from spacy.matcher import DependencyMatcher
 from textblob import TextBlob
 from word2number import w2n
 
-from nlp_patterns import born_date_pattern, born_place_pattern, family_member_name_pattern
+from create_narrative_turtle import create_turtle
 from nlp_sentence_dictionary import extract_dictionary_details
 from nlp_split_sentences import split_clauses
-from utilities import empty_string, new_line, update_dictionary_count
+from utilities import empty_string, new_line
 
 nlp = spacy.load('en_core_web_trf')
 nlp.add_pipe('sentencizer')
@@ -36,10 +34,6 @@ matcher = DependencyMatcher(nlp.vocab)
 
 spacy_stopwords = nlp.Defaults.stop_words
 spacy_stopwords.clear()
-
-matcher.add("born_date", [born_date_pattern])
-matcher.add("born_place", [born_place_pattern])
-matcher.add("family_member_name", [family_member_name_pattern])
 
 ner_dict = {'PERSON': ':Person',
             'NORP': ':Organization',
@@ -63,75 +57,25 @@ replacement_words = {
 }
 
 
-def get_birth_family_details(narrative: str) -> (list, list, dict):
+def get_family_details(narrative: str) -> dict:
     """
-    Use spaCy Dependency Parsing and rules-based matching to get the birthdate and place details,
-    and family member names from a narrative.
+    Use spaCy Dependency Parsing and rules-based matching to get family member names from a narrative.
 
-    :param narrative String holding the narrative
-    :returns: Two lists where the first contains the tokens related to date and the second
-             contains the tokens related to location, and a dictionary containing the names
-             of family members and their relationship to the narrator/subject
+    :param narrative: String holding the narrative
+    :returns: A dictionary containing the proper names of family members (the keys) and their
+              relationships (values)
     """
-    logging.info('Getting birth and family data from narrative')
-    # Analyze the text using spaCy and get matches to the 'born' and 'member' rules
+    # Analyze the text using spaCy and get matches to 'member' rule
     doc = nlp(narrative.replace('\n', ''))
     matches = matcher(doc)
-    # Get born on and born in details from the matches
-    born_on_date = set()
-    born_in_place = set()
     family_dict = dict()
     # Each token_id corresponds to one pattern dict
     for match in matches:
         match_id, token_ids = match   # Indicates which pattern is matched and the specific tokens
-        # Get the string representation
-        string_id = nlp.vocab.strings[match_id]
-        if string_id == 'born_date':
-            born_on_date.add(doc[token_ids[2]].text)
-        elif string_id == 'born_place':
-            born_in_place.add(doc[token_ids[2]].text)
-        elif string_id == 'family_member_name':
+        string_id = nlp.vocab.strings[match_id]   # Get the string representation; There is only 1 right now
+        if string_id == 'family_member_name':
             family_dict[doc[token_ids[1]].text] = doc[token_ids[0]].text   # Key = proper name, Value = relationship
-    # Verify that dates actually have a year
-    found_year = any([value for value in born_on_date if (value.isnumeric() and int(value) > 1000)])
-    if not found_year:
-        born_on_date = set()
-    return list(born_on_date), list(born_in_place), family_dict
-
-
-def get_synonym(text: str, for_noun: bool) -> list:
-    """
-    Get the synonyms of the input text.
-
-    :param text: Text whose synonyms are needed
-    :param for_noun: Boolean indicating that noun synonyms are needed (if true) or verb synonyms (if false)
-    :returns: An array holding the synonyms/lemmas of the input text
-    """
-    response = requests.get('https://www.thesaurus.com/browse/{}'.format(text))
-    soup = BeautifulSoup(response.text, 'html.parser')
-    soup.find('section', {'class': 'css-191l5o0-ClassicContentCard e1qo4u830'})
-    if for_noun:
-        class_id = 'css-1kg1yv8 eh475bn0'
-    else:
-        class_id = 'css-1n6g4vv eh475bn0'
-    return [span.text.strip() for span in soup.findAll('a', {'class': class_id})]
-
-
-def get_named_entity_in_string(text: str) -> (str, str):
-    """
-    Returns information on any Named Entity that are Agents (people, organizations, geopolitical
-    entities, ...) or Events in the input text.
-
-    :param text: The text to be parsed
-    :returns: Two strings - the first is the named entity's text and the second string is its
-             type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
-             does not contain any Named Entities, then two empty strings are returned
-    """
-    doc = nlp(text)
-    for ent in doc.ents:
-        if ent.label_ in ner_types:
-            return ent.text, ner_dict[ent.label_]
-    return empty_string, empty_string
+    return family_dict
 
 
 def get_head_word(text: str) -> (str, str):
@@ -148,27 +92,21 @@ def get_head_word(text: str) -> (str, str):
             return token.lemma_, token.text
 
 
-def get_nouns_verbs(sentences: str) -> (dict, dict):
+def get_named_entity_in_string(text: str) -> (str, str):
     """
-    Parses all the sentences in the input parameter to return counts of each distinct
-    noun and verb.
+    Returns information on any Named Entities that are Agents (people, organizations, geopolitical
+    entities, ...) or Events in the input text.
 
-    :param sentences: String with the text of one or more sentences
-    :returns: Two dictionaries of the counts of the noun/verb lemmas where the noun
-             dictionary is returned first
+    :param text: The text to be parsed
+    :returns: Two strings - the first is the named entity's text and the second string is its
+             type mapped to the DNA Agent sub-classing hierarchy or to :EventAndState; If the input text
+             does not contain any Named Entities, then two empty strings are returned
     """
-    noun_dict = dict()
-    verb_dict = dict()
-    doc = nlp(sentences)
-    for sentence in doc.sents:
-        for token in sentence:
-            if token.pos_ in ('NOUN', 'PROPN'):
-                update_dictionary_count(noun_dict, token.lemma_.lower())
-            if token.pos_ == 'VERB':
-                update_dictionary_count(verb_dict, token.lemma_.lower())
-    sorted_nouns = dict(sorted(noun_dict.items(), key=lambda item: item[1], reverse=True))
-    sorted_verbs = dict(sorted(verb_dict.items(), key=lambda item: item[1], reverse=True))
-    return sorted_nouns, sorted_verbs
+    doc = nlp(text)
+    for ent in doc.ents:
+        if ent.label_ in ner_types:
+            return ent.text, ner_dict[ent.label_]
+    return empty_string, empty_string
 
 
 def get_sentence_sentiment(sentence: str) -> float:
@@ -208,20 +146,46 @@ def get_time_details(phrase: str) -> (int, str):
     return number, increment
 
 
-def parse_narrative(narr_text: str, gender: str, family_dict: dict) -> list:
+def ingest_narratives(narr_dir: str, database: str) -> int:
     """
-    Creates a spacy Doc from the input text, splits sentences by conjunctions into clauses with
-    their own subjects/verbs, and then parses each of the resulting sentences to create a
-    dictionary holding the subject/verb/object/preposition/... details. Each of the sentence
-    dictionaries are added to an array, which is returned.
+    Ingest each of the .txt files in the narr_dir directory, parse the text into Turtle
+    and load the results to the specified database.
+
+    :param narr_dir: Directory holding the text narratives
+    :param database: Database to which the resulting KG triples are loaded
+    :returns: Integer indicating the number of narratives added
+    """
+    # Get narrative texts
+    count = 0
+    try:
+        in_files = [f for f in listdir(f'{dna_root}{narr_dir}') if f.endswith('.txt') and
+                    isfile(join(f'{dna_root}{narr_dir}', f))]
+        for infile in in_files:
+            with open(f'{dna_root}{narr_dir}{infile}', 'r', encoding='utf8', errors='ignore') as narr_in:
+                text = narr_in.read()
+            title = infile.split('.txt')[0]
+            sentence_dicts = parse_narrative(text)
+            event_turtle_list = create_event_turtle(sentence_dicts)
+            # Add the triples to the data store, to a named graph with name = graph_name
+            add_remove_data('add', ' '.join(event_turtle_list), database, f'urn:{title}')
+            count += 1
+    except Exception as e:
+        print(f'Exception ingesting narratives: {str(e)}', True)
+        traceback.print_exc(file=sys.stdout)
+    return count
+
+
+def parse_narrative(narr_text: str) -> list:
+    """
+    Creates a spacy Doc from the entire narrative text, then splits sentences by conjunctions into clauses
+    with their own subjects/verbs, and parses each of the resulting sentences to create a dictionary
+    holding the subject/verb/object/preposition/... details. Each of the sentence dictionaries are added
+    to an array, which is returned.
 
     :param narr_text: The narrative text
-    :param gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
-                   MALE - indicating the gender of the narrator
-    :param family_dict: A dictionary containing the names of family members and their
-                        relationship to the narrator/subject
     :returns: An array of dictionaries holding the details of each sentence (after splitting)
     """
+    family_dict = get_family_details(narr_text)
     doc = nlp(narr_text)
     split_sentences = []
     sentence_dicts = []
@@ -250,14 +214,13 @@ def parse_narrative(narr_text: str, gender: str, family_dict: dict) -> list:
     # Get the details of each sentence
     sentence_offset = 1
     for sentence in split_sentences:
-        revised = _replace_words(sentence.text)
-        extract_dictionary_details(revised, sentence_dicts, nlp, gender, family_dict, sentence_offset)
+        revised = replace_words(sentence.text)
+        extract_dictionary_details(revised, sentence_dicts, nlp, family_dict, sentence_offset)
         sentence_offset += 1
     return sentence_dicts
 
 
-# Functions internal to the module
-def _replace_words(sentence: str) -> str:
+def replace_words(sentence: str) -> str:
     """
     Replace specific phrases/terms with simpler ones - such as replacing 'as well as' with the word, 'and'.
 

@@ -4,26 +4,16 @@
 # 3) list databases
 # 4) query or update a database
 
-import configparser as cp
 import logging
 import os
 import stardog
 
-from utilities import domain_database, empty_string, ontologies_database, owl_thing, owl_thing2, \
-    resources_root, capture_error
+from utilities import dna_prefix, empty_string, ontologies_database, owl_thing, owl_thing2, resources_root
 
-# Get details from the dna.config file, stored in the resources directory
-# And set the connection details
-config = cp.RawConfigParser()
-config.read(f'{resources_root}dna.config')
-sd_conn_details = {
-    'endpoint': config.get('StardogConfig', 'endpoint'),
-    'username': config.get('StardogConfig', 'username'),
-    'password': config.get('StardogConfig', 'password')}
-# And set path to directory where ontologies stored
-ontol_path = config.get('OntologiesConfig', 'ontolPath')
-if not ontol_path.endswith('/'):
-    ontol_path = f'{ontol_path}/'
+# Get environment variables
+stardog_user = os.getenv('STARDOG_USER')
+stardog_password = os.environ.get('STARDOG_PASSWORD')
+stardog_endpoint = os.environ.get('STARDOG_ENDPOINT')
 
 query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '{ ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
@@ -125,6 +115,27 @@ def get_databases() -> list:
     return db_names
 
 
+def query_class(text: str, query: str) -> str:
+    """
+    Attempts to match the input text to verb/noun_synonyms, labels and definitions in the ontology,
+    and returns the highest probability class name as the result. Note that this method requires
+    the SPARQL query to SELECT a ?class variable.
+
+    :param text: Text to match
+    :param query: String holding the query to execute
+    :returns: The highest probability class name returned by the query
+    """
+    results = query_database('select', query.replace('keyword', text), ontologies_database)
+    if results:
+        result = results[0]  # Return the first result (assumes that the query is ordered by descending probability)
+        class_name = result['class']['value']
+        if class_name != owl_thing:
+            return class_name.split(':')[-1]
+        else:
+            return owl_thing2
+    return owl_thing2   # No results/no match
+
+
 def query_database(query_type: str, query: str, database: str) -> list:
     """
     Process a SELECT or UPDATE query
@@ -156,55 +167,33 @@ def query_database(query_type: str, query: str, database: str) -> list:
         return []
 
 
-def query_exact_and_approx_match(text: str, query_str: str, domain_query_str: str) -> str:
+def query_exact_and_approx_match(text: str, query_str: str) -> str:
     """
-    Executes a query_match and then approximate matches (identified by the query and domain_query strings)
-    for the text. An "approximate" match uses CONTAINS processing.
+    Executes a query_match and then approximate match (identified by the query string) for the
+    text. An "approximate" match is written using FILTER CONTAINS.
 
     :param text: Text to match
-    :param query_str: String holding the "approximate" query to execute for the core ontologies
-    :param domain_query_str: String holding the "approximate" query to execute for the domain ontologies
+    :param query_str: String holding the "approximate" query to execute
     :returns: The highest probability class name returned by the query
     """
-    class_name = query_ontology(text, query_match, query_match)   # Query exact match
+    class_name = query_class(text, query_match)   # Query exact match
     if class_name != owl_thing:
-        return class_name
-    if len(text) < 5:      # Avoid false matches if the word is less than 5 characters
+        return class_name.split(':')[-1]
+    # Avoid false matches if the word is < 5 characters (for ex, 'end' or 'old' is in many strings)
+    if len(text) < 5:
         return owl_thing2
-    class_name = query_ontology(text, query_str, domain_query_str)      # Query approximate match
-    # Avoid false matches if the matched class is less than 5 characters (for ex, 'friend' would match ':End')
+    class_name = query_class(text, query_str)      # Query approximate match
+    # Avoid false matches if the matched class is < 5 characters (for ex, ':End' might be returned for 'friend')
     if class_name != owl_thing and len(class_name.split(':')[-1]) > 5:
-        return class_name
+        return class_name.split(':')[-1]
     else:
         return owl_thing2
 
 
-def query_ontology(text: str, query: str, domain_query: str) -> str:
-    """
-    Attempts to match the input text to verb/noun_synonyms, labels and definitions in the ontology
-    AND domain-specific ontology using the specified queries.
-
-    :param text: Text to match
-    :param query: String holding the query to execute for the core ontologies
-    :param domain_query: String holding the query to execute for the domain ontologies
-    :returns: The highest probability class name returned by the query
-    """
-    domain_query_replaced = domain_query.replace('domain-database', domain_database).\
-        replace('ontologies-database', ontologies_database)
-    results = query_database('select', domain_query_replaced.replace('keyword', text), domain_database)
-    for result in results:
-        return result['class']['value']
-    results = query_database('select', query.replace('keyword', text), ontologies_database)
-    for result in results:
-        return result['class']['value']
-    return owl_thing
-
-
-# Functions internal to the module
+# Internal functions
 def _load_directory_to_database(directory_name, conn):
     """
-    Loads the DNA files to a new database/data store. Domain-specific content is added
-    to the 'urn:Domain_Events' named graph.
+    Loads the DNA ontology files to a new database/data store.
 
     :param directory_name: String holding the directory name
     :param conn: The connection to the Stardog DB for the database
@@ -214,9 +203,6 @@ def _load_directory_to_database(directory_name, conn):
         list_files = os.listdir(directory_name)
         for file in list_files:
             if file.endswith('.ttl'):
-                if 'domain-' in directory_name:
-                    conn.add(stardog.content.File(f'{directory_name}{file}'), 'urn:Domain_Events')
-                else:
-                    conn.add(stardog.content.File(f'{directory_name}{file}'))
+                conn.add(stardog.content.File(f'{directory_name}{file}'))
     except Exception as e:
         capture_error(f'Exception loading ontologies from {directory_name}: {str(e)}', True)

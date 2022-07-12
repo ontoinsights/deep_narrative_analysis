@@ -56,6 +56,7 @@ def get_event_time_from_domain(sent_date: str, time: str) -> str:
     :returns: The time as defined by an Event's :has_time, :has_beginning or :has_end predicates
     """
     # SHOULD find the event in the domain ontology modules
+    yesterday?
     results = query_database(
         'select', query_domain_event.replace('keyword', sent_date), domain_database)
     if results:

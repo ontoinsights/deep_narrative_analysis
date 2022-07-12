@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 4 2022
+# Last Modified: July 11 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,6 +28,11 @@
 #  Renamed Satisfaction to SatisfactionAndPride, and HatredAndDisgust
 #    to HatredBitternessAndDisgust
 #  Updated synonyms
+#  Added :wordnet_verb_synset details
+#  Added Dislike, Fearlessness, Fondness, HopelessnessAndDepression, 
+#    SelfConfidence and SelfDoubt
+#  Removed Pessimism in lieu of HopelessnessAndDepression
+#  Renamed Confidence to Certainty
 ########################################################################
 
 
@@ -36,76 +41,98 @@
 ########################################################################
 
 :AdmirationAndRespect a owl:Class ;
-  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:subClassOf :Fondness ;
   rdfs:label "Admiration and Respect" ;
   :noun_synonym "regard", "esteem", "reverence", "awe", "entrancement", "admiring", "respecting", "reverring", "revering", "marveling", "entrancing" ;
-  :verb_synonym "admire", "respect", "hold in regard", "hold in esteem", "revere", "entrance", "marvel" .
+  :verb_synonym "admire", "respect", "hold in regard", "hold in esteem", "revere", "entrance", "marvel", "value" .
+  07515980 06216535
+  01831800 02169125 00695834
 
 :AngerAndAnnoyance a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Anger and Annoyance" ;
   :noun_synonym "rage", "outrage", "fury", "wrath", "hostility", "bitterness", "indignation", "irritation", "irritability", "aggravation", "animosity", "antagonism", "enmity", "exasperation", "impatience", "ire", "miff", "irascibility", "peevishness", "vexation", "ferocity", "enragement",  "angering", "irritating", "aggravating", "antagonizing", "exasperating", "annoying", "vexing", "enraging" ;
-  :verb_synonym "irritate", "aggravate", "anatagonize", "exasperate", "annoy", "get tired of", "be angry", "vex", "enrage", "anger" . 
+  :verb_synonym "irritate", "aggravate", "anatagonize", "exasperate", "annoy", "get tired of", "be angry", "vex", "enrage", "anger", "bother" . 
+  00760325 00419407
+  01789790 01791774 
 
 :Anxiety a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Anxiety" ;
   :noun_synonym "restlessness", "worry", "discontentment", "fretfulness", "stress", "tension", "agitation", "nervousness", "uneasiness", "apprehension", "pensiveness", "dismay", "angst", "concern", "disquiet", "jitters", "unease", "concern", "disquietude", "worrying", "fretting", "agitating" ;
-  :verb_synonym "worry", "fret", "agitate", "concern", "be anxious" .
+  :verb_synonym "worry", "fret", "agitate", "concern", "be anxious", "perturb" .
+  07539144 05840588
+  01768023 00025196 01769760
 
 :ApathyAndBoredom a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Apathy and Boredom" ;
-  :noun_synonym "heartlessness", "indifference", "lethargy", "dullness" ;
-  :verb_synonym "bore", "be apathetic" .
+  :noun_synonym "heartlessness", "indifference", "lethargy", "dullness", "spiritlessness", "ennui" ; tedium blahs
+  :verb_synonym "bore", "be apathetic" .  mope
+  04643967 07555178
+  01809214 01825834
 
 :Appreciation a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Appreciation" ;
   :noun_synonym "thanksgiving", "thanks", "gratitude", "gratefulness", "thankfulness", "appreciating" ;
   :verb_synonym "appreciate", "offer thanks", "be grateful", "be thankful" .
+  07243631
+  00893836
 
 :Arrogance a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Arrogance" ;
-  :noun_synonym "boastfulness", "vanity", "aloofness", "egotism", "conceit", "pomposity", "self-importance" ;
-  :verb_synonym "be arrogant" .
+  :noun_synonym "boastfulness", "vanity", "egotism", "conceit", "pomposity", "self-importance" ; hautiness feeling of superiority
+  :verb_synonym "be arrogant" . swagger bluster
+  00759528
+  00012427
 
 :AwkwardnessAndShyness a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Awkwardness and Shyness" ;
   :noun_synonym "gawkiness", "ineptness", "cloddishness", "reticence", "timidity", "meekness" ;
   :verb_synonym "be awkward", "be shy", "be timid", "be meek", "be inept" .
+  07537968
+  x
 
 :CompassionAndEmpathy a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Compassion and Empathy" ;
   :noun_synonym "humaneness", "tenderheartedness", "sympathy", "sympathizing", "empathizing" ;
-  :verb_synonym "empathize", "sympathize", "care for", "care about", "be compassionate", "be empathetic" .
+  :verb_synonym "empathize", "sympathize", "care for", "care about", "be compassionate", "be empathetic" . commiserate feel for 
+  04836781 07570421
+  01825946
 
-:Confidence a owl:Class ;
+:Certainty a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
-  rdfs:label "Confidence" ;
-  :noun_synonym "certainty", "poise", "resoluteness", "self-possession" ;
-  :verb_synonym "be confident", "be certain", "be resolute" .
+  rdfs:label "Certainty" ;
+  :noun_synonym "resolve", "resoluteness" ; 
+  :verb_synonym "be resolute", "be resolved", "be certain" .
+  04868717 04763038
 
 :ConfusionAndDoubt a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Confusion and Doubt" ;
   :noun_synonym "trepidation", "uncertainty", "bewilderment", "bafflement", "perplexity", "disorientation", "bemusement", "fluster", "puzzlement", "befuddlement", "doubting", "disorienting", "flustering", "befuddling" ;
   :verb_synonym "confuse", "doubt", "bewilder", "baffle", "perplex", "disorient", "fluster", "befuddle" .
+  04764142 05691387
 
 :Curiosity a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Curiosity" ;
   :noun_synonym "interest", "inquisitiveness", "attentiveness" ;
   :verb_synonym "be curious", "thirst for knowledge", "interest" .
+  05691020 05690411
+  01825361
 
 :DelightAndHappiness a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Delight and Happiness" ;
   :noun_synonym "joy", "elation", "jubilation", "pleasure", "amusement", "enjoyment", "laughter", "cheerfulness", "gaiety", "glee", "jolliness", "joviality", "gladness", "ecstacy", "euphoria", "felicity", "delighting", "elating", "enjoying", "lauging" ;
   :verb_synonym "be amused", "enjoy", "delight", "laugh", "be happy" .
+
+:Dislike 
 
 :Envy a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
@@ -124,6 +151,12 @@
   rdfs:label "Fear and Distrust" ;
   :noun_synonym "dread", "alarm", "panic", "horror", "fright", "terror", "hysteria", "suspense", "scare", "suspicion", "mistrust", "angst", "fearing", "dreading", "panicking", "frightening", "terrorizing", "scaring", "suspecting", "mistrusting", "distructing" ; 
   :verb_synonym "be afraid", "distrust", "be hysterical", "mistrust", "terrorize", "frighten", "scare", "scare" .
+
+:Fearlessness 
+
+:Fondness
+like partiality
+07512613
 
 :FrustrationAndHelplessness a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
@@ -152,14 +185,18 @@
 :HatredBitternessAndDisgust a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Hatred, Bitterness and Disgust" ;
-  :noun_synonym "scorn", "spite", "resentment", "vengefulness", "hostility", "contempt", "aversion", "revulsion", "loathing", "ill will", "malice", "animosity", "detestation", "repugnance", "abhorrence", "hating", "disgusting", "scorning", "spiting", "despising", "detesting", "resenting", "curse", "cursing" ;
+  :noun_synonym "scorn", "spite", "resentment", "vengefulness", "hostility", "contempt", "aversion", "revulsion", "loathing", "ill will", "malice", "animosity", "detestation", "repugnance", "abhorrence", "hating", "disgusting", "scorning", "spiting", "despising", "detesting", "resenting" ;
   :verb_synonym "spite", "loathe", "hate", "despise", "detest", "resent", "abhor", "curse" .
 
 :Hope a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Hope" ;
-  :noun_synonym "eagerness", "optimism", "anticipation", "expectancy", "dream", "keenness", "hoping", "anticipating", "prayer", "praying", "wish", "wishing" ;
+  :noun_synonym "eagerness", "optimism", "anticipation", "expectancy", "dream", "keenness", "hoping", "anticipating", "prayer", "praying", "wish", "wishing" ; optimism
   :verb_synonym "hope", "anticipate", "be hopeful" .
+
+:HopelessnessAndDepression
+despondency helplessness "cynicism" pessimism fatalism
+07552873 07558421
 
 :Humility a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
@@ -197,12 +234,6 @@
   :noun_synonym "homesick", "fond memories" ;
   :verb_synonym "be nostalgic", "be homesick" .
 
-:Pessimism a owl:Class ;
-  rdfs:subClassOf :NegativeEmotion ;
-  rdfs:label "Pessimism" ;
-  :noun_synonym "fatalism", "cynicism" ;
-  :verb_synonym "be fatalistic", "be cynical", "be pessemistic" .
-
 :PositiveEmotion a owl:Class ;
   rdfs:subClassOf :EmotionalResponse ;
   rdfs:label "Positive Emotion" ;
@@ -227,23 +258,39 @@
   :noun_synonym "triumph", "gratification", "fulfillment", "self-esteem", "self-worth", "self-respect", "gratifying", "satisfying" ;
   :verb_synonym "satisfy", "be proud", "be gratified", "be fulfilled" .
 
+:SelfConfidence a owl:Class ;
+  rdfs:subClassOf :PositiveEmotion ;
+  rdfs:label "Self-Confidence" ;
+  :noun_synonym "poise", "self-possession" ;self-assurance
+  :verb_synonym "be confident", "be certain", "be resolute" .
+  05705328
+
+:SelfDoubt
+07524713 12 n 01 self-depreciation 
+
 :Shock a owl:Class ;
   rdfs:subClassOf :NegativeEmotion ;
   rdfs:label "Shock" ;
   :noun_synonym "upset", "shocking", "upsetting" ;
-  :verb_synonym "shock", "upset" .
+  :verb_synonym "shock", "upset", "dismay" .
+  07313600
+  01786469
 
 :Surprise a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Surprise" ;
-  :noun_synonym "amazement", "astonishment", "wonder", "marveling", "surprising", "amazing", "astonishing" ;
-  :verb_synonym "amaze", "astonish", "marvel", "surprise" .
+  :noun_synonym "amazement", "astonishment", "wonder", "marveling", "surprising", "amazing", "astonishing", "astounding" ;
+  :verb_synonym "amaze", "astonish", "marvel", "surprise", "astound" .
+  07524811
+  00727236
 
 :TrustAndTolerance a owl:Class ;
   rdfs:subClassOf :PositiveEmotion ;
   rdfs:label "Trust and Tolerance" ;
-  :noun_synonym "acceptance", "openness", "camaraderie", "cordiality", "comradery", "conviviality", "geniality", "sociability", "trusting", "tolerating", "accepting" ;
-  :verb_synonym "trust", "tolerate", "accept", "be cordial", "be congenial", "be sociable" .
+  :noun_synonym "openness", "camaraderie", "cordiality", "comradery", "conviviality", "geniality", "sociability", "trusting", "tolerating", "acceptance" ;
+  :verb_synonym "trust", "tolerate", "be cordial", "be congenial", "be sociable" .
+04902441 04645532
+00690278 02463017
 
 
 ########################################################################

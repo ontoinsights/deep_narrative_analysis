@@ -11,51 +11,6 @@ RIGHT_ID = 'RIGHT_ID'
 RIGHT_ATTRS = 'RIGHT_ATTRS'
 REL_OP = 'REL_OP'
 
-# "born ... on ... in ..."
-born_date_pattern = [
-  # anchor token: born
-  {
-    RIGHT_ID: 'born1',
-    RIGHT_ATTRS: {ORTH: 'born'}
-  },
-  # subject should be 'I'
-  {
-    LEFT_ID: 'born1',
-    REL_OP: '>',
-    RIGHT_ID: 'I_born1',
-    RIGHT_ATTRS: {ORTH: {'IN': ['I', 'Narrator']}}
-  },
-  # date follows "born"
-  {
-    LEFT_ID: 'born1',
-    REL_OP: '>>',
-    RIGHT_ID: 'born_date',
-    RIGHT_ATTRS: {ENT_TYPE: 'DATE'}
-  }
-]
-
-born_place_pattern = [
-  # anchor token: born
-  {
-    RIGHT_ID: 'born2',
-    RIGHT_ATTRS: {ORTH: 'born'}
-  },
-  # subject should be 'I'
-  {
-    LEFT_ID: 'born2',
-    REL_OP: '>',
-    RIGHT_ID: 'I_born2',
-    RIGHT_ATTRS: {ORTH: {'IN': ['I', 'Narrator']}}
-  },
-  # place follows "born"
-  {
-    LEFT_ID: 'born2',
-    REL_OP: '>>',
-    RIGHT_ID: 'born_place',
-    RIGHT_ATTRS: {ENT_TYPE: {'IN': ['GPE', 'LOC']}}
-  }
-]
-
 family_member_name_pattern = [
   # anchor token: family relation
   {

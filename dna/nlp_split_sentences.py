@@ -55,13 +55,13 @@ def get_chunks(verb: Token, connector: Union[Token, None], chunk_sentence: Span,
                 unseen_chunk = unseen_chunk.replace(f' {connector.text} ', ' ').replace(f' {connector.text}.', '.')
                 if processing_type == 'advcl':
                     if connector.text.lower() in cause_connectors:
-                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, True))  # Store the clauses
+                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, True))
                     elif connector.text.lower() in effect_connectors:
-                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
+                        chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))
                 else:
-                    chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
+                    chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))
         else:
-            chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))  # Store the clauses
+            chunks.extend(_store_chunks_in_order(seen_chunk, unseen_chunk, False))
     if len(chunks) > 0:
         return chunks
     else:
@@ -93,7 +93,7 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
     return split_sents
 
 
-# Functions internal to the module
+# Internal functions
 def _remove_startswith(chunk: str, connector: str) -> str:
     """
     Returns first string with the second string removed from its start.

@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: April 15 2022
+# Last modified: July 11 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -45,6 +45,14 @@
 #    (the :gender property)
 #  Modified the IRIs of the LineOfBusiness subclasses to reflect their
 #    'Business' semantics and avoid name clashes
+#  Added :BodyPart
+#  Added :wordnet_noun_synset details
+#  Renamed AgricultureBusiness to Agribusiness
+#  Removed InformationAndTechnologyBusiness and SpaceBusiness 
+#    in lieu of TechnologyBusiness
+#  Removed sub-classes of PoliticalIdeology
+#  Added BodyPart, StorageBusiness and TradeAndCraft subclasses of 
+#    LineOfBusiness
 ########################################################################
 
 
@@ -58,23 +66,35 @@
   :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) or Location, to another entity such as a Organization or GeopoliticalEntity. The individual to whom/which the Agent or Location is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent or Location 'plays' is defined by the :has_role or :role properties. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
   :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
   :noun_synonym "association", "allying", "annexing" ;
-  :verb_synonym "affiliate", "associate", "join", "ally", "annex" .
+  :verb_synonym "affiliate", "associate", "join", "ally", "annex" ;
+  :wordnet_noun_synset "01083552" .
 
 :AgentAspect a owl:Class ;
   rdfs:label "Agent Aspect" ;
-  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." .
+  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." ;
+  :wordnet_noun_synset "04740358" .
 
 :ArmedForce a owl:Class ;
   rdfs:subClassOf :GovernmentOrganization ;
   rdfs:label "Armed Force" ;
   :definition "A GPE's military force." ;
-  :example "Examples of ArmedForces are army, navy, marines, air force, etc." .
+  :example "Examples of ArmedForces are army, navy, marines, air force, etc." ;
+  :noun_synonym "military", "military force", "army", "navy", "air force", "coast guard", "marines" ;
+  :wordnet_noun_synset "08215965", "08228211", "08207684" .
+
+:BodyPart a owl:Class ;
+  rdfs:subClassOf :ComponentPart ;
+  rdfs:label "Armed Force" ;
+  :definition "A part of a Person, Animal or Plant. It is related to the entity as the object of the predicate, :has_component." ;
+  :example "Examples of body parts are head, hands, feet, elbow, etc." ;
+  :wordnet_noun_synset "05227735", "13107668" .
 
 :DisplacedPerson a owl:Class ;
   rdfs:subClassOf :Person ;
   rdfs:label "Displaced Person or Refugee" ;
   :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." ;
-  :noun_synonym "refugee" .
+  :noun_synonym "refugee" ;
+  :wordnet_noun_synset "10037615", "10535609" .
 
 :EducationLevel a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Enumeration ;
@@ -86,257 +106,322 @@
                                     :enum:CompletedUndergraduateEducation :enum:CompletedGraduateEducation 
                                     :enum:CompletedDoctoralEducation :enum:PostDoctoralEducation :enum:SomePrimaryEducation 
                                     :enum:SomeSecondaryEducation :enum:SomeUndergraduateEducation :enum:SomeGraduateEducation 
-                                    :enum:SomeDoctoralEducation ) ] .
+                                    :enum:SomeDoctoralEducation ) ] ;
+  :wordnet_noun_synset "00884975" .
 
 :Ethnicity a owl:Class ;
   rdfs:subClassOf :AgentAspect ;
   rdfs:label "Ethnicity" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
-  :noun_synonym "race" .
+  :noun_synonym "race" ;
+  :wordnet_noun_synset "04806382" .
 
 :GovernmentOrganization a owl:Class ;
   rdfs:subClassOf :Organization ;
   rdfs:label "Government Organization" ;
   :definition "A type of Organization related to the governance of an area." ;
-  :example "Examples are courts, city councils, senates, parliaments, etc." .
+  :example "Examples are courts, city councils, senates, parliaments, etc." ;
+  :noun_synonym "legislature", "legislative branch", "judiciary", "judicial system", "legislative body", "executive branch" ;
+  :wordnet_noun_synset "08180172", "08183086", "08183217", "08373001" .
 
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
   rdfs:label "Group/Collection of Agents" ;
   :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
   :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, Organization, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
-  :noun_synonym "consortium", "society", "crowd", "alliance", "band", "troupe", "troop" .
+  :noun_synonym "consortium", "society", "crowd", "alliance", "band", "troupe", "troop" ;
+  :wordnet_noun_synset "01019929" .
+
+:IntelligenceCommunity a owl:Class ;
+  rdfs:subClassOf :Collection, :GovernmentOrganization ;
+  rdfs:label "Intelligence Community" ;
+  :definition "A governmental organization responsible for collecting, storing and analyzing information about other agents in the world." ;
+  :wordnet_noun_synset "08356381", "10230113" .
 
 :LineOfBusiness a owl:Class ;
   rdfs:label "Line/Type of Business" ;
-  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." .
+  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or Organization). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." ;
+  :noun_synonym "line of work", "occupation", "profession", "career", "specialization" ;
+  :wordnet_noun_synset "01099024", "01096649", "00583425", "00584498", "00611221", "08082070" .
 
 :Organization a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Organization" ;
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an Organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
-  :noun_synonym "organisation", "association", "corporation", "institution", "company", "business", "firm", "consortium", "syndicate" .
+  :noun_synonym "organisation", "association", "corporation", "institution", "company", "business", "firm", "consortium", "syndicate" ;
+  :wordnet_noun_synset "08076248", "03579706" .
 
 :ParamilitaryForce a owl:Class ;
   rdfs:subClassOf :Organization ;
   rdfs:label "Paramilitary Force" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'." ;
-  :noun_synonym "quasi military" .
+  :noun_synonym "quasi military" ;
+  :wordnet_noun_synset "08224130" .
 
 :Person a owl:Class ;
   rdfs:subClassOf :Agent ;
   rdfs:label "Person" ;
   :definition "A human being." ;
-  :noun_synonym "human", "human being", "man", "woman", "child" .
+  :noun_synonym "human", "human being", "man", "woman", "child" ;
+  :wordnet_noun_synset "00007846" .
 
 :PoliceForce a owl:Class ;
   rdfs:subClassOf :GovernmentOrganization ;
   rdfs:label "Police Force" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" .
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" ;
+  :noun_synonym "constabulary" ;
+  :wordnet_noun_synset "08226608", "08228211" .
 
 :PoliticalIdeology a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Political Ideology" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
-  :example "Examples are Authoritarian, Communism, Socialism, etc." .
+  :example "Examples are Authoritarian, Communism, Socialism, etc." ;
+  :wordnet_noun_synset "06222574" .
 
 :PoliticalParty a owl:Class ;
   rdfs:subClassOf :Organization ;
   rdfs:label "Political Party" ;
-  :definition "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office." .
+  :definition "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office." ;
+  :wordnet_noun_synset "08273889" .
 
 :ReligiousBelief a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Belief ;
   rdfs:label "Religious Belief" ;
-  :definition "A superclass of the various world religions as well as no religion (nonreligion)." .
+  :definition "A superclass of the various world religions as well as no religion (nonreligion)." ;
+  :noun_synonym "religion", "faith" ;
+  :wordnet_noun_synset "05955536" .
 
 :Role a owl:Class ;
   rdfs:label "Role" ;
   :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or Organzation (i.e., a GroupOfAgents). Note that Role is intended to be an abstract super-class (i.e., it should not be instantiated). Its subclasses, which are domain specific (such as FamilyRole and OrganizationRole), define explicit semantics." ;
-  :example "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." .
+  :example "For example, in an Organization, some Persons are :Managers while others are :Employees or :TeamLeads." ;
+  :wordnet_noun_synset "00723312" .
+  
 
 
 ########################################################################
 # Subclasses of LineOfBusiness
 ########################################################################
 
-:AgricultureBusiness a owl:Class ;
+:Agribusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Agriculture, Apiculture and Aquaculture Business" ;
+  rdfs:label "Agribusiness" ;
   :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
-  :example "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." .
+  :example "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." ;
+  :noun_synonym "research and development", "scientist" ;
+  :noun_synonym "agirculture", "apiculture", "aquaculture", "husbandry", "viticulture" ;
+  :wordnet_noun_synset "01106311", "00454755", "00918116", "00917978", "00918295", "00916760", "00917553", "00919445", "00920103", "08092123", "01129030" .
+
+:ArtsLiteratureAndMusic a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Arts and Literature" ;
+  :definition "Creativity expressed as painting, sculpture, writing, etc." ;
+  :wordnet_noun_synset "00615511", "09831743", "05643893", "10360025", "08263534" .
 
 :BankingAndFinanceBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Banking, Finance and Investment Business" ;
-  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." .
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." ;
+  :wordnet_noun_synset "01100603", "01102563", "08083327", "08086714", "08087686" .
 
 :ConstructionBusiness a owl:Class ;
   rdfs:subClassOf :ManufacturingBusiness ;
   rdfs:label "Construction Business" ;
   :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
-  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." .
+  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." ;
+  :wordnet_noun_synset "01106542", "00612006", "08084519" .
 
 :CriminalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Criminal Business" .
+  rdfs:label "Criminal Business" ;
+  :wordnet_noun_synset "01114037", "08261980", "08262093", "08262346", "08263223", "08260983", "08262723" .
 
 :EducationalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Educational Business" ;
   :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
-  :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." .
+  :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." ;
+  :wordnet_noun_synset "00612720", "00895653" .
 
 :ElectronicsAndComputersBusiness a owl:Class ;
   rdfs:subClassOf :TechnologyBusiness ;
   rdfs:label "Electronics and Computers Related Business" ;
   :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
-  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." .
+  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." ;
+  :wordnet_noun_synset "08084637", "08084401", "08019477", "08083801", "00952816" .
 
 :EnergyAndUtilitiesBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Energy and Utilities Business" ;
   :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
-  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." .
+  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." ;
+  :wordnet_noun_synset "00580371", "08084296", "08085886", "08086077", "08086323" .
 
 :EntertainmentBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Entertainment Business" ;
   :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
-  :example "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." .
+  :example "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." ;
+  :wordnet_noun_synset "08084787", "08084987" .
 
 :EnvironmentalOrEcologicalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Environmental or Ecological Business" ;
-  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." .
+  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." ;
+  :wordnet_noun_synset "10080429", "00277033", "10062971" .
 
 :FashionBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Fashion Related Business" ;
-  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc. and the delivery of services related to these." ;
-  :example "Examples include beauty and nail salons and their workers, alteration/seamstress activities, jewelry and clothing design and sales, etc." .
+  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc." ;
+  :wordnet_noun_synset "00609277", "10241626", "08083153" .
 
 :FoodProcessingAndPreparationBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Food Processing and Preparation Business" ;
   :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
-  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." .
+  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." ;
+  :wordnet_noun_synset "00621664", "01105869", "00717095", "08019869" .
 
 :GovernmentAndPoliticsBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Government and Politics Business" ;
-  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." .
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." ;
+  :wordnet_noun_synset "01109454", "00586697", "00613259" .
 
 :HealthcareAndMedicalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Healthcare and Medical Business" ;
   :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
-  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." .
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." ;
+  :wordnet_noun_synset "00613447", "08019020", "08129596" .
 
 :HospitalityBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Hospitality Business" ;
-  :definition "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." .
+  :definition "Involved with food and drink services (performed by waiters/waitresses and hosts/hostesses), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." ;
+  :wordnet_noun_synset "00298987", "01106229" .
 
 :HumanitarianBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Humanitarian Business" ;
-  :definition "Involved with providing direct services or materials to people and areas in need." .
-
-:InformationTechnologyBusiness a owl:Class ;
-  rdfs:subClassOf :TechnologyBusiness ;
-  rdfs:label "Information Technology Business" ;
-  :definition "Involved with the collection, analysis, storage and communication of data." ;
-  :example "Information Technologies include the management of data centers, the development of software and data processing algorithms and services, etc." .
+  :definition "Involved with providing direct services or materials to people and areas in need." ;
+  :noun_synonym "non-profit", "non-profit organization" ;
+  :wordnet_noun_synset "01139918" .
 
 :InsuranceBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Insurance Business" ;
   :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
-  :example "Examples include insurance agencies, underwriters, etc." .
+  :example "Examples include insurance agencies, underwriters, etc." ;
+  :wordnet_noun_synset "08087301", "10229332" .
 
 :LaborAndStaffingBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Labor and Staffing Business" ;
-  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." .
+  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." ;
+  :noun_synonym "employment agency", "temp agency" ;
+  :wordnet_noun_synset "01100309", "08371279" .
 
 :LegalAndJudicialBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Legal and Judicial Business" ;
-  :definition "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." .
+  :definition "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." ;
+  :wordnet_noun_synset "00612411", "08080875", "08129368" .
 
 :ManufacturingBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Manufacturing Business" ;
-  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" .
+  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" ;
+  :wordnet_noun_synset "00925258", "00910607", "08019967", "08077282", "08083913", "08085624", "08085760" .
 
 :MilitaryBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Military Related Business" ;
-  :definition "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." .
+  :definition "Involved with armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." ;
+  :wordnet_noun_synset "01112538" .
 
 :MultiIndustryBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Multiple Industries Business" ;
   :definition "Involved with more than one line of business such as an industrial conglomerate." ;
-  :noun_synonym "conglomerate" .
+  :noun_synonym "conglomerate" ;
+  :wordnet_noun_synset "01019929" .
 
 :ProvisionOfServicesBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Provision of Services Business" ;
   :definition "Involved with the sale of services to a business, person or group." ;
-  :example "Examples are companies or individuals that provide education/training or IT/programming services." .
+  :example "Examples are companies or individuals that provide education/training or IT/programming services." ;
+  :wordnet_noun_synset "01103234", "01105693", "00586211", "08086178", "08086463", "08090536", "08090680" .
 
 :PublishingAndMediaBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Publishing and Media Business" ;
   :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
-  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." .
+  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." ;
+  :wordnet_noun_synset "01103863", "01104341", "00612961", "00613161", "00926528", "08018457", "08019615" .
 
 :RawMaterialProcessingAndPreparationBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Raw Material Processing and Preparation Business" ;
   :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
-  :example "Examples are mining/miners, drilling/boring/reaming, logging/loggers and processing such as distillation and refinery." .
+  :example "Examples are mining/miners, drilling/boring/reaming, logging/loggers, fishermen and processing such as distillation and refinery." ;
+  :wordnet_noun_synset "00455145", "00924141", "00924782", "00924944", "08020061", "08020281" .
 
 :RealEstateBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Real Estate Business" ;
-  :definition "Involved with the maintenance and sale of property/land and buildings." .
+  :definition "Involved with the maintenance and sale of property/land and buildings." ;
+  :wordnet_noun_synset "10529671", "01103132" .
 
 :ReligiousBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Religious/Religion Related Business" ;
   :definition "Involved with activities related to spirituality, faith and worship." ;
-  :example "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." .
+  :example "Examples include churches and similar organizations, clergy (priest, nun, monk, deacon, ...) and shaman, etc." ;
+  :noun_synonym "theology" ;
+  :wordnet_noun_synset "00615260", "08130409" .
 
 :RetailBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Retail Business" ;
   :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
-  :example "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." .
+  :example "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." ;
+  :wordnet_noun_synset "01103019", "04209460", "01103019" .
 
 :SecurityBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Security Related Business" ;
-  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." .
+  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel." ;
+  :wordnet_noun_synset "08227903" .
 
-:SpaceBusiness a owl:Class ;
-  rdfs:subClassOf :TechnologyBusiness ;
-  rdfs:label "Space Related Business" ;
-  :definition "Involved with the study and exploration of the solar system and beyond, as well as research into and production of flight-capable machinery capable of leaving the Earth's atmosphere." ;
-  :noun_synonym "astronautics", "astronaut", "interstellar travel", "outer space", "spaceflight" .
+:StorageBusiness a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Storage Business" ;
+  :definition "A business related to the storing of goods, materials, foods, etc." ;
+  :wordnet_noun_synset "00813322" .
 
 :TechnologyBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Technology Business" ;
   :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" ;
-  :noun_synonym "research and development", "inventor", "scientist" .
+  :noun_synonym "research and development", "scientist" ;
+  :wordnet_noun_synset "00951435", "10580065", "09638837", "06008975" . 
+
+:TradeAndCraft a owl:Class ;
+  rdfs:subClassOf :LineOfBusiness ;
+  rdfs:label "Trade and Craft" ;
+  :definition "Involved with making items or performing a job requiring skill and training." ;
+  :noun_synonym "craftsman", "artisan", "journeyman" ;
+  :wordnet_noun_synset "00607485", "09994178" .
 
 :TransportBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
   rdfs:label "Transport Related Business" ;
-  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." .
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." ;
+  :wordnet_noun_synset "01107164", "01110658", "01113655", "01113857", "08020159", "08020531", "08020652", "08091976" .
 
 
 ########################################################################
@@ -433,31 +518,6 @@
 # Individuals
 ########################################################################
 
-:Anarchism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Anarchism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Anarchism&oldid=1016661969), Anarchism is 'a political philosophy and movement that is sceptical of authority and rejects all involuntary, coercive forms of hierarchy. Anarchism calls for the abolition of the state, which it holds to be undesirable, unnecessary, and harmful.'" ;
-  :noun_synonym "anachist" .
-
-:Authoritarianism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Authoritarianism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Authoritarianism&oldid=1016774895), Authoritarianism is 'a form of government characterized by the rejection of political plurality, the use of a strong central power to preserve the political status quo, and reductions in the rule of law, separation of powers, and democratic voting. Political scientists have created many typologies describing variations of authoritarian forms of government. Authoritarian regimes may be either autocratic or oligarchic in nature and may be based upon the rule of a party or the military.'" ;
-  :noun_synonym "authoritarian" .
-
-:ColonialismAndImperialism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Colonialism and Imperialism" ;
-  :definition "Related concepts dealing with the control of a set of Persons by another (typically, a GPE). From Wikipedia (https://en.wikipedia.org/w/index.php?title=Colonialism&oldid=1018182352), Colonialism is a 'practice or policy of control by one people or power over other people or areas, often by establishing colonies and generally with the aim of economic dominance. In the process of colonisation, colonisers may impose their religion, language, economics, and other cultural practices on indigenous peoples. The foreign administrators rule the territory in pursuit of their interests, seeking to benefit from the colonised region's people and resources.' Also from Wikipedia (https://en.wikipedia.org/w/index.php?title=Imperialism&oldid=1018042334), Imperialism is 'policy or ideology of extending the rule over peoples and other countries, for extending political and economic access, power and control, often through employing hard power, especially military force, but also soft power.'" ;
-  :noun_synonym "colonialist", "imperialist" .
-
-:Communism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Communism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communism&oldid=1016816843), Communism is a 'philosophical, social, political, and economic ideology and movement whose ultimate goal is the establishment of ... a socioeconomic order structured upon the ideas of common ownership of the means of production and the absence of social classes, money, and the state. As such, communism is a specific form of socialism.'" ;
-  :noun_synonym "communist" .
-
-:Communitarianism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Communitarianism" ;
-  :definition "Communitarianism emphasizes the community over the individual, and the responsibilities of the individual to the community. From Wikipedia (https://en.wikipedia.org/w/index.php?title=Communitarianism&oldid=1018133055), 'its overriding philosophy is based upon the belief that a person's social identity and personality are largely molded by community relationships, with a smaller degree of development being placed on individualism. Although the community might be a family, communitarianism usually is understood, in the wider, philosophical sense, as a collection of interactions, among a community of people in a given place (geographical location), or among a community who share an interest or who share a history.'" ;
-  :noun_synonym "communitarian" .
-
 :enum:CompletedDoctoralEducation a :EducationLevel ;
   rdfs:label "Completed Doctoral Education" .
 
@@ -473,85 +533,11 @@
 :enum:CompletedUndergraduateEducation a :EducationLevel ;
   rdfs:label "Completed Undergraduate Education" .
 
-:Conservatism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Conservatism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Conservatism&oldid=1018019763), Conservatism promotes 'traditional social institutions. The central tenets of conservatism may vary in relation to the traditional values or practices of the culture and civilization in which it appears. In Western culture, conservatives seek to preserve a range of institutions such as organized religion, parliamentary government, and property rights. Adherents of conservatism often oppose modernism and seek a return to traditional values.'" ;
-  :noun_synonym "conservationist" .
-
-:Corporatism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Corporatism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Corporatism&oldid=1017376258), Corporatism 'advocates the organization of society by corporate groups, such as agricultural, labour, military, scientific, or guild associations, on the basis of their common interests ... The hypothesis that society will reach a peak of harmonious functioning when each of its divisions efficiently performs its designated function, such as a body's organs individually contributing its general health and functionality, lies at the center of corporatist theory. Corporatist ideas have been expressed since ancient Greek and Roman societies, with integration into Catholic social teaching and Christian democratic political parties. They have been paired by various advocates and implemented in various societies with a wide variety of political systems, including authoritarianism, absolutism, fascism and liberalism. Corporatism may also refer to economic tripartism involving negotiations between labour and business interest groups and the government to establish economic policy. This is sometimes also referred to as neo-corporatism or social democratic corporatism.'" ;
-  :noun_synonym "corporatist" .
-
-:Democracy rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Democracy" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Democracy&oldid=1018088389), Democracy is a 'form of government in which the people have the authority to choose their governing legislators. The decisions on who is considered part of the people and how authority is shared among or delegated by the people have changed over time and at different speeds in different countries, but they have included more and more of the inhabitants of all countries. Cornerstones include freedom of assembly and speech, inclusiveness and equality, membership, consent, voting, right to life and minority rights.'" ;
-  :noun_synonym "democratist" .
-
-:Environmentalism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Environmentalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Environmentalism&oldid=1005807941), Environmentalism is a 'broad philosophy, ideology, and social movement regarding concerns for environmental protection and improvement of the health of the environment, particularly as the measure for this health seeks to incorporate the impact of changes to the environment on humans, animals, plants and non-living matter'." ;
-  :noun_synonym "environmentalist" .
-
-:Facism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Facism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Fascism&oldid=1017645394), Facism is a 'form of far-right, authoritarian ultranationalism characterized by dictatorial power, forcible suppression of opposition and strong regimentation of society and of the economy which came to prominence in early 20th-century Europe'." ;
-  :noun_synonym "facist" .
-
-:Liberalism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Liberalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Liberalism&oldid=1016510923), Liberalism is 'based on liberty, consent of the governed and equality before the law. Liberals espouse a wide array of views depending on their understanding of these principles, but they generally support free markets, free trade, limited government, individual rights (including civil rights and human rights), capitalism, democracy, secularism, gender equality, racial equality, internationalism, freedom of speech, freedom of the press and freedom of religion.'" ;
-  :noun_synonym "liberalist" .
-
-:Libertarianism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Libertarianism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Libertarianism&oldid=1017897385), Libertarianism 'upholds liberty as a core principle. Libertarians seek to maximize autonomy and political freedom, emphasizing free association, freedom of choice, individualism and voluntary association. Libertarians share a skepticism of authority and state power, but some of them diverge on the scope of their opposition to existing economic and political systems. Various schools of libertarian thought offer a range of views regarding the legitimate functions of state and private power, often calling for the restriction or dissolution of coercive social institutions.'"  ;
-  :noun_synonym "libertarian" .
-
-:Localism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Localism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Localism_(politics)&oldid=1036561541), Localism 'describes a range of political philosophies which prioritize the local. Generally, localism supports local production and consumption of goods, local control of government, and promotion of local history, local culture and local identity. Localism can be contrasted with regionalism and centralized government, with its opposite being found in the unitary state. Localism can also refer to a systematic approach to organizing a national government so that local autonomy is retained rather than following the usual pattern of government and political power becoming centralized over time. On a conceptual level, there are important affinities between localism and deliberative democracy. This concerns mainly the democratic goal of engaging citizens in decisions that affect them. Consequently, localism will encourage stronger democratic and political participatory forums and widening public sphere connectivity.'" ;
-  :noun_synonym "localist" .
-
-:ModerateIdeology rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Moderate Ideology" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Moderate&oldid=1006575574), Moderate 'is an ideological category which designates a rejection of radical or extreme views, especially in regard to politics and religion. A moderate is considered someone occupying any mainstream position avoiding extreme views and major social change. In United States politics, a moderate is considered someone occupying a centre position on the left–right political spectrum.'" .
-
-:Nationalism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Nationalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Nationalism&oldid=1018089498), Nationalism 'promotes the interests of a particular nation (as in a group of people), especially with the aim of gaining and maintaining the nation's sovereignty (self-governance) over its homeland. Nationalism holds that each nation should govern itself, free from outside interference (self-determination), that a nation is a natural and ideal basis for a polity and that the nation is the only rightful source of political power (popular sovereignty). It further aims to build and maintain a single national identity, based on shared social characteristics of culture, ethnicity, geographic location, language, politics (or the government), religion, traditions and belief in a shared singular history, and to promote national unity or solidarity. Nationalism seeks to preserve and foster a nation's traditional cultures and cultural revivals have been associated with nationalist movements. It also encourages pride in national achievements and is closely linked to patriotism. Nationalism is often combined with other ideologies such as conservatism (national conservatism) or socialism (left-wing nationalism).'" ;
-  :noun_synonym "nationalist" .
-
 :enum:NoEducation a :EducationLevel ;
   rdfs:label "No Education" .
 
-:Oligarchy rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Oligarchy" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Oligarchy&oldid=1040627006), Oligarchy 'is a form of power structure in which power rests with a small number of people. These people may or may not be distinguished by one or several characteristics, such as nobility, fame, wealth, education, or corporate, religious, political, or military control. Throughout history, oligarchies have often been tyrannical, relying on public obedience or oppression to exist.'" ;
-  :noun_synonym "oligarchist" .
-
-:Populism  rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Populism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Populism&oldid=1016524972), Populism is 'an ideology which presents 'the people' as a morally good force and contrasts them against 'the elite', who are portrayed as corrupt and self-serving. Populists differ in how 'the people' are defined, but it can be based along class, ethnic, or national lines. Populists typically present 'the elite' as comprising the political, economic, cultural, and media establishment, depicted as a homogeneous entity and accused of placing their own interests, and often the interests of other groups—such as large corporations, foreign countries, or immigrants—above the interests of 'the people'. Populist parties and social movements are often led by charismatic or dominant figures who present themselves as the 'voice of the people'. According to the ideational approach, populism is often combined with other ideologies, such as nationalism, liberalism, or socialism. Thus, populists can be found at different locations along the left–right political spectrum, and there exist both left-wing populism and right-wing populism.'" ;
-  :noun_synonym "populist" .
-
 :enum:PostDoctoralEducation a :EducationLevel ;
   rdfs:label "Post-Doctoral Education" .
-
-:Progressivism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Progressivism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Progressivism&oldid=10180432732), Progressivism promotes 'social reform [b]ased on the idea of progress in which advancements in science, technology, economic development and social organization are vital to the improvement of the human condition ... The contemporary common political conception of progressivism emerged from the vast social changes brought about by industrialization in the Western world in the late-19th century. Progressives take the view that progress is being stifled by vast economic inequality between the rich and the poor; minimally regulated laissez-faire capitalism with monopolistic corporations; and the intense and often violent conflict between those perceived to be privileged and unprivileged, arguing that measures were needed to address these problems. The meanings of progressivism have varied over time and from different perspectives. Early-20th century progressivism was tied to eugenics and the temperance movement, both of which were promoted in the name of public health and as initiatives toward that goal. Contemporary progressives promote public policies that they believe will lead to positive social change. In the 21st century, a movement that identifies as progressive is 'a social or political movement that aims to represent the interests of ordinary people through political change and the support of government actions'.'" ;
-  :noun_synonym "progressivist" .
-
-:Reactionism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Reactionism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Reactionary&oldid=1016120273), Reactionists 'favour a return to a previous political state of society that they believe possessed positive characteristics that are absent in contemporary society. As an adjective, the word reactionary describes points of view and policies meant to restore a past status quo. The word reactionary is often used in the context of the left–right political spectrum, and is one tradition in right-wing politics. In popular usage, it is commonly used to refer to a highly traditional position, one opposed to social or political change. However, according to political theorist Mark Lilla, a reactionary yearns to overturn a present condition of perceived decadence and recover an idealized past. Such reactionary individuals and policies favour social transformation, in contrast to conservative individuals or policies that seek incremental change or to preserve what exists in the present.'" ;
-  :noun_synonym "reactionist" .
-
-:Socialism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Socialism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Socialism&oldid=1018154550), Socialism is 'a political, social, and economic philosophy encompassing a range of economic and social systems characterised by social ownership of the means of production. It includes the political theories and movements associated with such systems. Social ownership can be public, collective, cooperative, or of equity. While no single definition encapsulates the many types of socialism, social ownership is the one common element. The types of socialism vary based on the role of markets and planning in resource allocation, on the structure of management in organizations, and socialists disagree on whether government, particularly existing government, is the correct vehicle for change.'" ;
-  :noun_synonym "socialist" .
 
 :enum:SomeDoctoralEducation a :EducationLevel ;
   rdfs:label "Some Doctoral Education" .
@@ -567,8 +553,3 @@
 
 :enum:SomeUndergraduateEducation a :EducationLevel ;
   rdfs:label "Some Undergraduate Education" .
-
-:Syndicalism rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Syndicalism" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Syndicalism&oldid=1013439694), Syndicalism is a 'current in the labor movement to establish local, worker-based organizations and advance the demands and rights of workers through strikes'." ;
-  :noun_synonym "syndicalist" .

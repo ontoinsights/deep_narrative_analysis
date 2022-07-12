@@ -13,8 +13,8 @@
 # The subclasses of Resource should be extended as needed for a domain
 # of interest.
 # 
-# Created: February 9, 2020
-# Last modified: January 19 2022
+# Created: February 9 2020
+# Last modified: July 11 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,6 +34,14 @@
 #  Added the property, :cites
 #  Added Electricity, Fuel and LandAndWaterResource (and their subclasses)
 #  Corrected the subclassing of :Forest
+#  Added :wordnet_noun_synset details
+#  Removed sub-classes of AgriculturalLand
+#  Removed :Coal and :CrudeOil in lieu of :FossilFuel
+#  Removed :HVACEquipment as it is too difficult to distinguish from 
+#    other appliances/Machines
+#  Removed WoodAndSubstitute in lieu of using the super-class, 
+#    BuildingMaterialAndStone
+#  Updated MonetaryAndFinancialInstrument to sub-class from LegalInstrument
 ########################################################################
 
 
@@ -44,48 +52,44 @@
 :AgriculturalLand a owl:Class ;
   rdfs:subClassOf :LandAndWaterResource ;
   rdfs:label "Agricultural Land" ;
-  :definition "Land that is arable, under permanent crops, or under permanent pastures." .
+  :definition "Land that is arable, under permanent crops, or under permanent pastures." ;
+  :noun_synonym "farmland", "pasture", "pastureland", "farm", "cropland", "grassland", "shrubland", "orchard", "plantation", "meadow", "grove" ;
+  :wordnet_noun_synset "08587011", "08633625", "08615857", "03468764", "13273412", "08588163" .
 
 :Animal a owl:Class ;
   rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Animal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
-  :noun_synonym "beast", "creature", "insect", "bug", "fauna" .
-
-:ArableLand a owl:Class ;
-  rdfs:subClassOf :AgriculturalLand ;
-  rdfs:label "Arable Land" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Arable_land&oldid=1054005801), ArableLand is 'any land capable of being ploughed and used to grow crops. Alternatively, for the purposes of agricultural statistics, the term often has a more precise definition: [It] is the land under temporary agricultural crops (multiple-cropped areas are counted only once), temporary meadows for mowing or pasture, land under market and kitchen gardens and land temporarily fallow (less than five years)... A more concise definition appearing in the Eurostat glossary similarly refers to actual rather than potential uses: \"land worked (ploughed or tilled) regularly, generally under a system of crop rotation\".'" .
+  :noun_synonym "beast", "creature", "insect", "bug", "fauna", "critter", "herbivore", "carnivore", "pet" ;
+  :wordnet_noun_synset "00015568", "01315584" .
 
 :ArtAndCollectible a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Art and Collectible" ;
   :definition "Something valued above its original worth, since it is rare, prized, popular, etc." ;
   :example "Examples of collectibles are pieces of art and sculpture, books, stamps and antiques." ;
-  :noun_synonym "rarity" .
+  :noun_synonym "rarity", "work of art" ;
+  :wordnet_noun_synset "04609048", "03073217", "07970085", "07971162", "07971449", "07972455", "07975256", "08480980", "08481109", "02726679" .
 
 :BuildingMaterialAndStone a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Building Material and Stone" ;
-  :definition "Any substance used for construction/building (such as rebar, brick, clay, concrete, wood boards or stones). Note that individuals may be of more than one class - as for example, wood boards would be of types, BuildingMaterialAndStone and WoodAndSubstitute." .
+  :definition "Any substance used for construction/building (such as rebar, brick, clay, concrete, wood boards or stones). Note that individuals may be of more than one class - as for example, wood boards would be of types, BuildingMaterialAndStone and WoodAndSubstitute." ;
+  :wordnet_noun_synset "14810638" .
 
 :ChemicalElementAndCompound a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Chemical Element and Compound" ;
-  :definition "A ChemicalElement is any is substance consisting only of atoms from a single entry in the Periodic Table. Alternately, a chemical compound is a 'substance composed of many identical molecules (or molecular entities) composed of atoms from more than one element [in the Periodic Table] held together by chemical bonds. Two atoms of the same element bonded in a molecule do not form a chemical compound, since this would require two different elements. There are four types of compounds, depending on how the constituent atoms are held together: (1) molecules held together by covalent bonds; (2) ionic compounds held together by ionic bonds; (3) intermetallic compounds held together by metallic bonds; and, (4) certain complexes held together by coordinate covalent bonds.' (https://en.wikipedia.org/w/index.php?title=Chemical_compound&oldid=935156698)" .
+  :definition "A ChemicalElement is any is substance consisting only of atoms from a single entry in the Periodic Table. Alternately, a chemical compound is a 'substance composed of many identical molecules (or molecular entities) composed of atoms from more than one element [in the Periodic Table] held together by chemical bonds. Two atoms of the same element bonded in a molecule do not form a chemical compound, since this would require two different elements. There are four types of compounds, depending on how the constituent atoms are held together: (1) molecules held together by covalent bonds; (2) ionic compounds held together by ionic bonds; (3) intermetallic compounds held together by metallic bonds; and, (4) certain complexes held together by coordinate covalent bonds.' (https://en.wikipedia.org/w/index.php?title=Chemical_compound&oldid=935156698)" ;
+  :wordnet_noun_synset "14647071", "14842408" .
 
 :ClothingAndAccessory a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Clothing and Accessory" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Clothing&oldid=1013868775), Clothing/clothes 'are items worn on the body. Clothing is typically made of fabrics or textiles but over time has included garments made from animal skin or other thin sheets of materials put together. The wearing of clothing is mostly restricted to human beings and is a feature of all human societies. The amount and type of clothing worn depends on gender, body type, social, and geographic considerations. Clothing serves many purposes: it can serve as protection from the elements, rough surfaces, rash-causing plants, insect bites, splinters, thorns and prickles by providing a barrier between the skin and the environment. Clothes can insulate against cold or hot conditions, and they can provide a hygienic barrier, keeping infectious and toxic materials away from the body. Clothing also provides protection from ultraviolet radiation.' An accessory is clothing intended to formalize or accent what is worn." ;
   :example "Examples are shirts/tops, pants, dresses, scarves, belts, ties, etc." ;
-  :noun_synonym "clothes", "apparel", "attire" .
-
-:Coal a owl:Class ;
-  rdfs:subClassOf :Fuel ;
-  rdfs:label "Coal" ;
-  :definition "A type of Fuel." ;
-  :noun_synonym "anthracite" .
+  :noun_synonym "clothes", "apparel", "attire", "accoutrement", "accouterment" ;
+  :wordnet_noun_synset "03055525", "02731365", "02759103", "02674410" .
 
 :ComponentPart a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -97,29 +101,27 @@
 :ComputingAndTelecommunicationDevice a owl:Class ;
   rdfs:subClassOf :Machine ;
   rdfs:label "Computing and Telecommunication Device" ;
-  :definition "A Machine that can 'execute' sequences of arithmetic and logical operations, and/or transmits information either over wires, radio waves, optics and other means. At this time, the use of computers is fairly ubiquitous in the telecommunications industry." .
+  :definition "A Machine that can 'execute' sequences of arithmetic and logical operations, and/or transmits information either over wires, radio waves, optics and other means. At this time, the use of computers is fairly ubiquitous in the telecommunications industry." ;
+  :wordnet_noun_synset "04407424", "03086983" .
 
 :Container a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Container" ;
   :definition "A receptacle or enclosure for holding a solid, liquid or gas." ;
-  :noun_synonym "receptacle" .
+  :noun_synonym "receptacle", "urn", "vase", "tank", "storage tank", "bottle", "box", "crate" ;
+  :wordnet_noun_synset "03099154", "02879899", "04529463", "04395830" .
 
 :Contract a owl:Class ;
   rdfs:subClassOf :LegalInstrument, :Agreement ;
   rdfs:label "Contract" ;
-  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." .
-
-:CrudeOil a owl:Class ;
-  rdfs:subClassOf :Fuel ;
-  rdfs:label "Crude Oil" ;
-  :definition "A type of Fuel that is 'a mixture of hydrocarbons that exists in liquid phase in natural underground reservoirs and remains liquid at atmospheric pressure after passing through surface separating facilities' (https://www3.epa.gov/carbon-footprint-calculator/tool/definitions/crude-oil.html)." ;
-  :noun_synonym "petroleum" .
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." ;
+  :wordnet_noun_synset "06532935" .
 
 :Database a owl:Class ;
   rdfs:subClassOf :Dataset ;
   rdfs:label "Database" ;
-  :definition "Information organized into a collection of tables (e.g., relational databases) or records/triples/etc. (e.g., NoSQL databases), stored on a computer and accessed via specialized query languages." .
+  :definition "Information organized into a collection of tables (e.g., relational databases) or records/triples/etc. (e.g., NoSQL databases), stored on a computer and accessed via specialized query languages." ;
+  :wordnet_noun_synset "06600792" .
 
 :Dataset a owl:Class ;
   rdfs:subClassOf :Software ;
@@ -129,65 +131,78 @@
 :DyeAndInk a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Dye, Pigment and Ink" ;
-  :definition "A substance that is used to color (or change the color of) somthing to which is it applied. A dye chemically bonds to the applied material, whereas a pigment does not. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Ink&oldid=1008461908), an ink 'is a gel, sol, or solution that contains at least one colourant, such as a dye or pigment, and is used to color a surface to produce an image, text, or design ... Ink can be a complex medium, composed of solvents, pigments, dyes, resins, lubricants, solubilizers, surfactants, particulate matter, fluorescents, and other materials.'" .
+  :definition "A substance that is used to color (or change the color of) somthing to which is it applied. A dye chemically bonds to the applied material, whereas a pigment does not. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Ink&oldid=1008461908), an ink 'is a gel, sol, or solution that contains at least one colourant, such as a dye or pigment, and is used to color a surface to produce an image, text, or design ... Ink can be a complex medium, composed of solvents, pigments, dyes, resins, lubricants, solubilizers, surfactants, particulate matter, fluorescents, and other materials.'" ;
+  :wordnet_noun_synset "15009942", "14941786" .
 
 :Electricity a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Electricity" ;
   :definition "Electricity is a type of Resource (inanimate entity that is produced, consumed, bought, sold, ...). It is defined as 'a secondary energy source because it is produced by converting primary sources of energy such as coal, natural gas, nuclear energy, solar energy, and wind energy, into electrical power. Electricity is also referred to as an energy carrier [since] it can be converted to other forms of energy such as mechanical energy or heat.' (https://www.eia.gov/energyexplained/electricity/)" ;
-  :noun_synonym "electric power", "electric energy" .
+  :noun_synonym "electric power", "electric energy" ;
+  :wordnet_noun_synset "11469756", "11470903" .
 
 :EngineAndGenerator a owl:Class ;
   rdfs:subClassOf :Machine ;
   rdfs:label "Engine, Motor and Generator" ;
-  :definition "A Machine that converts different types of energy into mechanical or electrical energy. An engine/motor generates mechanical energy for motion, while generators typically create electricity/electrical energy." .
+  :definition "A Machine that converts different types of energy into mechanical or electrical energy. An engine/motor generates mechanical energy for motion, while generators typically create electricity/electrical energy." ;
+  :wordnet_noun_synset "03292644", "03438787", "03795479" .
 
 :FoodAndDrink a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Food and Drink" ;
   :definition "An entity that is consumed to satisfy hunger and/or thirst, or for nutritional or recreational reasons." ;
-  :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance" .
+  :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance", "nutrient", "leftover", "ration", "field ration", "meal", "cookout", "side dish", "entree" ;
+  :wordnet_noun_synset "00021445" .
 
 :Forest a owl:Class ;
   rdfs:subClassOf :LandAndWaterResource ;
   rdfs:label "Forest" ;
   :definition "A Forest 'area is land spanning more than 0.5 hectare with trees higher than five meters and a canopy cover of more than 10% to include windbreaks, shelterbelts, and corridors of trees greater than 0.5 hectare and at least 20 m wide' (https://www.cia.gov/the-world-factbook/field/land-use)." ;
-  :noun_synonym "wood", "woodland", "jungle", "timberland" .
+  :noun_synonym "wood", "woodland", "jungle", "timberland" ;
+  :wordnet_noun_synset "08455525" .
+  
+:FossilFuel a owl:Class ;
+  rdfs:subClassOf :Fuel ;
+  rdfs:label "Fossil Fuel" ;
+  :definition "Per Wikipedia (), a fossil fuel 'is a hydrocarbon-containing material formed naturally in the earth's crust from the remains of dead plants and animals that is extracted and burned as a fuel. The main fossil fuels are coal, crude oil and natural gas'." ;
+  :noun_synonym "crude oil", "coal", "natural gas" ;
+  :wordnet_noun_synset "14710513" .
 
 :Fuel a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Fuel" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451), a fuel 'is any material that can be made to react with other substances so that it releases energy as heat energy or to be used for work [to provide power]. The concept was originally applied solely to those materials capable of releasing chemical energy but has since also been applied to other sources of heat energy such as nuclear energy (via nuclear fission and nuclear fusion). The heat energy released by reactions of fuels is converted into mechanical energy via a heat engine. Other times the heat itself is valued for warmth, cooking, or industrial processes, as well as the illumination that comes with combustion.'" ;
-  :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are types of fuels." .
+  :example "Hydrocarbons [such as methane and octane] and related oxygen-containing molecules are by far the most common source of fuel used by humans, but other substances, including radioactive metals, are also utilized. (https://en.wikipedia.org/w/index.php?title=Fuel&oldid=1013862451) In addition, substances such as wood, peat and coal are types of fuels." ;
+  :wordnet_noun_synset "14899228" .
 
 :FungusAndPlant a owl:Class ;
   rdfs:subClassOf :Resource, :Agent ;
   rdfs:label "Fungus and Plant" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
-  :noun_synonym "flora", "vegetation", "mold", "mushroom", "fruit", "vegetable", "tree" .
+  :noun_synonym "flora", "vegetation", "mold", "mushroom", "fruit", "vegetable", "tree", "yeast" ;
+  :wordnet_noun_synset "13013628", "13013224", "11550054", "00017402" .
 
 :FurnitureAndHouseholdGoods a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Furniture and Household Goods" ;
   :definition "Household goods are intended for personal and family use within a home or residence. They include furniture, appliances, plates and utensils, etc. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Furniture&oldid=1013958576), furniture 'refers to movable objects intended to support various human activities such as seating (e.g., chairs, stools, and sofas), eating (tables), and sleeping (e.g., beds). Furniture is also used to hold objects at a convenient height for work (as horizontal surfaces above the ground, such as tables and desks), or to store things (e.g., cupboards and shelves). Furniture can be a product of design and is considered a form of decorative art. In addition to furniture's functional role, it can serve a symbolic or religious purpose. It can be made from many materials'." .
-
-:HVACEquipment a owl:Class ;
-  rdfs:subClassOf :Machine ;
-  rdfs:label "Heating, Ventilation, Air Conditioning and Refrigeration Machine and Equipment" ;
-  :definition "Any Resource that provides capabilities for heating/cooling, ventilation/air movement, air cleaning or refrigeration." .
+  :noun_synonym "dry goods" ;
+  :wordnet_noun_synset "03410635", "03262580", "03256767" .
 
 :IdentificationInstrument a owl:Class ;
   rdfs:subClassOf :LegalInstrument ;
   rdfs:label "Identification Instrument" ;
   :definition "A legal document that establishes who someone is, what they know, what they can do, etc." ;
-  :noun_synonym "driver's license", "birth certificate", "passport", "identification papers", "identification card" .
+  :noun_synonym "driver's license", "birth certificate", "passport", "identification papers", "identification card", "certificate", "certification" ;
+  :wordnet_noun_synset "06483016", "06561652" .
 
 :Jewelry a owl:Class ;
   rdfs:subClassOf :ClothingAndAccessory ;
   rdfs:label "Jewelry" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Jewellery&oldid=932741930), Jewelry 'consists of decorative items worn for personal adornment, such as brooches, rings, necklaces, earrings, pendants, bracelets, and cufflinks. Jewellery may be attached to the body or the clothes.' It may be made of precious metals and stones or imitations." ;
   :example "Examples are a bracelet, brooch, earrings, rings, a necklace or pendant, anklet, cameo, charm, choker, locket or cufflink." ;
-  :noun_synonym "jewelery" .
+  :noun_synonym "jewelery", "jewellery" ;
+  :wordnet_noun_synset "03602662" .
 
 :LandAndWaterResource a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -197,78 +212,75 @@
 :LegalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Legal Instrument" ;
-  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments." ;
+  :noun_synonym "legal document", "official document" ;
+  :wordnet_noun_synset "06491336" .
 
 :Machine a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Machine or Mechanical Device" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667), a Machine '(or mechanical device) is a mechanical structure that uses power to apply forces and control movement to perform an intended action. Machines can be driven by animals and people, by natural forces such as wind and water, and by chemical, thermal, or electrical power, and include a system of mechanisms that shape the actuator input to achieve a specific application of output forces and movement ... Modern machines are complex systems that consist of structural elements, mechanisms and control components and include interfaces for convenient use." ;
   :example "Examples include: a wide range of vehicles, such as automobiles, boats and airplanes; appliances in the home and office, including computers, building air handling and water handling systems; as well as farm machinery, machine tools and factory automation systems and robots. (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667)" ;
-  :noun_synonym "appliance", "device" .
+  :noun_synonym "appliance", "device" ;
+  :wordnet_noun_synset "03705309", "02732781", "04077839", "04077657" .
 
 :Message a owl:Class ;
   rdfs:subClassOf :InformationSource ;
   rdfs:label "Message" ;
   :definition "A communication distributed by electronic or physical means, conveying some information." ;
   :noun_synonym "correspondence", "mail", "instant message", "email", "tweet" ;
-  :verb_synonym "mail", "message", "email", "tweet" .
+  :verb_synonym "mail", "message", "email", "tweet" ;
+  :wordnet_noun_synset "06263820", "06283265", "06289979" .
 
 :MonetaryAndFinancialInstrument a owl:Class ;
-  rdfs:subClassOf :Resource ;
+  rdfs:subClassOf :LegalInstrument ; 
   rdfs:label "Monetary and Financial Instrument" ;
-  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." .
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." ;
+  :wordnet_noun_synset "13377127", "13309007", "13420126", "13399521", "13399691", "06483696", "06492177", "06492827" .
 
 :MusicalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Musical Instrument" ;
   :definition "A Resource that is found, built or adapted to produce 'music'. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Music&oldid=1012822353), music 'is the art of arranging sounds in time to produce a composition through the elements of melody, harmony, rhythm, and timbre'." ;
-  :example "Examples of MusicalInstruments include string instruments such as guitars, percussion instruments such as drums and wind instruments such as flutes and oboes." .
-
-:NaturalGas a owl:Class ;
-  rdfs:subClassOf :Fuel ;
-  rdfs:label "Natural Gas" ;
-  :definition "A type of Fuel that is 'a naturally occurring hydrocarbon gas mixture consisting of methane and commonly including varying amounts of other higher alkanes, and sometimes a small percentage of carbon dioxide, nitrogen, hydrogen sulfide, or helium. Natural gas is colorless and odorless, and explosive ... The extraction and consumption of natural gas is a major and growing driver of climate change. It is a potent greenhouse gas itself when released into the atmosphere, and creates carbon dioxide when burnt.' (https://en.wikipedia.org/w/index.php?title=Natural_gas&oldid=1056092303)" ;
-  :noun_synonym "fossil gas" .
-
-:PermanentCrop a owl:Class ;
-  rdfs:subClassOf :AgriculturalLand ;
-  rdfs:label "Permanent Crop" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Permanent_crop&oldid=1034516992), PermanentCrop is 'one produced from plants which last for many seasons, rather than being replanted after each harvest... [It describes] cultivable land that is not being used for annually-harvested crops such as staple grains. In such usage, permanent cropland is a form of agricultural land that includes grasslands and shrublands used to grow grape vines or coffee; orchards used to grow fruit or olives; and forested plantations used to grow nuts or rubber.'" .
-
-:PermanentPasture a owl:Class ;
-  rdfs:subClassOf :AgriculturalLand ;
-  rdfs:label "Permanent Pasture and Meadow" ;
-  :definition "Permanent pastures and meadows are 'used for at least five years or more to grow herbaceous forage, either cultivated or growing naturally' (https://www.cia.gov/the-world-factbook/field/land-use)." .
+  :example "Examples of MusicalInstruments include string instruments such as guitars, percussion instruments such as drums and wind instruments such as flutes and oboes." ;
+  :wordnet_noun_synset "03806455" .
 
 :PersonalAndBabyCare a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Personal and Baby Care" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Personal_care&oldid=1010023799), 'personal care or toiletries are consumer products used in personal hygiene and for beautification.'" ;
-  :example "Personal care includes products as diverse as ... cleansing pads, colognes, cotton swabs, cotton pads, deodorant, eye liner, facial tissue, hair clippers, lip gloss, lipstick, lip balm, lotion, makeup, hand soap, facial cleanser, body wash, nail files, pomade, perfumes, razors, shaving cream, moisturizer, baby powder, toilet paper, toothpaste, facial treatments, wet wipes, and shampoo. (https://en.wikipedia.org/w/index.php?title=Personal_care&oldid=1010023799)" .
+  :example "Personal care includes products as diverse as ... cleansing pads, colognes, cotton swabs, cotton pads, deodorant, eye liner, facial tissue, hair clippers, lip gloss, lipstick, lip balm, lotion, makeup, hand soap, facial cleanser, body wash, nail files, pomade, perfumes, razors, shaving cream, moisturizer, baby powder, toilet paper, toothpaste, facial treatments, wet wipes, and shampoo. (https://en.wikipedia.org/w/index.php?title=Personal_care&oldid=1010023799)" ;
+  :noun_synonym "toiletry" ;
+  :wordnet_noun_synset "04454577", "03193215" .
 
 :PharamaceuticalAndMedicinal a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Pharmaceutical and Medicinal Entity" ;
   :definition "A Resource (naturally occurring or manufactured) that is used to cure/heal, relieve pain and/or administer to injuries or illnesses." ;
-  :noun_synonym "healing", "therapeutic" .
+  :noun_synonym "healing", "therapeutic", "medicine", "medication" ;
+  :wordnet_noun_synset "03745652" .
 
 :PreciousMetalPearlAndGemstone a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Precious Metal, Pearl and Gemstone" ;
   :definition "Entities that are naturally occurring, of high economic value and (usually) rare (due to scarcity or controlled release)." ;
-  :example "Examples of precious metals are gold and silver. Examples of gemstones include diamonds, rubies and sapphires." .
+  :example "Examples of precious metals are gold and silver. Examples of gemstones include diamonds, rubies and sapphires." ;
+  :wordnet_noun_synset "03601980", "13392662" .
 
 :Publication a owl:Class ;
   rdfs:subClassOf :InformationSource ;
   rdfs:label "Publication" ;
   :definition "A book, magazine, article, etc. that is available/published." ;
-  :noun_synonym "book", "volume", "hardback", "paperback", "title", "work", "opus", "treatise", "manual", "register", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report" .
+  :noun_synonym "book", "volume", "hardback", "paperback", "title", "work", "opus", "treatise", "manual", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report" ;
+  :wordnet_noun_synset "01103863", "02873453", "03709749", "03827711", "04606723", "06626039", "06432944", "06437949", "06438138", "06605500", "06694721", "06277798", "06694296" .
 
 :RefinedPetroleumProduct a owl:Class ;
   rdfs:subClassOf :Fuel ;
   rdfs:label "Refined Petroleum Product" ;
   :definition "A type of Fuel that is 'derived from crude oils through processes such as catalytic cracking and fractional distillation. These products have physical and chemical characteristics that differ according to the type of crude oil and subsequent refining processes' (https://www.epa.gov/emergency-response/types-refined-petroleum-products)." ;
   :example "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." .
+  :noun_synonym "fuel oil", "heating oil" ; ;
+  :wordnet_noun_synset "14710746", "14710042" .
 
 :RenewableWater a owl:Class ;
   rdfs:subClassOf :WaterResource ;
@@ -279,13 +291,15 @@
   rdfs:subClassOf :SubstanceAndRawMaterial ;
   rdfs:label "Soap and Cleaning Substance" ;
   :definition "An entity used to separate dirt, grime, particulates, pathogens, etc. from various articles and environments." ;
-  :example "Examples are soaps, detergents, solvents, sands, etc." .
+  :example "Examples are soaps, detergents, solvents, sands, etc." ;
+  :wordnet_noun_synset "03044572" .
 
 :Software a owl:Class ;
   rdfs:subClassOf :InformationSource ;
   rdfs:label "Software" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579), Software 'is a collection of instructions and data that tell [a] computer how to work ... In computer science and software engineering, computer software is all information processed by computer systems, including programs and data." ;
-  :example "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" .
+  :example "Computer software includes computer programs, libraries and related non-executable data, such as online documentation or digital media. (https://en.wikipedia.org/w/index.php?title=Software&oldid=1009494579)" ;
+  :wordnet_noun_synset "06367301", "04264643" .
 
 :Spreadsheet a owl:Class ;
   rdfs:subClassOf :Dataset ;
@@ -297,24 +311,28 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Substance and Raw Material" ;
   :definition "Raw materials are the basic constituents/matter which make up something or from which something is made. This semantic is aligned with WordNet 3.1's definition of 'substance'." ;
-  :example "Examples of raw materials are chemical elements and compounds, wood, rubber, cement, gemstones, soap, etc." .
+  :example "Examples of raw materials are chemical elements and compounds, wood, rubber, cement, gemstones, soap, etc." ;
+  :wordnet_noun_synset "14604877" .
 
 :ToolAndImplement a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Tool, Instrument and Implement" ;
-  :definition "An object/device that can carry out a particular function (such as a hammer or lathe), and/or expand a Person's ability (e.g., a scientific instrument such as a microscope or telescope)." .
+  :definition "An object/device that can carry out a particular function (such as a hammer or lathe), and/or expand a Person's ability (e.g., a scientific instrument such as a microscope or telescope)." ;
+  :wordnet_noun_synset "04459089", "04154560", "03235863", "03739416", "03745184", "03818716", "03857800", "04371632", "04372571", "04444514", "04479147" .
 
 :ToyAndGamingItem a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Toy and Gaming Item" ;
   :definition "An object used in play or in a game (for recreation or competition)." ;
-  :example "Examples of toys are dolls, gaming boards, playing cards, balls, etc." .
+  :example "Examples of toys are dolls, gaming boards, playing cards, balls, etc." ;
+  :wordnet_noun_synset "03419072", "03971038" .
 
 :Vehicle a owl:Class ;
   rdfs:subClassOf :Machine ;
   rdfs:label "Vehicle" ;
   :definition "A Machine used for transporting people and/or goods. Vehicles operate on land or sea, and in the air or space." ;
-  :noun_synonym "conveyance", "aircraft", "airplane", "automobile", "car", "bike", "bicycle", "motorcycle", "boat", "vessel", "helicopter", "truck", "rocket", "ship", "train", "railroad car", "van" .
+  :noun_synonym "conveyance", "aircraft", "airplane", "automobile", "car", "bike", "bicycle", "motorcycle", "boat", "vessel", "helicopter", "truck", "rocket", "ship", "train", "railroad car", "van" ;
+  :wordnet_noun_synset "04531608", "04537861", "03515727", "04025495", "04025495", "04203545", "04221349", "04474542", "04477048", "04272024" .
 
 :WaterResource a owl:Class ;
   rdfs:subClassOf :LandAndWaterResource ;
@@ -325,23 +343,21 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Waste and Residue" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), waste and residue 'are unwanted or unusable materials. Waste is any substance which is discarded after primary use, or is worthless, defective and of no use. A by-product by contrast is a joint product of relatively minor economic value. A waste product may become a by-product, joint product or resource through an invention that raises a waste product's value above zero.'" ;
-  :example "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" .
+  :example "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Waste&oldid=1005293229), 'examples include municipal solid waste (household trash/refuse), hazardous waste, wastewater (such as sewage, which contains bodily wastes (feces and urine) and surface runoff), radioactive waste, and others.'" ;
+  :wordnet_noun_synset "14880414", "15029068" .
 
 :WeaponAndAmmunition a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Weapon and Ammunition" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Weapon&oldid=1011762825), a 'weapon, arm or armament is any implement or device that can be used with the intent to inflict damage or harm. Weapons are used to increase the efficacy and efficiency of activities such as hunting, crime, law enforcement, self-defense, and warfare. In broader context, weapons may be construed to include anything used to gain a tactical, strategic, material or mental advantage over an adversary or enemy target. While ordinary objects – sticks, rocks, bottles, chairs, vehicles – can be used as weapons, many are expressly designed for the purpose; these range from simple implements such as clubs, axes and swords, to complicated modern firearms, tanks, intercontinental ballistic missiles, biological weapons, and cyberweapons. Something that has been re-purposed, converted, or enhanced to become a weapon of war is termed weaponized, such as a weaponized virus or weaponized laser.' On the other hand, ammunition '(informally ammo) is the material fired, scattered, dropped or detonated from any weapon. Ammunition is both expendable weapons (e.g., bombs, missiles, grenades, land mines) and the component parts of other weapons that create the effect on a target (e.g., bullets and warheads). Nearly all mechanical weapons require some form of ammunition to operate.'(https://en.wikipedia.org/w/index.php?title=Ammunition&oldid=1012849062)" .
-  
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Weapon&oldid=1011762825), a 'weapon, arm or armament is any implement or device that can be used with the intent to inflict damage or harm. Weapons are used to increase the efficacy and efficiency of activities such as hunting, crime, law enforcement, self-defense, and warfare. In broader context, weapons may be construed to include anything used to gain a tactical, strategic, material or mental advantage over an adversary or enemy target. While ordinary objects – sticks, rocks, bottles, chairs, vehicles – can be used as weapons, many are expressly designed for the purpose; these range from simple implements such as clubs, axes and swords, to complicated modern firearms, tanks, intercontinental ballistic missiles, biological weapons, and cyberweapons. Something that has been re-purposed, converted, or enhanced to become a weapon of war is termed weaponized, such as a weaponized virus or weaponized laser.' On the other hand, ammunition '(informally ammo) is the material fired, scattered, dropped or detonated from any weapon. Ammunition is both expendable weapons (e.g., bombs, missiles, grenades, land mines) and the component parts of other weapons that create the effect on a target (e.g., bullets and warheads). Nearly all mechanical weapons require some form of ammunition to operate.'(https://en.wikipedia.org/w/index.php?title=Ammunition&oldid=1012849062)" ;
+  :wordnet_noun_synset "14609988", "02741036", "04573543" .
+
 :WebPage a owl:Class ;
   rdfs:subClassOf :Software ;
   rdfs:label "Web Page" ;
   :noun_synonym "webpage" ;
-  :definition "A hypertext document available on the World Wide Web, at a URL." .
-
-:WoodAndSubstitue a owl:Class ;
-  rdfs:subClassOf :SubstanceAndRawMaterial ;
-  rdfs:label "Wood and Substitute" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wood&oldid=1009092813), Wood 'is a porous and fibrous structural tissue found in the stems and roots of trees and other woody plants. It is an organic material – a natural composite of cellulose fibers that are strong in tension and embedded in a matrix of lignin that resists compression ... Wood may also refer to other plant materials with comparable properties, and to material engineered from wood, or wood chips or fiber. Wood has been used for thousands of years for fuel, as a construction material, for making tools and weapons, furniture and paper. More recently it emerged as a feedstock for the production of purified cellulose and its derivatives, such as cellophane and cellulose acetate.' Wood substitutes include hump, bamboo, composites and plastics." .
+  :definition "A hypertext document available on the World Wide Web, at a URL." ;
+  :wordnet_noun_synset "06370307" .
 
 
 ########################################################################

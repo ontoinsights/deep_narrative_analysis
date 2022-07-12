@@ -22,7 +22,7 @@ unwanted_tokens = [
 ]
 
 
-def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gender: str, family_dict: dict):
+def add_token_details(token: Token, dictionary: dict, token_key: str, family_dict: dict):
     """
     Expand/clarify the token text, get the token's entity type (or define one if blank), and
     add the token details to the specified dictionary key.
@@ -30,20 +30,17 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
     :param token: Token from spacy parse
     :param dictionary: Dictionary that the token details should be added to
     :param token_key: Dictionary key where the details are added
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
-                        MALE - indicating the gender of the narrator
     :param family_dict: A dictionary containing the names of family members and their
                         relationship to the narrator/subject
-    :returns: None (Specified dictionary is updated)
+    :returns: None (Input dictionary is updated)
     """
     ent = token.text
     if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
         return
+    # TODO: Handle quotation marks
     ent_type = token.ent_type_
-    if ent == 'Narrator':
-        ent_type = f'{narr_gender}SINGPERSON'
     # Handle proper nouns and pronouns
-    elif 'Prop' in token.morph.get('NounType'):      # Proper noun
+    if 'Prop' in token.morph.get('NounType'):      # Proper noun
         ent, ent_type = _process_proper_noun(token, family_dict)
     elif 'Prs' in token.morph.get('PronType'):    # Personal pronoun
         ent, ent_type = _process_personal_pronoun(token, narr_gender)
@@ -63,21 +60,7 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
         ent, ent_type = _process_noun(token, ent_type)
 
     # Set up the entity's dictionary and add basic details
-    ent_dict = dict()
-    # Lists of dictionaries have plural names while individual dictionary keys should not
-    ent_base_key = 'detail'
-    if 'verb' in token_key:
-        ent_base_key = 'verb'
-    elif 'object' in token_key:
-        ent_base_key = 'object'
-    elif 'subject' in token_key:
-        ent_base_key = 'subject'
-    ent_dict[f'{ent_base_key}_text'] = ent
-    if 'verb' in token_key:
-        ent_dict['verb_lemma'] = token.lemma_
-    else:
-        ent_dict[f'{ent_base_key}_type'] = ent_type
-
+    ent_dict = _setup_entity_dictionary(token, token_key)
     # Process specific children (conjunctions and prepositions)
     for child in token.children:
         if ent_type == 'VERB' and ('obj' in child.dep_ or 'attr' in child.dep_):
@@ -85,10 +68,10 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
             # Object/attr is part of the adverbial clause, so it adds to the current ent_dict
             # add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
             # else:
-            add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
+            add_token_details(child, ent_dict, objects_string, family_dict)
         # TODO: Note a "cc" of "or" or "nor" (:alternative true Collection)
         elif 'conj' == child.dep_:
-            add_token_details(child, dictionary, token_key, narr_gender, family_dict)
+            add_token_details(child, dictionary, token_key, family_dict)
         elif 'prep' in child.dep_:
             if child.text.lower() not in processed_prepositions:
                 continue
@@ -104,7 +87,7 @@ def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gende
     add_to_dictionary_values(dictionary, token_key, ent_dict, dict)
 
 
-# Functions internal to the module
+# Internal functions
 def _check_family(entity: str, family_dict: dict) -> (str, str, str):
     """
     Determines if a reference is to a family member and returns the member's relationship,
@@ -251,3 +234,28 @@ def _process_proper_noun(token: Token, family_dict: dict) -> (str, str):
             entity, entity_type = _process_noun(token, entity_type)   # Get the full entity text at least
         entity_type = f'{gender}{entity_type}' if gender else entity_type
     return entity, entity_type
+
+
+def _setup_entity_dictionary(ent_token: Token, ent_key: str) -> dict:
+    """
+    Set up a dictionary to hold the entity's/token's details.
+
+    :param ent_token: Token from spacy parse
+    :param ent_key: Dictionary key where the details are added
+    :returns: A dictionary holding the entity's/token's initial dictionary definition
+    """
+    ent_dict = dict()
+    # Lists of dictionaries have plural names while individual dictionary keys should not
+    ent_base_key = 'detail'
+    if 'verb' in ent_key:
+        ent_base_key = 'verb'
+    elif 'object' in ent_key:
+        ent_base_key = 'object'
+    elif 'subject' in ent_key:
+        ent_base_key = 'subject'
+    ent_dict[f'{ent_base_key}_text'] = ent_token.text
+    if 'verb' in ent_key:
+        ent_dict['verb_lemma'] = ent_token.lemma_
+    else:
+        ent_dict[f'{ent_base_key}_type'] = ent_token.ent_type_
+    return ent_dict

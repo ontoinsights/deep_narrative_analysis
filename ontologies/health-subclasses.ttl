@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 23 2022
+# Last Modified: July 11 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -23,10 +23,8 @@
 # either express or implied.
 # 
 # Changes:
-#  Moved classes to this file from event-subclasses.ttl
-#  Added and clarified noun/verb_synonyms
-#  Added :Healthy
-#  Updated synonyms
+#  Rewrite based on the hyper/hyponym definitions of WordNet 
+#    since the previous subclassing was too difficult to maintain
 ########################################################################
 
 
@@ -35,209 +33,135 @@
 ########################################################################
 
 :Addiction a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Addiction" ;
   :definition "A condition related to being dependent on (and unable to stop taking/using) a substance such as drugs or alcohol, or an activity (such as being addicted to video gaming or online activity). The substance or activity is indicated using the :has_topic property." ;
   :noun_synonym "alcoholism" ;
-  :verb_synonym "addict" .
+  :wordnet_noun_synset "14086207" .
 
-:ADHD a owl:Class ;
-  rdfs:subClassOf :NeurologicalDisability ;
-  rdfs:label "Attention deficit hyperactivity disorder (ADHD)" ;
-  :definition "Attention deficit hyperactivity disorder (ADHD) is a neurodevelopmental disability that results in hyperactivity, difficulty in focusing attention, and impulsive behavior." ;
-  :noun_synonym "ADD", "attention deficit disorder", "hyperactivity", "difficulty focusing", "ADHD" .
-
-:AlcoholAndDrugUse a owl:Class ;
+:AnimalDisease a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Alcohol and Drug Use" ;
-  :definition "A condition related to 'over-use' of drugs or alcohol, such that the use affects the performance of normal life activities. The substance is indicated using the :has_topic property." ;
-  :noun_synonym "drug abuse", "alcohol abuse", "substance abuse" .
+  rdfs:label "Animal Disease" ;
+  :definition "An illness that affects animals, but typically does NOT affect humans." ; 
+  :wordnet_noun_synset "14276606" .
 
-:Arthritis a owl:Class ;
-  rdfs:subClassOf :MobilityImpairment ;
-  rdfs:label "Arthritis" ;
-  :definition "A health condition related to inflammation/swelling and stiffness of a Person's joints. Note that cases of rheumatoid arthritis should also be classified as an :AutoimmuneDisease." .
-
-:Autism a owl:Class ;
-  rdfs:subClassOf :NeurologicalDisability ;
-  rdfs:label "Autism" ;
-  :definition "Autism spectrum disorder (ASD) is a neurodevelopmental disability that affects social skills and verbal/nonverbal communication, and causes repetitive behaviors and other behavioral issues." ;
-  :noun_synonym "Autism spectrum disorder", "ASD" .
-
-:AutoimmuneDisease a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Autoimmune Disease" ;
-  :definition "A disease where a Person's immune system attacks healthy cells." ;
-  :noun_synonym "immunological disease" .
-
-:BipolarDisorder a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
-  rdfs:label "Bipolar Disorder" ;
-  :definition "A mental disorder associated with large mood swings from depressive lows to manic highs." ;
-  :noun_synonym "manic depressive disorder" .
-
-:Blindness a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Blindness" ;
-  :definition "Loss of vision due to neurological or physical issues." ;
-  :noun_synonym "loss of sight" .
-
-:BloodDisorder a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Blood Disorder" ;
-  :definition "A health condition that affects red or white blood cells, platelets or blood plasma, such as anemia." ;
-  :noun_synonym "anemia" .
-  
-:BodilyInjury  a owl:Class ;
+:BodilyInjury a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Bodily Injury" ;
-  :definition "Damage to all or a part of a Person's body." ;
-  :example "Examples of BodilyInjury are concussions, fractures, burns, cuts, etc." .
+  :definition "Damage/trauma to all or a part of a Person's body." ;
+  :example "Examples of BodilyInjury are concussions, fractures, burns, cuts, bruises, etc." ;
+  :noun_synonym "hurt" ;
+  :wordnet_noun_synset "14309164" .
 
-:Cancer a owl:Class ;
+:ConvulsionAndSpasm a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Cancer" ;
-  :definition "A health condition characterized by uncontrolled growth of abnormal cells in some part of the body." .
-
-:CardiovascularDisease a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Cardiovascular Disease" ;
-  :definition "Any health condition affecting the heart, such as stroke, cardiac arrest, etc." ;
-  :noun_synonym "stroke", "heart attack", "heart disease", "cardiac arrest", "heart failure", "arrhythmia" .
-
-:CerebralPalsy a owl:Class ;
-  rdfs:subClassOf :NeurologicalDisability, :MobilityImpairment ;
-  rdfs:label "Cerebral Palsy" ;
-  :definition "A health condition that affects a Person’s ability to move and to maintain balance and posture." .
-
-:ColdAndFlu a owl:Class ;
-  rdfs:subClassOf :InfectiousDisease, :RespiratoryandPulmonaryDisease ;
-  rdfs:label "Cold and Flu" ;
-  :definition "Types of viral infections that attack the nose, throat and lungs." .
-
-:Covid19 a owl:Class ;
-  rdfs:subClassOf :InfectiousDisease, :RespiratoryandPulmonaryDisease ;
-  rdfs:label "Covid-19 Coronavirus" ;
-  :definition "A viral infection that attacks the respiratory system" .
-
-:Deafness a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Deafness" ;
-  :definition "Loss of hearing due to neurological or physical issues." .
+  rdfs:label "Convulsion and Spasm" ;
+  :definition "Sudden contraction of muscles or constriction of an organ." ;
+  :wordnet_noun_synset "14106077", "00226974" .
 
 :Deformity a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
   rdfs:label "Deformity" ;
-  :definition "A malformation of some part of the body." ;
-  :noun_synonym "malformation" .
+  :definition "A condition where a part of the body is disfigured, distored, misshapen or malformed." ;
+  :noun_synonym "malformation", "disfigurement", "malformation", "misshapenness" ;
+  :wordnet_noun_synset "14236994" .
 
-:Dementia a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
-  rdfs:label "Dementia" ;  
-  :definition "A type of mental disorder that progressively, negatively affects a Person's brain function, memory, thinking and behavior such that the Person cannot carry out everyday activities. This may be caused by injury or disease." ;
-  :noun_synonym "Alzheimer's disease" .
-
-:Diabetes a owl:Class ;
+:Dehydration a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Diabetes" ;
-  :definition "Diabetes is a condition resulting in high blood sugars. It may be caused by a lack of insulin or a body's inability to absorb glucose. Note that Type 1 diabetes should also be classified as an :AutoimmuneDisease." .
+  rdfs:label "Dehydration" ;
+  :definition "A condition where the amount of water in a body is reduced to a harmful/dangerous level." ;
+  :wordnet_noun_synset "14064328" .
 
-:Healthy a owl:Class ;
+:Disability a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
+  rdfs:label "Disability" ;
+  :definition "A physical or mental condition affecting an individual's ability to move, and perform daily tasks and activities." ;
+  :noun_synonym "disablement", "handicap", "impairment" ;
+  :wordnet_noun_synset "14571935" .
+
+:DiseaseAndInfection a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Healthy" ;
-  :definition "Free from disease and injury" ;
-  :noun_synonym "good health", "physically fit", "good shape", "hale", "hearty" ;
-  :verb_synonym "be healthy" .
+  rdfs:label "Disease and Infection" ;
+  :definition "An illness with one or more specific Symptoms, that is not the result of injury. An infectious disease is transmitted by bacteria, viruses, parasites or fungi." ;
+  :wordnet_noun_synset "14093842", "14075399", "14198031" .
 
-:HIVAndAIDS a owl:Class ;
-  rdfs:subClassOf :InfectiousDisease, :AutoimmuneDisease ;
-  rdfs:label "Human Immunodeficiency Virus (HIV) and Acquired Immunodeficiency Syndrome (AIDS)" ;
-  :definition "Human Immunodeficiency Virus (HIV) is a virus that attacks the body's immune system. If not treated, it can lead to Acquired Immunodeficiency Syndrome (AIDS)." ;
-  :noun_synonym "HIV", "AIDS" .
+:Disorder a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
+  rdfs:label "Disorder" ;
+  :definition "A condition characterized by abnormal functioning of physical or mental processes." ;
+  :wordnet_noun_synset "14075885" .
 
-:InfectiousDisease a owl:Class ;
+:Frailty a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Infectious Disease" ;
-  :definition "Infectious diseases are disorders caused by bacteria, viruses, fungi or parasites." .
+  rdfs:label "Frailty" ;
+  :definition "A condition where an individual's body is abnormally weakened or weakened due to old age." ;
+  :noun_synonym "infirmity", "frailness", "feebleness" ;
+  :wordnet_noun_synset "14571235" .
 
-:MentalDisorder a owl:Class ;
+:HypersensitivityAndAllergicReaction a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Mental Disorder" ;
-  :definition "A health condition related to mood swings, anxiety and personality issues, and problems with thinking and behavior." ;
-  :noun_synonym "mental illness", "psychiatric disorder", "anxiety disorder", "mood disorder", "psychotic disorder", "depression", "depressive disorder" .
+  rdfs:label "Hypersensitivity and Allergic Reaction" ;
+  :definition "An intense reaction to the environment (such as the cold) and/or an allergen (such as pollen or certain foods). Reactions can range from mild to severe and can result in anaphylactic shock and death." ;
+  :noun_synonym "allery" ;
+  :wordnet_noun_synset "14557398" .
 
-:MissingLimb a owl:Class ;
-  rdfs:subClassOf :MobilityImpairment ;
-  rdfs:label "Missing Limb" ;
-  :definition "A health condition related to amputated or paralyzed limbs." ;
-  :noun_synonym "paraplegia", "quadriplegia", "tetraplegia", "amputation" .
-
-:MobilityImpairment a owl:Class ;
+:LackOfHealthAndFitness a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Mobility Impairment" ;
-  :definition "Any health condition that impacts movement and the ability to move freely." .
+  rdfs:label "Lack of Health / Lack of Fitness" ;
+  :definition "A condition where an individual is ill or unfit/in poor physical condition." ;
+  :noun_synonym "unhealthiness", "health problem", "illness", "malady", "sickness", "sickliness", "ill health" ;
+  :wordnet_noun_synset "14075528" .
 
-:MultipleSclerosis a owl:Class ;
-  rdfs:subClassOf :NeurologicalDisability, :AutoimmuneDisease ;
-  rdfs:label "Multiple Sclerosis" ;
-  :definition "An autoimmune disease that damages nerve cells and disrupts information flow between the body and the brain, and within the brain." .
-
-:Myopathy a owl:Class ;
+:ObstructionAndConcretion a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Myopathy" ;
-  :definition "A health condition related to muscle weakness and wasting, and problems with muscle function. This condition may cause :MobilityImpairment." ;
-  :noun_synonym "muscular dystrophy" .
+  rdfs:label "Obstruction and Concretion" ;
+  :definition "A blockage or the formation of a hard, solid mass in some part of the body. The 'hard, solid mass' is sometimes referred to a 'stone', 'calculus' or 'concretion'." ;
+  :noun_synonym "intestinal obstruction", "ureteral obstruction", "gallstone", "calculus" ;
+  :wordnet_noun_synset "14531751", "09253675" .
 
-:NeurologicalDisability a owl:Class ;
+:PlantDisease a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Neurological Disability" ;
-  :definition "A condition affecting brain function that impacts memory, learning or language development, and/or behavior." .
+  rdfs:label "Plant Disease" ;
+  :definition "A disease that affects plants." ; 
+  :wordnet_noun_synset "14300438" .
 
-:NutritionalDeficiency a owl:Class ;
+:Poisoning a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Nutritional Deficiency" ;
-  :definition "A health condition related to nutritional deficiencies which may be caused by the body's inability to absorb one or more nutrients, or the lack of availability of nutritious foods. Malnutrition can lead to digestive and skin problems, stunted or defective bone growth, etc." ;
-  :noun_synonym "malnutrition" .
+  rdfs:label "Poisoning" ;
+  :definition "A condition resulting from the administration/ingestion of a toxic substance." ;
+  :wordnet_noun_synset "14533314" .
 
-:ObsessiveCompulsiveDisorder a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
-  rdfs:label "Obsessive Compulsive Disorder (OCD)" ;
-  :definition "A mental and behavioral disorder where a Person repeats behaviors/routines ('compulsions') and/or thoughts ('obsessions'), and is unable to control them for long periods of time." ;
-  :noun_synonym "OCD" .
-
-:PTSD a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
-  rdfs:label "Post-Traumatic Stress Disorder (PTSD)" ;
-  :definition "A mental disorder where a Person has flashbacks/memories of a traumatic event along with strong emotional and physical reactions." ;
-  :noun_synonym "PTSD" .
-
-:RespiratoryandPulmonaryDisease a owl:Class ;
+:StarvationAndMalnutrition a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Respiratory and Pulmonary Disease" ;
-  :definition "A set of diseases and disorders that block airflow and/or affect the functioning of the lungs. The result is that a Person has difficulty breathing. The diseases may be caused by infections, smoking, inhaling of pollution, etc." ;
-  :noun_synonym "COPD", "chronic obstructive pulmonary disease" .
+  rdfs:label "Starvation and Malnutrition" ;
+  :definition "A condition where an individual is unable to obtain sufficient, nutritious food." ;
+  :wordnet_noun_synset "01153157", "14223182" .
 
-:Schizophrenia a owl:Class ;
-  rdfs:subClassOf :MentalDisorder ;
-  rdfs:label "Schizophrenia" ;
-  :definition "A MentalDisorder that affects a Person's ability to think, feel, and behave. The Person may not perceive 'reality' but function in their own world." .
-
-:SeizureAndSpasm a owl:Class ;
-  rdfs:subClassOf :NeurologicalDisability ;
-  rdfs:label "Seizure and Spasm" ;
-  :definition "A NeurologicalDisability resulting from interruptions and disruptions in the connections between nerve cells in the brain. They can cause a Person's body to shake and jerk or lose consciousness. Causes may be a high fever, problems with blood sugar levels, a concussion, etc." ;
-  :noun_synonym "convultion", "epilepsy" ;
-  :verb_synonym "convulse" .
-
-:SpeechDisorder a owl:Class ;
+:Sterility a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Speech Disorder" ;
-  :definition "A condition in which a Person has problems communicating - either in creating or forming the speech sounds or due to repetitions or disruptions in the speech patterns." ;
-  :noun_synonym "stutter", "disfluency", "dysfluency" ;
-  :verb_synonym "stutter" . 
+  rdfs:label "Sterility" ;
+  :definition "A condition where offspring cannot be conceived either due to female issues with her eggs or reproductive organs, or male issues with sperm." ;
+  :noun_synonym "impotence", "infertility" ;
+  :wordnet_noun_synset "14068989" .
 
-:SwallowingDisorder a owl:Class ;
+:Symptom a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Swallowing Disorder" ;
-  :definition "A condition in which food is regurgitated or stuck in the throat and/or chest, coughing or choking during swallowing of foods or liquids, or pain during swallowing." ;
-  :noun_synonym "dysphagia", "odynophagia", "bulbar muscle dysfunction" .
+  rdfs:label "Symptom" ;
+  :definition "A physical or mental sensation or change in functioning which is associated with/can indicate a disease or illness." ;
+  :wordnet_noun_synset "14323139" . 
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:indicated_by a owl:ObjectProperty ;
+  rdfs:label "indicated by" ;
+  :definition "Relationship between a disease, disorder, illness. etc. and its Symptoms." ;
+  rdfs:domain :HealthAndDiseaseRelated ;
+  rdfs:range :Symptom .

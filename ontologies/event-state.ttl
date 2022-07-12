@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: March 23 2022
+# Last modified: July 11 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -27,6 +27,8 @@
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added several
 #  Moved the properties, :has_location and :sentiment, to top.ttl
 #  Updated synonyms
+#  Added :scheduled_time
+#  Added :wordnet_noun_synset details
 ########################################################################
 
 
@@ -39,21 +41,24 @@
   rdfs:label "Continuation" ;
   :definition "Indication that an ongoing EventAndState is still occurring - regardless of whether the actual time is known." ;
   :noun_synonym "continuance", "continuing" ;
-  :verb_synonym "carry on", "continue" .
+  :verb_synonym "carry on", "continue", "go on", "keep on" ;
+  :wordnet_noun_synset "01019929" .
 
 :End a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "End" ;
   :definition "The final point of an ongoing EventAndState - regardless of whether the actual end time is known." ;
   :noun_synonym "finish", "closing", "conclusion", "resolution", "termination", "completion", "ending", "finishing", "concluding", "resolving", "terminating", "completing", "expiration", "expiring" ;
-  :noun_synonym "finish", "close", "conclude", "terminate", "complete", "expire" .
+  :noun_synonym "finish", "close", "conclude", "terminate", "complete", "expire" ;
+  :wordnet_noun_synset "00210792" .
 
 :StartOrBeginning a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Start or Beginning" ;
   :definition "The originating point of an ongoing EventAndState - regardless of whether the actual start time is known." ;
   :noun_synonym "commencement", "inception", "onset", "emergence", "commencing", "starting", "emerging" ;
-  :verb_synonym "kick off", "commence", "start", "emerge" .
+  :verb_synonym "kick off", "commence", "start", "emerge" ;
+  :wordnet_noun_synset "00236302" .
 
 
 ########################################################################
@@ -140,3 +145,11 @@
   rdfs:domain :EventAndState ;
   :definition "References the subject/topic of an EventAndState." ;
   :example "For example, if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_topic property. As another example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_agent property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property." .
+
+:scheduled_time a owl:ObjectProperty ;
+  rdfs:label "scheduled time" ;
+  rdfs:subPropertyOf :has_time ;
+  rdfs:domain :EventAndState ;
+  rdfs:range :Time ;
+  :definition "References a Time at which some event will/should occur or some condition should be in effect." ;
+  :noun_synonym "zero hour" .
