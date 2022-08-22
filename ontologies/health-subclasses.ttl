@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 11 2022
+# Last Modified: August 20 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,7 @@
 # Changes:
 #  Rewrite based on the hyper/hyponym definitions of WordNet 
 #    since the previous subclassing was too difficult to maintain
+#  Added Intoxication
 ########################################################################
 
 
@@ -50,7 +51,7 @@
   rdfs:label "Bodily Injury" ;
   :definition "Damage/trauma to all or a part of a Person's body." ;
   :example "Examples of BodilyInjury are concussions, fractures, burns, cuts, bruises, etc." ;
-  :noun_synonym "hurt" ;
+  :noun_synonym "trauma" ;
   :wordnet_noun_synset "14309164" .
 
 :ConvulsionAndSpasm a owl:Class ;
@@ -70,7 +71,10 @@
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Dehydration" ;
   :definition "A condition where the amount of water in a body is reduced to a harmful/dangerous level." ;
-  :wordnet_noun_synset "14064328" .
+  :noun_synonym "thirst", "polydipsia", "thirsting", "thirstiness" ;
+  :verb_synonym "thirst", "be thirsty" ;
+  :wordnet_noun_synset "14064328", "14064142" ;
+  :wordnet_verb_synset "02126525" .
 
 :Disability a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
@@ -102,15 +106,15 @@
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Hypersensitivity and Allergic Reaction" ;
   :definition "An intense reaction to the environment (such as the cold) and/or an allergen (such as pollen or certain foods). Reactions can range from mild to severe and can result in anaphylactic shock and death." ;
-  :noun_synonym "allery" ;
+  :noun_synonym "allergy" ;
   :wordnet_noun_synset "14557398" .
 
-:LackOfHealthAndFitness a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Lack of Health / Lack of Fitness" ;
-  :definition "A condition where an individual is ill or unfit/in poor physical condition." ;
-  :noun_synonym "unhealthiness", "health problem", "illness", "malady", "sickness", "sickliness", "ill health" ;
-  :wordnet_noun_synset "14075528" .
+:Intoxication a owl:Class ;
+  rdfs:subClassOf :Poisoning ;
+  rdfs:label "Intoxication" ;
+  :definition "A poisoning induced by drugs, alcohol or other substances." ;
+  :noun_synonym "drunkenness", "inebriation", "inebriety", "tipsiness", "insobriety" ;
+  :wordnet_noun_synset "14042038" .
 
 :ObstructionAndConcretion a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
@@ -131,11 +135,14 @@
   :definition "A condition resulting from the administration/ingestion of a toxic substance." ;
   :wordnet_noun_synset "14533314" .
 
-:StarvationAndMalnutrition a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated ;
-  rdfs:label "Starvation and Malnutrition" ;
-  :definition "A condition where an individual is unable to obtain sufficient, nutritious food." ;
-  :wordnet_noun_synset "01153157", "14223182" .
+:StarvationHungerAndMalnutrition a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :FoodAndNutrition ;
+  rdfs:label "Starvation, Hunger and Malnutrition" ;
+  :definition "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate." ;
+  :noun_synonym "famine", "ravenousness", "starving", "hungriness", "undernourishment", "malnourishment" ;
+  :verb_synonym "starve", "be hungry", "be famished", "be ravenous", "famish" ;
+  :wordnet_noun_synset "01153157", "14223182", "14063016", "07330390" ;
+  :wordnet_verb_synset "01190677", "02126423", "01190070", "01190481", "01190273" .
 
 :Sterility a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;

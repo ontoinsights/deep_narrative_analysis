@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: July 11 2022
+# Last modified: August 20 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -95,7 +95,8 @@
 :Collection a owl:Class ;
   rdfs:label "Collection/Group" ;
   :definition "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property." ;
-  :noun_synonym "assemblage", "assortment", "compilation", "set", "compendium", "accumulation", "aggregation", "bevy", "pack", "herd", "kingdom", "community", "people", "humanity", "humankind", "mankind", "swarm", "citizenry", "population", "multitude", "masses" ;
+  :noun_synonym "assortment", "compilation", "set", "accumulation", "aggregation", "bevy", "pack", "herd", "kingdom", "community", "people", "humanity", "humankind", "mankind", "swarm", "citizenry", "population", "multitude", "masses", "herding", "swarming" ;
+  :vweb_synonym "herd", "swarm" ;
   :wordnet_noun_synset "01016008" .
 
 :Enumeration a owl:Class ;
@@ -105,15 +106,13 @@
 :Evidence a owl:Class ;
   rdfs:subClassOf :Collection ;
   rdfs:label "Evidence" ;
-  :definition "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting." ;
-  :noun_synonym "proof", "confirmation", "verification", "validation", "affirmation" ;
-  :wordnet_noun_synset "05832256" .
+  :definition "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting." .
 
 :EventAndState a owl:Class ;
   rdfs:label "Event and State" ;
   :definition "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties). A state is a factor, situation or condition that an Agent (defined using the :has_agent property) or Resouce (defined using the :has_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
-  :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation", "status", "condition" ;
-  :wordnet_noun_synset "07298313", "00024900" .
+  :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation" ;
+  :wordnet_noun_synset "07298313", "00024900", "08584764", "13957629" .
 
 :GoalDirectedProcess a owl:Class ;
   rdfs:label "Goal-Directed Process" ;
@@ -126,13 +125,13 @@
 :InformationSource a owl:Class ;
   rdfs:label "Information Source" ;
   :definition "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content." ;
-  :wordnet_noun_synset "06278749", "02873453", "03222161", "06650349", "06520807", "06413674" .
+  :wordnet_noun_synset "06278749", "03222161", "06650349", "06520807", "06413674" . 
 
 :Location a owl:Class ;
   rdfs:label "Location" ;
-  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property. Note that an 'imaginary' Location (such as C.S. Lewis' Narnia) is identified using the :imaginary boolean." " ;
+  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property. Note that an 'imaginary' Location (such as C.S. Lewis' Narnia) is identified using the :imaginary boolean." ;
   :noun_synonym "locale", "site", "venue", "placement", "locality", "setting", "place" ;
-  :wordnet_noun_synset "00027365", "05633662" .
+  :wordnet_noun_synset "05633662" . 
 
 :Mention a owl:Class ;
   rdfs:label "Mention" ;
@@ -161,7 +160,7 @@
 
 :Resource a owl:Class ;
   rdfs:label "Resource" ;
-  :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold. Note that an 'imaginary' Resource (such as a flying carpet or magic wand) is identified using the :imaginary boolean." " ;
+  :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold. Note that an 'imaginary' Resource (such as a flying carpet or magic wand) is identified using the :imaginary boolean." ;
   :noun_synonym "instrument", "tool", "asset", "supply", "commodity", "artifact" ;
   :wordnet_noun_synset "13352793" .
 
@@ -259,8 +258,7 @@
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
-                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] ;
-  :noun_synonym "likelihood", "odds" .
+                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] .
 
 :prototypical a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "prototypical (boolean)" ;
@@ -305,36 +303,28 @@
 
 :before a owl:ObjectProperty, owl:TransitiveProperty ;
   rdfs:label "before" ;
-  :definition "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity." ;
-  :verb_synonym "predate", "pre-date", "precede" .
+  :definition "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity." .
 
 :causes a owl:ObjectProperty ;
   rdfs:label "causes" ;
   :definition "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object." ;
   rdfs:domain :EventAndState ;
-  rdfs:range :EventAndState ;
-  :noun_synonym "cause" ;
-  :verb_synonym "induce", "cause".
+  rdfs:range :EventAndState .
 
 :during a owl:ObjectProperty ;
   rdfs:label "during" ;
-  :definition "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity." ;
-  :noun_synonym "concurrence", "coincident" ;
-  :verb_synonym "coincide" .
+  :definition "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity." .
 
 :enables a owl:ObjectProperty ;
     rdfs:label "enables" ;
     :definition "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)." ;
     rdfs:domain :EventAndState ;
-    rdfs:range :EventAndState ;
-    :noun_synonym "enablement" ;
-    :verb_synonym "make possible", "enable" .
+    rdfs:range :EventAndState .
 
 :excluded_member a owl:ObjectProperty ;
   rdfs:label "excluded member" ;
   :definition "Defines an entity that is specifically NOT in a grouping/Collection." ;
-  rdfs:domain :Collection ;
-  :noun_synonym "exclusion" .
+  rdfs:domain :Collection .
 
 :has_author a owl:ObjectProperty ;
   rdfs:label "has author" ;
@@ -397,9 +387,7 @@
 
 :has_next a owl:ObjectProperty ;
   rdfs:label "has next" ;
-  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." ;
-  :noun_synonym "following", "adjacency", "adjacent" ;
-  :verb_synonym "follow" .
+  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." .
 
 :has_subject a owl:ObjectProperty ;
   rdfs:label "has subject" ;
@@ -413,23 +401,17 @@
 
 :meets a owl:ObjectProperty ;
   rdfs:label "meets" ;
-  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." ;
-  :noun_synonym "convergence", "boundary", "meet" ;
-  :verb_synonym "converge", "touch", "meet" .
+  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
 
 :overlaps a owl:ObjectProperty ;
   rdfs:label "overlaps" ;
-  :definition "Indicates that the boundaries of an entity extend over/cover another." ;
-  :noun_synonym "overlap" ;
-  :verb_synonym "overlap" .
+  :definition "Indicates that the boundaries of an entity extend over/cover another." .
 
 :prevents a owl:ObjectProperty ;
     rdfs:label "prevents" ;
     :definition "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)." ;
     rdfs:domain :EventAndState ;
-    rdfs:range :EventAndState ;
-    :noun_synonym "preventative" ;
-    :verb_synonym "prevent" .
+    rdfs:range :EventAndState .
 
 :reference_to_enumerated_value a owl:ObjectProperty ;
     rdfs:label "reference to enumerated value" ;

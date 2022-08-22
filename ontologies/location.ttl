@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: July 11 2022
+# Last modified: August 12 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -43,7 +43,7 @@
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Administrative Division" ;
   :definition "A subnational level of government, operating over some region. The first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc. The level of an AdministrativeDivision is given by the property, :admin_level. Note that :admin_level is an optional property and may not be known, or applicable." ;
-  :noun_synonym "county", "district", "govenorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" ;
+  :noun_synonym "county", "district", "governorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" ;
   :wordnet_noun_synset "08508836" .
 
 :AnthropogenicFeature a owl:Class ;
@@ -69,7 +69,7 @@
   rdfs:label "Building and Dwelling" ;
   :definition "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
   :example "Examples of BuildingAndDwelling include a house, factory, hospital, apartments, shops/stores, etc."  ;
-  :noun_synonym "dwelling", "home", "domicile", "abode", "habitation", "dwelling_house", "flat" ;
+  :noun_synonym "home", "domicile", "abode", "habitation", "flat" ;
   :wordnet_noun_synset "02916498", "03264208", "02918337", "03745009", "04209460", "02729230" .
 
 :Continent a owl:Class ;
@@ -112,8 +112,7 @@
 :OccupiedArea a owl:Class ;
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Occupied Area" ;
-  :definition "The land and government of a region which has been taken over/'occupied' by another nation/GPE." ;
-  :wordnet_noun_synset "08529808" .
+  :definition "The land and government of a region which has been taken over/'occupied' by another nation/GPE." .
 
 :OnlineLocation a owl:Class ;
   rdfs:subClassOf :Location ;
@@ -148,7 +147,7 @@
   :noun_synonym "north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest", "compass point" ;
   :wordnet_noun_synset "08578618", "08578767", "08578888", "08578999", "08579120", "08579251", "08579372", "08579483", "13852504" .
 
-:TransportationFeeature a owl:Class ;
+:TransportationFeature a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
   rdfs:label "Transportation Feature" ;
   :definition "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;

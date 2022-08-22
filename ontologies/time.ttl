@@ -9,7 +9,7 @@
 # File defining semantics related to time
 # 
 # Created: February 9 2020
-# Last modified: July 11 2022
+# Last modified: August 20 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -261,7 +261,6 @@
   rdfs:subClassOf :Season ;
   rdfs:label "Autumn" ;
   :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
-  :noun_synonym "fall" ;
   :wordnet_noun_synset "15261656" .
 
 :Bedtime a owl:Class ;
@@ -308,6 +307,12 @@
   rdfs:label "Happy Hour" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Happy_hour&oldid=1086061520), 'a marketing term for a time when a venue such as a restaurant or bar offers reduced prices on alcoholic drinks. Discounted menu items like appetizers are often served during happy hour. This is a way for bars and restaurants to draw in more business before or after peak business hours.'" ;
   :wordnet_noun_synset "15253815" .
+
+:HarvestTime a owl:Class ;
+  rdfs:subClassOf :Season ;
+  rdfs:label "Harvest Time" ;
+  :definition "The part of the year during which crops are picked/gathered." ;
+  :wordnet_noun_synset "00923604" .
 
 :HighSeason a owl:Class ;
   rdfs:subClassOf :Season ;

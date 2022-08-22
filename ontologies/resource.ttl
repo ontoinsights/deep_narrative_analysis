@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9 2020
-# Last modified: July 11 2022
+# Last modified: August 21 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -42,6 +42,8 @@
 #  Removed WoodAndSubstitute in lieu of using the super-class, 
 #    BuildingMaterialAndStone
 #  Updated MonetaryAndFinancialInstrument to sub-class from LegalInstrument
+#  Added Schedule
+#  Updated the subclassing of Animal and FungusAndPlant
 ########################################################################
 
 
@@ -57,7 +59,7 @@
   :wordnet_noun_synset "08587011", "08633625", "08615857", "03468764", "13273412", "08588163" .
 
 :Animal a owl:Class ;
-  rdfs:subClassOf :Resource, :Agent ;
+  rdfs:subClassOf :Resource, :Agent, :FoodAndDrink ;
   rdfs:label "Animal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
   :noun_synonym "beast", "creature", "insect", "bug", "fauna", "critter", "herbivore", "carnivore", "pet" ;
@@ -115,7 +117,8 @@
   rdfs:subClassOf :LegalInstrument, :Agreement ;
   rdfs:label "Contract" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Contract&oldid=1039432950), a Contract 'is a legally binding agreement that defines and governs the rights and duties between or among its parties'." ;
-  :wordnet_noun_synset "06532935" .
+  :wordnet_noun_synset "06532935", "06784454" ;
+  :wordnet_verb_synset "02415071" .
 
 :Database a owl:Class ;
   rdfs:subClassOf :Dataset ;
@@ -151,7 +154,7 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Food and Drink" ;
   :definition "An entity that is consumed to satisfy hunger and/or thirst, or for nutritional or recreational reasons." ;
-  :noun_synonym "beverage", "drink", "water", "nourishment", "sustenance", "nutrient", "leftover", "ration", "field ration", "meal", "cookout", "side dish", "entree" ;
+  :noun_synonym "beverage", "water", "nourishment", "sustenance", "nutrient", "leftover", "ration", "field ration", "meal", "cookout", "side dish", "entree" ;
   :wordnet_noun_synset "00021445" .
 
 :Forest a owl:Class ;
@@ -176,7 +179,7 @@
   :wordnet_noun_synset "14899228" .
 
 :FungusAndPlant a owl:Class ;
-  rdfs:subClassOf :Resource, :Agent ;
+  rdfs:subClassOf :Resource, :Agent, :FoodAndDrink ;
   rdfs:label "Fungus and Plant" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Plant&oldid=1013530935), Plants 'are mainly multicellular organisms, predominantly photosynthetic eukaryotes of the kingdom Plantae ... plants form the clade Viridiplantae (Latin name for 'green plants'), a group that includes the flowering plants, conifers and other gymnosperms, ferns and their allies, hornworts, liverworts, mosses, and the green algae, but excludes the red and brown algae.' Alternately, a 'fungus (plural: fungi or funguses) is any member of the group of eukaryotic organisms that includes microorganisms such as yeasts and molds, as well as the more familiar mushrooms.' (https://en.wikipedia.org/w/index.php?title=Fungus&oldid=1012842030)" ;
   :noun_synonym "flora", "vegetation", "mold", "mushroom", "fruit", "vegetable", "tree", "yeast" ;
@@ -185,7 +188,7 @@
 :FurnitureAndHouseholdGoods a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Furniture and Household Goods" ;
-  :definition "Household goods are intended for personal and family use within a home or residence. They include furniture, appliances, plates and utensils, etc. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Furniture&oldid=1013958576), furniture 'refers to movable objects intended to support various human activities such as seating (e.g., chairs, stools, and sofas), eating (tables), and sleeping (e.g., beds). Furniture is also used to hold objects at a convenient height for work (as horizontal surfaces above the ground, such as tables and desks), or to store things (e.g., cupboards and shelves). Furniture can be a product of design and is considered a form of decorative art. In addition to furniture's functional role, it can serve a symbolic or religious purpose. It can be made from many materials'." .
+  :definition "Household goods are intended for personal and family use within a home or residence. They include furniture, appliances, plates and utensils, etc. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Furniture&oldid=1013958576), furniture 'refers to movable objects intended to support various human activities such as seating (e.g., chairs, stools, and sofas), eating (tables), and sleeping (e.g., beds). Furniture is also used to hold objects at a convenient height for work (as horizontal surfaces above the ground, such as tables and desks), or to store things (e.g., cupboards and shelves). Furniture can be a product of design and is considered a form of decorative art. In addition to furniture's functional role, it can serve a symbolic or religious purpose. It can be made from many materials'." ;
   :noun_synonym "dry goods" ;
   :wordnet_noun_synset "03410635", "03262580", "03256767" .
 
@@ -221,7 +224,7 @@
   rdfs:label "Machine or Mechanical Device" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667), a Machine '(or mechanical device) is a mechanical structure that uses power to apply forces and control movement to perform an intended action. Machines can be driven by animals and people, by natural forces such as wind and water, and by chemical, thermal, or electrical power, and include a system of mechanisms that shape the actuator input to achieve a specific application of output forces and movement ... Modern machines are complex systems that consist of structural elements, mechanisms and control components and include interfaces for convenient use." ;
   :example "Examples include: a wide range of vehicles, such as automobiles, boats and airplanes; appliances in the home and office, including computers, building air handling and water handling systems; as well as farm machinery, machine tools and factory automation systems and robots. (https://en.wikipedia.org/w/index.php?title=Machine&oldid=1008478667)" ;
-  :noun_synonym "appliance", "device" ;
+  :noun_synonym "appliance" ;
   :wordnet_noun_synset "03705309", "02732781", "04077839", "04077657" .
 
 :Message a owl:Class ;
@@ -236,7 +239,7 @@
   rdfs:subClassOf :LegalInstrument ; 
   rdfs:label "Monetary and Financial Instrument" ;
   :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Financial_instrument&oldid=1009997407), FinancialInstruments 'are monetary contracts between parties. They can be created, traded, modified and settled. They can be cash (currency), evidence of an ownership interest in an entity or a contractual right to receive or deliver in the form of currency (forex); debt (bonds, loans); equity (shares); or derivatives (options, futures, forwards) ... Financial instruments may be categorized by \"asset class\" depending on whether they are equity-based (reflecting ownership of the issuing entity) or debt-based (reflecting a loan the investor has made to the issuing entity). If the instrument is debt it can be further categorized into short-term (less than one year) or long-term. Foreign exchange instruments and transactions are neither debt- nor equity-based and belong in their own category.' Note that entities such as legal contracts transferring ownership of an asset are both Legal and FinancialInstruments." ;
-  :wordnet_noun_synset "13377127", "13309007", "13420126", "13399521", "13399691", "06483696", "06492177", "06492827" .
+  :wordnet_noun_synset "13377127", "13309007", "13420126", "13399521", "13399691", "06483696", "06492177", "06492827", "13419414" .
 
 :MusicalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
@@ -257,7 +260,7 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Pharmaceutical and Medicinal Entity" ;
   :definition "A Resource (naturally occurring or manufactured) that is used to cure/heal, relieve pain and/or administer to injuries or illnesses." ;
-  :noun_synonym "healing", "therapeutic", "medicine", "medication" ;
+  :noun_synonym "therapeutic", "medicine", "medication" ;
   :wordnet_noun_synset "03745652" .
 
 :PreciousMetalPearlAndGemstone a owl:Class ;
@@ -271,21 +274,28 @@
   rdfs:subClassOf :InformationSource ;
   rdfs:label "Publication" ;
   :definition "A book, magazine, article, etc. that is available/published." ;
-  :noun_synonym "book", "volume", "hardback", "paperback", "title", "work", "opus", "treatise", "manual", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report" ;
-  :wordnet_noun_synset "01103863", "02873453", "03709749", "03827711", "04606723", "06626039", "06432944", "06437949", "06438138", "06605500", "06694721", "06277798", "06694296" .
+  :noun_synonym "book", "hardback", "paperback", "title", "opus", "treatise", "manual", "almanac", "yearbook", "compendium", "newspaper", "magazine", "periodical", "newsletter", "gazette", "bulletin", "journal", "report",  "broadcast" ;
+  :wordnet_noun_synset "01103863", "02873453", "03709749", "03827711", "04606723", "06626039", "06432944", "06437949", "06438138", "06605500", "06694721", "06277798", "06694296", "06264137", "03709749" . 
 
 :RefinedPetroleumProduct a owl:Class ;
   rdfs:subClassOf :Fuel ;
   rdfs:label "Refined Petroleum Product" ;
   :definition "A type of Fuel that is 'derived from crude oils through processes such as catalytic cracking and fractional distillation. These products have physical and chemical characteristics that differ according to the type of crude oil and subsequent refining processes' (https://www.epa.gov/emergency-response/types-refined-petroleum-products)." ;
-  :example "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." .
-  :noun_synonym "fuel oil", "heating oil" ; ;
+  :example "Examples of refined petroleum products are gasoline, diesel fuel, jet fuel, kerosene, heating oil, fuel oil, lubricating oil, and asphalt (pitch)." ;
+  :noun_synonym "fuel oil", "heating oil" ;
   :wordnet_noun_synset "14710746", "14710042" .
 
 :RenewableWater a owl:Class ;
   rdfs:subClassOf :WaterResource ;
   rdfs:label "Renewable Water" ;
   :definition "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
+
+:Schedule a owl:Class ;
+  rdfs:subClassOf :InformationSource ;
+  rdfs:label "Schedule" ;
+  :noun_synonym "agenda", "docket", "plan of action", "itinerary" ;
+  :definition "A plan and/or series of steps to be discussed in a meeting/handled by a Person or team/used to accomplish a goal/..." ;
+  :wordnet_noun_synset "05907175" .
 
 :SoapAndCleaningSubstance a owl:Class ;
   rdfs:subClassOf :SubstanceAndRawMaterial ;

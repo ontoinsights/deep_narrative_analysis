@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: July 11 2022
+# Last modified: August 21 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -29,6 +29,8 @@
 #  Updated synonyms
 #  Added :scheduled_time
 #  Added :wordnet_noun_synset details
+#  Renamed StartOrBeginning to StartAndBeginning for consistency
+#  Added subclasses of End - Success And Failure
 ########################################################################
 
 
@@ -42,23 +44,44 @@
   :definition "Indication that an ongoing EventAndState is still occurring - regardless of whether the actual time is known." ;
   :noun_synonym "continuance", "continuing" ;
   :verb_synonym "carry on", "continue", "go on", "keep on" ;
-  :wordnet_noun_synset "01019929" .
+  :wordnet_noun_synset "01019929" ;
+  :wordnet_verb_synset "00118331", "00783045" .
 
 :End a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "End" ;
   :definition "The final point of an ongoing EventAndState - regardless of whether the actual end time is known." ;
-  :noun_synonym "finish", "closing", "conclusion", "resolution", "termination", "completion", "ending", "finishing", "concluding", "resolving", "terminating", "completing", "expiration", "expiring" ;
-  :noun_synonym "finish", "close", "conclude", "terminate", "complete", "expire" ;
-  :wordnet_noun_synset "00210792" .
+  :noun_synonym "finish", "conclusion", "resolution", "termination", "completion", "ending", "finishing", "concluding", "resolving", "terminating", "completing" ;
+  :verb_synonym "finish", "conclude", "terminate", "complete" ;
+  :wordnet_noun_synset "00210792" ;
+  :wordnet_verb_synset "00353480" .
 
-:StartOrBeginning a owl:Class ;
+:Failure a owl:Class ;
+  rdfs:subClassOf :End ;
+  rdfs:label "Failure" ;
+  :definition "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure time is known." ;
+  :noun_synonym "nonaccomplishment", "nonachievement", "failing", "flunking", "flunk", "naught", "loss" ;
+  :verb_synonym "fail", "flop", "fall flat", "founder", "strike out", "flunk" ;
+  :wordnet_noun_synset "00067036" ;
+  :wordnet_verb_synset "02534046" .
+
+:StartAndBeginning a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Start or Beginning" ;
+  rdfs:label "Start and Beginning" ;
   :definition "The originating point of an ongoing EventAndState - regardless of whether the actual start time is known." ;
   :noun_synonym "commencement", "inception", "onset", "emergence", "commencing", "starting", "emerging" ;
   :verb_synonym "kick off", "commence", "start", "emerge" ;
-  :wordnet_noun_synset "00236302" .
+  :wordnet_noun_synset "00236302" ;
+  :wordnet_verb_synset "00346415", "00349400" .
+
+:Success a owl:Class ;
+  rdfs:subClassOf :End ;
+  rdfs:label "Success" ;
+  :definition "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual end time is known." ;
+  :noun_synonym "comeback", "attainment", "win", "blockbuster", "winning", "hit", "smash", "bull's eye", "home run", "flying colors", "flying colours", "achievement", "masterstroke", "masterpiece" ;
+  :verb_synonym "succeed", "attain", "surmount" ;
+  :wordnet_noun_synset "00064472", "00035910" ;
+  :wordnet_verb_synset "02024442" .
 
 
 ########################################################################

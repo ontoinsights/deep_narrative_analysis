@@ -1,0 +1,295 @@
+openapi: 3.0.3
+info:
+  title: Deep Narrative Analysis RESTful APIs v1.0
+  description: |-
+    Defines the interface for ingesting, retrieving, editing and deleting 
+    narratives using the Deep Narrative Analysis (DNA) infrastructure.
+    
+    Some useful links:
+    - [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis)
+    - [DNA blog](https://hearing-all-voices.blogspot.com/)
+  contact:
+    email: andrea@ontoinsights.com
+  license:
+    name: Creative Commons Attribution 4.0 International Public License
+    url: https://creativecommons.org/licenses/by/4.0/legalcode
+  version: '1.0'
+paths:
+  /dna/v1/narratives:
+    get:
+      summary: >-
+        Get a list of all narratives and their meta-data in the 
+        specified database
+      description: >-
+        Return the meta-data for all narratives in the specified database
+      parameters:
+        - $ref: '#/components/parameters/database'
+      operationId: getList
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NarrativeList' 
+        '404':
+          description: Database not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DBNotFound'  
+    post:
+      summary: Ingest a narrative to the specified database
+      description: >-
+        Process a narrative based on details in the request body 
+        and ingest it to the specified database
+      parameters:
+        - $ref: '#/components/parameters/database'
+      operationId: ingest
+      requestBody:
+        description: Input narrative
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputNarrative'  
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NarrativeMeta'
+        '400':
+          description: Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Database not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DBNotFound'  
+        '409':
+          description: >-
+            Duplicate title (a narrative with the specified title is
+            already present in the database)
+  /dna/v1/narratives/graphs:
+    get:
+      summary: Get a narrative's knowledge graph
+      description: >-
+        Get the knowledge graph for the narrative with the specified id
+        in the database
+      operationId: getGraph
+      parameters:
+        - $ref: '#/components/parameters/database'
+        - $ref: '#/components/parameters/narrativeId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeGraph'  
+        '404':
+          description: Database or narrative ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'  
+    put:
+      summary: Update a narrative's knowledge graph
+      description: >-
+        Update the knowledge graph for the specific narrative 
+        in the database
+      operationId: updateGraph
+      parameters:
+        - $ref: '#/components/parameters/database'
+        - $ref: '#/components/parameters/narrativeId'
+      requestBody:
+        description: Knowledge graph details
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KnowledgeGraph'  
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NarrativeMeta'  
+        '400':
+          description: Syntax error in knowledge graph (Bad request)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Database or narrative ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'    
+        '409':
+          description: >-
+            Duplicate title (a narrative with the specified title is
+            already present in the database)
+    delete:
+      summary: Delete a narrative's knowledge graph
+      description: >-
+        Delete the knowledge graph for the specified narrative 
+        in the database.
+      operationId: deleteGraph
+      parameters:
+        - $ref: '#/components/parameters/database'
+        - $ref: '#/components/parameters/narrativeId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  database:
+                    type: string
+                    example: dna
+                  narrativeId:
+                    type: string
+                    example: 73cf1b89
+        '404':
+          description: Database or narrative ID not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'  
+components:
+  parameters:
+    database:
+      name: database
+      in: query
+      description: >-
+        Name of the database holding the narratives
+      required: true
+      schema:
+        type: string
+    narrativeId:
+      name: narrativeId
+      in: query
+      description: UUID for a narrative in the database
+      required: true
+      schema:
+        type: string
+        format: uuid
+  schemas:
+    BadRequest:
+      type: array
+      items:
+        type: object
+        properties:
+          entity:
+            type: string
+            enum: [ GRAPH_ERROR, MISSING_CONTENT ]
+            example: MISSING_CONTENT
+          inputValue:
+            type: string
+            example: string or null
+          errorDetail:
+            type: string
+            example: Missing narrative title
+    DBNotFound:
+      type: object
+      properties:
+        inputDatabase:
+          type: string
+          example: foo
+    InputNarrative:
+      type: object
+      properties:
+        title:
+          type: string
+          example: A Narrative Title
+        narrative:
+          type: string
+          example: This is the text of the narrative.
+    NotFound:
+      type: array
+      items:
+        type: object
+        properties:
+          missingEntity:
+            type: string
+            enum: [ DB_NAME, NARR_ID ]
+            example: DB_NAME
+          inputString:
+            type: string
+            example: foo
+    KnowledgeGraph:
+      type: object
+      properties:
+        title:
+          type: string
+          example: A New Title
+        numberOfTriples:
+          type: integer
+          format: int64
+          example: 500
+        triples:
+          type: array
+          items:
+            type: object
+            properties:
+              subject:
+                type: string
+                example: dna:NewEvent
+              predicate:
+                type: string
+                example: rdfs:label
+              objectType:
+                type: string
+                enum: [ DATA, OBJECT ]
+                example: DATA
+              object:
+                type: string
+                example: A new event from the narrative.
+    NarrativeList:
+      type: object
+      properties:
+        database:
+          type: string
+          example: dna
+        narratives:
+          type: array
+          items:
+            type: object
+            properties:
+              narrativeId:
+                type: string
+                example: 73cf1b89
+              title:
+                type: string
+                example: A Narrative Title
+              numberOfTriples:
+                type: integer
+                format: int64
+                example: 500
+    NarrativeMeta:
+      type: object
+      properties:
+        database:
+          type: string
+          example: dna
+        narrativeId:
+          type: string
+          example: 73cf1b89
+        title:
+          type: string
+          example: A Narrative Title
+        numberOfTriples:
+          type: integer
+          format: int64
+          example: 10

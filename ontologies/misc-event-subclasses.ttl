@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 15 2022
+# Last Modified: August 21 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -38,7 +38,13 @@
 #  Added EmotionalResponse as a subclass of Cognition and changed Desire
 #   to be additional synonyms on LongingAndPassition (in emotion-subclasses.ttl)
 #  Updated the superclass of IntentionAndGoal
-#  Renamed Repair to MaintenanceAndRepair; Added Supervision
+#  Renamed Repair to MaintenanceAndRepair; Added Supervision and Forgetting
+#  Added :wordnet_noun_synset details
+#  Removed Hunger and Thirst in lieu of the corresponding 
+#    HealthAndDiseaseRelated subclasses
+#  Renamed :Learning to :LearningAndEducation
+#  Added Betrayal, DeceptionAndDishonesty, MeaningImplicationAndInference
+#    and SelfControl
 ########################################################################
 
 
@@ -50,260 +56,359 @@
   rdfs:subClassOf :CaptureAndSeizure ;
   rdfs:label "Abduction" ;
   :definition "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will." ;
-  :noun_synonym "kidnapping", "hijacking", "abducting" ;
-  :verb_synonym "abduct", "kidnap", "hijack", "take hostage" .
+  :noun_synonym "kidnapping", "hijacking", "abducting", "highjacking" ;
+  :verb_synonym "abduct", "kidnap", "hijack", "take hostage", "commandeer", "highjack", "pirate" ;
+  :wordnet_noun_synset "00776957", "00777199", "00784853" ;
+  :wordnet_verb_synset "01473673", "01474455" .
 
 :Arson a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;
   rdfs:label "Arson" ;
   :definition "An Event where a fire is intentionally set in order to destroy or damage property." ;
   :noun_synonym "incendiarism", "pyromania", "firebombing" ;
-  :verb_synonym "set fire", "incinerate" .
+  :verb_synonym "set fire", "incinerate", "burn" ;
+  :wordnet_noun_synset "00378877", "03571171" ;
+  :wordnet_verb_synset "00378713" .
 
 :AssessmentAndCharacterization a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Assessment and Characterization" ;
   :definition "Events dealing with evaluating, characterizing or estimating something or someone." ;
-  :noun_synonym "evaluation", "judgment", "estimation", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "deduction", "ranking", "determination", "rating", "valuation", "identification", "assessing", "characterizing", "evaluating", "judging", "estimating", "appraising", "guaging", "comparing", "conjecturing", "classifying", "correlating", "deducing", "determining", "valuing", "identifying" ; 
-  :verb_synonym "assess", "characterize", "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "deduce", "determine", "rate", "identify", "rank" .
+  :noun_synonym "evaluation", "estimation", "estimate", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "ranking", "rating", "valuation", "identification", "assessing", "characterizing", "evaluating", "judging", "estimating", "appraising", "gauging", "comparing", "conjecturing", "classifying", "correlating", "determining", "valuing", "identifying", "approximation" ;
+  :verb_synonym "assess", "characterize", "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "rate", "identify", "rank", "recognize", "qualify", "characterize", "characterise", "valuate", "value", "approximate", "guess" ;
+  :wordnet_noun_synset "00875745", "05740701", "00143485", "05770995", "05811387" ;
+  :wordnet_verb_synset "00672179", "00958719", "00654571", "02170904", "00636134", "01028104", "00594278", "00683348", "00674352" .
 
 :AttackDamageAndAssault a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Attack, Damage and Assault" ;
   :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "destruction", "assailant", "onslaught", "violence", "defacement", "attacking", "damaging", "assaulting", "destroying", "assailing", "defacing", "trashing" ;
-  :verb_synonym "attack", "damage", "assault", "destroy",  "assail", "shoot down", "trash", "deface", "take the offensive" .
+  :noun_synonym "destruction", "assailant", "onslaught", "defacement", "attacking", "damaging", "assaulting", "destroying", "assailing", "defacing", "trashing", "mutilation", "devastation", "brutalization", "brutalisation" ;
+  :verb_synonym "attack", "damage", "assault", "destroy",  "assail", "shoot down", "trash", "deface", "take the offensive", "maim" ;
+  :wordnet_noun_synset "00403900", "00974725", "00982124", "00775311", "00217881" ;
+  :wordnet_verb_synset "00864347", "00259743", "00090640", "00478872" . 
 
 :AttentionAndFocus a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Attention and Focus" ;
   :definition "The act of a Person paying attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property." ;
-  :noun_synonym "contemplation", "concentration", "awareness", "attentiveness", "vigilance", "entrancement", "perception", "focusing", "contemplating", "concentrating", "perceiving" ;
-  :verb_synonym "focus", "contemplate", "concentrate", "pay attention", "be vigil", "entrance", "perceive" .
+  :noun_synonym "contemplation", "concentration", "awareness", "attentiveness", "vigilance", "entrancement", "perception", "focusing", "contemplating", "concentrating", "perceiving", "engrossment", "absorption", "immersion", "preoccupation", "entrancing" ;
+  :verb_synonym "focus", "contemplate", "concentrate", "pay attention", "be vigil", "perceive", "view", "consider", "look at", "preoccupy", "entrance" ;
+  :wordnet_noun_synset "00200890", "05658424", "05712641", "00880604", "05712213", "04670308", "05716379", "05708052" ;
+  :wordnet_verb_synset "00724156", "02134765", "01787213" .
 
 :Battle a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;
   rdfs:label "Battle" ;
   :definition "Any Event that involves fighting (typically) between military/paramilitary/armed forces." ;
-  :noun_synonym "fight", "skirmish", "dogfight", "raid", "incursion", "surprise attack", "combat", "battling", "fighting", "skirmishing", "raiding", "combatting", "combating" ;
-  :verb_synonym "fight", "battle", "skirmish", "raid", "combat" .
+  :noun_synonym "fight", "skirmish", "dogfight", "raid", "infiltration", "incursion", "surprise attack", "combat", "battling", "fighting", "skirmishing", "raiding", "combatting", "combating", "conflict" ;
+  :verb_synonym "fight", "battle", "skirmish", "raid", "combat" ;
+  :wordnet_noun_synset "00955670", "00961007" ;
+  :wordnet_verb_synset "01092746", "01126191" .
 
 :Belief a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Belief" ;
   :definition "An 'attitude that something is the case, or that some proposition about the world is true' (https://en.wikipedia.org/w/index.php?title=Belief&oldid=1013662709)." ;
-  :noun_synonym "confidence", "suspicion", "believing", "suspecting" ;
-  :verb_synonym "believe", "suspect" .
+  :noun_synonym "believing" ;
+  :verb_synonym "believe", "suspect", "surmise" ;
+  :wordnet_noun_synset "05950141", "05734038" ;
+  :wordnet_verb_synset "00685199", "00923043" . 
+
+:Betrayal a owl:Class ;
+  rdfs:subClassOf :DeceptionAndDishonesty, :ViolationOfAgreement ;
+  rdfs:label "Betrayal" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Betrayal&oldid=1096433753), Betrayal 'is the breaking or violation of a presumptive contract, trust, or confidence that produces moral and psychological conflict within a relationship amongst individuals, between organizations or between individuals and organizations. Often betrayal is the act of supporting a rival group, or it is a complete break from previously decided upon or presumed norms by one party from the others.'" ;
+  :noun_synonym "disloyalty", "traitor", "treason", "betrayer", "betraying", "spy", "treachery", "unfaithfulness", "faithlessness", "double-dealing", "breach of faith", "stab in the back", "Judas kiss", "double-cross" ;
+  :verb_synonym "be disloyal to", "be unfaithful to", "break faith with", "double-cross", "double-deal", "sell out", "stab in the back", "be a Judas", "rat on", "squeal on", "rat out", "cheat on", "betray", "undermine" ;
+  :wordnet_noun_synset "00751065" ;
+  :wordnet_verb_synset "02582588", "02584093", "02543073" . 
 
 :BoycottAndBan a owl:Class ;
-  rdfs:subClassOf :Avoidance ;
+  rdfs:subClassOf :Avoidance, :RefusalAndRejection ;
   rdfs:label "Boycott and Ban" ;
   :definition "An act of abstaining from interacting with (such as working with or buying from) an Agent. The Agent which is boycotting another entity is identified using :has_active_agent, while the Agent boycotted against is specified using :has_affected_agent." ;
   :noun_synonym "embargo", "moratorium", "proscription", "boycotting", "embargoing", "banning" ;
-  :verb_synonym "boycott", "ban", "embargo" .
+  :verb_synonym "boycott", "ban", "embargo", "banish", "ostracize", "ostracise", "cast out", "blackball" ;
+  :wordnet_noun_synset "00206979", "07269842", "06673141" ;
+  :wordnet_verb_synset "02470917", "02509666" .
 
 :CaptureAndSeizure a owl:Class ;
   rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
   rdfs:label "Capture and Seizure" ;
   :definition "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
-  :noun_synonym "arrest", "confiscation", "misappropriation", "capturing", "seizing", "confiscating", "misappropriating", "arresting", "apprehending", "snatching" ;
-  :verb_synonym "apprehend", "arrest", "capture", "seize", "snatch", "take captive", "take control", "confiscate", "misappropriate" .
+  :noun_synonym "arrest", "confiscation", "capturing", "seizing", "confiscating", "arresting", "apprehending", "snatching" ;
+  :verb_synonym "apprehend", "arrest", "capture", "seize", "snatch", "take captive", "take control", "confiscate", "catch", "prehend" ;
+  :wordnet_noun_synset "00089301", "00097789", "00776783", "00086039" ;
+  :wordnet_verb_synset "01217985", "01215136", "01217701", "02210054" .
 
 :CoercionAndIntimidation a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Coercion and Intimidation" ;
   :definition "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear." ;
-  :noun_synonym "force", "bullying", "strong-arm tactic", "coercing", "intimidating", "forcing", "compelling" ;
-  :verb_synonym "coerce", "intimidate", "bully", "force", "compel", "strong-arm" .
+  :noun_synonym "bullying", "strong-arm tactic", "coercing", "intimidating", "forcing", "compelling", "compulsion", "subjugation", "subjugating" ;
+  :verb_synonym "coerce", "intimidate", "bully", "force", "compel", "strong-arm", "pressure", "subjugate" ;
+  :wordnet_noun_synset "00157632", "01224966", "05202630", "14019785" ; 
+  :wordnet_verb_synset "02510211", "01823521", "01037071", "02512195", "02502465" .
 
 :Concealment a owl:Class ;
   rdfs:subClassOf :Prevention ;
   rdfs:label "Concealment" ;
   :definition "An act of preventing something/someone from being known/found." ;
-  :noun_synonym "hiding", "camouflage", "cover", "disguise", "dissimulation", "secrecy", "secret", "hide-out", "obscuration", "smoke screen", "occultation", "concealing", "camouflaging", "covering", "dissimulating", "obscuring", "disguising" ;
-  :verb_synonym "hide", "conceal", "camouflage", "cover", "disguise", "dissimulate", "keep secret", "obscure", "put up a smoke screen" .
+  :noun_synonym "hiding", "camouflage", "cover", "disguise", "dissimulation", "secrecy", "secret", "obscuration", "smoke screen", "occultation", "concealing", "camouflaging", "covering", "dissimulating", "obscuring", "disguising" ;
+  :verb_synonym "hide", "conceal", "camouflage", "cover", "disguise", "dissimulate", "keep secret", "obscure", "put up a smoke screen", "blot out", "veil", "mask" ;
+  :wordnet_noun_synset "01050836", "00752488", "04659534", "04254139" ;
+  :wordnet_verb_synset "02149298", "02163017", "00314788" . 
 
-:DecisionMaking a owl:Class ;
+:DeceptionAndDishonesty a owl:Class ;
+  rdfs:subClassOf :AggressiveOrHostileAct ;
+  rdfs:label "Deception and Dishonesty" ;
+  :definition "An act of preventing something/someone from being known/found." ;
+  :noun_synonym "perfidy", "perfidiousness", "bad faith", "duplicity", "knavery", "quackery", "trick", "falsehood", "falsification", "disinformation", "misrepresentation", "misrepresenting", "transgression", "evil doing", "injustice", "iniquity", "malversation", "plagiarism", "plagiarization", "plagiarisation", "piracy", "hoax", "wangle", "wangling", "lie", "lying", "falsity", "deceit", "conspiracy", "corruptness" ;
+  :verb_synonym "deceive", "lead on", "delude", "cozen", "cheat", "trick", "fudge", "falsify", "wangle", "misrepresent", "hoax", "machinate", "bilk", "defraud", "nobble", "doctor" ;
+  :wordnet_noun_synset "00752488", "00750872", "00751748" ;
+  :wordnet_verb_synset "02581157",  "02580280", "02583006", "02580591" .
+
+:DecisionMakingAndChoice a owl:Class ;
   rdfs:subClassOf :Cognition ;
-  rdfs:label "Decision Making" ;
-  :definition "An act of concluding or resolving some issue or question." ;
-  :noun_synonym "course of action", "resolution", "plan", "deciding", "planning", "resolving" ;
-  :verb_synonym "plan", "decide", "resolve", "make a decision" .
+  rdfs:label "Decision Making and Choice" ;
+  :definition "An act of concluding or resolving some question or issue by choosing a course of action or alternative." ;
+  :noun_synonym "course of action", "deciding", "planning", "choosing", "selection", "pick", "determination" ;
+  :verb_synonym "decide", "resolve", "make a decision", "choose", "make up one's mind", "determine" ;
+  :wordnet_noun_synset "00162063", "00039000", "00152317" ;
+  :wordnet_verb_synset "02486392", "00681856", "00699355" .
 
 :DefensiveOrProtectiveAct a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Defensive or Protective Act" ;
   :definition "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
   :noun_synonym "preservation", "conservation", "protection", "security", "safeguarding", "defending", "protecting", "preserving", "conserving", "securing" ;
-  :verb_synonym "defend", "protect", "conserve", "preserve", "secure", "safeguard", "shield" .
+  :verb_synonym "defend", "protect", "conserve", "preserve", "secure", "safeguard", "shield" ;
+  :wordnet_noun_synset "00819341" ;
+  :wordnet_noun_synset "01130221", "01130619" .
 
 :EmotionalResponse a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Emotional Response" ;
   :definition "A state of mind associated with positive/pleasurable or negative/displeasurable feelings, thoughts and moods." ;
   :noun_synonym "feeling", "emotion", "emoting", "reaction", "reacting" ;
-  :verb_synonym "emote", "react", "feel" .
+  :verb_synonym "react", "feel" ;
+  :wordnet_noun_synset "00026390", "07495208", "11437243" ;
+  :wordnet_verb_synset "00692071", "00719282" .
 
 :EscapeAndEvasion a owl:Class ;
   rdfs:subClassOf :Avoidance, :MovementTravelAndTransportation ;
   rdfs:label "Escape and Evasion" ;
   :definition "An act of avoiding/getting away from something, someone or some Event, or of breaking free from captivity or oppression." ;
-  :noun_synonym "breakout", "desertion", "extrication", "fleeing", "escaping", "deserting", "evading", "eluding", "extricating" ;
-  :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away" .
+  :noun_synonym "breakout", "desertion", "extrication", "fleeing", "escaping", "deserting", "evading", "eluding", "extricating", "running away", "disentanglement", "extrication" ;
+  :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away", "get away", "get by", "get out", "break loose" ; 
+  :wordnet_noun_synset "00046918", "01247140", "00060196" ;
+  :wordnet_verb_synset "00812391", "02078305", "02078906" .
 
 :Exhaustion a owl:Class ;
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Exhaustion" ;
   :definition "A feeling of discomfort caused by a lack of sleep, over exertion, etc." ;
-  :noun_synonym "fatigue", "weariness", "tiredness", "over-exertion", "fatiguing", "tiring", "wearying" ;
-  :verb_synonym "fatigue", "be weary", "be tired", "tire" .
+  :noun_synonym "fatigue", "weariness", "tiredness", "over-exertion", "fatiguing", "tiring", "wearying", "overexertion" ;
+  :verb_synonym "fatigue", "be weary", "be tired", "tire", "tire out", "wear down", "wear out", "outwear", "break down", "collapse" ;
+  :wordnet_noun_synset "14039832", "00634960" ;
+  :wordnet_verb_synset "00074774", "00030640" . 
+
+:Forgetting a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Forgetting" ;
+  :definition "An act of Cognition where past occurrences, learning and insights cannot be recalled/remembered." ;
+  :noun_synonym "forgetfulness", "absentmindedness" ; 
+  :verb_synonym "forget", "block out", "blank out", "draw a blank", "fail to remember" ;
+  :wordnet_noun_synset "05681752" ;
+  :wordnet_verb_synset "00610654", "00611721", "00616520", "00599897", "00600024" .
 
 :GiftAndDonation a owl:Class ;
   rdfs:subClassOf :Acquisition, :FriendlyOrSupportiveAct ;
   rdfs:label "Gift and Donation" ;
   :definition "An act of giving with no expectation of payment." ;
-  :noun_synonym "contribution", "present", "giveaway", "endowment", "offering", "alms", "charity", "gifting", "donating", "contributing", "endowing", "giving" ; 
-  :verb_synonym "give", "donate", "contribute", "endow" .
-
-:Hunger a owl:Class ;
-  rdfs:subClassOf :SensoryPerception ;
-  rdfs:label "Hunger" ;
-  :definition "A feeling of discomfort caused by a lack of food or by the desire to eat." ;
-  :noun_synonym "starvation", "famine", "ravenousness", "starving" ;
-  :verb_synonym "starve", "be hungry", "be famished", "be ravenous" .
+  :noun_synonym "contribution", "present", "giveaway", "endowment", "offering", "alms", "gifting", "donating", "contributing", "endowing", "giving" ; 
+  :verb_synonym "give", "donate", "contribute", "endow", "chip in", "kick in" ;
+  :wordnet_noun_synset "01088005", "01091702", "13285910", "13290913" ;
+  :wordnet_verb_synset "01062618", "02206050", "02313721", "02204104", "02205200" .
 
 :IgnoringAndOverlooking a owl:Class ;
   rdfs:subClassOf :Avoidance, :Cognition ;
   rdfs:label "Ignoring and Overlooking" ;
   :definition "An act of purposefully disregarding, not noticing or not acknowledging something or someone." ;
-  :noun_synonym "cold-shoulder", "disregarding", "neglecting" ;
-  :verb_synonym "disregard", "neglect", "pay no attention", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye" .
+  :noun_synonym "cold-shoulder", "disregard", "neglect", "disregarding", "neglecting", "negligence" ;
+  :verb_synonym "disregard", "neglect", "pay no attention", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye", "dismiss", "brush aside", "brush off", "discount", "push aside", "snub", "leave out", "lose track" ;
+  :wordnet_noun_synset "00419628", "05714175" ; 
+  :wordnet_verb_synset "00596900", "00618547", "00802592", "02123706", "01061436", "00616690", "02170805", "00596701" .
+
+:MeaningImplicationAndInference a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Implication, Indication and Inference" ;
+  :definition "An act of interpreting the meaning of something or positing a conclusion based on observation, reasoning, experience, etc." ;
+  :noun_synonym "illation", "analogy", "derivation", "extrapolation", "presumption", "entailment", "undertone", "undercurrent", "connotation", "significance", "import", "semantics", "insinuation", "innuendo", "deriving", "extrapolating", "presuming", "entailing", "connoting", "signifyng" ;
+  :verb_synonym "derive", "extrapolate", "entail", "connote", "signify", "insinuate", "mean", "implicate", "imply", "denote", "depict", "clarify", "clear up", "elucidate" ;
+  :wordnet_noun_synset "05782611", "05928460", "07252762" ; 
+  :wordnet_verb_synset "02640889", "02641270", "00931801", "00932561", "00941888" .
 
 :IntentionAndGoal a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Intention and Goal" ;
   :definition "An event or condition that an Agent hopes to attain/accomplish. Intentions are often distinguished from goals by being focused on the present moment, while goals are focused on the future." ;
-  :noun_synonym "aim", "objective", "motive", "purpose" ;
-  :verb_synonym "aim" .
+  :noun_synonym "aim", "objective", "motive", "purpose", "motivation", "plan" ;
+  :verb_synonym "aim", "intend", "plan", "purpose", "purport", "propose" ;
+  :wordnet_noun_synset "00023953", "05989760", "00164054", "05907175", "05991800" ; 
+  :wordnet_verb_synset "00710809", "00710367", "00711208", "00706456" .
 
 :InvasionAndOccupation a owl:Class ;
   rdfs:subClassOf :CaptureAndSeizure ;
   rdfs:label "Invasion and Occupation" ;
   :definition "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource." ;
-  :noun_synonym "conquering", "annexation", "annexing", "takeover", "overrunning", "invading", "occupying" ;
-  :verb_synonym "invade", "conquer", "occupy", "annex", "take over", "overrun" .
+  :noun_synonym "conquest", "conquering", "annexation", "annexing", "takeover", "overrunning", "invading", "occupying", "foray", "military control" ;
+  :verb_synonym "invade", "conquer", "occupy", "annex", "take over", "overrun", "suppress", "stamp down", "subdue", "conquer" ;
+  :wordnet_noun_synset "00977538", "00079356", "00089847", "01135427" ;
+  :wordnet_verb_synset "01128786", "00463047", "02277394", "02308993" .
 
 :KnowledgeAndSkill a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Knowledge and Skill" ;
   :definition "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)" ;
-  :noun_synonym "understanding", "comprehension", "expertise", "intelligence", "know-how", "proficiency", "knowing", "comprehending" ;
-  :verb_synonym "know", "understand", "comprehend" .
+  :noun_synonym "understanding", "comprehension", "expertise", "intelligence", "know-how", "proficiency", "knowing", "comprehending", "competency", "competency" ;
+  :verb_synonym "know", "understand", "comprehend", "know the score", "grok" ;
+  :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569" ;
+  :wordnet_verb_synset "00595732", "00596016", "00597025", "00597330", "00597527", "00597879", "00598039", "00590283", "00589616", "00592510" .
 
-:Learning a owl:Class ;
-  rdfs:subClassOf :Acquisition, :KnowledgeAndSkill, :EducationalEvent ;
-  rdfs:label "Learning" ;
-  :definition "An act of acquiring knowledge and skills through study, repetition, experience, instruction, etc." ;
-  :noun_synonym "studying", "practicing", "training", "memorization", "memorizing" ;
-  :verb_synonym "study", "practice", "train", "memorize", "learn" .
+:LearningAndEducation a owl:Class ;
+  rdfs:subClassOf :Acquisition, :KnowledgeAndSkill ;
+  rdfs:label "Learning and Education" ;
+  :definition "An act of acquiring or transferring knowledge and skills through study, repetition, experience, instruction, etc." ;
+  :noun_synonym "studying", "practicing", "training", "lesson", "schoolwork", "class", "course", "test", "teaching", "schooling", "tutoring", "instruction", "instructing", "coaching", "degree", "diploma" ;
+  :verb_synonym "study", "practice", "train", "memorize", "learn", "larn", "hit the books", "teach", "instruct", "educate", "test", "tutor", "coach", "take a class", "attend school", "attend college", "go to school", "go to college" ;
+  :wordnet_noun_synset "05760541", "00729939", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
+  :wordnet_verb_synset "00600349", "00599310", "00601387", "00608509", "00830768", "02392628", "02268987" .
 
 :MaintenanceAndRepair a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Maintenance and Repair" ;
   :definition "Any act that maintains/fixes/mends/adjusts/restores an entity." ;
-  :noun_synonym "maintaining", "restoration", "renovation", "patch", "fixing", "revamping", "renewal", "repairing",  "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing" ;
-  :verb_synonym "maintain", "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of" .
+  :noun_synonym "maintaining", "renovation", "patch", "fix", "fixing", "revamping", "renewal", "repairing", "mend", "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing", "care", "upkeep", "improvement", "tending" ;
+  :verb_synonym "maintain", "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of", "refurbish", "better", "improve" ;
+  :wordnet_noun_synset "00249844" ; 
+  :wordnet_verb_synset "00261534", "01634614", "00206293", "00207826", "00230988", "01572394" .
 
 :Memory a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Memory" ;
   :definition "An act of Cognition dealing with the recollection/retrieval of past occurrences, learning and insights." ;
-  :noun_synonym "recollection", "remembrance", "reminiscence", "flashback", "nostalgia", "wisfulness", "recollecting", "remembering", "reminiscing", "recalling" ;
-  :verb_synonym "recollect", "remember", "reminisce", "recall" .
+  :noun_synonym "recollection", "remembrance", "reminiscence", "flashback", "wistfulness", "recollecting", "remembering", "reminiscing", "recalling", "memorization", "memorizing" ;
+  :verb_synonym "recollect", "remember", "reminisce", "recall", "think of" ;
+  :wordnet_noun_synset "05659244", "05763153", "05768199", "05943778" ;
+  :wordnet_verb_synset "00611237", "00609334", "00612810", "00613356" .
 
 :Mistake a owl:Class ;
-  rdfs:subClassOf :AssessmentAndCharacterization, :Belief ;
+  rdfs:subClassOf :AssessmentAndCharacterization, :TroubleAndProblem ;
   rdfs:label "Mistake" ;
   :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property." ;
   :noun_synonym "error", "fault", "inaccuracy", "omission", "miscalculation", "blunder", "gaffe", "misconception", "misinterpretation", "misstatement", "false step", "misjudgment", "mistaking", "faulting", "omitting", "miscalculating", "blundering", "misinterpreting", "misconceiving", "misstating", "misjudging", "misunderstanding" ;
-  :verb_synonym "lack judgment", "show a lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterprete", "misstate", "misjudge", "misunderstand" .
+  :verb_synonym "lack judgment", "show a lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterpret", "misjudge", "misunderstand", "misconstrue", "misconceive", "misapprehend", "be amiss", "err", "mistake", "slip up" ;
+  :wordnet_noun_synset "00067036", "05714576", "05902260", "04811700" ;
+  :wordnet_verb_synset "00641140", "00621541", "00619438" .
 
 :MurderAndHomicide a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:subClassOf :AttackDamageAndAssault, :Death ;
   rdfs:label "Murder and Homicide" ;
   :definition "Any Event that is related to killing a person or living thing." ;
-  :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation", "pogrom", "murdering", "exterminating", "assassinating", "executing", "slaughtering", "massacring", "liquidating", "slaying", "strangling", "asphyxiating", "decapitating", "lynching" ;
-  :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "execute", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate" .
+  :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation", "pogrom", "murdering", "exterminating", "assassinating", "executing", "slaughtering", "massacring", "liquidating", "slaying", "strangling", "asphyxiating", "decapitating", "lynching", "manslaughter" ;
+  :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "execute", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate", "annihilate", "wipe out", "decimate", "butcher", "massacre", "slaughter", "mow down" ;
+  :wordnet_noun_synset "00220890" ;
+  :wordnet_verb_synset "01326622" .
 
 :Pain a owl:Class ;
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Pain" ;
   :definition "A reaction of suffering or discomfort." ;
-  :noun_synonym "agony", "suffering", "soreness", "discomfort", "hurt", "hurting", "ache", "aching", "throb", "throbbing", "sting", "stinging", "first degree burn", "second degree burn", "third degree burn", "torment", "aching", "throbbing", "suffering" ;
-  :verb_synonym "ache", "throb", "suffer", "sting" .
+  :noun_synonym "agony", "suffering", "soreness", "discomfort", "hurting", "ache", "aching", "throb", "throbbing", "sting", "stinging", "first degree burn", "second degree burn", "third degree burn", "torment", "aching", "throbbing", "suffering" ;
+  :verb_synonym "ache", "throb", "suffer", "sting" ;
+  :wordnet_noun_synset "05732639", "07509503", "14346126", "07510467" ;
+  :wordnet_verb_synset "02125976" . 
 
 :Prevention a owl:Class ;
   rdfs:subClassOf :Avoidance ;
   rdfs:label "Prevention" ;
   :definition "An act of stopping some event or condition from occurring. Note that the event/state/condition is identified using the :has_topic property." ;
-  :noun_synonym "forestalling", "determent", "hinderance", "inhibitor", "thwarting", "deterence", "impediment", "preventing", "forestalling", "deterring", "hindering", "inhibiting", "thwarting", "averting", "hampering", "impeding" ;
-  :verb_synonym "forestall", "deter", "hinder", "inhibit", "thwart", "avert", "hamper", "impede", "prevent" .
+  :noun_synonym "forestalling", "determent", "inhibitor", "thwarting", "deterrence", "deterrent", "preventing", "forestalling", "deterring", "inhibiting", "thwarting", "averting", "hampering", "impeding" ;
+  :verb_synonym "forestall", "deter", "hinder", "inhibit", "thwart", "avert", "hamper", "impede", "prevent", "inhibit", "foil" ;
+  :wordnet_noun_synset "01075919" ;
+  :wordnet_verb_synset "02455370", "02456941", "02456614", "00772186", "00910052", "02563998" .
 
 :ProvisionOfAid a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Provision of Aid" ;
-  :definition "An organized public demonstration indicating disapproval or objection to something or someone. The entity which is disapproved of/objected to is defined using the :has_topic property." ;
-  :noun_synonym "assistance", "helping hand", "aiding", "helping", "assisting", "providing" ;
-  :verb_synonym "aid", "help", "provide", "assist" .
+  :definition "." ;
+  :noun_synonym "assistance", "helping hand", "aiding", "helping", "assisting", "providing", "relief" ;
+  :verb_synonym "aid", "help", "provide", "assist", "benefit", "do good" ;
+  :wordnet_noun_synset "00656128", "01063127", "01090092", "13286803" ;
+  :wordnet_verb_synset "00081834", "02553283" .
 
 :PurchaseAndSale a owl:Class ;
   rdfs:subClassOf :Acquisition, :FinancialEvent ;
   rdfs:label "Purchase and Sale" ;
   :definition "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property." ;
-  :noun_synonym "buying", "selling", "procurement", "vending", "paying", "shopping", "purchasing", "procuring", "vending" ;
-  :verb_synonym "buy", "sell", "procure", "vend", "pay", "shop", "purchase" .
+  :noun_synonym "buying", "selling", "procurement", "vending", "paying", "shopping", "purchasing", "procuring", "vending", "buyout" ;
+  :verb_synonym "buy", "sell", "procure", "vend", "pay", "shop", "purchase" ;
+  :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160" ; 
+  :wordnet_verb_synset "02211988", "02262178" .
 
 :Rape a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;
   rdfs:label "Rape" ;
   :definition "Any Event that involves sexual assault of a Person." ;
   :noun_synonym "sexual assault", "sexual abuse", "molestation", "raping", "molesting" ;
-  :verb_synonym "rape", "molest" .
+  :verb_synonym "rape", "molest" ;
+  :wordnet_noun_synset "00775604" ;
+  :wordnet_verb_synset "02573434" . 
 
 :Resistance a owl:Class ;
   rdfs:subClassOf :AggressiveOrHostileAct, :RefusalAndRejection ;
   rdfs:label "Resistance" ;
   :definition "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate." ;
-  :noun_synonym "opposition", "defiance", "resisting", "opposing", "defying" ;
-  :verb_synonym "resist", "oppose", "defy" .
+  :noun_synonym "opposition", "defiance", "resisting", "opposing", "defying", "mutiny", "rebellion" ;
+  :verb_synonym "resist", "oppose", "defy", "fight back", "hold out", "withstand", "stand firm", "hold off", "object to", "mutiny", "rebel" ;
+  :wordnet_noun_synset "00203133", "01171807", "00966007", "00964240" ;
+  :wordnet_verb_synset "01093838", "02712676", "02590043", "02589224" .
 
 :RobberyAndTheft a owl:Class ;
   rdfs:subClassOf :CaptureAndSeizure ;
   rdfs:label "Robbery and Theft" ;
   :definition "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate." ;
-  :noun_synonym "stealing", "burglary", "thievery", "thief", "breaking and entering", "larceny", "looting", "robbing", "thieving", "looting" ;
-  :verb_synonym "rob", "thieve", "steal", "loot" .
+  :noun_synonym "stealing", "burglary", "thievery", "thief", "breaking and entering", "larceny", "looting", "robbing", "thieving", "looting", "heist" ;
+  :verb_synonym "rob", "thieve", "steal", "loot", "hold up", "rip off", "pilfer", "burglarize", "burglarise", "burgle", "heist", "plunder" ;
+  :wordnet_noun_synset "00782543", "00786699" ;
+  :wordnet_verb_synset "02326737" . 
+
+:SelfControl a owl:Class ;
+  rdfs:label "Self-Control" ;
+  rdfs:subClassOf :AttentionAndFocus, :RemovalAndRestriction ;
+  :definition "Restraint applied to one's emotions, expressions, impulses, desires, etc." ;
+  :noun_synonym "self-restraint", "willpower", "will power", "self-command" ;
+  :wordnet_noun_synset "04869236" .
 
 :SensoryPerception a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Sensory Perception" ;
   :definition "An act involving one of the senses - sight, hearing, touch, taste and smell." ;
-  :noun_synonym "sight", "smell", "taste", "touch", "hearing", "sense", "seeing", "smelling", "tasting", "touching", "sensing", "listening", "feeling" ;
-  :verb_synonym "see", "hear", "touch", "taste", "smell", "listen", "feel" .
+  :noun_synonym "sight", "smell", "taste", "sense", "seeing", "smelling", "tasting", "sensing", "listening", "somatosense" ;
+  :verb_synonym "see", "hear", "taste", "smell", "listen", "sight" ;
+  :wordnet_noun_synset "05729937", "05660241" ;
+  :wordnet_verb_synset "02129213", "02133754", "02174146", "02174335", "02110460", "02131823", "02168177", "02195992" . 
 
 :Supervision a owl:Class ;
   rdfs:subClassOf :AttentionAndFocus ;
   rdfs:label "Supervision" ;
   :definition "The act of a Person paying attention to/overseeing/monitoring someone or something. The entity who/which is supervised is indicated by the :has_topic property." ;
-  :noun_synonym "supervising", "overseeing", "monitoring", "managing" ;
-  :verb_synonym "supervise", "mange", "oversee", "monitor" .
-
-:Thirst a owl:Class ;
-  rdfs:subClassOf :SensoryPerception ;
-  rdfs:label "Thirst" ;
-  :definition "A feeling of discomfort caused by a lack of water/liquids or by the desire to drink." ;
-  :noun_synonym "dehydration", "polydipsia", "thirsting" ;
-  :verb_synonym "thirst", "be thirsty" .
+  :noun_synonym "supervising", "overseeing", "monitoring", "managing", "oversight", "directing", "management" ;
+  :verb_synonym "supervise", "manage", "oversee", "monitor" ;
+  :wordnet_noun_synset "01135602" ;
+  :wordnet_verb_synset "02173796", "02436818" .
 
 
 ########################################################################
@@ -317,7 +422,7 @@
   owl:members  ( :AttentionAndFocus :IgnoringAndOverlooking ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Concealment :Revelation ) .
+  owl:members  ( :Forgetting :Memory ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :GiftAndDonation :RobberyAndTheft ) .
