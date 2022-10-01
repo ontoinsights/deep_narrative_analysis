@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: August 20 2022
+# Last modified: September 29 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -31,13 +31,11 @@
 #  Changed :synonym to :noun_synonym and :verb_synonym, and added synonyms
 #  Changed :ReligiousActivities to :Religion, and added :ReligiousBelief
 #  Added :AppointmentAndNomination to the domain of :role
-#  Moved PoliticalIdeology from environment-subclasses.ttl, added
-#    :has_political_ideology and :enum:Oligarchy, and changed the definition
-#    to be an open enumeration (versus using oneOf)
+#  Moved PoliticalIdeology from environment-subclasses.ttl, and added
+#    :has_political_ideology
 #  Added jobs to the LineOfBusiness subclasses' "examples"
 #  Added the property, :political_ideology
 #  Added GovernmentalEntity and noun synonyms for PoliticalIdeologies
-#  Changed PoliticalIdeology individuals to subclasses
 #  Changed InformationTechnologyServices to InformationTechnology
 #  Added the Technology, MultiIndustry, ProvisionOfServices and Space 
 #    lines of business, and updated the LOB subclassing hierarchy
@@ -57,6 +55,9 @@
 #    MilitaryAndSecurityBusiness
 #  Renamed Organization to OrganizationalEntity to avoid confusion 
 #    with the Event, Alignment (e.g., organization/organizing)
+#  Added the properties, :ethnicity and :religion
+#  Subclassed PoliticalIdeology from AgentAspect and reintroduced subclasses
+#  Added :has_context
 ########################################################################
 
 
@@ -150,7 +151,7 @@
 :OrganizationalEntity a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Organizational Entity" ;
-  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
   :noun_synonym "corporation", "institution", "company", "business", "firm", "consortium", "syndicate" ;
   :wordnet_noun_synset "08076248", "03579706" .
 
@@ -176,7 +177,7 @@
   :wordnet_noun_synset "08226608", "08228211" .
 
 :PoliticalIdeology a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
+  rdfs:subClassOf :AgentAspect ;
   rdfs:label "Political Ideology" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
   :example "Examples are Authoritarian, Communism, Socialism, etc." ;
@@ -198,7 +199,7 @@
 :Role a owl:Class ;
   rdfs:label "Role" ;
   :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics." ;
-  :example "For example, in an Organization, some Persons are managers while others are employees or team leads." ;
+  :example "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads." ;
   :wordnet_noun_synset "00723312" .
   
 
@@ -424,8 +425,141 @@
 
 
 ########################################################################
+# Subclasses of PoliticalIdeology
+# TODO: Provide additional details
+########################################################################
+
+:AntiAbortion a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Anti-Abortion Movement" ;
+  :noun_synonym "anti-abortionist" .
+
+:Authoritarianism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Authoritarianism" ; 
+  :noun_synonym "absolutism", "absolutist", "monarchy", "monarchist", "dictator", "stratocracy", "despotism", "despot", "autocracy", "autocrat", "imperialism", "imperialist", "colonialism", "expansionism", "oligarchy", "oligarch", "plutocracy", "plutocrat", "totalitarianism", "kraterocracy" .
+
+:Centrism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Centrist" ; 
+  :noun_synonym "centralist", "syncretic politics" .
+
+:Communitarianism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Communitarianism" ; 
+  :noun_synonym "socialism", "socialist" .
+
+:Communism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Communism" ; 
+  :noun_synonym "communist", "leninism", "leninist", "marxism", "marxist", "trotskyism", "trotskyist", "autonomism", "autonomist", "ergatocracy" .
+
+:Conservatism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Conservatism" ; 
+  :noun_synonym "conservative", "alt-right", "alt-lite", "right-wing", "alt right", "alt lite", "right wing", "illiberalism", "illiberalist" .
+
+:Corporatism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Corporatism" ; 
+  :noun_synonym "corporatist", "mutualism", "mutualist" .
+
+:Democracy a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Democracy" ; 
+  :noun_synonym "democrat" .
+
+:Environmentalism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Environmentalism" ; 
+  :noun_synonym "environmentalist" .
+
+:FacismAndNazism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Facism and Nazism" ; 
+  :noun_synonym "fascist", "nazi", "aryanism", "national populist", "national populism" .
+
+:Feminism a owl:Class ;
+  rdfs:subClassOf :IdentityPolitics ;
+  rdfs:label "Feminism" ;
+  :noun_synonym "feminist" .
+
+:Humanism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Humanism" ;
+  :noun_synonym "humanist", "transhumanism", "transhumanist" .
+
+:IdentityPolitics a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Identity Politics" .
+
+:LeftWing a owl:Class ;
+  rdfs:subClassOf :Populism ;
+  rdfs:label "Left-Wing" ;
+  :noun_synonym "progressive", "liberal" .
+
+:LGBTRights a owl:Class ;
+  rdfs:subClassOf :IdentityPolitics ;
+  rdfs:label "LGBT Rights Movement" .
+
+:Liberalism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Liberalism" ;
+  :noun_synonym "liberal", "left-wing", "far-left", "left wing", "far left" .
+
+:Libertarianism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Libertarianism" ;
+  :noun_synonym "libertarian" .
+
+:Meritocracy a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Meritocracy" .
+
+:Nationalism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Nationalism" ;
+  :noun_synonym "nationalist" .
+
+:PoliticalReligiousIdeology a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Political-Religious Ideology" ;
+  :noun_synonym "freemasonry", "freemason", "secularism", "secularist", "theocracy", "theocrat" .
+
+:Populism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Populism" ;
+  :noun_synonym "populist", "anti-austerity", "anti-consumerism", "activism", "activist", "anti-nuclear", "anti-corporate", "peace movement", "pacifism", "pacifist", "egalitarianism", "egalitarian", "labor movement", "labour movement", "occupy movememnt", "syndicalism", "syndicalist"  .
+
+:Progressivism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Progressivism" ;
+  :noun_synonym "progressive" .
+
+:Radicalism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Radicalism" ; 
+  :noun_synonym "radical", "reactionary", "anarchism", "anarchist" .
+
+:Republican a owl:Class ;
+  rdfs:subClassOf :Conservatism ;
+  rdfs:label "Republican" .
+
+:SeparatismAndSegregation a owl:Class ;
+  rdfs:subClassOf :IdentityPolitics ;
+  rdfs:label "Separatism and Segregation" ;
+  :noun_synonym "separatist", "segregationism", "segregationist", "supremacism", "supremist", "anti-semitism", "anti-semite", "anti-zionism", "anti-zionist", "racism", "racist" . 
+
+
+########################################################################
 # Datatype Properties
 ########################################################################
+
+:ethnicity a owl:DatatypeProperty ;
+  rdfs:label "ethnicity" ;
+  rdfs:domain :Agent ;
+  rdfs:range xsd:string ;
+  :definition "Specifies a particular a particular ethnicity (as free form text) for an Agent or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
   
 :gender a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "gender" ;
@@ -446,6 +580,12 @@
   rdfs:range xsd:string ;
   :definition "Specifies a particular a particular ideology (as free form text) that the Agent holds or that is present at a location. Note that the :has_political_ideology property should also be specified, which maps the text to a predefined/enumerated value." ;
   :example "Zionism is an example where the property, :political_ideology, is used to define a particular type of Nationalism, with a specific goal. In this case, the enumerated value for :has_political_ideology would be :enum:Nationalism." .
+
+:religion a owl:DatatypeProperty ;
+  rdfs:label "religion" ;
+  rdfs:domain :Agent ;
+  rdfs:range xsd:string ;
+  :definition "Specifies a particular a particular religion (as free form text) that the Agent holds or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
 
 :role a owl:DatatypeProperty ;
   rdfs:label "role" ;
@@ -491,6 +631,13 @@
   rdfs:domain :Person ;
   rdfs:range :Country ;
   :definition "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship." .
+
+:has_context a owl:ObjectProperty ;
+  rdfs:label "has context" ;
+  rdfs:domain :Agent ;
+  rdfs:range :EventAndState ;
+  :definition "References a particular occurrence or condition that provides context for the Agent." ;
+  :example "For example, a dishonest Person would be associated with the :DeceptionAndDishonesty class type using the :has_context property." .
 
 :has_line_of_business a owl:ObjectProperty ;
   rdfs:label "has line of business" ;

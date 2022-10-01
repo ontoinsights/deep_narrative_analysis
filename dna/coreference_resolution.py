@@ -1,218 +1,314 @@
 # Functions for co-reference resolution
-# Called by create_event_turtle.py
+# Called by create_narrative_turtle.py
 
 import uuid
-
 from typing import Union
 
-from database import query_database
-from utilities import dna_prefix, empty_string, names_to_geo_dict, domain_database
+from dna.create_noun_turtle import create_noun_ttl
+from dna.database import query_database
+from dna.get_ontology_mapping import get_noun_mapping
+from dna.queries import query_noun_as_verb, query_specific_noun
+from dna.utilities import dna_prefix, empty_string, names_to_geo_dict, ontologies_database, owl_thing2
 
-query_specific_noun = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?iri ?type ?prob WHERE ' \
-    '{ ?iri a ?type . ' \
-    '{ { ?iri rdfs:label ?label . FILTER(?label = "keyword") . BIND(100 as ?prob) } UNION ' \
-    '{ ?iri :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
-    '{ ?iri rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
-    '{ ?iri rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?iri :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } } } ' \
-    'ORDER BY DESC(?prob)'
+pronouns = ['I', 'we', 'us', 'they', 'them', 'he', 'she', 'it',
+            'myself', 'ourselves', 'themselves', 'herself', 'himself', 'itself']
 
 
-def check_nouns(narr_gender: str, elem_dictionary: dict, key: str, last_nouns: list) -> list:
+def _check_criteria(text: str, last_nouns: list, looking_for_singular: Union[bool, None],
+                    looking_for_female: Union[bool, None], looking_for_person: bool) -> list:
     """
-    Get the subject or object nouns (as indicated by the key input parameter) in the sent_dictionary,
-    using the last_nouns details to attempt to resolve co-references/anaphora. Subject/object
-    information (the nouns and their types and IRIs) is returned.
+    Checks the values of the nouns in the last_nouns array for matches of the specified
+    gender/number criteria.
 
-    For example, for the sentence "Narrator was born on June 12, 1928, in Znojmo, Czechia, which was settled
-    in the thirteenth century.", the sent_dictionary will be defined as {'text': 'Narrator was born ...',
-    'offset': 1, 'TIMES': ['June 12, 1928', 'the thirteenth century'], 'LOCS': ['Znojmo', 'Czechia'],
-    'verbs': [{'verb_text': 'born', 'verb_lemma': 'bear', 'tense': 'Past',
-    'objects': [{'object_text': 'Narrator', 'object_type': 'FEMALESINGPERSON'}],
-    'preps': [{'prep_text': 'on', 'prep_details': [{'detail_text': 'June', 'detail_type': 'DATE'}]},
-    {'prep_text': 'in', 'prep_details': [{'detail_text': 'Znojmo', 'detail_type': 'SINGGPE'}]}]}]}.
+    :param text: A string with the noun text
+    :param last_nouns: A list of noun texts, types, class mappings and IRIs, from the current paragraph
+    :param looking_for_singular: Boolean indicating that a singular noun is needed
+    :param looking_for_female: Boolean indicating that a female gender noun is needed
+    :param looking_for_person: Boolean indicating that a 'matched' noun should be a person
+    :return: Array of tuples of texts, types, class_mappings and IRIs of already processed nouns that
+              match the criteria; Note that an array is returned to support matching the pronouns 'they'/'them'
+    """
+    poss_nouns = []
+    alt_nouns = []
+    for noun_tuple in last_nouns:
+        noun_text, noun_type, noun_mapping, noun_iri = noun_tuple
+        if text not in pronouns and (text not in noun_text or noun_text not in text):
+            continue     # First match the text if not a pronoun; If no match, skip the rest of the criteria
+        if (looking_for_person and 'PERSON' not in noun_type) or \
+                (not looking_for_person and 'PERSON' in noun_type):
+            continue
+        # Check number
+        found_number = False
+        if looking_for_singular is None or (looking_for_singular and 'SING' in noun_type) or \
+                (not looking_for_singular and 'PLURAL' in noun_type):
+            found_number = True
+        found_gender = False
+        if looking_for_female is None or (looking_for_female and 'FEMALE' in noun_type) or \
+                (not looking_for_female and 'FEMALE' not in noun_type and 'MALE' in noun_type):
+            found_gender = True
+        # Check criteria
+        if found_gender and found_number:
+            poss_nouns.append(noun_tuple)
+        elif found_gender or found_number:
+            alt_nouns.append(noun_tuple)
+    match_nouns = poss_nouns if poss_nouns else (alt_nouns if alt_nouns else [])
+    if looking_for_singular and len(match_nouns) > 1:
+        return [match_nouns[-1]]
+    return match_nouns
 
-    If the function parameters are ('Female', sent_dictionary, 'objects', last_nouns), then the text,
-    'Narrator', 'FEMALESINGPERSON' and ':Narrator' will be returned.
 
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or MALE -
-                        indicating the gender of the narrator
-    :param elem_dictionary: The dictionary (holding the details from the nlp parse of a
-                            sentence in a narrative)
+def _check_last_nouns(text: str, text_type: str, last_nouns: list) -> list:
+    """
+    Get the most likely co-reference for the noun text using the last_nouns details.
+    Subject/object information (the noun, and its type, mapping and IRI) is returned.
+
+    :param text: String holding the noun text
+    :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
+    :param last_nouns: An array of tuples of noun texts, types, mappings and IRI, from the current paragraph
+    :return: A tuple that is the 'matched' noun mapping and IRI, or two empty strings (if
+              no match is found)
+    """
+    looking_for_female = True if 'FEMALE' in text_type else (False if 'MALE' in text_type else None)
+    looking_for_singular = False if 'PLURAL' in text_type else True  # Default is singular
+    looking_for_person = True if 'PERSON' in text_type else False
+    match_nouns = _check_criteria(text, last_nouns, looking_for_singular, looking_for_female, looking_for_person)
+    final_nouns = []
+    for match_noun in match_nouns:
+        # Don't need the noun texts or entity types (those are used for pronouns)
+        final_nouns.append((match_noun[2], match_noun[3]))
+    return final_nouns
+
+
+def _check_plet_dict(text: str, text_type: str, plet_dict: dict, last_nouns: list) -> (list, str):
+    """
+    Get the most likely co-reference for the text using the plet_dict details to
+    resolve co-references/anaphora. Subject/object information (the noun, and its types
+    and IRI) is returned.
+
+    :param text: String holding the noun text
+    :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
+    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'persons', 'locs', 'events',
+             'times' and Values vary by the key
+    :param last_nouns: An array of tuples of noun texts, types, mappings and IRI, from the current paragraph
+    :return: A tuple that consists of the matched noun's class mappings and IRI, or an empty array and string
+    """
+    person_match = []          # Match of text and type
+    person_text_match = []     # Match of text only, not type
+    loc_text_match = []
+    event_text_match = []
+    if not text_type or 'PERSON' in text_type:   # Type is sometimes missing in the spaCy nlp doc details
+        person_arrays = plet_dict['persons'] if 'persons' in plet_dict else []
+        for person_array in person_arrays:
+            alt_names = person_array[0]
+            person_type = person_array[1]
+            if text not in pronouns and text in alt_names:
+                if text_type and (text_type in person_type or person_type in text_type):
+                    person_match.append((person_type, person_array[2]))    # index 2 holds the IRI
+                else:
+                    person_text_match.append((person_type, person_array[2]))
+    if not text_type or ('LOC' in text_type or 'GPE' in text_type or 'FAC' in text_type):
+        loc_arrays = plet_dict['locs'] if 'locs' in plet_dict else []
+        for loc_array in loc_arrays:
+            alt_names = loc_array[0]
+            loc_map = loc_array[1]
+            if text in alt_names:
+                loc_text_match.append((loc_map, loc_array[2]))   # index 2 holds the IRI
+    if not text_type or 'EVENT' in text_type:
+        event_arrays = plet_dict['events'] if 'events' in plet_dict else []
+        for event_array in event_arrays:
+            alt_names = event_array[0]
+            if text in alt_names:
+                # event_array[1] holds the class mappings and [2] holds the IRI
+                event_text_match.append((event_array[1], event_array[2]))
+    return (_update_last_nouns(text, person_match[-1][0], person_match[-1][1], [':Person'], last_nouns) if person_match
+            else (_update_last_nouns(text, person_text_match[-1][0], person_text_match[-1][1], [':Person'],
+                                     last_nouns) if person_text_match
+                  else (_update_last_nouns(text, text_type, loc_text_match[-1][1], loc_text_match[-1][0], last_nouns)
+                        if loc_text_match
+                        else (_update_last_nouns(text, text_type, event_text_match[-1][1], event_text_match[-1][0],
+                                                 last_nouns) if event_text_match else [], empty_string))))
+
+
+def _check_pronouns(pronoun: str, last_nouns: list) -> list:
+    """
+    Get the most likely co-reference(s) for the pronoun using the last_nouns details.
+    Subject/object information (the noun, and its types, mappings and IRI) is returned.
+
+    :param pronoun: String holding the pronoun text
+    :param last_nouns: An array of tuples of noun texts, types, mappings and IRI, from the current paragraph
+    :return: Array of tuples of class_mappings and IRIs of already processed nouns that match the criteria;
+              Note that an array is returned to support matching the pronouns 'they'/'them'
+    """
+    pronoun_details = []
+    pronoun_lower = pronoun.lower()
+    if pronoun == 'I' or pronoun_lower in ('me', 'myself'):
+        pronoun_details.append(('Narrator', 'SINGPERSON', ':Person', ':Narrator'))
+    elif pronoun_lower in ('we', 'us', 'ourselves'):
+        # Find singular or plural person nouns (any gender)
+        pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, None, None, True))
+        pronoun_details.append(('Narrator', 'SINGPERSON', ':Person', ':Narrator'))
+    elif pronoun_lower in ('they', 'them', 'themselves'):
+        # Give preference to persons (any gender or number)
+        noun_list = _check_criteria(pronoun_lower, last_nouns, None, None, True)
+        if noun_list:
+            pronoun_details.extend(noun_list)
+        else:
+            # Check for non-persons
+            pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, None, None, False))
+    elif pronoun_lower in ('she', 'herself'):
+        # Find singular, feminine, person nouns
+        pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, True, True, True))
+    elif pronoun_lower in ('he', 'himself'):
+        # Find singular, masculine, person nouns
+        pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, True, False, True))
+    elif pronoun_lower == ('it', 'itself'):
+        # Find singular, non-person nouns (no gender)
+        pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, True, None, False))
+    return pronoun_details
+
+
+def _update_last_nouns(text: str, text_type: str, text_iri: str, class_maps: list, last_nouns: list) -> (list, str):
+    """
+    Update the last_nouns array and return the class mappings and IRI.
+
+    :param text: String holding the noun text
+    :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
+    :param text_iri: String holding the noun IRI
+    :param class_maps: An array of strings holding the mapping(s) to the DNA ontology for the text
+    :param last_nouns: An array of tuples of noun texts, types, mappings and IRI, from the current paragraph
+    :return: A tuple that consists of the matched noun's class mappings and IRI, or an empty array and string
+    """
+    last_nouns.append((text, text_type, class_maps, text_iri))
+    return class_maps, text_iri
+
+
+def check_event(text: str, last_events: list) -> (list, str):
+    """
+    Get a possible verb/event mapping for the noun and check it against any events
+    (from the current paragraph) that have a type = mapping.
+
+    :param text: The text which is possibly mapped to an event
+    :param last_events: The list/array of tuples defining event types and IRIs from the
+                        current paragraph
+    :return: A tuple specifying the event class mappings and IRI if there is a type match,
+              or an empty list and string otherwise
+    """
+    ontol_classes, noun_ttl = get_noun_mapping(text, empty_string)   # Get the event class to which the noun is mapped
+    if not ontol_classes:
+        return [], empty_string
+    poss_events = []
+    for event_type, event_iri in last_events:
+        if event_type in ontol_classes:
+            poss_events.append(event_iri)
+    if poss_events:
+        return ontol_classes, poss_events[-1]
+    return [], empty_string
+
+
+def check_nouns(elem_dictionary: dict, key: str, plet_dict: dict, last_nouns: list, last_events: list,
+                turtle: list, ext_sources: bool) -> list:
+    """
+    Get the subject or object nouns (as indicated by the key input parameter) in the dictionary,
+    using last_nouns, plet_dict and last_events details to attempt to resolve co-references/anaphora.
+    Subject/object information (the nouns and their types and IRIs) is returned.
+
+    The order of checking for a match is last_nouns, plet_dict and then last_events. If there are no
+    matches, a new noun is created and added to either last_nouns or last_events.
+
+    For example, consider the sentence/chunk "She was sickly." following "Mary was born on June 12,
+    1972, in Znojmo, Czechia." If the function parameters are (chunk_dictionary, 'subjects', 
+    plet_dict, last_events), then the tuple, 'Mary', 'FEMALESINGPERSON' and ':Mary' will be returned
+    since 'she' should be resolved to Mary.
+
+    :param elem_dictionary: The dictionary (holding the details for the noun text and type from the spaCy parse)
     :param key: Either 'subjects' or 'objects'
-    :param last_nouns: The list/array of tuples defining the noun text, type and its IRI
-    :returns: Array of tuples that are the noun text, type and IRI
+    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'persons', 'locs', 'events', 
+             'times' and Values vary by the key
+    :param last_nouns: An array of tuples of noun texts, types, class mappings and IRIs,
+                       found in the current paragraph
+    :param last_events: An array of verb texts, mappings and IRIs from the current paragraph
+    :param turtle: A list of Turtle statements which will be updated in this function if a new
+                   noun is found
+    :param ext_sources: A boolean indicating that data from GeoNames, Wikidata, etc. should be
+                        added to the parse results if available
+    :return: A tuple holding an array of tuples of the noun's texts, types, mappings and IRIs (also, the last_nouns and
+              last_events arrays may be updated)
     """
-    # TODO: Use previous sentence to give context to nouns (ex: bloody attacks => during the violence)
-    nouns = set()
-    for elem in elem_dictionary[key]:
-        elem_key = key[0:-1]
+    nouns = []
+    for elem in elem_dictionary[key]:    # The subject or object nouns
+        elem_key = key[0:-1]             # Create dictionary key = 'subject' or 'object'
         elem_text = elem[f'{elem_key}_text']
         elem_type = elem[f'{elem_key}_type']
-        # TODO: 'he', 'she', 'they' always checks for a PERSON
-        if elem_type == 'INCLUSIVE':                  # E.g., 'we', 'us'
-            # Find singular or plural person nouns (any gender) in last_nouns
-            nouns.update(_check_last_nouns(last_nouns, None, None, True))
-            nouns.add(('Narrator', f'{narr_gender}SINGPERSON', ':Narrator'))
-        # Process the various pronouns
-        elif elem_text.lower() in ('they', 'them'):
-            # Give preference to persons (any gender) in last_nouns
-            noun_list = _check_last_nouns(last_nouns, None, None, True)
-            if noun_list:
-                nouns.update(noun_list)
-            else:
-                # Check for non-persons
-                nouns.update(_check_last_nouns(last_nouns, None, None, False))
-        elif elem_text.lower() in ('she', 'her'):
-            # Find singular, feminine, person nouns in last_nouns
-            nouns.update(_check_last_nouns(last_nouns, True, True, True))
-        elif elem_text.lower() in ('he', 'him'):
-            # Find singular, masculine, person nouns in last_nouns
-            nouns.update(_check_last_nouns(last_nouns, True, False, True))
-        elif elem_text.lower() == 'it':
-            # Find singular, non-person nouns (no gender) in last_nouns
-            nouns.update(_check_last_nouns(last_nouns, True, None, False))
-        else:
-            # Not a pronoun
-            found = False
-            for noun_text, noun_type, noun_iri in last_nouns:   # See if a subj/obj occurred in previous sentence
-                if elem_text == noun_text:
-                    found = True
-                    nouns.add((noun_text, noun_type, noun_iri))
-                    break
-            if not found:
-                if 'preps' in elem.keys():    # Get the full text for the noun
-                    elem_text = _get_noun_preposition_text(elem, elem_text)
-                iri = f":{elem_text.replace(' ', '_')}"
-                if ('PERSON' in elem_type or elem_type.endswith('GPE') or
-                        elem_type.endswith('ORG') or elem_type.endswith('NORP')):
-                    match_iri, match_type = check_specific_match(elem_text, elem_type)
-                    if match_iri:
-                        iri = match_iri
-                else:
-                    # Some kind of thing or event that could be repeated
-                    iri = f'{iri}_{str(uuid.uuid4())[:13]}'   # Adjust the subject IRI to be unique
-                nouns.add((elem_text, elem_type, iri))
-    if nouns:
-        return list(nouns)
-    else:
-        return []
+        if elem_type == 'CARDINAL':      # For example, 'one of the band'
+            if 'preps' in elem:
+                # Assemble the full text to aid in the ontology mapping
+                for prep in elem['preps']:
+                    # TODO: Assess if more than the first detail_text is needed, since it is an array
+                    elem_text += f' {prep["prep_text"]} {prep["prep_details"][0]["detail_text"]}'
+            iri = f":{elem_text.replace(' ', '_')}_{str(uuid.uuid4())[:13]}"
+            nouns.append((elem_text, 'CARDINAL', [owl_thing2], iri))
+            turtle.extend([f'{iri} a owl:Thing .',
+                           f'{iri} rdfs:label "{elem_text}" .'])
+            continue
+        if elem_text.lower() in pronouns:
+            # Array of tuples of matched text, type, mappings and IRIs
+            nouns.extend(_check_pronouns(elem_text, last_nouns))
+            continue
+        # Not a pronoun; Check for a match in instances of the ontology
+        if ('PERSON' in elem_type or elem_type.endswith('GPE') or
+                elem_type.endswith('ORG') or elem_type.endswith('NORP')):
+            match_iri, match_type = check_specific_match(elem_text, elem_type)
+            if match_iri:
+                # Tuple = noun text, type and IRI
+                nouns.append((elem_text, elem_type, match_type, match_iri))
+                continue
+        # No match - Try to match text and type in last_nouns and then the plet_dict
+        match_noun_tuples = _check_last_nouns(elem_text, elem_type, last_nouns)
+        if match_noun_tuples:
+            nouns.append((elem_text, elem_type, match_noun_tuples[0][0], match_noun_tuples[0][1]))
+            continue
+        match_maps, match_iri = _check_plet_dict(elem_text, elem_type, plet_dict, last_nouns)   # May update last_nouns
+        if match_iri:
+            nouns.append((elem_text, elem_type, match_maps, match_iri))
+            continue
+        # No match - Check if the noun is aligned with an event that has already been described
+        event_classes, event_iri = check_event(elem_text, last_events)
+        if event_iri:
+            # Tuple = string = 'event' and the noun text, event class mapping and IRI
+            nouns.append((elem_text, elem_type, event_classes, event_iri))
+            continue
+        # No match - Create new entity
+        # TODO: possessives - 'her father', 'her arm' or "Sue's arm" (versus 'her book')
+        iri = f":{elem_text.replace(' ', '_')}_{str(uuid.uuid4())[:13]}"
+        # Tuple = noun text, type and IRI
+        noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type,
+                                                     True if key == 'subjects' else False, ext_sources)
+        nouns.append((elem_text, elem_type, noun_mappings, iri))
+        turtle.extend(noun_turtle)
+        last_nouns.append((elem_text, elem_type, noun_mappings, iri))
+    return nouns
 
 
 def check_specific_match(noun: str, noun_type: str) -> (str, str):
     """
-    Checks if the concept/Person/Location/... is already defined in the DNA Country or domain-specific
-    ontology modules. These are the only ontologies where a specific person/location/... would be defined.
+    Checks if the concept/Person/Location/... is already defined in the DNA ontologies.
 
     :param noun: String holding the text to be matched
     :param noun_type: String holding the noun type (PERSON/GPE/LOC/...) from spacy's NER
-    :returns: A tuple consisting of the matched IRI and its type (if a match is found) or two empty strings
+    :return: A tuple consisting of the matched IRI and its class mapping (if a match is found),
+              or two empty strings
     """
-    if noun_type.endswith('GPE') and noun in names_to_geo_dict.keys():
+    if noun_type.endswith('GPE') and noun in names_to_geo_dict:
         return f'geo:{names_to_geo_dict[noun]}', ':Country'
-    if noun_type.endswith('PERSON') or noun_type.endswith('GPE') or noun_type.endswith('LOC') \
-            or noun_type.endswith('ORG') or noun_type.endswith('EVENT'):
-        match_details = query_database('select', query_specific_noun.replace('keyword', noun), domain_database)
-        if match_details:
-            return match_details[0]['iri']['value'].replace(dna_prefix, ':'), match_details[0]['type']['value']
+    class_type = 'Person' if noun_type.endswith('PERSON') else \
+        ('OrganizationalEntity' if noun_type.endswith('ORG') else
+         ('GeopoliticalEntity' if noun_type.endswith('GPE') else
+          ('Location' if noun_type.endswith('LOC') else
+           ('EventAndState' if noun_type.endswith('EVENT') else empty_string))))
+    match_details = query_database(
+        'select', query_specific_noun.replace('keyword', noun).replace('class_type', class_type), ontologies_database)
+    if match_details:
+        return match_details[0]['iri']['value'].replace(dna_prefix, ':'), match_details[0]['type']['value']
     return empty_string, empty_string
-
-
-# Functions internal to the module
-def _check_criteria(last_nouns: list, looking_for_singular: Union[bool, None],
-                    looking_for_female: Union[bool, None], looking_for_person: bool, is_exact: bool) -> list:
-    """
-    Checks the values of the nouns in last_nouns for matches of the specified gender/number
-    criteria.
-
-    :param last_nouns: The list/array of tuples defining the text, type and IRI of the nouns
-                       from the last sentence(s) that were analyzed
-    :param looking_for_singular: Boolean indicating that a singular noun is needed from last_nouns
-    :param looking_for_female: Boolean indicating that a female gender noun is needed from last_nouns
-    :param looking_for_person: Boolean indicating that a Person is needed from last_nouns (if True)
-    :param is_exact: Boolean indicating that the gender and number MUST match when the looking_for
-                     parameters are not None
-    :returns: A list/array of tuples of subjects/objects (text, type and IRI) from last_nouns that fit
-              the criteria defined by the parameters
-    """
-    poss_nouns = []
-    for text, ent_type, iri in last_nouns:
-        # Check number
-        if looking_for_singular is None or not is_exact:
-            found_number = True
-        else:
-            if (looking_for_singular and 'SING' in ent_type) or (not looking_for_singular and 'PLURAL' in ent_type):
-                found_number = True
-            else:
-                found_number = False
-        # Check gender
-        if looking_for_female is None or not is_exact:
-            found_gender = True
-        else:
-            if (looking_for_female and 'FEMALE' in ent_type) or (not looking_for_female and 'MALE' in ent_type):
-                found_gender = True
-            else:
-                found_gender = False
-        # Check if a PERSON
-        if looking_for_person and 'PERSON' in ent_type:
-            found_person = True
-        else:
-            found_person = False
-        # Check all criteria
-        if found_gender and found_number and found_person:
-            poss_nouns.append((text, ent_type, iri))
-    return poss_nouns
-
-
-def _check_last_nouns(last_nouns: list, looking_for_singular: Union[bool, None],
-                      looking_for_female: Union[bool, None], looking_for_person: Union[bool, None]):
-    """
-    Determine if any nouns in the last_nouns array meet the criteria defined by the input parameters.
-    This function first looks for exact matches of the criteria and then allows matching if no value
-    for gender, number and personhood are given (e.g., 'inexact').
-
-    :param last_nouns: The list/array of tuples defining the text, type and IRI of the nouns
-                       from the last sentence(s) that were analyzed
-    :param looking_for_singular: Boolean indicating that a singular noun is needed from last_nouns
-    :param looking_for_female: Boolean indicating that a female gender noun is needed from last_nouns
-    :param looking_for_person: Boolean indicating that a Person is needed from last_nouns
-    :returns: None
-    """
-    possible_nouns = _check_criteria(last_nouns, looking_for_singular, looking_for_female,
-                                     looking_for_person, True)        # Exact
-    if not possible_nouns:
-        # No exact matches found, so try again more broadly
-        possible_nouns = _check_criteria(last_nouns, looking_for_singular, looking_for_female,
-                                         looking_for_person, False)   # Inexact
-    if possible_nouns:
-        if looking_for_singular:
-            # Singular result - take the most recent which is the last entry in possible_nouns
-            return [possible_nouns[-1]]
-        else:
-            return possible_nouns
-    else:
-        return []
-
-
-def _get_noun_preposition_text(dictionary: dict, text: str) -> str:
-    """
-    Get prepositional details for a noun.
-
-    :param dictionary: Dictionary holding the details to be added
-    :param text: Input noun text
-    :returns: The updated noun text or the original text if no change is warranted
-    """
-    new_text = text
-    preps = dictionary['preps']
-    for prep in preps:
-        prep_str = str(prep)
-        if "_text': '" not in prep_str:
-            continue
-        prep_texts = prep_str.split("_text': '")
-        for i in range(1, len(prep_texts)):
-            if "'," in prep_texts[i]:
-                end_index = prep_texts[i].index("',")
-                new_text += ' ' + prep_texts[i][0:end_index]
-    return new_text

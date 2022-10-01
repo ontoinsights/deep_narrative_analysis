@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: August 21 2022
+# Last Modified: September 5 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -45,6 +45,7 @@
 #  Renamed :Learning to :LearningAndEducation
 #  Added Betrayal, DeceptionAndDishonesty, MeaningImplicationAndInference
 #    and SelfControl
+#  Renamed ProvisionOfAid to AidAndAssistance
 ########################################################################
 
 
@@ -60,6 +61,15 @@
   :verb_synonym "abduct", "kidnap", "hijack", "take hostage", "commandeer", "highjack", "pirate" ;
   :wordnet_noun_synset "00776957", "00777199", "00784853" ;
   :wordnet_verb_synset "01473673", "01474455" .
+
+:AidAndAssistance a owl:Class ;
+  rdfs:subClassOf :FriendlyOrSupportiveAct ;
+  rdfs:label "Aid and Assistance" ;
+  :definition "An act that helps someone/something." ;
+  :noun_synonym "helping hand", "aiding", "helping", "assisting", "relief" ;
+  :verb_synonym "aid", "help", "assist", "benefit", "do good" ;
+  :wordnet_noun_synset "00656128", "01063127", "01090092", "13286803" ;
+  :wordnet_verb_synset "00081834", "02553283" .
 
 :Arson a owl:Class ;
   rdfs:subClassOf :AttackDamageAndAssault ;
@@ -165,7 +175,7 @@
   rdfs:label "Deception and Dishonesty" ;
   :definition "An act of preventing something/someone from being known/found." ;
   :noun_synonym "perfidy", "perfidiousness", "bad faith", "duplicity", "knavery", "quackery", "trick", "falsehood", "falsification", "disinformation", "misrepresentation", "misrepresenting", "transgression", "evil doing", "injustice", "iniquity", "malversation", "plagiarism", "plagiarization", "plagiarisation", "piracy", "hoax", "wangle", "wangling", "lie", "lying", "falsity", "deceit", "conspiracy", "corruptness" ;
-  :verb_synonym "deceive", "lead on", "delude", "cozen", "cheat", "trick", "fudge", "falsify", "wangle", "misrepresent", "hoax", "machinate", "bilk", "defraud", "nobble", "doctor" ;
+  :verb_synonym "deceive", "lead on", "delude", "cozen", "cheat", "trick", "fudge", "falsify", "wangle", "misrepresent", "hoax", "machinate", "bilk", "defraud", "nobble", "doctor", "dupe", "swindle" ;
   :wordnet_noun_synset "00752488", "00750872", "00751748" ;
   :wordnet_verb_synset "02581157",  "02580280", "02583006", "02580591" .
 
@@ -241,15 +251,6 @@
   :wordnet_noun_synset "00419628", "05714175" ; 
   :wordnet_verb_synset "00596900", "00618547", "00802592", "02123706", "01061436", "00616690", "02170805", "00596701" .
 
-:MeaningImplicationAndInference a owl:Class ;
-  rdfs:subClassOf :Cognition ;
-  rdfs:label "Implication, Indication and Inference" ;
-  :definition "An act of interpreting the meaning of something or positing a conclusion based on observation, reasoning, experience, etc." ;
-  :noun_synonym "illation", "analogy", "derivation", "extrapolation", "presumption", "entailment", "undertone", "undercurrent", "connotation", "significance", "import", "semantics", "insinuation", "innuendo", "deriving", "extrapolating", "presuming", "entailing", "connoting", "signifyng" ;
-  :verb_synonym "derive", "extrapolate", "entail", "connote", "signify", "insinuate", "mean", "implicate", "imply", "denote", "depict", "clarify", "clear up", "elucidate" ;
-  :wordnet_noun_synset "05782611", "05928460", "07252762" ; 
-  :wordnet_verb_synset "02640889", "02641270", "00931801", "00932561", "00941888" .
-
 :IntentionAndGoal a owl:Class ;
   rdfs:subClassOf :Cognition ;
   rdfs:label "Intention and Goal" ;
@@ -291,9 +292,18 @@
   rdfs:label "Maintenance and Repair" ;
   :definition "Any act that maintains/fixes/mends/adjusts/restores an entity." ;
   :noun_synonym "maintaining", "renovation", "patch", "fix", "fixing", "revamping", "renewal", "repairing", "mend", "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing", "care", "upkeep", "improvement", "tending" ;
-  :verb_synonym "maintain", "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of", "refurbish", "better", "improve" ;
+  :verb_synonym "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of", "refurbish", "better", "improve" ;
   :wordnet_noun_synset "00249844" ; 
   :wordnet_verb_synset "00261534", "01634614", "00206293", "00207826", "00230988", "01572394" .
+
+:MeaningImplicationAndInference a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Meaning, Implication and Inference" ;
+  :definition "An act of interpreting the meaning of something or positing a conclusion based on observation, reasoning, experience, etc." ;
+  :noun_synonym "illation", "analogy", "derivation", "extrapolation", "presumption", "entailment", "undertone", "undercurrent", "connotation", "significance", "import", "semantics", "insinuation", "innuendo", "deriving", "extrapolating", "presuming", "entailing", "connoting", "signifyng" ;
+  :verb_synonym "derive", "extrapolate", "entail", "connote", "signify", "insinuate", "mean", "implicate", "imply", "denote", "depict", "clarify", "clear up", "elucidate", "decipher", "decode", "translate", "interpret" ;
+  :wordnet_noun_synset "05782611", "05928460", "07252762" ; 
+  :wordnet_verb_synset "02640889", "02641270", "00931801", "00932561", "00941888" .
 
 :Memory a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -318,7 +328,7 @@
   rdfs:label "Murder and Homicide" ;
   :definition "Any Event that is related to killing a person or living thing." ;
   :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation", "pogrom", "murdering", "exterminating", "assassinating", "executing", "slaughtering", "massacring", "liquidating", "slaying", "strangling", "asphyxiating", "decapitating", "lynching", "manslaughter" ;
-  :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "execute", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate", "annihilate", "wipe out", "decimate", "butcher", "massacre", "slaughter", "mow down" ;
+  :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate", "annihilate", "wipe out", "decimate", "butcher", "massacre", "slaughter", "mow down" ;
   :wordnet_noun_synset "00220890" ;
   :wordnet_verb_synset "01326622" .
 
@@ -339,15 +349,6 @@
   :verb_synonym "forestall", "deter", "hinder", "inhibit", "thwart", "avert", "hamper", "impede", "prevent", "inhibit", "foil" ;
   :wordnet_noun_synset "01075919" ;
   :wordnet_verb_synset "02455370", "02456941", "02456614", "00772186", "00910052", "02563998" .
-
-:ProvisionOfAid a owl:Class ;
-  rdfs:subClassOf :FriendlyOrSupportiveAct ;
-  rdfs:label "Provision of Aid" ;
-  :definition "." ;
-  :noun_synonym "assistance", "helping hand", "aiding", "helping", "assisting", "providing", "relief" ;
-  :verb_synonym "aid", "help", "provide", "assist", "benefit", "do good" ;
-  :wordnet_noun_synset "00656128", "01063127", "01090092", "13286803" ;
-  :wordnet_verb_synset "00081834", "02553283" .
 
 :PurchaseAndSale a owl:Class ;
   rdfs:subClassOf :Acquisition, :FinancialEvent ;

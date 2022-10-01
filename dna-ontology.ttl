@@ -46,12 +46,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:definition> "A noun which has a similar meaning." .
 
 
-###  urn:ontoinsights:dna:processing
-<urn:ontoinsights:dna:processing> rdf:type owl:AnnotationProperty ;
-                                  rdfs:label "processing instructions" ;
-                                  <urn:ontoinsights:dna:definition> "Additional details to capture the semantics of a class/concept." .
-
-
 ###  urn:ontoinsights:dna:verb_synonym
 <urn:ontoinsights:dna:verb_synonym> rdf:type owl:AnnotationProperty ;
                                     rdfs:label "synonym (verb)" ;
@@ -167,6 +161,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:definition> "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)." .
 
 
+###  urn:ontoinsights:dna:encodes
+<urn:ontoinsights:dna:encodes> rdf:type owl:ObjectProperty ;
+                               rdfs:domain <urn:ontoinsights:dna:KnowledgeGraph> ;
+                               rdfs:range <urn:ontoinsights:dna:InformationSource> ;
+                               rdfs:label "encodes" ;
+                               <urn:ontoinsights:dna:definition> "Relationship between a KnowledgeGraph and InformationSource indicating that the Graph captures/'encodes' details from the Source." .
+
+
 ###  urn:ontoinsights:dna:excluded_member
 <urn:ontoinsights:dna:excluded_member> rdf:type owl:ObjectProperty ;
                                        rdfs:domain <urn:ontoinsights:dna:Collection> ;
@@ -210,14 +212,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         <urn:ontoinsights:dna:definition> "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
 
 
-###  urn:ontoinsights:dna:has_author
-<urn:ontoinsights:dna:has_author> rdf:type owl:ObjectProperty ;
-                                  rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
-                                  rdfs:range <urn:ontoinsights:dna:Agent> ;
-                                  rdfs:label "has author" ;
-                                  <urn:ontoinsights:dna:definition> "References the Agent (Person, Organization, etc.) that created or published the information." .
-
-
 ###  urn:ontoinsights:dna:has_beginning
 <urn:ontoinsights:dna:has_beginning> rdf:type owl:ObjectProperty ;
                                      rdfs:subPropertyOf <urn:ontoinsights:dna:has_time> ;
@@ -246,6 +240,15 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:has_component
 <urn:ontoinsights:dna:has_component> rdf:type owl:ObjectProperty .
+
+
+###  urn:ontoinsights:dna:has_context
+<urn:ontoinsights:dna:has_context> rdf:type owl:ObjectProperty ;
+                                   rdfs:domain <urn:ontoinsights:dna:Agent> ;
+                                   rdfs:range <urn:ontoinsights:dna:EventAndState> ;
+                                   rdfs:label "has context" ;
+                                   <urn:ontoinsights:dna:definition> "References a particular occurrence or condition that provides context for the Agent." ;
+                                   <urn:ontoinsights:dna:example> "For example, a dishonest Person would be associated with the :DeceptionAndDishonesty class type using the :has_context property." .
 
 
 ###  urn:ontoinsights:dna:has_currency
@@ -455,13 +458,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                   <urn:ontoinsights:dna:definition> "Reference to a Season when a RecurrencePattern has a recurrence unit of :Seasonal, or when an :Interval or :PointInTime is defined by a Season." .
 
 
-###  urn:ontoinsights:dna:has_subject
-<urn:ontoinsights:dna:has_subject> rdf:type owl:ObjectProperty ;
-                                   rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
-                                   rdfs:label "has subject" ;
-                                   <urn:ontoinsights:dna:definition> "A reference to an entity that is a topic of an InformationSource." .
-
-
 ###  urn:ontoinsights:dna:has_time
 <urn:ontoinsights:dna:has_time> rdf:type owl:ObjectProperty ;
                                 rdfs:range <urn:ontoinsights:dna:Time> ;
@@ -544,17 +540,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       rdfs:label "scheduled time" ;
                                       <urn:ontoinsights:dna:definition> "References a Time at which some event will/should occur or some condition should be in effect." ;
                                       <urn:ontoinsights:dna:noun_synonym> "zero hour" .
-
-
-###  urn:ontoinsights:dna:sourced_from
-<urn:ontoinsights:dna:sourced_from> rdf:type owl:ObjectProperty ;
-                                    rdfs:range [ rdf:type owl:Class ;
-                                                 owl:unionOf ( <urn:ontoinsights:dna:InformationSource>
-                                                               <urn:ontoinsights:dna:Mention>
-                                                             )
-                                               ] ;
-                                    rdfs:label "sourced from" ;
-                                    <urn:ontoinsights:dna:definition> "A reference to the InformationSource (if a text file) and Mention (if a spreadsheet or database, with its provenance information, such as row_number) that resulted in the instantiation of an entity." .
 
 
 #################################################################
@@ -655,14 +640,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       <urn:ontoinsights:dna:definition> "A part of a PostalAddress identifying a particular part of a city or town." .
 
 
-###  urn:ontoinsights:dna:column_label
-<urn:ontoinsights:dna:column_label> rdf:type owl:DatatypeProperty ;
-                                    rdfs:domain <urn:ontoinsights:dna:Mention> ;
-                                    rdfs:range xsd:string ;
-                                    rdfs:label "spreadsheet or database column label" ;
-                                    <urn:ontoinsights:dna:definition> "Defines a particular column in a database or spreadsheet InformationSource, where a Mention is extracted." .
-
-
 ###  urn:ontoinsights:dna:confidence
 <urn:ontoinsights:dna:confidence> rdf:type owl:DatatypeProperty ,
                                            owl:FunctionalProperty ;
@@ -699,14 +676,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:range xsd:string ;
                                     rdfs:label "country name" ;
                                     <urn:ontoinsights:dna:definition> "Identification of the country for a PopulatedPlace or that is a part of a PostalAddress." .
-
-
-###  urn:ontoinsights:dna:data_identifier
-<urn:ontoinsights:dna:data_identifier> rdf:type owl:DatatypeProperty ;
-                                       rdfs:domain <urn:ontoinsights:dna:Mention> ;
-                                       rdfs:range xsd:string ;
-                                       rdfs:label "database identifier" ;
-                                       <urn:ontoinsights:dna:definition> "Defines a particular record (key), URI, etc. in a database InformationSource, where a Mention is extracted." .
 
 
 ###  urn:ontoinsights:dna:date_time
@@ -748,6 +717,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                               ] ;
                                    rdfs:label "day of week" ;
                                    <urn:ontoinsights:dna:definition> "An integer value indicating a specific day of the week, where Sunday is represented by 1, Monday by 2, ... through Saturday which is represented by 7." .
+
+
+###  urn:ontoinsights:dna:description
+<urn:ontoinsights:dna:description> rdf:type owl:DatatypeProperty ;
+                                   rdfs:range xsd:string ;
+                                   rdfs:label "description" ;
+                                   <urn:ontoinsights:dna:definition> "Text providing a description (usually from Wikipedia) of the entity" .
 
 
 ###  urn:ontoinsights:dna:direction
@@ -806,6 +782,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                 ] ;
                                      rdfs:label "email address" ;
                                      <urn:ontoinsights:dna:definition> "A unique identifier for an account on an email communications system." .
+
+
+###  urn:ontoinsights:dna:ethnicity
+<urn:ontoinsights:dna:ethnicity> rdf:type owl:DatatypeProperty ;
+                                 rdfs:domain <urn:ontoinsights:dna:Agent> ;
+                                 rdfs:range xsd:string ;
+                                 rdfs:label "ethnicity" ;
+                                 <urn:ontoinsights:dna:definition> "Specifies a particular a particular ethnicity (as free form text) for an Agent or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
 
 
 ###  urn:ontoinsights:dna:future
@@ -1029,6 +1013,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:definition> "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc." .
 
 
+###  urn:ontoinsights:dna:number_triples
+<urn:ontoinsights:dna:number_triples> rdf:type owl:DatatypeProperty ,
+                                               owl:FunctionalProperty ;
+                                      rdfs:domain <urn:ontoinsights:dna:KnowledgeGraph> ;
+                                      rdfs:range xsd:integer ;
+                                      rdfs:label "number of triples" ;
+                                      <urn:ontoinsights:dna:definition> "A count of the number of triples in a KnowledgeGrasph." .
+
+
 ###  urn:ontoinsights:dna:numeric_duration
 <urn:ontoinsights:dna:numeric_duration> rdf:type owl:DatatypeProperty ,
                                                  owl:FunctionalProperty ;
@@ -1041,6 +1034,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                    ] ;
                                         rdfs:label "numeric duration" ;
                                         <urn:ontoinsights:dna:definition> "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :temporal_unit property value." .
+
+
+###  urn:ontoinsights:dna:offset
+<urn:ontoinsights:dna:offset> rdf:type owl:DatatypeProperty ;
+                              rdfs:domain [ rdf:type owl:Class ;
+                                            owl:unionOf ( <urn:ontoinsights:dna:Chunk>
+                                                          <urn:ontoinsights:dna:Sentence>
+                                                        )
+                                          ] ;
+                              rdfs:range xsd:integer ;
+                              rdfs:label "offset" ;
+                              <urn:ontoinsights:dna:definition> "Defines the Sentence number in a InformationSource that is unstructured text, where an entity is extracted, or the ordering of the Chunks within a Sentence." .
 
 
 ###  urn:ontoinsights:dna:phone_number
@@ -1144,6 +1149,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                        <urn:ontoinsights:dna:definition> "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." .
 
 
+###  urn:ontoinsights:dna:religion
+<urn:ontoinsights:dna:religion> rdf:type owl:DatatypeProperty ;
+                                rdfs:domain <urn:ontoinsights:dna:Agent> ;
+                                rdfs:range xsd:string ;
+                                rdfs:label "religion" ;
+                                <urn:ontoinsights:dna:definition> "Specifies a particular a particular religion (as free form text) that the Agent holds or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
+
+
 ###  urn:ontoinsights:dna:reported_value
 <urn:ontoinsights:dna:reported_value> rdf:type owl:DatatypeProperty ,
                                                owl:FunctionalProperty ;
@@ -1169,14 +1182,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                             <urn:ontoinsights:dna:definition> "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
 
 
-###  urn:ontoinsights:dna:row_number
-<urn:ontoinsights:dna:row_number> rdf:type owl:DatatypeProperty ;
-                                  rdfs:domain <urn:ontoinsights:dna:Mention> ;
-                                  rdfs:range xsd:integer ;
-                                  rdfs:label "spreadsheet row number" ;
-                                  <urn:ontoinsights:dna:definition> "Defines a particular row in a spreadsheet-like InformationSource, where a Mention is extracted." .
-
-
 ###  urn:ontoinsights:dna:second_of_minute
 <urn:ontoinsights:dna:second_of_minute> rdf:type owl:DatatypeProperty ,
                                                  owl:FunctionalProperty ;
@@ -1191,13 +1196,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                    ] ;
                                         rdfs:label "second of minute" ;
                                         <urn:ontoinsights:dna:definition> "A decimal value indicating a specific second or sub-second of a minute. The range of possible values is 0.00 through 59.9999..." .
-
-
-###  urn:ontoinsights:dna:sentence_offset
-<urn:ontoinsights:dna:sentence_offset> rdf:type owl:DatatypeProperty ;
-                                       rdfs:range xsd:integer ;
-                                       rdfs:label "sentence offset" ;
-                                       <urn:ontoinsights:dna:definition> "Defines the sentence number in a InformationSource that is unstructured text, where a Mention or entity is extracted." .
 
 
 ###  urn:ontoinsights:dna:sentiment
@@ -1373,6 +1371,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                             <urn:ontoinsights:dna:definition> "String holding the contents of an InformationSource or the particular text that generated the individual or subject-object-predicate triple." .
 
 
+###  urn:ontoinsights:dna:text_quote
+<urn:ontoinsights:dna:text_quote> rdf:type owl:DatatypeProperty ,
+                                           owl:FunctionalProperty ;
+                                  rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
+                                  rdfs:range xsd:string ;
+                                  rdfs:label "text_quotes" ;
+                                  <urn:ontoinsights:dna:definition> "String holding quoted text in an Information Source." .
+
+
 ###  urn:ontoinsights:dna:time_zone
 <urn:ontoinsights:dna:time_zone> rdf:type owl:DatatypeProperty ,
                                           owl:FunctionalProperty ;
@@ -1532,7 +1539,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                            "circulate" ,
                                                                            "disseminate" ,
                                                                            "distribute" ,
-                                                                           "issue" ,
                                                                            "print" ,
                                                                            "publicise" ,
                                                                            "publicize" ,
@@ -1594,7 +1600,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "esteem" ,
                                                                                      "hold in esteem" ,
                                                                                      "hold in regard" ,
-                                                                                     "prize" ,
                                                                                      "respect" ,
                                                                                      "revere" ;
                                                  <urn:ontoinsights:dna:wordnet_noun_synset> "06216535" ,
@@ -1682,7 +1687,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                    rdfs:label "Affiliation" ;
                                    <urn:ontoinsights:dna:definition> "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) or Location, to another entity such as a OrganizationalEntity or GeopoliticalEntity. The individual to whom/which the Agent or Location is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent or Location 'plays' is defined by the :has_role or :role properties. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
                                    <urn:ontoinsights:dna:example> "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
-                                   <urn:ontoinsights:dna:noun_synonym> "allying" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "allying" ,
+                                                                       "association" ;
                                    <urn:ontoinsights:dna:verb_synonym> "affiliate" ,
                                                                        "ally" ,
                                                                        "associate" ,
@@ -1859,6 +1865,30 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                                            "02425530" .
 
 
+###  urn:ontoinsights:dna:AidAndAssistance
+<urn:ontoinsights:dna:AidAndAssistance> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
+                                        rdfs:label "Aid and Assistance" ;
+                                        <urn:ontoinsights:dna:definition> "An act that helps someone/something." ;
+                                        <urn:ontoinsights:dna:noun_synonym> "aiding" ,
+                                                                            "assisting" ,
+                                                                            "helping" ,
+                                                                            "helping hand" ,
+                                                                            "relief" ,
+                                                                            "welfare" ;
+                                        <urn:ontoinsights:dna:verb_synonym> "aid" ,
+                                                                            "assist" ,
+                                                                            "benefit" ,
+                                                                            "do good" ,
+                                                                            "help" ;
+                                        <urn:ontoinsights:dna:wordnet_noun_synset> "00656128" ,
+                                                                                   "01063127" ,
+                                                                                   "01090092" ,
+                                                                                   "13286803" ;
+                                        <urn:ontoinsights:dna:wordnet_verb_synset> "00081834" ,
+                                                                                   "02553283" .
+
+
 ###  urn:ontoinsights:dna:Alignment
 <urn:ontoinsights:dna:Alignment> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:InclusionAttachmentAndUnification> ;
@@ -1881,6 +1911,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "stack" ;
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "05082771" ;
                                  <urn:ontoinsights:dna:wordnet_verb_synset> "01466592" .
+
+
+###  urn:ontoinsights:dna:AlternativeCollection
+<urn:ontoinsights:dna:AlternativeCollection> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:Collection> ;
+                                             rdfs:label "Alternative Collection" ;
+                                             <urn:ontoinsights:dna:definition> "A Collection whose members are considered 'alternatives'." ;
+                                             <urn:ontoinsights:dna:example> "An Event may be describing two different Locations, due to uncertainty. These can be grouped in an AlternativeCollection to indicate this uncertainty. And, using the :probability RDF* property on the :has_member association of the Locations to the Collection, the likelihoods of the Event occurring at either Location can be specified." .
 
 
 ###  urn:ontoinsights:dna:AngerAndAnnoyance
@@ -1940,20 +1978,19 @@ rdf:label rdf:type owl:AnnotationProperty .
                                               <urn:ontoinsights:dna:Resource> ;
                               rdfs:label "Animal" ;
                               <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Animal&oldid=1013060732), Animals '(also called Metazoa) are multicellular eukaryotic organisms that form the biological kingdom Animalia. With few exceptions, animals consume organic material, breathe oxygen, are able to move, can reproduce sexually, and grow from a hollow sphere of cells, the blastula, during embryonic development. Over 1.5 million living animal species have been described — of which around 1 million are insects — but it has been estimated there are over 7 million animal species in total. ... They have complex interactions with each other and their environments, forming intricate food webs ... Humans make use of many other animal species, such as for food (including meat, milk, and eggs), for materials (such as leather and wool), as pets, and as working animals including for transport.'" ;
-                              <urn:ontoinsights:dna:noun_synonym> "American elk" ,
-                                                                  "Equus asinus" ,
+                              <urn:ontoinsights:dna:noun_synonym> "Equus asinus" ,
                                                                   "Gallus gallus" ,
                                                                   "May beetle" ,
                                                                   "May bug" ,
                                                                   "Sus scrofa" ,
                                                                   "barnacle" ,
+                                                                  "bear" ,
                                                                   "beast" ,
                                                                   "bee" ,
                                                                   "beetle" ,
                                                                   "biddy" ,
                                                                   "billfish" ,
                                                                   "black bass" ,
-                                                                  "black bear" ,
                                                                   "blackbird" ,
                                                                   "blacksnake" ,
                                                                   "bonito" ,
@@ -1969,6 +2006,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "canine" ,
                                                                   "capsid" ,
                                                                   "carnivore" ,
+                                                                  "cat" ,
                                                                   "catamount" ,
                                                                   "catbird" ,
                                                                   "catfish" ,
@@ -1976,11 +2014,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "chat" ,
                                                                   "chicken" ,
                                                                   "chimaera" ,
-                                                                  "civet cat" ,
                                                                   "colt" ,
                                                                   "coney" ,
                                                                   "cony" ,
-                                                                  "coral snake" ,
                                                                   "cow" ,
                                                                   "crawfish" ,
                                                                   "crayfish" ,
@@ -1990,30 +2026,28 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "deathwatch" ,
                                                                   "decapod" ,
                                                                   "dipper" ,
+                                                                  "dog" ,
                                                                   "dollarfish" ,
+                                                                  "dolphin" ,
                                                                   "eelpout" ,
                                                                   "elk" ,
                                                                   "fauna" ,
-                                                                  "field mouse" ,
+                                                                  "feline" ,
                                                                   "firefly" ,
+                                                                  "fish" ,
                                                                   "flightless bird" ,
                                                                   "fly" ,
                                                                   "flycatcher" ,
-                                                                  "flying cat" ,
-                                                                  "flying squirrel" ,
                                                                   "fungus gnat" ,
-                                                                  "fur seal" ,
                                                                   "gallfly" ,
                                                                   "gar" ,
                                                                   "gnawing mammal" ,
                                                                   "goat" ,
                                                                   "goldeneye" ,
                                                                   "gopher" ,
-                                                                  "gopher snake" ,
                                                                   "grackle" ,
                                                                   "grass finch" ,
                                                                   "grassfinch" ,
-                                                                  "green snake" ,
                                                                   "greenling" ,
                                                                   "griffon" ,
                                                                   "gudgeon" ,
@@ -2023,14 +2057,17 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "hind" ,
                                                                   "honeycreeper" ,
                                                                   "horned toad" ,
+                                                                  "horse" ,
                                                                   "hound" ,
                                                                   "insect" ,
-                                                                  "kangaroo rat" ,
+                                                                  "kitten" ,
+                                                                  "lion" ,
                                                                   "locust" ,
                                                                   "louse" ,
                                                                   "marsh hen" ,
                                                                   "monkey" ,
                                                                   "moonfish" ,
+                                                                  "mouse" ,
                                                                   "mullet" ,
                                                                   "needlefish" ,
                                                                   "night raven" ,
@@ -2048,14 +2085,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "pouched rat" ,
                                                                   "pout" ,
                                                                   "primate" ,
+                                                                  "puppy" ,
                                                                   "quail" ,
+                                                                  "rabbit" ,
+                                                                  "rat" ,
                                                                   "rattler" ,
                                                                   "ray" ,
                                                                   "razorback" ,
                                                                   "ribbonfish" ,
-                                                                  "ring snake" ,
                                                                   "roach" ,
-                                                                  "rock rabbit" ,
                                                                   "rockfish" ,
                                                                   "roller" ,
                                                                   "roundworm" ,
@@ -2066,6 +2104,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "sea horse" ,
                                                                   "sea trout" ,
                                                                   "seahorse" ,
+                                                                  "seal" ,
                                                                   "seasnail" ,
                                                                   "sheldrake" ,
                                                                   "shellfish" ,
@@ -2074,17 +2113,20 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "silverside" ,
                                                                   "silversides" ,
                                                                   "slater" ,
+                                                                  "snake" ,
                                                                   "snapper" ,
                                                                   "snowbird" ,
                                                                   "spiny lizard" ,
                                                                   "springer" ,
                                                                   "squealer" ,
+                                                                  "squirrel" ,
                                                                   "stilt" ,
                                                                   "stiltbird" ,
                                                                   "sunfish" ,
                                                                   "surf fish" ,
                                                                   "surffish" ,
                                                                   "thoroughbred" ,
+                                                                  "tiger" ,
                                                                   "tom" ,
                                                                   "topminnow" ,
                                                                   "tree creeper" ,
@@ -2100,8 +2142,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                   "whitefish" ,
                                                                   "whiting" ,
                                                                   "wood warbler" ,
-                                                                  "woodlouse" ,
-                                                                  "worm snake" ;
+                                                                  "woodlouse" ;
                               <urn:ontoinsights:dna:wordnet_noun_synset> "00015568" ,
                                                                          "01315584" .
 
@@ -2120,6 +2161,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                             rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
                                             rdfs:label "Anthropogenic (Human-Created) Feature" ;
                                             <urn:ontoinsights:dna:definition> "A point or site on/in the Earth which is a human-created structure that is used for a particular industry or purpose. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
+
+
+###  urn:ontoinsights:dna:AntiAbortion
+<urn:ontoinsights:dna:AntiAbortion> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                    rdfs:label "Anti-Abortion Movement" ;
+                                    <urn:ontoinsights:dna:noun_synonym> "anti-abortionist" .
 
 
 ###  urn:ontoinsights:dna:Anxiety
@@ -2153,6 +2201,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "fret" ,
                                                                    "mind" ,
                                                                    "perturb" ,
+                                                                   "sick with worry" ,
                                                                    "worry" ;
                                <urn:ontoinsights:dna:wordnet_noun_synset> "05840588" ,
                                                                           "07528747" ,
@@ -2318,13 +2367,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "entertaining" ,
                                                                                     "musical performance" ,
                                                                                     "performance" ,
-                                                                                    "performing" ,
                                                                                     "rehearsal" ,
                                                                                     "rehearsing" ,
                                                                                     "stage dancing" ;
-                                                <urn:ontoinsights:dna:verb_synonym> "act" ,
-                                                                                    "entertain" ,
-                                                                                    "perform" ,
+                                                <urn:ontoinsights:dna:verb_synonym> "entertain" ,
                                                                                     "rehearse" ;
                                                 <urn:ontoinsights:dna:wordnet_verb_synset> "01718067" ,
                                                                                            "01727101" ,
@@ -2537,6 +2583,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "assault" ,
                                                                                   "attack" ,
                                                                                   "bombard" ,
+                                                                                  "bombing" ,
                                                                                   "damage" ,
                                                                                   "deface" ,
                                                                                   "destroy" ,
@@ -2621,6 +2668,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "concentrate" ,
                                                                              "consider" ,
                                                                              "contemplate" ,
+                                                                             "deal with" ,
                                                                              "engage" ,
                                                                              "entrance" ,
                                                                              "flag" ,
@@ -2645,6 +2693,32 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          <urn:ontoinsights:dna:wordnet_verb_synset> "00724156" ,
                                                                                     "01787213" ,
                                                                                     "02134765" .
+
+
+###  urn:ontoinsights:dna:Authoritarianism
+<urn:ontoinsights:dna:Authoritarianism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Authoritarianism" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "absolutism" ,
+                                                                            "absolutist" ,
+                                                                            "autocracy" ,
+                                                                            "autocrat" ,
+                                                                            "colonialism" ,
+                                                                            "despot" ,
+                                                                            "despotism" ,
+                                                                            "dictator" ,
+                                                                            "expansionism" ,
+                                                                            "imperialism" ,
+                                                                            "imperialist" ,
+                                                                            "kraterocracy" ,
+                                                                            "monarchist" ,
+                                                                            "monarchy" ,
+                                                                            "oligarch" ,
+                                                                            "oligarchy" ,
+                                                                            "plutocracy" ,
+                                                                            "plutocrat" ,
+                                                                            "stratocracy" ,
+                                                                            "totalitarianism" .
 
 
 ###  urn:ontoinsights:dna:Autumn
@@ -7057,6 +7131,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                            <urn:ontoinsights:dna:wordnet_verb_synset> "02545454" .
 
 
+###  urn:ontoinsights:dna:Centrism
+<urn:ontoinsights:dna:Centrism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                rdfs:label "Centrist" ;
+                                <urn:ontoinsights:dna:noun_synonym> "centralist" ,
+                                                                    "syncretic politics" .
+
+
 ###  urn:ontoinsights:dna:Ceremony
 <urn:ontoinsights:dna:Ceremony> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
@@ -7236,6 +7318,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "14450469" ,
                                                                             "15170546" ,
                                                                             "15172057" .
+
+
+###  urn:ontoinsights:dna:Chunk
+<urn:ontoinsights:dna:Chunk> rdf:type owl:Class ;
+                             rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                             rdfs:label "Chunk" ;
+                             <urn:ontoinsights:dna:definition> "A portion of a Sentence with one or more subjects, verbs and possibly objects. A Sentence can usually be broken down into clauses (e.g., :Chunks). A Sentence's Chunks are associated using the :has_component property." .
 
 
 ###  urn:ontoinsights:dna:ClimateChange
@@ -7418,9 +7507,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                         rdfs:subClassOf <urn:ontoinsights:dna:RequestAndAppeal> ;
                                         rdfs:label "Command and Demand" ;
                                         <urn:ontoinsights:dna:definition> "A communication that issues orders, mandates, etc. The Agent issuing the command/making the demand is indicated using the :has_active_agent property, while the Person with whom the Agent is communicating is defined using :has_affected_agent. The subject of the demand is specified using the :has_topic property." ;
-                                        <urn:ontoinsights:dna:noun_synonym> "assigning" ,
-                                                                            "assignment" ,
-                                                                            "billet" ,
+                                        <urn:ontoinsights:dna:noun_synonym> "billet" ,
                                                                             "commanding" ,
                                                                             "demanding" ,
                                                                             "direction" ,
@@ -7433,14 +7520,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                             "summoning" ,
                                                                             "summons" ,
                                                                             "ultimatum" ;
-                                        <urn:ontoinsights:dna:verb_synonym> "assign" ,
-                                                                            "command" ,
+                                        <urn:ontoinsights:dna:verb_synonym> "command" ,
                                                                             "demand" ,
                                                                             "designate" ,
                                                                             "direct" ,
                                                                             "insist" ,
                                                                             "mandate" ,
-                                                                            "prescribe" ,
                                                                             "rule" ,
                                                                             "summon" ;
                                         <urn:ontoinsights:dna:wordnet_noun_synset> "00798247" ,
@@ -7501,11 +7586,37 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                             "00817348" .
 
 
+###  urn:ontoinsights:dna:Communism
+<urn:ontoinsights:dna:Communism> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Communism" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "autonomism" ,
+                                                                     "autonomist" ,
+                                                                     "communist" ,
+                                                                     "ergatocracy" ,
+                                                                     "leninism" ,
+                                                                     "leninist" ,
+                                                                     "marxism" ,
+                                                                     "marxist" ,
+                                                                     "trotskyism" ,
+                                                                     "trotskyist" .
+
+
+###  urn:ontoinsights:dna:Communitarianism
+<urn:ontoinsights:dna:Communitarianism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Communitarianism" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "socialism" ,
+                                                                            "socialist" .
+
+
 ###  urn:ontoinsights:dna:CompassionAndEmpathy
 <urn:ontoinsights:dna:CompassionAndEmpathy> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:PositiveEmotion> ;
                                             rdfs:label "Compassion and Empathy" ;
                                             <urn:ontoinsights:dna:noun_synonym> "empathizing" ,
+                                                                                "forgiveness" ,
+                                                                                "forgiving" ,
                                                                                 "humaneness" ,
                                                                                 "mercifulness" ,
                                                                                 "mercy" ,
@@ -7517,6 +7628,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                 "commiserate" ,
                                                                                 "empathize" ,
                                                                                 "feel for" ,
+                                                                                "forgive" ,
                                                                                 "sympathize" ;
                                             <urn:ontoinsights:dna:wordnet_noun_synset> "04836781" ,
                                                                                        "07568767" ,
@@ -7719,6 +7831,21 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "00689196" .
 
 
+###  urn:ontoinsights:dna:Conservatism
+<urn:ontoinsights:dna:Conservatism> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                    rdfs:label "Conservatism" ;
+                                    <urn:ontoinsights:dna:noun_synonym> "alt lite" ,
+                                                                        "alt right" ,
+                                                                        "alt-lite" ,
+                                                                        "alt-right" ,
+                                                                        "conservative" ,
+                                                                        "illiberalism" ,
+                                                                        "illiberalist" ,
+                                                                        "right wing" ,
+                                                                        "right-wing" .
+
+
 ###  urn:ontoinsights:dna:ConstructionBusiness
 <urn:ontoinsights:dna:ConstructionBusiness> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:ManufacturingBusiness> ;
@@ -7782,11 +7909,28 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                         "survival" ;
                                     <urn:ontoinsights:dna:verb_synonym> "carry on" ,
                                                                         "continue" ,
+                                                                        "drag on" ,
                                                                         "endure" ,
                                                                         "get on" ,
                                                                         "go on" ,
+                                                                        "keep at" ,
+                                                                        "keep going" ,
                                                                         "keep on" ,
-                                                                        "proceed" ;
+                                                                        "keep up" ,
+                                                                        "not give up" ,
+                                                                        "not stop" ,
+                                                                        "perpetuate" ,
+                                                                        "persevere" ,
+                                                                        "persist" ,
+                                                                        "press on" ,
+                                                                        "proceed" ,
+                                                                        "prolong" ,
+                                                                        "push on" ,
+                                                                        "recommence" ,
+                                                                        "resume" ,
+                                                                        "soldier on" ,
+                                                                        "stay with" ,
+                                                                        "stick with" ;
                                     <urn:ontoinsights:dna:wordnet_noun_synset> "01019929" ;
                                     <urn:ontoinsights:dna:wordnet_verb_synset> "00118331" ,
                                                                                "00783045" .
@@ -7837,6 +7981,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                               "13864062" ;
                                    <urn:ontoinsights:dna:wordnet_verb_synset> "02300511" ,
                                                                               "02421408" .
+
+
+###  urn:ontoinsights:dna:Corporatism
+<urn:ontoinsights:dna:Corporatism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Corporatism" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "corporatist" ,
+                                                                       "mutualism" ,
+                                                                       "mutualist" .
 
 
 ###  urn:ontoinsights:dna:Country
@@ -8006,6 +8159,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "defraud" ,
                                                                                   "delude" ,
                                                                                   "doctor" ,
+                                                                                  "dupe" ,
                                                                                   "falsify" ,
                                                                                   "fool" ,
                                                                                   "fudge" ,
@@ -8016,6 +8170,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "nobble" ,
                                                                                   "put one over" ,
                                                                                   "short-change" ,
+                                                                                  "swindle" ,
                                                                                   "trick" ,
                                                                                   "wangle" ;
                                               <urn:ontoinsights:dna:wordnet_noun_synset> "00750872" ,
@@ -8243,6 +8398,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     <urn:ontoinsights:dna:verb_synonym> "dawdle" ,
                                                                         "defer" ,
                                                                         "delay" ,
+                                                                        "hold on" ,
                                                                         "postpone" ,
                                                                         "put off" ,
                                                                         "shelve" ,
@@ -8296,6 +8452,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "07505853" ,
                                                                                       "07541996" ,
                                                                                       "07542591" .
+
+
+###  urn:ontoinsights:dna:Democracy
+<urn:ontoinsights:dna:Democracy> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                 rdfs:label "Democracy" ;
+                                 <urn:ontoinsights:dna:noun_synonym> "democrat" .
 
 
 ###  urn:ontoinsights:dna:DemonstrationStrikeAndRally
@@ -8568,6 +8731,55 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "10535609" .
 
 
+###  urn:ontoinsights:dna:DistributionAndSupply
+<urn:ontoinsights:dna:DistributionAndSupply> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                             rdfs:label "Distribution and Supply" ;
+                                             <urn:ontoinsights:dna:definition> "Events related to giving out materials/Resources to Agents (typically Persons)." ;
+                                             <urn:ontoinsights:dna:noun_synonym> "allocation" ,
+                                                                                 "allotment" ,
+                                                                                 "apportioning" ,
+                                                                                 "apportionment" ,
+                                                                                 "assignation" ,
+                                                                                 "dispensing" ,
+                                                                                 "dispersal" ,
+                                                                                 "dissemination" ,
+                                                                                 "distributing" ,
+                                                                                 "doling out" ,
+                                                                                 "giving out" ,
+                                                                                 "handing out" ,
+                                                                                 "issuance" ,
+                                                                                 "meting out" ,
+                                                                                 "parceling" ,
+                                                                                 "parcelling" ,
+                                                                                 "passing around" ,
+                                                                                 "proration" ,
+                                                                                 "rationing" ;
+                                             <urn:ontoinsights:dna:verb_synonym> "allocate" ,
+                                                                                 "allot" ,
+                                                                                 "apportion" ,
+                                                                                 "bootleg" ,
+                                                                                 "circulate" ,
+                                                                                 "deploy" ,
+                                                                                 "dispense" ,
+                                                                                 "distribute" ,
+                                                                                 "dole out" ,
+                                                                                 "equip" ,
+                                                                                 "furnish" ,
+                                                                                 "hand out" ,
+                                                                                 "issuance" ,
+                                                                                 "mete out" ,
+                                                                                 "pass around" ,
+                                                                                 "proration" ,
+                                                                                 "ration" ,
+                                                                                 "spread" ;
+                                             <urn:ontoinsights:dna:wordnet_noun_synset> "00809586" ,
+                                                                                        "01085001" ,
+                                                                                        "01085569" ;
+                                             <urn:ontoinsights:dna:wordnet_verb_synset> "01381221" ,
+                                                                                        "02047080" .
+
+
 ###  urn:ontoinsights:dna:Divorce
 <urn:ontoinsights:dna:Divorce> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:LegalEvent> ,
@@ -8721,11 +8933,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                 <urn:ontoinsights:dna:noun_synonym> "ballot" ,
                                                                     "balloting" ,
                                                                     "electing" ,
+                                                                    "primary" ,
+                                                                    "primarying" ,
                                                                     "vote" ,
                                                                     "voting" ;
                                 <urn:ontoinsights:dna:verb_synonym> "ballot" ,
+                                                                    "cast a vote" ,
                                                                     "cast vote" ,
                                                                     "elect" ,
+                                                                    "primary" ,
                                                                     "vote" ;
                                 <urn:ontoinsights:dna:wordnet_noun_synset> "00181811" ,
                                                                            "00182630" ,
@@ -8790,7 +9006,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "demotion" ,
                                                                                      "dismissal" ,
                                                                                      "dismission" ,
-                                                                                     "employing" ,
                                                                                      "firing" ,
                                                                                      "hire" ,
                                                                                      "hiring" ,
@@ -8804,7 +9019,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                  <urn:ontoinsights:dna:verb_synonym> "can" ,
                                                                                      "demote" ,
                                                                                      "do work" ,
-                                                                                     "employ" ,
                                                                                      "fire" ,
                                                                                      "force out" ,
                                                                                      "give notice" ,
@@ -8863,6 +9077,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                "complete" ,
                                                                "conclude" ,
                                                                "cut short" ,
+                                                               "discontinue" ,
                                                                "finish" ,
                                                                "fulfil" ,
                                                                "fulfill" ,
@@ -8994,6 +9209,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                           "pollute" ;
                                                       <urn:ontoinsights:dna:wordnet_verb_synset> "00493246" ,
                                                                                                  "00493642" .
+
+
+###  urn:ontoinsights:dna:Environmentalism
+<urn:ontoinsights:dna:Environmentalism> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Environmentalism" ;
+                                        <urn:ontoinsights:dna:noun_synonym> "environmentalist" .
 
 
 ###  urn:ontoinsights:dna:Envy
@@ -9207,6 +9429,17 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "00914001" .
 
 
+###  urn:ontoinsights:dna:FacismAndNazism
+<urn:ontoinsights:dna:FacismAndNazism> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                       rdfs:label "Facism and Nazism" ;
+                                       <urn:ontoinsights:dna:noun_synonym> "aryanism" ,
+                                                                           "fascist" ,
+                                                                           "national populism" ,
+                                                                           "national populist" ,
+                                                                           "nazi" .
+
+
 ###  urn:ontoinsights:dna:Factory
 <urn:ontoinsights:dna:Factory> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:BuildingAndDwelling> ;
@@ -9227,7 +9460,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "naught" ,
                                                                    "nonaccomplishment" ,
                                                                    "nonachievement" ;
-                               <urn:ontoinsights:dna:verb_synonym> "fail" ,
+                               <urn:ontoinsights:dna:verb_synonym> "defeat" ,
+                                                                   "fail" ,
                                                                    "fall flat" ,
                                                                    "flop" ,
                                                                    "flunk" ,
@@ -9315,6 +9549,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                         "valor" ;
                                     <urn:ontoinsights:dna:wordnet_noun_synset> "04865686" ,
                                                                                "07541421" .
+
+
+###  urn:ontoinsights:dna:Feminism
+<urn:ontoinsights:dna:Feminism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:IdentityPolitics> ;
+                                rdfs:label "Feminism" ;
+                                <urn:ontoinsights:dna:noun_synonym> "feminist" .
 
 
 ###  urn:ontoinsights:dna:FinancialEvent
@@ -9884,6 +10125,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                              <urn:ontoinsights:dna:wordnet_verb_synset> "02300169" .
 
 
+###  urn:ontoinsights:dna:GeographicFeature
+<urn:ontoinsights:dna:GeographicFeature> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
+                                         rdfs:label "Geographic Feature" ;
+                                         <urn:ontoinsights:dna:definition> "Any type of physical feature associated with the geography of an area, such as a forest, monument, school campus, etc." .
+
+
 ###  urn:ontoinsights:dna:GeopoliticalEntity
 <urn:ontoinsights:dna:GeopoliticalEntity> rdf:type owl:Class ;
                                           rdfs:subClassOf <urn:ontoinsights:dna:Agent> ,
@@ -10013,7 +10261,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                     "comb" ,
                                                                     "dress" ,
                                                                     "groom" ,
-                                                                    "put on" ,
                                                                     "put on clothes" ;
                                 <urn:ontoinsights:dna:wordnet_noun_synset> "00258095" ,
                                                                            "00662026" ,
@@ -10184,6 +10431,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                    "immunize" ,
                                                                                    "inoculate" ,
                                                                                    "recuperate" ,
+                                                                                   "sicken" ,
                                                                                    "vaccinate" ;
                                                <urn:ontoinsights:dna:wordnet_noun_synset> "00830651" ,
                                                                                           "04081594" ,
@@ -10275,6 +10523,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "13966288" .
 
 
+###  urn:ontoinsights:dna:Humanism
+<urn:ontoinsights:dna:Humanism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                rdfs:label "Humanism" ;
+                                <urn:ontoinsights:dna:noun_synonym> "humanist" ,
+                                                                    "transhumanism" ,
+                                                                    "transhumanist" .
+
+
 ###  urn:ontoinsights:dna:HumanitarianBusiness
 <urn:ontoinsights:dna:HumanitarianBusiness> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -10319,6 +10576,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "passport" ;
                                                 <urn:ontoinsights:dna:wordnet_noun_synset> "06483016" ,
                                                                                            "06561652" .
+
+
+###  urn:ontoinsights:dna:IdentityPolitics
+<urn:ontoinsights:dna:IdentityPolitics> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                        rdfs:label "Identity Politics" .
 
 
 ###  urn:ontoinsights:dna:IgnoringAndOverlooking
@@ -10469,7 +10732,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                          owl:disjointWith <urn:ontoinsights:dna:Separation> ;
                                                          rdfs:label "Inclusion, Attachment and Unification" ;
                                                          <urn:ontoinsights:dna:definition> "An act of fastening, joining, grouping or bringing together, etc." ;
-                                                         <urn:ontoinsights:dna:noun_synonym> "amalgamating" ,
+                                                         <urn:ontoinsights:dna:noun_synonym> "adhesion" ,
+                                                                                             "amalgamating" ,
                                                                                              "amalgamation" ,
                                                                                              "attaching" ,
                                                                                              "coalescing" ,
@@ -10869,11 +11133,15 @@ rdf:label rdf:type owl:AnnotationProperty .
                                     rdfs:label "Intoxication" ;
                                     <urn:ontoinsights:dna:definition> "A poisoning induced by drugs, alcohol or other substances." ;
                                     <urn:ontoinsights:dna:noun_synonym> "drunkenness" ,
+                                                                        "high" ,
                                                                         "inebriation" ,
                                                                         "inebriety" ,
                                                                         "insobriety" ,
                                                                         "tipsiness" ;
-                                    <urn:ontoinsights:dna:wordnet_noun_synset> "14042038" .
+                                    <urn:ontoinsights:dna:verb_synonym> "inebriate" ,
+                                                                        "intoxicate" ;
+                                    <urn:ontoinsights:dna:wordnet_noun_synset> "14042038" ;
+                                    <urn:ontoinsights:dna:wordnet_verb_synset> "00088284" .
 
 
 ###  urn:ontoinsights:dna:InvasionAndOccupation
@@ -10990,6 +11258,19 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "00597527" ,
                                                                                     "00597879" ,
                                                                                     "00598039" .
+
+
+###  urn:ontoinsights:dna:KnowledgeGraph
+<urn:ontoinsights:dna:KnowledgeGraph> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                      rdfs:label "Knowledge Graph" ;
+                                      <urn:ontoinsights:dna:definition> "A collection of entities (the 'nodes') representing specific instances of the types of things in a domain of interest, interconnected by named 'edges' which identify the entities' properties (such as string or integer values) and relationships between them. The structure and semantics of the graph ('knowledge') are derived from the use of an ontology." .
+
+
+###  urn:ontoinsights:dna:LGBTRights
+<urn:ontoinsights:dna:LGBTRights> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:IdentityPolitics> ;
+                                  rdfs:label "LGBT Rights Movement" .
 
 
 ###  urn:ontoinsights:dna:LaborAndStaffingBusiness
@@ -11109,6 +11390,14 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                        "02392628" .
 
 
+###  urn:ontoinsights:dna:LeftWing
+<urn:ontoinsights:dna:LeftWing> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:Populism> ;
+                                rdfs:label "Left-Wing" ;
+                                <urn:ontoinsights:dna:noun_synonym> "liberal" ,
+                                                                    "progressive" .
+
+
 ###  urn:ontoinsights:dna:LegalAndJudicialBusiness
 <urn:ontoinsights:dna:LegalAndJudicialBusiness> rdf:type owl:Class ;
                                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -11185,6 +11474,24 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                            "legal document" ,
                                                                            "official document" ;
                                        <urn:ontoinsights:dna:wordnet_noun_synset> "06491336" .
+
+
+###  urn:ontoinsights:dna:Liberalism
+<urn:ontoinsights:dna:Liberalism> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                  rdfs:label "Liberalism" ;
+                                  <urn:ontoinsights:dna:noun_synonym> "far left" ,
+                                                                      "far-left" ,
+                                                                      "left wing" ,
+                                                                      "left-wing" ,
+                                                                      "liberal" .
+
+
+###  urn:ontoinsights:dna:Libertarianism
+<urn:ontoinsights:dna:Libertarianism> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                      rdfs:label "Libertarianism" ;
+                                      <urn:ontoinsights:dna:noun_synonym> "libertarian" .
 
 
 ###  urn:ontoinsights:dna:LifeEvent
@@ -11409,7 +11716,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                 "fine-tune" ,
                                                                                 "fix" ,
                                                                                 "improve" ,
-                                                                                "maintain" ,
                                                                                 "mend" ,
                                                                                 "overhaul" ,
                                                                                 "patch" ,
@@ -11492,11 +11798,13 @@ rdf:label rdf:type owl:AnnotationProperty .
 ###  urn:ontoinsights:dna:MeaningImplicationAndInference
 <urn:ontoinsights:dna:MeaningImplicationAndInference> rdf:type owl:Class ;
                                                       rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
-                                                      rdfs:label "Implication, Indication and Inference" ;
+                                                      rdfs:label "Meaning, Implication and Inference" ;
                                                       <urn:ontoinsights:dna:definition> "An act of interpreting the meaning of something or positing a conclusion based on observation, reasoning, experience, etc." ;
                                                       <urn:ontoinsights:dna:noun_synonym> "analogy" ,
                                                                                           "connotation" ,
                                                                                           "connoting" ,
+                                                                                          "deducing" ,
+                                                                                          "deduction" ,
                                                                                           "derivation" ,
                                                                                           "deriving" ,
                                                                                           "entailing" ,
@@ -11518,6 +11826,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                           "clarify" ,
                                                                                           "clear up" ,
                                                                                           "connote" ,
+                                                                                          "decipher" ,
+                                                                                          "decode" ,
+                                                                                          "deduce" ,
                                                                                           "denote" ,
                                                                                           "depict" ,
                                                                                           "derive" ,
@@ -11527,9 +11838,11 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                           "implicate" ,
                                                                                           "imply" ,
                                                                                           "insinuate" ,
+                                                                                          "interpret" ,
                                                                                           "mean" ,
                                                                                           "presuppose" ,
-                                                                                          "signify" ;
+                                                                                          "signify" ,
+                                                                                          "translate" ;
                                                       <urn:ontoinsights:dna:wordnet_noun_synset> "05782611" ,
                                                                                                  "05928460" ,
                                                                                                  "07252762" ;
@@ -11619,15 +11932,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                          "00613356" .
 
 
-###  urn:ontoinsights:dna:Mention
-<urn:ontoinsights:dna:Mention> rdf:type owl:Class ;
-                               rdfs:label "Mention" ;
-                               <urn:ontoinsights:dna:definition> "The provenance information for an entity or concept that appears in an InformationSource such as a database or spreadsheet." ;
-                               <urn:ontoinsights:dna:example> "For example, a value of the GDP of a country may be available in a spreadsheet at a particular row and column." ;
-                               <urn:ontoinsights:dna:noun_synonym> "citation" ,
-                                                                   "reference" ;
-                               <urn:ontoinsights:dna:wordnet_noun_synset> "06776392" ,
-                                                                          "07273332" .
+###  urn:ontoinsights:dna:Meritocracy
+<urn:ontoinsights:dna:Meritocracy> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Meritocracy" .
 
 
 ###  urn:ontoinsights:dna:Message
@@ -11705,6 +12013,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                <urn:ontoinsights:dna:verb_synonym> "be amiss" ,
                                                                    "blunder" ,
                                                                    "err" ,
+                                                                   "go wrong" ,
                                                                    "lack judgment" ,
                                                                    "make a mistake" ,
                                                                    "misapprehend" ,
@@ -11713,6 +12022,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "misconstrue" ,
                                                                    "misinterpret" ,
                                                                    "misjudge" ,
+                                                                   "misplay" ,
                                                                    "mistake" ,
                                                                    "misunderstand" ,
                                                                    "omit" ,
@@ -11928,7 +12238,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "butcher" ,
                                                                              "decapitate" ,
                                                                              "decimate" ,
-                                                                             "execute" ,
                                                                              "exterminate" ,
                                                                              "hang" ,
                                                                              "kill" ,
@@ -11954,6 +12263,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                          rdfs:label "Musical Instrument" ;
                                          <urn:ontoinsights:dna:definition> "A Resource that is found, built or adapted to produce 'music'. Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Music&oldid=1012822353), music 'is the art of arranging sounds in time to produce a composition through the elements of melody, harmony, rhythm, and timbre'." ;
                                          <urn:ontoinsights:dna:example> "Examples of MusicalInstruments include string instruments such as guitars, percussion instruments such as drums and wind instruments such as flutes and oboes." ;
+                                         <urn:ontoinsights:dna:noun_synonym> "guitar" ;
                                          <urn:ontoinsights:dna:wordnet_noun_synset> "03806455" .
 
 
@@ -11965,6 +12275,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                  <urn:ontoinsights:dna:noun_synonym> "story" ,
                                                                      "tale" ;
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "07235754" .
+
+
+###  urn:ontoinsights:dna:Nationalism
+<urn:ontoinsights:dna:Nationalism> rdf:type owl:Class ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                   rdfs:label "Nationalism" ;
+                                   <urn:ontoinsights:dna:noun_synonym> "nationalist" .
 
 
 ###  urn:ontoinsights:dna:NaturalProcess
@@ -12113,7 +12430,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:OrganizationalEntity> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:GroupOfAgents> ;
                                             rdfs:label "Organizational Entity" ;
-                                            <urn:ontoinsights:dna:definition> "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that Organizations can themselves contain Organizations, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
+                                            <urn:ontoinsights:dna:definition> "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
                                             <urn:ontoinsights:dna:noun_synonym> "agency" ,
                                                                                 "business" ,
                                                                                 "company" ,
@@ -12193,7 +12510,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "authorizing" ,
                                                                       "consent" ,
                                                                       "consenting" ,
-                                                                      "dispensation" ,
                                                                       "license" ,
                                                                       "licensing" ,
                                                                       "permitting" ;
@@ -12218,45 +12534,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                               rdfs:subClassOf <urn:ontoinsights:dna:Agent> ;
                               rdfs:label "Person" ;
                               <urn:ontoinsights:dna:definition> "A human being." ;
-                              <urn:ontoinsights:dna:noun_synonym> "Einstein" ,
-                                                                  "Jesus" ,
-                                                                  "Methuselah" ,
-                                                                  "antagonist" ,
-                                                                  "appraiser" ,
+                              <urn:ontoinsights:dna:noun_synonym> "antagonist" ,
                                                                   "associate" ,
-                                                                  "attendee" ,
-                                                                  "beau" ,
                                                                   "bookworm" ,
                                                                   "bum" ,
                                                                   "child" ,
                                                                   "countryman" ,
-                                                                  "courtesan" ,
-                                                                  "dame" ,
-                                                                  "degenerate" ,
-                                                                  "dispatcher" ,
                                                                   "dreamer" ,
-                                                                  "employee" ,
-                                                                  "escort" ,
-                                                                  "gent" ,
                                                                   "goof" ,
                                                                   "goofball" ,
-                                                                  "grownup" ,
                                                                   "human" ,
                                                                   "human being" ,
                                                                   "lackey" ,
-                                                                  "lad" ,
-                                                                  "lady" ,
                                                                   "man" ,
-                                                                  "manager" ,
-                                                                  "old man" ,
-                                                                  "patriarch" ,
-                                                                  "pensionary" ,
                                                                   "prodigy" ,
                                                                   "profligate" ,
-                                                                  "reprobate" ,
-                                                                  "reviewer" ,
                                                                   "scribe" ,
-                                                                  "sheik" ,
                                                                   "thinker" ,
                                                                   "townsman" ,
                                                                   "townsperson" ,
@@ -12375,7 +12668,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 
 ###  urn:ontoinsights:dna:PoliticalIdeology
 <urn:ontoinsights:dna:PoliticalIdeology> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:Enumeration> ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:AgentAspect> ;
                                          rdfs:label "Political Ideology" ;
                                          <urn:ontoinsights:dna:definition> "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
                                          <urn:ontoinsights:dna:example> "Examples are Authoritarian, Communism, Socialism, etc." ;
@@ -12390,6 +12683,18 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       <urn:ontoinsights:dna:wordnet_noun_synset> "08273889" .
 
 
+###  urn:ontoinsights:dna:PoliticalReligiousIdeology
+<urn:ontoinsights:dna:PoliticalReligiousIdeology> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                                  rdfs:label "Political-Religious Ideology" ;
+                                                  <urn:ontoinsights:dna:noun_synonym> "freemason" ,
+                                                                                      "freemasonry" ,
+                                                                                      "secularism" ,
+                                                                                      "secularist" ,
+                                                                                      "theocracy" ,
+                                                                                      "theocrat" .
+
+
 ###  urn:ontoinsights:dna:PopulatedPlace
 <urn:ontoinsights:dna:PopulatedPlace> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
@@ -12399,6 +12704,29 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                           "settlement" ,
                                                                           "town" ,
                                                                           "village" .
+
+
+###  urn:ontoinsights:dna:Populism
+<urn:ontoinsights:dna:Populism> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                rdfs:label "Populism" ;
+                                <urn:ontoinsights:dna:noun_synonym> "activism" ,
+                                                                    "activist" ,
+                                                                    "anti-austerity" ,
+                                                                    "anti-consumerism" ,
+                                                                    "anti-corporate" ,
+                                                                    "anti-nuclear" ,
+                                                                    "egalitarian" ,
+                                                                    "egalitarianism" ,
+                                                                    "labor movement" ,
+                                                                    "labour movement" ,
+                                                                    "occupy movememnt" ,
+                                                                    "pacifism" ,
+                                                                    "pacifist" ,
+                                                                    "peace movement" ,
+                                                                    "populist" ,
+                                                                    "syndicalism" ,
+                                                                    "syndicalist" .
 
 
 ###  urn:ontoinsights:dna:PositiveEmotion
@@ -12429,7 +12757,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "control" ,
                                                                       "get hold of" ,
                                                                       "get one's hands on" ,
-                                                                      "have" ,
                                                                       "keep" ,
                                                                       "lease" ,
                                                                       "own" ,
@@ -12611,6 +12938,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                                    "01660471" .
 
 
+###  urn:ontoinsights:dna:Progressivism
+<urn:ontoinsights:dna:Progressivism> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                     rdfs:label "Progressivism" ;
+                                     <urn:ontoinsights:dna:noun_synonym> "progressive" .
+
+
 ###  urn:ontoinsights:dna:ProjectAndCampaign
 <urn:ontoinsights:dna:ProjectAndCampaign> rdf:type owl:Class ;
                                           rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -12668,33 +13002,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                  "00885838" ,
                                                                                  "00886738" ,
                                                                                  "00888280" .
-
-
-###  urn:ontoinsights:dna:ProvisionOfAid
-<urn:ontoinsights:dna:ProvisionOfAid> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
-                                      rdfs:label "Provision of Aid" ;
-                                      <urn:ontoinsights:dna:definition> "." ;
-                                      <urn:ontoinsights:dna:noun_synonym> "aiding" ,
-                                                                          "assistance" ,
-                                                                          "assisting" ,
-                                                                          "helping" ,
-                                                                          "helping hand" ,
-                                                                          "providing" ,
-                                                                          "relief" ,
-                                                                          "welfare" ;
-                                      <urn:ontoinsights:dna:verb_synonym> "aid" ,
-                                                                          "assist" ,
-                                                                          "benefit" ,
-                                                                          "do good" ,
-                                                                          "help" ,
-                                                                          "provide" ;
-                                      <urn:ontoinsights:dna:wordnet_noun_synset> "00656128" ,
-                                                                                 "01063127" ,
-                                                                                 "01090092" ,
-                                                                                 "13286803" ;
-                                      <urn:ontoinsights:dna:wordnet_verb_synset> "00081834" ,
-                                                                                 "02553283" .
 
 
 ###  urn:ontoinsights:dna:ProvisionOfServicesBusiness
@@ -12830,6 +13137,16 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                   "01115160" ;
                                        <urn:ontoinsights:dna:wordnet_verb_synset> "02211988" ,
                                                                                   "02262178" .
+
+
+###  urn:ontoinsights:dna:Radicalism
+<urn:ontoinsights:dna:Radicalism> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:PoliticalIdeology> ;
+                                  rdfs:label "Radicalism" ;
+                                  <urn:ontoinsights:dna:noun_synonym> "anarchism" ,
+                                                                      "anarchist" ,
+                                                                      "radical" ,
+                                                                      "reactionary" .
 
 
 ###  urn:ontoinsights:dna:RainySeason
@@ -13222,6 +13539,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                       <urn:ontoinsights:dna:definition> "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries." .
 
 
+###  urn:ontoinsights:dna:Republican
+<urn:ontoinsights:dna:Republican> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:Conservatism> ;
+                                  rdfs:label "Republican" .
+
+
 ###  urn:ontoinsights:dna:RequestAndAppeal
 <urn:ontoinsights:dna:RequestAndAppeal> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:CommunicationAndSpeechAct> ;
@@ -13295,6 +13618,27 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                            "14024833" ;
                                                 <urn:ontoinsights:dna:wordnet_verb_synset> "00408253" ,
                                                                                            "01191258" .
+
+
+###  urn:ontoinsights:dna:Residence
+<urn:ontoinsights:dna:Residence> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
+                                 rdfs:label "Residence" ;
+                                 <urn:ontoinsights:dna:definition> "The condition of residing/living in a Location. The location is defined using the :has_location property." ;
+                                 <urn:ontoinsights:dna:noun_synonym> "abidance" ,
+                                                                     "living in" ,
+                                                                     "occupancy" ,
+                                                                     "residing in" ;
+                                 <urn:ontoinsights:dna:verb_synonym> "abide in" ,
+                                                                     "colonize" ,
+                                                                     "inhabit" ,
+                                                                     "live in" ,
+                                                                     "reside" ,
+                                                                     "settle" ;
+                                 <urn:ontoinsights:dna:wordnet_noun_synset> "01055844" ;
+                                 <urn:ontoinsights:dna:wordnet_verb_synset> "00414801" ,
+                                                                            "00416323" ,
+                                                                            "00540418" .
 
 
 ###  urn:ontoinsights:dna:Resistance
@@ -13442,8 +13786,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                  "rewarding" ;
                                              <urn:ontoinsights:dna:verb_synonym> "award" ,
                                                                                  "compensate" ,
+                                                                                 "confer" ,
                                                                                  "honor" ,
                                                                                  "honour" ,
+                                                                                 "prize" ,
                                                                                  "recompense" ,
                                                                                  "reward" ;
                                              <urn:ontoinsights:dna:wordnet_noun_synset> "06709228" ,
@@ -13476,6 +13822,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "put on the line" ,
                                                                       "risk" ,
                                                                       "stick one's neck out" ,
+                                                                      "take a chance" ,
                                                                       "take a leap in the dark" ,
                                                                       "take a risk" ,
                                                                       "venture" ;
@@ -13523,7 +13870,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:Role> rdf:type owl:Class ;
                             rdfs:label "Role" ;
                             <urn:ontoinsights:dna:definition> "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics." ;
-                            <urn:ontoinsights:dna:example> "For example, in an Organization, some Persons are managers while others are employees or team leads." ;
+                            <urn:ontoinsights:dna:example> "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads." ;
                             <urn:ontoinsights:dna:wordnet_noun_synset> "00723312" .
 
 
@@ -13649,6 +13996,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "denigration" ,
                                                                                      "deriding" ,
                                                                                      "discourtesy" ,
+                                                                                     "disparagement" ,
                                                                                      "disrespect" ,
                                                                                      "disrespecting" ,
                                                                                      "jeer" ,
@@ -13662,6 +14010,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                      "be sarcastic" ,
                                                                                      "denigration" ,
                                                                                      "deride" ,
+                                                                                     "disparage" ,
                                                                                      "disrespect" ,
                                                                                      "jeer" ,
                                                                                      "mock" ,
@@ -13771,7 +14120,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                      "investigate" ,
                                                                      "look for" ,
                                                                      "look high and low" ,
-                                                                     "pursue" ,
                                                                      "quest" ,
                                                                      "root around" ,
                                                                      "rummage" ,
@@ -13891,6 +14239,13 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                     "02195992" .
 
 
+###  urn:ontoinsights:dna:Sentence
+<urn:ontoinsights:dna:Sentence> rdf:type owl:Class ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                rdfs:label "Sentence" ;
+                                <urn:ontoinsights:dna:definition> "A portion of an InformationSource written as unstructured text, ending with a period, question or exclamation mark, etc., typically with one or more subjects, verbs and objects. A Sentence can usually be broken down into clauses (e.g., :Chunks) where each Chunk has its own subject(s), verb(s) and object(s). A Sentence's Chunks are associated using the :has_component property." .
+
+
 ###  urn:ontoinsights:dna:Separation
 <urn:ontoinsights:dna:Separation> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -13942,7 +14297,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                       "disassemble" ,
                                                                       "disconnect" ,
                                                                       "disentangle" ,
-                                                                      "disperse" ,
                                                                       "dissociate" ,
                                                                       "dissolve" ,
                                                                       "diverge" ,
@@ -13974,6 +14328,23 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "00495205" ,
                                                                              "02035003" ,
                                                                              "02036260" .
+
+
+###  urn:ontoinsights:dna:SeparatismAndSegregation
+<urn:ontoinsights:dna:SeparatismAndSegregation> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:dna:IdentityPolitics> ;
+                                                rdfs:label "Separatism and Segregation" ;
+                                                <urn:ontoinsights:dna:noun_synonym> "anti-semite" ,
+                                                                                    "anti-semitism" ,
+                                                                                    "anti-zionism" ,
+                                                                                    "anti-zionist" ,
+                                                                                    "racism" ,
+                                                                                    "racist" ,
+                                                                                    "segregationism" ,
+                                                                                    "segregationist" ,
+                                                                                    "separatist" ,
+                                                                                    "supremacism" ,
+                                                                                    "supremist" .
 
 
 ###  urn:ontoinsights:dna:Shock
@@ -14174,6 +14545,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "emerge" ,
                                                                              "enter" ,
                                                                              "kick off" ,
+                                                                             "materialize" ,
                                                                              "set off" ,
                                                                              "set out" ,
                                                                              "start" ;
@@ -14408,7 +14780,8 @@ rdf:label rdf:type owl:AnnotationProperty .
                                rdfs:subClassOf <urn:ontoinsights:dna:End> ;
                                rdfs:label "Success" ;
                                <urn:ontoinsights:dna:definition> "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual end time is known." ;
-                               <urn:ontoinsights:dna:noun_synonym> "achievement" ,
+                               <urn:ontoinsights:dna:noun_synonym> "accomplishment" ,
+                                                                   "achievement" ,
                                                                    "attainment" ,
                                                                    "blockbuster" ,
                                                                    "bull's eye" ,
@@ -14425,7 +14798,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                    "smash" ,
                                                                    "win" ,
                                                                    "winning" ;
-                               <urn:ontoinsights:dna:verb_synonym> "attain" ,
+                               <urn:ontoinsights:dna:verb_synonym> "accomplish" ,
+                                                                   "achieve" ,
+                                                                   "attain" ,
+                                                                   "fulfill" ,
                                                                    "succeed" ,
                                                                    "surmount" ;
                                <urn:ontoinsights:dna:wordnet_noun_synset> "00035910" ,
@@ -14503,8 +14879,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                        "overseeing" ,
                                                                        "oversight" ,
                                                                        "supervising" ;
-                                   <urn:ontoinsights:dna:verb_synonym> "administer" ,
-                                                                       "govern" ,
+                                   <urn:ontoinsights:dna:verb_synonym> "govern" ,
                                                                        "manage" ,
                                                                        "monitor" ,
                                                                        "oversee" ,
@@ -14548,7 +14923,7 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:SurrenderAndYielding> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:AssertionAndDeclaration> ;
                                             rdfs:label "Surrender and Yielding" ;
-                                            <urn:ontoinsights:dna:definition> "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct." ;
+                                            <urn:ontoinsights:dna:definition> "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another." ;
                                             <urn:ontoinsights:dna:noun_synonym> "abdicating" ,
                                                                                 "abdication" ,
                                                                                 "capitulating" ,
@@ -14566,6 +14941,7 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                 "capitulate" ,
                                                                                 "cede" ,
                                                                                 "give in" ,
+                                                                                "give up" ,
                                                                                 "give way" ,
                                                                                 "relent" ,
                                                                                 "relinquish" ,
@@ -14789,7 +15165,6 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                              "distress" ,
                                                                              "hardship" ,
                                                                              "hazard" ,
-                                                                             "issue" ,
                                                                              "mess" ,
                                                                              "travails" ,
                                                                              "tumult" ;
@@ -19400,22 +19775,22 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "downer" ,
                                                                                       "major tranquilliser" ,
                                                                                       "stimulant" ,
-                                                                                      "antipsychotic drug" ,
                                                                                       "sedative-hypnotic" ,
                                                                                       "chloral hydrate" ,
+                                                                                      "antipsychotic drug" ,
                                                                                       "minor tranquilliser" ,
                                                                                       "diphenylbutyl piperidine" ,
                                                                                       "depressant" ,
-                                                                                      "atropine" ,
                                                                                       "morphia" ,
-                                                                                      "lozenge" ,
+                                                                                      "atropine" ,
                                                                                       "tincture" ,
+                                                                                      "lozenge" ,
                                                                                       "antipsychotic agent" ,
                                                                                       "barbiturate" ,
-                                                                                      "morphine" ,
-                                                                                      "antipsychotic" ,
-                                                                                      "sedative-hypnotic drug" ,
                                                                                       "tranquillizer" ,
+                                                                                      "antipsychotic" ,
+                                                                                      "morphine" ,
+                                                                                      "sedative-hypnotic drug" ,
                                                                                       "antianxiety drug" ,
                                                                                       "sedative" ,
                                                                                       "anxiolytic drug" ,
@@ -19424,10 +19799,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "neuroleptic drug" ,
                                                                                       "aspirin" ,
                                                                                       "minor tranquillizer" ,
-                                                                                      "ataractic agent" ,
                                                                                       "sedative drug" ,
-                                                                                      "amobarbital" ,
+                                                                                      "ataractic agent" ,
                                                                                       "ataractic" ,
+                                                                                      "amobarbital" ,
                                                                                       "Bayer" ,
                                                                                       "salicylate" ,
                                                                                       "digitalis" ,
@@ -19438,16 +19813,12 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "ataractic drug" ,
                                                                                       "Empirin" ,
                                                                                       "benzodiazepine" ,
-                                                                                      "neuroleptic agent" ,
-                                                                                      "major tranquilizer" .
+                                                                                      "major tranquilizer" ,
+                                                                                      "neuroleptic agent" .
 
 
 <urn:ontoinsights:dna:PopulatedArea> <urn:ontoinsights:dna:noun_synonym> "urban center" ,
                                                                          "ghetto" .
-
-
-<urn:ontoinsights:dna:Reward> <urn:ontoinsights:dna:noun_synonym> "recompense" ;
-                              <urn:ontoinsights:dna:verb_synonym> "confer" .
 
 
 <urn:ontoinsights:dna:has_component> <urn:ontoinsights:dna:verb_synonym> "is part of" ;

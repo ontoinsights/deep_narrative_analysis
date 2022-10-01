@@ -1,5 +1,4 @@
 order ['urn:ontoinsights:dna:Alignment', 'urn:ontoinsights:dna:CommandAndDemand', 'urn:ontoinsights:dna:PurchaseAndSale']
-deduce ['urn:ontoinsights:dna:MeaningImplicationAndInference+urn:ontoinsights:dna:AssessmentAndCharacterization']
 set up ['urn:ontoinsights:dna:ProductionManufactureAndCreation', 'urn:ontoinsights:dna:Betrayal']
 expire ['urn:ontoinsights:dna:End', 'urn:ontoinsights:dna:Death']
 close ['urn:ontoinsights:dna:End', 'urn:ontoinsights:dna:EndOfBusiness']
@@ -10,14 +9,17 @@ vitiate ['urn:ontoinsights:dna:Decrease+urn:ontoinsights:dna:StateAndPhysicalCha
 indorse ['urn:ontoinsights:dna:FriendlyOrSupportiveAct+urn:ontoinsights:dna:CommunicationAndSpeechAct']
 deport ['urn:ontoinsights:dna:MovementTravelAndTransportation+urn:ontoinsights:dna:CoercionAndIntimidation']
 evict ['urn:ontoinsights:dna:MovementTravelAndTransportation+urn:ontoinsights:dna:CoercionAndIntimidation']
+employ ['urn:ontoinsights:dna:EmploymentAndRelatedEvent', 'urn:ontoinsights:dna:UtilizationAndConsumption'] *
 flounder ['urn:ontoinsights:dna:BodyMovement', 'urn:ontoinsights:dna:ConfusionAndDoubt'] *
-run into ['urn:ontoinsights:dna:MeetingAndEncounter+urn:ontoinsights:dna:Person', 'urn:ontoinsights:dna:ImpactAndContact'] *
+run into ['urn:ontoinsights:dna:MeetingAndEncounter', 'urn:ontoinsights:dna:ImpactAndContact'] *
 take the field ['urn:ontoinsights:dna:Battle', 'urn:ontoinsights:dna:Competition'] *
+bomb ['urn:ontoinsights:dna:AttackDamageAndAssault', 'urn:ontoinsights:dna:Failure'] * 
 adopt ['urn:ontoinsights:dna:CaringForDependents+urn:ontoinsights:dna:Person', 'urn:ontoinsights:dna:DecisionMakingAndChoice'] *
 go along ['urn:ontoinsights:dna:MovementTravelAndTransportation', 'urn:ontoinsights:dna:Agreement'] *
 take care ['urn:ontoinsights:dna:AttentionAndFocus', 'urn:ontoinsights:dna:CaringForDependents+urn:ontoinsights:dna:Person'] *
+deal ['urn:ontoinsights:dna:GamblingAndWagering', 'urn:ontoinsights:dna:CriminalBusiness'] *
 treat ['urn:ontoinsights:dna:HealthAndDiseaseRelated', 'urn:ontoinsights:dna:GiftAndDonation'] *
-cast ['urn:ontoinsights:dna:StateOrPhysicalChange', 'urn:ontoinsights:dna:ProductionManufactureAndCreation+urn:ontoinsights:dna:InformationSource', 'urn:ontoinsights:dna:RecreationEvent'] *
+cast ['urn:ontoinsights:dna:StateOrPhysicalChange', 'urn:ontoinsights:dna:RecreationEvent'] *
 snipe ['urn:ontoinsights:dna:SarcasmSlanderAndDerision', 'urn:ontoinsights:dna:AttackDamageAndAssault'] *
 distort ['urn:ontoinsights:dna:DeceptionAndDishonesty', 'urn:ontoinsights:dna:IncrementalMovement'] *
 miss ['urn:ontoinsights:dna:LongingAndPassion', 'urn:ontoinsights:dna:IgnoringAndOverlooking'] *
@@ -29,7 +31,9 @@ lay out ['urn:ontoinsights:dna:AssertionAndDeclaration', 'urn:ontoinsights:dna:I
 corrupt ['urn:ontoinsights:dna:Decrease+urn:ontoinsights:dna:StateAndPhysicalChange', 'urn:ontoinsights:dna:Bribe'] * 
 spin ['urn:ontoinsights:dna:AssertionAndDeclaration', 'urn:ontoinsights:dna:BodyMovement'] *
 observe ['urn:ontoinsights:dna:AssertionAndDeclaration', 'urn:ontoinsights:dna:AttentionAndFocus'] *
-punctuate ['urn:ontoinsights:dna:AssertionAndDeclaration', 'urn:ontoinsights:dna:Continuation'] *
+issue ['urn:ontoinsights:dna:ActOfPublishing', 'urn:ontoinsights:dna:IncrementalMovement', 'urn:ontoinsights:dna:DistributionAndSupply'] *
+administer ['urn:ontoinsights:dna:Supervision', 'urn:ontoinsights:dna:DistributionAndSupply'] *
+punctuate ['urn:ontoinsights:dna:AssertionAndDeclaration', '+do'] *
 turn over ['urn:ontoinsights:dna:RemovalAndRestriction', 'urn:ontoinsights:dna:BodyMovement'] *
 press ['urn:ontoinsights:dna:RequestAndAppeal', 'urn:ontoinsights:dna:ImpactAndContact'] *
 fill up ['urn:ontoinsights:dna:Increase', 'urn:ontoinsights:dna:IncrementalMovement'] *
@@ -38,8 +42,8 @@ scrape ['urn:ontoinsights:dna:BodilyInjury', 'urn:ontoinsights:dna:ImpactOrConta
 mount ['urn:ontoinsights:dna:Increase', 'urn:ontoinsights:dna:BodyMovement', 'urn:ontoinsights:dna:ProjectAndCampaign'] *
 fold ['urn:ontoinsights:dna:StateAndPhysicalChange', 'urn:ontoinsights:dna:EndOfBusiness'] *
 put down ['urn:ontoinsights:dna:SarcasmSlanderAndDerision', 'urn:ontoinsights:dna:IncrementalMovement'] *
-gas ['urn:ontoinsights:dna:Boast', 'urn:ontoinsights:dna:MurderAndHomicide+urn:ontoinsights:dna:Person'] *
 fall ['urn:ontoinsights:dna:Decrease', 'urn:ontoinsights:dna:Failure', 'urn:ontoinsights:dna:IncrementalMovement'] *
+assign ['urn:ontoinsights:dna:DistributionAndSupply', 'urn:ontoinsights:dna:LearningAndEducation'] *
 stir up ['urn:ontoinsights:dna:TroubleAndProblem', 'urn:ontoinsights:dna:IncrementalMovement'] *
 tap ['urn:ontoinsights:dna:RequestAndAppeal', 'urn:ontoinsights:dna:ImpactAndContact'] *
 grow ['urn:ontoinsights:dna:AgricultureApicultureAndAquacultureEvent', 'urn:ontoinsights:dna:Increase'] *
@@ -47,10 +51,19 @@ touch ['urn:ontoinsights:dna:ImpactAndContact', 'urn:ontoinsights:dna:SensoryPer
 protest ['urn:ontoinsights:dna:Complaint', 'urn:ontoinsights:dna:RefusalAndRejection'] *
 round ['urn:ontoinsights:dna:MovementTravelAndTransportation', 'urn:ontoinsights:dna:StateAndPhysicalChange'] *
 whirl ['urn:ontoinsights:dna:BodyMovement', 'urn:ontoinsights:dna:IncrementalMovement'] *
+occur ['urn:ontoinsights:dna:StartAndBeginning', 'urn:ontoinsights:dna:Cognition', 'urn:ontoinsights:dna:EnvironmentAndCondition'] *
+happen ['urn:ontoinsights:dna:StartAndBeginning', 'urn:ontoinsights:dna:Acquisition'] *
 strike ['urn:ontoinsights:dna:ImpactAndContact', 'urn:ontoinsights:dna:DemonstrationStrikeAndRally'] *
+perform ['urn:ontoinsights:dna:ArtAndEntertainment', '+do'] *
+act ['urn:ontoinsights:dna:ArtAndEntertainment', '+do'] *
+execute ['urn:ontoinsights:dna:MurderAndHomicide+urn:ontoinsights:dna:Person', '+do'] *
+pursue ['urn:ontoinsights:dna:AggressiveOrHostileAct', '+do'] *
+maintain ['urn:ontoinsights:dna:MaintenanceAndRepair', 'urn:ontoinsights:dna:Continuation+do'] *
+stage ['urn:ontoinsights:dna:ArtAndEntertainment', 'urn:ontoinsights:dna:DeceptionAndDishonesty'] *
+put on ['urn:ontoinsights:dna:ArtAndEntertainment', 'urn:ontoinsights:dna:DeceptionAndDishonesty', 'urn:ontoinsights:dna:Grooming'] *
 examine ['urn:ontoinsights:dna:Inquiry', 'urn:ontoinsights:dna:AttentionAndFocus'] *
 stop ['urn:ontoinsights:dna:End', 'urn:ontoinsights:dna:Prevention'] *
-wrestle ['urn:ontoinsights:dna:AttentionAndFocus', 'urn:ontoinsights:dna:Competition+urn:ontoinsights:dna:Person'] *
+wrestle ['urn:ontoinsights:dna:AttentionAndFocus', 'urn:ontoinsights:dna:Competition'] *
 cluster ['urn:ontoinsights:dna:MeetingAndEncounter', 'urn:ontoinsights:dna:Alignment'] *
 advance ['urn:ontoinsights:dna:EmploymentAndRelatedEvent', 'urn:ontoinsights:dna:MovementTravelAndTransportation'] *
 gain ['urn:ontoinsights:dna:Income', 'urn:ontoinsights:dna:Increase'] *
@@ -74,6 +87,8 @@ shave ['urn:ontoinsights:dna:Grooming', 'urn:ontoinsights:dna:Separation'] *
 warm up ['urn:ontoinsights:dna:StateAndPhysicalChange', 'urn:ontoinsights:dna:Increase'] *
 converge ['urn:ontoinsights:dna:InclusionAttachmentAndUnification', 'urn:ontoinsights:dna:MeetingAndEncounter'] *
 divest ['urn:ontoinsights:dna:Prevention', 'urn:ontoinsights:dna:RemovalAndRestriction'] *
+prescribe ['urn:ontoinsights:dna:CommandAndDemand', 'urn:ontoinsights:dna:HealthAndDiseaseRelated'] *
+provide ['urn:ontoinsights:dna:AidAndAssistance', 'urn:ontoinsights:dna:DistributionAndSupply'] *
 distill ['urn:ontoinsights:dna:StateAndPhysicalChange', 'urn:ontoinsights:dna:MeaningImplicationAndInference'] *
 sequester ['urn:ontoinsights:dna:Separation', 'urn:ontoinsights:dna:CaptureAndSeizure'] *
 stretch ['urn:ontoinsights:dna:Increase', 'urn:ontoinsights:dna:BodyMovement'] *
@@ -89,7 +104,7 @@ check ['urn:ontoinsights:dna:AttentionAndFocus', 'urn:ontoinsights:dna:End'] *
 reach ['urn:ontoinsights:dna:Success', 'urn:ontoinsights:dna:BodyMovement'] *
 upset ['urn:ontoinsights:dna:ImpactAndContact', 'urn:ontoinsights:dna:Anxiety'] *
 waste ['urn:ontoinsights:dna:UtilizationAndConsumption', 'urn:ontoinsights:dna:Loss'] *
-give out ['urn:ontoinsights:dna:UtilizationAndConsumption', 'urn:ontoinsights:dna:BodyMovement'] *
+give out ['urn:ontoinsights:dna:DistributionAndSupply', 'urn:ontoinsights:dna:Exhaustion', 'urn:ontoinsights:dna:Failure', 'urn:ontoinsights:dna:UtilizationAndConsumption'] *
 rot ['urn:ontoinsights:dna:Decrease', 'urn:ontoinsights:dna:StateAndPhysicalChange'] *
 void ['urn:ontoinsights:dna:BodilyAct', 'urn:ontoinsights:dna:RefusalAndRejection'] *
 weave ['urn:ontoinsights:dna:InclusionAttachmentAndUnification', 'urn:ontoinsights:dna:ProductionManufactureAndCreation'] *

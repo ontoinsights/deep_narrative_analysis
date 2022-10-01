@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: August 21 2022
+# Last Modified: September 10 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -46,7 +46,7 @@
 #   it to :EmploymentAndRelatedEvent
 #  Updated the subclassing of CaptivityAndDetention
 #  Moved StarvationHungerAndFamine to health-subclasses.ttl
-#  Added TroubleAndProblem
+#  Added TroubleAndProblem and Residence
 ########################################################################
 
 
@@ -147,8 +147,8 @@
   rdfs:label "Employment and Related Event" ;
   :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.), as well as specific Events (hiring, lay offs, promotions, etc.) that serve as Evidence for this condition. The overall situation regarding Employment/unemployment can be described using the :has_assessment predicate." ;
   :example "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment and labor rates." ;
-  :noun_synonym "job", "position", "work", "employing", "hire", "hiring", "layoff", "promotion", "demotion", "demoting", "firing", "employing", "hiring freeze", "firing", "layoff", "dismissal", "sacking" ;
-  :verb_synonym "employ", "hire", "work", "do work", "fire", "layoff", "promote", "demote", "kick upstairs", "kick downstairs", "give notice", "can", "give the axe", "sack", "force out" ;
+  :noun_synonym "job", "position", "work", "hire", "hiring", "layoff", "promotion", "demotion", "demoting", "firing", "hiring freeze", "firing", "layoff", "dismissal", "sacking" ;
+  :verb_synonym "hire", "work", "do work", "fire", "layoff", "promote", "demote", "kick upstairs", "kick downstairs", "give notice", "can", "give the axe", "sack", "force out" ;
   :wordnet_noun_synset "13991539", "00585404", "00587299", "00810735", "00810862", "00811034", "00199300", "00199642", "13991755", "00230681", "00217041" ;
   :wordnet_verb_synset "02414542", "02415985", "02402779", "02404473", "02407967" .
 
@@ -319,6 +319,15 @@
   :wordnet_noun_synset "05901034", "05901258", "09390100", "14024833" ;
   :wordnet_verb_synset "00408253", "01191258" . 
 
+:Residence a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Residence" ;
+  :definition "The condition of residing/living in a Location. The location is defined using the :has_location property." ;
+  :noun_synonym "living in", "residing in", "abidance", "occupancy" ;
+  :verb_synonym "reside", "live in", "inhabit", "settle", "colonize", "abide in" ;
+  :wordnet_noun_synset "01055844" ;
+  :wordnet_verb_synset "00414801", "00416323", "00540418" . 
+
 :Safety a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Safety and Safe Conditions" ;
@@ -362,7 +371,7 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Trouble and Problem" ;
   :definition "A situation describing and assessing (via the :has_assessment property)  difficulties or problems being experienced by a Person, Organization, community, etc." ;
-  :noun_synonym "hazard", "distress", "travails", "hardship", "discord", "difficulty", "issue" ;
+  :noun_synonym "hazard", "distress", "travails", "hardship", "discord", "difficulty" ;
   :verb_synonym "besiege", "tribulate" ;
   :wordnet_noun_synset "05694760" ;
   :wordnet_verb_synset "01802000", "01802298" .

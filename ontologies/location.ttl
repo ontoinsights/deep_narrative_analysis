@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: August 12 2022
+# Last modified: September 23 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -32,6 +32,7 @@
 #  Added :area_sq_kms for a PhysicalLocation
 #  Defined Country as a sub-class of AdministrativeDivision
 #  Added :wordnet_noun_synset details
+#  Added GeographicFeature
 ########################################################################
 
 
@@ -101,6 +102,11 @@
   rdfs:label "Factory" ;
   :definition "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." ;
   :wordnet_noun_synset "03321351" .
+
+:GeographicFeature a owl:Class ;
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Geographic Feature" ;
+  :definition "Any type of physical feature associated with the geography of an area, such as a forest, monument, school campus, etc." .
 
 :GeopoliticalEntity a owl:Class ;
   rdfs:subClassOf :Agent, :PhysicalLocation ;

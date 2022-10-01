@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: August 21 2022
+# Last Modified: September 28 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -97,8 +97,8 @@
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Command and Demand" ;
   :definition "A communication that issues orders, mandates, etc. The Agent issuing the command/making the demand is indicated using the :has_active_agent property, while the Person with whom the Agent is communicating is defined using :has_affected_agent. The subject of the demand is specified using the :has_topic property." ;
-  :noun_synonym "summons", "mandate", "direction", "assignment", "commanding", "summoning", "mandating", "ruling", "assigning", "insistence", "demanding", "insisting", "requiring", "ultimatum" ;
-  :verb_synonym "summon", "mandate", "rule", "direct", "command", "assign", "prescribe", "demand", "insist" ;
+  :noun_synonym "summons", "mandate", "direction", "commanding", "summoning", "mandating", "ruling", "insistence", "demanding", "insisting", "requiring", "ultimatum" ;
+  :verb_synonym "summon", "mandate", "rule", "direct", "command", "demand", "insist" ;
   :wordnet_noun_synset "07182782", "00798247", "00805278", "06568472", "01217047", "07205939", "07206356" ; 
   :wordnet_verb_synset "00749139", "02396945", "00748704", "00756987", "00718950" .
 
@@ -151,7 +151,7 @@
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Permission" ;
   :definition "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property." ;
-  :noun_synonym "authorization", "consent", "allowing", "approval", "dispensation", "license", "permitting", "authorizing", "consenting", "approving", "licensing" ;
+  :noun_synonym "authorization", "consent", "allowing", "approval", "license", "permitting", "authorizing", "consenting", "approving", "licensing" ;
   :verb_synonym "allow", "approve", "authorize", "let", "permit", "license" ;
   :wordnet_noun_synset "01141515", "06699481" ;
   :wordnet_verb_synset "02479404", "00803980", "02449527" .
@@ -187,17 +187,17 @@
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Sarcasm, Slander and Derision" ;
   :definition "A CommunicationAndSpeechAct that is intended to ridicule or mock something or someone. Note that who/what is mocked is identified using the :has_topic predicate." ;
-  :noun_synonym "mockery", "ridicule", "jeer", "taunt", "disrespect", "deriding", "ridiculing", "jeering", "taunting", "disrespecting", "denigration", "denigrating", "discourtesy" ;
-  :verb_synonym "mock", "ridicule", "jeer", "taunt", "disrespect", "be sarcastic", "deride", "tease", "denigration", "slander" ;
+  :noun_synonym "mockery", "ridicule", "jeer", "taunt", "disrespect", "deriding", "ridiculing", "jeering", "taunting", "disrespecting", "denigration", "denigrating", "discourtesy", "disparagement" ;
+  :verb_synonym "mock", "ridicule", "jeer", "taunt", "disrespect", "be sarcastic", "deride", "tease", "denigration", "slander", "disparage" ;
   :wordnet_noun_synset "06790003", "01226520", "06728866",  "06733349", "01222825" ;
   :wordnet_verb_synset "00850760", "00851012", "00852181", "02463257", "00848188" .
 
 :SurrenderAndYielding a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Surrender and Yielding" ;
-  :definition "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another. Note that this Event may involve making a statement or issuing a communication, if so, the individual should also be classified as a :CommunicationAndSpeechAct." ;
+  :definition "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another." ;
   :noun_synonym "capitulation", "succombing", "giving in", "giving way", "abdication", "relenting", "relinquishment", "resigning", "surrendering", "capitulating", "abdicating", "relinquishing" ;
-  :verb_synonym "surrender", "yield", "capitulate", "succumb", "give in", "give way", "abdicate", "relent", "relinquish", "resign", "cede" ;
+  :verb_synonym "surrender", "yield", "capitulate", "succumb", "give in", "give up", "give way", "abdicate", "relent", "relinquish", "resign", "cede" ;
   :wordnet_noun_synset "00068527", "06523753", "07269504", "00213657", "07269262" ;
   :wordnet_verb_synset "01118865", "00806138", "02384340", "02232523", "02240011", "02709149", "00805801" .
 

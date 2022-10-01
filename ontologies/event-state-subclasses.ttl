@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: August 21 2022
+# Last Modified: September 13 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -55,7 +55,8 @@
 #  Combined EducationalEvent with Cognition's Learning (and renamed it
 #   to :LearningAndEducation, in misc-event-subclasses.ttl)
 #  Renamed Reward to RewardAndCompensation
-#  Added Alignment, Bribe, Coup, SiegeAndSurrounding and StateOrPhysicalChange
+#  Added Alignment, Bribe, Coup, DistributionAndSupply, 
+#    SiegeAndSurrounding and StateOrPhysicalChange
 ########################################################################
 
 
@@ -67,7 +68,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Acquisition" ;
   :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
-  :noun_synonym "discovery", "find", "acquiring", "obtaining", "discovering", "finding", "find", "collecting" ;
+  :noun_synonym "discovery", "find", "acquiring", "obtaining", "discovering", "finding", "collecting" ;
   :verb_synonym "acquire", "obtain", "discover", "find", "collect" ;
   :wordnet_noun_synset "00042637", "00043933" ;
   :wordnet_verb_synset "02215637", "00723361" .
@@ -77,7 +78,7 @@
   rdfs:label "Act of Publishing" ;
   :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." ;
   :noun_synonym "printing", "reporting", "broadcasting" ;
-  :verb_synonym "publish", "print", "report", "broadcast", "publicize", "publicise", "air", "bring out", "put out", "issue", "distribute", "disseminate", "transmit" ;
+  :verb_synonym "publish", "print", "report", "broadcast", "publicize", "publicise", "air", "bring out", "put out", "distribute", "disseminate", "transmit" ;
   :wordnet_verb_synset "00956640" .
 
 :AggressiveOrHostileAct a owl:Class ;
@@ -118,8 +119,8 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Art and Entertainment Event" ;
   :definition "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)." ;
-  :noun_synonym "performance", "rehearsal", "performing", "entertaining", "rehearsing" ;
-  :verb_synonym "perform", "act", "entertain", "rehearse" ;
+  :noun_synonym "performance", "rehearsal", "entertaining", "rehearsing" ;
+  :verb_synonym "entertain", "rehearse" ;
   :wordnet_verb_synset "01718067", "02497847", "01727101" .
 
 :Assessment a owl:Class ;
@@ -294,6 +295,15 @@
   :noun_synonym "catastrophe", "cataclysm", "calamity", "act of God", "force majeure", "tragedy" ;
   :wordnet_noun_synset "00218366", "07329438" .
 
+:DistributionAndSupply a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Distribution and Supply" ;
+  :definition "Events related to giving out materials/Resources to Agents (typically Persons)." ;
+  :noun_synonym "distributing", "giving out", "handing out", "dispensing", "issuance", "passing around", "doling out", "allocation", "allotment", "apportioning", "apportionment", "meting out", "dissemination", "dispersal", "rationing", "proration", "parceling", "parcelling", "assignation" ;
+  :verb_synonym "distribute", "hand out", "dispense", "issuance", "pass around", "dole out", "allocate", "allot", "apportion", "mete out", "proration", "ration", "spread", "deploy", "bootleg", "circulate", "furnish", "equip" ; 
+  :wordnet_noun_synset "00809586", "01085001", "01085569" ;
+  :wordnet_verb_synset "01381221", "02047080" .
+
 :Divorce a owl:Class ;
   rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
   rdfs:label "Divorce" ;
@@ -317,7 +327,7 @@
   rdfs:label "Election" ;
   :definition "The act of choosing an Agent to play a role or to hold a position within a GroupOfAgents." ;
   :example "Examples are the election of a Person to political office, or to serve in a role such as a jury foreman or chairman of a committee." ;
-  :noun_synonym "ballot", "electing", "voting", "vote", "balloting" ;
+  :noun_synonym "ballot", "electing", "voting", "vote", "balloting", "primary", "primarying" ;
   :verb_synonym "elect", "vote", "ballot" ;
   :wordnet_noun_synset "00182630", "00184354", "00181811" ;
   :wordnet_verb_synset "02405902", "02466737" .
@@ -395,7 +405,7 @@
   rdfs:label "Health and Disease Related" ;
   :definition "Any event or condition concerning disease, disorders, illness, etc. (and recovery from such) by humans, plants and animals. The diseases, illnesses, etc. are indicated using the :has_topic property. Note that several sub-classes are also typed as an AgentAspect to allow them to define 'some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them'. When used in that sense, the instance is related to a Person using the :has_agent_aspect property." ;
   :noun_synonym "sickness", "ailment", "ailing", "malady", "affliction", "cure", "curing", "healing", "ill health", "unhealthiness", "health problem", "remedy", "immunization", "immunisation", "inoculation", "vaccination", "unhealthiness", "illness", "sickliness" ;
-  :verb_synonym "cure", "heal", "vaccinate", "immunize", "immunise", "inoculate" ;
+  :verb_synonym "cure", "heal", "vaccinate", "immunize", "immunise", "inoculate", "sicken" ;
   :wordnet_noun_synset "04081594", "00830651", "14075528" ; 
   :wordnet_verb_synset "00081478", "00086587" .
 
@@ -523,7 +533,7 @@
   rdfs:label "Possession" ;
   :definition "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
   :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "possessing", "ownership", "owner" ;
-  :verb_synonym "take possession", "possess", "get hold of", "get one's hands on", "belong to", "keep", "control", "have", "own", "get hold of" ;
+  :verb_synonym "take possession", "possess", "get hold of", "get one's hands on", "belong to", "keep", "control", "own", "get hold of" ;
   :wordnet_noun_synset "14503072", "14502904", "00032912", "00811126", "00812259", "13261412", "14503072" ;
   :wordnet_verb_synset "02209474", "01216829", "02306641" .
 
@@ -605,7 +615,7 @@
   :definition "Proceeding with an act that is dangerous and/or may result in injury, failure or loss." ;
   :definition "Proceeding with an act that is dangerous and/or that has the 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings." ;
   :noun_synonym "audacity", "bravado", "boldness", "daring", "recklessness", "venturing", "danger", "recklessness", "foolhardiness", "rashness", "gutsiness" ;
-  :verb_synonym "risk", "take a risk", "stick one's neck out", "take a leap in the dark", "venture", "put on the line", "lay on the line" ;
+  :verb_synonym "risk", "take a risk", "stick one's neck out", "take a leap in the dark", "venture", "put on the line", "lay on the line", "take a chance" ;
   :wordnet_noun_synset "00803899", "04669283", "04866016", "04867047" ; 
   :wordnet_verb_synset "02551275" . 
 
@@ -614,7 +624,7 @@
   rdfs:label "Searching" ;
   :definition "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property." ;
   :noun_synonym "hunt", "exploration", "forage", "stalking", "rummaging", "seeking", "hunting", "exploring", "foraging", "investigation" ;
-  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "root around", "fish around", "look high and low", "search", "investigate", "track down", "pursue" ;
+  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "root around", "fish around", "look high and low", "search", "investigate", "track down" ;
   :wordnet_noun_synset "00453279", "00947217" ;
   :wordnet_verb_synset "01318273", "00790800", "01320383", "01146304", "02004900" .
 
@@ -623,7 +633,7 @@
   rdfs:label "Separation" ;
   :definition "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts." ;
   :noun_synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation", "splitting", "disassembly", "partition", "division", "disconnecting", "detaching", "severing", "dissociating", "disassembling", "breaking", "isolating", "segregating", "dividing", "separating", "disjunction", "disjuncture", "disconnection", "disconnectedness", "discontinuity", "division" ;
-  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide", "separate", "decompose",  "diverge", "branch", "fork", "furcate", "disperse", "scatter", "fall apart", "come apart", "break apart", "isolate" ;
+  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide", "separate", "decompose",  "diverge", "branch", "fork", "furcate", "scatter", "fall apart", "come apart", "break apart", "isolate" ;
   :wordnet_noun_synset "14441101", "14440955", "08664696", "00386599" ; 
   :wordnet_verb_synset "00209582", "02036260", "00331375", "02035003", "00334996", "00369315", "00495205" . 
 
