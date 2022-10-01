@@ -7,7 +7,7 @@ from typing import Union
 from dna.create_noun_turtle import create_noun_ttl
 from dna.database import query_database
 from dna.get_ontology_mapping import get_noun_mapping
-from dna.queries import query_noun_as_verb, query_specific_noun
+from dna.queries import query_specific_noun
 from dna.utilities import dna_prefix, empty_string, names_to_geo_dict, ontologies_database, owl_thing2
 
 pronouns = ['I', 'we', 'us', 'they', 'them', 'he', 'she', 'it',
@@ -162,7 +162,7 @@ def _check_pronouns(pronoun: str, last_nouns: list) -> list:
     elif pronoun_lower in ('he', 'himself'):
         # Find singular, masculine, person nouns
         pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, True, False, True))
-    elif pronoun_lower == ('it', 'itself'):
+    elif pronoun_lower in ('it', 'itself'):
         # Find singular, non-person nouns (no gender)
         pronoun_details.extend(_check_criteria(pronoun_lower, last_nouns, True, None, False))
     return pronoun_details

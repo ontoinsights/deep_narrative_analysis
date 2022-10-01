@@ -165,19 +165,18 @@ def _process_xcomp_prt(chunk_dict: dict) -> (dict, dict, bool):
         True if (subjects_string not in chunk_dict and objects_string in chunk_dict) else False
 
 
-def _process_xcomp_root(event_iri: str, lemma: str, root_text: str, root_map: list, chunk_dict: dict, plet_dict: dict,
+def _process_xcomp_root(event_iri: str, root_text: str, root_map: list, chunk_dict: dict, plet_dict: dict,
                         last_nouns: list, last_events: list, turtle: list, ext_sources: bool) -> (str, list):
     """
     Adjust the current array of Turtle statements taking the xcomp root verb into account.
 
-    :param event_iri: An IRI identifying the verb event
-    :param xcomp_dict: A dictionary whose keys are the xcomp verb lemma and values are the 'xcomp >'
-                       processing string
-    :param chunk_dict: A dictionary holding details about the chunk
+    :param event_iri: An IRI identifying the verb even
+    :param root_text: String holding the xcomp root verb's text
+    :param root_map: An array holding the mapping of the root verb to the DNA ontology
+    :param chunk_dict: A dictionary holding the NLP details about the chunk
     :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
              the narrative to-date - For co-reference resolution (it may be updated by this function);
              Keys = 'persons', 'locs', 'events', 'times' and Values that vary for the different keys
-    :param loc_time_iris: An array holding the last processed location (index 0) and time (index 1)
     :param last_nouns: An array of noun texts, type, class mapping and IRI from the current paragraph
     :param last_events: A list/array of tuples defining an event DNA class mapping and IRI, found in the
                         current paragraph
@@ -187,11 +186,7 @@ def _process_xcomp_root(event_iri: str, lemma: str, root_text: str, root_map: li
     :return: A tuple consisting of the event_iri string and the turtle array (unchanged or updated
              to take the xcomp root into account)
     """
-    verb_dict = dict()
-    for verb in chunk_dict['verbs']:
-        if root_text == verb['verb_lemma']:
-            verb_dict = verb
-    replacement_ttl = handle_xcomp_processing((root_text, root_map), lemma, chunk_dict, plet_dict,
+    replacement_ttl = handle_xcomp_processing((root_text, root_map), chunk_dict, plet_dict,
                                               last_nouns, last_events, turtle, event_iri, ext_sources)
     return event_iri, replacement_ttl if replacement_ttl else turtle
 
@@ -263,7 +258,7 @@ def process_verb(chunk_dict: dict, plet_dict: dict, loc_time_iris: list, last_no
             # Future: Code assumes that there is only 1 mapping for an aux verb and no xcomp; Is this valid?
             aux_map = aux_mappings[0]
             if 'Emotion' in aux_map:
-                xcomp_dict[lemma] = f'xcomp > {verbs["verb_aux"]}, {lemma}'
+                xcomp_dict[lemma] = f'xcomp > {verb["verb_aux"]}, {lemma}'
             else:
                 ttl_list.append(f'{event_iri} a {aux_map.replace("+", ", ")} .')
         # Second deal with prt verbs
@@ -300,6 +295,6 @@ def process_verb(chunk_dict: dict, plet_dict: dict, loc_time_iris: list, last_no
         # TODO: ttl_list.append(f'{chunk_iri} :sentiment {_get_text_sentiment(label)} .')
         # TODO: Update last_events
         if xcomp_dict and lemma in xcomp_dict and xcomp_root_mappings:
-            return _process_xcomp_root(event_iri, lemma, root_text, xcomp_root_mappings, chunk_dict, plet_dict,
+            return _process_xcomp_root(event_iri, root_text, xcomp_root_mappings, chunk_dict, plet_dict,
                                        last_nouns, last_events, ttl_list, ext_sources)
     return event_iri, ttl_list

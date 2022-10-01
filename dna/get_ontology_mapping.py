@@ -177,13 +177,13 @@ def determine_ontology_verb_be(verb_dict: dict, sent_subjects: list, turtle: lis
                     new_ttl = _determine_norp_emotion_or_lob(word, sent_subjects)
                     if new_ttl:
                         break
-            # TODO: Process text similar to 'She is tall' (e.g., not an emotion, ...), or 'The killer is Mary'
+            # TODO: Handle text similar to 'She is tall' (e.g., not an emotion, ...), or 'The killer is Mary'
             if new_ttl:    # Truthy indicates that the word_dict was processed
                 turtle.extend(new_ttl)
             else:
-                return create_basic_environment_ttl(subjs)    # TODO: Improve and use objects
+                return create_basic_environment_ttl(sent_subjects)    # TODO: Improve and use objects
     else:
-        return create_basic_environment_ttl(subjs)            # TODO: Improve
+        return create_basic_environment_ttl(sent_subjects)            # TODO: Improve
     return []   # Everything addressed by new Turtle
 
 
@@ -323,10 +323,16 @@ def get_verb_mapping(text: str, verb_dict: dict, subjects: list) -> list:
     """
     verb_classes = _revise_verb_mapping(_check_dicts(text, True), verb_dict, subjects)
     if not verb_classes:     # No multiple class mappings
-        if space in text:     # verb + prt or verb + prep
-            ontol_class = query_exact_and_approx_match(text, empty_string)    # Check the ontology for exact match
-            if ontol_class != owl_thing2:
-                return check_emotion_loc_movement([ontol_class], 'movement')
+        if space in text:     # verb + prt or verb + prep or event proper noun (such as 'World War II')
+            if text.istitle():     # Proper noun
+                for text_word in text.split(space):
+                    ontol_class = query_exact_and_approx_match(text_word.lower(), empty_string)
+                    if ontol_class != owl_thing2:
+                        return [ontol_class]
+            else:
+                ontol_class = query_exact_and_approx_match(text, empty_string)    # Check the ontology for exact match
+                if ontol_class != owl_thing2:
+                    return check_emotion_loc_movement([ontol_class], 'movement')
         else:
             ontol_class = query_exact_and_approx_match(text.lower(), query_event)     # Check the ontology
         if ontol_class != owl_thing2:

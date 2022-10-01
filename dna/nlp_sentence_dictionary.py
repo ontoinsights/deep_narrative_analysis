@@ -19,8 +19,7 @@ from spacy.language import Language
 from spacy.tokens import Token
 
 from dna.nlp_sentence_tokens import add_token_details
-from dna.utilities import empty_string, objects_string, subjects_string, add_to_dictionary_values, \
-    processed_prepositions
+from dna.utilities import objects_string, subjects_string, add_to_dictionary_values, processed_prepositions
 
 
 def _adjust_xcomp_prt(processing: list) -> list:
@@ -55,7 +54,7 @@ def _adjust_xcomp_prt(processing: list) -> list:
     elif xcomp_tuples:
         return [f'xcomp > {verb1}, {verb2}' for verb1, verb2 in xcomp_tuples]
     elif prts:
-        return [f'prt > prt' for prt in prts]
+        return [f'prt > {prt}' for prt in prts]
 
 
 def _process_aux(aux_token: Token, verb_dictionary: dict):

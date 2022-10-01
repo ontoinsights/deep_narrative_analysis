@@ -18,12 +18,11 @@ import logging
 from textblob import TextBlob
 import uuid
 
-from dna.coreference_resolution import check_nouns
 from dna.process_locations import get_sentence_locations
 from dna.process_persons import get_sentence_persons
 from dna.process_times import get_sentence_times
 from dna.process_verbs import process_verb
-from dna.utilities import empty_string, objects_string, subjects_string
+from dna.utilities import empty_string
 
 ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
                 '@prefix dc: <http://purl.org/dc/terms/> .', '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
@@ -89,7 +88,6 @@ def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, plet_dict: dic
     chunk_text = chunk_dict['chunk_text']
     chunk_ttl_list = [f'{chunk_iri} a :Chunk ; :offset {offset} .',
                       f'{chunk_iri} :text "{chunk_text}" .']
-    print('chunk', chunk_text)
     if chunk_text.startswith('Quotation'):
         return chunk_ttl_list
     event_iri, new_ttl_list = process_verb(chunk_dict, plet_dict, loc_time_iris, last_nouns, last_events,

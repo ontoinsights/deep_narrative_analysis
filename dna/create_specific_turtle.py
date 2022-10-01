@@ -24,12 +24,12 @@ def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool) -
     if not process_verb and '+' in class_map and \
             ('dna:Person+' in class_map or 'dna:OrganizationalEntity' in class_map):
         for detail in class_map.split('+'):    # Class names that define the type, '+' indicates multiple inheritance
-            if query_class(detail, query_lob_or_event.replace('check', 'LineOfBusiness')):
+            if query_class(detail, query_subclass.replace('check', 'LineOfBusiness')):
                 class_map = class_map.replace(f'+{detail}', empty_string)
                 class_map = class_map.replace(detail, empty_string)
                 type_turtle.append(
                    f'{indiv_iri} :has_line_of_business {detail.replace(dna_prefix, ":")} .')
-            elif query_class(detail, query_lob_or_event.replace('check', 'EventAndState')):
+            elif query_class(detail, query_subclass.replace('check', 'EventAndState')):
                 class_map = class_map.replace(f'+{detail}', empty_string)
                 class_map = class_map.replace(detail, empty_string)
                 match_iri = f':PersonEvent_{str(uuid.uuid4())[:13]}'
@@ -48,7 +48,7 @@ def create_basic_environment_ttl(subjs: list) -> list:
     :param subjs: Array of tuples that are the subjects' texts, mappings, types and IRIs
     :return: An array holding the Turtle statements describing the condition
     """
-    event_iri = f':{general_type}_{str(uuid.uuid4())[:13]}'
+    event_iri = f':EnvCondition_{str(uuid.uuid4())[:13]}'
     condition_turtle = [f'{event_iri} a :EnvironmentAndCondition .']
     for subj in subjs:
         subj_text, subj_type, subj_mappings, subj_iri = subj

@@ -20,7 +20,6 @@ def _get_person_iri_and_ttl(person_text: str, plet_dict: dict, use_sources: bool
              Keys = 'persons', 'locs', 'events', 'times', Values (for 'persons') = array of arrays
              with index 0 holding an array of labels associated with the person (variations on their
              name), index 1 storing the person's entity type and index 2 storing the person's IRI
-    :param person_turtle: An array of Turtle statements defining named persons in the current chunk
     :param use_sources: Boolean indicating whether additional information on a person should
                         be retrieved from Wikidata (recommended)
     :return: A tuple holding 1) an array of alternate names for the person, 2) a string with the

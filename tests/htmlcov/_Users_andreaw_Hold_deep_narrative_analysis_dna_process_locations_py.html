@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for /Users/andreaw/Hold/deep_narrative_analysis/dna/process_locations.py: 73%</title>
+    <title>Coverage for /Users/andreaw/Hold/deep_narrative_analysis/dna/process_locations.py: 76%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,15 +18,15 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>/Users/andreaw/Hold/deep_narrative_analysis/dna/process_locations.py</b> :
-            <span class="pc_cov">73%</span>
+            <span class="pc_cov">76%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             75 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">57 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">18 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">59 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">16 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
-            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">5 partial</button>
+            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">3 partial</button>
         </h2>
     </div>
 </div>
@@ -81,8 +81,8 @@
     <p id="t26" class="run"><span class="n"><a href="#t26">26</a></span><span class="t">        <span class="key">return</span> <span class="op">[</span><span class="op">]</span><span class="op">,</span> <span class="nam">empty_string</span>&nbsp;</span><span class="r"></span></p>
     <p id="t27" class="run"><span class="n"><a href="#t27">27</a></span><span class="t">    <span class="nam">known_locs</span> <span class="op">=</span> <span class="nam">plet_dict</span><span class="op">[</span><span class="str">'locs'</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p id="t28" class="run"><span class="n"><a href="#t28">28</a></span><span class="t">    <span class="key">for</span> <span class="nam">known_loc</span> <span class="key">in</span> <span class="nam">known_locs</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t29" class="par run show_par"><span class="n"><a href="#t29">29</a></span><span class="t">        <span class="key">if</span> <span class="nam">loc_text</span> <span class="key">in</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">0</span><span class="op">]</span><span class="op">:</span>                    <span class="com"># Strings match</span>&nbsp;</span><span class="r"><span class="annotate short">29&#x202F;&#x219B;&#x202F;30</span><span class="annotate long">line 29 didn't jump to line 30, because the condition on line 29 was never true</span></span></p>
-    <p id="t30" class="mis show_mis"><span class="n"><a href="#t30">30</a></span><span class="t">            <span class="key">return</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">2</span><span class="op">]</span><span class="op">,</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">3</span><span class="op">]</span>           <span class="com"># NER maps to a known/processed location, with an IRI</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t29" class="run"><span class="n"><a href="#t29">29</a></span><span class="t">        <span class="key">if</span> <span class="nam">loc_text</span> <span class="key">in</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">0</span><span class="op">]</span><span class="op">:</span>                    <span class="com"># Strings match</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t30" class="run"><span class="n"><a href="#t30">30</a></span><span class="t">            <span class="key">return</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">2</span><span class="op">]</span><span class="op">,</span> <span class="nam">known_loc</span><span class="op">[</span><span class="num">3</span><span class="op">]</span>           <span class="com"># NER maps to a known/processed location, with an IRI</span>&nbsp;</span><span class="r"></span></p>
     <p id="t31" class="run"><span class="n"><a href="#t31">31</a></span><span class="t">    <span class="key">return</span> <span class="op">[</span><span class="op">]</span><span class="op">,</span> <span class="nam">empty_string</span>&nbsp;</span><span class="r"></span></p>
     <p id="t32" class="pln"><span class="n"><a href="#t32">32</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t33" class="pln"><span class="n"><a href="#t33">33</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
@@ -113,8 +113,8 @@
     <p id="t58" class="run"><span class="n"><a href="#t58">58</a></span><span class="t">    <span class="key">if</span> <span class="nam">loc_text</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span><span class="op">.</span><span class="nam">startswith</span><span class="op">(</span><span class="str">'the '</span><span class="op">)</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
     <p id="t59" class="run"><span class="n"><a href="#t59">59</a></span><span class="t">        <span class="nam">loc_text</span> <span class="op">=</span> <span class="nam">loc_text</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">'the '</span><span class="op">,</span> <span class="nam">empty_string</span><span class="op">)</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">'The '</span><span class="op">,</span> <span class="nam">empty_string</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t60" class="run"><span class="n"><a href="#t60">60</a></span><span class="t">    <span class="nam">loc_maps</span><span class="op">,</span> <span class="nam">loc_iri</span> <span class="op">=</span> <span class="nam">check_if_loc_is_known</span><span class="op">(</span><span class="nam">loc_text</span><span class="op">,</span> <span class="nam">plet_dict</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t61" class="par run show_par"><span class="n"><a href="#t61">61</a></span><span class="t">    <span class="key">if</span> <span class="nam">loc_iri</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">61&#x202F;&#x219B;&#x202F;62</span><span class="annotate long">line 61 didn't jump to line 62, because the condition on line 61 was never true</span></span></p>
-    <p id="t62" class="mis show_mis"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="key">return</span> <span class="op">[</span><span class="op">]</span><span class="op">,</span> <span class="nam">loc_maps</span><span class="op">,</span> <span class="nam">loc_iri</span><span class="op">,</span> <span class="op">[</span><span class="op">]</span>   <span class="com"># Don't care about alt names and have no Turtle</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t61" class="run"><span class="n"><a href="#t61">61</a></span><span class="t">    <span class="key">if</span> <span class="nam">loc_iri</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t62" class="run"><span class="n"><a href="#t62">62</a></span><span class="t">        <span class="key">return</span> <span class="op">[</span><span class="op">]</span><span class="op">,</span> <span class="nam">loc_maps</span><span class="op">,</span> <span class="nam">loc_iri</span><span class="op">,</span> <span class="op">[</span><span class="op">]</span>   <span class="com"># Don't care about alt names and have no Turtle</span>&nbsp;</span><span class="r"></span></p>
     <p id="t63" class="run"><span class="n"><a href="#t63">63</a></span><span class="t">    <span class="nam">loc_iri</span> <span class="op">=</span> <span class="str">f':{loc_text.replace(space,"_")}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t64" class="par run show_par"><span class="n"><a href="#t64">64</a></span><span class="t">    <span class="key">if</span> <span class="nam">from_ner</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">64&#x202F;&#x219B;&#x202F;78</span><span class="annotate long">line 64 didn't jump to line 78, because the condition on line 64 was never false</span></span></p>
     <p id="t65" class="pln"><span class="n"><a href="#t65">65</a></span><span class="t">        <span class="com"># Know that this is identified as a LOC, GPE, ...; See if there is more info</span>&nbsp;</span><span class="r"></span></p>
@@ -209,7 +209,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2022-09-30 22:11 -0400
+            created at 2022-10-01 17:11 -0400
         </p>
     </div>
 </div>

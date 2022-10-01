@@ -8,7 +8,7 @@ from dna.get_ontology_mapping import get_noun_mapping
 from dna.nlp import get_named_entities_in_string
 from dna.query_ontology import get_norp_emotion_or_lob
 from dna.query_sources import get_geonames_location, get_wikipedia_description
-from dna.utilities import days, dna_prefix, empty_string, months, names_to_geo_dict, space
+from dna.utilities import days, empty_string, months, names_to_geo_dict, space
 
 person = ':Person'
 person_collection = ':Person, :Collection'
@@ -109,7 +109,7 @@ def create_geonames_ttl(loc_iri: str, loc_text: str) -> (list, str, list):
     return geonames_ttl, class_type, alt_names
 
 
-def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str) -> (str, list):
+def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str) -> (list, list):
     """
     Definition of the Turtle for a Person, Group or Organization that was identified by spaCy as a
     'NORP' (nationality, religion, political party, ...).
@@ -117,14 +117,15 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str) -> (str, list
     :param noun_text: String holding the noun text
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
     :param noun_iri: String identifying the noun concept as an IRI
-    :return: A tuple holding the type of noun (e.g., Person or GroupOfAgents) and an array of
+    :return: A tuple holding the type of noun (e.g., Person or OrganizationalEntity) and an array of
              the defining Turtle (if appropriate)
     """
     # Check if ethnic group, religious group, ... that is already defined in the DNA ontology
     norp_type, norp_class = get_norp_emotion_or_lob(noun_text)
     wikipedia_desc = empty_string
     retrieved_desc = False
-    if not norp_class or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
+    if not norp_class or norp_type == 'EmotionalResponse' \
+            or norp_type == 'LineOfBusiness':   # Should not be LOB or emotion
         # Check if a type of ethnic, religious or political group by checking the Wikipedia description
         wikipedia_desc = get_wikipedia_description(noun_text)
         retrieved_desc = True
@@ -140,9 +141,9 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str) -> (str, list
                         break
     # Did not find match of the word or any details from its definition
     if not norp_class or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness':
-        type_str = ':Organization'
+        type_str = ':OrganizationalEntity'
         if 'PLURAL' in noun_type:
-            type_str = ':Organization, :Collection'
+            type_str += ':, :Collection'
         norp_ttl = [f'{noun_iri} a {type_str} ; rdfs:label "{noun_text}" .']
         if not retrieved_desc:
             wikipedia_desc = get_wikipedia_description(noun_text)
@@ -159,7 +160,7 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str) -> (str, list
             norp_ttl.append(f'{noun_iri} :has_political_ideology <{norp_class}> .')
     if noun_type.startswith('NEG'):
         norp_ttl.append(f'{noun_iri} :negation true .')
-    return norp_ttl
+    return [type_str], norp_ttl
 
 
 def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool,
@@ -184,7 +185,7 @@ def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool
         class_name = ':GeopoliticalEntity+:Location'
     # Nationalities, religious or political groups
     if noun_type.endswith('NORP'):
-        return create_norp_ttl(noun_text, noun_type, noun_iri)   # TODO: Return 2
+        return create_norp_ttl(noun_text, noun_type, noun_iri)
     if noun_type.endswith('ORG'):
         class_name = ':Organization'
     if noun_type.endswith('LOC'):

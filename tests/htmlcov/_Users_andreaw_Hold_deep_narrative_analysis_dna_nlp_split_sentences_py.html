@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for /Users/andreaw/Hold/deep_narrative_analysis/dna/nlp_split_sentences.py: 95%</title>
+    <title>Coverage for /Users/andreaw/Hold/deep_narrative_analysis/dna/nlp_split_sentences.py: 97%</title>
     <link rel="icon" sizes="32x32" href="favicon_32.png">
     <link rel="stylesheet" href="style.css" type="text/css">
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -18,15 +18,15 @@
 <div id="header">
     <div class="content">
         <h1>Coverage for <b>/Users/andreaw/Hold/deep_narrative_analysis/dna/nlp_split_sentences.py</b> :
-            <span class="pc_cov">95%</span>
+            <span class="pc_cov">97%</span>
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
             197 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">189 run</button>
-            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">8 missing</button>
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">192 run</button>
+            <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">5 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
-            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">6 partial</button>
+            <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">5 partial</button>
         </h2>
     </div>
 </div>
@@ -153,19 +153,19 @@
     <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t">                    <span class="nam">_store_chunks_in_order</span><span class="op">(</span><span class="nam">unseen_chunk</span><span class="op">,</span>&nbsp;</span><span class="r"></span></p>
     <p id="t99" class="pln"><span class="n"><a href="#t99">99</a></span><span class="t">                                           <span class="str">f"{' '.join(subj_texts)} {seen_chunk}"</span> <span class="key">if</span> <span class="nam">subj_texts</span> <span class="key">else</span> <span class="nam">seen_chunk</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t100" class="run"><span class="n"><a href="#t100">100</a></span><span class="t">            <span class="key">elif</span> <span class="nam">processing_type</span> <span class="op">==</span> <span class="str">'advcl'</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t101" class="par run show_par"><span class="n"><a href="#t101">101</a></span><span class="t">                <span class="key">if</span> <span class="nam">connector</span><span class="op">.</span><span class="nam">text</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">in</span> <span class="nam">later_connectors</span><span class="op">:</span>   <span class="com"># Store unseen_chunk first</span>&nbsp;</span><span class="r"><span class="annotate short">101&#x202F;&#x219B;&#x202F;102</span><span class="annotate long">line 101 didn't jump to line 102, because the condition on line 101 was never true</span></span></p>
-    <p id="t102" class="mis show_mis"><span class="n"><a href="#t102">102</a></span><span class="t">                    <span class="key">if</span> <span class="str">'eventually'</span> <span class="key">in</span> <span class="nam">unseen_chunk</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">or</span> <span class="str">'afterwards'</span> <span class="key">in</span> <span class="nam">unseen_chunk</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">or</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t101" class="run"><span class="n"><a href="#t101">101</a></span><span class="t">                <span class="key">if</span> <span class="nam">connector</span><span class="op">.</span><span class="nam">text</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">in</span> <span class="nam">later_connectors</span><span class="op">:</span>   <span class="com"># Store unseen_chunk first</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t102" class="par run show_par"><span class="n"><a href="#t102">102</a></span><span class="t">                    <span class="key">if</span> <span class="str">'eventually'</span> <span class="key">in</span> <span class="nam">unseen_chunk</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">or</span> <span class="str">'afterwards'</span> <span class="key">in</span> <span class="nam">unseen_chunk</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">or</span> <span class="xx">\</span>&nbsp;</span><span class="r"><span class="annotate short">102&#x202F;&#x219B;&#x202F;104</span><span class="annotate long">line 102 didn't jump to line 104, because the condition on line 102 was never true</span></span></p>
     <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t">                            <span class="str">'finally'</span> <span class="key">in</span> <span class="nam">unseen_chunk</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span><span class="op">:</span>    <span class="com"># Keywords override ordering</span>&nbsp;</span><span class="r"></span></p>
     <p id="t104" class="mis show_mis"><span class="n"><a href="#t104">104</a></span><span class="t">                        <span class="nam">chunks</span><span class="op">.</span><span class="nam">extend</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">                            <span class="nam">_store_chunks_in_order</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t">                                <span class="str">f"{' '.join(subj_texts)} {seen_chunk}"</span> <span class="key">if</span> <span class="nam">subj_texts</span> <span class="key">else</span> <span class="nam">seen_chunk</span><span class="op">,</span> <span class="nam">unseen_chunk</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t">                    <span class="key">else</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t108" class="mis show_mis"><span class="n"><a href="#t108">108</a></span><span class="t">                        <span class="nam">chunks</span><span class="op">.</span><span class="nam">extend</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t108" class="run"><span class="n"><a href="#t108">108</a></span><span class="t">                        <span class="nam">chunks</span><span class="op">.</span><span class="nam">extend</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t109" class="pln"><span class="n"><a href="#t109">109</a></span><span class="t">                            <span class="nam">_store_chunks_in_order</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t110" class="pln"><span class="n"><a href="#t110">110</a></span><span class="t">                                <span class="nam">unseen_chunk</span><span class="op">,</span> <span class="str">f"{' '.join(subj_texts)} {seen_chunk}"</span> <span class="key">if</span> <span class="nam">subj_texts</span> <span class="key">else</span> <span class="nam">seen_chunk</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p id="t111" class="pln"><span class="n"><a href="#t111">111</a></span><span class="t">                <span class="key">else</span><span class="op">:</span>     <span class="com"># Store seen_chunk first</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t112" class="par run show_par"><span class="n"><a href="#t112">112</a></span><span class="t">                    <span class="key">if</span> <span class="nam">connector</span><span class="op">.</span><span class="nam">text</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">in</span> <span class="nam">special_marks</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">112&#x202F;&#x219B;&#x202F;113</span><span class="annotate long">line 112 didn't jump to line 113, because the condition on line 112 was never true</span></span></p>
-    <p id="t113" class="mis show_mis"><span class="n"><a href="#t113">113</a></span><span class="t">                        <span class="nam">seen_chunk</span> <span class="op">+=</span> <span class="str">f'$&amp;{connector.text.lower()}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t112" class="run"><span class="n"><a href="#t112">112</a></span><span class="t">                    <span class="key">if</span> <span class="nam">connector</span><span class="op">.</span><span class="nam">text</span><span class="op">.</span><span class="nam">lower</span><span class="op">(</span><span class="op">)</span> <span class="key">in</span> <span class="nam">special_marks</span><span class="op">:</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t113" class="run"><span class="n"><a href="#t113">113</a></span><span class="t">                        <span class="nam">seen_chunk</span> <span class="op">+=</span> <span class="str">f'$&amp;{connector.text.lower()}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t114" class="run"><span class="n"><a href="#t114">114</a></span><span class="t">                    <span class="nam">chunks</span><span class="op">.</span><span class="nam">extend</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t115" class="pln"><span class="n"><a href="#t115">115</a></span><span class="t">                        <span class="nam">_store_chunks_in_order</span><span class="op">(</span>&nbsp;</span><span class="r"></span></p>
     <p id="t116" class="pln"><span class="n"><a href="#t116">116</a></span><span class="t">                            <span class="str">f"{' '.join(subj_texts)} {seen_chunk}"</span> <span class="key">if</span> <span class="nam">subj_texts</span> <span class="key">else</span> <span class="nam">seen_chunk</span><span class="op">,</span> <span class="nam">unseen_chunk</span><span class="op">)</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
@@ -427,7 +427,7 @@
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2022-09-30 22:11 -0400
+            created at 2022-10-01 17:11 -0400
         </p>
     </div>
 </div>

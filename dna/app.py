@@ -254,7 +254,7 @@ def narratives():
                             narr_meta['publisher'] if 'publisher' in narr_meta else not_defined,
                             narr_meta['source'] if 'source' in narr_meta else not_defined,
                             title]
-        # TODO: Check if narrative with this or similar metadata already exists
+        # Future: Do we care if a narrative with this or similar metadata already exists?
         narr = narr_data['narrative']
         logging.info(f'Ingesting {title} to {repo}')
         sentence_dicts, quotations, quotations_dict = parse_narrative(narr)

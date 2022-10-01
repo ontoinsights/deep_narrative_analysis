@@ -7,7 +7,7 @@ from dna.coreference_resolution import check_nouns
 from dna.create_specific_turtle import create_type_turtle
 from dna.query_ontology import check_subclass
 from dna.utilities import add_unique_to_array, dna_prefix, empty_string, objects_string, \
-    prep_to_predicate_for_locs, space
+    prep_to_predicate_for_locs
 
 has_location = ':has_location'
 
@@ -79,13 +79,11 @@ def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri
     :return: An array holding the Turtle statements describing the preposition object (and the
              prepositions array is updated)
     """
-    print('prep detail', prep_detail)
     prep_turtle = []
     prep_text, prep_obj_text, prep_obj_type = prep_detail
     prep_mapping = check_nouns(
         {'objects': [{'object_text': prep_obj_text, 'object_type': prep_obj_type}]}, 'objects',
         plet_dict, last_nouns, last_events, prep_turtle, ext_sources)
-    print('prep map', prep_mapping)
     # Should only be 1 tuple in prep_details array where 2nd value is the updated obj type, 3rd value is
     #    an array of class mappings and the 4th value is the IRI
     prep_obj_type = prep_mapping[0][1]
@@ -143,14 +141,13 @@ def handle_movement_locations(turtle: list, prepositions: list, loc_iri: str, ev
     return
 
 
-def handle_xcomp_processing(verb1_tuple: tuple, verb2_text: str, chunk_dict: dict, plet_dict: dict, last_nouns: list,
+def handle_xcomp_processing(verb1_tuple: tuple, chunk_dict: dict, plet_dict: dict, last_nouns: list,
                             last_events: list, turtle: list, event_iri: str, ext_sources: bool) -> list:
     """
     Handles xcomp processing for a sentence, which requires adjusting the subject/object,
     and more.
 
     :param verb1_tuple: The text of the root verb and mapping to the DNA ontology
-    :param verb2_text: The text of the xcomp verb
     :param chunk_dict: A dictionary holding details about the chunk
     :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
              the narrative to-date - For co-reference resolution (it may be updated by this function);

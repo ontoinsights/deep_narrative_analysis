@@ -17,9 +17,16 @@ last_nouns = []
 last_events = []
 
 
+def reset():
+    plet_dictionary.clear()
+    last_nouns.clear()
+    last_events.clear()
+
+
 def test_sent1_plet():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent1)
     sent_dict = sent_dicts[0]
+    reset()
     get_sentence_locations(sent_dict, plet_dictionary, last_nouns, True)
     get_sentence_times(sent_dict, '', plet_dictionary, last_nouns, True)
     get_sentence_persons(sent_dict, plet_dictionary, last_nouns, True)
@@ -66,15 +73,12 @@ def test_sent3_plet():
 
 
 def test_paragraphs():
-    plet_dictionary = dict()
-    last_nouns = []
-    last_events = []
+    reset()
     turtle = []
     sent_dicts, quotations, quotations_dict = parse_narrative(paragraphs)
     get_sentence_persons(sent_dicts[0], plet_dictionary, last_nouns, True)
     get_sentence_persons(sent_dicts[2], plet_dictionary, last_nouns, True)
     get_sentence_persons(sent_dicts[3], plet_dictionary, last_nouns, True)
-    sent_dict = sent_dicts[2]
     assert len(plet_dictionary['persons']) == 3
     assert plet_dictionary['persons'][0][2] == ':Harriet_Hageman'
     assert plet_dictionary['persons'][1][2] == ':Liz_Cheney'
@@ -85,9 +89,7 @@ def test_paragraphs():
 
 
 def test_sent1_no_ext():
-    plet_dictionary = dict()
-    last_nouns = []
-    last_events = []
+    reset()
     sent_dicts, quotations, quotations_dict = parse_narrative(sent1)
     sent_dict = sent_dicts[0]
     get_sentence_locations(sent_dict, plet_dictionary, last_nouns, False)

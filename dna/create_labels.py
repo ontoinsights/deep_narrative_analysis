@@ -1,8 +1,6 @@
 # Functions to process/modify sentence/verb labels
 # Called by create_narrative_turtle.py
 
-import uuid
-
 from dna.utilities import empty_string
 
 

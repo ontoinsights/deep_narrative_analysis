@@ -139,7 +139,7 @@ def test_sent_xcomp3():
     assert ':has_affected_agent :GOP_voters_' in ttl_str     # voters were urged
     assert ':has_topic :one_of_prominent_critics_' in ttl_str    # topic of urging
     assert 'a :OpportunityAndPossibility' in ttl_str             # urging does not mean that the xcomp event happens
-    assert ':the_Republican_primary_' in ttl_str and  'a :Election' in ttl_str
+    assert ':the_Republican_primary_' in ttl_str and 'a :Election' in ttl_str
     assert 'a :SurrenderAndYielding' in ttl_str           # Cheney conceded
     assert 'a :Failure' in ttl_str                        # defeat
     assert ':has_topic :defeat_'                          # topic of concession
@@ -212,6 +212,18 @@ def test_paragraphs():
     assert success   # Want to make sure that there are no exceptions
 
 
+def test_short_news_turtle():
+    for title in ('LC-FarRight', 'LC-Right', 'LC-Center', 'LC-Left'):
+        with open(f'resources/{title}.txt', 'r') as narr:
+            narrative = narr.read()
+            sent_dicts, quotations, quotations_dict = parse_narrative(narrative)
+            success, turtle = create_graph(sent_dicts, '', True, False)
+            print(title)
+            print(turtle)
+            assert success
+    # TODO: More detailed review/asserts
+
+
 def test_news_turtle():
     for title in ('LizCheney-FarRight', 'LizCheney-Right', 'LizCheney-Center', 'LizCheney-Left'):
         with open(f'resources/{title}.txt', 'r') as narr:
@@ -220,7 +232,8 @@ def test_news_turtle():
             success, turtle = create_graph(sent_dicts, '', False, False)
             print(title)
             print(turtle)
-            assert success     # TODO: Make sure that there are no exceptions
+            assert success
+    # TODO: More detailed review/asserts
 
 
 def test_narrative_turtle():
@@ -229,5 +242,5 @@ def test_narrative_turtle():
     sent_dicts, quotations, quotations_dict = parse_narrative(narrative)
     success, turtle = create_graph(sent_dicts, '', True, True)   # Timeline possible True
     print(turtle)
-    assert success             # TODO: Make sure that there are no exceptions
-
+    assert success
+    # TODO: More detailed review/asserts
