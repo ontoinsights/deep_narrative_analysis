@@ -42,15 +42,15 @@ def add_remove_data(op_type: str, triples: str, database: str, graph: str = empt
         if op_type == 'add':
             # Add to the database
             if graph:
-                conn.add(stardog.content.Raw(triples, text_turtle), graph_uri=graph)
+                conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
             else:
-                conn.add(stardog.content.Raw(triples, text_turtle))
+                conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
         else:
             # Remove from the database
             if graph:
-                conn.remove(stardog.content.Raw(triples, text_turtle), graph_uri=graph)
+                conn.remove(stardog.content.Raw(triples.encode('urf-8'), text_turtle), graph_uri=graph)
             else:
-                conn.remove(stardog.content.Raw(triples, text_turtle))
+                conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
         conn.commit()
         return empty_string
     except Exception as e:

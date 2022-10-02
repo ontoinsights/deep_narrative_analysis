@@ -352,7 +352,7 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
     new_time = _create_time_iri(before_after, time_text)
     if time_type == 'EVENT':
         new_time, time_ttl = _process_event_time(before_after, time_text, event_iri, plet_dict)
-        ttl_list.append(time_ttl)
+        ttl_list.extend(time_ttl)
     elif time_type == 'DATE':
         new_time, time_ttl = _process_date_time(before_after, time_text, event_iri, time_iri, plet_dict)
         ttl_list.extend(time_ttl)

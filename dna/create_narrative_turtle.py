@@ -15,7 +15,7 @@
 # There may be more than 1 verb when there is a root verb + an xcomp
 
 import logging
-from textblob import TextBlob
+# from textblob import TextBlob
 import uuid
 
 from dna.process_locations import get_sentence_locations
@@ -25,7 +25,8 @@ from dna.process_verbs import process_verb
 from dna.utilities import empty_string
 
 ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
-                '@prefix dc: <http://purl.org/dc/terms/> .', '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+                '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
+                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
 
 # Date processing is handled differently/separately
 # TODO: Other interpretations + near, on, over, of, without, ...

@@ -11,7 +11,7 @@ from dna.create_specific_turtle import create_metadata_ttl, create_quotations_tt
 from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, query_database
 from dna.nlp import parse_narrative
 from dna.queries import construct_kg, count_triples, delete_entity, query_narratives, query_dbs, update_narrative
-from dna.utilities import empty_string
+from dna.utilities import dna_prefix, empty_string
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
@@ -218,7 +218,8 @@ def repositories():
         db_list = []
         if len(db_bindings) > 0:
             for binding in db_bindings:
-                db_dict = {repository: binding['db']['value'], 'created': binding['created']['value']}
+                db_dict = {repository: binding['db']['value'].replace(dna_prefix, ''),
+                           'created': binding['created']['value']}
                 db_list.append(db_dict)
         return jsonify(db_list), 200
     else:
@@ -233,10 +234,9 @@ def narratives():
         if scode in (400, 404, 409):
             return jsonify(args_dict), scode
         repo = args_dict[repository]
-        use_sources = args_dict['extSources'] if 'extSources' in args_dict else False
-        timeline_poss = args_dict['timelinePossible'] if 'timelinePossible' in args_dict else False
-        if type(use_sources) != bool or type(timeline_poss) != bool:
-            return jsonify({error_str: 'extSources and/or timelinePossible must be set to "true" or "false".'}), 500
+        use_sources = True if 'extSources' in args_dict and args_dict['extSources'] == 'true' else False
+        timeline_poss = True if 'timelinePossible' in args_dict and args_dict['timelinePossible'] == 'true' else False
+        # TODO: Check if extSources or timelinePossible only true or false
         # Get text from request body
         if not request.data:
             return jsonify({'missing': ['narrativeText']}), 400
