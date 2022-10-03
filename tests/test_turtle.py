@@ -28,6 +28,7 @@ def test_sent_simple():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent_simple)
     success, graph_ttl = create_graph(sent_dicts, '', True, False)
     assert success
+    print(graph_ttl)
     ttl_str = str(graph_ttl)
     assert '"Elizabeth Lynne Cheney"' in ttl_str        # Person alt name
     assert ':Liz_Cheney :gender "Female"' in ttl_str    # Gender capture

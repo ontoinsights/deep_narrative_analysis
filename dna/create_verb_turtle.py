@@ -31,7 +31,6 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, ttl_list: list)
         else:
             ttl_list.append(f'{event_iri} :has_active_agent {subj_iri} .')
     for obj_text, obj_type, obj_mappings, obj_iri in objs:
-        print(obj_text, obj_type, obj_mappings, obj_iri)
         is_agent = False
         if 'PERSON' in obj_type or obj_type.endswith('GPE') or obj_type.endswith('ORG') \
                 or obj_type.endswith('NORP'):
@@ -50,7 +49,6 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, ttl_list: list)
                         break
                 if is_agent:
                     break
-        print(is_agent)
         if is_agent:
             if ':Affiliation' in ttl_str:
                 ttl_list.append(f'{event_iri} :affiliated_with {obj_iri} .')

@@ -7,6 +7,10 @@ from dna.database import query_class
 from dna.queries import query_subclass
 from dna.utilities import dna_prefix, empty_string
 
+ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
+                '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
+                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+
 
 def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, is_alt_coll: bool) -> list:
     """
@@ -118,23 +122,30 @@ def create_metadata_ttl(graph_id: str, narr_text: str, created_at: str,
     return turtle
 
 
-def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict) -> list:
+def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict,
+                          quotations_ttl: list, for_meta_dna: bool) -> list:
     """
-    Return the Turtle related to the quotations in a text.
+    Return the Turtle related to the quotations in a text - for the data to be added to
+    the meta_dna database (if for_meta_dna is True) or adding the detailed 'Quotation#'
+    text for the knowledge graph (if for_meta_dna is False).
 
     :param graph_id: The ID of the graph where the narrative is stored
     :param quotations: An array of quotations extracted from the original text
     :param quot_dict: An array of quotation dictionaries (key = 'Quotation#' which is referenced
                       in a chunk, and value = full quotation text) extracted from the original text
+    :param quotations_ttl: The current list of Turtle statements related to the quotations
+    :param for_meta_dna: A boolean indicating whether this processing is for the meta_dna repository
+                         or for the narrative's knowledge graph
     :return: An array of Turtle statements
     """
-    quote_ttl = []
     narr_iri = f':Narrative_{graph_id}'
-    for quotation in quotations:
-        quote_ttl.append(f'{narr_iri} :text_quote "{quotation}" .')
-    for quote_numb, text in quot_dict.items():
-        quote_ttl.append(f':{quote_numb} :text "{text}" .')
-    return quote_ttl
+    if for_meta_dna:
+        for quotation in quotations:
+            quotations_ttl.append(f'{narr_iri} :text_quote "{quotation}" .')
+    else:
+        for quote_numb, text in quot_dict.items():
+            quotations_ttl.append(f':{quote_numb} :text "{text}" .')
+    return quotations_ttl
 
 
 def create_type_turtle(class_mappings: list, subj_iri: str, is_verb: bool, noun_text: str) -> list:

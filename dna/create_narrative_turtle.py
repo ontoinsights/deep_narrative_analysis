@@ -22,11 +22,7 @@ from dna.process_agents import get_sentence_agents
 from dna.process_locations import get_sentence_locations
 from dna.process_times import get_sentence_times
 from dna.process_verbs import process_verb
-from dna.utilities import empty_string
-
-ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
-                '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
-                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+from dna.utilities import empty_string, ttl_prefixes
 
 # Date processing is handled differently/separately
 # TODO: Other interpretations + near, on, over, of, without, ...
@@ -108,6 +104,7 @@ def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, alet_dict: dic
     event_iri, new_ttl_list = process_verb(chunk_dict, alet_dict, loc_time_iris, last_nouns, last_events,
                                            ext_sources, timeline_poss)
     if event_iri:
+        chunk_ttl_list.append(f'{chunk_iri} :has_component {event_iri} .')
         chunk_ttl_list.extend(new_ttl_list)
         return chunk_ttl_list
     return []

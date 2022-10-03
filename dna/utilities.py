@@ -58,6 +58,10 @@ cause_prepositions = ['because of', 'due to', 'as a result [of]', 'as a conseque
 # Prepositions that introduce an effect in the form of a noun phrase
 effect_prepositions = ['in order to']
 
+ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
+                '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
+                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+
 # A dictionary where the keys are country names and the values are the GeoNames country codes
 geocodes_file = os.path.join(f'{dna_dir}/resources', 'countries_mapped_to_geo_codes.pickle')
 with open(geocodes_file, 'rb') as inFile:

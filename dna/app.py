@@ -11,7 +11,7 @@ from dna.create_specific_turtle import create_metadata_ttl, create_quotations_tt
 from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, query_database
 from dna.nlp import parse_narrative
 from dna.queries import construct_kg, count_triples, delete_entity, query_narratives, query_dbs, update_narrative
-from dna.utilities import dna_prefix, empty_string
+from dna.utilities import dna_prefix, empty_string, ttl_prefixes
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
@@ -266,8 +266,11 @@ def narratives():
             msg = add_remove_data('add', ' '.join(graph_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
             if not msg:
                 # Successful, so process the quotations and add them to the graph
-                quotation_ttl = create_quotations_ttl(graph_uuid, quotations, quotations_dict)
                 logging.info("Loading quotations")
+                quotation_ttl = ttl_prefixes
+                create_quotations_ttl(graph_uuid, quotations, quotations_dict, quotation_ttl, True)
+                msg = add_remove_data('add', ' '.join(quotation_ttl), repo)
+                create_quotations_ttl(graph_uuid, quotations, quotations_dict, quotation_ttl, False)
                 msg = add_remove_data('add', ' '.join(quotation_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
                 if not msg:
                     # And add meta-data to the default graph in the database
