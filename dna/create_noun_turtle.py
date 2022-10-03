@@ -54,6 +54,31 @@ def create_affiliation_ttl(noun_iri: str, noun_text: str, affiliated_text: str, 
     return ttl
 
 
+def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_class: str,
+                     description: str) -> list:
+    """
+    Create the Turtle for a named entity that is identified as an Agent/Person.
+
+    :param agent_iri: String holding the IRI to be assigned to the Agent
+    :param alt_names: An array of strings of alternative names
+    :param agent_type: The entity type for the Agent (for ex, FEMALESINGPERSON)
+    :param agent_class: The mapping of the entity type to the DNA ontology
+    :param description: A description of the person from Wikipedia, if available; Otherwise,
+                        an empty string
+    :return: A tuple holding the agent_class and an array of its Turtle declaration
+    """
+    labels = '", "'.join(alt_names)
+    agent_ttl = [f'{agent_iri} a {agent_class} .',
+                 f'{agent_iri} rdfs:label "{labels}" .']
+    if description:
+        agent_ttl.append(f'{agent_iri} :description "{description}" .')
+    if 'FEMALE' in agent_type:
+        agent_ttl.append(f'{agent_iri} :gender "Female" .')
+    elif 'MALE' in agent_type:
+        agent_ttl.append(f'{agent_iri} :gender "Male" .')
+    return agent_ttl
+
+
 def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list, description: str,
                            start_time_iri: str, end_time_iri: str) -> list:
     """
@@ -62,7 +87,7 @@ def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list,
     :param event_iri: The IRI created for the event
     :param alt_names: An array of strings which represent alternate names for the event
     :param event_classes: An array with mappings of the event to the DNA ontology
-    :param description: A description of the person from Wikipedia, if available; Otherwise,
+    :param description: A description of the event from Wikipedia, if available; Otherwise,
                         an empty string
     :param start_time_iri: The IRI created for the starting time of the event
     :param end_time_iri: The IRI created for the ending time of the event
@@ -234,29 +259,6 @@ def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool
     if wikipedia_desc:
         noun_ttl.append(f'{noun_iri} :description "{wikipedia_desc}" .')
     return class_mappings, noun_ttl
-
-
-def create_person_ttl(person_iri: str, alt_names: list, person_type: str, description: str) -> list:
-    """
-    Create the Turtle for a named entity that is identified as a Person.
-
-    :param person_iri: String holding the IRI to be assigned to the person
-    :param alt_names: An array of strings of alternative names
-    :param person_type: The entity type for the person (for ex, FEMALESINGPERSON)
-    :param description: A description of the person from Wikipedia, if available; Otherwise,
-                        an empty string
-    :return: An array holding the Turtle for a person
-    """
-    labels = '", "'.join(alt_names)
-    person_ttl = [f'{person_iri} a :Person .',
-                  f'{person_iri} rdfs:label "{labels}" .']
-    if description:
-        person_ttl.append(f'{person_iri} :description "{description}" .')
-    if 'FEMALE' in person_type:
-        person_ttl.append(f'{person_iri} :gender "Female" .')
-    elif 'MALE' in person_type:
-        person_ttl.append(f'{person_iri} :gender "Male" .')
-    return person_ttl
 
 
 def create_time_ttl(time_text: str, time_iri: str) -> list:

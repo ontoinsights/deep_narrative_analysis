@@ -1,9 +1,9 @@
 # Entry points for all spaCy processing and creation of the KG from the text parse
-# Includes functions for getting family details, head words, named entities, relative time, etc.
+# Includes functions for head words, named entities, relative time, etc.
 # Key function: parse_narratives
 # Where a narrative's sentences are parsed into dictionary elements with the following form:
 #    'text': 'narrative_text', 'sentence_offset': #,
-#    'PERSONS': ['person1', 'person2', ...], 'LOCS': ['location1', ...],
+#    'AGENTS': ['agent1', 'agent2', ...], 'LOCS': ['location1', ...],
 #    'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'chunks': [chunk1, chunk2, ...]
 # Note that 'punct': '?' may also be included above
@@ -68,7 +68,8 @@ ner_dict = {'PERSON': ':Person',
             'NORP': ':Organization',
             'ORG': ':Organization',
             'GPE': ':GeopoliticalEntity',
-            'LOC': ':GeopoliticalEntity',
+            'LOC': ':Location',
+            'FAC': ':Location',
             'EVENT': ':EventAndState'}
 ner_types = list(ner_dict.keys())
 ner_types.append('DATE')
@@ -91,7 +92,8 @@ replacement_words = {
 
 def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
     """
-    Get the GPE, LOC (location), EVENT, PERSON, DATE and TIME entities from the input sentence.
+    Get the GPE, LOC or FAC (location), EVENT, PERSON, NORP or ORG (agent), DATE and TIME entities
+    from the input sentence.
 
     :param nlp_sentence: The sentence (a spaCy Doc)
     :param sentence_dict: A dictionary that is updated with time-, location- and/or event-related details
@@ -101,8 +103,8 @@ def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
     for ent in nlp_sentence.ents:
         if ent.label_ in ('GPE', 'LOC', 'FAC'):
             add_to_dictionary_values(sentence_dict, 'LOCS', ent.text, str)
-        elif ent.label_ == 'PERSON':
-            add_to_dictionary_values(sentence_dict, 'PERSONS', ent.text, str)
+        elif ent.label_ in ('PERSON', 'ORG', 'NORP'):
+            add_to_dictionary_values(sentence_dict, 'AGENTS', ent.text, str)
         elif ent.label_ in ('DATE', 'TIME'):
             add_to_dictionary_values(sentence_dict, 'TIMES', ent.text, str)
         elif ent.label_ == 'EVENT':

@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: September 24 2022
+# Last modified: October 2 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -39,7 +39,7 @@
 #  Simplified provenance data
 #  Renamed :sentence_offset to :offset to use with sentence chunks
 #  Added Sentence and Chunk as subclasses of InformationSource
-#  Removed :processing and added :description
+#  Removed :processing and added :description and :mentions
 ########################################################################
 
 
@@ -412,6 +412,13 @@
 :meets a owl:ObjectProperty ;
   rdfs:label "meets" ;
   :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
+
+:mentions a owl:ObjectProperty ;
+  rdfs:label "mentions" ;
+  rdfs:domain :Sentence ;
+  rdfs:range [ a owl:Class ;
+               owl:unionOf ( :Agent :Location :Time ) ] ;
+  :definition "Indicates that the Sentence includes a reference to a specific Agent (organization, person, etc.), time period, EventAndState (such as World War II) or Location." .
 
 :overlaps a owl:ObjectProperty ;
   rdfs:label "overlaps" ;

@@ -1,6 +1,6 @@
 # Processing to create the sentence dictionary:
 #    'text': 'narrative_text', 'sentence_offset': #,
-#    'PERSONS': ['person1', 'person2', ...], 'LOCS': ['location1', ...],
+#    'AGENTS': ['agent1', 'agent2', ...], 'LOCS': ['location1', ...],
 #    'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'chunks': [chunk1, chunk2, ...]
 # Note that 'punct': '?' may also be included above

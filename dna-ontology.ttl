@@ -494,6 +494,19 @@ rdf:label rdf:type owl:AnnotationProperty .
 <urn:ontoinsights:dna:meets> rdf:type owl:ObjectProperty .
 
 
+###  urn:ontoinsights:dna:mentions
+<urn:ontoinsights:dna:mentions> rdf:type owl:ObjectProperty ;
+                                rdfs:domain <urn:ontoinsights:dna:Sentence> ;
+                                rdfs:range [ rdf:type owl:Class ;
+                                             owl:unionOf ( <urn:ontoinsights:dna:Agent>
+                                                           <urn:ontoinsights:dna:Location>
+                                                           <urn:ontoinsights:dna:Time>
+                                                         )
+                                           ] ;
+                                rdfs:label "mentions" ;
+                                <urn:ontoinsights:dna:definition> "Indicates that the Sentence includes a reference to a specific Agent (organization, person, etc.), time period, EventAndState (such as World War II) or Location." .
+
+
 ###  urn:ontoinsights:dna:near
 <urn:ontoinsights:dna:near> rdf:type owl:ObjectProperty ;
                             rdfs:domain <urn:ontoinsights:dna:RelativeDirectionLocation> ;
@@ -19771,25 +19784,25 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "anxiolytic" ,
                                                                                       "tranquilliser" ,
                                                                                       "restorative" ,
-                                                                                      "antianxiety agent" ,
                                                                                       "downer" ,
+                                                                                      "antianxiety agent" ,
                                                                                       "major tranquilliser" ,
                                                                                       "stimulant" ,
                                                                                       "sedative-hypnotic" ,
                                                                                       "chloral hydrate" ,
                                                                                       "antipsychotic drug" ,
-                                                                                      "minor tranquilliser" ,
                                                                                       "diphenylbutyl piperidine" ,
+                                                                                      "minor tranquilliser" ,
                                                                                       "depressant" ,
                                                                                       "morphia" ,
                                                                                       "atropine" ,
-                                                                                      "tincture" ,
                                                                                       "lozenge" ,
+                                                                                      "tincture" ,
                                                                                       "antipsychotic agent" ,
                                                                                       "barbiturate" ,
-                                                                                      "tranquillizer" ,
                                                                                       "antipsychotic" ,
                                                                                       "morphine" ,
+                                                                                      "tranquillizer" ,
                                                                                       "sedative-hypnotic drug" ,
                                                                                       "antianxiety drug" ,
                                                                                       "sedative" ,
@@ -19801,10 +19814,10 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "minor tranquillizer" ,
                                                                                       "sedative drug" ,
                                                                                       "ataractic agent" ,
-                                                                                      "ataractic" ,
                                                                                       "amobarbital" ,
-                                                                                      "Bayer" ,
+                                                                                      "ataractic" ,
                                                                                       "salicylate" ,
+                                                                                      "Bayer" ,
                                                                                       "digitalis" ,
                                                                                       "knockout drops" ,
                                                                                       "acetylsalicylic acid" ,
@@ -19812,9 +19825,9 @@ rdf:label rdf:type owl:AnnotationProperty .
                                                                                       "minor tranquilizer" ,
                                                                                       "ataractic drug" ,
                                                                                       "Empirin" ,
+                                                                                      "neuroleptic agent" ,
                                                                                       "benzodiazepine" ,
-                                                                                      "major tranquilizer" ,
-                                                                                      "neuroleptic agent" .
+                                                                                      "major tranquilizer" .
 
 
 <urn:ontoinsights:dna:PopulatedArea> <urn:ontoinsights:dna:noun_synonym> "urban center" ,

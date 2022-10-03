@@ -180,10 +180,10 @@ def determine_ontology_verb_be(verb_dict: dict, sent_subjects: list, turtle: lis
             # TODO: Handle text similar to 'She is tall' (e.g., not an emotion, ...), or 'The killer is Mary'
             if new_ttl:    # Truthy indicates that the word_dict was processed
                 turtle.extend(new_ttl)
-            else:
-                return create_basic_environment_ttl(sent_subjects)    # TODO: Improve and use objects
-    else:
-        return create_basic_environment_ttl(sent_subjects)            # TODO: Improve
+            # else:
+                # return create_basic_environment_ttl(sent_subjects)    # TODO: Improve and use objects
+    # else:
+        # return create_basic_environment_ttl(sent_subjects)            # TODO: Improve
     return []   # Everything addressed by new Turtle
 
 
@@ -210,6 +210,23 @@ def determine_ontology_verb_have(verb_dict: dict) -> list:
     # TODO: Handle "I had a bath" (an activity)
     """
     return [':Possession']
+
+
+def get_agent_class(text_type: str) -> str:
+    """
+    Returns a class mapping for an Agent based on its type.
+
+    :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
+    :return: The DNA class mapping
+    """
+    class_map = ':Person' if 'PERSON' in text_type else \
+        ('OrganizationalEntity' if text_type.endswith('ORG') or text_type.endswith('NORP') else
+         ('GeopoliticalEntity' if text_type.endswith('GPE') else
+          ('Location' if text_type.endswith('LOC') or text_type.endswith('FAC') else
+           ('EventAndState' if text_type.endswith('EVENT') else ':Agent'))))
+    if 'PLUR' in text_type:
+        class_map += '+:Collection'
+    return class_map
 
 
 def get_event_state_mapping(verb_text: str, verb_dict: dict, subjs: list,

@@ -9,6 +9,10 @@ sent_xcomp3 = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican pr
         'to reject one of his most prominent critics on Capitol Hill.'
 sent_aux_only = 'Liz Cheney is a neoconservative.'
 sent_aux_and_verb = 'Liz Cheney was defeated Tuesday by Harriet Hageman.'
+sent_possessive_and_aux = \
+    'Liz Cheney’s loss marks a remarkable fall for a political family that has loomed large in ' \
+    'Republican politics in the sparsely populated state for more than four decades. Her father is former ' \
+    'Vice President Dick Cheney, who was elected to the House in 1978, where he served for a decade.'
 sents = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, ' \
         'an outcome that was a priority for former President Donald Trump as he urged GOP voters ' \
         'to reject one of his most prominent critics on Capitol Hill.\n\n' \
@@ -206,6 +210,14 @@ def test_sent_aux_and_verb():
     # :Event_b3057af2-3500 rdfs:label "Hageman defeated Cheney" .
 
 
+def test_sent_possessive_and_aux():
+    sent_dicts, quotations, quotations_dict = parse_narrative(sent_possessive_and_aux)
+    success, graph_ttl = create_graph(sent_dicts, '', True, False)
+    assert success
+    ttl_str = str(graph_ttl)
+    # TODO: Add assertion details
+
+
 def test_paragraphs():
     sent_dicts, quotations, quotations_dict = parse_narrative(sents)
     success, graph_ttl = create_graph(sent_dicts, '', False, False)
@@ -243,4 +255,4 @@ def test_narrative_turtle():
     success, turtle = create_graph(sent_dicts, '', True, True)   # Timeline possible True
     print(turtle)
     assert success
-    # TODO: More detailed review/asserts
+    # TODO: More detailed review/asserts; Esp need to test timeline

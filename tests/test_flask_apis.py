@@ -51,9 +51,9 @@ def test_repositories_get1(client):
     resp = client.get('/dna/v1/repositories')
     assert resp.status_code == 200
     json_data = resp.get_json()
-    assert len(json_data) == 2
+    assert len(json_data) == 2     # TODO: Requires an empty meta-dna repository to pass
     dbs = [json_data[0]['repository'], json_data[1]['repository']]
-    assert 'urn:ontoinsights:dna:foo' in dbs and 'urn:ontoinsights:dna:bar' in dbs
+    assert 'foo' in dbs and 'bar' in dbs
     assert 'created' in json_data[0] and 'created' in json_data[1]
 
 
@@ -83,7 +83,7 @@ def test_repositories_get2(client):
     assert resp.status_code == 200
     json_data = resp.get_json()
     assert len(json_data) == 1
-    assert json_data[0]['repository'] == 'urn:ontoinsights:dna:foo'
+    assert json_data[0]['repository'] == 'foo'
 
 
 # dna/v1/repositories/narratives
@@ -177,18 +177,7 @@ def test_narratives_post_missing_narr(client):
     assert json_data['missing'][0] == 'narrativeText'
 
 
-def test_narratives_post_invalid_sources(client):
-    resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo', 'extSources': 123})
-    assert resp.status_code == 500
-    json_data = resp.get_json()
-    assert 'extSources and/or timelinePossible must be set' in json_data['error']
-
-
-def test_narratives_post_invalid_timeline(client):
-    resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo', 'timelinePossible': 123})
-    assert resp.status_code == 500
-    json_data = resp.get_json()
-    assert 'extSources and/or timelinePossible must be set' in json_data['error']
+# def test_narratives_post_invalid_sources(client):   invalid extSources, timelinePossible
 
 
 def test_narratives_post_invalid_repo(client):

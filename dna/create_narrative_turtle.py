@@ -1,7 +1,7 @@
 # Processing to create the Turtle rendering of the sentences in a narrative
 # The sentences are defined by their sentence dictionaries, which have the form:
 #    'text': 'narrative_text', 'sentence_offset': #,
-#    'PERSONS': ['person1', 'person2', ...], 'LOCS': ['location1', ...],
+#    'AGENTS': ['agent1', 'agent2', ...], 'LOCS': ['location1', ...],
 #    'TIMES': ['dates_or_times1', ...], 'EVENTS': ['event1', ...],
 #    'chunks': [chunk1, chunk2, ...]
 # Note that 'punct': '?' may also be included above
@@ -18,8 +18,8 @@ import logging
 # from textblob import TextBlob
 import uuid
 
+from dna.process_agents import get_sentence_agents
 from dna.process_locations import get_sentence_locations
-from dna.process_persons import get_sentence_persons
 from dna.process_times import get_sentence_times
 from dna.process_verbs import process_verb
 from dna.utilities import empty_string
@@ -36,6 +36,20 @@ prep_to_predicate_for_locs = {'about': ':has_topic',
                               'from': ':has_origin',
                               'to': ':has_destination',
                               'in': ':has_location'}
+
+
+def _add_mentions_to_sentence(sentence_iri: str, mention_iris: list, sentence_ttl_list: list):
+    """
+    Add mentions of agents/persons, locations and events to the sentence.
+
+    :param sentence_iri: A string identifying the sentence
+    :param mention_iris: A list of either agent/person, location or event IRIs associated with
+                         named entities in the sentence
+    :return: None
+    """
+    for mention_iri in mention_iris:
+        sentence_ttl_list.append(f'{sentence_iri} :mentions {mention_iri} .')
+    return
 
 
 def _get_text_sentiment(text: str) -> float:
@@ -65,7 +79,7 @@ def _get_text_sentiment(text: str) -> float:
     #    return sentiment
 
 
-def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, plet_dict: dict, loc_time_iris: list,
+def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, alet_dict: dict, loc_time_iris: list,
                    last_nouns: list, last_events: list, ext_sources: bool, timeline_poss: bool) -> list:
     """
     Generate the Turtle for each chunk in a sentence, from the chunk's dictionary definition.
@@ -73,9 +87,9 @@ def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, plet_dict: dic
     :param chunk_dict: The dictionary for the chunk
     :param chunk_iri: The IRI identifier for the chunk
     :param offset: Integer indicating the ordering of the chunk within the sentence
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times' and Values vary by the key
+             Keys = 'agents', 'locs', 'events', 'times' and Values vary by the key
     :param loc_time_iris: An array holding the last processed time (index 0) and location (index 1)
     :param last_nouns: An array of noun texts, type, class mapping and IRI from the current paragraph
     :param last_events: An array of verb texts, class mapping and IRI from the current paragraph
@@ -91,7 +105,7 @@ def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, plet_dict: dic
                       f'{chunk_iri} :text "{chunk_text}" .']
     if chunk_text.startswith('Quotation'):
         return chunk_ttl_list
-    event_iri, new_ttl_list = process_verb(chunk_dict, plet_dict, loc_time_iris, last_nouns, last_events,
+    event_iri, new_ttl_list = process_verb(chunk_dict, alet_dict, loc_time_iris, last_nouns, last_events,
                                            ext_sources, timeline_poss)
     if event_iri:
         chunk_ttl_list.extend(new_ttl_list)
@@ -117,9 +131,9 @@ def create_graph(sentence_dicts: list, published: str, use_sources: bool = False
               list of the Turtle statements encoding the narrative (if successful)
     """
     logging.info(f'Creating narrative Turtle')
-    # A dictionary holding the persons, locations, events & times encountered in the text - For co-reference resolution
-    #  Keys = 'persons', 'locs', 'events', 'times' and Values vary by key type
-    plet_dictionary = dict()
+    # A dictionary holding the agents, locations, events & times encountered in the text - For co-reference resolution
+    #  Keys = 'agents', 'locs', 'events', 'times' and Values vary by key type
+    alet_dictionary = dict()
     last_nouns = []    # Array of tuples of noun texts, types, class mappings and IRIs, reset at paragraph boundaries
     last_events = []   # Array of tuples of verb texts, class mappings and IRIs, reset at paragraph boundaries
     graph_ttl_list = []
@@ -136,17 +150,20 @@ def create_graph(sentence_dicts: list, published: str, use_sources: bool = False
         sent_text = sent_dict['text']
         sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sent_dict["offset"]} .',
                              f'{sentence_iri} :text "{sent_text}" .']
-        # Handle location, time and person info
+        # Handle location, time and agent info
         if 'LOCS' in sent_dict:
-            locs_ttl = get_sentence_locations(sent_dict, plet_dictionary, last_nouns, use_sources)
+            loc_iris, locs_ttl = get_sentence_locations(sent_dict, alet_dictionary, last_nouns, use_sources)
+            _add_mentions_to_sentence(sentence_iri, loc_iris, sentence_ttl_list)
             sentence_ttl_list.extend(locs_ttl)
         if 'TIMES' in sent_dict or 'EVENTS' in sent_dict:
-            dates_ttl = get_sentence_times(sent_dict, published, plet_dictionary, last_nouns, use_sources)
-            sentence_ttl_list.extend(dates_ttl)
-        # Handle PERSONS
-        if 'PERSONS' in sent_dict:
-            persons_ttl = get_sentence_persons(sent_dict, plet_dictionary, last_nouns, use_sources)
-            sentence_ttl_list.extend(persons_ttl)
+            event_iris, time_ttl = get_sentence_times(sent_dict, published, alet_dictionary, last_nouns, use_sources)
+            _add_mentions_to_sentence(sentence_iri, event_iris, sentence_ttl_list)
+            sentence_ttl_list.extend(time_ttl)
+        # Handle AGENTS
+        if 'AGENTS' in sent_dict:
+            agent_iris, agents_ttl = get_sentence_agents(sent_dict, alet_dictionary, last_nouns, use_sources)
+            _add_mentions_to_sentence(sentence_iri, agent_iris, sentence_ttl_list)
+            sentence_ttl_list.extend(agents_ttl)
         # Handle each sentence's chunks, in order
         chunk_offset = 1
         # An array with index 0 = last time mentioned, index 1 = last location mentioned
@@ -155,7 +172,7 @@ def create_graph(sentence_dicts: list, published: str, use_sources: bool = False
             chunk_iri = f':Chunk_{str(uuid.uuid4())[:13]}'
             sentence_ttl_list.append(f'{sentence_iri} :has_component {chunk_iri} .')
             sentence_ttl_list.extend(
-                _process_chunk(chunk, chunk_iri, chunk_offset, plet_dictionary, loc_time_iris,
+                _process_chunk(chunk, chunk_iri, chunk_offset, alet_dictionary, loc_time_iris,
                                last_nouns, last_events, use_sources, timeline_poss))
             chunk_offset += 1
         graph_ttl_list.extend(sentence_ttl_list)

@@ -259,6 +259,7 @@ def narratives():
         logging.info(f'Ingesting {title} to {repo}')
         sentence_dicts, quotations, quotations_dict = parse_narrative(narr)
         success, graph_ttl = create_graph(sentence_dicts, narr_details[1], use_sources, timeline_poss)
+        logging.info('Loading knowledge graph')
         if success:
             # Add the triples to the data store, to a named graph with name = dna:graph_uuid
             graph_uuid = str(uuid.uuid4())[:8]
@@ -266,9 +267,11 @@ def narratives():
             if not msg:
                 # Successful, so process the quotations and add them to the graph
                 quotation_ttl = create_quotations_ttl(graph_uuid, quotations, quotations_dict)
+                logging.info("Loading quotations")
                 msg = add_remove_data('add', ' '.join(quotation_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
                 if not msg:
                     # And add meta-data to the default graph in the database
+                    logging.info("Loading metadata")
                     return _handle_narrative_metadata(repo, graph_uuid, narr, narr_details)
             if msg:
                 return jsonify({error_str: f'Error adding narrative knowledge graph {graph_uuid}: {msg}'}), 500

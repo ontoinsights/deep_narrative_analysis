@@ -81,12 +81,12 @@ def _get_chunks(verb: Token, connector: Union[Token, None], chunk_sentence: Span
         # Yes ... Separate clauses
         # Get the tokens in sentence related to the 'other' verb's subtree
         seen = [ww for ww in verb.subtree if (
-                (ww.pos_ == 'PUNCT' and ww.lemma_ == '?') or
+                (ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or
                 not ((ww.dep_ == 'dobj' and ww.pos_ == 'PRON') or ww.pos_ == 'PUNCT'))]
         seen_chunk = ' '.join([ww.text for ww in seen]).strip()
         seen_chunk = seen_chunk.replace(' .', empty_string) if seen_chunk.endswith(' .') else seen_chunk
         unseen = [ww for ww in chunk_sentence if ww not in seen and
-                  ((ww.pos_ == 'PUNCT' and ww.lemma_ == '?') or ww.pos_ != 'PUNCT')]
+                  ((ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or ww.pos_ != 'PUNCT')]
         unseen_chunk = ' '.join([ww.text for ww in unseen]).strip()
         unseen_chunk = unseen_chunk.replace(' .', empty_string) if unseen_chunk.endswith(' .') else unseen_chunk
         if connector:
@@ -140,6 +140,20 @@ def _remove_connector_text(chunk_text: str, connector_text: str) -> str:
         chunk_text = chunk_text[0:(len(connector_text) + 2) * -1]
     elif chunk_text.endswith(f' {connector_text}'):
         chunk_text = chunk_text[0:(len(connector_text) + 1) * -1]
+    return chunk_text
+
+
+def _remove_start_end_commas(chunk_text: str) -> str:
+    """
+    Returns the input text with any beginning or ending commas removed.
+
+    :param chunk_text: String to be updated
+    :return: Updated 'chunk' string
+    """
+    if chunk_text.startswith(', '):
+        chunk_text = chunk_text[2:]
+    if chunk_text.endswith(' ,'):
+        chunk_text = chunk_text[:-2]
     return chunk_text
 
 
@@ -255,7 +269,7 @@ def _split_relcl_clauses(clause: str, nlp: Language) -> list:
             seen = [ww for ww in relcl.subtree]
             seen_chunk = ' '.join([ww.text for ww in seen])
             unseen = [ww for ww in clause_span if ww not in seen and
-                      ((ww.pos_ == 'PUNCT' and ww.lemma_ == '?') or ww.pos_ != 'PUNCT')]
+                      ((ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or ww.pos_ != 'PUNCT')]
             unseen_chunk = ' '.join([ww.text for ww in unseen])
             # Need to remove the relcl subtree from the noun's subtree
             noun_text = noun_text.replace(seen_chunk, empty_string).strip()
@@ -365,5 +379,5 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
             revised_clause = _remove_connector_text(clause, word)
             if clause != revised_clause:
                 clause = f'{revised_clause}$&{word}'
-        final_chunks.append(clause)
+        final_chunks.append(_remove_start_end_commas(clause))
     return final_chunks

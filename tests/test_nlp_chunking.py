@@ -190,7 +190,7 @@ def test_compound_news_text2():
     new_sents = split_clauses(compound_news_text2, nlp)
     assert new_sents[0] == "he urged GOP voters to reject one of his most prominent critics on Capitol Hill"
     assert new_sents[1] == "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming " \
-                           "an outcome that was a priority for former President Donald Trump"
+                           ", an outcome that was a priority for former President Donald Trump"
 
 
 def test_compound_advcl_relcl_conj():

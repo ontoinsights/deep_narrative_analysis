@@ -12,6 +12,8 @@ query = 'select (count(*) as ?cnt) where {?s ?p ?o}'
 graph_query = query.replace('where', f'from <{full_test_graph}> where')
 
 
+# TODO: Update repository counts to be deltas
+
 def test_create_database():
     result = create_delete_database('create', test_db)
     assert f'Database, {test_db}, created' in result

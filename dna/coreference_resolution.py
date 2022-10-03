@@ -2,11 +2,12 @@
 # Called by create_narrative_turtle.py
 
 import uuid
+import re
 from typing import Union
 
 from dna.create_noun_turtle import create_noun_ttl
 from dna.database import query_database
-from dna.get_ontology_mapping import get_noun_mapping
+from dna.get_ontology_mapping import get_agent_class, get_noun_mapping
 from dna.queries import query_specific_noun
 from dna.utilities import dna_prefix, empty_string, names_to_geo_dict, ontologies_database, owl_thing2
 
@@ -69,7 +70,7 @@ def _check_last_nouns(text: str, text_type: str, last_nouns: list) -> list:
               no match is found)
     """
     looking_for_female = True if 'FEMALE' in text_type else (False if 'MALE' in text_type else None)
-    looking_for_singular = False if 'PLURAL' in text_type else True  # Default is singular
+    looking_for_singular = False if 'PLURAL' in text_type else (True if 'SING' in text_type else None)
     looking_for_person = True if 'PERSON' in text_type else False
     match_nouns = _check_criteria(text, last_nouns, looking_for_singular, looking_for_female, looking_for_person)
     final_nouns = []
@@ -79,51 +80,55 @@ def _check_last_nouns(text: str, text_type: str, last_nouns: list) -> list:
     return final_nouns
 
 
-def _check_plet_dict(text: str, text_type: str, plet_dict: dict, last_nouns: list) -> (list, str):
+def _check_alet_dict(text: str, text_type: str, alet_dict: dict, last_nouns: list) -> (list, str):
     """
-    Get the most likely co-reference for the text using the plet_dict details to
+    Get the most likely co-reference for the text using the alet_dict details to
     resolve co-references/anaphora. Subject/object information (the noun, and its types
     and IRI) is returned.
 
     :param text: String holding the noun text
     :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
-             the full narrative - For co-reference resolution; Keys = 'persons', 'locs', 'events',
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events',
              'times' and Values vary by the key
     :param last_nouns: An array of tuples of noun texts, types, mappings and IRI, from the current paragraph
     :return: A tuple that consists of the matched noun's class mappings and IRI, or an empty array and string
     """
-    person_match = []          # Match of text and type
-    person_text_match = []     # Match of text only, not type
+    agent_match = []          # Match of text and type
+    agent_text_match = []     # Match of text only, not type
     loc_text_match = []
     event_text_match = []
-    if not text_type or 'PERSON' in text_type:   # Type is sometimes missing in the spaCy nlp doc details
-        person_arrays = plet_dict['persons'] if 'persons' in plet_dict else []
-        for person_array in person_arrays:
-            alt_names = person_array[0]
-            person_type = person_array[1]
+    # text_type may be missing from spaCy for some nouns due to removal of commas from text; Should punct be retained?
+    if not text_type or 'PERSON' in text_type or text_type.endswith('ORG') or \
+            text_type.endswith('GPE') or text_type.endswith('NORP') or text_type.endswith('NOUN'):
+        agent_arrays = alet_dict['agents'] if 'agents' in alet_dict else []
+        for agent_array in agent_arrays:
+            alt_names = agent_array[0]
+            agent_type = agent_array[1]
             if text not in pronouns and text in alt_names:
-                if text_type and (text_type in person_type or person_type in text_type):
-                    person_match.append((person_type, person_array[2]))    # index 2 holds the IRI
+                if text_type and (text_type in agent_type or agent_type in text_type):
+                    agent_match.append((agent_type, agent_array[2]))    # index 2 holds the IRI
+                    break
                 else:
-                    person_text_match.append((person_type, person_array[2]))
-    if not text_type or ('LOC' in text_type or 'GPE' in text_type or 'FAC' in text_type):
-        loc_arrays = plet_dict['locs'] if 'locs' in plet_dict else []
+                    agent_text_match.append((agent_type, agent_array[2]))
+    if not text_type or 'LOC' in text_type or 'GPE' in text_type or 'FAC' in text_type or 'NOUN' in text_type:
+        loc_arrays = alet_dict['locs'] if 'locs' in alet_dict else []
         for loc_array in loc_arrays:
             alt_names = loc_array[0]
             loc_map = loc_array[1]
             if text in alt_names:
                 loc_text_match.append((loc_map, loc_array[2]))   # index 2 holds the IRI
-    if not text_type or 'EVENT' in text_type:
-        event_arrays = plet_dict['events'] if 'events' in plet_dict else []
+    if not text_type or 'EVENT' in text_type or 'NOUN' in text_type:
+        event_arrays = alet_dict['events'] if 'events' in alet_dict else []
         for event_array in event_arrays:
             alt_names = event_array[0]
             if text in alt_names:
                 # event_array[1] holds the class mappings and [2] holds the IRI
                 event_text_match.append((event_array[1], event_array[2]))
-    return (_update_last_nouns(text, person_match[-1][0], person_match[-1][1], [':Person'], last_nouns) if person_match
-            else (_update_last_nouns(text, person_text_match[-1][0], person_text_match[-1][1], [':Person'],
-                                     last_nouns) if person_text_match
+    return (_update_last_nouns(text, agent_match[-1][0], agent_match[-1][1], [get_agent_class(text_type)],
+                               last_nouns) if agent_match
+            else (_update_last_nouns(text, agent_text_match[-1][0], agent_text_match[-1][1],
+                                     [get_agent_class(text_type)], last_nouns) if agent_text_match
                   else (_update_last_nouns(text, text_type, loc_text_match[-1][1], loc_text_match[-1][0], last_nouns)
                         if loc_text_match
                         else (_update_last_nouns(text, text_type, event_text_match[-1][1], event_text_match[-1][0],
@@ -206,25 +211,25 @@ def check_event(text: str, last_events: list) -> (list, str):
     return [], empty_string
 
 
-def check_nouns(elem_dictionary: dict, key: str, plet_dict: dict, last_nouns: list, last_events: list,
+def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: list, last_events: list,
                 turtle: list, ext_sources: bool) -> list:
     """
     Get the subject or object nouns (as indicated by the key input parameter) in the dictionary,
-    using last_nouns, plet_dict and last_events details to attempt to resolve co-references/anaphora.
+    using last_nouns, alet_dict and last_events details to attempt to resolve co-references/anaphora.
     Subject/object information (the nouns and their types and IRIs) is returned.
 
-    The order of checking for a match is last_nouns, plet_dict and then last_events. If there are no
+    The order of checking for a match is last_nouns, alet_dict and then last_events. If there are no
     matches, a new noun is created and added to either last_nouns or last_events.
 
     For example, consider the sentence/chunk "She was sickly." following "Mary was born on June 12,
     1972, in Znojmo, Czechia." If the function parameters are (chunk_dictionary, 'subjects', 
-    plet_dict, last_events), then the tuple, 'Mary', 'FEMALESINGPERSON' and ':Mary' will be returned
+    alet_dict, last_events), then the tuple, 'Mary', 'FEMALESINGPERSON' and ':Mary' will be returned
     since 'she' should be resolved to Mary.
 
     :param elem_dictionary: The dictionary (holding the details for the noun text and type from the spaCy parse)
     :param key: Either 'subjects' or 'objects'
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
-             the full narrative - For co-reference resolution; Keys = 'persons', 'locs', 'events', 
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events', 
              'times' and Values vary by the key
     :param last_nouns: An array of tuples of noun texts, types, class mappings and IRIs,
                        found in the current paragraph
@@ -264,12 +269,12 @@ def check_nouns(elem_dictionary: dict, key: str, plet_dict: dict, last_nouns: li
                 # Tuple = noun text, type and IRI
                 nouns.append((elem_text, elem_type, match_type, match_iri))
                 continue
-        # No match - Try to match text and type in last_nouns and then the plet_dict
+        # No match - Try to match text and type in last_nouns and then the alet_dict
         match_noun_tuples = _check_last_nouns(elem_text, elem_type, last_nouns)
         if match_noun_tuples:
             nouns.append((elem_text, elem_type, match_noun_tuples[0][0], match_noun_tuples[0][1]))
             continue
-        match_maps, match_iri = _check_plet_dict(elem_text, elem_type, plet_dict, last_nouns)   # May update last_nouns
+        match_maps, match_iri = _check_alet_dict(elem_text, elem_type, alet_dict, last_nouns)   # May update last_nouns
         if match_iri:
             nouns.append((elem_text, elem_type, match_maps, match_iri))
             continue
@@ -281,7 +286,8 @@ def check_nouns(elem_dictionary: dict, key: str, plet_dict: dict, last_nouns: li
             continue
         # No match - Create new entity
         # TODO: possessives - 'her father', 'her arm' or "Sue's arm" (versus 'her book')
-        iri = f":{elem_text.replace(' ', '_')}_{str(uuid.uuid4())[:13]}"
+        init_iri = f":{elem_text.replace(' ', '_')}_{str(uuid.uuid4())[:13]}"
+        iri = re.sub(r'[^:a-zA-Z0-9_]', empty_string, init_iri)
         # Tuple = noun text, type and IRI
         noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type,
                                                      True if key == 'subjects' else False, ext_sources)
@@ -293,7 +299,7 @@ def check_nouns(elem_dictionary: dict, key: str, plet_dict: dict, last_nouns: li
 
 def check_specific_match(noun: str, noun_type: str) -> (str, str):
     """
-    Checks if the concept/Person/Location/... is already defined in the DNA ontologies.
+    Checks if the concept/Agent/Location/... is already defined in the DNA ontologies.
 
     :param noun: String holding the text to be matched
     :param noun_type: String holding the noun type (PERSON/GPE/LOC/...) from spacy's NER
@@ -302,11 +308,7 @@ def check_specific_match(noun: str, noun_type: str) -> (str, str):
     """
     if noun_type.endswith('GPE') and noun in names_to_geo_dict:
         return f'geo:{names_to_geo_dict[noun]}', ':Country'
-    class_type = 'Person' if noun_type.endswith('PERSON') else \
-        ('OrganizationalEntity' if noun_type.endswith('ORG') else
-         ('GeopoliticalEntity' if noun_type.endswith('GPE') else
-          ('Location' if noun_type.endswith('LOC') else
-           ('EventAndState' if noun_type.endswith('EVENT') else empty_string))))
+    class_type = get_agent_class(noun_type).replace('+:Collection', empty_string)   # PLURAL details ignored here
     match_details = query_database(
         'select', query_specific_noun.replace('keyword', noun).replace('class_type', class_type), ontologies_database)
     if match_details:

@@ -31,13 +31,15 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, ttl_list: list)
         else:
             ttl_list.append(f'{event_iri} :has_active_agent {subj_iri} .')
     for obj_text, obj_type, obj_mappings, obj_iri in objs:
+        print(obj_text, obj_type, obj_mappings, obj_iri)
         is_agent = False
         if 'PERSON' in obj_type or obj_type.endswith('GPE') or obj_type.endswith('ORG') \
                 or obj_type.endswith('NORP'):
             is_agent = True
         if not is_agent:     # May not have a type, so have to check the class mappings
             for obj_map in obj_mappings:
-                if ',' not in obj_map and check_subclass(f'{dna_prefix}{obj_map[1:]}', 'Agent'):
+                if ',' not in obj_map and ('Agent' in obj_map or
+                                           check_subclass(f'{dna_prefix}{obj_map[1:]}', 'Agent')):
                     is_agent = True
                     break
                 # Deal with a comma separated list of classes (multiple inheritance)
@@ -48,6 +50,7 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, ttl_list: list)
                         break
                 if is_agent:
                     break
+        print(is_agent)
         if is_agent:
             if ':Affiliation' in ttl_str:
                 ttl_list.append(f'{event_iri} :affiliated_with {obj_iri} .')

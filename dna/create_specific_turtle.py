@@ -8,7 +8,7 @@ from dna.queries import query_subclass
 from dna.utilities import dna_prefix, empty_string
 
 
-def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool) -> list:
+def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, is_alt_coll: bool) -> list:
     """
     Create the Turtle assigning an individual a type (rdf:type) based on the class mapping string. The
     individual is identified by the indiv_iri. The details in the class mapping may require special
@@ -18,6 +18,8 @@ def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool) -
     :param class_map: A possible type definition for an individual
     :param indiv_iri: A string/IRI identifying the individual
     :param process_verb: Boolean indicating that this processing is for a verb mapping
+    :param is_alt_coll: Boolean indicating that this processing defines a collection of alternative
+                        mappings (an AlternativeCollection)
     :return: A list of strings holding the Turtle type declaration
     """
     type_turtle = []
@@ -36,7 +38,10 @@ def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool) -
                 type_turtle.append(
                         f'{match_iri} a {detail.replace(dna_prefix, ":")} ; '
                         f':has_actor {indiv_iri} .')
-    type_turtle.append(f'{indiv_iri} a {class_map.replace("+", ", ")} .')
+    if is_alt_coll:
+        type_turtle.append(f'{indiv_iri} :has_member {class_map.replace("+", ", ")} .')
+    else:
+        type_turtle.append(f'{indiv_iri} a {class_map.replace("+", ", ")} .')
     return type_turtle
 
 
@@ -100,7 +105,8 @@ def create_metadata_ttl(graph_id: str, narr_text: str, created_at: str,
                          author, publication date, publisher, source and title of the narrative
     :return: An array of Turtle statements
     """
-    turtle = [f'@prefix : <urn:ontoinsights:dna:> . @prefix dc: <http://purl.org/dc/terms/> . ',
+    narr_text = narr_text.replace('"', "'")
+    turtle = [f'@prefix : <urn:ontoinsights:dna:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
               f':{graph_id} a :KnowledgeGraph ; dc:created "{created_at}"^^xsd:dateTime ; '
               f':number_triples {number_triples} ; :encodes :Narrative_{graph_id} .',
               f':Narrative_{graph_id} a :Narrative ; dc:creator "{narr_details[0]}" ; '
@@ -147,7 +153,7 @@ def create_type_turtle(class_mappings: list, subj_iri: str, is_verb: bool, noun_
     if len(class_mappings) > 1:
         ttl_list = [f'{subj_iri} a :AlternativeCollection ; :text "{noun_text}" .']
         for class_map in class_mappings:
-            ttl_list.extend(_process_class_mapping(class_map, subj_iri, is_verb))
+            ttl_list.extend(_process_class_mapping(class_map, subj_iri, is_verb, True))
         return ttl_list
     else:
-        return _process_class_mapping(class_mappings[0], subj_iri, is_verb)
+        return _process_class_mapping(class_mappings[0], subj_iri, is_verb, False)

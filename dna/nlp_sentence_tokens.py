@@ -23,10 +23,7 @@ def _handle_noun(noun_token: Token) -> (str, str):
     :param noun_token: Token of the noun
     :return: Two strings, the noun text and type
     """
-    noun_text = noun_token.text
-    full_noun_text = space.join(t.text for t in noun_token.children if
-                                t.dep_ in ('amod', 'compound', 'det', 'nummod', 'nmod', 'pcomp')
-                                and t.pos_ not in unwanted_tokens)
+    noun_text = ' '.join([ww.text for ww in noun_token.subtree])
     # Handle proper nouns and pronouns
     if 'PROPN' in noun_token.pos_:      # Proper noun
         return _process_proper_noun(noun_token)

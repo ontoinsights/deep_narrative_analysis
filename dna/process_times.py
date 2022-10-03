@@ -14,7 +14,8 @@ year_pattern = re.compile('[0-9]{4}')
 day_pattern1 = re.compile(' [0-9] | [0-2][0-9] | [3][0-1] ')
 day_pattern2 = re.compile('|'.join(days))
 
-incremental_time_keywords = ['earlier', 'later', 'next', 'previous', 'prior', 'following']   # TODO: More alternatives?
+# TODO: More alternative incremental times?
+incremental_time_keywords = ['ago', 'earlier', 'later', 'next', 'previous', 'prior', 'following']
 
 
 def _create_time_iri(before_after_str: str, str_text: str) -> str:
@@ -31,12 +32,12 @@ def _create_time_iri(before_after_str: str, str_text: str) -> str:
     day_search1 = day_pattern1.search(str_text)
     day_search2 = day_pattern2.search(str_text)
     if not year_search and not month_search and not day_search1 and not day_search2:
-        return empty_string
-    if year_search or month_search:
+        return f':PiT_{str_text.lower().replace(space, "_").replace(".", empty_string)}'
+    if year_search or month_search or day_search1:
         return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
                + (f'_Yr{year_search.group()}' if year_search else empty_string) \
                + (f'_Mo{month_search.group()}' if month_search else empty_string) \
-               + (f'_Day{day_search1.group()}' if day_search1 else empty_string)
+               + (f'_Day{day_search1.group().strip()}' if day_search1 else empty_string)
     return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
            + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
@@ -58,7 +59,7 @@ def _get_before_after(sent_str: str, time_text: str) -> str:
     return ba_str
 
 
-def _get_relative_time(time_text: str, last_time: str, plet_dict: dict) -> (str, list):
+def _get_relative_time(time_text: str, last_time: str, alet_dict: dict) -> (str, list):
     """
     Handle times identified by spaCy's NER, that have the form <number> <increment> <earlier|later|...>,
     such as "one year earlier". Return the time IRI and any new Turtle defining it.
@@ -66,12 +67,12 @@ def _get_relative_time(time_text: str, last_time: str, plet_dict: dict) -> (str,
     :param time_text: String specifying the time
     :param last_time: A string indicating the last known date from which the increment is
                       calculated
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times', Values (for 'times') = array of strings
+             Keys = 'agents', 'locs', 'events', 'times', Values (for 'times') = array of strings
              storing the time's IRI
     :return: A tuple with the IRI identifying the new time and an array of Turtle statements
-             defining any new times identified (also the plet_dict will be updated)
+             defining any new times identified (also the alet_dict will be updated)
     """
     # Is the date relative (e.g., 'a year earlier')?
     new_time_lower = time_text.lower()
@@ -86,25 +87,26 @@ def _get_relative_time(time_text: str, last_time: str, plet_dict: dict) -> (str,
     if not found_keyword:
         return empty_string, []
     time_ttl = []
-    new_time_iri = f':PiT_{time_text.replace(space, "_")}'
+    new_time_iri = f':PiT_{time_text.replace(space, "_")}'.replace('.', empty_string)
     number, increment = get_time_details(new_time_lower)
-    if 'earlier' in new_time_lower or 'previous' in new_time_lower or 'prior' in new_time_lower:
+    if 'ago' in new_time_lower or 'earlier' in new_time_lower or 'previous' in new_time_lower \
+            or 'prior' in new_time_lower:
         number *= -1
-    if last_time:
+    if last_time and ('_Yr' in last_time or '_Mo' in last_time):
         new_time_iri = _update_time(last_time, number, increment)
-        if new_time_iri in plet_dict['times']:
+        if new_time_iri in alet_dict['times']:
             return new_time_iri, []
         time_ttl = create_time_ttl(time_text, new_time_iri)
-        known_times = plet_dict['times']
+        known_times = alet_dict['times']
         known_times.append(new_time_iri)
-        plet_dict['times'] = known_times
+        alet_dict['times'] = known_times
     if not time_ttl:
         time_ttl = [f'{new_time_iri} a :PointInTime ; rdfs:label "{time_text}" .']
     return new_time_iri, time_ttl
 
 
 def _process_date_time(before_after: str, time_text: str, event_iri: str, time_iri: str,
-                       plet_dict: dict) -> (str, list):
+                       alet_dict: dict) -> (str, list):
     """
     Determine the time relationship of a chunk/verb to a point in time/date.
 
@@ -119,7 +121,7 @@ def _process_date_time(before_after: str, time_text: str, event_iri: str, time_i
     default_time_iri = _create_time_iri(empty_string, time_text)
     new_time = default_time_iri
     if not before_after:
-        new_time, time_ttl = _get_relative_time(time_text, time_iri, plet_dict)
+        new_time, time_ttl = _get_relative_time(time_text, time_iri, alet_dict)
         if not new_time:
             time_ttl.append(f'{event_iri} :has_time {default_time_iri} .')
     elif before_after == 'Before':
@@ -129,22 +131,22 @@ def _process_date_time(before_after: str, time_text: str, event_iri: str, time_i
     return new_time, time_ttl
 
 
-def _process_event_time(before_after: str, event_text: str, event_iri: str, plet_dict: dict) -> (str, list):
+def _process_event_time(before_after: str, event_text: str, event_iri: str, alet_dict: dict) -> (str, list):
     """
     Determine the time relationship of a chunk/verb to a referenced, named event.
 
     :param before_after: A string = 'Before', 'After' or the empty string
     :param event_text: A string holding the event's text
     :param event_iri: The verb's/event's IRI
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
-             the full narrative; Keys = 'persons', 'locs', 'events', 'times', Values (for 'events')
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative; Keys = 'agents', 'locs', 'events', 'times', Values (for 'events')
              = array of arrays with index 0 holding an array of strings naming the event, index 1
              storing an array of DNA class mappings, index 2 holding the event's IRI, and indexes
              3 and 4 tracking the start/end time IRIs
     :return: A tuple with a string holding the time IRI and a statement specifying the Turtle
              for the event's time, or two empty strings
     """
-    known_events = plet_dict['events'] if 'events' in plet_dict else []
+    known_events = alet_dict['events'] if 'events' in alet_dict else []
     start_iri = empty_string
     end_iri = empty_string
     known_iri = empty_string
@@ -178,7 +180,7 @@ def _update_time(last_date: str, number: int, increment: str) -> str:
     :param last_date: The inferred (or explicit) time of the event, formatted as:
                       ('before'|'after'|'') PointInTime_date
     :param number: Positive or negative integer indicating whether the month, day or year is updated
-    :param increment: String specifying year, month, day
+    :param increment: String specifying year, month, day, decade, century
     :return: String specifying the updated last_date as a IRI (or the last_date is returned if the update
              cannot be performed)
     """
@@ -186,9 +188,14 @@ def _update_time(last_date: str, number: int, increment: str) -> str:
         year = last_date.split('_Yr')[1].split('_')[0] if '_Yr' in last_date else empty_string
         month = last_date.split('_Mo')[1].split('_')[0] if '_Mo' in last_date else empty_string
         day = last_date.split('_Day')[1] if '_Day' in last_date else empty_string
-        if increment == 'year':
+        if increment in ('year', 'decade', 'century'):
             if year:
-                return ':PiT' + f'_Yr{str(int(year) + number)}'
+                if increment == 'year':
+                    return ':PiT' + f'_Yr{str(int(year) + number)}'
+                elif increment == 'decade':
+                    return ':PiT' + f'_Yr{str(int(year) + (number * 10))}'
+                elif increment == 'century':
+                    return ':PiT' + f'_Yr{str(int(year) + (number * 100))}'
             else:
                 return f':PiT_{str(abs(number))}Yrs' + ('Earlier' if number < 0 else 'Later')
         if increment == 'month':
@@ -213,30 +220,30 @@ def _update_time(last_date: str, number: int, increment: str) -> str:
     return last_date
 
 
-def check_if_event_is_known(event_text: str, plet_dict: dict) -> (list, str):
+def check_if_event_is_known(event_text: str, alet_dict: dict) -> (list, str):
     """
-    Determines if the event is already processed and stored in the plet_dict.
+    Determines if the event is already processed and stored in the alet_dict.
 
     :param event_text: Input event string
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times' and Values (for 'events') = array of arrays
+             Keys = 'agents', 'locs', 'events', 'times' and Values (for 'events') = array of arrays
              with index 0 holding an array of strings naming the event, index 1 storing an array of
              DNA class mappings, index 2 holding the event's IRI, and indexes 3 and 4 tracking
              the start/end time IRIs
-    :return: A tuple holding the class mappings and IRI of the person, or an empty list and string
+    :return: A tuple holding the class mappings and IRI of the agent, or an empty list and string
     """
-    if 'events' not in plet_dict:
+    if 'events' not in alet_dict:
         return [], empty_string
-    known_events = plet_dict['events']
+    known_events = alet_dict['events']
     for known_event in known_events:
         if event_text in known_event[0]:               # Strings match
             return known_event[1], known_event[2]      # NER maps to a known/processed event, with an IRI
     return [], empty_string
 
 
-def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dict, last_nouns: list,
-                       use_sources: bool) -> list:
+def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dict, last_nouns: list,
+                       use_sources: bool) -> (list, list):
     """
     Handle times identified by spaCy's NER, stored in the sentence dictionary with the
     key, 'TIMES'. If there is only 1 time specified, it is returned as "the" time for the
@@ -245,9 +252,9 @@ def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dic
     :param sentence_dictionary: The sentence dictionary
     :param published: A string indicating the date that the article was published, if provided
                       (otherwise, the empty string)
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times', Values (for 'times') = array of strings
+             Keys = 'agents', 'locs', 'events', 'times', Values (for 'times') = array of strings
              storing the time's IRI, and Values (for 'events') = array of arrays with index 0
              holding an array of strings naming the event, index 1 storing an array of DNA class
              mappings, index 2 holding the event's IRI, and indexes 3 and 4 tracking the
@@ -256,8 +263,8 @@ def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dic
                        from the current paragraph
     :param use_sources: Boolean indicating whether additional information on an event should
                         be retrieved from Wikidata (recommended)
-    :return: An array of Turtle statements defining new times and events identified in the sentence
-             (also the plet_dict may be updated)
+    :return: A tuple consisting of two arrays: (1) the IRIs of the events identified in the sentence
+             (if any), and 2) Turtle statements defining them and times (also the alet_dict may be updated)
     """
     # TODO: With no specific reference, use the published date as the default; Can also address weekday names
     #       (intDay = datetime.date(year=2000, month=12, day=1).weekday()
@@ -266,7 +273,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dic
     time_turtle = []
     new_times = []
     new_events = []
-    known_times = plet_dict['times'] if 'times' in plet_dict else []
+    known_times = alet_dict['times'] if 'times' in alet_dict else []
     if 'TIMES' in sentence_dictionary:
         add_unique_to_array(sentence_dictionary['TIMES'], new_times)
     if 'EVENTS' in sentence_dictionary:
@@ -283,13 +290,14 @@ def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dic
         if time_iri not in known_times:
             time_turtle.extend(create_time_ttl(new_time, time_iri))
             known_times.append(time_iri)    # Add the new times
-    plet_dict['times'] = known_times
+    alet_dict['times'] = known_times
     # Handle the events
-    known_events = plet_dict['events'] if 'events' in plet_dict else []
+    event_iris = []
+    known_events = alet_dict['events'] if 'events' in alet_dict else []
     for new_event in new_events:
-        event_classes, event_iri = check_if_event_is_known(new_event, plet_dict)
+        event_classes, event_iri = check_if_event_is_known(new_event, alet_dict)
         if not event_iri:
-            event_iri = f':Event_{new_event.replace(space, "_")}'
+            event_iri = f':Event_{new_event.replace(space, "_")}'.replace('.', empty_string)
             # Try to classify the event, for example 'World War II' is a :War
             event_classes = get_verb_mapping(new_event, dict(), [])
             if not event_classes:
@@ -309,14 +317,15 @@ def get_sentence_times(sentence_dictionary: dict, published: str, plet_dict: dic
             time_turtle.extend(
                 create_named_event_ttl(event_iri, alt_names, event_classes, wiki_details,
                                        start_time_iri, end_time_iri))
-            last_nouns.append((new_event, 'EVENT', event_classes, event_iri))
             known_events.append([alt_names, event_classes, event_iri, start_time_iri, end_time_iri])
-    plet_dict['events'] = known_events
-    return time_turtle
+        last_nouns.append((new_event, 'EVENT', event_classes, event_iri))
+        event_iris.append(event_iri)
+    alet_dict['events'] = known_events
+    return event_iris, time_turtle
 
 
 def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, time_iri: str,
-                       plet_dict: dict, ttl_list: list) -> str:
+                       alet_dict: dict, ttl_list: list) -> str:
     """
     Creates the Turtle to associate a date with an event (chunk verb).
 
@@ -324,9 +333,9 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
     :param named_entities: An array of tuples of a named entity's text and type
     :param event_iri: IRI identifying the event
     :param time_iri: IRI identifying the last event time from the narrative
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the narrative to-date - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times', Values (for 'times') = array of strings
+             Keys = 'agents', 'locs', 'events', 'times', Values (for 'times') = array of strings
              storing the time's IRI, and Values (for 'events') = array of arrays with index 0
              holding an array of strings naming the event, index 1 storing an array of DNA class
              mappings, index 2 holding the event's IRI, and indexes 3 and 4 tracking the
@@ -351,10 +360,10 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
     time_text, time_type = poss_time
     new_time = _create_time_iri(before_after, time_text)
     if time_type == 'EVENT':
-        new_time, time_ttl = _process_event_time(before_after, time_text, event_iri, plet_dict)
+        new_time, time_ttl = _process_event_time(before_after, time_text, event_iri, alet_dict)
         ttl_list.extend(time_ttl)
     elif time_type == 'DATE':
-        new_time, time_ttl = _process_date_time(before_after, time_text, event_iri, time_iri, plet_dict)
+        new_time, time_ttl = _process_date_time(before_after, time_text, event_iri, time_iri, alet_dict)
         ttl_list.extend(time_ttl)
         return empty_string
     return new_time

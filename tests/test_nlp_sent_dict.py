@@ -28,8 +28,8 @@ def test_sent_no_quotations():
     assert not quotations and not quotations_dict
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
-    assert first_dict['LOCS'] == ['U.S.', 'Wyoming'] and first_dict['PERSONS'] == ['Liz Cheney', 'Donald Trump'] \
-           and first_dict['TIMES'] == ['Tuesday']
+    assert first_dict['LOCS'] == ['U.S.', 'Wyoming'] and first_dict['AGENTS'] == \
+           ['Liz Cheney', 'Republican', 'Donald Trump', 'GOP', 'Capitol Hill'] and first_dict['TIMES'] == ['Tuesday']
     assert len(first_dict['chunks']) == 2
     assert first_dict['chunks'][0]['verbs'][0]['verb_lemma'] == 'reject'
     assert first_dict['chunks'][0]['verbs'][1]['verb_lemma'] == 'urge'
@@ -39,14 +39,14 @@ def test_sent_no_quotations():
     first_dict_chunk1_verb = first_dict['chunks'][1]['verbs'][0]
     # TODO: Should be GPE; Without comma after WY, spaCy returns no entity type; Should commas be retained?
     assert first_dict_chunk1_verb['preps'][0]['prep_details'][0]['preps'][0]['prep_details'][0]['detail_type'] == \
-           'SINGPERSON'
+           'SINGGPE'
 
 
 def test_sent_percent():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent_percent)
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
-    assert 'LOCS' not in first_dict and first_dict['PERSONS'] == ['Harriet Hageman', 'Cheney']
+    assert 'LOCS' not in first_dict and first_dict['AGENTS'] == ['Harriet Hageman', 'Cheney']
     assert len(first_dict['chunks']) == 1
     assert first_dict['chunks'][0]['verbs'][0]['verb_lemma'] == 'win'
     assert first_dict['chunks'][0]['verbs'][0]['objects'][0]['object_text'] == '66.3%'
@@ -71,7 +71,7 @@ def test_sent_quotation():
 def test_sent_dative():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent_dative)
     assert len(sent_dicts) == 1
-    assert len(sent_dicts[0]['PERSONS']) == 1   # spaCy error: Should be 2; 'John' not identified as a PERSON
+    assert len(sent_dicts[0]['AGENTS']) == 1   # spaCy error: Should be 2; 'John' not identified as a PERSON
     assert sent_dicts[0]['chunks'][0]['verbs'][0]['objects'][0]['object_text'] == 'Susan'
     assert sent_dicts[0]['chunks'][0]['verbs'][0]['objects'][1]['object_text'] == 'a raise'
     str0 = str(sent_dicts[0])

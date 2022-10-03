@@ -124,7 +124,7 @@ def get_event_details_from_wikidata(event_text: str) -> (str, str, str, list):
             if 'results' in response and 'bindings' in response['results']:
                 results = response['results']['bindings']
                 for result in results:
-                    alt_names.append(result['altLabel']['value'])
+                    alt_names.append(result['altLabel']['value'].replace('"', "'"))
             time_query = query_wikidata_time.replace('?item', f'wd:{wikidata_id}')
             start_time = _get_wikidata_time(time_query, True)
             end_time = _get_wikidata_time(time_query, False)
@@ -213,7 +213,7 @@ def get_wikipedia_description(noun: str) -> str:
     if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':
         return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}'
     if 'extract' in wikipedia:
-        extract_text = wikipedia['extract'].replace('"', "'").replace('\xa0', space).\
+        extract_text = wikipedia['extract'].replace('"', "'").replace('\xa0', space).replace('\n', space).\
             encode('ASCII', errors='replace').decode('utf-8')
         wiki_text = f"'{extract_text}'"
         return f'From Wikipedia (wikibase_item: {wikipedia["wikibase_item"]}): {wiki_text}'

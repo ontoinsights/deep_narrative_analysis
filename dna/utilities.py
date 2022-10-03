@@ -124,4 +124,4 @@ def check_name_gender(name_str: str) -> str:
         gender = 'FEMALE' if name in female_names else ('MALE' if name in male_names else empty_string)
         if gender:
             break
-    return f'{gender}SINGPERSON' if gender else 'SINGPERSON'
+    return f'{gender}SINGPERSON' if gender else 'SINGNOUN'
