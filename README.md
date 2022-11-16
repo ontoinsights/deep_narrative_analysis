@@ -14,6 +14,8 @@ Deep Narrative Analysis (DNA) is a toolset for analyzing narratives (biographica
 
 For more detailed information on DNA, see the paper, [_Translating Narratives to Knowledge Graphs_](./Translating%20Narratives%20to%20Knowledge%20Graphs.pdf).
 
+To view the ontology, see the [dna-ontologies web page](https://ontoinsights.github.io/dna-ontologies/).
+
 ## File Structure
 
 The semantics (ontologies) and processing are captured in the directories of this project. The following folder structure is used:
