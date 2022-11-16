@@ -3,170 +3,84 @@
 
 from spacy.tokens import Token
 
-from utilities import empty_string, space, objects_string, family_members, \
-    add_to_dictionary_values, processed_prepositions
+from dna.utilities_and_language_specific import add_to_dictionary_values, check_name_gender, empty_string, \
+    family_members, family_text, objects_string, processed_prepositions, space
 
-family_roles = []
-for key in family_members.keys():
-    family_roles.append(key)
-family_roles_plurals = []
-for fam_role in family_roles:
-    family_roles_plurals.append(f'{fam_role}s')
+family_roles = [key for key in family_members.keys()]
 
-unwanted_tokens = [
-    'DET',    # determiner
-    'INTJ',   # interjection
-    'PUNCT',  # punctuation
-    'SYM',    # symbol
-    'X',      # other
-]
+unwanted_tokens = ('DET',    # determinant
+                   'INTJ',   # interjection
+                   'X')      # other
+# Want 'PUNCT' for semantic evaluation and 'SYM' to address statements such as "66.3% of the vote"
+unwanted_dependencies = ('agent', 'appos', 'attr', 'aux', 'auxpass', 'case', 'cc', 'ccomp', 'conj', 'dep',
+                         'mark', 'meta', 'punct', 'xcomp')
 
 
-def add_token_details(token: Token, dictionary: dict, token_key: str, narr_gender: str, family_dict: dict):
+def _handle_noun(noun_token: Token) -> (str, str):
     """
-    Expand/clarify the token text, get the token's entity type (or define one if blank), and
-    add the token details to the specified dictionary key.
+    When processing a token (in add_token_details) that is a noun, first handle the special
+    cases of a proper noun, pronoun, family member role, etc. Lastly, check a general noun.
 
-    :param token: Token from spacy parse
-    :param dictionary: Dictionary that the token details should be added to
-    :param token_key: Dictionary key where the details are added
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
-                        MALE - indicating the gender of the narrator
-    :param family_dict: A dictionary containing the names of family members and their
-                        relationship to the narrator/subject
-    :returns: None (Specified dictionary is updated)
+    :param noun_token: Token of the noun
+    :return: Two strings, the noun text and type
     """
-    ent = token.text
-    if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
-        return
-    ent_type = token.ent_type_
-    if ent == 'Narrator':
-        ent_type = f'{narr_gender}SINGPERSON'
+    noun_text = noun_token.text
+    nouns = []
+    full_noun_text = space.join(t.text for t in noun_token.subtree if
+                                (t.pos_ not in unwanted_tokens and t.dep_ not in unwanted_dependencies))
     # Handle proper nouns and pronouns
-    elif 'Prop' in token.morph.get('NounType'):      # Proper noun
-        ent, ent_type = _process_proper_noun(token, family_dict)
-    elif 'Prs' in token.morph.get('PronType'):    # Personal pronoun
-        ent, ent_type = _process_personal_pronoun(token, narr_gender)
-    # Handle references to family members ('brother', 'sister', ...)
-    elif ent.lower() in family_roles:
-        gender = family_members[ent.lower()]
-        ent_type = f'{gender}SINGPERSON' if gender else f'SINGPERSON'
-    elif ent.lower() in family_roles_plurals:
-        gender = family_members[ent[0:-1].lower()]
-        ent_type = f'{gender}PLURALPERSON' if gender else f'PLURALPERSON'
-    elif ent.lower() == 'family':
-        ent_type = 'PLURALPERSON'
-    elif 'verb' in token_key:
-        ent = token.text
-        ent_type = 'VERB'
+    if 'PROPN' in noun_token.pos_:      # Proper noun
+        return _process_proper_noun(noun_token)
+    elif 'Prs' in noun_token.morph.get('PronType'):    # Personal pronoun
+        return _process_personal_pronoun(noun_token)
+    # Handle references to family members ('brother', 'sister', ...) or 'family'
+    elif noun_text.lower() in family_roles:
+        gender = family_members[noun_text.lower()]
+        return full_noun_text, f'{gender}SINGPERSON' if gender else f'SINGPERSON'
+    elif noun_text.lower()[0:-1] in family_roles:  # Check if plural family members were referenced
+        gender = family_members[noun_text.lower()[0:-1]]   # Check if plural family members were referenced
+        return full_noun_text, f'{gender}PLURALPERSON' if gender else f'PLURALPERSON'
+    elif noun_text.lower() in family_text:
+        return full_noun_text, 'PLURALPERSON'
     else:
-        ent, ent_type = _process_noun(token, ent_type)
-
-    # Set up the entity's dictionary and add basic details
-    ent_dict = dict()
-    # Lists of dictionaries have plural names while individual dictionary keys should not
-    ent_base_key = 'detail'
-    if 'verb' in token_key:
-        ent_base_key = 'verb'
-    elif 'object' in token_key:
-        ent_base_key = 'object'
-    elif 'subject' in token_key:
-        ent_base_key = 'subject'
-    ent_dict[f'{ent_base_key}_text'] = ent
-    if 'verb' in token_key:
-        ent_dict['verb_lemma'] = token.lemma_
-    else:
-        ent_dict[f'{ent_base_key}_type'] = ent_type
-
-    # Process specific children (conjunctions and prepositions)
-    for child in token.children:
-        if ent_type == 'VERB' and ('obj' in child.dep_ or 'attr' in child.dep_):
-            # if 'advcl' in token_key or 'xcomp' in token_key:
-            # Object/attr is part of the adverbial clause, so it adds to the current ent_dict
-            # add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
-            # else:
-            add_token_details(child, ent_dict, objects_string, narr_gender, family_dict)
-        # TODO: Note a "cc" of "or" or "nor" (:alternative true Collection)
-        elif 'conj' == child.dep_:
-            add_token_details(child, dictionary, token_key, narr_gender, family_dict)
-        elif 'prep' in child.dep_:
-            if child.text.lower() not in processed_prepositions:
-                continue
-            prep_dict = dict()
-            # Lists of dictionaries have plural names while individual dictionary keys should not
-            prep_dict['prep_text'] = child.text
-            for prep_child in child.children:
-                if 'obj' in prep_child.dep_ or 'attr' in prep_child.dep_:
-                    # Object/attr is part of the prepositional clause, so it adds to the current prep_dict
-                    _process_prep_object(prep_child, prep_dict,
-                                         (token_key[0:-1] if token_key.endswith("s") else token_key))
-            add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
-    add_to_dictionary_values(dictionary, token_key, ent_dict, dict)
+        return _process_noun(noun_token)
 
 
-# Functions internal to the module
-def _check_family(entity: str, family_dict: dict) -> (str, str, str):
-    """
-    Determines if a reference is to a family member and returns the member's relationship,
-    gender and type (= PERSON if a family member or NOUN otherwise).
-
-    :param entity: The string representing the noun or possessive
-    :param family_dict: A dictionary containing the names of family members and their
-                        relationship to the narrator/subject
-    :returns: 3 strings representing the entity's relationship (if a family member), gender
-             and type (= PERSON if a family member or NOUN otherwise)
-    """
-    gender = empty_string
-    ent_type = 'NOUN'
-    if entity in family_dict.keys():
-        entity = family_dict[entity]
-    if entity in family_roles:
-        gender = family_members[entity]
-        ent_type = 'PERSON'
-    return entity, gender, ent_type
-
-
-def _process_noun(token: Token, ent_type: str) -> (str, str):
+def _process_noun(token: Token) -> (str, str):
     """
     When processing a token (in add_token_details) that is a noun, capture its number, gender, etc.
 
     :param token: Token of the noun
-    :param ent_type: Input ent_type (which may be empty)
-    :returns: Two strings, the entity text and type
+    :return: Two strings, the entity text and type
     """
     # Retrieve the full text with adjectives, etc.
-    token_text = token.text.lower()
-    ent = space.join(t.text for t in token.children if
-                     (t.dep_ in ('amod', 'nummod', 'compound') and t.pos_ not in unwanted_tokens))
-    if ent:
-        ent = f'{ent}{space}{token.text}'
-    else:
-        ent = token.text
-    # Get gender
-    gender = empty_string
-    if token_text.endswith('s'):     # Avoid having to check for plurals for all family member types
-        check_text = token_text[:-1]
-    else:
-        check_text = token_text
-    if check_text in family_roles:
-        gender = family_members[check_text]
-        ent_type = 'PERSON'
-    else:
-        if 'Fem' in token.morph.get('Gender'):
-            gender = 'FEMALE'
-        elif 'Masc' in token.morph.get('Gender'):
-            gender = 'MALE'
-    if ent_type == empty_string:
-        ent_type = 'NOUN'
+    ent = space.join(t.text for t in token.subtree if t.pos_ not in unwanted_tokens)
+    # if (t.dep_ in ('advmod', 'amod', 'compound', 'nummod', 'nmod', 'poss')
+    symbols = [t.text for t in token.children if t.pos_ == 'SYM']
+    ent_type = token.ent_type_ if token.ent_type_ else 'NOUN'
     # Include plurality in ent_type
     if 'Plur' in token.morph.get('Number'):
         ent_type = f'PLURAL{ent_type}'
     elif 'Sing' in token.morph.get('Number'):
         ent_type = f'SING{ent_type}'
+    gender = empty_string
+    if 'Fem' in token.morph.get('Gender'):
+        gender = 'FEMALE'
+    elif 'Masc' in token.morph.get('Gender'):
+        gender = 'MALE'
     ent_type = f'{gender}{ent_type}' if gender else ent_type
     # Account for a determiner of 'no' - i.e., nothing (for ex, 'no information was found')
     if any([tc for tc in token.children if tc.dep_ == 'det' and tc.text == 'no']):
         ent_type = f'NEG{ent_type}'
+    if 'PERCENT' in ent_type or 'MONEY' in ent_type:
+        ent = ent.replace(' %', '%')
+        for sym in symbols:
+            if ent[ent.index(sym) + 2].isdigit():
+                ent = ent.replace(f'{sym} ', sym)
+            elif ent[ent.index(sym) - 2].isdigit():
+                ent = ent.replace(f' {sym}', sym)
+    else:
+        ent.replace('.', empty_string)
     return ent, ent_type
 
 
@@ -178,12 +92,12 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     :param token: Token of the preposition
     :param dictionary: Dictionary that the token details should be added to
     :param prep_key: Dictionary key where the details are added
-    :returns: None (Specified dictionary is updated)
+    :return: None (Specified dictionary is updated)
     """
     # Retrieve the text for nouns (including adjectives and compound nouns)
-    prep_ent, prep_ent_type = _process_noun(token, token.ent_type_)
+    prep_ent, prep_ent_type = _handle_noun(token)
     prep_ent_detail = dict()
-    prep_ent_detail['detail_text'] = prep_ent
+    prep_ent_detail['detail_text'] = prep_ent.split('$&')[0]
     prep_ent_detail['detail_type'] = prep_ent_type
     # Recursively call if there are more objects, related by conjunction
     for child in token.children:
@@ -192,62 +106,129 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     add_to_dictionary_values(dictionary, 'prep_details', prep_ent_detail, dict)
 
 
-def _process_personal_pronoun(token: Token, narr_gender: str) -> (str, str):
+def _process_personal_pronoun(token: Token) -> (str, str):
     """
     When processing a token that is a personal pronoun, return the text that identifies
     the person and their 'type' (gender + single/plural + PERSON).
 
     :param token: Token of the personal pronoun
-    :param narr_gender: Either an empty string or one of the values, AGENDER, BIGENDER, FEMALE or
-                        MALE - indicating the gender of the narrator
-    :returns: A tuple holding the text that identifies the person and their 'type'
+    :return: A tuple holding the text that identifies the person and their 'type'
             (gender + single/plural + PERSON).
     """
     entity = token.text
     entity_type = token.ent_type_
     if '1' in token.morph.get('Person'):
-        if 'Plur' in token.morph.get('Number'):
-            entity_type = 'INCLUSIVE'
-        else:
-            entity = 'Narrator'
-            entity_type = f'{narr_gender}SINGPERSON'
-    elif '2' in token.morph.get('Person'):
+        entity_type = 'PERSON'
+    if '2' in token.morph.get('Person'):
         entity_type = 'AUDIENCE'
     elif '3' in token.morph.get('Person'):
-        # Include gender and plurality in ent_type
-        if 'Plur' in token.morph.get('Number'):
-            entity_type = f'PLURAL{entity_type}'
-        elif 'Sing' in token.morph.get('Number'):
-            entity_type = f'SING{entity_type}'
-        if 'Fem' in token.morph.get('Gender'):
-            entity_type = f'FEMALE{entity_type}'
-        elif 'Masc' in token.morph.get('Gender'):
-            entity_type = f'MALE{entity_type}'
+        if token.text.lower() == 'it':
+            entity_type = 'NOUN'
+        else:
+            entity_type = 'PERSON'
+    # Include gender and plurality in ent_type
+    if 'Plur' in token.morph.get('Number'):
+        entity_type = f'PLURAL{entity_type}'
+    elif 'Sing' in token.morph.get('Number'):
+        entity_type = f'SING{entity_type}'
+    if 'Fem' in token.morph.get('Gender'):
+        entity_type = f'FEMALE{entity_type}'
+    elif 'Masc' in token.morph.get('Gender'):
+        entity_type = f'MALE{entity_type}'
     return entity, entity_type
 
 
-def _process_proper_noun(token: Token, family_dict: dict) -> (str, str):
+def _process_proper_noun(token: Token) -> (str, str):
     """
     When processing a token that is a proper noun, return the text of the noun and its
     'type' (gender + single/plural + PERSON).
 
     :param token: Token of the proper noun
-    :param family_dict: A dictionary containing the names of family members and their relationship
-                        to the narrator/subject
-    :returns: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
+    :return: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
              GPE/LOC/EVENT/...).
     """
     entity = token.text
     entity_type = token.ent_type_
-    if entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('ORG') \
-            or entity_type.endswith('NORP'):
-        entity, entity_type = _process_noun(token, entity_type)
-    elif not entity_type.endswith('DATE') and not entity_type.endswith('TIME'):
-        if entity_type.endswith('EVENT'):
-            gender = empty_string
-        else:
-            entity, gender, entity_type = _check_family(entity, family_dict)
-        if entity_type.endswith('NOUN') or entity_type.endswith('EVENT'):
-            entity, entity_type = _process_noun(token, entity_type)   # Get the full entity text at least
-        entity_type = f'{gender}{entity_type}' if gender else entity_type
-    return entity, entity_type
+    if entity_type.endswith('DATE') or entity_type.endswith('TIME'):
+        return entity, entity_type
+    if entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('FAC') \
+            or entity_type.endswith('ORG') or entity_type.endswith('NORP') or entity_type.endswith('EVENT') \
+            or entity_type.endswith('NOUN'):
+        return _process_noun(token)
+    return entity, check_name_gender(entity)
+
+
+def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, verb_lemma: str = None) -> dict:
+    """
+    Set up a dictionary to hold the entity's/token's details.
+
+    :param ent_text: Full token string - For verbs, = lemma; For nouns, compound words
+                     and modifiers added
+    :param ent_type: The type of the entity - For example, SINGPERSON or NOUN
+    :param ent_key: Dictionary key where the details are added
+    :param verb_lemma: The lemma if the entity is a verb
+    :return: A dictionary holding the entity's/token's initial dictionary definition
+    """
+    ent_dict = dict()
+    # Lists of dictionaries have plural names while individual dictionary keys should not
+    ent_base_key = 'detail'
+    if 'verb' in ent_key:
+        ent_base_key = 'verb'
+    elif 'object' in ent_key:
+        ent_base_key = 'object'
+    elif 'subject' in ent_key:
+        ent_base_key = 'subject'
+    ent_dict[f'{ent_base_key}_text'] = ent_text
+    if 'verb' in ent_key:
+        ent_dict['verb_lemma'] = verb_lemma
+    else:
+        ent_dict[f'{ent_base_key}_type'] = ent_type
+    return ent_dict
+
+
+def add_token_details(token: Token, dictionary: dict, token_key: str):
+    """
+    Expand/clarify the token text, get the token's entity type (or define one if blank), and
+    add the token details to the specified dictionary key.
+
+    :param token: Token from spacy parse
+    :param dictionary: Dictionary that the token details should be added to
+    :param token_key: Dictionary key where the details are added
+    :return: None (Input dictionary is updated)
+    """
+    ent = token.text.split('$&')[0]
+    if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
+        return
+    if 'verb' in token_key:
+        ent = token.lemma_
+        ent_type = 'VERB'
+    else:
+        ent, ent_type = _handle_noun(token)
+    # Set up the entity's dictionary and add basic details
+    ent_dict = _setup_entity_dictionary(ent, ent_type, token_key, token.lemma_)
+    # Process specific children (conjunctions and prepositions)
+    for child in token.children:
+        if ent_type == 'VERB' and ('obj' in child.dep_ or 'attr' in child.dep_):
+            # if 'advcl' in token_key or 'xcomp' in token_key:
+            # Object/attr is part of the adverbial clause, so it adds to the current ent_dict
+            # add_token_details(child, ent_dict, objects_string)
+            # else:
+            add_token_details(child, ent_dict, objects_string)
+        elif 'conj' == child.dep_:
+            # TODO: A "cc" of "or" or "nor" => :alternative true Collection (currently, assumes 'cc' = 'and')
+            add_token_details(child, dictionary, token_key)
+        elif 'prep' in child.dep_:
+            if child.text.lower() not in processed_prepositions:
+                continue
+            prep_dict = dict()
+            # Lists of dictionaries have plural names while individual dictionary keys should not
+            prep_dict['prep_text'] = child.text
+            for prep_child in child.children:
+                if 'obj' in prep_child.dep_ or 'attr' in prep_child.dep_:
+                    # Object/attr is part of the prepositional clause, so it adds to the current prep_dict
+                    _process_prep_object(prep_child, prep_dict,
+                                         (token_key[0:-1] if token_key.endswith("s") else token_key))
+                    # TODO: Add processing for pcomp
+                    # Only add to the dictionary if the object or attr is processed
+                    add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
+    add_to_dictionary_values(dictionary, token_key, ent_dict, dict)

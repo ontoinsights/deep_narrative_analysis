@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: December 24 2021
+# Last modified: November 1 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,6 +34,12 @@
 #  Added the properties, :negation, :sentiment and :has_location
 #  Generalized :has_goal
 #  Corrected :sentence_offset domain (to be anything)
+#  Added :wordnet_noun/verb_synset and details for the Top classes
+#  Added :imaginary boolean and :text_quotes
+#  Simplified provenance data
+#  Renamed :sentence_offset to :offset to use with sentence chunks
+#  Added Sentence and Chunk as subclasses of InformationSource
+#  Removed :processing and added :description and :mentions
 ########################################################################
 
 
@@ -61,13 +67,19 @@
   rdfs:label "synonym (noun)" ;
   :definition "A noun which has a similar meaning." .
 
-:processing a owl:AnnotationProperty ;
-  rdfs:label "processing instructions" ;
-  :definition "Additional details to capture the semantics of a class/concept." .
-
 :verb_synonym a owl:AnnotationProperty ;
   rdfs:label "synonym (verb)" ;
   :definition "A verb which has a similar meaning. Verb synonyms are typically only defined for EventAndState and relationship concepts." .
+
+:wordnet_noun_synset a owl:AnnotationProperty ;
+  rdfs:label "WordNet noun synset" ;
+  :definition "String holding the WordNet synset identifier for the concept. WordNet is described and available from the following web site, https://wordnet.princeton.edu/. Note that there may be more than one synset corresponding to a concept." ;
+  rdfs:range xsd:string .
+
+:wordnet_verb_synset a owl:AnnotationProperty ;
+  rdfs:label "WordNet verb synset" ;
+  :definition "String holding the WordNet synset identifier for the concept. WordNet is described and available from the following web site, https://wordnet.princeton.edu/. Note that there may be more than one synset corresponding to a concept." ;
+  rdfs:range xsd:string .
 
 
 ########################################################################
@@ -76,13 +88,27 @@
 
 :Agent a owl:Class ;
   rdfs:label "Agent/Actor" ;
-  :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in, are affected by or are the holders of EventAndState occurrences and conditions." ;
-  :noun_synonym "legal entity", "doer", "actor", "performer", "participant", "role player", "character" .
+  :definition "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in, are affected by or are the holders of EventAndState occurrences and conditions. Note that an 'imaginary' being/Agent is identified using the :imaginary boolean." ;
+  :noun_synonym "legal entity", "doer", "actor", "performer", "participant", "role player", "character" ;
+  :wordnet_noun_synset "00007347", "09786620", "09836176", "09506868" .
+
+:Chunk a owl:Class ;
+  rdfs:label "Chunk" ;
+  rdfs:subClassOf :InformationSource ;
+  :definition "A portion of a Sentence with one or more subjects, verbs and possibly objects. A Sentence can usually be broken down into clauses (e.g., :Chunks). A Sentence's Chunks are associated using the :has_component property." .
 
 :Collection a owl:Class ;
   rdfs:label "Collection/Group" ;
   :definition "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property." ;
-  :noun_synonym "assemblage", "assortment", "compilation", "set", "compendium", "accumulation", "aggregation", "bevy", "pack", "herd" .
+  :noun_synonym "assortment", "compilation", "set", "accumulation", "aggregation", "bevy", "pack", "herd", "kingdom", "community", "people", "humanity", "humankind", "mankind", "swarm", "citizenry", "population", "multitude", "masses", "herding", "swarming" ;
+  :verb_synonym "herd", "swarm" ;
+  :wordnet_noun_synset "01016008" .
+
+:AlternativeCollection a owl:Class ;
+  rdfs:subClassOf :Collection ;
+  rdfs:label "Alternative Collection" ;
+  :definition "A Collection whose members are considered 'alternatives'." ;
+  :example "An Event may be describing two different Locations, due to uncertainty. These can be grouped in an AlternativeCollection to indicate this uncertainty. And, using the :probability RDF* property on the :has_member association of the Locations to the Collection, the likelihoods of the Event occurring at either Location can be specified." .
 
 :Enumeration a owl:Class ;
   rdfs:label "Enumeration" ;
@@ -91,66 +117,79 @@
 :Evidence a owl:Class ;
   rdfs:subClassOf :Collection ;
   rdfs:label "Evidence" ;
-  :definition "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting." ;
-  :noun_synonym "proof", "confirmation", "verification", "validation", "affirmation" .
+  :definition "A Collection of entities that support or refute the validity, existence or definition of the referencing individual or subject-predicate-object triple. Evidence may be supporting or refuting as indicated by the property, :supporting." .
 
 :EventAndState a owl:Class ;
   rdfs:label "Event and State" ;
   :definition "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the Event subclass), to whom (defined using the :has_agent property or its sub-properties), when (defined using the :has_time property or its sub-properties), how (defined using the :has_instrument property) and where (defined using the :has_location property or its sub-properties). A state is a factor, situation or condition that an Agent (defined using the :has_agent property) or Resouce (defined using the :has_resource predicate) experiences at some time (defined using the :has_time property or its sub-properties) and possibly place (defined using the :has_location property)." ;
-  :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation", "status", "condition" .
+  :noun_synonym "occurrence", "happening", "act", "incident", "circumstance", "factor", "situation" ;
+  :wordnet_noun_synset "07298313", "00024900", "08584764", "13957629" .
 
 :GoalDirectedProcess a owl:Class ;
   rdfs:label "Goal-Directed Process" ;
   rdfs:subClassOf :Process ;
   :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline and are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)." ;
   :example "Examples are a business process or procedure designed to achieve a specific end state." ;
-  :noun_synonym "procedure", "business process" .
+  :noun_synonym "procedure", "business process" ;
+  :wordnet_noun_synset "01025762" .
 
 :InformationSource a owl:Class ;
   rdfs:label "Information Source" ;
-  :definition "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content." .
+  :definition "A document, book, news article, database, spreadsheet, file, web page, blog or other textual artifact with non-fictional, or fictional content." ;
+  :wordnet_noun_synset "06278749", "03222161", "06650349", "06520807", "06413674" . 
+
+:KnowledgeGraph a owl:Class ;
+  rdfs:label "Knowledge Graph" ;
+  rdfs:subClassOf :InformationSource ;
+  :definition "A collection of entities (the 'nodes') representing specific instances of the types of things in a domain of interest, interconnected by named 'edges' which identify the entities' properties (such as string or integer values) and relationships between them. The structure and semantics of the graph ('knowledge') are derived from the use of an ontology." .
 
 :Location a owl:Class ;
   rdfs:label "Location" ;
-  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property." ;
-  :noun_synonym "locale", "site", "venue", "placement", "locality", "setting", "place" .
-
-:Mention a owl:Class ;
-  rdfs:label "Mention" ;
-  :definition "The provenance information for an entity or concept that appears in an InformationSource such as a database or spreadsheet." ;
-  :example "For example, a value of the GDP of a country may be available in a spreadsheet at a particular row and column." ;
-  :noun_synonym "reference", "citation" .
+  :definition "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's/Condition's Location is specified using the :has_location property. Note that an 'imaginary' Location (such as C.S. Lewis' Narnia) is identified using the :imaginary boolean." ;
+  :noun_synonym "locale", "site", "venue", "placement", "locality", "setting", "place" ;
+  :wordnet_noun_synset "05633662" . 
 
 :Narrative a owl:Class ;
   rdfs:label "Narrative" ;
   rdfs:subClassOf :InformationSource ;
   :definition "A sequence of events relating/explaining what occurred in a (real or fictitious) person's life." ;
-  :noun_synonym "story", "tale" .
+  :noun_synonym "story", "tale" ;
+  :wordnet_noun_synset "07235754" .
 
 :NaturalProcess a owl:Class ;
   rdfs:label "Natural Process" ;
   rdfs:subClassOf :Process ;
-  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process." .
+  :definition "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process." ;
+  :wordnet_noun_synset "13540166" .
 
 :Process a owl:Class ;
   rdfs:label "Process/Sequence" ;
-  :definition "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)." .
+  :definition "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process), GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state) and Scripts (prototypical stories)." ;
+  :wordnet_noun_synset "00029976" .
 
 :Resource a owl:Class ;
   rdfs:label "Resource" ;
-  :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold." ;
-  :noun_synonym "instrument", "tool", "asset", "supply", "commodity" .
+  :definition "Superclass defining any inanimate entity (such as a food, tools, building, ...) which can be used, harvested, mined, made/manufactured, bought and sold. Note that an 'imaginary' Resource (such as a flying carpet or magic wand) is identified using the :imaginary boolean." ;
+  :noun_synonym "instrument", "tool", "asset", "supply", "commodity", "artifact" ;
+  :wordnet_noun_synset "13352793" .
 
 :Script a owl:Class ;
   rdfs:label "Script" ;
   rdfs:subClassOf :Process ;
   :definition "A 'prototypical' (or hypothetical) sequence of actions, occurrences, conditions or factors 'expected' to be found in a particular context or narrative/story." ;
-  :noun_synonym "timeline", "plot" .
+  :noun_synonym "timeline", "plot", "plot-line" ;
+  :wordnet_noun_synset "06384937" .
+
+:Sentence a owl:Class ;
+  rdfs:label "Sentence" ;
+  rdfs:subClassOf :InformationSource ;
+  :definition "A portion of an InformationSource written as unstructured text, ending with a period, question or exclamation mark, etc., typically with one or more subjects, verbs and objects. A Sentence can usually be broken down into clauses (e.g., :Chunks) where each Chunk has its own subject(s), verb(s) and object(s). A Sentence's Chunks are associated using the :has_component property." .
 
 :Time a owl:Class ;
   rdfs:label "Time" ;
   :definition "Superclass defining the shared semantics of specific points in time, intervals of time or durations. An individual's time-related information is specified using the :has_time property or its sub-properties." ;
-  :noun_synonym "fourth dimension" .
+  :noun_synonym "fourth dimension" ;
+  :wordnet_noun_synset "00028468" .
 
 :UnifyingCollection a owl:Class ;
   rdfs:subClassOf :Collection ;
@@ -178,12 +217,6 @@
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
                                       [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] .
 
-:column_label a owl:DatatypeProperty ;
-  rdfs:label "spreadsheet or database column label" ;
-  :definition "Defines a particular column in a database or spreadsheet InformationSource, where a Mention is extracted." ;
-  rdfs:domain :Mention ;
-  rdfs:range xsd:string .
-
 :count a owl:DatatypeProperty ;
   rdfs:label "count/number" ;
   :definition "The number of some entity/in a Collection." ;
@@ -191,15 +224,19 @@
   rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
-:data_identifier a owl:DatatypeProperty ;
-  rdfs:label "database identifier" ;
-  :definition "Defines a particular record (key), URI, etc. in a database InformationSource, where a Mention is extracted." ;
-  rdfs:domain :Mention ;
+:description a owl:DatatypeProperty ;
+  rdfs:label "description" ;
+  :definition "Text providing a description (usually from Wikipedia) of the entity" ;
   rdfs:range xsd:string .
   
 :future a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "future (boolean)" ;
   :definition "Boolean indicating that the individual describes somthing possible in, or planned for, a 'future' time." ;
+  rdfs:range xsd:boolean .
+  
+:imaginary a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "imaginary (boolean)" ;
+  :definition "Boolean indicating that the individual describes somthing that exists in the imagination (in stories, myth, etc.) but does not exist in reality." ;
   rdfs:range xsd:boolean .
 
 :maximum_count a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -221,6 +258,19 @@
   rdfs:range xsd:boolean ;
   :definition "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc." .
 
+:number_triples a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "number of triples" ;
+  :definition "A count of the number of triples in a KnowledgeGrasph." ;
+  rdfs:domain :KnowledgeGraph ;
+  rdfs:range xsd:integer .
+
+:offset a owl:DatatypeProperty;
+  rdfs:label "offset" ;
+  :definition "Defines the Sentence number in a InformationSource that is unstructured text, where an entity is extracted, or the ordering of the Chunks within a Sentence." ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :Sentence :Chunk ) ] ;
+  rdfs:range xsd:integer .
+
 :probability a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "probability/likelihood" ;
   :definition "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing." ;
@@ -228,25 +278,13 @@
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]
-                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] ;
-  :noun_synonym "likelihood", "odds" .
+                                      [ xsd:maxInclusive "1.00"^^xsd:decimal ] ) ] .
 
 :prototypical a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "prototypical (boolean)" ;
   :definition "Boolean indicating that the individual describes a 'typical' (and not a specific) instance." ;
   :definition "This concept can also be indicated by using an OWL class as an instance (via OWL2 punning)." ;
   rdfs:range xsd:boolean .
-
-:row_number a owl:DatatypeProperty ;
-  rdfs:label "spreadsheet row number" ;
-  :definition "Defines a particular row in a spreadsheet-like InformationSource, where a Mention is extracted." ;
-  rdfs:domain :Mention ;
-  rdfs:range xsd:integer .
-
-:sentence_offset a owl:DatatypeProperty;
-  rdfs:label "sentence offset" ;
-  :definition "Defines the sentence number in a InformationSource that is unstructured text, where a Mention or entity is extracted." ;
-  rdfs:range xsd:integer .
 
 :sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "sentiment" ;
@@ -267,6 +305,12 @@
   :definition "String holding the contents of an InformationSource or the particular text that generated the individual or subject-object-predicate triple." ;
   rdfs:range xsd:string .
 
+:text_quote a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "text_quotes" ;
+  :definition "String holding quoted text in an Information Source." ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
 
 ########################################################################
 # Object Properties
@@ -274,42 +318,39 @@
 
 :before a owl:ObjectProperty, owl:TransitiveProperty ;
   rdfs:label "before" ;
-  :definition "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity." ;
-  :verb_synonym "predate", "pre-date", "precede" .
+  :definition "Indicates that the specified entity existed before (or preceded/pre-dated in time) the referenced entity." .
 
 :causes a owl:ObjectProperty ;
   rdfs:label "causes" ;
   :definition "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object." ;
   rdfs:domain :EventAndState ;
-  rdfs:range :EventAndState ;
-  :noun_synonym "cause" ;
-  :verb_synonym "induce", "cause".
+  rdfs:range :EventAndState .
+
+:describes a owl:ObjectProperty ;
+    rdfs:label "describes" ;
+    :definition "Relationship between a Chunk and the entity (typically an Agent or EventAndState) whose details are extracted from it." ;
+    rdfs:domain :Chunk .
 
 :during a owl:ObjectProperty ;
   rdfs:label "during" ;
-  :definition "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity." ;
-  :noun_synonym "concurrence", "coincident" ;
-  :verb_synonym "coincide" .
+  :definition "Indicates that the specified entity existed at the same time (or occurred within the same timeframe) as the referenced entity." .
 
 :enables a owl:ObjectProperty ;
     rdfs:label "enables" ;
     :definition "Relationship between two EventAndState individuals indicating that the subject 'enables'/allows the object (makes it possible or more likely for the object to occur)." ;
     rdfs:domain :EventAndState ;
-    rdfs:range :EventAndState ;
-    :noun_synonym "enablement" ;
-    :verb_synonym "make possible", "enable" .
+    rdfs:range :EventAndState .
+
+:encodes a owl:ObjectProperty ;
+    rdfs:label "encodes" ;
+    :definition "Relationship between a KnowledgeGraph and InformationSource indicating that the Graph captures/'encodes' details from the Source." ;
+    rdfs:domain :KnowledgeGraph ;
+    rdfs:range :InformationSource .
 
 :excluded_member a owl:ObjectProperty ;
   rdfs:label "excluded member" ;
   :definition "Defines an entity that is specifically NOT in a grouping/Collection." ;
-  rdfs:domain :Collection ;
-  :noun_synonym "exclusion" .
-
-:has_author a owl:ObjectProperty ;
-  rdfs:label "has author" ;
-  rdfs:domain :InformationSource ;
-  rdfs:range :Agent ;
-  :definition "References the Agent (Person, Organization, etc.) that created or published the information." .
+  rdfs:domain :Collection .
 
 :has_beginning a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has beginning" ;
@@ -366,14 +407,7 @@
 
 :has_next a owl:ObjectProperty ;
   rdfs:label "has next" ;
-  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." ;
-  :noun_synonym "following", "adjacency", "adjacent" ;
-  :verb_synonym "follow" .
-
-:has_subject a owl:ObjectProperty ;
-  rdfs:label "has subject" ;
-  :definition "A reference to an entity that is a topic of an InformationSource." ;
-  rdfs:domain :InformationSource .
+  :definition "Defines an entity that follows the subject/referencing entity in time, or as an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState." .
 
 :has_time a owl:ObjectProperty ;
   rdfs:label "has time" ;
@@ -382,31 +416,26 @@
 
 :meets a owl:ObjectProperty ;
   rdfs:label "meets" ;
-  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." ;
-  :noun_synonym "convergence", "boundary", "meet" ;
-  :verb_synonym "converge", "touch", "meet" .
+  :definition "Indicates that the boundaries of an entity touch/join with another/share a border or boundary." .
+
+:mentions a owl:ObjectProperty ;
+  rdfs:label "mentions" ;
+  rdfs:domain :Sentence ;
+  rdfs:range [ a owl:Class ;
+               owl:unionOf ( :Agent :Location :Time ) ] ;
+  :definition "Indicates that the Sentence includes a reference to a specific Agent (organization, person, etc.), time period, EventAndState (such as World War II) or Location." .
 
 :overlaps a owl:ObjectProperty ;
   rdfs:label "overlaps" ;
-  :definition "Indicates that the boundaries of an entity extend over/cover another." ;
-  :noun_synonym "overlap" ;
-  :verb_synonym "overlap" .
+  :definition "Indicates that the boundaries of an entity extend over/cover another." .
 
 :prevents a owl:ObjectProperty ;
     rdfs:label "prevents" ;
     :definition "Relationship between two EventAndState individuals indicating that the subject 'prevents' the object (decreases the likelihood of the object occurrring)." ;
     rdfs:domain :EventAndState ;
-    rdfs:range :EventAndState ;
-    :noun_synonym "preventative" ;
-    :verb_synonym "prevent" .
+    rdfs:range :EventAndState .
 
 :reference_to_enumerated_value a owl:ObjectProperty ;
     rdfs:label "reference to enumerated value" ;
     :definition "Relationship between an individual and a value of an Enumeration. This is defined to improve semantic understanding of the property hierarchy when visualized as a tree." ;
     rdfs:range :Enumeration .
-
-:sourced_from a owl:ObjectProperty ;
-  rdfs:label "sourced from" ;
-  :definition "A reference to the InformationSource (if a text file) and Mention (if a spreadsheet or database, with its provenance information, such as row_number) that resulted in the instantiation of an entity." ;
-  rdfs:range [ a owl:Class ;
-               owl:unionOf ( :Mention :InformationSource ) ] . 

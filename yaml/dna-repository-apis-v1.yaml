@@ -1,0 +1,527 @@
+openapi: 3.0.3
+info:
+  title: Deep Narrative Analysis RESTful APIs v1.0.5
+  description: |-
+    Defines the interface for ingesting, retrieving, editing and deleting 
+    narratives using the Deep Narrative Analysis (DNA) infrastructure.
+    
+    Useful links:
+    - [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis)
+    - [DNA blog](https://hearing-all-voices.blogspot.com/)
+    
+    To use the API, the following should be downloaded/installed:
+    - The Stardog data store (https://www.stardog.com/get-started/)
+    - The DNA GitHub repository 
+      (https://github.com/ontoinsights/deep_narrative_analysis)
+    - All DNA Python libraries specified in the requirements.txt file (in
+      the GitHub repository)
+    - The appropriate spaCy language model (for English, en_core_web_trf)
+    
+    More information can be found in the GitHub repository's README.txt file.
+    
+    The following workflow is recommended:
+    - Go to the 'dna' directory in the downloaded GitHub DNA file structure
+    - Still in the 'dna' directory, execute "flask run"
+    - Create a new repository by POSTing to
+      /dna/v1/repositories?repository=repo_name, or an existing repository can 
+      be reused
+    - Ingest narratives to the repository by POSTing to 
+      /dna/v1/repositories/narratives?repository=repo_name with a request body
+      holding the narrative metadata and text (the response body will contain 
+      the narrative's id)
+      - At this time, the text language should match that of the spaCy language 
+        model; In the future, another parameter will be added to the API to 
+        indicate the language
+    - Review and edit the ingested narrative by GETting 
+      /dna/v1/repositories/narratives?repository=repo_name&narrativeId=narr_id
+      (the response body will contain a list of all triples)
+    - If edited, update the narrative by PUTting to 
+      /dna/v1/repositories/narratives?repository=repo_name&narrativeId=narr_id
+      (the request body will contain a list of all triples)
+      
+    Note that GETting /dna/v1/repositories or /dna/v1/repositories/narratives
+    will return a list of all DNA repositories or narratives, respectively.
+    
+    DELETEing /dna/v1/repositories?repository=repo_name or 
+    /dna/v1/repositories/narratives?repository=repo_name&narrativeId=narr_id
+    will remove the specified repository or narrative. Please use these
+    commands with caution since the results are not reversable.
+  contact:
+    email: andrea@ontoinsights.com
+  license:
+    name: Creative Commons Attribution 4.0 International Public License
+    url: https://creativecommons.org/licenses/by/4.0/legalcode
+  version: '1.0.5'
+paths:
+  /dna/v1/repositories:
+    get:
+      summary: >-
+        Get a list of all repositories
+      description: >-
+        Return the names and creation dates of all the narrative repositories
+      operationId: getRepositories
+      responses:
+        '200':
+          description: Successful operation (may be empty)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RepositoryList' 
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    post:
+      summary: >-
+        Create a new repository
+      description: >-
+        Create a new narrative repository with the specified name
+      parameters:
+        - $ref: '#/components/parameters/repository'
+      operationId: createRepository
+      responses:
+        '201':
+          description: Repository created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  created:
+                    type: string
+                    example: dna
+        '400':
+          description: Repository creation - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '409':
+          description: Repository already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, already exists
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    delete:
+      summary: Delete a repository
+      description: >-
+        Delete the narrative repository of the specified name
+      parameters:
+        - $ref: '#/components/parameters/repository'
+      operationId: deleteRepository
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  deleted:
+                    type: string
+                    example: dna
+        '404':
+          description: Repository not found 
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+  /dna/v1/repositories/narratives:
+    get:
+      summary: >-
+        Get a list of all narratives and their meta-data in the 
+        specified repository
+      description: >-
+        Return the meta-data for all narratives in the specified repository
+      parameters:
+        - $ref: '#/components/parameters/repository'
+      operationId: getList
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NarrativeList' 
+        '404':
+          description: Repository not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    post:
+      summary: Ingest a narrative to the specified repository
+      description: >-
+        Process a narrative based on details in the query parameters and
+        request body, and ingest it to the specified repository
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/extSources'
+        - $ref: '#/components/parameters/isBiography'
+      operationId: ingest
+      requestBody:
+        description: Ingest narrative
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/InputNarrative'  
+        required: true
+      responses:
+        '201':
+          description: Knowledge graph created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NarrativeDetails'
+        '400':
+          description: Narrative ingest - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Repository not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found  
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    delete:
+      summary: Delete a narrative
+      description: >-
+        Delete the specified narrative in the repository
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/narrativeId'
+      operationId: deleteNarrative
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    example: dna
+                  deleted:
+                    type: string
+                    example: 73cf1b89
+        '400':
+          description: Narrative delete - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Repository or narrativeId not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: >-
+                      Narrative with the id, 73cf1b89, was not found in the
+                      repository, foo
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+  /dna/v1/repositories/narratives/graphs:
+    get:
+      summary: Get a narrative's knowledge graph
+      description: >-
+        Get the knowledge graph for the narrative with the specified id
+        in the repository
+      operationId: getGraph
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/narrativeId'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KnowledgeGraphDetails'  
+        '400':
+          description: Graph retrieval - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Repository or narrative ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: >-
+                      Narrative with the id, 123, was not found in foo
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    put:
+      summary: Update a narrative's knowledge graph
+      description: >-
+        Update the knowledge graph for the specific narrative 
+        in the repository. Currently, the entire graph is replaced.
+        In the future, it will be possible to update select triples.
+      operationId: updateGraph
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/narrativeId'
+      requestBody:
+        description: Updated narrative triples
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                triples:
+                  type: array
+                  items:
+                    type: string
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    example: dna
+                  narrativeId:
+                    type: string
+                    example: 73cf1b89
+                  processed:
+                    type: string
+                    format: date-time
+                    example: 2022-09-09T12:41:00Z
+                  numberOfTriples:
+                    type: integer
+                    example: 500
+        '400':
+          description: Update graph - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Repository or narrative ID not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: >-
+                      Narrative with the id, 73cf1b89, was not found in foo
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+components:
+  parameters:
+    extSources:
+      name: extSources
+      in: query
+      description: >-
+        Boolean indicating whether details from external sources (such as 
+        Wikipedia/Wikidata or GeoNames) should be included in the parse
+      required: false
+      schema:
+        type: boolean
+        default: false
+    isBiography:
+      name: isBiography
+      in: query
+      description: >-
+        Boolean indicating whether the text is a biography/autobiography (if 
+        true) or a news article/blog post/etc. This has implications for the
+        parse. For example, in a biography, it is likely that a coherent 
+        timeline can be extracted. The default is 'false'.
+      required: false
+      schema:
+        type: boolean
+        default: false
+    narrativeId:
+      name: narrativeId
+      in: query
+      description: UUID for a narrative in the repository
+      required: true
+      schema:
+        type: string
+        format: uuid
+        example: 73cf1b89
+    repository:
+      name: repository
+      in: query
+      description: >-
+        Name of the repository holding narratives
+      required: true
+      schema:
+        type: string
+  schemas:
+    BadRequest:
+      type: object
+      properties:
+        error:
+          type: string
+          enum: [ missing, invalid ]
+          example: missing
+        detail:
+          type: string
+          example: The argument parameter, repository, is required
+    InputNarrative:
+      type: object
+      properties:
+        narrativeMetadata: 
+          $ref: '#/components/schemas/NarrativeMeta'
+        narrative:
+          type: string
+          example: This is the text of the narrative.
+    InternalError:
+      type: object
+      properties:
+        error:
+          type: array
+          items:
+            type: string
+            example: error details
+    KnowledgeGraphDetails:
+      type: object
+      properties:
+        repository:
+          type: string
+          example: dna
+        narrativeDetails:
+          $ref: '#/components/schemas/NarrativeDetails'
+        triples:
+          type: array
+          items:
+            type: string
+    NarrativeDetails:
+      type: object
+      properties:
+        narrativeId:
+          type: string
+          example: 73cf1b89
+        processed:
+          type: string
+          description: Date/time when the text was processed by DNA
+          format: date-time 
+          example: 2022-09-09T12:41:00Z
+        numberOfTriples:
+          type: integer
+          description: Number of triples in the knowledge graph
+          example: 500
+        narrativeMetadata:
+          $ref: '#/components/schemas/NarrativeMeta'
+    NarrativeList:
+      type: object
+      properties:
+        repository:
+          type: string
+          example: dna
+        narratives:
+          type: array
+          items:
+            $ref: '#/components/schemas/NarrativeDetails'
+    NarrativeMeta:
+      type: object
+      properties:
+        author: 
+            type: string
+            description: The writer of the text
+            example: John Smith
+        published:
+            type: string
+            description: Date/time when the text was published
+            format: date-time 
+            example: 2022-07-14T17:32:28Z
+        publisher:
+            type: string
+            example: Wall Street Journal
+        source:
+            type: string
+            description: >-
+              String identifying the online location of the article, its 
+              reference in an online repository, etc. 
+            example: Identifier_such_as_URL
+        title:
+            type: string
+            description: Article, blog post, ... title
+            example: A Narrative Title
+    RepositoryList:
+      type: array
+      items:
+        $ref: '#/components/schemas/RepositoryMeta'  
+    RepositoryMeta:
+      type: object
+      properties:
+        repository:
+          type: string
+          example: narratives1
+        created:
+          type: string
+          format: date-time
+          example: 2022-07-21T17:32:28Z

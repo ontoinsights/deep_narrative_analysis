@@ -6,10 +6,12 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 ########################################################################
-# File defining semantics related to time
+# File defining semantics related to time 
+# Many of the top-level concepts are taken from the W3C Time ontology
+# (https://www.w3.org/TR/owl-time/).
 # 
-# Created: February 9, 2020
-# Last modified: November 22 2021
+# Created: February 9 2020
+# Last modified: November 5 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -28,6 +30,10 @@
 #  Added :has_earliest_beginning, :has_latest_end and :time_zone
 #  Modified :has_temporal_unit and :has_recurrence_unit to be a restricted 
 #    set of string values
+#  Added sub-classes of Interval, PointInTime and Season; Changed Season 
+#    individuals (Autumn, Winter, ...) to be sub-classes
+#  Added :wordnet_noun_synset details
+#  Changed :Teenage to :Adolescence
 ########################################################################
 
 
@@ -35,62 +41,43 @@
 # Classes
 ########################################################################
 
-:Adulthood a owl:Class ;
-  rdfs:subClassOf :Interval ;
-  rdfs:label "Adulthood" ;
-  :definition "An interval of time in a Person's life, typically from 18-21 through 60-65 years of age." ;
-  :noun_synonym "middle age", "thirties", "forties", "fifties", "twenties", "legal age" .
-
-:Childhood a owl:Class ;
-  rdfs:subClassOf :Interval ;
-  rdfs:label "Childhood" ;
-  :definition "An interval of time in a Person's life, typically from birth to 12 years old." ;
-  :noun_synonym "infant", "infancy", "youth", "boyhood", "girlhood", "minor" .
-
 :Duration a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Duration of Time" ;
   :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :temporal_unit properties." ;
-  :noun_synonym "temporal distance", "lifespan" .
+  :noun_synonym "temporal distance", "lifespan" ;
+  :wordnet_noun_synset "05058400" .
 
 :Interval a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Interval of Time" ;
   :definition "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."; 
-  :noun_synonym "timeframe", "period" .
-
-:OldAge a owl:Class ;
-  rdfs:subClassOf :Interval ;
-  rdfs:label "Old Age" ;
-  :definition "An interval of time in a Person's life, typically 60-65 years of age or older." ;
-  :noun_synonym "elderliness", "advanced years", "declining years", "oldness", "agedness", "pensioner" ;
-  :verb_synonym "be elderly", "be old", "be aged" .
+  :noun_synonym "timeframe", "period" ;
+  :wordnet_noun_synset "15294470" .
 
 :PointInTime a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Point in Time" ;
   :definition "A point in time as specified by the properties, :year, :day_of_month, :day_of_week, :hour_of_day, :minute_of_hour, :month_of_year, :second_of_minute and :week_of_month, or by a specific :date_time timestamp." ;
   :example "For example, April 1 2016 at noon can be specified by a PointInTime instance with the following properties and values: :year 2016, :month_of_year 4, :day_of_month 1 and :hour_of_day 12 or by the xsd:timestamp, '2016-04-01T12:00:00." ;
-  :noun_synonym "moment", "instant" .
+  :noun_synonym "moment", "instant" ;
+  :wordnet_noun_synset "15205381" .
 
 :RecurrencePattern a owl:Class ;
   rdfs:subClassOf :Time ;
   rdfs:label "Recurrence Pattern" ;
   :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
   :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :recurrence_unit property would be set to 'Months'. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :recurrence_unit would be 'Weeks' and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :recurrence_unit of 'Seasonal' and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
-  :noun_synonym "rhythm", "cadence", "cycle", "repetition" .
+  :noun_synonym "rhythm", "cadence", "cycle", "repetition" ;
+  :wordnet_noun_synset "04775267", "07357963" .
 
 :Season a owl:Class ;
-  rdfs:subClassOf :RecurrencePattern ;
-  rdfs:label "Season" ;
-  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains. For this reason, types of Seasons are specified as individuals as an 'open enumeration'." ;
-  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." .
-
-:TeenAge a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Teenage" ;
-  :definition "An interval of time in a Person's life, typically from 13 through 19 years old." ;
-  :noun_synonym "teen", "adolescence", "young adult" .
+  rdfs:label "Season" ;
+  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains." ;
+  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." ;
+  :noun_synonym "time of year" ;
+  :wordnet_noun_synset "15261272" .
 
 
 ########################################################################
@@ -215,6 +202,12 @@
 # Object Properties
 ########################################################################
 
+:has_approximate_time a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has approximate time" ;
+  rdfs:subPropertyOf :has_time ;
+  rdfs:range :Time ;
+  :definition "Estimates the Time of an EventAndState, from a previous reference in the narrative, when no specific Time is defined." .
+
 :has_earliest_beginning a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has earliest beginning" ;
   rdfs:subPropertyOf :has_beginning ;
@@ -249,35 +242,206 @@
 
 
 ########################################################################
-# Individuals
+# Sub-classes of :Interval and :Season
 ########################################################################
 
-:Autumn a :Season ;
+:Adolescence a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Adolescence" ;
+  :definition "An interval of time in a Person's life, typically from 13 through 19 years old." ;
+  :noun_synonym "teenage", "teenager", "young adult" ;
+  :wordnet_noun_synset "09791452", "09650451", "14450314", "15172810" .
+
+:Adulthood a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Adulthood" ;
+  :definition "An interval of time in a Person's life, typically from 18-21 through 60-65 years of age." ;
+  :noun_synonym "middle age", "legal age", "maturity" ;
+  :wordnet_noun_synset "14448507" .
+
+:Afternoon a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Afternoon" ;
+  :definition "An interval of time in a day, between noon and evening." ;
+  :wordnet_noun_synset "15191238" .
+
+:Autumn a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Autumn" ;
   :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
-  :noun_synonym "fall" .
+  :wordnet_noun_synset "15261656" .
 
-:DrySeason a :Season ;
+:Bedtime a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Bedtime" ;
+  :definition "A PointInTime when a Person goes to bed." ;
+  :noun_synonym "lights-out" ;
+  :wordnet_noun_synset "15193522", "15193616" .
+
+:Childhood a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Childhood" ;
+  :definition "An interval of time in a Person's life, typically from birth to 12 years old." ;
+  :noun_synonym "infant", "infancy", "youth", "boyhood", "girlhood", "minor" ;
+  :wordnet_noun_synset "14450469", "15170546", "15172057", "09645219" .
+
+:ClosingTime a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Closing Time" ;
+  :definition "A PointInTime when a business or location is no longer accessible to the public (e.g., it is 'closed'.)" ;
+  :wordnet_noun_synset "15193712" .
+
+:DrySeason a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Dry Season" ;
-  :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics." .
+  :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics." ;
+  :wordnet_noun_synset "15263971" .
 
-:GrowingSeason a :Season ;
+:Evening a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Evening" ;
+  :definition "An interval of time in a day, after sunset and before sunrise." ;
+  :noun_synonym "eventide", "night" ;
+  :wordnet_noun_synset "15191509", "15194806" .
+
+:GrowingSeason a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Growing Season" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'." .
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'." ;
+  :wordnet_noun_synset "15262966" .
 
-:RainySeason a :Season ;
+:HappyHour a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Happy Hour" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Happy_hour&oldid=1086061520), 'a marketing term for a time when a venue such as a restaurant or bar offers reduced prices on alcoholic drinks. Discounted menu items like appetizers are often served during happy hour. This is a way for bars and restaurants to draw in more business before or after peak business hours.'" ;
+  :wordnet_noun_synset "15253815" .
+
+:HarvestTime a owl:Class ;
+  rdfs:subClassOf :Season ;
+  rdfs:label "Harvest Time" ;
+  :definition "The part of the year during which crops are picked/gathered." ;
+  :wordnet_noun_synset "00923604" .
+
+:HighSeason a owl:Class ;
+  rdfs:subClassOf :Season ;
+  rdfs:label "High Season" ;
+  :definition "Time when many people are traveling and rates for transportation, dining, etc. are highest." ;
+  :noun_synonym "peak season" ;
+  :wordnet_noun_synset "15263367" .
+
+:Holiday a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Holiday" ;
+  :definition "A day that many people are exempt from work and which commemorates an event, person, religious occasion, etc." ;
+  :noun_synonym "long weekend" ;
+  :wordnet_noun_synset "15208263" .
+
+:Mealtime a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Mealtime" ;
+  :definition "A PointInTime at which food is consumed." ;
+  :noun_synonym "breakfast", "lunch", "dinner", "supper", "lunch period" ;
+  :wordnet_noun_synset "15190684" .
+
+:Midday a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Midday" ;
+  :definition "An interval of time in the middle of the day, starting around noon." ;
+  :noun_synonym "noon", "twelve noon", "high noon", "noonday", "noontide" ;
+  :wordnet_noun_synset "15190537" .
+
+:Morning a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Morning" ;
+  :definition "An interval of time in a day, between dawn and noon." ;
+  :noun_synonym "morn", "forenoon" ;
+  :wordnet_noun_synset "15190336", "15194183" .
+
+:OffSeason a owl:Class ;
+  rdfs:subClassOf :Season ;
+  rdfs:label "Off Season" ;
+  :definition "Time when few people are traveling and rates for transportation, dining, etc. are lowest." ;
+  :noun_synonym "slow season", "off peak", "off-season" ;
+  :wordnet_noun_synset "15263558" .
+
+:OldAge a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Old Age" ;
+  :definition "An interval of time in a Person's life, typically 60-65 years of age or older." ;
+  :noun_synonym "elderliness", "advanced years", "declining years", "oldness", "agedness", "pensioner", "elder", "senior" ;
+  :verb_synonym "be elderly", "be old", "be aged" ;
+  :wordnet_noun_synset "15178747", "10068026" .
+
+:OpeningTime a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Opening Time" ;
+  :definition "A PointInTime when a business or location is accessible to the public (e.g., it is 'open'.)" .
+
+:PrisonTime a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Prison Time" ;
+  :definition "An interval of time where a Person was in prison/incarcerated." ;
+  :noun_synonym "hard time", "prison term", "life sentence" ;
+  :wordnet_noun_synset "15249488" .
+
+:Probation a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Probation" ;
+  :definition "An interval of time where a Person's activities are examined for assessment for a job or membership in a group, or as a condition of avoiding or being released from prison." ;
+  :noun_synonym "trial period", "parole" ;
+  :wordnet_noun_synset "01260931", "15140511" .
+
+:RainySeason a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Rainy Season" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'" ;
-  :noun_synonym "wet season", "green season" .
+  :noun_synonym "wet season", "green season", "monsoon season" ;
+  :wordnet_noun_synset "15263692" .
 
-:Spring a :Season ;
+:RushHour a owl:Class ;
+  rdfs:subClassOf :Interval ;
+  rdfs:label "Rush Hour" ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Rush_hour&oldid=1096453413), 'a part of the day during which traffic congestion on roads and crowding on public transport is at its highest. Normally, this happens twice every weekday: once in the morning and once in the afternoon or evening, the times during which the most people commute. The term is often used for a period of peak congestion that may last for more than one hour.'" ;
+  :noun_synonym "peak hour" ;
+  :wordnet_noun_synset "15253940" .
+
+:SeedTime a owl:Class ;
+  rdfs:subClassOf :Season ;
+  rdfs:label "Seed Time" ;
+  :definition "The time of year that seeds should be planted." ;
+  :wordnet_noun_synset "15263068" .
+
+:Spring a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Spring" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'." .
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'." ;
+  :noun_synonym "springtime" ;
+  :wordnet_noun_synset "15261841" .
 
-:Summer a :Season ;
+:Summer a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Summer" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'." .
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'." ;
+  :noun_synonym "summertime", "dog days" ;
+  :wordnet_noun_synset "15262047", "15262364" .
 
-:Winter a :Season ;
+:Sunrise a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Sunrise" ;
+  :definition "Time when the sun rises above the horizon." ;
+  :noun_synonym "dawn", "dawning", "first light", "daybreak", "break of day", "dayspring", "sunup", "cockcrow" ;
+  :wordnet_noun_synset "15193837" .
+
+:Sunset a owl:Class ;
+  rdfs:subClassOf :PointInTime ;
+  rdfs:label "Sunset" ;
+  :definition "Time when the sun sets below the horizon." ;
+  :noun_synonym "twilight", "dusk", "gloaming", "gloam", "nightfall", "evenfall", "sundown" ;
+  :wordnet_noun_synset "15194295", "15194468" .
+
+:Winter a owl:Class ;
+  rdfs:subClassOf :Season ;
   rdfs:label "Winter" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." .
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." ;
+  :noun_synonym "wintertime" ;
+  :wordnet_noun_synset "15262579", "15262871" .

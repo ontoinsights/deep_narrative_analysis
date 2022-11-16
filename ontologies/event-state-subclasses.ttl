@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: June 05 2022
+# Last Modified: October 26 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -23,9 +23,8 @@
 # either express or implied.
 # 
 # Changes:
-#  Added MistakeAndRegret, MurderAndHomicide, ProjectAndCampaign, 
-#    Marriage, Divorce, DemonstrationAndRally, FormationOfOrganization
-#    and ProjectAndCampaign
+#  Added ProjectAndCampaign, Marriage, Divorce, DemonstrationAndRally, 
+#    FormationOfOrganization and ProjectAndCampaign
 #  Updated the default and dna prefixes
 #  Renamed :value to :reported_numeric and added :reported_string
 #  Added and clarified noun/verb_synonyms
@@ -43,6 +42,21 @@
 #  Added :defined_for
 #  Renamed InProcessPlacement to Placement
 #  Updated synonyms
+#  Added :wordnet_noun_synset details
+#  Removed Cutting in lieu of using its super-class, Separation
+#  Removed ProtestAndStrike in lieu of using its super-class, 
+#    DemonstrationStrikeAndRally (which was renamed)
+#  Renamed DissoluionOfBusiness to EndOfBusiness, FormationOfOrganization 
+#   to StartOfBusiness, and Placement to IncrementalMovement
+#  Removed Revelation as the classes KnowledgeAndSkill or 
+#   AssertionAndDeclaration can be used instead
+#  Combined EmploymentEvent with Environment's Employment (and renamed 
+#   it to :EmploymentAndRelatedEvent, in the environment-subclasses.ttl)
+#  Combined EducationalEvent with Cognition's Learning (and renamed it
+#   to :LearningAndEducation, in misc-event-subclasses.ttl)
+#  Renamed Reward to RewardAndCompensation
+#  Added Alignment, Bribe, Coup, DistributionAndSupply, 
+#    SiegeAndSurrounding and StateOrPhysicalChange
 ########################################################################
 
 
@@ -54,519 +68,672 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Acquisition" ;
   :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
-  :noun_synonym "discovery", "find", "acquiring", "equipping", "obtaining", "discovering", "finding" ;
-  :verb_synonym "acquire", "equip", "obtain", "discover", "find" .
+  :noun_synonym "discovery", "find", "acquiring", "obtaining", "discovering", "finding", "collecting" ;
+  :verb_synonym "acquire", "obtain", "discover", "find", "collect" ;
+  :wordnet_noun_synset "00042637", "00043933" ;
+  :wordnet_verb_synset "02215637", "00723361" .
 
 :ActOfPublishing a owl:Class ;
   rdfs:subClassOf :ReturnRecoveryAndRelease ;
-  rdfs:label "Act of publishing" ;
+  rdfs:label "Act of Publishing" ;
   :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." ;
-  :noun_synonym "issue", "report", "broadcast", "publication", "publishing", "printing", "reporting", "broadcasting" ;
-  :verb_synonym "publish", "print", "report", "broadcast" .
+  :noun_synonym "printing", "reporting", "broadcasting" ;
+  :verb_synonym "publish", "print", "report", "broadcast", "publicize", "publicise", "air", "bring out", "put out", "distribute", "disseminate", "transmit" ;
+  :wordnet_verb_synset "00956640" .
 
 :AggressiveOrHostileAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Aggressive or Hostile Act" ;
   :definition "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "aggression", "hostility", "confrontation", "confronting" ;
-  :verb_synonym "confront" .
+  :noun_synonym "aggression", "hostility", "confrontation", "confronting",  "wrongdoing", "wrongful conduct", "misconduct" ;
+  :verb_synonym "confront", "alienate", "harass", "wrong" ;
+  :wordnet_noun_synset "14004330", "00966680", "01224100", "07563271", "00734044" ;
+  :wordnet_verb_synset "01793315", "01811281", "01827478", "02519655" .
 
 :Agreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Agreement" ;
   :definition "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate." ;
-  :noun_synonym "commitment", "acquiescence", "complying", "committing", "acquiescing", "agreeing" ;
-  :verb_synonym "comply", "commit", "acquiesce", "agree", "reach resolution" .
+  :noun_synonym "acquiescence", "agreeing", "harmony", "concordance", "accord", "acceptance", "accepting", "acquiescing" ;
+  :verb_synonym "agree", "reach resolution", "accept", "consent", "go for", "assent", "accede", "acquiesce" ;
+  :wordnet_noun_synset "06783066", "13992690", "01217882" ;
+  :wordnet_verb_synset "00799359", "00766267", "00559750" .
 
 :AgricultureApicultureAndAquacultureEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Agriculture, Apiculture and Aquaculture Event" ;
+  rdfs:label "Agriculture, Apiculture, Aquaculture and Viticulture Event" ;
   :definition "Events dealing with farming, ranching, breeding, beekeeping, etc." ;
-  :verb_synonym "farm", "ranch", "breed", "beekeep" .
+  :verb_synonym "farm", "ranch", "breed", "beekeep", "plant", "harvest", "hive", "reap" ;
+  :wordnet_verb_synset "01746607", "01383909", "02425530", "00056076", "01322669" .
+
+:Alignment a owl:Class ;
+  rdfs:subClassOf :InclusionAttachmentAndUnification ;
+  rdfs:label "Alignment" ;
+  :definition "A type of grouping related to the arranging or organizing of the component entities." ;
+  :noun_synonym "organizing", "aligning", "arrangement" ;
+  :verb_synonym "organize", "align", "organise", "match", "fit", "correspond", "arrange", "stack" ;
+  :wordnet_noun_synset "05082771" ;
+  :wordnet_verb_synset "01466592" .
 
 :ArtAndEntertainmentEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Art and Entertainment Event" ;
   :definition "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)." ;
-  :noun_synonym "performance", "rehearsal", "performing", "entertaining", "rehearsing" ;
-  :verb_synonym "perform", "entertain", "rehearse" .
+  :noun_synonym "performance", "rehearsal", "entertaining", "rehearsing" ;
+  :verb_synonym "entertain", "rehearse" ;
+  :wordnet_verb_synset "01718067", "02497847", "01727101" .
 
 :Assessment a owl:Class ;
   rdfs:subClassOf :Measurement ;
   rdfs:label "Assessment" ;
-  :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." ;
-  :noun_synonym "estimate", "estimating" ;
-  :verb_synonym "estimate" .
+  :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on a scale from 'negligible or none' to 'very high'. The assessed value is specified using the :assessment prooperty." .
 
 :Attempt a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Attempt" ;
   :definition "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished." ;
-  :noun_synonym "trying", "endeavoring", "striving", "undertaking", "attempting", "endeavouring" ;
-  :verb_synonym "try", "seek to", "endeavor", "strive", "undertake", "attempt", "venture to", "endeavour" .
+  :noun_synonym "trying", "endeavoring", "endeavor", "striving", "undertaking", "attempting", "endeavour", "endeavouring", "try" ;
+  :verb_synonym "try", "seek to", "endeavor", "strive", "undertake", "attempt", "venture to", "endeavour" ;
+  :wordnet_noun_synset "00787849" ; 
+  :wordnet_verb_synset "01654835", "02535833", "01148517" .
 
 :Avoidance a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Avoidance" ;
   :definition "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring." ;
-  :noun_synonym "restraint", "abstinence", "restraining", "abstaining", "refraining", "avoiding" ;
-  :verb_synonym "refrain", "avoid", "abstain", "restrain" .
+  :noun_synonym "abstinence", "abstaining", "refraining", "avoiding" ;
+  :verb_synonym "refrain", "avoid", "abstain", "forbear" ;
+  :wordnet_noun_synset "00204602", "01070697", "04889817", "01068613" ;
+  :wordnet_verb_synset "00813037", "01198570", "02731589" .
 
 :Birth a owl:Class ;
   rdfs:subClassOf :LifeEvent ;
   rdfs:label "Birth" ;
-  :definition "The act of an individual (animal or Person) being born/beginning life." ;
+  :definition "An individual (living entity) being born/beginning life." ;
   :noun_synonym "parentage", "parturition", "birthing" ;
-  :verb_synonym "give birth", "bear", "born" .
+  :verb_synonym "give birth", "bear", "born", "birth" ;
+  :wordnet_noun_synset "07334902" ;
+  :wordnet_verb_synset "00056644" .
 
 :BodilyAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Bodily Act" ;
-  :definition "An activity typically involving the body of an animal or Person (such as coughing, eating or running)." .
+  :definition "An activity typically involving the body of an animal or Person (such as coughing, eating or running)." ;
+  :wordnet_noun_synset "13461236" ;
+  :wordnet_verb_synset "00072742" .
 
 :BodyMovement a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Body Movement" ;
   :definition "An activity related to the movement of an animal's or Person's body (such as dancing or running)." ;
-  :example "Examples are breathing, bowing, flinching, running, coughing, etc." . 
+  :example "Examples are breathing, bowing, flinching, running, coughing, etc." ;
+  :wordnet_noun_synset "00117507", "00283971" ;
+  :wordnet_verb_synset "00105087", "00010047", "00099475", "01548665", "01835473" . 
+
+:Bribe a owl:Class ;
+  rdfs:subClassOf :RewardAndCompensation ;
+  rdfs:label "Bribe" ;
+  :definition "Offering of money or thing(s) of value to induce a Person to perform certain actions." ;
+  :noun_synonym "bribery", "inducement", "incentive", "payola", "backhander", "payoff", "kickback", "graft", "barratry" ;
+  :verb_synonym "bribe", "buy off", "pay off" ;
+  :wordnet_noun_synset "00777759" ;
+  :wordnet_verb_synset "02288941" . 
 
 :Ceremony a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter ;
   rdfs:label "Ceremony" ;
   :definition "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." ;
-  :noun_synonym "celebration", "commemoration", "commencement", "fundraiser", "funeral", "graduation", "inaugural", "inauguration", "rededication", "fundraising", "graduating", "inaugurating", "rededicating" ;
-  :verb_synonym "celebrate", "commemorate", "inaugurate", "rededicate", "graduate" .
+  :noun_synonym "commemoration", "funeral", "graduation", "rededication", "graduating", "rededicating", "memorialization", "memorialisation", "ceremonial", "observance"  ;
+  :verb_synonym "commemorate", "inaugurate", "mark" ;
+  :wordnet_noun_synset "01029321", "01028839", "07467451", "7465442" ; 
+  :wordnet_verb_synset "00614139", "02400924", "02430184" .
 
 :Change a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Change" ;
   :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using the :assessment predicate." ;
-  :example "Examples are changes in the amount of something (such as food, water or schools), an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :enum:Education and the :prototypical property set to true), etc." ;
-  :noun_synonym "conversion", "adjustment", "alteration", "adaptation", "trend", "changing", "adjusting", "converting", "altering", "adapting", "trending" ;
-  :verb_synonym "change", "adjust", "convert", "alter", "adapt", "trend" .
+  :example "Examples are changes in the amount of something (such as food, water or schools), an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :EducationalBusiness and the :prototypical property set to true), etc." ;
+  :noun_synonym "conversion", "adjustment", "alteration", "adaptation", "trend", "changing", "adjusting", "converting", "altering", "adapting", "trending", "flux", "mutation", "transformation", "drift" ;
+  :verb_synonym "change", "adjust", "convert", "alter", "adapt", "trend", "mutate" ;
+  :wordnet_noun_synset "14057399", "06207399", "00191991" ;
+  :wordnet_verb_synset "00109468" .
 
 :Cognition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Cognition" ;
-  :definition "Any thought processes related to learning, making decisions, perception, memory, imagination, forming judgments, etc. Note that the Person who is thinking is defined using the :has_active_agent property. And, details about what is learned/thought/understood is indicated using the :has_topic predicate." .
+  :definition "Any thought processes related to learning, making decisions, perception, memory, imagination, forming judgments, etc. Note that the Person who is thinking is defined using the :has_active_agent property. And, details about what is learned/thought/understood is indicated using the :has_topic predicate." ;
+  :noun_synonym "thought", "thinking", "thoughtfulness" ;
+  :verb_synonym "think", "cogitate", "cerebrate", "chew over", "think over", "ponder", "muse", "reflect on", "mull over", "ruminate" ;
+  :wordnet_noun_synset "05682974", "00023451", "05658174", "05778923", "04667893" ;
+  :wordnet_verb_synset "00691086", "00630153" .
 
 :CommunicationAndSpeechAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Communication and Speech Act" ;
   :definition "Any act of conveying information via written or spoken word, or non-verbal means. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity listening is defined using :has_affected_agent." ;
   :noun_synonym "statement", "utterance", "response", "reply", "telling", "talking", "saying", "communicating", "speaking", "uttering", "replying", "responding", "writing" ;
-  :verb_synonym "tell", "talk", "say", "communicate", "speak", "utter", "reply", "respond", "write" .
+  :verb_synonym "tell", "talk", "say", "communicate", "speak", "utter", "reply", "respond", "write" ;
+  :wordnet_noun_synset "07253354" ;
+  :wordnet_verb_synset "00800905", "00817348", "00742582", "0074428" . 
 
 :Competition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Competition" ;
   :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using the :assessment predicate." ;
   :noun_synonym "rivalry", "contest", "rival", "competing", "contesting" ;
-  :verb_synonym "compete" .
+  :verb_synonym "compete", "vie" ;
+  :wordnet_noun_synset "01171059", "07470961" ;
+  :wordnet_verb_synset "01074673", "01081873" .
 
 :Cooperation a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Cooperation" ;
   :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using the :assessment predicate." ;
-  :noun_synonym "collaboration", "teamwork", "mutual assistance", "symbiosis", "sharing", "cooperating", "collaborating" ;
-  :verb_synonym "cooperate", "collaborate", "share" .
+  :noun_synonym "collaboration", "teamwork", "mutual assistance", "symbiosis", "sharing", "cooperating", "collaborating", "mutuality", "interdependence", "interdependency", "alliance" ;
+  :verb_synonym "cooperate", "collaborate", "join forces" ;
+  :wordnet_noun_synset "00412397", "01205394", "13864062" ; 
+  :wordnet_verb_synset "02421408", "02300511" .
 
-:Cutting a owl:Class ;
-  rdfs:subClassOf :Separation ;
-  rdfs:label "Cutting" ;
-  :definition "The act of making an opening or incision in something or someone." ;
-  :noun_synonym "laceration", "clipping", "slitting", "slashing", "carving", "calving", "cutting", "clipping" ;
-  :verb_synonym "slit", "slash", "carve", "calve", "cut", "lacerate", "clip" .
+:Coup a owl:Class ;
+  rdfs:subClassOf :PoliticalEvent ;
+  rdfs:label "Coup" ;
+  :definition "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent." ;
+  :noun_synonym "coup d'etat", "putsch" ;
+  :verb_synonym "overthrow", "bring down", "revolutionize" ;
+  :wordnet_noun_synset "01147528" ; 
+  :wordnet_verb_synset "02407551", "02407837" .
 
 :Death a owl:Class ;
-  rdfs:subClassOf :LifeEvent ;
+  rdfs:subClassOf :LifeEvent, :End ;
   rdfs:label "Death" ;
-  :definition "The act of an individual (animal or Person) ending life." ;
-  :noun_synonym "casualty", "annihilation", "decease", "demise", "dying", "drowning", "annihilating" ;
-  :verb_synonym "die", "drown", "annihilate" .
+  :definition "The end of a living entity's life." ;
+  :noun_synonym "annihilation", "decease", "demise", "dying", "drowning", "annihilating" ;
+  :verb_synonym "die", "decease", "perish", "pass away", "drown", "kick the bucket", "cash in one's chips", "give-up the ghost", "drop dead", "pop off", "choke" ;
+  :wordnet_noun_synset "07370091", "07354694", "09919123", "15168437", "13985834" ;
+  :wordnet_verb_synset "00359085" . 
 
 :Decrease a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease" ;
   :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using the :assessment predicate." ;
-  :noun_synonym "reduction", "drop", "lessening", "lowering", "declining", "deflating", "subsiding", "dropping", "decreasing", "reducing", "eroding" ;
-  :verb_synonym "lessen", "lower", "decline", "deflate", "subside", "drop", "decrease", "reduce", "erode", "eat away" .
+  :noun_synonym "reduction", "drop", "lessening", "lowering", "deflating", "subsiding", "dropping", "decreasing", "eroding", "erosion", "eating away", "wearing", "wearing away", "diminution", "step-down", "decrement", "dip", "free fall" ;
+  :verb_synonym "lessen", "lower", "deflate", "subside", "drop", "decrease", "erode", "eat away", "weaken", "reduce", "melt off", "slim", "slenderize", "thin", "worsen", "get worse", "devalue", "devaluate", "wane" ;
+  :wordnet_noun_synset "13496741", "00352464", "05117108", "13479774" ;
+  :wordnet_verb_synset "00169459", "00223926", "00045548", "00204228", "00269051", "00494865", "00432779", "00275432", "00275523" .
 
 :DelayAndWait a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Delay and Wait" ;
   :definition "A lack of action." ;
-  :noun_synonym "delaying", "waiting", "postponing" ;
-  :verb_synonym "delay", "wait", "postpone" .
+  :noun_synonym "delaying", "waiting", "postponing", "postponement", "holdup" ;
+  :verb_synonym "delay", "wait", "postpone", "table", "shelve", "defer", "put off" ;
+  :wordnet_noun_synset "01068087", "01065863" ;
+  :wordnet_verb_synset "00460731", "02644022", "02648898" . 
 
-:DemonstrationAndRally a owl:Class ;
-  rdfs:subClassOf :MeetingAndEncounter ;
-  rdfs:label "Demonstration and Rally" ;
-  :definition "A meeting to support or object to something or someone. The thing or Agent which is the focus of the Rally is defined using the :has_topic property." ;
-  :noun_synonym "march", "demonstrating", "marching" ;
-  :verb_synonym "demonstrate", "march" .
+:DemonstrationStrikeAndRally a owl:Class ;
+  rdfs:subClassOf :MeetingAndEncounter, :DisagreementOrDispute ;
+  rdfs:label "Demonstration, Strike and Rally" ;
+  :definition "A meeting to support or object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property." ;
+  :noun_synonym "march", "demonstrating", "marching", "picket", "sit-in", "walk-out", "hunger strike", "work stoppage" ;
+  :verb_synonym "demonstrate", "march", "go on strike", "be on strike" ;
+  :wordnet_noun_synset "01180193", "08375259", "01170859", "01180685", "01245509", "01244711", "01181340" ;
+  :wordnet_verb_synset "02417777", "02527482"  .
 
 :DisagreementOrDispute a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Disagreement or Dispute" ;
   :definition "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate." ;
-  :noun_synonym "discrepancy", "quarrel", "controversy", "disputation", "argument", "disagreeing", "disputing", "quarrelling", "quarreling", "debating", "arguing" ;
-  :verb_synonym "disagree", "dispute", "quarrel", "debate", "argue" .
+  :noun_synonym "discrepancy", "quarrel", "controversy", "disputation", "argument", "disagreeing", "disputing", "quarrelling", "quarreling", "debating", "arguing", "feud", "argumentation", "debate", "difference of opinion" ; 
+  :verb_synonym "disagree", "dispute", "quarrel", "debate", "argue", "contend", "quibble", "niggle", "bicker", "squabble" ; 
+  :wordnet_noun_synset "07195447", "04756076", "07196595", "07155686", "01238738" ;
+  :wordnet_verb_synset "00775477", "00716789" .
 
 :Disaster a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
+  rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Disaster" ;
   :definition "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)." ;
-  :noun_synonym "catastrophe", "cataclysm", "calamity", "act of God" .
+  :noun_synonym "catastrophe", "cataclysm", "calamity", "act of God", "force majeure", "tragedy" ;
+  :wordnet_noun_synset "00218366", "07329438" .
 
-:DissolutionOfBusiness a owl:Class ;
-  rdfs:subClassOf :EmploymentEvent, :End ;
-  rdfs:label "Dissolution of Business" ;
-  :definition "An Event indicating that an existing business (Organization) or business location ceased operations." ;
-  :noun_synonym "closing" ;
-  :verb_synonym "go out of business", "shut its doors", "close" .
+:DistributionAndSupply a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Distribution and Supply" ;
+  :definition "Events related to giving out materials/Resources to Agents (typically Persons)." ;
+  :noun_synonym "distributing", "giving out", "handing out", "dispensing", "issuance", "passing around", "doling out", "allocation", "allotment", "apportioning", "apportionment", "meting out", "dissemination", "dispersal", "rationing", "proration", "parceling", "parcelling", "assignation" ;
+  :verb_synonym "distribute", "hand out", "dispense", "issuance", "pass around", "dole out", "allocate", "allot", "apportion", "mete out", "proration", "ration", "spread", "deploy", "bootleg", "circulate", "furnish", "equip" ; 
+  :wordnet_noun_synset "00809586", "01085001", "01085569" ;
+  :wordnet_verb_synset "01381221", "02047080" .
 
 :Divorce a owl:Class ;
   rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
   rdfs:label "Divorce" ;
   :definition "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage." ;
   :noun_synonym "annulment", "breakup", "annulling" ;
-  :verb_synonym "annul", "breakup", "get a divorce", "end a marriage" .
+  :verb_synonym "annul", "breakup", "get a divorce", "end a marriage", "split up", "break up" ;
+  :wordnet_noun_synset "01203761", "00216181" ;
+  :wordnet_verb_synset "02436167" .
 
 :Eating a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Eating" ;
   :definition "An activity related to an animal's or Person's intake of food/nutrients." ;
-  :noun_synonym "sustenance", "nourishment", "fare", "food", "ration", "meal", "snack", "vittles", "chow", "chewing", "dining", "feeding", "gnawing", "devouring", "ingesting", "swallowing", "snacking" ;
-  :verb_synonym "eat", "chew", "dine", "feed", "gnaw", "devour", "ingest", "swallow", "snack" .
-
-:EducationalEvent a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Educational Event" ;
-  :definition "An Event involved with teaching such as a specific class/course, the hiring of teachers or a new approach to testing." ;
-  :noun_synonym "education", "class", "course", "test", "teacher", "faculty", "teaching", "student", "professor", "training", "schooling", "tutoring", "instruction", "instructing", "coaching", "learning", "college", "diploma", "degree" ;
-  :verb_synonym "educate", "teach", "test", "train", "tutor", "instruct", "coach", "learn", "take a class", "attend school/college", "go to school/college" .
+  :noun_synonym "feeding", "chewing", "dining", "gnawing", "devouring", "ingesting", "swallowing", "snacking", "feasting", "chewing", "mastication", "manduction", "ingestion", "intake", "uptake" ;
+  :verb_synonym "eat", "chew", "dine", "feed", "gnaw", "devour", "ingest", "swallow", "snack", "feast", "masticate", "manducate" ;
+  :wordnet_noun_synset "00840028", "00839759" ;
+  :wordnet_verb_synset "01168667", "01159300", "01203727" .
 
 :Election a owl:Class ;
   rdfs:subClassOf :PoliticalEvent ;
   rdfs:label "Election" ;
   :definition "The act of choosing an Agent to play a role or to hold a position within a GroupOfAgents." ;
   :example "Examples are the election of a Person to political office, or to serve in a role such as a jury foreman or chairman of a committee." ;
-  :noun_synonym "ballot", "electing", "voting" ;
-  :verb_synonym "elect", "vote" .
+  :noun_synonym "ballot", "electing", "voting", "vote", "balloting", "primary", "primarying" ;
+  :verb_synonym "elect", "vote", "ballot" ;
+  :wordnet_noun_synset "00182630", "00184354", "00181811" ;
+  :wordnet_verb_synset "02405902", "02466737" .
 
-:EmploymentEvent a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Employment Event" ;
-  :definition "An Event associated with a business and its workers. Note that EmploymentEvent is not the specific affiliation of an Agent in a business/organization (which should be accomplished using an instance of Affiliation), but is about occurrences related to companies forming/dissolving, hiring, firing, lay offs, increase/decrease in pay, etc." ;
-  :noun_synonym "hire", "hiring", "layoff", "promotion", "demotion", "demoting", "firing", "employing" ;
-  :verb_synonym "hire", "fire", "layoff", "promote", "demote" .
+:EndOfBusiness a owl:Class ;
+  rdfs:subClassOf :End ;
+  rdfs:label "End of Business" ;
+  :definition "An Event indicating that an existing business (Organization) or business location ceased operations." ;
+  :noun_synonym "closing", "closure", "closedown", "shutdown" ;
+  :verb_synonym "go out of business", "shut its doors", "close its doors", "close up shop", "shut down", "close down" ;
+  :wordnet_noun_synset "00230127" ;
+  :wordnet_verb_synset "02431242" . 
 
 :Enforcement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Enforcement" ;
   :definition "An act that compels/insists on obedience or compliance to a law or obligation." ;
   :noun_synonym "imposition", "enforcing", "imposing" ;
-  :verb_synonym "enforce", "impose" .
+  :verb_synonym "enforce", "impose" ;
+  :wordnet_noun_synset "01129340", "01129944" ;
+  :wordnet_verb_synset "02565990", "02566249" .
 
 :EnvironmentalOrEcologicalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Environmental or Ecological Event" ;
-  :definition "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals." .
+  :definition "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals." ;
+  :verb_synonym "pollute", "foul" ;
+  :wordnet_verb_synset "00493642", "00493246" .
 
 :EnvironmentAndCondition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Environment and Condition" ;
   :definition "A factor, situation or condition related to an Agent's (defined using the :has_holder property) or Resource's (defined using the :has_resource predicate) living conditions, external circumstances or physical environment at some time (defined using the :has_time property or its sub-properties) and place (defined using the :has_location property)." ;
   :example "For example, when hypothesizing about possible (or impossible), future scenarios, one can use a sub-class of EnvironmentAndCondition (OpportunityOrPossibility or Impossibility) to create this world/'environment'. Or, a sub-class (DrinkableWater) can describe that a Person or community lives in an area without potable water." ;
-  :verb_synonym "become" .
+  :noun_synonym "status" ;
+  :verb_synonym "become" ;
+  :wordnet_noun_synset "13943868" .
 
 :FinancialEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Financial Event" ;
   :definition "Events dealing with monies/currencies, funds and other capital." ;
-  :noun_synonym "finance", "money", "currency", "funds", "capital", "financing", "funding" ;
-  :verb_synonym "finance", "fund" .
-
-:FormationOfOrganization a owl:Class ;
-  rdfs:subClassOf :EmploymentEvent, :StartOrBeginning ;
-  rdfs:label "Formation of Organization" ;
-  :definition "An Event indicating that a new Organization has been created/founded. The new Organization is defined by the property, :has_affected_agent." ;
-  :noun_synonym "incorporation", "opening", "incorporating", "establishing" ;
-  :verb_synonym "incorporate", "establish", "open" .
+  :verb_synonym "finance", "fund", "subsidize" ;
+  :wordnet_verb_synset "02222048", "02221793", "02220288", "02221492" .
 
 :FriendlyOrSupportiveAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Friendly or Supportive Act" ;
   :definition "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "encouragement", "neighborliness", "friendliness", "encouraging", "supporting", "patronizing" ;
-  :verb_synonym "support", "patronize", "encourage" .
+  :noun_synonym "encouraging", "supporting", "patronizing", "advocacy" ;
+  :verb_synonym "support", "patronize", "encourage" ;
+  :wordnet_noun_synset "01216661", "01215009" ;
+  :wordnet_verb_synset "00896689" .
 
 :GamblingAndWagering a owl:Class ;
   rdfs:subClassOf :RiskTaking ;
   rdfs:label "Gambling and Wagering" ;
   :definition "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result." ;
-  :noun_synonym "betting", "bet", "poker", "casino", "gambling", "wagering" ;
-  :verb_synonym "bet", "gamble", "wager", "place a bet", "lay a bet", "play the horses" .
+  :noun_synonym "betting", "bet", "poker", "casino", "wager", "gamble" ;
+  :verb_synonym "bet", "gamble", "wager", "place a bet", "lay a bet", "play the horses", "chance", "take chances", "take a chance" ;
+  :wordnet_noun_synset "00431125", "00491361", "00494042", "00494319", "00495779", "00492724" ;
+  :wordnet_verb_synset "01140949", "02550045", "01079346" . 
 
 :Grooming a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Grooming" ;
   :definition "An activity related to the cleaning, brushing, etc. of an animal's or Person's body." ;
-  :noun_synonym "dressing", "combing", "brushing", "grooming" ;
-  :verb_synonym "put on clothes", "comb", "brush", "groom" .
+  :noun_synonym "dressing", "combing", "brushing", "manicure", "pedicure" ;
+  :verb_synonym "put on clothes", "comb", "brush", "groom", "dress" ;
+  :wordnet_noun_synset "00258095", "00662026", "00662200", "00829898" ;
+  :wordnet_verb_synset "00293903" .
 
 :HealthAndDiseaseRelated a owl:Class ;
-  rdfs:subClassOf :EventAndState, :AgentAspect ;
+  rdfs:subClassOf :EventAndState ;
   rdfs:label "Health and Disease Related" ;
-  :definition "Any event or condition concerning disease or illness (and recovery from such) by humans, plants and animals. The disease, illness, etc. are indicated using the :has_topic property. Note that this class is also typed as an AgentAspect to allow it to define 'some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them'. When used in that sense, the instance is related to a Person using the :has_agent_aspect property." ;
-  :noun_synonym "illness", "injury", "sickness", "infection", "infecting", "ailment", "ailing", "malady", "disorder", "deformation", "affliction", "impairing", "impairment", "contagion", "cure", "curing", "vaccine", "vaccinating", "healing" ;
-  :verb_synonym "infect", "cure", "heal", "vaccinate" .
+  :definition "Any event or condition concerning disease, disorders, illness, etc. (and recovery from such) by humans, plants and animals. The diseases, illnesses, etc. are indicated using the :has_topic property. Note that several sub-classes are also typed as an AgentAspect to allow them to define 'some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them'. When used in that sense, the instance is related to a Person using the :has_agent_aspect property." ;
+  :noun_synonym "sickness", "ailment", "ailing", "malady", "affliction", "cure", "curing", "healing", "ill health", "unhealthiness", "health problem", "remedy", "immunization", "immunisation", "inoculation", "vaccination", "unhealthiness", "illness", "sickliness" ;
+  :verb_synonym "cure", "heal", "vaccinate", "immunize", "immunise", "inoculate", "sicken" ;
+  :wordnet_noun_synset "04081594", "00830651", "14075528" ; 
+  :wordnet_verb_synset "00081478", "00086587" .
 
 :ImitationAndCounterfeit a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Imitation and Counterfeit" ;
   :definition "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting." ;
-  :noun_synonym "copy", "duplicate", "simulation", "reproduction", "caricature", "fake", "forgery", "copying", "duplicating", "simulating", "reproducing", "faking", "forging", "imitating", "counterfeiting", "modeling" ;
-  :verb_synonym "copy", "duplicate", "simulate", "reproduce", "fake", "forge", "imitate", "counterfeit", "model" .
+  :noun_synonym "copy", "duplicate", "simulation", "reproduction", "caricature", "fake", "forgery", "copying", "duplicating", "simulating", "reproducing", "faking", "forging", "imitating", "counterfeiting", "sham" ;
+  :verb_synonym "copy", "duplicate", "simulate", "reproduce", "fake", "forge", "imitate", "counterfeit" ;
+  :wordnet_noun_synset "03109245" ;
+  :wordnet_verb_synset "01657814", "01697776", "01740703" .
 
 :ImpactAndContact a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Impact and Contact" ;
   :definition "An act of coming into physical contact/touching, which may be forceful (e.g., an impact)" ;
-  :noun_synonym "crash", "impingement", "collision", "bump", "touch", "touching", "hitting", "swatting", "bumping", "poking", "colliding", "slamming", "striking", "impacting", "contacting" ;
-  :verb_synonym "touch", "hit", "swat", "bump", "poke", "collide", "slam", "strike", "impact", "contact" .
+  :noun_synonym "crash", "impingement", "collision", "bump", "hitting", "swatting", "bumping", "poking", "colliding", "slamming", "striking", "impacting", "contacting" ;
+  :verb_synonym "hit", "swat", "bump", "poke", "collide", "slam", "impact", "contact" ;
+  :wordnet_noun_synset "07316161", "07316568", "07353152", "00047263" ;
+  :wordnet_verb_synset "01208316", "01208838" .
 
 :InclusionAttachmentAndUnification a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Inclusion, Attachment and Unification" ;
   :definition "An act of fastening, joining, grouping or bringing together, etc." ;
-  :noun_synonym "amalgamation", "combination", "insertion", "union", "merger", "fusion", "fusing", "integration", "coalition", "confederation", "federation", "synthesis", "amalgamating", "combining", "inserting", "uniting", "merging", "integrating", "coalescing", "federating", "synthesizing", "including", "attaching", "confederating" ;
-  :verb_synonym "amalgamate", "combine", "insert", "unite", "merge", "fuse", "integrate", "coalesce", "federate", "synthesize", "include", "attach", "confederate" .
+  :noun_synonym "amalgamation", "combination", "insertion", "union", "merger", "fusion", "fusing", "integration", "coalition", "confederation", "federation", "synthesis", "amalgamating", "combining", "inserting", "uniting", "merging", "integrating", "coalescing", "federating", "synthesizing", "including", "attaching", "confederating", "consolidation", "consolidating", "fastening" ;
+  :verb_synonym "amalgamate", "insert", "unite", "merge", "fuse", "integrate", "coalesce", "federate", "synthesize", "include", "attach", "confederate", "compound", "mix", "mingle", "commix", "unify", "aggregate" ; 
+  :wordnet_noun_synset "00379793", "14441799", "00148415", "00380230", "01215372" ; 
+  :wordnet_verb_synset "00193830", "01464634", "00187671", "00368338", "00244010", "01387824" . 
 
 :Increase a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Increase" ;
   :definition "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using the :assessment predicate." ;
-  :noun_synonym "growth", "rise", "expansion", "escalation", "addition", "broadening", "rallying", "increasing", "growing", "rising", "expanding", "escalating", "adding", "broadening", "extending" ;
-  :verb_synonym "expand", "extend", "raise", "escalate", "add to", "grow", "increase", "rally" .
+  :noun_synonym  "rise", "expansion", "escalation", "addition", "broadening", "rallying", "increasing", "rising", "expanding", "escalating", "adding", "broadening", "extending", "surge", "amplification", "maximization", "maximisation", "maximation", "strengthening" ;
+  :verb_synonym "expand", "raise", "escalate", "add to", "increase", "rally", "combine", "intensify", "step up" ;
+  :wordnet_noun_synset "00364086" ; 
+  :wordnet_verb_synset "00156409", "00231172", "00153083" .
+
+:IncrementalMovement a owl:Class ;
+  rdfs:subClassOf :MovementTravelAndTransportation ;
+  rdfs:label "Incremental Movement" ;
+  :definition "Any act that changes the location of something by small amounts or makes small changes to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
+  :noun_synonym "placing", "putting", "funneling", "pouring", "coiling", "spraying", "filling", "pocketing" ;
+  :verb_synonym "place", "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "displace", "set", "pose", "position", "stir", "spill", "splatter", "flick", "ruffle", "pump", "roll", "revolve", "wind", "wind up" ;
+  :wordnet_noun_synset "00403343", "01053255" ; 
+  :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282" .
 
 :InformationHandling a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Information Handling" ;
-  :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of information, especially digital information and cyber activities." ;
-  :noun_synonym "IT", "information technology" .
+  :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities." ;
+  :noun_synonym "IT", "information technology", "computerization", "cybernation", "data processing" ;
+  :verb_synonym "program" ; 
+  :wordnet_noun_synset "00103599", "13476660" ; 
+  :wordnet_verb_synset "01751525" .  
 
 :LegalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Legal Event" ;
   :definition "Any activity based on following legal practices, or related to or allowed by laws or the legal system." ;
-  :noun_synonym "trial", "court case", "hearing", "jury", "justice", "legal proceedings", "judge", "attorney", "lawyer", "litigation", "litigating", "testifying", "counsel", "lawsuit", "sentence", "verdict", "testimony", "sentencing", "law" ;
-  :verb_synonym "try a case", "go to court", "litigate", "testify", "sentence", "reach a verdict", "charge with" .
+  :noun_synonym "trial", "court case", "jury", "justice", "legal proceedings", "judge", "attorney", "lawyer", "litigation", "litigating", "testifying", "lawsuit", "sentence", "verdict", "testimony", "sentencing", "law", "recusation", "recusal", "sequestration" ;
+  :verb_synonym "try a case", "go to court", "litigate", "testify", "sentence", "reach a verdict", "charge with", "take the stand", "take the Fifth", "sentence", "depose" ;
+  :wordnet_noun_synset "01183965", "01187304", "01183047", "01183348", "01183702", "01081986", "01204674", "08431076", "06660952", "01194465" ;
+  :wordnet_verb_synset "02588535", "01016830", "02267740", "02503473", "00762621", "00896020", "00908688", "01015049" .
 
 :LifeEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Life Event" ;
-  :definition "Any occurrence in a living entity's and Person's life, such as birth, death, marriage, divorce, etc." .
+  :definition "Any occurrence in an Agent's existence, such as birth, death, marriage, etc." .
 
 :Loss a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Loss" ;
   :definition "An event or condition describing NOT having some goods or property, which previously were in an Agent's Possession." ;
-  :noun_synonym "mislaying", "losing", "misplacing", "disappearance", "forfeiture", "squandering", "forfeiting", "squandering" ;
-  :verb_synonym "mislay", "lose", "misplace", "forfeit", "squander" .
+  :noun_synonym "mislaying", "losing", "misplacing", "disappearance", "forfeiture", "squandering", "forfeiting", "forfeit", "sacrifice" ;
+  :verb_synonym "mislay", "lose", "misplace", "forfeit", "squander", "give up", "waive", "forgo", "forego", "squander" ;
+  :wordnet_noun_synset "00068346", "00206740", "00745120" ;
+  :wordnet_verb_synset "02292463", "02293000", "01504432", "02308311", "02273196" . 
 
 :Marriage a owl:Class ;
   rdfs:subClassOf :LifeEvent, :Ceremony, :PromiseAndOath, :LegalEvent ;
   rdfs:label "Marriage" ;
   :definition "A formal/legal event and condition describing that two people have committed to a relationship with each other." ;
-  :noun_synonym "wedding", "nuptials", "betrothal", "marrying" ;
-  :verb_synonym "wed", "betroth", "marry", "get married" .
+  :noun_synonym "wedding", "nuptials", "betrothal", "marrying", "matrimony" ;
+  :verb_synonym "wed", "betroth", "marry", "get married", "conjoin", "get hitched" ;
+  :wordnet_noun_synset "01038810", "01038935", "01039028" ; 
+  :wordnet_verb_synset "02494483", "00888123" .
 
 :Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Measurement" ;
   :definition "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property." ;
-  :noun_synonym "quantification", "measuring", "quantifying", "weighing" ;
-  :verb_synonym "measure", "quantify", "weigh" .
+  :noun_synonym "quantification", "measuring", "quantifying", "weighing", "measure" ;
+  :verb_synonym "measure", "quantify", "weigh" ;
+  :wordnet_noun_synset "00998911" ; 
+  :wordnet_verb_synset "00490773" . 
 
 :MeetingAndEncounter a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Meeting and Encounter" ;
   :definition "Any Event that is a formal, informal or coincidental gathering or assembly of people." ;
-  :noun_synonym "gathering", "assembly", "conference" , "social event", "herding", "swarming", "congregation", "convention", "crowd", "social", "encountering", "congregating", "socializing" ;
-  :verb_synonym "gather", "herd", "swarm", "congregate", "meet", "encounter" .
+  :noun_synonym "gathering", "assembly", "conference" , "social event", "congregation", "convention", "social", "encountering", "congregating", "socializing", "coming upon" ;
+  :verb_synonym "gather", "congregate", "meet", "encounter" ;
+  :wordnet_noun_synset "00148007", "01232427" ; 
+  :wordnet_verb_synset "02382049", "02026953" . 
 
 :MovementTravelAndTransportation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Movement, Travel and Transportation" ;
   :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
-  :noun_synonym "motion", "move", "moving", "arrival", "arriving", "departure", "departing", "shipment", "shipping", "trip", "journey", "transiting", "transit", "transport", "transporting", "haulage", "hauling", "conveyance", "conveying", "vacation", "vacationing", "cargo", "immigrating", "immigration", "emigrating", "emigration", "transfer", "transferring", "sending", "bringing", "driving", "leaving", "approaching", "carrying", "traveling", "travelling", "traveling", "travelling", "pushing", "pulling", "running", "rolling", "sliding" ;
-  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate", "push", "pull", "throw", "run", "roll", "transfer", "slide" .
-
-:Placement a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Placement" ;
-  :definition "Any act that changes the location of something by incremental amounts or makes a small change to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
-  :noun_synonym "placing", "putting", "funneling", "pouring", "coiling", "spraying", "filling", "pocketing" ;
-  :verb_synonym "place", "put", "funnel", "pour", "coil", "spray", "fill", "pocket" .
+  :noun_synonym "motion", "move", "moving", "arrival", "arriving", "departure", "departing", "shipment", "shipping", "trip", "journey", "transiting", "transit", "transport", "transporting", "haulage", "hauling", "conveying", "vacation", "vacationing", "cargo", "immigrating", "immigration", "emigrating", "emigration", "transfer", "transferring", "sending", "bringing", "driving", "leaving", "approaching", "carrying", "traveling", "travelling", "traveling", "travelling", "pushing", "pulling", "rolling", "sliding" ;
+  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "go", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate", "push", "pull", "throw", "transfer", "slide" ;
+  :wordnet_noun_synset "00280679", "01107164" ;
+  :wordnet_verb_synset "01839438", "00270891", "00415334", "01091334", "01438013", "01450719", "01452567", "01514338", "01517828", "01569697", "01954657", "01955339", "01957669", "02006752", "02060895", "02063390", "02236972" .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Political Event" ;
-  :definition "Any Event related to the governance, government and public affairs of a community or country." .
+  :definition "Any Event related to the governance, government and public affairs of a community or country." ;
+  :wordnet_noun_synset "01126829" .
 
 :Possession a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Possession" ;
   :definition "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "asset", "possessing", "confiscating", "impounding", "commandeering" ;
-  :verb_synonym "confiscate", "impound", "take possession", "possess", "get hold of", "get one's hands on", "commandeer", "belong to", "keep", "control", "have" .
+  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "possessing", "ownership", "owner" ;
+  :verb_synonym "take possession", "possess", "get hold of", "get one's hands on", "belong to", "keep", "control", "own", "get hold of" ;
+  :wordnet_noun_synset "14503072", "14502904", "00032912", "00811126", "00812259", "13261412", "14503072" ;
+  :wordnet_verb_synset "02209474", "01216829", "02306641" .
 
 :ProductionManufactureAndCreation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Production, Manufacture and Creation" ;
   :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
-  :noun_synonym "construction", "fabrication", "manufacturing", "modeling", "invention", "producing", "creating", "building", "assembling", "constructing", "inventing" ;
-  :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "invent" .
+  :noun_synonym "construction", "fabrication", "manufacturing", "modeling", "invention", "producing", "creating", "building", "assembling", "constructing", "inventing", "manufacturer", "maker", "innovation", "excogitation", "conception", "design", "construction" ;
+  :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "invent", "develop", "produce", "make", "put together", "fabricate", "contrive", "devise", "excogitate" ;
+  :wordnet_noun_synset "00910607", "00925258", "08077282", "00942228", "03587827", "05641230", "00912746", "01106542" ; 
+  :wordnet_verb_synset "00094214", "01624592", "01660471", "01656984", "01635953" .
 
 :ProjectAndCampaign a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Project and Campaign" ;
   :definition "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)." ;
-  :noun_synonym "venture", "operation", "expedition", "crusade", "campaigning", "crusading" ;
-  :verb_synonym "campaign", "crusade" .
-
-:ProtestAndStrike a owl:Class ;
-  rdfs:subClassOf :DemonstrationAndRally, :RefusalAndRejection ;
-  rdfs:label "Protest and Strike" ;
-  :definition "An organized public demonstration indicating disapproval or objection to something or someone. The entity which is disapproved of/objected to is defined using the :has_topic property." ;
-  :noun_synonym "mutiny", "picket", "sit-in", "walk-out", "protesting" ;
-  :verb_synonym "protest", "go on strike", "be on strike", "mutiny" .
+  :noun_synonym "venture", "operation", "crusade", "campaigning", "crusading", "labor of love" ;
+  :verb_synonym "campaign", "crusade" ;
+  :wordnet_noun_synset "00797381", "00410304" ;
+  :wordnet_verb_synset "01096497", "02595732" .
 
 :Punishment a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Punishment" ;
   :definition "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property." ;
-  :noun_synonym "discipline", "retribution", "penalizing", "punishing", "disciplining", "penalizing" ;
-  :verb_synonym "discipline", "penalize", "punish" .
+  :noun_synonym "discipline", "retribution", "penalizing", "punishing", "disciplining", "penalty", "penalization", "penalisation" ;
+  :verb_synonym "discipline", "penalize", "punish", "chasten", "penalise" ;
+  :wordnet_noun_synset "01162829" ; 
+  :wordnet_verb_synset "00202809", "02505278" . 
 
 :RecreationEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Recreation Event" ;
   :definition "Any activity done for relaxation and enjoyment (not an Agent's job or business)." ;
   :noun_synonym "leisure", "playing", "game" ;
-  :verb_synonym "play" .
+  :verb_synonym "play" ;
+  :wordnet_noun_synset "00427931", "00402591", "00041926", "00456623" ;
+  :wordnet_verb_synset "00013321", "01075360", "01151936", "02423521" . 
 
 :RemovalAndRestriction a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Removal and Restriction" ;
   :definition "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)." ;
-  :noun_synonym "limitation", "cutback", "sanction" , "banishment", "extraction", "withdrawal", "eradication", "eviction", "expulsion", "evacuation", "removing", "restricting", "limiting", "clearing", "extracting", "withdrawing", "eradicating", "evicting", "evacuating" ;
-  :verb_synonym "remove", "restrict", "limit", "clear", "extract", "withdraw", "eradicate", "evict", "evacuate", "get rid of" .
+  :noun_synonym "limitation", "cutback", "sanction" , "banishment", "extraction", "withdrawal", "eradication", "expulsion", "evacuation", "removing", "restricting", "limiting", "clearing", "extracting", "withdrawing", "eradicating", "evacuating", "emptying", "voidance", "restraint", "restraining" ;
+  :verb_synonym "remove", "restrict", "limit", "clear", "withdraw", "eradicate", "evacuate", "get rid of", "take away", "throttle", "empty", "restrain" ;
+  :wordnet_noun_synset "00392407", "00809843", "01147872" ; 
+  :wordnet_verb_synset "00173351", "00234091", "00450647" . 
 
 :RemovalOfRawMaterials a owl:Class ;
   rdfs:subClassOf :RemovalAndRestriction ;
   rdfs:label "Removal of Raw Materials (Mining, Drilling, Logging, ...)" ;
   :definition "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities" ;
-  :noun_synonym "mining", "logging", "drilling", "excavation", "deforestation", "excavating", "quarrying", "tunneling" ;
-  :verb_synonym "mine", "quarry", "excavate", "drill", "tunnel", "cut down trees" .
+  :noun_synonym "mining", "logging", "drilling", "excavation", "excavating", "quarrying", "tunneling" ;
+  :verb_synonym "mine", "quarry", "excavate", "drill", "tunnel", "lumber" ;
+  :wordnet_noun_synset "00610057", "00924141", "00582809", "00924944", "00944615" ;
+  :wordnet_verb_synset "01165936", "01166163", "01313320", "01445640", "01261392" . 
 
 :ReturnRecoveryAndRelease a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Return, Recovery and Release" ;
   :definition "An act of restoring something or someone to their original owner/location/condition, granting freedom to someone or something, or publishing/releasing something. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)." ;
-  :noun_synonym "restitution", "liberation", "rescue", "restoration", "retrieval", "freeing", "reverting", "liberating", "rescuing", "releasing", "returning", "restoring", "recovering", "retrieving", "reclaiming", "regaining" ;
-  :verb_synonym "free", "revert", "give back", "take back", "pay back", "liberate", "rescue", "release", "return", "restore", "recover", "retrieve", "get back", "reclaim", "regain" .
+  :noun_synonym "liberation", "rescue", "retrieval", "freeing", "reverting", "liberating", "rescuing", "releasing", "returning", "restoring", "recovering", "retrieving", "reclaiming", "regaining", "reclamation", "discharge", "deliverance", "delivery", "saving" ;
+  :verb_synonym "free", "revert", "give back", "take back", "pay back", "liberate", "rescue", "release", "return", "recover", "retrieve", "get back", "reclaim", "regain", "save", "carry through", "pull through", "deliver", "refund", "repay", "loose", "set free", "let go", "discharge" ;
+  :wordnet_noun_synset "00046648", "07434392", "00096322", "00096791", "00214561", "00090171" ; 
+  :wordnet_verb_synset "02557529", "02289796", "02426474", "02502711", "01477180" . 
 
-:Revelation a owl:Class ;
+:RewardAndCompensation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Revelation" ;
-  :definition "An act of exposing/making something/someone known." ;
-  :noun_synonym "disclosure", "divulgence", "exhibition", "unveiling", "laying open", "exposition", "revealing", "disclosing", "divulging", "exhibiting", "exposing" ;
-  :verb_synonym "reveal", "disclose", "divulge", "exhibit", "unveil", "expose", "make known", "lay open" .
-
-:Reward a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Reward" ;
+  rdfs:label "Reward and Compensation" ;
   :definition "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific EventAndState (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property." ;
-  :noun_synonym "recompense", "prize", "award", "bonus", "rewarding", "recompensing", "honoring" ;
-  :verb_synonym "reward", "recompense", "honor" .
+  :noun_synonym "prize", "award", "bonus", "rewarding", "honoring", "award", "accolade", "honor", "honour", "laurels", "compensating" ;
+  :verb_synonym "reward", "recompense", "honor", "award", "honor", "honour", "compensate" ;
+  :wordnet_noun_synset "13304787", "06709228", "13303030" ;
+  :wordnet_verb_synset "00789322", "02266695", "02551772" . 
 
 :RiskTaking a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Risk Taking" ;
   :definition "Proceeding with an act that is dangerous and/or may result in injury, failure or loss." ;
   :definition "Proceeding with an act that is dangerous and/or that has the 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings." ;
-  :noun_synonym "audacity", "bravado", "boldness", "daring", "recklessness", "pluck", "venturing" ;
-  :verb_synonym "take a risk", "stick one's neck out", "take a leap in the dark", "venture" .
+  :noun_synonym "audacity", "bravado", "boldness", "daring", "recklessness", "venturing", "danger", "recklessness", "foolhardiness", "rashness", "gutsiness" ;
+  :verb_synonym "risk", "take a risk", "stick one's neck out", "take a leap in the dark", "venture", "put on the line", "lay on the line", "take a chance" ;
+  :wordnet_noun_synset "00803899", "04669283", "04866016", "04867047" ; 
+  :wordnet_verb_synset "02551275" . 
 
 :Searching a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Searching" ;
   :definition "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property." ;
-  :noun_synonym "hunt", "exploration", "forage", "stalking", "rummaging", "seeking", "scavenge", "hunting", "exploring", "foraging" ;
-  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "scavenge", "root around", "fish around", "look high and low", "search" .
+  :noun_synonym "hunt", "exploration", "forage", "stalking", "rummaging", "seeking", "hunting", "exploring", "foraging", "investigation" ;
+  :verb_synonym "hunt", "look for", "explore", "forage", "stalk", "rummage", "seek", "root around", "fish around", "look high and low", "search", "investigate", "track down" ;
+  :wordnet_noun_synset "00453279", "00947217" ;
+  :wordnet_verb_synset "01318273", "00790800", "01320383", "01146304", "02004900" .
 
 :Separation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Separation" ;
   :definition "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts." ;
-  :noun_synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation", "splitting", "disassembly", "breakage", "partition", "division", "disconnecting", "detaching", "severing", "dissociating", "disassembling", "breaking", "isolating", "segregating", "dividing", "separating"  ;
-  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide", "separate" .
+  :noun_synonym "disconnection", "detachment", "severance", "uncoupling", "dissociation", "splitting", "disassembly", "partition", "division", "disconnecting", "detaching", "severing", "dissociating", "disassembling", "breaking", "isolating", "segregating", "dividing", "separating", "disjunction", "disjuncture", "disconnection", "disconnectedness", "discontinuity", "division" ;
+  :verb_synonym "disconnect", "detach", "sever", "uncouple", "dissociate", "split", "disassemble", "break", "isolate", "set apart", "segregate", "divide", "separate", "decompose",  "diverge", "branch", "fork", "furcate", "scatter", "fall apart", "come apart", "break apart", "isolate" ;
+  :wordnet_noun_synset "14441101", "14440955", "08664696", "00386599" ; 
+  :wordnet_verb_synset "00209582", "02036260", "00331375", "02035003", "00334996", "00369315", "00495205" . 
+
+:SiegeAndSurrounding a owl:Class ;
+  rdfs:subClassOf :RemovalAndRestriction ;
+  rdfs:label "Siege and Surrounding" ;
+  :definition "An act of encircling a Location." ;
+  :noun_synonym "encircling", "besieging", "beleaguering", "blockade", "blockading", "encirclement", "enclosing", "inclosing" ;
+  :verb_synonym "besiege", "beleaguer", "surround", "hem in", "fence in", "encircle", "blockade", "block off", "seal off", "enclose", "inclose", "close in", "shut in" ;
+  :wordnet_noun_synset "00956197" ; 
+  :wordnet_verb_synset "01129272", "01129387", "01129837", "01133033", "01469999", "01571714", "01589983" . 
 
 :SleepAndRest a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Sleep and Rest" ;
   :definition "An activity related to not moving/working in order to recover strength or fitness, or to refresh. Sleeping is a more relaxed state than resting where an Agent's eyes are closed, muscles relaxed and consciousness suspended." ;
-  :noun_synonym "dream", "nightmare", "nap", "siesta", "inactivity", "sleeping", "resting", "dreaming", "dozing", "snoozing" ;
-  :verb_synonym "sleep", "dream", "snooze", "doze", "rest" .
+  :noun_synonym "dream", "nightmare", "nap", "siesta", "inactivity", "sleeping", "resting", "dreaming", "dozing", "snoozing", "slumber", "sopor", "shuteye", "shut-eye", "ease", "repose", "reverie", "revery" ;
+  :verb_synonym "sleep", "dream", "snooze", "doze", "rest", "slumber", "nap", "repose" ;
+  :wordnet_noun_synset "00859826", "14048353", "14049464", "15298612", "01066072", "01064507", "05708758" ; 
+  :wordnet_verb_synset "00014398", "01641175" .
 
 :SpaceEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Space Event" ;
   :definition "Any event that occurs beyond the Earth." ;
-  :example "Examples are comet, asteroid or meteoroid impacts, meteor showers, burn-up of space debris in the atmosphere, solar flares, eclipses, etc." .
+  :example "Examples are comet, asteroid or meteoroid impacts, meteor showers, burn-up of space debris in the atmosphere, solar flares, eclipses, etc." ;
+  :noun_synonym  "extraterrestrial", "space walk", "spaceflight", "space travel", "spacefaring", "eclipse", "meteor shower", "space probe", "space station", "spacesuit", "solar flare" ;
+  :verb_synonym "blast off", "spacewalk" ;
+  :wordnet_noun_synset "09300592", "00293825", "00314328", "04272778", "04273014", "04273124", "04273272", "04273485", "07383246", "11527418" ;
+  :wordnet_verb_synset "01517688", "01910195" . 
+
+:StartOfBusiness a owl:Class ;
+  rdfs:subClassOf :StartAndBeginning ;
+  rdfs:label "Start of Business" ;
+  :definition "An Event indicating that a new Organization has been created/founded. The new Organization is defined by the property, :has_affected_agent." ;
+  :verb_synonym "incorporate", "establish", "open" ;
+  :wordnet_verb_synset "02452944", "01348685" .
+
+:StateAndPhysicalChange a owl:Class ;
+  rdfs:subClassOf :Change ;
+  rdfs:label "State Change and Physical Change" ;
+  :definition "An Event indicating that some entity has been modified by the application of heat, cooling, pressure, human activity, etc. The entity that is affected is identified using the property, :has_topic." ;
+  :noun_synonym "contortion", "bend", "elongation", "hydration", "wetting", "soiling", "dirtying", "dessication", "softening", "hardening", "discoloring" ;
+  :verb_synonym "decay", "mildew", "hydrate", "dry", "soften", "harden", "darken", "discolor" ;
+  :wordnet_noun_synset "00405224", "00199979" ;
+  :wordnet_verb_synset "00139943", "00140787", "00144670", "00145958", "00169459", "00209244", "00238763", "00239753", "00255753", "00283693", "00313162" .
 
 :Storage a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Storage" ;
   :definition "Any act of keeping something for future delivery, sale or use." ;
-  :noun_synonym "warehousing", "retention", "storehouse", "repository", "cache", "depot", "warehouse", "stash", "stockpile", "keeping", "storing", "stocking", "stockpiling", "reserving", "holding", "caching", "hoarding", "stowing" ;
-  :verb_synonym "keep", "store", "stock", "stockpile", "reserve", "hold", "cache", "hoard", "stow", "set aside" .
+  :noun_synonym "warehousing", "storehouse", "repository", "cache", "depot", "warehouse", "stash", "stockpile", "storing", "stocking", "stockpiling", "reserving", "holding", "caching", "hoarding", "stowing", "reserve", "backlog", "stockpile" ;
+  :verb_synonym "store", "stock", "stockpile", "reserve", "hold", "cache", "hoard", "stow", "set aside", "stash", "lay in", "save up" ;
+  :wordnet_noun_synset "00373415", "00813322", "04336084", "13389225", "08479216", "00813016" ; 
+  :wordnet_verb_synset "02285938", "02287351", "02290237", "02208876" .  
 
 :Substitution a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Substitution" ;
   :definition "An act of replacing something or someone with another." ;
-  :noun_synonym "exchange", "interchange", "replacement", "switching", "exchanging", "substituting", "replacing" ;
-  :verb_synonym "exchange", "substitute", "replace", "switch" .
+  :noun_synonym "exchange", "interchange", "replacement", "switching", "exchanging", "substituting", "replacing", "commutation", "permutation", "transposition", "replacement", "switch" ;
+  :verb_synonym "exchange", "substitute", "replace", "switch", "interchange", "exchange", "stand in", "fill in" ;
+  :wordnet_noun_synset "00197334", "07458361" ; 
+  :wordnet_verb_synset "02262575", "02263424" . 
 
 :Suicide a owl:Class ;
   rdfs:subClassOf :Death ;
   rdfs:label "Suicide" ;
   :definition "The act of an individual (animal or Person) taking their own life." ;
-  :verb_synonym "take one's life", "kill oneself" .
+  :noun_synonym "self-destruction", "self-annihilation" ;
+  :verb_synonym "take one's life", "kill oneself", "commit suicide" ;
+  :wordnet_noun_synset "00223352", "10693108" ; 
+  :wordnet_verb_synset "01327678" . 
 
 :UtilizationAndConsumption a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Utilization And Consumption" ;
   :definition "Any act that uses something or someone." ;
-  :noun_synonym "usage", "use", "using", "utilizing", "consuming" ;
-  :verb_synonym "use", "consume", "utilize" .
+  :noun_synonym "usage", "use", "using", "utilizing", "consuming", "utilisation", "using up", "depletion" ;
+  :verb_synonym "use", "consume", "utilize", "eat up", "deplete", "exhaust", "run through", "expend", "utilise" ;
+  :wordnet_noun_synset "00948944", "00357025" ; 
+  :wordnet_verb_synset "01159815", "01167359", "01160888", "01161188" . 
 
 :ViolationOfAgreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Violation of Agreement" ;
   :definition "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property." ;
-  :noun_synonym "violating" ;
-  :verb_synonym "violate" .
+  :noun_synonym "violating", "breach of contract", "infringement" ;
+  :verb_synonym "violate", "go against", "breach" ;
+  :wordnet_noun_synset "00772032", "00069993" ;
+  :wordnet_verb_synset "02572443" . 
 
 :WeatherEvent a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Weather Event" ;
   :definition "Any environmental occurrence related to atmospheric conditions in an area." ;
-  :example "Examples include high/low temperatures, high winds, thunder and lightening, precipitation/drizzle/rain/snow, fog, storms (cyclones, tornadoes, hurricanes, sandstorms, typhoons, ...), etc." .
+  :example "Examples include high/low temperatures, high winds, thunder and lightening, precipitation/drizzle/rain/snow, fog, storms (cyclones, tornadoes, hurricanes, sandstorms, typhoons, ...), etc." ;
+  :verb_synonym "rain", "snow", "precipitate", "flood", "storm", "blow", "squall", "thunder" ;
+  :wordnet_noun_synset "06763412", "11445694", "11482925" ;
+  :wordnet_verb_synset "02762779", "00217578", "02775199", "02776493" . 
 
 
 ########################################################################
@@ -607,7 +774,10 @@
   owl:members  ( :RemovalAndRestriction :ReturnRecoveryAndRelease ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Reward :Punishment ) .
+  owl:members  ( :RewardAndCompensation :Punishment ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :StartOfBusiness :EndOfBusiness ) .
 
 
 ########################################################################

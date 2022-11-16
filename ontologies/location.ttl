@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: April 8 2021
+# Last modified: September 23 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -30,6 +30,9 @@
 #  Modified :Terrain and :Direction to be a restricted set of string values
 #    (the :terrain and :direction properties)
 #  Added :area_sq_kms for a PhysicalLocation
+#  Defined Country as a sub-class of AdministrativeDivision
+#  Added :wordnet_noun_synset details
+#  Added GeographicFeature
 ########################################################################
 
 
@@ -41,7 +44,8 @@
   rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Administrative Division" ;
   :definition "A subnational level of government, operating over some region. The first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc. The level of an AdministrativeDivision is given by the property, :admin_level. Note that :admin_level is an optional property and may not be known, or applicable." ;
-  :noun_synonym "county", "district", "govenorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" .
+  :noun_synonym "county", "district", "governorate", "municipality", "oblast", "parish", "prefecture", "principality", "province", "state", "territory" ;
+  :wordnet_noun_synset "08508836" .
 
 :AnthropogenicFeature a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -52,18 +56,22 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Border" ;
   :definition "A boundary between two political, social or geographic entities. A Border may be identified by name, by the names of the bordering entities (using the :border_with property) or by a set of latitudes/longitudes (using the :has_location property to reference a set of PhysicalLocations with corresponding :latitutde/longitude properties)." ;
-  :noun_synonym "perimeter", "boundary" .
+  :noun_synonym "perimeter", "boundary" ;
+  :wordnet_noun_synset "08529808" .
 
 :BoundingRegion a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Bounding Region" ;
-  :definition "A BoundingRegion is defined by at least three sets of latitude/longitude coordinates (instances of PhysicalLocation with :latitude/longitude properties) which enclose the region. The PhysicalLocations that define the points are referenced using the :has_bounding_coordinate property." .
+  :definition "A BoundingRegion is defined by at least three sets of latitude/longitude coordinates (instances of PhysicalLocation with :latitude/longitude properties) which enclose the region. The PhysicalLocations that define the points are referenced using the :has_bounding_coordinate property." ;
+  :wordnet_noun_synset "08647614" .
 
 :BuildingAndDwelling a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
   rdfs:label "Building and Dwelling" ;
   :definition "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
-  :example "Examples of BuildingAndDwelling include a house, factory, hospital, apartments, shops/stores, etc." .
+  :example "Examples of BuildingAndDwelling include a house, factory, hospital, apartments, shops/stores, etc."  ;
+  :noun_synonym "home", "domicile", "abode", "habitation", "flat" ;
+  :wordnet_noun_synset "02916498", "03264208", "02918337", "03745009", "04209460", "02729230" .
 
 :Continent a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -71,15 +79,17 @@
   :definition "One of the 7 large landmasses (Africa, Antarctica, Asia, Australia, Europe, North America, South America). The continents are instantiated using their GeoName idenfitiers in the file, geonames_countries.ttl." .
 
 :Country a owl:Class ;
-  rdfs:subClassOf :GeopoliticalEntity ;
+  rdfs:subClassOf :AdministrativeDivision ;
   rdfs:label "Country" ;
   :definition "Describes the government of a nation, the people living in the nation and the land area that is governed." ;
-  :noun_synonym "nation", "commonwealth", "nationality" .
+  :noun_synonym "nation", "commonwealth", "nationality" ;
+  :wordnet_noun_synset "08185877" .
 
 :Currency a owl:Class ;
   rdfs:subClassOf :MonetaryAndFinancialInstrument ;
   rdfs:label "Currency" ;
-  :definition "A metal or paper medium of exchange that is used as money in a country." .
+  :definition "A metal or paper medium of exchange that is used as money in a country." ;
+  :wordnet_noun_synset "13407086" .
 
 :DesignatedArea a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -90,7 +100,13 @@
 :Factory a owl:Class ;
   rdfs:subClassOf :BuildingAndDwelling ;
   rdfs:label "Factory" ;
-  :definition "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." .
+  :definition "One or more buildings where goods are made, assembled, etc. which is accomplished by human labor and/or machines." ;
+  :wordnet_noun_synset "03321351" .
+
+:GeographicFeature a owl:Class ;
+  rdfs:subClassOf :PhysicalLocation ;
+  rdfs:label "Geographic Feature" ;
+  :definition "Any type of physical feature associated with the geography of an area, such as a forest, monument, school campus, etc." .
 
 :GeopoliticalEntity a owl:Class ;
   rdfs:subClassOf :Agent, :PhysicalLocation ;
@@ -108,12 +124,14 @@
   rdfs:subClassOf :Location ;
   rdfs:label "Online Location" ;
   :definition "A location defined in/on a network, such as a wireless network (e.g., a mobile phone number), the Internet (such an IP address, email adress or URL) or a wired network. The properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others." ;
-  :noun_synonym "internet location", "internet address", "computer address", "web address" .
+  :noun_synonym "internet location", "internet address", "computer address", "web address" ;
+  :wordnet_noun_synset "06367922" .
 
 :PhysicalLocation a owl:Class ;
   rdfs:subClassOf :Location ;
   rdfs:label "Physical Location" ;
-  :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." .
+  :definition "A point or site on/in the Earth as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
+  :wordnet_noun_synset "00027365" .
 
 :PopulatedPlace a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
@@ -125,24 +143,29 @@
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Postal Address" ;
   :definition "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified." ;
-  :noun_synonym "street address", "mailing address" .
+  :noun_synonym "street address", "mailing address", "business address" ;
+  :wordnet_noun_synset "08508037" .
 
 :RelativeDirectionLocation a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Relative Direction Location" ;
-  :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known." .
+  :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Either of the properties can be omitted if not known." ;
+  :noun_synonym "north", "south", "east", "west", "northeast", "northwest", "southeast", "southwest", "compass point" ;
+  :wordnet_noun_synset "08578618", "08578767", "08578888", "08578999", "08579120", "08579251", "08579372", "08579483", "13852504" .
 
-:TransportationFeeature a owl:Class ;
+:TransportationFeature a owl:Class ;
   rdfs:subClassOf :AnthropogenicFeature ;
   rdfs:label "Transportation Feature" ;
   :definition "A point or site on/in the Earth related to roads, paths, etc. and related locations. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
-  :example "Examples include water ports, airports, heliports, roads, bridges, railroads, railroad yards, etc." .
+  :example "Examples include water ports, airports, heliports, roads, bridges, railroads, railroad yards, etc." ;
+  :wordnet_noun_synset "08651532", "02690680", "02695091", "04055680", "04471218", "04056210", "04505257", "03610935", "02688444", "02929672", "04056210", "04356155", "02690680", "03221531", "00491580" .
 
 :WaterFeature a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;
   rdfs:label "Water Feature" ;
   :definition "A body of water as identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites." ;
-  :example "Examples include oceans, rivers, streams, bays, lakes, channels, etc." .
+  :example "Examples include oceans, rivers, streams, bays, lakes, channels, etc." ;
+  :wordnet_noun_synset "09248053", "03009709" .
 
 
 ########################################################################
