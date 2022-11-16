@@ -284,7 +284,7 @@ def test_paragraphs():
 
 def test_short_news_turtle():
     for title in ('LC-FarRight', 'LC-Right', 'LC-Center', 'LC-Left'):
-        with open(f'resources/{text}.txt', 'r') as narr:
+        with open(f'resources/{title}.txt', 'r') as narr:
             narrative = narr.read()
             sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
             success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
@@ -415,20 +415,17 @@ def test_bug3():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(bug3)
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
     ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert ':Mary' in ttl_str and ':George' in ttl_str
     # Following are shown in the output pasted below
-    assert ':has_topic :plan_' in ttl_str
-    assert 'a :Agreement' in ttl_str
-    assert 'a :AssertionAndDeclaration' in ttl_str    # Outline
-    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :George' in ttl_str
+    assert ':has_topic :her_concession_speech_' in ttl_str
+    assert 'a :AssessmentAndCharacterization' in ttl_str    # Compared
+    assert ':has_active_agent :Liz_Cheney' in ttl_str and ':has_affected_agent :Abraham_Lincoln' in ttl_str
     # Output:
     # :Chunk_51acc08f-3598 a :Chunk ; :offset 1 .
     # :Chunk_51acc08f-3598 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
     #      during her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman" .
     # :Chunk_51acc08f-3598 :sentiment -0.2023 .
     # :Event_bcaff11f-20d2 :has_recipient :Abraham_Lincoln .
-    # TODO: Originally too short, now too long
+    # TODO: Originally too short, now too long!
     # :her_concession_speech_shortly_after_her_loss_to_
     #     trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11 a :EventAndState .   TODO: Mapping incorrect
     # :her_concession_speech_shortly_after_her_loss_to_trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11

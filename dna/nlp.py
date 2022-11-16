@@ -425,7 +425,7 @@ def resolve_quotations(narr: str) -> (str, list, dict):
             # Address fact that a quotation may include other quotations within it
             updated_quote = _remove_quotation_marks(quote)
             updated_narr = updated_narr.replace(updated_quote, f' Quotation{index}')
-            quotation_dict[f'Quotation{index}'] = quote
+            quotation_dict[f'Quotation{index}'] = quote[:-1] if quote.endswith('.') else quote
             final_quotes.append(quote[:-1] if quote.endswith('.') else quote)
             index += 1
         else:

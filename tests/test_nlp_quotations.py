@@ -42,8 +42,8 @@ def test_text3():
     assert updated_text == 'Quotation0 Ms. Cheney said in her concession speech. Quotation1 Quotation2'
     assert quotations == [
         'No House seat, no office in this land is more important than the principles we swore to protect',
-        'Our nation is barreling once again toward crisis, lawlessness and violence.',
-        'No American should support election deniers.']
+        'Our nation is barreling once again toward crisis, lawlessness and violence',
+        'No American should support election deniers']
     assert len(quotation_dict) == 3
     assert quotation_dict['Quotation1'] == \
            'Our nation is barreling once again toward crisis, lawlessness and violence.'
@@ -58,7 +58,7 @@ def test_text4():
         'This is a wonderful result for America, and a complete rebuke of the Unselect Committee of '
         'political Hacks and Thugs',
         'Now [Cheney] can finally disappear into the depths of political oblivion where, I am sure, '
-        'she will be much happier than she is right now.',
+        'she will be much happier than she is right now',
         'pure delight']
     assert len(quotation_dict) == 2
     assert quotation_dict['Quotation0'] == \
@@ -66,7 +66,7 @@ def test_text4():
            'political Hacks and Thugs'
     assert quotation_dict['Quotation1'] == \
            'Now [Cheney] can finally disappear into the depths of political oblivion where, I am sure, ' \
-           'she will be much happier than she is right now.'
+           'she will be much happier than she is right now'
 
 
 def test_text5():
