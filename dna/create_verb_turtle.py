@@ -6,7 +6,7 @@ import uuid
 from dna.coreference_resolution import check_nouns
 from dna.create_specific_turtle import create_type_turtle
 from dna.query_ontology import check_subclass
-from dna.utilities import add_unique_to_array, dna_prefix, empty_string, objects_string, \
+from dna.utilities_and_language_specific import add_unique_to_array, dna_prefix, empty_string, objects_string, \
     prep_to_predicate_for_locs
 
 has_location = ':has_location'
@@ -59,8 +59,8 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, ttl_list: list)
     return
 
 
-def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri: str, plet_dict: dict,
-                               last_nouns: list, last_events: list, loc_time_iris: list, ext_sources: bool) -> list:
+def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri: str, alet_dict: dict,
+                               last_nouns: list, last_events: list, objects: list, ext_sources: bool) -> (list, str):
     """
     Parse the details for a verb's prepositions and create the corresponding Turtle. Note that
     dates/times are not handled in this code, but for the sentence overall.
@@ -69,29 +69,38 @@ def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri
     :param prepositions: An array of tuples holding the preposition text, object text, object type,
                          object class mappings, and object IRI
     :param event_iri: The IRI for the verb/event
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the narrative to-date - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times' and Values that vary for the different keys
+             Keys = 'agents', 'locs', 'events', 'times' and Values that vary for the different keys
     :param last_nouns: An array of noun texts, type, class mapping and IRI from the current paragraph
     :param last_events: A list of all event types and their IRIs from the current paragraph
-    :param loc_time_iris: Last known location (index 0) and time (index 1) in the narrative
+    :param objects: An array of the direct objects of the chunk, to which the prepositional objects
+                    are added; The array is a list of tuples holding an array of tuples of the
+                    noun's texts, types, mappings and IRIs
     :param ext_sources: Boolean indicating whether additional information on a noun should
                         be retrieved from Wikidata (recommended)
     :return: An array holding the Turtle statements describing the preposition object (and the
-             prepositions array is updated)
+             prepositions array is updated); Also if the prepositional object is location-related,
+             and the preposition indicates that a new location is discussed, that location's IRI is
+             returned (also, the objects array is updated)
     """
+    # TODO: Get full prepositional text ('with aid of the local police chief')
     prep_turtle = []
     prep_text, prep_obj_text, prep_obj_type = prep_detail
     prep_mapping = check_nouns(
         {'objects': [{'object_text': prep_obj_text, 'object_type': prep_obj_type}]}, 'objects',
-        plet_dict, last_nouns, last_events, prep_turtle, ext_sources)
+        alet_dict, last_nouns, last_events, prep_turtle, ext_sources)
+    print(prep_detail)
+    print(prep_mapping)
     # Should only be 1 tuple in prep_details array where 2nd value is the updated obj type, 3rd value is
     #    an array of class mappings and the 4th value is the IRI
     prep_obj_type = prep_mapping[0][1]
     prep_obj_classes = prep_mapping[0][2]
     prep_obj_iri = prep_mapping[0][3]
+    objects.append((prep_obj_text, prep_obj_type, prep_obj_classes, prep_obj_iri))
     prepositions.append((prep_text, prep_obj_text, prep_obj_type, prep_obj_classes, prep_obj_iri))
     # TODO: Relationships for an Agent are different from associations for other "things"; Is more needed?
+    new_loc_iri = empty_string
     if 'PERSON' in prep_obj_type or 'Agent' in prep_obj_classes or 'ORG' in prep_obj_type:
         if prep_text == 'from':
             prep_turtle.append(f'{event_iri} :has_provider {prep_obj_iri} .')
@@ -106,53 +115,56 @@ def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri
             prep_turtle.append(f'{event_iri} :has_instrument {prep_obj_iri} .')
         elif prep_text in prep_to_predicate_for_locs and \
                 (prep_obj_type.endswith('LOC') or prep_obj_type.endswith('GPE') or prep_obj_type.endswith('FAC')):
-            if prep_text in ('at', 'in', 'to'):   # Preference to these prepositions
-                loc_time_iris[0] = prep_obj_iri
+            if prep_text in ('at', 'in', 'near', 'outside', 'to'):
+                new_loc_iri = prep_obj_iri
             prep_turtle.append(f'{event_iri} {prep_to_predicate_for_locs[prep_text]} {prep_obj_iri} .')
         elif prep_text in ('about', 'from', 'in', 'of', 'to'):
             prep_turtle.append(f'{event_iri} :has_topic {prep_obj_iri} .')
-    return prep_turtle
+    return prep_turtle, new_loc_iri
 
 
-def handle_movement_locations(turtle: list, prepositions: list, loc_iri: str, event_iri: str):
+def handle_locations(turtle: list, loc_iri: str, loc_time_iris: list, event_iri: str, is_bio: bool):
     """
     Add an origin location for a Movement event (if possible and one is not already defined) and
     determine if an Event/State should have a location.
 
     :param turtle: The current Turtle definition for the sentence
-    :param prepositions: An array of tuples specifying the preposition text, and its
-                         object texts, types, class mappings and IRIs
-    :param loc_iri: A string holding the last known location from the narrative
+    :param loc_iri: A string holding a new location for the current event
+    :param loc_time_iris: An array holding the last processed location (index 0) and time (index 1)
     :param event_iri: A string holding the IRI identifier for the sentence's verb/event
-    :return: Nothing (the 'turtle' array may be updated)
+    :param is_bio: A boolean indicating that the text is biographical/autobiographical, and so
+                   may consistently define/use location references
+    :return: N/A (the turtle and loc_time_iris arrays may be updated)
     """
     ttl_str = str(turtle)
-    location_ttl = []
     # Get the origin for a MovementTravelAndTransportation event
     # Origin is the location defined by the preposition 'from' OR the last location from processed_locs
     if ':Movement' in ttl_str and 'has_origin' not in ttl_str:
-        found_origin = False
-        for prep, obj_text, obj_type, obj_mappings, obj_iri in prepositions:
-            if prep == 'from':
-                found_origin = True
-                location_ttl.append(f'{event_iri} :has_origin {obj_iri} .')
-                break
-        if not found_origin and loc_iri:
-            location_ttl.append(f'{event_iri} :has_origin {loc_iri} .')
+        if loc_time_iris[0]:
+            turtle.append(f'{event_iri} :has_origin {loc_time_iris[0]} .')
+    loc_time_iris[0] = loc_iri if loc_iri else loc_time_iris[0]     # Reset with the 'new' last known loc if available
+    if is_bio and 'has_location' not in ttl_str and 'has_destination' not in ttl_str:
+        # No location - so add one
+        if loc_iri:
+            turtle.append(f'{event_iri} :has_location {loc_iri} .')
+        else:
+            turtle.append(f'{event_iri} :has_location {loc_time_iris[0]} .')
     return
 
 
-def handle_xcomp_processing(verb1_tuple: tuple, chunk_dict: dict, plet_dict: dict, last_nouns: list,
-                            last_events: list, turtle: list, event_iri: str, ext_sources: bool) -> list:
+def handle_xcomp_processing(root_text: str, root_map: list, chunk_dict: dict, alet_dict: dict,
+                            last_nouns: list, last_events: list, turtle: list, event_iri: str,
+                            ext_sources: bool) -> list:
     """
     Handles xcomp processing for a sentence, which requires adjusting the subject/object,
     and more.
 
-    :param verb1_tuple: The text of the root verb and mapping to the DNA ontology
+    :param root_text: The text of the root verb
+    :param root_map: An array holding the mapping of the root verb to the DNA ontology
     :param chunk_dict: A dictionary holding details about the chunk
-    :param plet_dict: A dictionary holding the persons, locations, events & times encountered in
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the narrative to-date - For co-reference resolution (it may be updated by this function);
-             Keys = 'persons', 'locs', 'events', 'times' and Values that vary for the different keys
+             Keys = 'agents', 'locs', 'events', 'times' and Values that vary for the different keys
     :param last_nouns: An array of noun texts, type, class mapping and IRI from the current paragraph
     :param last_events: A list/array of tuples defining an event DNA class mapping and IRI, found in the
                         current paragraph
@@ -162,22 +174,21 @@ def handle_xcomp_processing(verb1_tuple: tuple, chunk_dict: dict, plet_dict: dic
                         added to the parse results if available
     :return: An array of Turtle statements intended to replace the existing verb Turtle
     """
-    verb1_text, verb1_mapping = verb1_tuple   # Mappings are arrays due to multiple inheritance
-    # If root verb = Attempt or Continuation, End, ..., then can do simple multiple inheritance
-    if verb1_mapping[0] in (':Attempt', ':Continuation', ':StartAndBeginning', ':End', ':Success', ':Failure'):
-        turtle.append(f'{event_iri} a {verb1_mapping[0]} .')
+    # If root verb has a DNA mapping of Attempt or Continuation, End, ..., then can do simple multiple inheritance
+    if root_map[0] in (':Attempt', ':Continuation', ':StartAndBeginning', ':End', ':Success', ':Failure'):
+        turtle.append(f'{event_iri} a {root_map[0]} .')
         return turtle
     # Otherwise, create new event IRI for the scoping event/root verb (e.g., "permitted to leave")
     new_iri = f':Event_{str(uuid.uuid4())[:13]}'
     # And create the Turtle
-    new_ttl = create_type_turtle(verb1_mapping, new_iri, True, empty_string)
+    new_ttl = create_type_turtle(root_map, new_iri, True, root_text)
     new_ttl.append(f'{new_iri} :has_topic {event_iri} .')
     root_objects = []    # Account for the objects of the root verb
     for verb in chunk_dict['verbs']:
-        if verb['verb_lemma'] == verb1_text and objects_string in verb:
-            add_unique_to_array(check_nouns(verb, objects_string, plet_dict, last_nouns, last_events,
-                                            new_ttl, ext_sources), root_objects)
-            # TODO: Process prepositions for the root verb
+        if verb['verb_lemma'] == root_text and objects_string in verb:
+            add_unique_to_array(check_nouns(verb, objects_string, alet_dict, last_nouns,
+                                            last_events, new_ttl, ext_sources), root_objects)
+            # TODO: Also process prepositions for the root verb (this is only processing the xcomp verb)
             add_subj_obj_to_ttl(new_iri, [], root_objects, new_ttl)
     # Use the existing the Turtle to add the details for the new scoping event and to correct the xcomp event
     turtle_text = str(turtle)
@@ -187,7 +198,10 @@ def handle_xcomp_processing(verb1_tuple: tuple, chunk_dict: dict, plet_dict: dic
         # - If 'affected_agent', the root verb is passive and its subj becomes the 'active_agent' of the xcomp verb
         # - If the root verb has its own objects, these become the 'active_agent's of the xcomp verb
         # - If there is no 'affected_agent' and no root objects, the subject of the xcomp and root verbs are the same
-        if ':has_affected_agent' in turtle_stmt:
+        if ':describes' in turtle_stmt:    # Chunk also describes the root verb/event
+            new_ttl.append(turtle_stmt)
+            new_ttl.append(f'{turtle_stmt.split(" :describes")[0]} :describes {new_iri} .')
+        elif ':has_affected_agent' in turtle_stmt:
             new_ttl.append(f'{new_iri} :has_{turtle_stmt.split("has_")[1]}')
             new_ttl.append(turtle_stmt.replace('affected_agent', 'active_agent'))
         elif ':has_active_agent' in turtle_stmt:
@@ -225,7 +239,7 @@ def handle_xcomp_processing(verb1_tuple: tuple, chunk_dict: dict, plet_dict: dic
         elif ':text ' in turtle_stmt:
             new_ttl.append(turtle_stmt)
             new_ttl.append(f'{new_iri} :text {turtle_stmt.split(":text ")[1]}')
-        elif 'rdfs:label ' in turtle_stmt:
+        elif 'rdfs:label ' in turtle_stmt and turtle_stmt.startswith(':Event'):
             new_ttl.append(turtle_stmt)
             new_ttl.append(f'{new_iri} rdfs:label {turtle_stmt.split("rdfs:label ")[1]}')
         elif ':sentiment ' in turtle_stmt:

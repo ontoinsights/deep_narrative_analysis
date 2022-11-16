@@ -15,10 +15,10 @@
 #               'preps': [{'prep_text': 'preposition_text',
 #                          'prep_details': [{'detail_text': 'preposition_object', 'detail_type': 'type_eg_SINGGPE'}]}]
 # There may be more than 1 verb when there is a root verb + an xcomp
-# TODO: Account for preposition object having a preposition - for ex, 'with the aid of the police'
 # Sentence dictionaries are evaluated to produce the narrative's Turtle output
 #    (parse_narratives -> create_narrative_turtle's create_graph)
 
+import logging
 import re
 import spacy
 from spacy.language import Language
@@ -29,9 +29,12 @@ from spacy.lang.char_classes import ALPHA, ALPHA_LOWER, ALPHA_UPPER, CONCAT_QUOT
 from spacy.util import compile_infix_regex
 from word2number import w2n
 
+from dna.nlp_patterns import member_name_pattern, name_member_pattern, members_names_pattern, names_members_pattern, \
+    member_verb_name_pattern, members_verb_names_pattern, name_verb_member_pattern, names_verb_members_pattern
 from dna.nlp_sentence_dictionary import extract_chunk_details
 from dna.nlp_split_sentences import split_clauses
-from dna.utilities import empty_string, space, add_to_dictionary_values
+from dna.utilities_and_language_specific import add_to_dictionary_values, empty_string, ner_types, \
+    replacement_words, space
 
 
 # noinspection PyArgumentList
@@ -59,35 +62,19 @@ def custom_tokenizer(nlp_lang: Language):   # Code duplicated in test environmen
 nlp = spacy.load('en_core_web_trf')
 nlp.tokenizer = custom_tokenizer(nlp)
 nlp.add_pipe('sentencizer')
-matcher = DependencyMatcher(nlp.vocab)
 
 spacy_stopwords = nlp.Defaults.stop_words
 spacy_stopwords.clear()
 
-ner_dict = {'PERSON': ':Person',
-            'NORP': ':Organization',
-            'ORG': ':Organization',
-            'GPE': ':GeopoliticalEntity',
-            'LOC': ':Location',
-            'FAC': ':Location',
-            'EVENT': ':EventAndState'}
-ner_types = list(ner_dict.keys())
-ner_types.append('DATE')
-
-double_quote = '"'
-
-# Replace multi-word phrases or non-standard terms acting as conjunctions and prepositions
-# (or using prepositions) with single words
-replacement_words = {
-    'as well as': 'and',
-    'circa': 'in',
-    'in addition to': 'and',
-    'since': 'for',   # Assumes that clauses such as 'since [noun] [verb]' have already been split out
-    'next to': 'near',
-    'on behalf of': 'for',
-    'prior to': 'before',
-    'subsequent to': 'after'
-}
+matcher = DependencyMatcher(nlp.vocab)
+matcher.add("member_name", [member_name_pattern])
+matcher.add("name_member", [name_member_pattern])
+matcher.add("member_verb_name", [member_verb_name_pattern])
+matcher.add("name_verb_member", [name_verb_member_pattern])
+matcher.add("members_names", [members_names_pattern])
+matcher.add("names_members", [names_members_pattern])
+matcher.add("members_verb_names", [members_verb_names_pattern])
+matcher.add("names_verb_members", [names_verb_members_pattern])
 
 
 def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
@@ -101,14 +88,54 @@ def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
              key is either 'LOCS' or 'TIMES')
     """
     for ent in nlp_sentence.ents:
+        ent_text = ent.text
+        if ent.label_ in ('PERSON', 'ORG', 'NORP'):
+            # Remove any possessive cases and just use proper nouns for PERSON, ORG, ...
+            # TODO: Correct texts such as 'Billie Holiday's NYC' or '1950's NYC' to address the possessive
+            ent_doc = nlp(ent.text)
+            ent_names = []
+            for token in ent_doc:
+                if token.pos_ == 'PROPN':
+                    ent_names.append(token.text)
+            if ent_names:
+                ent_text = space.join(ent_names)
         if ent.label_ in ('GPE', 'LOC', 'FAC'):
-            add_to_dictionary_values(sentence_dict, 'LOCS', ent.text, str)
+            add_to_dictionary_values(sentence_dict, 'LOCS', f'{ent_text}+{ent.label_}', str)
         elif ent.label_ in ('PERSON', 'ORG', 'NORP'):
-            add_to_dictionary_values(sentence_dict, 'AGENTS', ent.text, str)
+            add_to_dictionary_values(sentence_dict, 'AGENTS', f'{ent_text}+{ent.label_}', str)
         elif ent.label_ in ('DATE', 'TIME'):
-            add_to_dictionary_values(sentence_dict, 'TIMES', ent.text, str)
+            add_to_dictionary_values(sentence_dict, 'TIMES', f'{ent_text}', str)
         elif ent.label_ == 'EVENT':
-            add_to_dictionary_values(sentence_dict, 'EVENTS', ent.text, str)
+            add_to_dictionary_values(sentence_dict, 'EVENTS', f'{ent_text}', str)
+
+
+def _record_family_member(role: str, name: str, family_dict: dict):
+    """
+    Record a proper name associated with a family role (brother, sister, ...).
+
+    :param role: String holding the family member role
+    :param name: String holding the name of the Person (1+ proper nouns)
+    :param family_dict: A dictionary keyed by names with values = their family relationship/role;
+                        The dictionary is updated if new family members are found
+    :return: N/A (family_dict may be updated)
+    """
+    found = False
+    if name in family_dict:
+        found = True
+        if role != family_dict[name]:
+            logging.error(f'Found proper name ({name}) associated with multiple roles, '
+                          f'{role} and {family_dict[name]}.')
+    else:
+        for family_name in family_dict.keys():
+            if name in family_name or family_name in name:    # May only have the first or last names
+                found = True
+                if role != family_dict[family_name]:
+                    logging.error(f'Found related names, {name} and {family_name}, associated with '
+                                  f'multiple roles, {role} and {family_dict[family_name]}.')
+                break
+    if not found:
+        family_dict[name] = role
+    return
 
 
 def _remove_quotation_marks(text: str) -> str:
@@ -145,18 +172,88 @@ def _replace_words(sentence: str) -> str:
     return sentence
 
 
+def get_complete_name_head_words(text: str) -> (str, str):
+    """
+    Creates a spacy Doc from the input text and returns the text of the 'head'/root proper noun
+    as well as its compound nouns.
+
+    :param text: The text to parse
+    :return: The lemma of the root word in the input text and its actual text (for ex, a plural)
+    """
+    doc = nlp(text)
+    for token in doc:
+        if token.dep_ == 'ROOT':
+            complete_names = [ch.text for ch in token.children if ch.dep_ == 'compound']
+            return f'{space.join(complete_names)} {token.text}'.strip()
+    return empty_string
+
+
+def get_family_details(doc: Doc) -> dict:
+    """
+    Use spaCy rules-based matching to get the proper names of family members from a narrative.
+
+    :param doc: spaCy Document holding the narrative
+    :returns: A dictionary keyed by names with values = their family relationship/role
+    """
+    # TODO: Logic is incorrect if multiple families are discussed in a single text
+    logging.info('Getting family data from narrative')
+    family_dict = dict()
+    matches = matcher(doc)
+    for match_id, token_ids in matches:          # Indicates which pattern is matched and the specific tokens
+        string_id = nlp.vocab.strings[match_id]  # Get string id for the matched pattern
+        if string_id in ('member_name', 'name_member'):
+            role = doc[token_ids[0]].text
+            name_tokens = doc[token_ids[1]].subtree
+        elif string_id in ('members_names', 'names_members'):
+            role = doc[token_ids[0]].text[:-1]
+            name_tokens = doc[token_ids[1]].subtree
+        elif string_id in ('member_verb_name', 'name_verb_member'):
+            role = doc[token_ids[1]].text
+            name_tokens = doc[token_ids[2]].subtree
+        else:
+            role = doc[token_ids[1]].text[:-1]
+            name_tokens = doc[token_ids[2]].subtree
+        names = []
+        preceding_punct = True
+        for name_token in name_tokens:
+            if name_token.text == ',' or name_token.text == 'and':
+                preceding_punct = True
+            if name_token.pos_ == 'PROPN':
+                if preceding_punct:
+                    preceding_punct = False
+                    names.append(f'new{name_token.text}')
+                else:
+                    names.append(name_token.text)
+        new_name = empty_string
+        for name in names:
+            if name.startswith('new'):
+                if new_name:
+                    # Record the current 'new' name
+                    _record_family_member(role, new_name, family_dict)
+                # Reset the 'new' name
+                new_name = name.replace('new', empty_string)
+                continue
+            else:
+                # Append the subsequent names (for ex, "Mary Jo Smith") to the new_name
+                new_name += space + name
+        # Capture the last 'new' name
+        _record_family_member(role, new_name, family_dict)
+    return family_dict
+
+
 def get_head_word(text: str) -> (str, str):
     """
     Creates a spacy Doc from the input text and returns the lemma and text of the 'head'/root noun/verb.
+    Also returns the text without possessives.
 
     :param text: The text to parse
-    :return: The lemma of the root word in the input text and its actual text
+    :return: The lemma of the root word in the input text and its actual text (for ex, a plural)
     """
-    # TODO: Use more efficient way to get the lemma if there is only a single word in the text
     doc = nlp(text)
     for token in doc:
         if token.dep_ == 'ROOT':
             return token.lemma_, token.text
+    return empty_string, empty_string
 
 
 def get_named_entities_in_string(text: str) -> list:
@@ -203,7 +300,7 @@ def get_time_details(phrase: str) -> (int, str):
     return number, increment
 
 
-def parse_narrative(narr_text: str) -> (list, list):
+def parse_narrative(narr_text: str) -> (list, list, dict):
     """
     Creates a spacy Doc from the entire narrative text, then splits sentences into clauses with
     their own subjects/verbs, and parses each of the resulting sentences to create a dictionary
@@ -212,10 +309,10 @@ def parse_narrative(narr_text: str) -> (list, list):
 
     :param narr_text: The narrative text
     :return: A tuple consisting of an array of dictionaries holding the details of each sentence
-             (after splitting) and the text of any quotations (between various types of double
-             quotation marks)
+             (after splitting), an array of the texts of any quotations (texts between any types of
+             quotation marks), and a dictionary of quotations that have a subject and verb (and
+             will be removed from the final narrative)
     """
-    # Future: Is this needed?   family_dict = get_family_details(narr_text) from first tag
     revised_narr = _replace_words(narr_text)
     updated_narr, quotations, quotations_dict = resolve_quotations(revised_narr)
     # \n\n indicates a new paragraph
@@ -276,12 +373,12 @@ def parse_narrative(narr_text: str) -> (list, list):
             sent_dict['offset'] = sentence_offset
             sent_dict['text'] = 'New line'
             sentence_dicts.append(sent_dict)
-    return sentence_dicts, quotations, quotations_dict
+    return sentence_dicts, quotations, quotations_dict, get_family_details(doc)
 
 
 def resolve_quotations(narr: str) -> (str, list, dict):
     """
-    Process the narratives in the text.
+    Process the quotations in the text - capture them and remove quotation marks.
 
     :param narr: The original narrative text
     :return: A tuple with (1) the updated narrative text (removing quotation marks and removing any quotations

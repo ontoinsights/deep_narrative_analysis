@@ -3,16 +3,17 @@
 
 from spacy.tokens import Token
 
-from dna.utilities import add_to_dictionary_values, check_name_gender, empty_string, family_members, \
-    objects_string, processed_prepositions, space
+from dna.utilities_and_language_specific import add_to_dictionary_values, check_name_gender, empty_string, \
+    family_members, family_text, objects_string, processed_prepositions, space
 
-family_roles = [key for key in family_members.keys() if True]
+family_roles = [key for key in family_members.keys()]
 
-unwanted_tokens = [
-    'INTJ',   # interjection
-    'X',      # other
-]
-# Want 'PUNCT' and 'SYM' to address statements such as "66.3% of the vote"
+unwanted_tokens = ('DET',    # determinant
+                   'INTJ',   # interjection
+                   'X')      # other
+# Want 'PUNCT' for semantic evaluation and 'SYM' to address statements such as "66.3% of the vote"
+unwanted_dependencies = ('agent', 'appos', 'attr', 'aux', 'auxpass', 'case', 'cc', 'ccomp', 'conj', 'dep',
+                         'mark', 'meta', 'punct', 'xcomp')
 
 
 def _handle_noun(noun_token: Token) -> (str, str):
@@ -23,22 +24,23 @@ def _handle_noun(noun_token: Token) -> (str, str):
     :param noun_token: Token of the noun
     :return: Two strings, the noun text and type
     """
-    noun_text = ' '.join([ww.text for ww in noun_token.subtree])
+    noun_text = noun_token.text
+    nouns = []
+    full_noun_text = space.join(t.text for t in noun_token.subtree if
+                                (t.pos_ not in unwanted_tokens and t.dep_ not in unwanted_dependencies))
     # Handle proper nouns and pronouns
     if 'PROPN' in noun_token.pos_:      # Proper noun
         return _process_proper_noun(noun_token)
     elif 'Prs' in noun_token.morph.get('PronType'):    # Personal pronoun
         return _process_personal_pronoun(noun_token)
-    # Handle references to family members ('brother', 'sister', ...)
+    # Handle references to family members ('brother', 'sister', ...) or 'family'
     elif noun_text.lower() in family_roles:
-        noun_text_lower = noun_text.lower()
-        gender = family_members[noun_text_lower]
-        if gender:
-            return full_noun_text, f'{gender}SINGPERSON' if gender else f'SINGPERSON'
-        else:
-            gender = family_members[noun_text_lower[0:-1]]   # Check if plural family members were referenced
-            return full_noun_text, f'{gender}PLURALPERSON' if gender else f'PLURALPERSON'
-    elif noun_text.lower() in ('family', 'families'):
+        gender = family_members[noun_text.lower()]
+        return full_noun_text, f'{gender}SINGPERSON' if gender else f'SINGPERSON'
+    elif noun_text.lower()[0:-1] in family_roles:  # Check if plural family members were referenced
+        gender = family_members[noun_text.lower()[0:-1]]   # Check if plural family members were referenced
+        return full_noun_text, f'{gender}PLURALPERSON' if gender else f'PLURALPERSON'
+    elif noun_text.lower() in family_text:
         return full_noun_text, 'PLURALPERSON'
     else:
         return _process_noun(noun_token)
@@ -52,13 +54,9 @@ def _process_noun(token: Token) -> (str, str):
     :return: Two strings, the entity text and type
     """
     # Retrieve the full text with adjectives, etc.
-    ent = space.join(t.text for t in token.children if (t.dep_ in ('amod', 'compound', 'det', 'nummod', 'nmod')
-                     and t.pos_ not in unwanted_tokens))
+    ent = space.join(t.text for t in token.subtree if t.pos_ not in unwanted_tokens)
+    # if (t.dep_ in ('advmod', 'amod', 'compound', 'nummod', 'nmod', 'poss')
     symbols = [t.text for t in token.children if t.pos_ == 'SYM']
-    if ent:
-        ent = f'{ent}{space}{token.text}'
-    else:
-        ent = token.text
     ent_type = token.ent_type_ if token.ent_type_ else 'NOUN'
     # Include plurality in ent_type
     if 'Plur' in token.morph.get('Number'):
@@ -76,7 +74,7 @@ def _process_noun(token: Token) -> (str, str):
         ent_type = f'NEG{ent_type}'
     if 'PERCENT' in ent_type or 'MONEY' in ent_type:
         ent = ent.replace(' %', '%')
-        for sym in symbols:    # TODO: Assumes that there is only 1 occurrence of the symbol
+        for sym in symbols:
             if ent[ent.index(sym) + 2].isdigit():
                 ent = ent.replace(f'{sym} ', sym)
             elif ent[ent.index(sym) - 2].isdigit():
@@ -99,7 +97,7 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     # Retrieve the text for nouns (including adjectives and compound nouns)
     prep_ent, prep_ent_type = _handle_noun(token)
     prep_ent_detail = dict()
-    prep_ent_detail['detail_text'] = prep_ent
+    prep_ent_detail['detail_text'] = prep_ent.split('$&')[0]
     prep_ent_detail['detail_type'] = prep_ent_type
     # Recursively call if there are more objects, related by conjunction
     for child in token.children:
@@ -153,8 +151,9 @@ def _process_proper_noun(token: Token) -> (str, str):
     entity_type = token.ent_type_
     if entity_type.endswith('DATE') or entity_type.endswith('TIME'):
         return entity, entity_type
-    if entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('ORG') \
-            or entity_type.endswith('NORP') or entity_type.endswith('EVENT') or entity_type.endswith('NOUN'):
+    if entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('FAC') \
+            or entity_type.endswith('ORG') or entity_type.endswith('NORP') or entity_type.endswith('EVENT') \
+            or entity_type.endswith('NOUN'):
         return _process_noun(token)
     return entity, check_name_gender(entity)
 
@@ -197,7 +196,7 @@ def add_token_details(token: Token, dictionary: dict, token_key: str):
     :param token_key: Dictionary key where the details are added
     :return: None (Input dictionary is updated)
     """
-    ent = token.text
+    ent = token.text.split('$&')[0]
     if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
         return
     if 'verb' in token_key:

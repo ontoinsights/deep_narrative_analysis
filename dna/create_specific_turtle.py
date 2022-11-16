@@ -1,15 +1,12 @@
 # Functions to clean up the Turtle (before storage in Stardog)
 # Called by create_narrative_turtle.py
 
+from rdflib import Graph as RDFGraph
 import uuid
 
 from dna.database import query_class
 from dna.queries import query_subclass
-from dna.utilities import dna_prefix, empty_string
-
-ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
-                '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
-                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+from dna.utilities_and_language_specific import dna_prefix, empty_string, ttl_prefixes
 
 
 def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, is_alt_coll: bool) -> list:
@@ -49,50 +46,59 @@ def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, i
     return type_turtle
 
 
-def create_basic_environment_ttl(subjs: list) -> list:
+def cleanup_turtle(turtle: list) -> list:
     """
-    Create the Turtle for an :EnvironmentAndCondition where the subject(s) are the 'holder's of
-    that condition.
+    Use rdflib to examine the Turtle statements, to determine if IRIs (related to sentence objects)
+    are included, but are never referenced as objects. They are removed since they might be confusing
+    to a user.
 
-    :param subjs: Array of tuples that are the subjects' texts, mappings, types and IRIs
-    :return: An array holding the Turtle statements describing the condition
+    :param turtle: An array of the Turtle statements for a sentence/chunk
+    :return: The Turtle with any triples with a subject IRI that is not referenced as an object removed
     """
-    event_iri = f':EnvCondition_{str(uuid.uuid4())[:13]}'
-    condition_turtle = [f'{event_iri} a :EnvironmentAndCondition .']
-    for subj in subjs:
-        subj_text, subj_type, subj_mappings, subj_iri = subj
-        condition_turtle.append(f'{event_iri} :has_holder {subj_iri} .')
-    return condition_turtle
+    complete_turtle = ttl_prefixes[:]
+    complete_turtle.extend(turtle)
+    rdf_graph = RDFGraph()
+    print('complete', complete_turtle)
+    graph = rdf_graph.parse(data=' '.join(complete_turtle), format='text/turtle')
+    unused_iris = []
+    subjects = [subj for subj in graph.subjects(None, None, True) if subj.startswith('urn:')]
+    objects = [obj for obj in graph.objects(None, None, True) if obj.startswith('urn:')]
+    for subj in subjects:
+        if subj not in objects:
+            unused_iris.append(subj)
+    if unused_iris:
+        if len(unused_iris) == 1 and ':Sentence' in str(unused_iris[0]):   # The Sentence reference is always 'unused'
+            return turtle
+        new_turtle = []
+        for ttl in turtle:
+            found_unused = False
+            for unused in unused_iris:
+                if ':Sentence_' in unused:
+                    continue
+                if ttl.startswith(f':{str(unused.split(":")[-1])} '):
+                    found_unused = True
+                    continue
+            if not found_unused:
+                new_turtle.append(ttl)
+        return new_turtle
+    else:
+        return turtle
 
 
-def create_environment_ttl(text: str, specific_class: str, general_type: str, subjects: list) -> list:
+def create_environment_ttl(text: str, specific_class: str, subjects: list, event_iri: str) -> list:
     """
     Return the Turtle for a Person identified as a member of an organization (NORP), as having
     an emotion or as involved in a line of business (LoB).
 
     :param text: Specific text from the sentence that was used for the identification
     :param specific_class: The most specific class in the DNA ontology to which the text was mapped
-    :param general_type: String = either 'EmotionalResponse'|'Ethnicity'|'ReligiousBelief'|
-                         'LineOfBusiness'|'PoliticalIdeology'
     :param subjects: Array of tuples that are the subjects' texts, mappings, types and IRIs
+    :param event_iri: String holding the IRI of the Event being described/processed
     :return: Appropriate Turtle statement given the input parameters
     """
-    event_iri = f':{general_type}_{str(uuid.uuid4())[:13]}'
-    if general_type == 'EmotionalResponse':
-        new_ttl = [f'{event_iri} a {specific_class} ; rdfs:label "{text}" .']
-    else:
-        new_ttl = [f'{event_iri} a :EnvironmentAndCondition ; :has_topic :{general_type} ; ' 
-                   f'rdfs:label "The {general_type} of the holder - {text}." .']
+    new_ttl = [f'{event_iri} a {specific_class} ; rdfs:label "{text}" .']
     for subj_text, subj_type, subj_mappings, subj_iri in subjects:
         new_ttl.append(f'{event_iri} :has_holder {subj_iri} .')
-        if general_type == 'LineOfBusiness':
-            new_ttl.append(f'{subj_iri} :has_line_of_business {specific_class} ; :line_of_business "{text}" .')
-        if general_type == 'PoliticalIdeology':
-            new_ttl.append(f'{subj_iri} :has_political_ideology {specific_class} ; :political_ideology "{text}" .')
-        if general_type == 'ReligiousBelief':
-            new_ttl.append(f'{subj_iri} :has_agent_aspect {specific_class} ; :religion "{text}" .')
-        if general_type == 'Ethnicity':
-            new_ttl.append(f'{subj_iri} :has_agent_aspect {specific_class} ; :ethnicity "{text}" .')
     return new_ttl
 
 
@@ -123,7 +129,7 @@ def create_metadata_ttl(graph_id: str, narr_text: str, created_at: str,
 
 
 def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict,
-                          quotations_ttl: list, for_meta_dna: bool) -> list:
+                          quotations_ttl: list, for_default_graph: bool) -> list:
     """
     Return the Turtle related to the quotations in a text - for the data to be added to
     the meta_dna database (if for_meta_dna is True) or adding the detailed 'Quotation#'
@@ -134,12 +140,12 @@ def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict,
     :param quot_dict: An array of quotation dictionaries (key = 'Quotation#' which is referenced
                       in a chunk, and value = full quotation text) extracted from the original text
     :param quotations_ttl: The current list of Turtle statements related to the quotations
-    :param for_meta_dna: A boolean indicating whether this processing is for the meta_dna repository
-                         or for the narrative's knowledge graph
+    :param for_default_graph: A boolean indicating whether this processing is for the default/
+                              meta-data graph of the repository
     :return: An array of Turtle statements
     """
     narr_iri = f':Narrative_{graph_id}'
-    if for_meta_dna:
+    if for_default_graph:
         for quotation in quotations:
             quotations_ttl.append(f'{narr_iri} :text_quote "{quotation}" .')
     else:

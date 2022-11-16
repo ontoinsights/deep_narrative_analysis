@@ -11,11 +11,9 @@ import os
 from rdflib import Graph
 import stardog
 
-from dna.utilities import base_dir, empty_string, ontologies_database, owl_thing, owl_thing2
+from dna.utilities_and_language_specific import empty_string, ontologies_database, owl_thing, owl_thing2
 
 rdf_graph = Graph()
-
-ontologies_dir = os.path.join(base_dir, 'ontologies/')
 text_turtle = 'text/turtle'
 
 # Get environment variables
@@ -152,7 +150,7 @@ def query_class(text: str, query: str) -> str:
     if results:
         result = results[0]  # Return the first result (assumes that the query is ordered by descending probability)
         class_name = result['class']['value']
-        if class_name != owl_thing:
+        if class_name is not None and class_name != owl_thing:
             return f':{class_name.split(":")[-1]}'
         else:
             return owl_thing2

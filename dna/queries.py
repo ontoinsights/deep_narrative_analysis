@@ -40,9 +40,9 @@ query_narratives = \
     '?narrative dc:creator ?author ; dc:publisher ?publisher; dc:source ?source ; dc:title ?title . ' \
     'OPTIONAL {?narrative dc:created ?narrCreated} BIND(str(?graph) as ?narrId)}'
 
-query_norp_emotion_or_enum = \
+query_norp_emotion_or_lob = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
-    '?class rdfs:subClassOf+ :class_type . ' \
+    '?class rdfs:subClassOf* :class_type . ' \
     '{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION ' \
     '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION ' \
@@ -84,7 +84,7 @@ query_noun_example = \
 
 query_specific_noun = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?iri ?type ?prob WHERE ' \
-    '{ ?iri a ?type . ?type rdfs:subClassOf+ :class_type . ' \
+    '{ ?iri a ?type . ?type rdfs:subClassOf+ class_type . ' \
     '{ { ?iri rdfs:label ?label . FILTER(?label = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?iri :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?iri rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(90 as ?prob) } UNION ' \
@@ -96,8 +96,13 @@ query_specific_noun = \
 query_subclass = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
               '<keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'
 
-query_wikidata_alt_names = \
-    'SELECT DISTINCT ?altLabel WHERE {?item skos:altLabel ?altLabel . FILTER(lang(?altLabel) = "en")}'
+query_wikidata_instance_of = \
+    'SELECT DISTINCT ?instanceOf WHERE {?item wd:P31 ?instanceOf}'
+
+# Future: Non-English
+query_wikidata_labels = \
+    'SELECT DISTINCT ?label WHERE {{?item rdfs:label ?label . FILTER(lang(?label) = "en")} UNION ' \
+    '{?item skos:altLabel ?label . FILTER(lang(?label) = "en")}}'
 
 query_wikidata_time = 'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'
 

@@ -19,15 +19,16 @@ from spacy.language import Language
 from spacy.tokens import Token
 
 from dna.nlp_sentence_tokens import add_token_details
-from dna.utilities import objects_string, subjects_string, add_to_dictionary_values, processed_prepositions
+from dna.utilities_and_language_specific import objects_string, subjects_string, add_to_dictionary_values, \
+    processed_prepositions
 
 
 def _adjust_xcomp_prt(processing: list) -> list:
     """
     Clean up the verb_processing text if there are both prt and xcomp details. If there is only a
     single 'xcomp' or 'prt', then just remove the final '$'. If both, correct either the first or
-    second verb of the 'xcomp' details for one of the verbs (the one matching the prt verb) to h
-    ave it reference the full 'prt' text (verb + prt).
+    second verb of the 'xcomp' details for one of the verbs (the one matching the prt verb) to
+    have it reference the full 'prt' text (verb + prt).
 
     :param processing: Array holding the xcomp and prt details
     :return: List holding the final xcomp/prt details
@@ -157,7 +158,13 @@ def process_verb(token: Token, dictionary: dict, nlp: Language):
             prep_dict = dict()
             prep_dict['prep_text'] = child.text
             for prep_dep in child.children:
-                add_token_details(prep_dep, prep_dict, 'prep_details')
+                if 'prep' in prep_dep.dep_:
+                    # Preposition followed by another preposition!
+                    prep_dict['prep_text'] += f' {prep_dep.text}'
+                    for prep2_dep in prep_dep.children:     # Only going 2 levels deep on prepositions
+                        add_token_details(prep2_dep, prep_dict, 'prep_details')
+                else:
+                    add_token_details(prep_dep, prep_dict, 'prep_details')
             add_to_dictionary_values(verb_dict, 'preps', prep_dict, dict)
     # Need to adjust the processing if there are prt and xcomp children
     if 'verb_processing' in dictionary and not dictionary['verb_processing']:

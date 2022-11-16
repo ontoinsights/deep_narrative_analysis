@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: September 29 2022
+# Last modified: October 26 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -34,7 +34,6 @@
 #  Moved PoliticalIdeology from environment-subclasses.ttl, and added
 #    :has_political_ideology
 #  Added jobs to the LineOfBusiness subclasses' "examples"
-#  Added the property, :political_ideology
 #  Added GovernmentalEntity and noun synonyms for PoliticalIdeologies
 #  Changed InformationTechnologyServices to InformationTechnology
 #  Added the Technology, MultiIndustry, ProvisionOfServices and Space 
@@ -48,16 +47,18 @@
 #  Renamed AgricultureBusiness to Agribusiness
 #  Removed InformationAndTechnologyBusiness and SpaceBusiness 
 #    in lieu of TechnologyBusiness
-#  Removed sub-classes of PoliticalIdeology
 #  Added BodyPart, StorageBusiness and TradeAndCraft subclasses of 
 #    LineOfBusiness
 #  Combined MilitaryBusiness and SecurityBusiness (LoBs) to create
 #    MilitaryAndSecurityBusiness
 #  Renamed Organization to OrganizationalEntity to avoid confusion 
 #    with the Event, Alignment (e.g., organization/organizing)
-#  Added the properties, :ethnicity and :religion
 #  Subclassed PoliticalIdeology from AgentAspect and reintroduced subclasses
 #  Added :has_context
+#  Added the data property, :agent_aspect, and removed :ethnicity, 
+#    :religion and :political_ideology in lieu of using this 
+#  Removed :has_political_ideology in lieu of using :has_agent_aspect
+#  Clarified that has_agent_aspect applies to any Agent, not just Persons
 ########################################################################
 
 
@@ -201,7 +202,6 @@
   :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics." ;
   :example "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads." ;
   :wordnet_noun_synset "00723312" .
-  
 
 
 ########################################################################
@@ -519,7 +519,7 @@
 :Nationalism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Nationalism" ;
-  :noun_synonym "nationalist" .
+  :noun_synonym "nationalist", "zionist", "zionism" .
 
 :PoliticalReligiousIdeology a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
@@ -555,11 +555,11 @@
 # Datatype Properties
 ########################################################################
 
-:ethnicity a owl:DatatypeProperty ;
-  rdfs:label "ethnicity" ;
+:agent_aspect a owl:DatatypeProperty ;
+  rdfs:label "agent aspect" ;
   rdfs:domain :Agent ;
   rdfs:range xsd:string ;
-  :definition "Specifies a particular a particular ethnicity (as free form text) for an Agent or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
+  :definition "Specifies a particular a particular ethnicity, religious belief or political ideology (as free form text) for an Agent. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined set of individuals." .
   
 :gender a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "gender" ;
@@ -573,19 +573,6 @@
   rdfs:domain :Agent ;
   rdfs:range xsd:string ;
   :definition "Specifies a particular a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or OrganizationalEntity). Note that the :has_line_of_business property may also be specified, which maps the text to a set of predefined values." .
-
-:political_ideology a owl:DatatypeProperty ;
-  rdfs:label "political ideology" ;
-  rdfs:domain :Agent ;
-  rdfs:range xsd:string ;
-  :definition "Specifies a particular a particular ideology (as free form text) that the Agent holds or that is present at a location. Note that the :has_political_ideology property should also be specified, which maps the text to a predefined/enumerated value." ;
-  :example "Zionism is an example where the property, :political_ideology, is used to define a particular type of Nationalism, with a specific goal. In this case, the enumerated value for :has_political_ideology would be :enum:Nationalism." .
-
-:religion a owl:DatatypeProperty ;
-  rdfs:label "religion" ;
-  rdfs:domain :Agent ;
-  rdfs:range xsd:string ;
-  :definition "Specifies a particular a particular religion (as free form text) that the Agent holds or that is present at a location. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined/enumerated value." .
 
 :role a owl:DatatypeProperty ;
   rdfs:label "role" ;
@@ -620,11 +607,10 @@
   :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
 
 :has_agent_aspect a owl:ObjectProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
   rdfs:label "has agent aspect" ;
-  rdfs:domain :Person ;
+  rdfs:domain :Agent ;
   rdfs:range :AgentAspect ;
-  :definition "Indicates some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them." .
+  :definition "Indicates some facet, detail or characteristic of a Person, GeoPoliticalEntity or other Agent that serves to distinguish and/or describe them." .
 
 :has_citizenship a owl:ObjectProperty ;
   rdfs:label "has citizenship" ;
@@ -649,8 +635,6 @@
   rdfs:subPropertyOf :reference_to_enumerated_value ;
   rdfs:label "has political ideology" ;
   :definition "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent." ;
-  rdfs:domain [ a owl:Class ;
-                owl:unionOf ( :Location :Agent ) ] ;
   rdfs:range :PoliticalIdeology .
 
 :has_role a owl:ObjectProperty ;

@@ -5,6 +5,7 @@ from dna.app import app
 narrative_ids = []
 triples = []
 kg_times = []
+number_databases = []
 
 
 @pytest.fixture()
@@ -16,6 +17,14 @@ def test_app():
 @pytest.fixture()
 def client():
     return app.test_client()
+
+
+# Get initial number of repositories/databases in meta-dna
+def test_repositories_get0(client):
+    resp = client.get('/dna/v1/repositories')
+    assert resp.status_code == 200
+    json_data = resp.get_json()
+    number_databases.append(len(json_data))
 
 
 # dna/v1/repositories
@@ -37,7 +46,8 @@ def test_repositories_post_missing_repo(client):
     resp = client.post('/dna/v1/repositories')
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'repository'
+    assert json_data['error'] == 'missing'
+    assert json_data['detail'] == 'The argument parameter, repository, is required'
 
 
 def test_repositories_post_dup(client):
@@ -51,8 +61,10 @@ def test_repositories_get1(client):
     resp = client.get('/dna/v1/repositories')
     assert resp.status_code == 200
     json_data = resp.get_json()
-    assert len(json_data) == 2     # TODO: Requires an empty meta-dna repository to pass
-    dbs = [json_data[0]['repository'], json_data[1]['repository']]
+    assert len(json_data) == number_databases[0] + 2
+    dbs = []
+    for jd in json_data:
+        dbs.append(jd['repository'])
     assert 'foo' in dbs and 'bar' in dbs
     assert 'created' in json_data[0] and 'created' in json_data[1]
 
@@ -68,7 +80,8 @@ def test_repositories_delete_missing_param(client):
     resp = client.delete('/dna/v1/repositories')
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'repository'
+    assert json_data['error'] == 'missing'
+    assert json_data['detail'] == 'The argument parameter, repository, is required'
 
 
 def test_repositories_delete_nonexistent(client):
@@ -82,8 +95,11 @@ def test_repositories_get2(client):
     resp = client.get('/dna/v1/repositories')
     assert resp.status_code == 200
     json_data = resp.get_json()
-    assert len(json_data) == 1
-    assert json_data[0]['repository'] == 'foo'
+    assert len(json_data) == number_databases[0] + 1
+    dbs = []
+    for jd in json_data:
+        dbs.append(jd['repository'])
+    assert 'foo' in dbs
 
 
 # dna/v1/repositories/narratives
@@ -151,7 +167,8 @@ def test_narratives_post_missing_all(client):
     resp = client.post('/dna/v1/repositories/narratives')
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'repository'
+    assert json_data['error'] == 'missing'
+    assert 'repository' in json_data['detail']
 
 
 def test_narratives_post_missing_repo(client):
@@ -167,17 +184,24 @@ def test_narratives_post_missing_repo(client):
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json', data=req_data)
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'repository'
+    assert json_data['error'] == 'missing'
+    assert 'repository' in json_data['detail']
 
 
 def test_narratives_post_missing_narr(client):
     resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo'})
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'narrativeText'
+    assert json_data['error'] == 'missing'
+    assert 'request body' in json_data['detail']
 
 
-# def test_narratives_post_invalid_sources(client):   invalid extSources, timelinePossible
+def test_narratives_post_invalid_sources(client):
+    resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo', 'extSources': 'no'})
+    assert resp.status_code == 400
+    json_data = resp.get_json()
+    assert json_data['error'] == 'invalid'
+    assert 'extSources' in json_data['detail']
 
 
 def test_narratives_post_invalid_repo(client):
@@ -210,8 +234,8 @@ def test_narratives_delete_missing_all(client):
     resp = client.delete('/dna/v1/repositories/narratives')
     assert resp.status_code == 400
     json_data = resp.get_json()
-    missing = json_data['missing']
-    assert 'repository' in missing and 'narrativeId' in missing
+    assert json_data['error'] == 'missing'
+    assert 'repository' in json_data['detail']
 
 
 def test_narratives_delete_missing_repo(client):
@@ -219,14 +243,16 @@ def test_narratives_delete_missing_repo(client):
                          query_string={'narrativeId': narrative_ids[0]})
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'repository'
+    assert json_data['error'] == 'missing'
+    assert 'repository' in json_data['detail']
 
 
 def test_narratives_delete_missing_narr(client):
     resp = client.delete('/dna/v1/repositories/narratives', query_string={'repository': 'foo'})
     assert resp.status_code == 400
     json_data = resp.get_json()
-    assert json_data['missing'][0] == 'narrativeId'
+    assert json_data['error'] == 'missing'
+    assert 'narrativeId' in json_data['detail']
 
 
 def test_narratives_delete_nonexistent_repo(client):

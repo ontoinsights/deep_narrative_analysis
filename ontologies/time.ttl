@@ -11,7 +11,7 @@
 # (https://www.w3.org/TR/owl-time/).
 # 
 # Created: February 9 2020
-# Last modified: September 5 2022
+# Last modified: November 5 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -201,6 +201,12 @@
 ########################################################################
 # Object Properties
 ########################################################################
+
+:has_approximate_time a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has approximate time" ;
+  rdfs:subPropertyOf :has_time ;
+  rdfs:range :Time ;
+  :definition "Estimates the Time of an EventAndState, from a previous reference in the narrative, when no specific Time is defined." .
 
 :has_earliest_beginning a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has earliest beginning" ;

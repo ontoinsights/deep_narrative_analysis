@@ -3,8 +3,8 @@
 # Called by create_narrative_turtle.py and create_specific_turtle.py
 
 from dna.database import query_class, query_database
-from dna.queries import query_emotion, query_match, query_norp_emotion_or_enum, query_subclass
-from dna.utilities import dna_prefix, empty_string, ontologies_database, owl_thing2
+from dna.queries import query_emotion, query_match, query_norp_emotion_or_lob, query_subclass
+from dna.utilities_and_language_specific import dna_prefix, empty_string, ontologies_database, owl_thing2
 
 
 def _check_emotion(class_name: str) -> str:
@@ -105,7 +105,7 @@ def get_norp_emotion_or_lob(noun_text: str) -> (str, str):
              'ReligiousBelief', 'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass
     """
     for class_type in ('EmotionalResponse', 'Ethnicity', 'ReligiousBelief', 'LineOfBusiness', 'PoliticalIdeology'):
-        result = query_class(noun_text, query_norp_emotion_or_enum.replace('class_type', class_type))
+        result = query_class(noun_text, query_norp_emotion_or_lob.replace('class_type', class_type))
         if result != owl_thing2:
             return class_type, result.replace(dna_prefix, ':')
     return empty_string, empty_string
@@ -132,5 +132,4 @@ def query_exact_and_approx_match(text: str, query_str: str) -> str:
         # Avoid false matches if the matched class is < 5 characters (for ex, ':End' might be returned for 'friend')
         if class_name != owl_thing2 and len(class_name.split(':')[-1]) > 5:
             return f':{class_name.split(":")[-1]}'
-    else:
-        return owl_thing2
+    return owl_thing2

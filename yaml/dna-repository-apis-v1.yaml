@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Deep Narrative Analysis RESTful APIs v1.0.4
+  title: Deep Narrative Analysis RESTful APIs v1.0.5
   description: |-
     Defines the interface for ingesting, retrieving, editing and deleting 
     narratives using the Deep Narrative Analysis (DNA) infrastructure.
@@ -9,12 +9,29 @@ info:
     - [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis)
     - [DNA blog](https://hearing-all-voices.blogspot.com/)
     
-    To use the API, the following workflow is recommended:
-    - Create a repository by POSTing to /dna/v1/repositories?repository=repo_name
+    To use the API, the following should be downloaded/installed:
+    - The Stardog data store (https://www.stardog.com/get-started/)
+    - The DNA GitHub repository 
+      (https://github.com/ontoinsights/deep_narrative_analysis)
+    - All DNA Python libraries specified in the requirements.txt file (in
+      the GitHub repository)
+    - The appropriate spaCy language model (for English, en_core_web_trf)
+    
+    More information can be found in the GitHub repository's README.txt file.
+    
+    The following workflow is recommended:
+    - Go to the 'dna' directory in the downloaded GitHub DNA file structure
+    - Still in the 'dna' directory, execute "flask run"
+    - Create a new repository by POSTing to
+      /dna/v1/repositories?repository=repo_name, or an existing repository can 
+      be reused
     - Ingest narratives to the repository by POSTing to 
       /dna/v1/repositories/narratives?repository=repo_name with a request body
       holding the narrative metadata and text (the response body will contain 
       the narrative's id)
+      - At this time, the text language should match that of the spaCy language 
+        model; In the future, another parameter will be added to the API to 
+        indicate the language
     - Review and edit the ingested narrative by GETting 
       /dna/v1/repositories/narratives?repository=repo_name&narrativeId=narr_id
       (the response body will contain a list of all triples)
@@ -34,7 +51,7 @@ info:
   license:
     name: Creative Commons Attribution 4.0 International Public License
     url: https://creativecommons.org/licenses/by/4.0/legalcode
-  version: '1.0'
+  version: '1.0.5'
 paths:
   /dna/v1/repositories:
     get:
@@ -76,7 +93,7 @@ paths:
                     type: string
                     example: dna
         '400':
-          description: Repository creation - Bad request
+          description: Repository creation - Missing or invalid content
           content:
             application/json:
               schema:
@@ -167,12 +184,12 @@ paths:
     post:
       summary: Ingest a narrative to the specified repository
       description: >-
-        Process a narrative based on details in the request body 
-        and ingest it to the specified repository
+        Process a narrative based on details in the query parameters and
+        request body, and ingest it to the specified repository
       parameters:
         - $ref: '#/components/parameters/repository'
-        - $ref: '#/components/parameters/timelinePossible'
         - $ref: '#/components/parameters/extSources'
+        - $ref: '#/components/parameters/isBiography'
       operationId: ingest
       requestBody:
         description: Ingest narrative
@@ -248,7 +265,7 @@ paths:
                   error:
                     type: string
                     example: >-
-                      Narrative with the id, 123, was not found in the
+                      Narrative with the id, 73cf1b89, was not found in the
                       repository, foo
         '500':
           description: Internal processing error
@@ -274,7 +291,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/KnowledgeGraphDetails'  
         '400':
-          description: KG retrieval - Missing or invalid content
+          description: Graph retrieval - Missing or invalid content
           content:
             application/json:
               schema:
@@ -340,7 +357,7 @@ paths:
                     type: integer
                     example: 500
         '400':
-          description: Update knowledge graph - Bad request
+          description: Update graph - Missing or invalid content
           content:
             application/json:
               schema:
@@ -355,7 +372,7 @@ paths:
                   error:
                     type: string
                     example: >-
-                      Narrative with the id, 123, was not found in foo
+                      Narrative with the id, 73cf1b89, was not found in foo
         '500':
           description: Internal processing error
           content:
@@ -368,8 +385,20 @@ components:
       name: extSources
       in: query
       description: >-
-        Boolean indicating whether details from external sources
-        should be included in the parse
+        Boolean indicating whether details from external sources (such as 
+        Wikipedia/Wikidata or GeoNames) should be included in the parse
+      required: false
+      schema:
+        type: boolean
+        default: false
+    isBiography:
+      name: isBiography
+      in: query
+      description: >-
+        Boolean indicating whether the text is a biography/autobiography (if 
+        true) or a news article/blog post/etc. This has implications for the
+        parse. For example, in a biography, it is likely that a coherent 
+        timeline can be extracted. The default is 'false'.
       required: false
       schema:
         type: boolean
@@ -382,24 +411,12 @@ components:
       schema:
         type: string
         format: uuid
-        example: 123
-    timelinePossible:
-      name: timelinePossible
-      in: query
-      description: >-
-        Boolean indicating whether a coherent timeline could be constructed
-        from the text. If the text is autobiographical, a timeline should
-        be possible. If not (for example, a news article where references, etc.
-        could vary), the default (false) should be used.
-      required: false
-      schema:
-        type: boolean
-        default: false
+        example: 73cf1b89
     repository:
       name: repository
       in: query
       description: >-
-        Name of the repository holding the narratives
+        Name of the repository holding narratives
       required: true
       schema:
         type: string
@@ -407,12 +424,13 @@ components:
     BadRequest:
       type: object
       properties:
-          missing:
-            type: array
-            items:
-              type: string
-              enum: [ repository, narrativeId, narrativeText, narrativeTriples ]
-              example: repository
+        error:
+          type: string
+          enum: [ missing, invalid ]
+          example: missing
+        detail:
+          type: string
+          example: The argument parameter, repository, is required
     InputNarrative:
       type: object
       properties:

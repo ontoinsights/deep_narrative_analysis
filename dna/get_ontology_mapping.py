@@ -4,15 +4,15 @@
 import os
 import pickle
 
-from dna.create_specific_turtle import create_basic_environment_ttl, create_environment_ttl
+from dna.create_specific_turtle import create_environment_ttl
 from dna.database import query_class
 from dna.nlp import get_head_word
 from dna.queries import query_event, query_event_example, query_noun
 from dna.query_ontology import check_subclass, check_emotion_loc_movement, get_norp_emotion_or_lob, \
     query_exact_and_approx_match
 from dna.query_sources import check_wordnet
-from dna.utilities import dna_dir, dna_prefix, empty_string, event_and_state_class, objects_string, \
-    owl_thing2, preps_string, space
+from dna.utilities_and_language_specific import dna_dir, dna_prefix, empty_string, event_and_state_class, \
+    ner_dict, objects_string, owl_thing2, preps_string, space
 
 resources_dir = os.path.join(dna_dir, 'resources/')
 # Pickle files holding nouns/verbs with multiple inheritance and/or multiple mapping choices
@@ -41,6 +41,70 @@ def _check_dicts(text: str, is_verb: bool) -> list:
     return []
 
 
+def _determine_ontology_verb_be(verb_dict: dict, sent_subjects: list, event_iri: str, turtle: list) -> list:
+    """
+    Handle semantic variations of the verb, 'be', such as 'being', 'become', 'am', ...
+
+    :param verb_dict: The verb details from the sentence dictionary
+    :param sent_subjects: Array of tuples that are the subject text, type, mappings and IRI
+    :param event_iri: String holding the IRI of the Event being described/processed
+    :param turtle: A list of the Turtle statements/declarations currently defined for the sentence
+                   (it may be updated)
+    :return: An array holding the class mappings for the verb_text
+    """
+    verb_str = str(verb_dict)
+    if "'prep_text': 'with'" in verb_str:
+        prep_str = verb_str.split("'prep_text': 'with'")[1].split(']')[0]  # Get all the text for 'with'
+        if 'PERSON' in prep_str:
+            return [':MeetingAndEncounter']
+        else:
+            return [':Affiliation']
+    if 'verb_acomp' in verb_dict or objects_string in verb_dict:
+        if 'verb_acomp' in verb_dict:
+            key_term = 'verb_acomp'
+            word_dict_term = 'verb_text'
+        else:
+            key_term = objects_string
+            word_dict_term = 'object_text'
+        # Special processing for am/is/was/... + adjectival complement or a direct object
+        # For example, "I am Slavic/angry" => be as the verb lemma + Slavic/angry as the acomp
+        # For example, "My father was an attorney" => be as the verb lemma + attorney as the object
+        word_dicts = verb_dict[key_term]   # Acomp or object details are an array
+        for word_dict in word_dicts:
+            word_text = word_dict[word_dict_term]
+            new_ttl = determine_norp_emotion_or_lob(get_head_word(word_text)[0], sent_subjects, event_iri)
+            if new_ttl:
+                turtle.extend(new_ttl)
+        return empty_string
+    else:
+        return [event_and_state_class]   # Last resort with no acomp or object detail
+
+
+def _determine_ontology_verb_do(verb_dict: dict) -> list:
+    """
+    Determine the appropriate mapping of the lemma, 'do' (assumes a semantic
+    of performing some task or activity).
+
+    :param verb_dict: The verb details from the sentence dictionary
+    :return: An array of class mappings for the verb_text or an empty list indicating that the
+             semantics are already captured in the turtle
+    # TODO: Handle "I did the dishes" (where the object indicates what is done)
+    """
+    return [event_and_state_class]
+
+
+def _determine_ontology_verb_have(verb_dict: dict) -> list:
+    """
+    Determine the appropriate mapping of the lemma, 'have' (assumes a semantic of possession).
+
+    :param verb_dict: The verb details from the sentence dictionary
+    :return: An array of class mappings for the verb_text or an empty list indicating that the
+             semantics are already captured in the turtle
+    # TODO: Handle "I had a bath" (an activity)
+    """
+    return [':Possession']
+
+
 def _revise_noun_mapping(curr_classes: list, noun_iri: str) -> (list, list):
     """
     Update the class mappings if they reference (using a '+') a LineOfBusiness, a stage
@@ -55,7 +119,6 @@ def _revise_noun_mapping(curr_classes: list, noun_iri: str) -> (list, list):
     new_ttl = []
     for curr_class in curr_classes:
         if '+' not in curr_class:
-            # TODO: Any other types?
             updated_classes.append(curr_class)
             continue
         if not (':Person' in curr_class or ':OrganizationalEntity' in curr_class
@@ -104,7 +167,7 @@ def _revise_verb_mapping(curr_classes: list, verb_dict: dict, subjs: list) -> li
     updated_classes = []
     for curr_class in curr_classes:
         if '+do' in curr_class:
-            do_mapping = determine_ontology_verb_do(verb_dict)[0]
+            do_mapping = _determine_ontology_verb_do(verb_dict)[0]
             new_class = curr_class.replace('+do', empty_string)
             if new_class:
                 new_class += f'+{do_mapping}'
@@ -125,112 +188,52 @@ def _revise_verb_mapping(curr_classes: list, verb_dict: dict, subjs: list) -> li
     return updated_classes
 
 
-def _determine_norp_emotion_or_lob(word: str, subjs: list) -> list:
+def determine_norp_emotion_or_lob(word: str, subjs: list, event_iri: str = empty_string) -> list:
     """
     Return the details for a Person's identification as a member of an organization (NORP), as having
-    an emotion or having a line of business (LoB).
+    an emotion or having a line of business (LoB) or political ideology.
 
-    :param word: String that identified the NORP, emotion or LoB
+    :param word: String that identified the NORP, emotion, ideology or LoB
     :param subjs: Array of tuples that are the subject text, type, mappings and IRI
+    :param event_iri: String holding the IRI of the Event being described/processed
     :return: Appropriate Turtle statement given the input parameters
     """
     word_type, word_class = get_norp_emotion_or_lob(word)
     if not word_type:
         return []
-    return create_environment_ttl(word, word_class.replace(dna_prefix, empty_string), word_type, subjs)
+    if word_type in ('Ethnicity', 'ReligiousBelief', 'PoliticalIdeology'):
+        ttl_stmt = f'subj :has_agent_aspect {word_class} ; :agent_aspect "{word}" .'
+    elif word_type == 'LineOfBusiness':
+        ttl_stmt = f'subj :has_line_of_business {word_class} ; :line_of_business "{word}" .'
+    elif word_type == 'EmotionalResponse':
+        return create_environment_ttl(word, word_class, subjs, event_iri)
+    else:
+        return create_environment_ttl(word, ':EnvironmentAndCondition', subjs, event_iri)
+    new_ttl = [f'{event_iri} a :EnvironmentAndCondition ; :has_topic {word_class} .']
+    for subj_text, subj_type, subj_mappings, subj_iri in subjs:
+        new_ttl.append(ttl_stmt.replace('subj ', f'{subj_iri} '))
+        new_ttl.append(f'{event_iri} :has_holder {subj_iri}. ')
+        new_ttl.append(f'{event_iri} rdfs:label "Describes that {subj_text} has an aspect of {word}" .')
+    return new_ttl
 
 
-def determine_ontology_verb_be(verb_dict: dict, sent_subjects: list, turtle: list) -> list:
+def get_agent_or_loc_class(text_type: str) -> str:
     """
-    Handle semantic variations of the verb, 'be', such as 'being', 'become', 'am', ...
-
-    :param verb_dict: The verb details from the sentence dictionary
-    :param sent_subjects: Array of tuples that are the subject text, type, mappings and IRI
-    :param turtle: A list of the Turtle statements/declarations currently defined for the sentence
-                   (it may be updated)
-    :return: An array of class mappings for the verb_text or an empty list indicating that the
-             semantics are already captured in the turtle
-    """
-    verb_str = str(verb_dict)
-    if "'prep_text': 'with'" in verb_str:
-        prep_str = verb_str.split("'prep_text': 'with'")[1].split(']')[0]  # Get all the text for 'with'
-        if 'PERSON' in prep_str:
-            return [':MeetingAndEncounter']
-        else:
-            return [':Affiliation']
-    if 'verb_acomp' in verb_dict or objects_string in verb_dict:
-        if 'verb_acomp' in verb_dict:
-            key_term = 'verb_acomp'
-            word_dict_term = 'verb_text'
-        else:
-            key_term = objects_string
-            word_dict_term = 'object_text'
-        # Special processing for am/is/was/... + adjectival complement or a direct object
-        # For example, "I am Slavic/angry" => be as the verb lemma + Slavic/angry as the acomp
-        # For example, "My father was an attorney" => be as the verb lemma + attorney as the object
-        word_dicts = verb_dict[key_term]   # Acomp or object details are an array
-        for word_dict in word_dicts:
-            word_text = word_dict[word_dict_term]
-            new_ttl = _determine_norp_emotion_or_lob(get_head_word(word_text)[0], sent_subjects)
-            if not new_ttl and space in word_text:
-                for word in word_text.split(space):    # Try looking up the individual words
-                    new_ttl = _determine_norp_emotion_or_lob(word, sent_subjects)
-                    if new_ttl:
-                        break
-            # TODO: Handle text similar to 'She is tall' (e.g., not an emotion, ...), or 'The killer is Mary'
-            if new_ttl:    # Truthy indicates that the word_dict was processed
-                turtle.extend(new_ttl)
-            # else:
-                # return create_basic_environment_ttl(sent_subjects)    # TODO: Improve and use objects
-    # else:
-        # return create_basic_environment_ttl(sent_subjects)            # TODO: Improve
-    return []   # Everything addressed by new Turtle
-
-
-def determine_ontology_verb_do(verb_dict: dict) -> list:
-    """
-    Determine the appropriate mapping of the lemma, 'do' (assumes a semantic
-    of performing some task or activity).
-
-    :param verb_dict: The verb details from the sentence dictionary
-    :return: An array of class mappings for the verb_text or an empty list indicating that the
-             semantics are already captured in the turtle
-    # TODO: Handle "I did the dishes" (where the object indicates what is done)
-    """
-    return [event_and_state_class]
-
-
-def determine_ontology_verb_have(verb_dict: dict) -> list:
-    """
-    Determine the appropriate mapping of the lemma, 'have' (assumes a semantic of possession).
-
-    :param verb_dict: The verb details from the sentence dictionary
-    :return: An array of class mappings for the verb_text or an empty list indicating that the
-             semantics are already captured in the turtle
-    # TODO: Handle "I had a bath" (an activity)
-    """
-    return [':Possession']
-
-
-def get_agent_class(text_type: str) -> str:
-    """
-    Returns a class mapping for an Agent based on its type.
+    Returns a class mapping for an Agent or Location based on its type.
 
     :param text_type: String holding the noun type (such as 'FEMALESINGPERSON')
     :return: The DNA class mapping
     """
-    class_map = ':Person' if 'PERSON' in text_type else \
-        ('OrganizationalEntity' if text_type.endswith('ORG') or text_type.endswith('NORP') else
-         ('GeopoliticalEntity' if text_type.endswith('GPE') else
-          ('Location' if text_type.endswith('LOC') or text_type.endswith('FAC') else
-           ('EventAndState' if text_type.endswith('EVENT') else ':Agent'))))
-    if 'PLUR' in text_type:
+    base_type = text_type.replace('PLURAL', empty_string).replace('SING', empty_string).\
+        replace('FEMALE', empty_string).replace('MALE', empty_string)
+    class_map = ner_dict[base_type]
+    if 'PLURAL' in text_type:
         class_map += '+:Collection'
     return class_map
 
 
 def get_event_state_mapping(verb_text: str, verb_dict: dict, subjs: list,
-                            objs: list, curr_turtle: list) -> list:
+                            objs: list, event_iri: str, curr_turtle: list) -> list:
     """
     Determine the appropriate event(s)/state(s) in the DNA ontology, that match the semantics of
     the verb.
@@ -239,17 +242,18 @@ def get_event_state_mapping(verb_text: str, verb_dict: dict, subjs: list,
     :param verb_dict: The verb details from the sentence dictionary
     :param subjs: Array of tuples that are the subject text, type, mappings and IRI
     :param objs: Array of tuples that are the object text, type, mappings and IRI
+    :param event_iri: String holding the IRI of the Event being described/processed
     :param curr_turtle: A list of the Turtle statements/declarations currently defined for the sentence
                         (it may be updated)
     :return: An array of class mappings for the verb_text or an empty list indicating that the
              semantics are already captured in the turtle
     """
     if verb_text in ('be', 'being', 'become', 'becoming'):
-        return determine_ontology_verb_be(verb_dict, subjs, curr_turtle)
+        return _determine_ontology_verb_be(verb_dict, subjs, event_iri, curr_turtle)
     elif verb_text in ('do', 'doing'):
-        return determine_ontology_verb_do(verb_dict)
+        return _determine_ontology_verb_do(verb_dict)
     elif verb_text in ('have', 'having'):
-        return determine_ontology_verb_have(verb_dict)
+        return _determine_ontology_verb_have(verb_dict)
     if space in verb_text:    # Indicates a verb + prt
         verb_classes = get_verb_mapping(verb_text, verb_dict, subjs)
         if verb_classes != [event_and_state_class]:
@@ -264,8 +268,7 @@ def get_event_state_mapping(verb_text: str, verb_dict: dict, subjs: list,
     # Check for verb + object mappings
     if objs:
         for obj_text, obj_type, obj_maps, obj_iri in objs:
-            revised_text = f'{verb_text} {obj_text}'
-            verb_classes = get_verb_mapping(revised_text, verb_dict, [])
+            verb_classes = get_verb_mapping(f'{verb_text} {get_head_word(obj_text)[0]}', verb_dict, [])
             if verb_classes != [event_and_state_class]:
                 return verb_classes
     # Not found, check for the verb alone
@@ -339,10 +342,11 @@ def get_verb_mapping(text: str, verb_dict: dict, subjects: list) -> list:
              = [':EventAndState']
     """
     verb_classes = _revise_verb_mapping(_check_dicts(text, True), verb_dict, subjects)
+    ontol_class = owl_thing2
     if not verb_classes:     # No multiple class mappings
         if space in text:     # verb + prt or verb + prep or event proper noun (such as 'World War II')
             if text.istitle():     # Proper noun
-                for text_word in text.split(space):
+                for text_word in text.split():
                     ontol_class = query_exact_and_approx_match(text_word.lower(), empty_string)
                     if ontol_class != owl_thing2:
                         return [ontol_class]

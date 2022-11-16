@@ -69,6 +69,7 @@ quotation_and_removed = \
 location_dashes = \
     'She also claimed that Trump is promoting an insidious lie about the recent FBI raid of his ' \
     'Mar-a-Lago residence which will provoke violence and threats of violence.'
+compound_conn_and_preposition = 'George went along with the plan that Mary outlined.'
 
 
 def test_simple_subj_verb():
@@ -195,16 +196,16 @@ def test_compound_news_text2():
 
 def test_compound_advcl_relcl_conj():
     new_sents = split_clauses(compound_advcl_relcl_conj, nlp)
-    assert new_sents[0] == "Cheney said"
-    assert new_sents[1] == "members of congress are sworn to protect the principles"
-    assert new_sents[2] == "her opposition to former President Donald Trump was rooted in the principles"
-    assert new_sents[3] == "she well understood the potential political consequences of opposing Trump"
+    assert "Cheney said" in new_sents
+    assert "members of congress are sworn to protect the principles" in new_sents
+    assert "her opposition to former President Donald Trump was rooted in the principles" in new_sents
+    assert "she well understood the potential political consequences of opposing Trump" in new_sents
 
 
 def test_compound_relcl_who():
     new_sents = split_clauses(compound_relcl_who, nlp)
-    assert new_sents[0] == "Lincoln saved the nation during our Civil War"
-    assert new_sents[1] == "She then compared herself to Lincoln"
+    assert "Lincoln saved the nation during our Civil War" in new_sents
+    assert "She then compared herself to Lincoln" in new_sents
 
 
 def test_quotation1():
@@ -239,3 +240,9 @@ def test_location_dashes():
     # Likely interpretation by a human but not certain; Not associated by spacy
     # assert new_sents[0] == 'an insidious lie about the recent FBI raid of his ' \
     #                        'Mar-a-Lago residence will provoke violence and threats of violence'
+
+
+def test_compound_conn_and_preposition():
+    new_sents = split_clauses(compound_conn_and_preposition, nlp)
+    assert new_sents[0] == 'Mary outlined the plan'
+    assert new_sents[1] == 'George went along with the plan'

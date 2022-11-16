@@ -22,8 +22,8 @@
         </h1>
         <img id="keyboard_icon" src="keybd_closed.png" alt="Show keyboard shortcuts" />
         <h2 class="stats">
-            18 statements &nbsp;
-            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">18 run</button>
+            19 statements &nbsp;
+            <button type="button" class="run shortkey_r button_toggle_run" title="Toggle lines run">19 run</button>
             <button type="button" class="mis show_mis shortkey_m button_toggle_mis" title="Toggle lines missing">0 missing</button>
             <button type="button" class="exc show_exc shortkey_x button_toggle_exc" title="Toggle lines excluded">0 excluded</button>
             <button type="button" class="par run show_par shortkey_p button_toggle_par" title="Toggle lines partially run">0 partial</button>
@@ -95,9 +95,9 @@
     <p id="t40" class="pln"><span class="n"><a href="#t40">40</a></span><span class="t">    <span class="str">'?narrative dc:creator ?author ; dc:publisher ?publisher; dc:source ?source ; dc:title ?title . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t41" class="pln"><span class="n"><a href="#t41">41</a></span><span class="t">    <span class="str">'OPTIONAL {?narrative dc:created ?narrCreated} BIND(str(?graph) as ?narrId)}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t42" class="pln"><span class="n"><a href="#t42">42</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t43" class="run"><span class="n"><a href="#t43">43</a></span><span class="t"><span class="nam">query_norp_emotion_or_enum</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t43" class="run"><span class="n"><a href="#t43">43</a></span><span class="t"><span class="nam">query_norp_emotion_or_lob</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t44" class="pln"><span class="n"><a href="#t44">44</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t45" class="pln"><span class="n"><a href="#t45">45</a></span><span class="t">    <span class="str">'?class rdfs:subClassOf+ :class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t45" class="pln"><span class="n"><a href="#t45">45</a></span><span class="t">    <span class="str">'?class rdfs:subClassOf* :class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t46" class="pln"><span class="n"><a href="#t46">46</a></span><span class="t">    <span class="str">'{ { ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t47" class="pln"><span class="n"><a href="#t47">47</a></span><span class="t">    <span class="str">'{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(85 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t48" class="pln"><span class="n"><a href="#t48">48</a></span><span class="t">    <span class="str">'{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(90 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
@@ -139,7 +139,7 @@
     <p id="t84" class="pln"><span class="n"><a href="#t84">84</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p id="t85" class="run"><span class="n"><a href="#t85">85</a></span><span class="t"><span class="nam">query_specific_noun</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t86" class="pln"><span class="n"><a href="#t86">86</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> SELECT ?iri ?type ?prob WHERE '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t87" class="pln"><span class="n"><a href="#t87">87</a></span><span class="t">    <span class="str">'{ ?iri a ?type . ?type rdfs:subClassOf+ :class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t87" class="pln"><span class="n"><a href="#t87">87</a></span><span class="t">    <span class="str">'{ ?iri a ?type . ?type rdfs:subClassOf+ class_type . '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t88" class="pln"><span class="n"><a href="#t88">88</a></span><span class="t">    <span class="str">'{ { ?iri rdfs:label ?label . FILTER(?label = "keyword") . BIND(100 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t89" class="pln"><span class="n"><a href="#t89">89</a></span><span class="t">    <span class="str">'{ ?iri :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t90" class="pln"><span class="n"><a href="#t90">90</a></span><span class="t">    <span class="str">'{ ?iri rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(90 as ?prob) } UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
@@ -151,21 +151,26 @@
     <p id="t96" class="run"><span class="n"><a href="#t96">96</a></span><span class="t"><span class="nam">query_subclass</span> <span class="op">=</span> <span class="str">'prefix : &lt;urn:ontoinsights:dna:> SELECT ?class WHERE { '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
     <p id="t97" class="pln"><span class="n"><a href="#t97">97</a></span><span class="t">              <span class="str">'&lt;keyword> rdfs:subClassOf+ :searchClass . BIND("keyword" as ?class) }'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t98" class="pln"><span class="n"><a href="#t98">98</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t99" class="run"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="nam">query_wikidata_alt_names</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t">    <span class="str">'SELECT DISTINCT ?altLabel WHERE {?item skos:altLabel ?altLabel . FILTER(lang(?altLabel) = "en")}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t99" class="run"><span class="n"><a href="#t99">99</a></span><span class="t"><span class="nam">query_wikidata_instance_of</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t100" class="pln"><span class="n"><a href="#t100">100</a></span><span class="t">    <span class="str">'SELECT DISTINCT ?instanceOf WHERE {?item wd:P31 ?instanceOf}'</span>&nbsp;</span><span class="r"></span></p>
     <p id="t101" class="pln"><span class="n"><a href="#t101">101</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t102" class="run"><span class="n"><a href="#t102">102</a></span><span class="t"><span class="nam">query_wikidata_time</span> <span class="op">=</span> <span class="str">'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t103" class="pln"><span class="n"><a href="#t103">103</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p id="t104" class="run"><span class="n"><a href="#t104">104</a></span><span class="t"><span class="nam">update_narrative</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> prefix dc: &lt;http://purl.org/dc/terms/> '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t">    <span class="str">'DELETE {?s dc:created ?created ; :number_triples ?numbTriples} WHERE {'</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
-    <p id="t107" class="pln"><span class="n"><a href="#t107">107</a></span><span class="t">    <span class="str">'?s a :KnowledgeGraph ; dc:created ?created ; :number_triples ?numbTriples }'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t102" class="pln"><span class="n"><a href="#t102">102</a></span><span class="t"><span class="com"># Future: Non-English</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t103" class="run"><span class="n"><a href="#t103">103</a></span><span class="t"><span class="nam">query_wikidata_labels</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t104" class="pln"><span class="n"><a href="#t104">104</a></span><span class="t">    <span class="str">'SELECT DISTINCT ?label WHERE {{?item rdfs:label ?label . FILTER(lang(?label) = "en")} UNION '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t105" class="pln"><span class="n"><a href="#t105">105</a></span><span class="t">    <span class="str">'{?item skos:altLabel ?label . FILTER(lang(?label) = "en")}}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t106" class="pln"><span class="n"><a href="#t106">106</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t107" class="run"><span class="n"><a href="#t107">107</a></span><span class="t"><span class="nam">query_wikidata_time</span> <span class="op">=</span> <span class="str">'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t108" class="pln"><span class="n"><a href="#t108">108</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
+    <p id="t109" class="run"><span class="n"><a href="#t109">109</a></span><span class="t"><span class="nam">update_narrative</span> <span class="op">=</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t110" class="pln"><span class="n"><a href="#t110">110</a></span><span class="t">    <span class="str">'prefix : &lt;urn:ontoinsights:dna:> prefix dc: &lt;http://purl.org/dc/terms/> '</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t111" class="pln"><span class="n"><a href="#t111">111</a></span><span class="t">    <span class="str">'DELETE {?s dc:created ?created ; :number_triples ?numbTriples} WHERE {'</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
+    <p id="t112" class="pln"><span class="n"><a href="#t112">112</a></span><span class="t">    <span class="str">'?s a :KnowledgeGraph ; dc:created ?created ; :number_triples ?numbTriples }'</span>&nbsp;</span><span class="r"></span></p>
 </div>
 <div id="footer">
     <div class="content">
         <p>
             <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v5.5</a>,
-            created at 2022-10-03 14:50 -0400
+            created at 2022-11-15 20:53 -0500
         </p>
     </div>
 </div>

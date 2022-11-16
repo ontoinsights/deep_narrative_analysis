@@ -1,4 +1,4 @@
-# Various string constants and pre-defined dictionaries and arrays
+# Various string and language-specific constants, pre-defined dictionaries and arrays
 # Also includes small, utility methods used across different DNA modules
 
 # import base64
@@ -16,8 +16,9 @@ empty_string = ''
 space = ' '
 subjects_string = 'subjects'
 objects_string = 'objects'
-verbs_string = 'verbs'
 preps_string = 'preps'
+verbs_string = 'verbs'
+underscore = '_'
 
 dna_prefix = 'urn:ontoinsights:dna:'
 owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
@@ -26,41 +27,102 @@ event_and_state_class = ':EventAndState'
 
 ontologies_database = 'ontologies'
 
+concept_map = {'political': ':PoliticalIdeology',
+               'ideology': ':PoliticalIdeology',
+               'religio': ':ReligiousBelief',
+               'ethnic': ':Ethnicity'}
+
+days = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
+          'August', 'September', 'October', 'November', 'December')
+
+# TODO: Other incremental times?
+incremental_time_keywords = ('ago', 'earlier', 'later', 'next', 'previous', 'prior', 'following')
+
+explicit_plural = ('group', 'people')
+part_of_group = ('member', 'group', 'citizen', 'people', 'affiliate', 'representative', 'associate', 'comrade')
+
 family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
                   'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
                   'parent': empty_string, 'sibling': empty_string, 'cousin': empty_string,
                   'grandparent': empty_string, 'relative': empty_string}
+plural_family_members = ('mothers', 'fathers', 'sisters', 'brothers', 'aunts', 'uncles',
+                         'grandmothers', 'grandfathers', 'grandparents', 'parents', 'siblings',
+                         'cousins', 'relatives')
+family_text = ('family', 'families')
 
-months = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-          'August', 'September', 'October', 'November', 'December']
+# TODO: Mapping is for sentences; Add support for questions (such as asking permission -
+#     can, may, could, or requesting - would, will, can, could)
+aux_verb_dict = {'can': 'dna:OpportunityAndPossibility',
+                 'could': 'dna:OpportunityAndPossibility',
+                 'may': 'dna:OpportunityAndPossibility',
+                 'might': 'dna:OpportunityAndPossibility',
+                 'must': 'dna:CommandAndDemand',
+                 'should': 'dna:OpportunityAndPossibility,dna:AdviceAndRecommendation',
+                 'will': 'dna:IntentionAndGoal,dna:CommandAndDemand',
+                 'would': 'dna:OpportunityAndPossibility'}
 
-days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
-
-processed_prepositions = ('about', 'after', 'as', 'at', 'before', 'during', 'in', 'inside', 'into',
+# TODO: Other prepositions?
+processed_prepositions = ('about', 'after', 'along', 'as', 'at', 'before', 'during', 'in', 'inside', 'into',
                           'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with', 'without')
 
 prep_to_predicate_for_locs = {'about': ':has_topic',
                               'at': ':has_location',
                               'from': ':has_origin',
                               'to': ':has_destination',
-                              'in': ':has_location'}
+                              'in': ':has_location',
+                              'near': ':has_location',
+                              'outside': 'has_location'}
+
+pronouns = ('I', 'we', 'us', 'they', 'them', 'he', 'she', 'it', 'myself', 'ourselves', 'themselves',
+            'herself', 'himself', 'itself', 'my', 'our', 'their', 'her', 'his')
+
+# Replace multi-word phrases or non-standard terms acting as conjunctions or prepositions with single word terms
+replacement_words = {
+    'as well as': 'and',
+    'circa': 'in',
+    'in addition to': 'and',
+    'since': 'for',   # Assumes that clauses such as 'since [noun] [verb]' have already been split out
+    'next to': 'near',
+    'on behalf of': 'for',
+    'prior to': 'before',
+    'subsequent to': 'after'
+}
+
+relative_clause_words = ('who', 'whose', 'whom', 'which', 'that', 'where', 'when', 'why')
+conjunction_words = ('for', 'and', 'nor', 'but', 'or', 'yet', 'so')
+special_marks = ('if', 'because', 'since')
 
 # Words that introduce a temporal relation, where the main clause is the following event
-earlier_connectors = ['when', 'because', 'since', 'as', 'while', 'before', 'as long as', 'until', 'til', 'where',
-                      'given', 'given that', 'wherever', 'whenever', 'anywhere', 'everywhere', 'if']
+earlier_connectors = ('when', 'because', 'since', 'as', 'while', 'before', 'as long as', 'until', 'til', 'where',
+                      'given', 'given that', 'wherever', 'whenever', 'anywhere', 'everywhere', 'if')
 # Words that introduce a temporal relation with the main clause, where the main clause is the earlier event
-later_connectors = ['after', 'so', 'so that', 'therefore', 'consequently', 'though', 'than', 'in order to',
-                    'in order that', 'although', 'that']
+later_connectors = ('after', 'so', 'so that', 'therefore', 'consequently', 'though', 'than', 'in order to',
+                    'in order that', 'although', 'that')
 # If - then only is cause-effect when the tenses of the main and other clause are the same
 cause_effect_pairs = [('if', 'then')]
 # Prepositions that introduce a cause in the form of a noun phrase
-cause_prepositions = ['because of', 'due to', 'as a result [of]', 'as a consequence [of]', 'by means of']
+cause_prepositions = ('because of', 'due to', 'as a result [of]', 'as a consequence [of]', 'by means of')
 # Prepositions that introduce an effect in the form of a noun phrase
 effect_prepositions = ['in order to']
 
+# spaCy NER type mapping
+ner_dict = {'PERSON': ':Person',
+            'NORP': ':Person',
+            'ORG': ':Organization',
+            'GPE': ':GeopoliticalEntity',
+            'LOC': ':Location',
+            'FAC': ':AnthropogenicFeature',
+            'EVENT': ':EventAndState'}
+ner_types = list(ner_dict.keys())
+ner_types.append('DATE')
+
 ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
                 '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
-                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .']
+                '@prefix owl: <http://www.w3.org/2002/07/owl#> .',
+                '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .',
+                '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .',
+                '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .']
 
 # A dictionary where the keys are country names and the values are the GeoNames country codes
 geocodes_file = os.path.join(f'{dna_dir}/resources', 'countries_mapped_to_geo_codes.pickle')
@@ -121,11 +183,11 @@ def check_name_gender(name_str: str) -> str:
     """
     gender = empty_string
     if space in name_str:
-        names = name_str.split(space)
+        names = name_str.split()
     else:
         names = [name_str]
     for name in names:
         gender = 'FEMALE' if name in female_names else ('MALE' if name in male_names else empty_string)
         if gender:
             break
-    return f'{gender}SINGPERSON' if gender else 'SINGNOUN'
+    return f'{gender}SINGPERSON' if gender else 'SINGPERSON'

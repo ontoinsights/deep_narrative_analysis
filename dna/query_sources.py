@@ -9,8 +9,8 @@ import xml.etree.ElementTree as etree
 from nltk.corpus import wordnet as wn
 
 from dna.nlp import get_head_word
-from dna.queries import query_wikidata_alt_names, query_wikidata_time
-from dna.utilities import empty_string, space
+from dna.queries import query_wikidata_labels, query_wikidata_time
+from dna.utilities_and_language_specific import empty_string, space
 
 geonamesUser = os.environ.get('GEONAMES_ID')
 
@@ -21,6 +21,60 @@ geocodes_mapping = {'H': ':WaterFeature',
                     'T': ':GeographicFeature',
                     'U': ':WaterFeature',
                     'V': ':GeographicFeature'}
+
+
+def _get_geonames_alt_names(root: etree.Element) -> (list, str):
+    """
+    Retrieve all alternativeName elements (there is more than 1) having the specified language(s)
+    in the XML tree. And, return the Wikipedia link for the entity, if available.
+
+    :param root: The root element of the XML tree
+    :return: A tuple consisting of an array holding the string values of the alternative names
+             or an empty array (if not defined), and a string holding the Wikipedia link for
+             additional details
+    """
+    # TODO: Language specific results
+    names = set()
+    link = empty_string
+    elems = root.findall('./geoname/alternateName[@lang]')
+    for elem in elems:
+        lang = elem.get('lang')
+        access = True if ('isPreferredName' in elem.attrib or 'isShortName' in elem.attrib) else False
+        if lang == 'en' or lang == 'abbr' or access:
+            names.add(elem.text)
+        if lang == 'link' and 'en.wikipedia' in elem.text:
+            link = elem.text
+    return list(names), link
+
+
+def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, None]:
+    """
+    Send and process a query to the GeoNames API.
+
+    :param request: A string holding the query request.
+    :param loc_str: A string holding the text identifying the location.
+    :return: The GeoNames response
+    """
+    try:
+        response = requests.get(request)
+    except requests.exceptions.RequestException as e:
+        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        return None
+    orig_root = etree.fromstring(response.content)
+    toponym_name = _get_xml_value('./geoname/toponymName', orig_root)
+    ascii_name = _get_xml_value('./geoname/asciiName', orig_root)
+    if toponym_name.lower() == loc_str.lower():
+        return orig_root
+    # Try again, forcing a match of fcode = ADM1 - for ex, New York returns New York City, not the state
+    if 'fcode=' not in request:
+        request += '&fcode=ADM1'
+        root = _get_geonames_response(request, loc_str)
+        if root:
+            return root
+    # Relax the match to the toponym or ascii name containing the location string
+    if loc_str.lower() in toponym_name.lower() or loc_str.lower() in ascii_name.lower():
+        return orig_root
+    return None
 
 
 def _get_wikidata_time(query: str, is_start: bool) -> str:
@@ -37,7 +91,12 @@ def _get_wikidata_time(query: str, is_start: bool) -> str:
         query = query.replace('propTime', 'P580')
     else:
         query = query.replace('propTime', 'P582')
-    response = requests.get(f'https://query.wikidata.org/sparql?format=json&query={query}').json()
+    try:
+        response = requests.get(f'https://query.wikidata.org/sparql?format=json&query={query}').json()
+    except requests.exceptions.RequestException as e:
+        request = f'https://query.wikidata.org/sparql?format=json&query={query}'
+        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        return empty_string
     results = []
     if 'results' in response and 'bindings' in response['results']:
         results = response['results']['bindings']
@@ -61,26 +120,6 @@ def _get_xml_value(xpath: str, root: etree.Element) -> str:
         return elems[0].text
     else:
         return empty_string
-
-
-def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, None]:
-    """
-    Send and process a query to the GeoNames API.
-
-    :param request: A string holding the query request.
-    :param loc_str: A string holding the text identifying the location.
-    :return: The GeoNames response
-    """
-    response = requests.get(request)
-    root = etree.fromstring(response.content)
-    toponym_name = _get_xml_value('./geoname/toponymName', root)
-    if toponym_name.lower() == loc_str.lower():
-        return root
-    # Try again, forcing a match of fcode = ADM1 - for ex, New York returns New York City, not the state
-    if 'fcode=' in request:
-        return None
-    request += '&fcode=ADM1'
-    return _get_geonames_response(request, loc_str)
 
 
 def check_wordnet(word: str) -> str:
@@ -108,60 +147,67 @@ def get_event_details_from_wikidata(event_text: str) -> (str, str, str, list):
 
     :param event_text: Text defining the event
     :return: A tuple consisting of strings holding the Wikipedia description of the event,
-             strings identifying the start and end times and an array of alternate names
+             strings identifying the start and end times and an array of labels/alternate names
     """
     logging.info(f'Getting Wikidata event details for {event_text}')
     start_time = empty_string
     end_time = empty_string
-    alt_names = []
+    labels = []
     wiki_details = get_wikipedia_description(event_text.replace(space, '_'))
-    if wiki_details:
-        if 'See the web site' not in wiki_details:
-            wikidata_id = wiki_details.split('wikibase_item: ')[1].split(')')[0]
-            query_alt_names = query_wikidata_alt_names.replace('?item', f'wd:{wikidata_id}')
-            response = requests.get(f'https://query.wikidata.org/sparql?format=json&query='
-                                    f'{query_alt_names}').json()
-            if 'results' in response and 'bindings' in response['results']:
-                results = response['results']['bindings']
-                for result in results:
-                    alt_names.append(result['altLabel']['value'].replace('"', "'"))
-            time_query = query_wikidata_time.replace('?item', f'wd:{wikidata_id}')
-            start_time = _get_wikidata_time(time_query, True)
-            end_time = _get_wikidata_time(time_query, False)
-    return wiki_details, start_time, end_time, alt_names
+    if wiki_details and 'See the web site' not in wiki_details:
+        wikidata_id = wiki_details.split('wikibase_item: ')[1].split(')')[0]
+        labels = get_wikidata_labels(wikidata_id)
+        time_query = query_wikidata_time.replace('?item', f'wd:{wikidata_id}')
+        start_time = _get_wikidata_time(time_query, True)
+        end_time = _get_wikidata_time(time_query, False)
+    return wiki_details, start_time, end_time, labels
 
 
-def get_geonames_location(loc_text: str) -> (str, str, int, list):
+def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
     """
     Get the type of location from its text as well as its country and administrative level (if relevant).
 
     :param loc_text: Location text
     :return: A tuple holding the location's class mapping (for geonames, it is always a single string),
              country name (or an empty string or None), an administrative level (if 0, then admin level
-             is not applicable) or GeoNames ID (for a Country), and a list of alternate names
-             (or just [loc_text] is returned)
+             is not applicable) or GeoNames ID (for a Country), a list of alternate names and a link
+             to a Wikipedia page for the location
     """
     logging.info(f'Getting geonames details for {loc_text}')
     # Future: May need to add sleep to meet geonames timing requirements
+    name_startswith = False
     if ',' in loc_text:
-        request = f'http://api.geonames.org/search?q={loc_text.lower().replace(space, "+")}' \
+        request = f'http://api.geonames.org/search?q={loc_text.lower().replace(space, "+").replace(",", "+")}' \
                   f'&style=full&maxRows=1&username={geonamesUser}'
     elif space in loc_text:
         request = f'http://api.geonames.org/search?q={loc_text.lower().replace(space, "+")}' \
                   f'&name_equals={loc_text.lower().replace(space, "+")}&style=full&maxRows=1&username={geonamesUser}'
     else:
+        name_startswith = True
         request = f'http://api.geonames.org/search?q={loc_text.lower()}&name_startsWith={loc_text.lower()}' \
                   f'&style=full&maxRows=1&username={geonamesUser}'
     root = _get_geonames_response(request, loc_text)
     if root is None:
-        return empty_string, empty_string, 0, []
+        if name_startswith:
+            # Try less restrictive search
+            request = f'http://api.geonames.org/search?q={loc_text.lower()}' \
+                      f'&style=full&maxRows=1&username={geonamesUser}'
+            root = _get_geonames_response(request, loc_text)
+    if root is None:
+        return empty_string, empty_string, 0, [], empty_string
     country = _get_xml_value('./geoname/countryName', root)
     feature = _get_xml_value('./geoname/fcl', root)
     fcode = _get_xml_value('./geoname/fcode', root)
     ascii_name = _get_xml_value('./geoname/asciiName', root)
-    alt_str = _get_xml_value('./geoname/alternateNames', root)
+    alt_names, wiki_link = _get_geonames_alt_names(root)     # TODO: Language specific results
     if not country and not feature:
-        return empty_string, empty_string, 0, []
+        return empty_string, empty_string, 0, [], empty_string
+    # Process the alternate names
+    if loc_text not in alt_names:
+        alt_names.append(loc_text)
+    if ascii_name not in alt_names:
+        alt_names.append(ascii_name)
+    # Process the rest of the GeoNames info
     admin_level = 0
     class_type = ':PopulatedPlace'
     if feature == 'A':     # Administrative area
@@ -175,7 +221,7 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list):
             country = empty_string
         elif fcode.startswith('L') or fcode.startswith('Z'):
             # Leased area usually for military installations or a zone, such as a demilitarized zone
-            return empty_string, empty_string, admin_level
+            class_type = ':DesignatedArea'
     elif feature == 'P' and fcode.startswith('PPLA'):  # PopulatedPlace that is an administrative division
         class_type += '+:AdministrativeDivision'
         # Get administrative level
@@ -186,29 +232,52 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list):
             admin_level = 1
     elif feature in ('H', 'L', 'R', 'S', 'T', 'U', 'V'):
         class_type = geocodes_mapping[feature]
-    # Process the alternate names
-    alt_names = []
-    anames = alt_str.split(',')
-    for aname in anames:
-        if aname.isascii():
-            if "'" not in aname or "'s" in aname or "' " in aname:
-                alt_names.append(aname)
-    if ascii_name not in alt_names:
-        alt_names.append(ascii_name)
-    return class_type, country, admin_level, alt_names
+    return class_type, country, admin_level, alt_names, wiki_link
 
 
-def get_wikipedia_description(noun: str) -> str:
+def get_wikidata_labels(wikidata_id: str) -> list:
+    """
+    Get the labels (labels and alt_names) for a Wikidata item.
+
+    :param wikidata_id: String holding the Q ID of the Wikidata item
+    :return: An array of strings that are the rdfs:label and skos:alt_names of the item
+    """
+    labels = []
+    query_labels = query_wikidata_labels.replace('?item', f'wd:{wikidata_id}')
+    try:
+        response = requests.get(
+            f'https://query.wikidata.org/sparql?format=json&query={query_labels}').json()
+    except requests.exceptions.RequestException as e:
+        request = f'https://query.wikidata.org/sparql?format=json&query={query_labels}'
+        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        return labels
+    if 'results' in response and 'bindings' in response['results']:
+        results = response['results']['bindings']
+        for result in results:
+            labels.append(result['label']['value'].replace('"', "'"))
+    return labels
+
+
+def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> str:
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
 
     :param noun: String holding the organization/group name
+    :param explicit_link: A link retrieved from another source (such as GeoNames) to a Wikipedia
+                          entry for the noun
     :return: String that is the first paragraph of the Wikipedia page (if the org/group is found),
              information on a disambiguation page or an empty string
     """
     logging.info(f'Getting wikipedia details for {noun}')
     noun_underscore = noun.replace(space, '_')
-    resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/{noun_underscore}')
+    try:
+        resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/'
+                            f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}')
+    except requests.exceptions.RequestException as e:
+        request = f'https://en.wikipedia.org/api/rest_v1/page/summary/' \
+                  f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}'
+        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        return empty_string
     wikipedia = resp.json()
     if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':
         return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}'

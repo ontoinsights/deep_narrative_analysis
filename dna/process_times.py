@@ -7,15 +7,14 @@ from dna.create_noun_turtle import create_named_event_ttl, create_time_ttl
 from dna.get_ontology_mapping import get_verb_mapping
 from dna.query_sources import get_event_details_from_wikidata
 from dna.nlp import get_time_details
-from dna.utilities import add_unique_to_array, days, empty_string, months, space
+from dna.utilities_and_language_specific import add_unique_to_array, days, empty_string, \
+    incremental_time_keywords, months, space, underscore
 
+# Future: Is this regex adequate for non-US dates?
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
-day_pattern1 = re.compile(' [0-9] | [0-2][0-9] | [3][0-1] ')
+day_pattern1 = re.compile('[0-9] | [0-9],|[0-2][0-9] |[0-2][0-9],|[3][0-1] |[3][0-1],')
 day_pattern2 = re.compile('|'.join(days))
-
-# TODO: More alternative incremental times?
-incremental_time_keywords = ['ago', 'earlier', 'later', 'next', 'previous', 'prior', 'following']
 
 
 def _create_time_iri(before_after_str: str, str_text: str) -> str:
@@ -32,12 +31,12 @@ def _create_time_iri(before_after_str: str, str_text: str) -> str:
     day_search1 = day_pattern1.search(str_text)
     day_search2 = day_pattern2.search(str_text)
     if not year_search and not month_search and not day_search1 and not day_search2:
-        return f':PiT_{str_text.lower().replace(space, "_").replace(".", empty_string)}'
+        return f':PiT_{str_text.lower().replace(space, underscore).replace(".", empty_string)}'
     if year_search or month_search or day_search1:
         return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
                + (f'_Yr{year_search.group()}' if year_search else empty_string) \
                + (f'_Mo{month_search.group()}' if month_search else empty_string) \
-               + (f'_Day{day_search1.group().strip()}' if day_search1 else empty_string)
+               + (f'_Day{day_search1.group().replace(",", empty_string).strip()}' if day_search1 else empty_string)
     return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
            + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
@@ -87,7 +86,7 @@ def _get_relative_time(time_text: str, last_time: str, alet_dict: dict) -> (str,
     if not found_keyword:
         return empty_string, []
     time_ttl = []
-    new_time_iri = f':PiT_{time_text.replace(space, "_")}'.replace('.', empty_string)
+    new_time_iri = f':PiT_{time_text.replace(space, underscore)}'.replace('.', empty_string)
     number, increment = get_time_details(new_time_lower)
     if 'ago' in new_time_lower or 'earlier' in new_time_lower or 'previous' in new_time_lower \
             or 'prior' in new_time_lower:
@@ -105,7 +104,7 @@ def _get_relative_time(time_text: str, last_time: str, alet_dict: dict) -> (str,
     return new_time_iri, time_ttl
 
 
-def _process_date_time(before_after: str, time_text: str, event_iri: str, time_iri: str,
+def _process_date_time(before_after: str, time_text: str, event_iri: str, new_time_iri: str, time_iri: str,
                        alet_dict: dict) -> (str, list):
     """
     Determine the time relationship of a chunk/verb to a point in time/date.
@@ -113,22 +112,30 @@ def _process_date_time(before_after: str, time_text: str, event_iri: str, time_i
     :param before_after: A string = 'Before', 'After' or the empty string
     :param time_text: A string holding the time's text
     :param event_iri: The verb's/event's IRI
-    :param time_iri: A date identified as a named entity by spaCy
-    :return: A tuple with a string holding the time IRI and an array of Turtle statements specifying
-             the event's time, or an empty strings and empty array
+    :param new_time_iri: A date identified as a named entity by spaCy
+    :param time_iri: The last known event date in the narrative
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution (it may be updated by this function);
+             Keys = 'agents', 'locs', 'events', 'times', Values (for 'times') = array of strings
+             storing the time's IRI
+    :return: A tuple with a string holding the time IRI and a statement specifying the Turtle for the event's time
     """
     time_ttl = []
-    default_time_iri = _create_time_iri(empty_string, time_text)
-    new_time = default_time_iri
     if not before_after:
         new_time, time_ttl = _get_relative_time(time_text, time_iri, alet_dict)
-        if not new_time:
-            time_ttl.append(f'{event_iri} :has_time {default_time_iri} .')
+        if new_time:
+            time_ttl.append(f'{event_iri} :has_time {new_time} .')
+            return new_time, time_ttl
+        elif new_time_iri:
+            time_ttl.append(f'{event_iri} :has_time {new_time_iri} .')
+            return new_time_iri, time_ttl
+        else:
+            time_ttl.append(f'{event_iri} :has_time {time_iri} .')
     elif before_after == 'Before':
-        time_ttl.append(f'{event_iri} :has_latest_end {default_time_iri} .')
+        time_ttl.append(f'{event_iri} :has_latest_end {time_iri} .')
     elif before_after == 'After':
-        time_ttl.append(f'{event_iri} :has_earliest_beginning {default_time_iri} .')
-    return new_time, time_ttl
+        time_ttl.append(f'{event_iri} :has_earliest_beginning {time_iri} .')
+    return time_iri, time_ttl
 
 
 def _process_event_time(before_after: str, event_text: str, event_iri: str, alet_dict: dict) -> (str, list):
@@ -144,7 +151,7 @@ def _process_event_time(before_after: str, event_text: str, event_iri: str, alet
              storing an array of DNA class mappings, index 2 holding the event's IRI, and indexes
              3 and 4 tracking the start/end time IRIs
     :return: A tuple with a string holding the time IRI and a statement specifying the Turtle
-             for the event's time, or two empty strings
+             for the event's time, or an empty string and array
     """
     known_events = alet_dict['events'] if 'events' in alet_dict else []
     start_iri = empty_string
@@ -161,11 +168,11 @@ def _process_event_time(before_after: str, event_text: str, event_iri: str, alet
     elif before_after == 'After' and end_iri:
         return end_iri, [f'{event_iri} :has_earliest_beginning {end_iri} .']
     elif before_after == 'Before':
-        return f':Event_Before_{known_iri.split("_")[1]}', \
-               [f'{event_iri} :has_latest_end :Event_Before_{known_iri.split("_")[1]} .']
+        return f':Event_Before_{known_iri.split(underscore)[1]}', \
+               [f'{event_iri} :has_latest_end :Event_Before_{known_iri.split(underscore)[1]} .']
     elif before_after == 'After':
-        return f':Event_After_{known_iri.split("_")[1]}', \
-               [f'{event_iri} :has_earliest_beginning :Event_After_{known_iri.split("_")[1]} .']
+        return f':Event_After_{known_iri.split(underscore)[1]}', \
+               [f'{event_iri} :has_earliest_beginning :Event_After_{known_iri.split(underscore)[1]} .']
     elif known_iri:
         # TODO: has_time or no time?
         return known_iri, [f'{event_iri} :has_time {known_iri} .']
@@ -185,8 +192,8 @@ def _update_time(last_date: str, number: int, increment: str) -> str:
              cannot be performed)
     """
     if ':PiT_' in last_date:
-        year = last_date.split('_Yr')[1].split('_')[0] if '_Yr' in last_date else empty_string
-        month = last_date.split('_Mo')[1].split('_')[0] if '_Mo' in last_date else empty_string
+        year = last_date.split('_Yr')[1].split(underscore)[0] if '_Yr' in last_date else empty_string
+        month = last_date.split('_Mo')[1].split(underscore)[0] if '_Mo' in last_date else empty_string
         day = last_date.split('_Day')[1] if '_Day' in last_date else empty_string
         if increment in ('year', 'decade', 'century'):
             if year:
@@ -223,6 +230,8 @@ def _update_time(last_date: str, number: int, increment: str) -> str:
 def check_if_event_is_known(event_text: str, alet_dict: dict) -> (list, str):
     """
     Determines if the event is already processed and stored in the alet_dict.
+
+    The acronym, alet, stands for agent-location-event-time.
 
     :param event_text: Input event string
     :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
@@ -269,7 +278,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
     # TODO: With no specific reference, use the published date as the default; Can also address weekday names
     #       (intDay = datetime.date(year=2000, month=12, day=1).weekday()
     #       where days [], print(days[intDay])  (if news on Wednesday, Tuesday mention is previous day))
-    # TODO: Handle imprecise time (morning, evening, day, night, ...)
+    # TODO: Handle imprecise time (morning, evening, day, night, summer, winter, ...)
     time_turtle = []
     new_times = []
     new_events = []
@@ -297,7 +306,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
     for new_event in new_events:
         event_classes, event_iri = check_if_event_is_known(new_event, alet_dict)
         if not event_iri:
-            event_iri = f':Event_{new_event.replace(space, "_")}'.replace('.', empty_string)
+            event_iri = f':Event_{new_event.replace(space, underscore)}'.replace('.', empty_string)
             # Try to classify the event, for example 'World War II' is a :War
             event_classes = get_verb_mapping(new_event, dict(), [])
             if not event_classes:
@@ -325,7 +334,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
 
 
 def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, time_iri: str,
-                       alet_dict: dict, ttl_list: list) -> str:
+                       alet_dict: dict, is_bio: bool, ttl_list: list) -> str:
     """
     Creates the Turtle to associate a date with an event (chunk verb).
 
@@ -340,6 +349,7 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
              holding an array of strings naming the event, index 1 storing an array of DNA class
              mappings, index 2 holding the event's IRI, and indexes 3 and 4 tracking the
              start/end time IRIs
+    :param is_bio: A boolean indicating that the text is biographical/autobiographical
     :param ttl_list: An array of the Turtle statements for the event (updated in this function)
     :return: A new time IRI (and ttl_list is updated) or an empty string
     """
@@ -349,6 +359,8 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
         if ent_type in ('DATE', 'EVENT'):
             poss_times.append((ent, ent_type))
     if not poss_times:
+        if is_bio:        # Possible to indicate a time; Use last known time
+            ttl_list.append(f'{event_iri} :has_approximate_time {time_iri} .')
         return empty_string
     poss_time = poss_times[0]    # Defaulting to the first in case 'before'/'after' is not specified
     before_after = empty_string
@@ -363,7 +375,6 @@ def process_chunk_time(chunk_text: str, named_entities: list, event_iri: str, ti
         new_time, time_ttl = _process_event_time(before_after, time_text, event_iri, alet_dict)
         ttl_list.extend(time_ttl)
     elif time_type == 'DATE':
-        new_time, time_ttl = _process_date_time(before_after, time_text, event_iri, time_iri, alet_dict)
+        new_time, time_ttl = _process_date_time(before_after, time_text, event_iri, new_time, time_iri, alet_dict)
         ttl_list.extend(time_ttl)
-        return empty_string
     return new_time

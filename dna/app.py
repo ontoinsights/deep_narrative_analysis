@@ -4,6 +4,7 @@ from datetime import datetime
 from flask import Flask, Request, Response, jsonify, request
 import json
 import logging
+from typing import Union
 import uuid
 
 from dna.create_narrative_turtle import create_graph
@@ -11,56 +12,78 @@ from dna.create_specific_turtle import create_metadata_ttl, create_quotations_tt
 from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, query_database
 from dna.nlp import parse_narrative
 from dna.queries import construct_kg, count_triples, delete_entity, query_narratives, query_dbs, update_narrative
-from dna.utilities import dna_prefix, empty_string, ttl_prefixes
+from dna.utilities_and_language_specific import dna_prefix, empty_string, ttl_prefixes
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
 
+detail = 'detail'
 error_str = 'error'
-meta_db = "meta-dna"
+ext_sources = 'extSources'
+meta_db = 'meta-dna'
 narrative_id = 'narrativeId'
-not_defined = "not defined"
+not_defined = 'not defined'
 repository = 'repository'
+is_biography = 'isBiography'
 
 
-def _check_query_parameters(check_narr_id: bool, req: Request, should_exist: list) -> (Response, int):
+def _check_query_parameter(check_param: str, should_exist: bool, req: Request) -> (Union[dict, str, bool], int):
     """
-    Check that the specified query parameters are defined, and if defined and = 'repository'
-    or 'narrativeId', check that the specified entity exists.
+    Check that the specified query parameter is defined. (1) If the parameter == 'repository',
+    check that a query parameter for 'repository' is defined and that a Stardog database with the
+    specified name exists or not (depending on the should_exist parameter). (2) If the parameter ==
+    'narrativeId', check for both 'repository' and 'narrativeId' query parameters, that a Stardog
+    database exists with the specified repository name, and that a graph with the narrativeId exists
+    or not (depending on the should_exist parameter) in that database. (3) If the parameter ==
+    'extSources' or 'isBiography', check whether a query parameter with that string is defined
+    and that its value is either 'true' or 'false'.
 
-    :param check_narr_id: Boolean indicating that the arguments should include a narrativeId
+    :param check_param: String indicating the argument name ('repository', 'narrativeId',
+                        'extSources' or 'isBiography')
+    :param should_exist: If true, indicates that the entity SHOULD exist
     :param req: Flask Request
-    :param should_exist: A list holding the names of the entities ('repository' and/or 'narrativeId')
-                         that should exist
-    :return: Flask JSON response and status code
+    :return: If an error is encountered, a Flask JSON Response and status code are returned; If the
+             argument is found and valid, its value (a string or boolean) is returned and the integer, 200
     """
-    # Get repository query parameter (always needed)
     args_dict = req.args.to_dict()
-    resp = []
-    if repository not in args_dict:    # Always retrieve the repo name
-        resp.append(repository)
-    # Get narrativeId query parameter (if requested)
-    if check_narr_id and narrative_id not in args_dict:
-        resp.append(narrative_id)
-    if resp:
-        return {'missing': resp}, 400
+    if check_param in (ext_sources, is_biography):
+        # Checking for optional, boolean value
+        if check_param in args_dict:
+            arg_value = args_dict[check_param]
+            if arg_value == 'true':
+                return True, 200
+            elif arg_value == 'false':
+                return False, 200
+            else:
+                return {error_str: 'invalid',
+                        detail: f'The argument parameter, {check_param}, must be =true or =false'}, 400
+        else:
+            return False, 200
+    # Checking for repository or repository and narrativeId
+    if repository not in args_dict:
+        return {error_str: 'missing',
+                detail: 'The argument parameter, repository, is required'}, 400
     repo = args_dict[repository]
     repo_exists = _entity_exists(repo)
-    if repository in should_exist and not repo_exists:
+    if ((check_param == repository and should_exist) or check_param == narrative_id) and not repo_exists:
         return {error_str: f'Repository with the name, {repo}, was not found'}, 404
-    elif repository not in should_exist and repo_exists:
-        return {error_str: f'Repository with the name, {repo}, already exists'}, 409
-    if check_narr_id:
-        narr_id = args_dict[narrative_id]
-        narr_exists = _entity_exists(repo, narr_id)
-        if narrative_id in should_exist and not narr_exists:
-            return {error_str: f'Narrative with the id, {narr_id}, was not found in {repo}'}, 404
-        elif narrative_id not in should_exist and narr_exists:
-            return {error_str: f'Narrative with id, {narr_id}, already exists in {repo}'}, 409
+    if check_param == repository:
+        if not should_exist and repo_exists:
+            return {error_str: f'Repository with the name, {repo}, already exists'}, 409
         else:
-            return args_dict, 200
+            return {repository: repo}, 200
+    # Check for narrativeId
+    if narrative_id not in args_dict:
+        return {error_str: 'missing',
+                detail: 'The argument parameter, narrativeId, is required'}, 400
+    narr = args_dict[narrative_id]
+    narr_exists = _entity_exists(repo, narr)
+    if should_exist and not narr_exists:
+        return {error_str: f'Narrative with the id, {narr}, was not found in {repo}'}, 404
+    elif not should_exist and repo_exists:
+        return {error_str: f'Narrative with the id, {narr}, already exists in {repo}'}, 409
     else:
-        return args_dict, 200
+        return {repository: repo, narrative_id: narr}, 200
 
 
 def _delete_data(db: str, graph: str = empty_string) -> (Response, int):
@@ -116,7 +139,8 @@ def _entity_exists(db: str, graph: str = empty_string) -> bool:
 
 def _handle_narrative_metadata(db: str, narr_id: str, narr: str, narr_details: list) -> (Response, int):
     """
-    Add the meta-data triples for a narrative to the specified database.
+    Add the meta-data triples for a narrative to the specified database. In the future, this metadata
+    may be retrieved from a news service or web scraping.
 
     :param db: Database where the meta-data and narrative graph are found
     :param narr_id: String identifying the narrative/narrative graph
@@ -167,13 +191,13 @@ def _parse_narrative_query_binding(binding_set: dict) -> dict:
 
 # Main
 app = Flask(__name__)
-# TODO: Deal with concurrency, caching, etc. for production; Move to Nginx and WSGI protocol
+# Future: Deal with concurrency, caching, etc. for production; Move to Nginx and WSGI protocol
 
 
 @app.route('/dna/v1')
 def index():
     return \
-        '<h1>Deep Narrative Analysis APIs V1.0.3</h1> ' \
+        '<h1>Deep Narrative Analysis APIs V1.0.5</h1> ' \
         '<div>DNA APIs to ingest and manage repositories and the narratives within them. <br /><br />' \
         'For detailed information about the APIs, see the ' \
         '<a href="https://ontoinsights.github.io/dna-swagger/">Swagger/YAML documentation</a>.'
@@ -183,10 +207,10 @@ def index():
 def repositories():
     if request.method == 'POST':
         # Get repository name query parameter
-        args_dict, scode = _check_query_parameters(False, request, [])
+        value, scode = _check_query_parameter(repository, False, request)
         if scode in (400, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
         logging.info(f'Creating database, {repo}')
         create_msg = create_delete_database('create', repo)
         if 'created at' in create_msg:
@@ -203,17 +227,17 @@ def repositories():
             return jsonify({error_str: create_msg}), 500
     elif request.method == 'DELETE':
         # Get repository name query parameter
-        args_dict, scode = _check_query_parameters(False, request, [repository])
+        value, scode = _check_query_parameter(repository, True, request)
         if scode in (400, 404):
-            return jsonify(args_dict), scode
-        repo = request.args.to_dict()[repository]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
         logging.info(f'Deleting database, {repo}')
         return _delete_data(repo)
     elif request.method == 'GET':
         # Get repository name query parameter
         logging.info(f'Database list')
         db_bindings = query_database('select', query_dbs, meta_db)
-        if 'exception' in db_bindings[0]:
+        if db_bindings and 'exception' in db_bindings[0]:
             return jsonify({error_str: db_bindings[0]}), 500
         db_list = []
         if len(db_bindings) > 0:
@@ -230,19 +254,28 @@ def repositories():
 def narratives():
     if request.method == 'POST':
         # Get repository name query parameter
-        args_dict, scode = _check_query_parameters(False, request, [repository])
+        value, scode = _check_query_parameter(repository, True, request)
         if scode in (400, 404, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
-        use_sources = True if 'extSources' in args_dict and args_dict['extSources'] == 'true' else False
-        timeline_poss = True if 'timelinePossible' in args_dict and args_dict['timelinePossible'] == 'true' else False
-        # TODO: Check if extSources or timelinePossible only true or false
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
+        value, scode = _check_query_parameter(ext_sources, False, request)
+        if scode == 400:
+            return jsonify(dict(value)), 400
+        use_sources = value
+        value, scode = _check_query_parameter(is_biography, False, request)
+        if scode == 400:
+            return jsonify(dict(value)), 400
+        is_bio = value
         # Get text from request body
         if not request.data:
-            return jsonify({'missing': ['narrativeText']}), 400
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'A request body MUST be defined when issuing a /narratives POST.'}), 400
         narr_data = json.loads(request.data)
         if 'narrative' not in narr_data:
-            return jsonify({'missing': ['narrativeText']}), 400
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'A narrative element MUST be present in the request body of a /narratives POST.'}), 400
         if 'narrativeMetadata' not in narr_data:
             title = 'No title provided'
             narr_details = [not_defined, not_defined, not_defined, not_defined, title]
@@ -257,44 +290,48 @@ def narratives():
         # Future: Do we care if a narrative with this or similar metadata already exists?
         narr = narr_data['narrative']
         logging.info(f'Ingesting {title} to {repo}')
-        sentence_dicts, quotations, quotations_dict = parse_narrative(narr)
-        success, graph_ttl = create_graph(sentence_dicts, narr_details[1], use_sources, timeline_poss)
+        sentence_dicts, quotations, quotations_dict, family_dict = parse_narrative(narr)
+        success, graph_ttl = create_graph(sentence_dicts, family_dict, narr_details[1], use_sources, is_bio)
         logging.info('Loading knowledge graph')
         if success:
             # Add the triples to the data store, to a named graph with name = dna:graph_uuid
             graph_uuid = str(uuid.uuid4())[:8]
             msg = add_remove_data('add', ' '.join(graph_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
             if not msg:
-                # Successful, so process the quotations and add them to the graph
+                # Successful, so process the quotations and add them to the default/meta-data graph and
+                #    specific narrative graph
                 logging.info("Loading quotations")
-                quotation_ttl = ttl_prefixes
+                quotation_ttl = ttl_prefixes[:]
                 create_quotations_ttl(graph_uuid, quotations, quotations_dict, quotation_ttl, True)
                 msg = add_remove_data('add', ' '.join(quotation_ttl), repo)
+                if msg:
+                    return jsonify({error_str: f'Error adding quotations to the repository {repo}: {msg}'}), 500
                 create_quotations_ttl(graph_uuid, quotations, quotations_dict, quotation_ttl, False)
                 msg = add_remove_data('add', ' '.join(quotation_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
-                if not msg:
-                    # And add meta-data to the default graph in the database
-                    logging.info("Loading metadata")
-                    return _handle_narrative_metadata(repo, graph_uuid, narr, narr_details)
+                if msg:
+                    return jsonify({error_str: f'Error adding quotations to narrative graph {graph_uuid}: {msg}'}), 500
+                # Add meta-data to the default graph in the database
+                logging.info("Loading metadata")
+                return _handle_narrative_metadata(repo, graph_uuid, narr, narr_details)
             if msg:
-                return jsonify({error_str: f'Error adding narrative knowledge graph {graph_uuid}: {msg}'}), 500
+                return jsonify({error_str: f'Error adding narrative graph {graph_uuid}: {msg}'}), 500
         else:
             return jsonify({error_str: f'Error parsing the sentence dictionaries for {title}'}), 500
     elif request.method == 'DELETE':
         # Get repository name and narrative id query parameters
-        args_dict, scode = _check_query_parameters(True, request, [repository, narrative_id])
+        value, scode = _check_query_parameter(narrative_id, True, request)
         if scode in (400, 404, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
-        narr_id = args_dict[narrative_id]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
+        narr_id = dict(value)[narrative_id]
         logging.info(f'Deleting narrative, {narr_id}, in {repo}')
         return _delete_data(repo, narr_id)
     elif request.method == 'GET':
         # Get repository name query parameter
-        args_dict, scode = _check_query_parameters(False, request, [repository])
+        value, scode = _check_query_parameter(repository, True, request)
         if scode in (400, 404, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
         logging.info(f'Narrative list for {repo}')
         narrative_bindings = query_database('select', query_narratives, repo)
         if narrative_bindings and 'exception' in narrative_bindings[0]:
@@ -312,11 +349,11 @@ def narratives():
 def graphs():
     if request.method == 'GET':
         # Get repository name and narrative id query parameters
-        args_dict, scode = _check_query_parameters(True, request, [repository, narrative_id])
+        value, scode = _check_query_parameter(narrative_id, True, request)
         if scode in (400, 404, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
-        narr_id = args_dict[narrative_id]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
+        narr_id = dict(value)[narrative_id]
         logging.info(f'Get KG for narrative {narr_id} for {repo}')
         success, turtle = construct_database(construct_kg.replace('graph_uuid', narr_id), repo)
         if success:
@@ -328,15 +365,21 @@ def graphs():
             return jsonify({error_str: f'Error getting narrative knowledge graph {narr_id}: {turtle[0]}'}), 500
     elif request.method == 'PUT':
         # Get repository name and narrative id query parameters
-        args_dict, scode = _check_query_parameters(True, request, [repository, narrative_id])
+        value, scode = _check_query_parameter(narrative_id, True, request)
         if scode in (400, 404, 409):
-            return jsonify(args_dict), scode
-        repo = args_dict[repository]
-        narr_id = args_dict[narrative_id]
+            return jsonify(dict(value)), scode
+        repo = dict(value)[repository]
+        narr_id = dict(value)[narrative_id]
         # Get triples from request body
+        if not request.data:
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'A request body MUST be defined when issuing a /graphs POST.'}), 400
         req_data = json.loads(request.data)
         if 'triples' not in req_data:
-            return jsonify({'missing': ['narrativeTriples']}), 400
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'A triples element MUST be present in the request body of a /graphs POST.'}), 400
         logging.info(f'Updating narrative, {narr_id}, in {repo}')
         test_msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'urn:ontoinsights:dna:test_{narr_id}')
         if not test_msg:     # Successful

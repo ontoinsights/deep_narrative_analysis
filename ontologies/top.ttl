@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: October 2 2022
+# Last modified: November 1 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -101,7 +101,7 @@
   rdfs:label "Collection/Group" ;
   :definition "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property." ;
   :noun_synonym "assortment", "compilation", "set", "accumulation", "aggregation", "bevy", "pack", "herd", "kingdom", "community", "people", "humanity", "humankind", "mankind", "swarm", "citizenry", "population", "multitude", "masses", "herding", "swarming" ;
-  :vweb_synonym "herd", "swarm" ;
+  :verb_synonym "herd", "swarm" ;
   :wordnet_noun_synset "01016008" .
 
 :AlternativeCollection a owl:Class ;
@@ -325,6 +325,11 @@
   :definition "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object." ;
   rdfs:domain :EventAndState ;
   rdfs:range :EventAndState .
+
+:describes a owl:ObjectProperty ;
+    rdfs:label "describes" ;
+    :definition "Relationship between a Chunk and the entity (typically an Agent or EventAndState) whose details are extracted from it." ;
+    rdfs:domain :Chunk .
 
 :during a owl:ObjectProperty ;
   rdfs:label "during" ;

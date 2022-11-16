@@ -6,11 +6,8 @@ from spacy.language import Language
 from spacy.tokens import Span, Token
 from typing import Union
 
-from dna.utilities import later_connectors, empty_string, space
-
-relative_clause_words = ['who', 'whose', 'whom', 'which', 'that', 'where', 'when', 'why']
-conjunction_words = ['for', 'and', 'nor', 'but', 'or', 'yet', 'so']
-special_marks = ['if', 'because', 'since']
+from dna.utilities_and_language_specific import conjunction_words, later_connectors, empty_string, \
+    relative_clause_words, space, special_marks
 
 
 def _chunk_quotations(text_str: str) -> list:
@@ -185,7 +182,25 @@ def _split_advcl_clauses(sentence: str, nlp: Language) -> list:
             revised_chunks.extend([chunk.replace(f' {connectors[0]} ', space) for chunk in chunks])
         else:
             revised_chunks = chunks
-        new_chunks.extend(revised_chunks)
+        # Now check the original sentence for other verbs associated (as 'conj') with the advcl verb
+        # Must check the orig sent, since after the chunks are split, the text may be ambiguous
+        conj_verbs = [conj_verb for conj_verb in advcl_verb.children if conj_verb.dep_ == 'conj']
+        ccs = [cc for cc in advcl_verb.children if cc.dep_ == 'cc']
+        if conj_verbs:
+            # TODO: Scale if more than 1 additional, advcl, conj verb - conj_verbs[0] restricts to the first one
+            alt_chunks = _get_chunks(conj_verbs[0], None, sent_span, 'advcl', [])
+            if len(alt_chunks) > 1:        # 2nd entry should be any new advcl text
+                new_chunks.append(revised_chunks[0])
+                revised1 = revised_chunks[1].replace(alt_chunks[1], empty_string).strip()
+                if ccs and revised1.endswith(ccs[0].text):
+                    new_chunks.append(revised1[:(-1 * len(ccs[0].text))].strip())
+                else:
+                    new_chunks.append(revised1)
+                new_chunks.append(alt_chunks[1])
+            else:
+                new_chunks.extend(revised_chunks)
+        else:
+            new_chunks.extend(revised_chunks)
     return new_chunks if new_chunks else [sentence]
 
 
@@ -369,15 +384,18 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
     final_chunks = []
     for clause in final_with_conn_words:
         # Relative and connector words may be present at the beginning or end of the clauses, and should be removed
-        # TODO: Is the ordering (relcl to conj) correct? Should it be recursive?
+        # TODO: Is the ordering (relcl to conj) correct?
         for word in relative_clause_words:
-            clause = _remove_connector_text(clause, word)
+            if word in clause.lower():
+                clause = _remove_connector_text(clause, word)
         for word in conjunction_words:
-            clause = _remove_connector_text(clause, word)
+            if word in clause.lower():
+                clause = _remove_connector_text(clause, word)
         # May still have "special mark"s that need to be addressed in the semantics
         for word in special_marks:
-            revised_clause = _remove_connector_text(clause, word)
-            if clause != revised_clause:
-                clause = f'{revised_clause}$&{word}'
+            if word in clause.lower():
+                revised_clause = _remove_connector_text(clause, word)
+                if clause != revised_clause:
+                    clause = f'{revised_clause}$&{word}'
         final_chunks.append(_remove_start_end_commas(clause))
     return final_chunks
