@@ -90,8 +90,6 @@ def create_ttl_for_prep_detail(prep_detail: tuple, prepositions: list, event_iri
     prep_mapping = check_nouns(
         {'objects': [{'object_text': prep_obj_text, 'object_type': prep_obj_type}]}, 'objects',
         alet_dict, last_nouns, last_events, prep_turtle, ext_sources)
-    print(prep_detail)
-    print(prep_mapping)
     # Should only be 1 tuple in prep_details array where 2nd value is the updated obj type, 3rd value is
     #    an array of class mappings and the 4th value is the IRI
     prep_obj_type = prep_mapping[0][1]

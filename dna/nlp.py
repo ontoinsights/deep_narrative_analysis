@@ -426,7 +426,7 @@ def resolve_quotations(narr: str) -> (str, list, dict):
             updated_quote = _remove_quotation_marks(quote)
             updated_narr = updated_narr.replace(updated_quote, f' Quotation{index}')
             quotation_dict[f'Quotation{index}'] = quote
-            final_quotes.append(quote)
+            final_quotes.append(quote[:-1] if quote.endswith('.') else quote)
             index += 1
         else:
             # Phrases should not end with periods

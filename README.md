@@ -48,7 +48,7 @@ After downloading the required libraries, the following must also be installed:
   * Make sure to have added Stardog's installation location to your PATH environment variable
   * After installation, the database, "ontologies", should be created with the files from the _ontologies_ directory 
     * The following command line instruction (executed from DNA's _ontologies_ directory) will create the database: `stardog-admin db create -n ontologies *.ttl` 
-  * Also, the empty database, "meta-db", should be created (from any directory, execute `stardog-admin db create -n meta-dna` )
+  * Also, the empty database, "meta-dna", should be created (from any directory, execute `stardog-admin db create -n meta-dna` )
 * spaCy transformer language model 
   * Accomplished by executing "python3 -m spacy download en_core_web_trf"
   

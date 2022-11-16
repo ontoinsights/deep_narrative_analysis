@@ -58,11 +58,10 @@ def cleanup_turtle(turtle: list) -> list:
     complete_turtle = ttl_prefixes[:]
     complete_turtle.extend(turtle)
     rdf_graph = RDFGraph()
-    print('complete', complete_turtle)
     graph = rdf_graph.parse(data=' '.join(complete_turtle), format='text/turtle')
     unused_iris = []
-    subjects = [subj for subj in graph.subjects(None, None, True) if subj.startswith('urn:')]
-    objects = [obj for obj in graph.objects(None, None, True) if obj.startswith('urn:')]
+    subjects = [subj for subj in graph.subjects() if subj.startswith('urn:')]  # TODO: unique positional arg
+    objects = [obj for obj in graph.objects() if obj.startswith('urn:')]       # TODO: unique positional arg
     for subj in subjects:
         if subj not in objects:
             unused_iris.append(subj)

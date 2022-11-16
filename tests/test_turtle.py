@@ -24,6 +24,8 @@ sents = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary 
         'violence and threats of violence.'
 bug1 = 'While Mary exercised, John practiced guitar.'
 bug2 = 'George went along with the plan that Mary outlined.'
+bug3 = 'Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during her concession speech ' \
+       'shortly after her loss to Trump-backed Republican challenger Harriet Hageman.'
 
 
 def test_sent_simple():
@@ -282,7 +284,7 @@ def test_paragraphs():
 
 def test_short_news_turtle():
     for title in ('LC-FarRight', 'LC-Right', 'LC-Center', 'LC-Left'):
-        with open(f'resources/{title}.txt', 'r') as narr:
+        with open(f'resources/{text}.txt', 'r') as narr:
             narrative = narr.read()
             sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
             success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
@@ -407,3 +409,37 @@ def test_bug2():
     # :Event_53cef197-4475 :has_topic :plan_f618881b_a558 .
     # :Event_53cef197-4475 rdfs:label "George went plan along with plan" .
     # :Chunk_93e4f425-717a :describes :Event_53cef197-4475 .
+
+
+def test_bug3():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(bug3)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    assert ':Mary' in ttl_str and ':George' in ttl_str
+    # Following are shown in the output pasted below
+    assert ':has_topic :plan_' in ttl_str
+    assert 'a :Agreement' in ttl_str
+    assert 'a :AssertionAndDeclaration' in ttl_str    # Outline
+    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :George' in ttl_str
+    # Output:
+    # :Chunk_51acc08f-3598 a :Chunk ; :offset 1 .
+    # :Chunk_51acc08f-3598 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
+    #      during her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman" .
+    # :Chunk_51acc08f-3598 :sentiment -0.2023 .
+    # :Event_bcaff11f-20d2 :has_recipient :Abraham_Lincoln .
+    # TODO: Originally too short, now too long
+    # :her_concession_speech_shortly_after_her_loss_to_
+    #     trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11 a :EventAndState .   TODO: Mapping incorrect
+    # :her_concession_speech_shortly_after_her_loss_to_trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11
+    #   rdfs:label "her concession speech shortly after her loss to Trump-backed Republican challenger
+    #   Harriet Hageman" .
+    # :Event_bcaff11f-20d2 a :AssessmentAndCharacterization .
+    # :Event_bcaff11f-20d2 :has_active_agent :Liz_Cheney .
+    # :Event_bcaff11f-20d2 :has_affected_agent :Liz_Cheney .
+    # :Event_bcaff11f-20d2 :has_affected_agent :Abraham_Lincoln .
+    # :Event_bcaff11f-20d2 :has_topic
+    #      :her_concession_speech_shortly_after_her_loss_to_trump_backed_
+    #      republican_challenger_harriet_hageman_9ed99c59_3e11 .
+    # :Event_bcaff11f-20d2 rdfs:label "Cheney compared Cheney, to Lincoln during her concession speech
+    #    shortly after her loss to Trump-backed Republican challenger Harriet Hageman" .
