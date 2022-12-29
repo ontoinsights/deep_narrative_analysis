@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 16 November 2022
+Updated 29 December 2022
 
 ## License
 Creative Commons 
@@ -30,6 +30,7 @@ The semantics (ontologies) and processing are captured in the directories of thi
   * All the posted ontology files are written in Turtle (OWL2)
   * In addition, a Protege-ready merge of the ontology files (dna-ontology.ttl) is available in the top-level directory
   * A human-friendly, searchable tree view is available at https://ontoinsights.github.io/dna-ontologies/
+  * Note that there is a 'cameo' sub-directory, holding the CAMEO ethnicity and religion details, which have been superceded by the Wikidata information
 * _ontol-docs_ contains documentation explaining the DNA ontologies and their usage
   * The _graphs_ subdirectory contains PNGs of the ontology concepts, where the graph local names correspond to the Turtle file modules' local names
   * The file, dna-ontology-tree.html, holds a downloadable version of the searchable tree view
@@ -83,7 +84,6 @@ Other components that must be installed are:
 * nltk components
   * Accomplished by executing the following instructions in an interactive Python environment (e.g, 'python3')
     * import nltk
-    * nltk.download('vader_lexicon')
     * nltk.download('wordnet')
     * nltk.download('omw-1.4') 
 
@@ -103,8 +103,6 @@ To this end, the following details are relevant for multi-lingual research:
 * Verify that the WordNet synonyms referenced in the _ontologies_ (.ttl) files are also used in the WordNet reference for the desired language
   * If so, the language-specific noun and verb synonyms can be pulled and directly inserted into the ontology files
   * If not, a manual + programmatic/translation mapping from the language-specific synsets to the DNA ontology concepts will be required
-* DNA sentiment analysis (in the create_narrative_turtle.py file) uses NLTK's VADER (https://www.nltk.org/howto/sentiment.html), which is English only
-  * This library was chosen since it is relatively accurate for short texts and runs on all platforms
-  * PolyGlot was assessed but had library compatibility issues when running on Mac platforms (OntoInsights' current development environment)
-    * Resolving these issues is a future work-item
+* DNA sentiment analysis (in the create_narrative_turtle.py file) is currently disabled 
+  * SentiWordnet is currently being investigated
 * The text details (texts to be ingested) in each of the test*.py files (in the _tests_ directory) should be modified for the desired language
