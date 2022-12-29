@@ -46,11 +46,11 @@ def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, i
     return type_turtle
 
 
-def cleanup_turtle(turtle: list) -> list:
+def cleanup_unused_turtle(turtle: list) -> list:
     """
-    Use rdflib to examine the Turtle statements, to determine if IRIs (related to sentence objects)
+    Use rdflib to examine the Turtle statements, to determine if any IRIs that are triple subjects
     are included, but are never referenced as objects. They are removed since they might be confusing
-    to a user.
+    to a user reviewing a knowledge graph.
 
     :param turtle: An array of the Turtle statements for a sentence/chunk
     :return: The Turtle with any triples with a subject IRI that is not referenced as an object removed
@@ -60,8 +60,9 @@ def cleanup_turtle(turtle: list) -> list:
     rdf_graph = RDFGraph()
     graph = rdf_graph.parse(data=' '.join(complete_turtle), format='text/turtle')
     unused_iris = []
-    subjects = [subj for subj in graph.subjects() if subj.startswith('urn:')]  # TODO: unique positional arg
-    objects = [obj for obj in graph.objects() if obj.startswith('urn:')]       # TODO: unique positional arg
+    # TODO: graph.subjects() should have a 'unique' positional argument but reports an error
+    subjects = [subj for subj in graph.subjects() if subj.startswith('urn:')]
+    objects = [obj for obj in graph.objects() if obj.startswith('urn:')]
     for subj in subjects:
         if subj not in objects:
             unused_iris.append(subj)
@@ -72,7 +73,7 @@ def cleanup_turtle(turtle: list) -> list:
         for ttl in turtle:
             found_unused = False
             for unused in unused_iris:
-                if ':Sentence_' in unused:
+                if ':Sentence_' in unused or '_Affiliation' in unused:
                     continue
                 if ttl.startswith(f':{str(unused.split(":")[-1])} '):
                     found_unused = True

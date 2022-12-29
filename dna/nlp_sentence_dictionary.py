@@ -12,23 +12,23 @@
 #               'preps': [{'prep_text': 'preposition_text',
 #                          'prep_details': [{'detail_text': 'preposition_object', 'detail_type': 'type_eg_SINGGPE'}]}]
 # There may be more than 1 verb when there is a root verb + an xcomp
-# Called by nlp.py, Main function: extract_sentence details
+# Called by nlp.py, Main function: extract_chunk_details
 
 import logging
 from spacy.language import Language
 from spacy.tokens import Token
 
 from dna.nlp_sentence_tokens import add_token_details
-from dna.utilities_and_language_specific import objects_string, subjects_string, add_to_dictionary_values, \
-    processed_prepositions
+from dna.utilities_and_language_specific import add_to_dictionary_values, aux_lemmas, objects_string,  \
+    subjects_string, processed_prepositions
 
 
 def _adjust_xcomp_prt(processing: list) -> list:
     """
     Clean up the verb_processing text if there are both prt and xcomp details. If there is only a
     single 'xcomp' or 'prt', then just remove the final '$'. If both, correct either the first or
-    second verb of the 'xcomp' details for one of the verbs (the one matching the prt verb) to
-    have it reference the full 'prt' text (verb + prt).
+    second verb of the 'xcomp' details (depending on which matches the prt verb) to have it reference
+    the full 'prt' text (verb + prt).
 
     :param processing: Array holding the xcomp and prt details
     :return: List holding the final xcomp/prt details
@@ -61,16 +61,17 @@ def _adjust_xcomp_prt(processing: list) -> list:
 def _process_aux(aux_token: Token, verb_dictionary: dict):
     """
     When processing a token that is an auxiliary, such as a modal or a primary auxiliary
-    (be, do, have), get the details.
+    (be, do, have), get the tense details and add to the verb_dictionary.
 
     :param aux_token: Token holding the spaCy details about the auxiliary
     :param verb_dictionary: Dictionary holding all the details about the verb/sentence
                             being processed
     :return: None (the verb_dictionary is updated)
     """
+    # TODO: Remove assumption of English
     if aux_token.lemma_ == 'to':
         return
-    elif aux_token.lemma_ in ('be', 'do', 'have'):
+    elif aux_token.lemma_ in aux_lemmas:
         child_tense = aux_token.morph.get('Tense')
         if verb_dictionary['tense'] == 'Pres' and child_tense and child_tense == 'Past':
             verb_dictionary['tense'] = 'Past'
@@ -96,18 +97,17 @@ def extract_chunk_details(chunk: str, chunk_dict: dict, nlp: Language) -> dict:
     logging.info(f'Creating chunk dictionary for {chunk}')
     nlp_chunk = nlp(chunk)
     # There should only be 1 root verb, because the text was already split
-    process_verb([chunk.root for chunk in nlp_chunk.sents][0], chunk_dict, nlp)
+    process_verb([chunk.root for chunk in nlp_chunk.sents][0], chunk_dict)
     return chunk_dict
 
 
-def process_verb(token: Token, dictionary: dict, nlp: Language):
+def process_verb(token: Token, dictionary: dict):
     """
     When processing a token (that is a verb), capture its details. Note that all processing
     of a narrative is based on the sentences/chunks and their ROOT verbs.
 
     :param token: Verb token from spacy parse
     :param dictionary: Dictionary that the token details should be added to
-    :param nlp: A spaCy Language model
     :return: None (Specified dictionary is updated)
     """
     logging.info(f'Processing the verb, {token.text}')
@@ -121,15 +121,18 @@ def process_verb(token: Token, dictionary: dict, nlp: Language):
     for child in token.children:
         if child.dep_ == 'xcomp':   # Clausal complement - e.g., 'he attempted robbing the bank' (xcomp = robbing)
             # For the above, xcomp > attempt, rob
-            add_to_dictionary_values(dictionary, 'verb_processing', f'xcomp > {token.lemma_}, {child.lemma_}', str)
-            process_verb(child, dictionary, nlp)
-            for child_child in child.children:
-                if child_child.dep_ == 'conj':
+            add_to_dictionary_values(dictionary, 'verb_processing',
+                                     f'xcomp > {token.lemma_}/{token.text}, {child.lemma_}', str)
+            process_verb(child, dictionary)
+            for child2 in child.children:
+                if child2.dep_ == 'cc':
+                    dictionary['verb_cc'] = child2.text
+                elif child2.dep_ == 'conj':
                     # Conjunction of xcomps ('Sue failed to win the race or to finish.') handled as
                     #     3 verbs with multiple xcomp processing details
                     add_to_dictionary_values(dictionary, 'verb_processing',
-                                             f'xcomp > {token.lemma_}, {child_child.text}', str)
-                    process_verb(child_child, dictionary, nlp)
+                                             f'xcomp > {token.lemma_}/{token.text}, {child2.text}', str)
+                    process_verb(child2, dictionary)
         elif 'prt' in child.dep_:   # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
             # For the above, prt > give up
             add_to_dictionary_values(dictionary, 'verb_processing', f'prt > {token.lemma_} {child.text}', str)
@@ -159,7 +162,7 @@ def process_verb(token: Token, dictionary: dict, nlp: Language):
             prep_dict['prep_text'] = child.text
             for prep_dep in child.children:
                 if 'prep' in prep_dep.dep_:
-                    # Preposition followed by another preposition!
+                    # Preposition directly followed by another preposition (for ex, 'along with')
                     prep_dict['prep_text'] += f' {prep_dep.text}'
                     for prep2_dep in prep_dep.children:     # Only going 2 levels deep on prepositions
                         add_token_details(prep2_dep, prep_dict, 'prep_details')

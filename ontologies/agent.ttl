@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: October 26 2022
+# Last modified: October 27 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -59,6 +59,7 @@
 #    :religion and :political_ideology in lieu of using this 
 #  Removed :has_political_ideology in lieu of using :has_agent_aspect
 #  Clarified that has_agent_aspect applies to any Agent, not just Persons
+#  Removed the class, LeftWing, in lieu of Progressivism, Liberalism, etc.
 ########################################################################
 
 
@@ -462,7 +463,7 @@
 :Corporatism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Corporatism" ; 
-  :noun_synonym "corporatist", "mutualism", "mutualist" .
+  :noun_synonym "corporatist" .
 
 :Democracy a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
@@ -492,11 +493,6 @@
 :IdentityPolitics a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
   rdfs:label "Identity Politics" .
-
-:LeftWing a owl:Class ;
-  rdfs:subClassOf :Populism ;
-  rdfs:label "Left-Wing" ;
-  :noun_synonym "progressive", "liberal" .
 
 :LGBTRights a owl:Class ;
   rdfs:subClassOf :IdentityPolitics ;
@@ -548,7 +544,7 @@
 :SeparatismAndSegregation a owl:Class ;
   rdfs:subClassOf :IdentityPolitics ;
   rdfs:label "Separatism and Segregation" ;
-  :noun_synonym "separatist", "segregationism", "segregationist", "supremacism", "supremist", "anti-semitism", "anti-semite", "anti-zionism", "anti-zionist", "racism", "racist" . 
+  :noun_synonym "separatist", "segregationism", "segregationist", "supremacism", "supremist", "anti-semitism", "anti-semite", "anti-zionism", "anti-zionist", "racism", "racist", "anti-Jew", "anti-Jewish" . 
 
 
 ########################################################################

@@ -7,25 +7,24 @@ import uuid
 
 from dna.coreference_resolution import check_nouns
 from dna.create_labels import create_verb_label, get_prt_label, get_xcomp_labels
-from dna.create_noun_turtle import create_using_details
 from dna.create_specific_turtle import create_type_turtle
 from dna.create_verb_turtle import add_subj_obj_to_ttl, create_ttl_for_prep_detail, handle_locations, \
-    handle_xcomp_processing
+    handle_xcomp_processing, revise_prep_turtle
 from dna.get_ontology_mapping import get_event_state_mapping
 from dna.nlp import get_named_entities_in_string
 from dna.process_times import process_chunk_time
 from dna.query_ontology import check_emotion_loc_movement
-from dna.utilities_and_language_specific import add_unique_to_array, aux_verb_dict, empty_string, subjects_string, \
-    objects_string, preps_string
+from dna.utilities_and_language_specific import add_unique_to_array, aux_lemmas, aux_verb_dict, empty_string, \
+    objects_string, preps_string, subjects_string, verbs_string
 
 
-# TODO: Is last_events complete? Check nouns + verbs.
+# TODO: Is last_events complete and updated for all events? Check nouns + verbs.
 
 
 def _check_verb_person_mappings(mappings: list, objs: list) -> list:
     """
     If mappings have an alternative with a class mapping of verb + Person, then check the verb's objects.
-    If they are a Person, choose that mapping over the others.
+    If they are a Person, then that mapping is chosen over the other(s).
 
     :param mappings: A list of strings holding possible alternative ontology mappings for the verb
     :param objs: Array of tuples that are the noun text, type, mappings and IRI for the sentence's objects
@@ -38,14 +37,12 @@ def _check_verb_person_mappings(mappings: list, objs: list) -> list:
         if '+' in mapping and (':Person' in mapping or ':NegPerson' in mapping):
             for obj in objs:
                 text, noun_type, noun_mappings, iri = obj
-                if 'PERSON' in noun_type:
-                    if ':Person' in mapping:
-                        return [mapping.replace('urn:ontoinsights:dna:Person', empty_string).
-                                replace(':Person', empty_string).replace('+', empty_string)]
-                    else:
-                        continue
-            # No Person, so don't save that mapping
-            continue
+                if 'PERSON' in noun_type and ':Person' in mapping:
+                    return [mapping.replace('urn:ontoinsights:dna:Person', empty_string).
+                            replace(':Person', empty_string).replace('+', empty_string)]
+                if 'PERSON' not in noun_type and ':NegPerson' in mapping:
+                    new_mappings.append(mapping.replace('urn:ontoinsights:dna:NegPerson', empty_string).
+                                        replace(':NegPerson', empty_string).replace('+', empty_string))
         else:
             new_mappings.append(mapping)
     return new_mappings
@@ -74,13 +71,24 @@ def _get_preposition_tuples(prep_dict: dict) -> list:
     return prep_details
 
 
-def _get_xcomp_root_objects(xcomp_dict: dict, chunk_dict: dict) -> list:
+def _get_xcomp_root_objects(xcomp_dict: dict, chunk_dict: dict, alet_dict: dict, last_nouns: list,
+                            last_events: list, turtle: list, ext_sources: bool) -> list:
     """
-    Extract the texts of any nouns that are objects of the root verb.
+    Extract the texts of any nouns that are objects of the root verb of a root-xcomp pair.
 
     :param xcomp_dict: A dictionary with keys = root verb and the xcomp verb and values = 'root' for
                        the root verb or the verb_processing string for the xcomp
     :param chunk_dict: Dictionary holding the chunk details
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the narrative to-date - For co-reference resolution (it may be updated by this function);
+             Keys = 'agents', 'locs', 'events', 'times' and Values that vary for the different keys
+    :param last_nouns: An array of noun texts, type, class mapping and IRI from the current paragraph
+    :param last_events: A list/array of tuples defining an event DNA class mapping and IRI, found in the
+                        current paragraph
+    :param turtle: A list of Turtle statements which will be updated in this function if new
+                   nouns are found
+    :param ext_sources: A boolean indicating that data from GeoNames, Wikidata, etc. should be
+                        added to the parse results if available
     :return: An array of strings of the nouns that are objects of the root verb of the xcomp
     """
     chunk_objects = []
@@ -92,22 +100,14 @@ def _get_xcomp_root_objects(xcomp_dict: dict, chunk_dict: dict) -> list:
                     lemma = chunk_verb['verb_lemma']
                     if lemma == verb:
                         if objects_string in chunk_verb:    # Get the objects that are specific to the verb
-                            add_unique_to_array(check_nouns(chunk_verb, objects_string, dict(), [],
-                                                [], [], False), chunk_objects)
-                            # TODO: Also get prepositional objects?
-    if chunk_objects:
-        root_texts = []
-        for chunk_object in chunk_objects:
-            obj_text, obj_type, obj_map, obj_iri = chunk_object
-            root_texts.append(obj_text)
-        return root_texts
-    return []
+                            add_unique_to_array(check_nouns(chunk_verb, objects_string, alet_dict, last_nouns,
+                                                last_events, turtle, ext_sources), chunk_objects)
+    return chunk_objects
 
 
 def _process_aux_verb(verb_dict: dict, chunk_text: str) -> list:
     """
-    Determines the mapping of the auxiliary verb to the DNA ontology, including whether the
-    verb indicates an emotion, mood or modal - which affects the overall sentiment of the sentence.
+    Determines the mapping of the auxiliary verb to the DNA ontology.
 
     :param verb_dict: The dictionary for the verb
     :param chunk_text: Text of the sentence
@@ -126,14 +126,7 @@ def _process_aux_verb(verb_dict: dict, chunk_text: str) -> list:
             else:
                 class_mapping = [aux_mapping]
             return class_mapping
-        else:
-            if aux_label in ('be', 'do', 'have', 'become'):      # Main verb defines the event/state
-                return []     # No change to that verb
-            # Determine if the aux verb is an emotion/mood by getting the Event/State class for the text
-            keep_aux, class_mapping = get_event_state_mapping(aux_label, dict(), [], [], 'iri', [])
-            if not keep_aux:
-                return []
-            return check_emotion_loc_movement(class_mapping, 'emotion')
+    return []
 
 
 def _process_subjs_objs(chunk_dict: dict, alet_dict: dict, last_nouns: list, last_events: list,
@@ -167,12 +160,13 @@ def _process_subjs_objs(chunk_dict: dict, alet_dict: dict, last_nouns: list, las
 
 def _process_xcomp_prt(chunk_dict: dict) -> (dict, dict, bool):
     """
-    Extract any 'verb_processing' details for the chunk.
+    Extract the 'verb_processing' details (xcomp and prt) for the chunk.
 
     :param chunk_dict: The dictionary from the spaCy parse for the chunk
     :return: A tuple consisting of a dictionary holding xcomp processing details, a dictionary
              holding prt processing details and a boolean indicating that subjects and objects
-             are switched (which is done for passive verbs)
+             are switched (which is done for passive verbs since the object of a passive root
+             verb becomes the subject of the xcomp verb).
     """
     # xcomp - for ex, 'she loved to play with her sister' => 'love' is root, 'play' is xcomp
     # These verbs are both found in the same chunk_dict['verbs'] array
@@ -181,9 +175,10 @@ def _process_xcomp_prt(chunk_dict: dict) -> (dict, dict, bool):
     prt_dict = dict()
     if 'verb_processing' in chunk_dict:
         for processing in chunk_dict['verb_processing']:
-            if 'xcomp' in processing:    # For example, 'xcomp > love, play'
+            # For example, 'xcomp > love/loved, play'; Both the root lemma and text are given, separated by '/'
+            if 'xcomp' in processing:
                 xcomp_dict[processing.split(', ')[1]] = processing
-                xcomp_dict[processing.split('> ')[1].split(',')[0]] = 'root'
+                xcomp_dict[processing.split('> ')[1].split('/')[0]] = 'root'
             elif 'prt' in processing:    # For example, 'prt > give, up'
                 prt_dict[processing.split('prt > ')[1].split(' ')[0]] = processing
     return xcomp_dict, prt_dict, \
@@ -214,6 +209,7 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
     logging.info(f'Processing chunk, {chunk_text}')
     ttl_list = []
     event_iri = f':Event_{str(uuid.uuid4())[:13]}'
+    xcomp_root_event_iri = f':Event_{str(uuid.uuid4())[:13]}'   # Just in case this chunk has a root-xcomp pair
     named_entities = get_named_entities_in_string(chunk_text)
     # Determine chunk time
     new_time = process_chunk_time(chunk_text, named_entities, event_iri, loc_time_iris[1], alet_dict,
@@ -228,19 +224,23 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
     # Note that obj_ttl may not be added if an auxiliary verb is the main/root verb (for ex, 'John is an attorney')
     xcomp_dict, prt_dict, switch_subj_obj = _process_xcomp_prt(chunk_dict)
     if xcomp_dict and switch_subj_obj:    # Passive root verb => 'subjects' are defined as the chunk's objects
-        subjects = init_objects           # Only switch for xcomp and if the switch_ variable is true
-        objects = init_subjects
+        subjects = init_objects[:]           # Only switch for xcomp and if the switch_ variable is true
+        objects = init_subjects[:]           # Passive root subjects become the active xcomp subjects
     else:
-        subjects = init_subjects
-        objects = init_objects
-    root_objects = _get_xcomp_root_objects(xcomp_dict, chunk_dict)    # Need this detail for the label
-    root_text = empty_string
-    xcomp_root_mappings = []
+        subjects = init_subjects[:]
+        objects = init_objects[:]
+    # Need to know the root verb's objects ahead of processing any xcomp verb(s)
+    # Because they are the subjects of the xcomp verb(s)
+    xcomp_root_objects = _get_xcomp_root_objects(xcomp_dict, chunk_dict, alet_dict, last_nouns, last_events,
+                                                 ttl_list, ext_sources)
+    xcomp_incorporates_root = False
+    dict_changes = dict()    # Dictionary of revised preposition to predicate mappings
     for verb in chunk_dict['verbs']:
-        if objects_string in verb:    # Get the objects that are specific to the verb
-            add_unique_to_array(check_nouns(verb, objects_string, alet_dict, last_nouns,
-                                            last_events, ttl_list, ext_sources), objects)
         lemma = verb['verb_lemma']
+        if objects_string in verb:    # Get the objects that are specific to the verb
+            # Note that for the root verb of a root-xcomp pair, the objects array should be = xcomp_root_objects
+            add_unique_to_array(check_nouns(verb, objects_string, alet_dict, last_nouns, last_events,
+                                            ttl_list, ext_sources), objects)
         # Get and process the prepositions and their objects
         prepositions = []        # List of tuples (preposition text, and object text, type, class mappings and IRI)
         prep_ttl = []            # Turtle related to prepositional objects
@@ -258,56 +258,96 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
                     loc_iri = prep_loc_iri if prep_loc_iri else loc_iri
         ttl_list.extend(prep_ttl)
         event_state_mappings = []
+        xcomp_root = empty_string
         # First deal with the auxiliary verbs
         aux_mappings = _process_aux_verb(verb, chunk_text)
         if aux_mappings:
-            # Future: Code assumes that there is only 1 mapping for an aux verb and no xcomp; Is this valid?
             aux_map = aux_mappings[0]
-            if 'Emotion' in aux_map:
-                xcomp_dict[lemma] = f'xcomp > {verb["verb_aux"]}, {lemma}'
-            else:
-                ttl_list.append(f'{event_iri} a {aux_map.replace("+", ", ")} .')
+            ttl_list.append(f'{event_iri} a {aux_map.replace("+", ", ")} .')
         # Second deal with prt verbs
         if 'verb_processing' in chunk_dict and prt_dict and lemma in prt_dict:
             event_state_mappings = \
                 get_event_state_mapping(prt_dict[lemma].split('prt > ')[1], verb, subjects, objects,
                                         event_iri, ttl_list)
-        # Third deal with the root and xcomp verbs
-        if 'verb_processing' in chunk_dict and xcomp_dict and lemma in xcomp_dict \
-                and xcomp_dict[lemma].startswith('xcomp'):
-            if not event_state_mappings:     # Might have a mapping if the lemma is part of prt processing
-                event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects, event_iri, ttl_list)
-            root_text = xcomp_dict[lemma].split('xcomp > ')[1].split(',')[0]
-            xcomp_root_mappings = get_event_state_mapping(root_text, verb, subjects, objects, event_iri, ttl_list)
+        # Third deal with the root or xcomp verbs in a pair
+        if 'verb_processing' in chunk_dict and xcomp_dict and lemma in xcomp_dict:
+            if xcomp_dict[lemma].startswith('xcomp'):
+                xcomp_root = 'xcomp'
+                if not event_state_mappings:     # Might have a mapping if the lemma is part of prt processing
+                    if xcomp_root_objects:       # Object of the root verb is the subject of the xcomp
+                        event_state_mappings = get_event_state_mapping(lemma, verb, xcomp_root_objects, objects,
+                                                                       event_iri, ttl_list)
+                    else:
+                        event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects,
+                                                                       event_iri, ttl_list)
+            else:    # Root verb; Note that at this point, xcomp_root_objects = objects
+                xcomp_root = 'root'
+                event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects,
+                                                               xcomp_root_event_iri, ttl_list)
         # Lastly deal with other verbs
         if 'verb_processing' not in chunk_dict:
             event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects, event_iri, ttl_list)
+        if xcomp_root == 'root' and not xcomp_root_objects:
+            # Collapse a root verb (that is an emotion or is Attempt, Continuation, End, ...) to the xcomp
+            event_state_mappings = check_emotion_loc_movement(event_state_mappings, 'emotion')
+            if ':EmotionalResponse' in event_state_mappings or ':PositiveEmotion' in event_state_mappings or \
+                    ':NegativeEmotion' in event_state_mappings or event_state_mappings[0] in \
+                    (':Attempt', ':Continuation', ':StartAndBeginning', ':End', ':Success', ':Failure'):
+                ttl_list.append(f'{event_iri} a {", ".join(event_state_mappings)} .')
+                xcomp_incorporates_root = True
+                continue
+        ref_event_iri = xcomp_root_event_iri if xcomp_root == 'root' else event_iri
         if not event_state_mappings:
-            ttl_list.append(f'{chunk_iri} :describes {event_iri} .')
-            handle_locations(ttl_list, loc_iri, loc_time_iris, event_iri, is_bio)  # May need to add location
-            # Skip remainder of processing the xcomp root verb and for EnvAndCondition
+            ttl_list.append(f'{chunk_iri} :describes {ref_event_iri} .')
+            handle_locations(ttl_list, loc_iri, loc_time_iris, ref_event_iri, is_bio)  # May need to add location
             continue
         if len(event_state_mappings) > 1:
             # Logic to possibly select one mapping when there are alternatives
             event_state_mappings = _check_verb_person_mappings(event_state_mappings, objects)
-        ttl_list.extend(create_type_turtle(event_state_mappings, event_iri, True, lemma))
+        ttl_list.extend(create_type_turtle(event_state_mappings, ref_event_iri, True, lemma))
         # May need to add origin to movement or a location overall for the event
-        handle_locations(ttl_list, loc_iri, loc_time_iris, event_iri, is_bio)
-        # Include the objects' ttl which was skipped above; It is referenced in the 'add_subj_obj_to_ttl' processing
+        handle_locations(ttl_list, loc_iri, loc_time_iris, ref_event_iri, is_bio)
+        # Add the subject and object details to the Turtle
         ttl_list.extend(obj_ttl)
-        add_subj_obj_to_ttl(event_iri, subjects, objects, ttl_list)
+        if xcomp_root and xcomp_root_objects:
+            if xcomp_root == 'xcomp':
+                add_subj_obj_to_ttl(ref_event_iri, xcomp_root_objects, objects, False, ttl_list)
+            else:
+                add_subj_obj_to_ttl(ref_event_iri, subjects, xcomp_root_objects, True, ttl_list)
+        else:
+            add_subj_obj_to_ttl(ref_event_iri, subjects, objects, False, ttl_list)
         # Gather all the details that create a sentence label and deal with negation
-        labels = [verb['verb_text'], get_xcomp_labels(chunk_dict, root_objects), get_prt_label(chunk_dict),
-                  create_using_details(verb, event_iri, ttl_list),
+        labels = [verb['verb_text'], get_prt_label(chunk_dict),
                   verb['verb_aux'] if 'verb_aux' in verb else empty_string]
         if 'negation' in verb:
-            ttl_list.append(f'{event_iri} :negation true .')
-        label = create_verb_label(labels, subjects, objects, prepositions, True if 'negation' in verb else False)
-        ttl_list.append(f'{event_iri} rdfs:label "{label.strip()}" .')
-        ttl_list.append(f'{chunk_iri} :describes {event_iri} .')
-        # TODO: Update last_events
-        if xcomp_dict and lemma in xcomp_dict and xcomp_root_mappings:
-            # Adjust the current array of Turtle statements taking the xcomp root verb into account
-            return handle_xcomp_processing(root_text, xcomp_root_mappings, chunk_dict, alet_dict,
-                                           last_nouns, last_events, ttl_list, event_iri, ext_sources)
-    return ttl_list
+            ttl_list.append(f'{ref_event_iri} :negation true .')
+        if xcomp_root and xcomp_root_objects:
+            if xcomp_root == 'xcomp':
+                label = create_verb_label(labels, xcomp_root_objects, objects, prepositions,
+                                          True if 'negation' in verb else False)
+            else:
+                label = create_verb_label(labels, subjects, xcomp_root_objects, prepositions,
+                                          True if 'negation' in verb else False)
+        else:
+            label = create_verb_label(labels, subjects, objects, prepositions, True if 'negation' in verb else False)
+        ttl_list.append(f'{ref_event_iri} rdfs:label "{label.strip()}" .')
+        ttl_list.append(f'{chunk_iri} :describes {ref_event_iri} .')
+        revise_prep_turtle(ttl_list, event_state_mappings, prepositions, ref_event_iri, dict_changes)
+    if len(dict_changes) > 0:    # Need to update a 1+ preposition to predicate mappings
+        revised_ttl = []
+        for ttl_stmt in ttl_list:
+            updated_ttl = False
+            for orig_pred_stmt, new_pred_stmt in dict_changes.items():
+                if ttl_stmt.startswith(orig_pred_stmt):
+                    revised_ttl.append(ttl_stmt.replace(orig_pred_stmt, new_pred_stmt))
+                    updated_ttl = True
+                    break
+            if not updated_ttl:
+                revised_ttl.append(ttl_stmt)
+    else:
+        revised_ttl = ttl_list[:]
+    if xcomp_dict:
+        # Adjust the array of Turtle statements
+        return handle_xcomp_processing(event_iri, xcomp_root_event_iri, xcomp_dict, xcomp_incorporates_root,
+                                       revised_ttl)
+    return revised_ttl

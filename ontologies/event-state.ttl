@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: August 22 2022
+# Last modified: November 21 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -31,6 +31,7 @@
 #  Added :wordnet_noun_synset details
 #  Renamed StartOrBeginning to StartAndBeginning for consistency
 #  Added subclasses of End - Success And Failure
+#  Corrected verb, 'defeat' == Success
 ########################################################################
 
 
@@ -60,8 +61,8 @@
   rdfs:subClassOf :End ;
   rdfs:label "Failure" ;
   :definition "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure time is known." ;
-  :noun_synonym "nonaccomplishment", "nonachievement", "failing", "flunking", "flunk", "naught", "loss" ;
-  :verb_synonym "fail", "flop", "fall flat", "founder", "strike out", "flunk", "defeat" ;
+  :noun_synonym "nonaccomplishment", "nonachievement", "failing", "flunking", "flunk", "naught", "loss", "defeat" ;
+  :verb_synonym "fail", "flop", "fall flat", "flounder", "strike out", "flunk" ;
   :wordnet_noun_synset "00067036" ;
   :wordnet_verb_synset "02534046" .
 
@@ -79,7 +80,7 @@
   rdfs:label "Success" ;
   :definition "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual end time is known." ;
   :noun_synonym "comeback", "attainment", "win", "blockbuster", "winning", "hit", "smash", "bull's eye", "home run", "flying colors", "flying colours", "achievement", "masterstroke", "masterpiece", "accomplishment" ;
-  :verb_synonym "succeed", "attain", "surmount", "accomplish", "achieve", "fulfill" ;
+  :verb_synonym "succeed", "attain", "surmount", "accomplish", "achieve", "defeat" ;
   :wordnet_noun_synset "00064472", "00035910" ;
   :wordnet_verb_synset "02024442" .
 

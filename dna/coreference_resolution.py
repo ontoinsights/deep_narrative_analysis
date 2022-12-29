@@ -4,18 +4,61 @@
 import uuid
 import re
 from typing import Union
+import word2number as w2n
 
 from dna.create_noun_turtle import create_noun_ttl
 from dna.database import query_database
 from dna.get_ontology_mapping import get_agent_or_loc_class, get_noun_mapping
-from dna.nlp import get_complete_name_head_words, get_head_word
+from dna.nlp import get_head_word
 from dna.queries import query_specific_noun
 from dna.utilities_and_language_specific import dna_prefix, empty_string, family_members, \
-    names_to_geo_dict, ontologies_database, owl_thing2, pronouns, underscore
+    names_to_geo_dict, ontologies_database, owl_thing2, personal_pronouns, space, underscore
 
 
-# Future: Should family roles and names be associated so that all refs to 'sister' or the sister's name
-#    resolve to the same IRI?
+def _account_for_cardinal_noun(elem_dict: dict, phrase: str, alet_dict: dict, last_nouns: list,
+                               last_events: list, turtle: list, ext_sources: bool) -> tuple:
+    """
+    Get the semantics/mapping for the object of a prepositional phrase associated with a cardinal
+    number, such as "one of the band".
+
+    :param elem_dict: The dictionary (holding the details for the noun/verb containing the
+                      cardinal text)
+    :param phrase: The full text of the noun phrase
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events',
+             'times' and Values vary by the key
+    :param last_nouns: An array of tuples of noun texts, types, class mappings and IRIs,
+                       found in the narrative
+    :param last_events: An array of verb texts, mappings and IRIs from the current paragraph
+    :param turtle: A list of Turtle statements which will be updated in this function if a new
+                   noun is found
+    :param ext_sources: A boolean indicating that data from GeoNames, Wikidata, etc. should be
+                        added to the parse results if available
+    :return: A tuple of the resulting noun phrase's text, spaCy type, mappings and IRI; Also,
+             the Turtle is likely updated
+    """
+    # noinspection PyBroadException
+    try:
+        card_number = w2n.word_to_num(get_head_word(phrase))
+    except Exception:
+        card_number = 1    # TODO: Improve default
+    # Evaluate the object of any preposition related to the cardinal; Future: Need to handle > 1 prep?
+    prep_text = elem_dict['preps'][0]['prep_details'][0]['detail_text']
+    prep_type = elem_dict['preps'][0]['prep_details'][0]['detail_type']
+    if card_number < 2:    # Account for the cardinality
+        prep_type = prep_type.replace('PLURAL', 'SING')
+    # Get the noun info for the prepositional object
+    prep_ttl = []
+    # check_nouns result = an array of tuples of the noun's texts, types, mappings and IRIs
+    result = check_nouns({'objects': [{'object_text': prep_text, 'object_type': prep_type}]}, 'objects',
+                         alet_dict, last_nouns, last_events, prep_ttl, ext_sources)[0]   # Should only need 1
+    # Adjust the label to reflect the text with the cardinal, and add the stmts to the current elem_dict's Turtle
+    for ttl_stmt in prep_ttl:
+        if 'rdfs:label' in ttl_stmt:
+            turtle.append(f'{ttl_stmt.split(" rdfs:label")[0]} rdfs:label "{phrase}" .')
+        else:
+            turtle.append(ttl_stmt)
+    return phrase, prep_type, result[2], result[3]    # Return the mapping and IRI
 
 
 def _check_alet_dict(text: str, text_type: str, alet_dict: dict, last_nouns: list) -> (list, str):
@@ -44,7 +87,7 @@ def _check_alet_dict(text: str, text_type: str, alet_dict: dict, last_nouns: lis
         for agent_array in agent_arrays:
             alt_names = agent_array[0]
             agent_type = agent_array[1]
-            if text not in pronouns and text in alt_names:
+            if text not in personal_pronouns and text in alt_names:
                 if text_type and (text_type in agent_type or agent_type in text_type):
                     agent_match.append((agent_type, agent_array[2]))    # index 2 holds the IRI
                     break
@@ -98,7 +141,8 @@ def _check_criteria(text: str, last_nouns: list, looking_for_singular: Union[boo
             else:
                 continue
         # Pronoun text already lower case, but may be called with other text such as 'Her father'
-        if text not in pronouns and (text.lower() not in noun_text.lower() or noun_text.lower() not in text.lower()):
+        if text not in personal_pronouns and (text.lower() not in noun_text.lower() or
+                                              noun_text.lower() not in text.lower()):
             continue     # First match the text if not a pronoun; If no match, skip the rest of the criteria
         if (looking_for_person and 'PERSON' not in noun_type) or \
                 (not looking_for_person and 'PERSON' in noun_type):
@@ -146,7 +190,7 @@ def _check_last_nouns(text: str, text_type: str, last_nouns: list) -> list:
     return final_nouns
 
 
-def _check_pronouns(pronoun: str, last_nouns: list) -> list:
+def _check_personal_pronouns(pronoun: str, last_nouns: list) -> list:
     """
     Get the most likely co-reference(s) for the pronoun using the last_nouns details.
     Subject/object information (the noun, and its types, mappings and IRI) is returned.
@@ -219,6 +263,29 @@ def _process_family_role(person_text: str, person_type: str, alet_dict: dict) ->
     return tuple()
 
 
+def _separate_possessives(text: str) -> (dict, str):
+    """
+    If a noun text contains a possessive reference, separate it out, since proper noun processing will
+    override the details of the noun.
+
+    :param text: String holding the noun text
+    :return: A tuple with a dictionary holding the noun to which a possessive is a modifier (the noun
+             is the key, and the possessive is the value; this is a dictionary since a clause may have more
+             than 1 possessive), and a string with the possessive(s) removed from the noun text
+    """
+    possessive_dict = dict()         # Dictionary of nouns (keys) with their possessive modifiers (values)
+    revised_words = []
+    if '/poss/' in text:
+        space_splits = text.split()
+        for index in range(0, len(space_splits)):
+            if '/poss/' in space_splits[index]:
+                possessive_dict[space_splits[index + 1]] = space_splits[index].replace('/poss/', empty_string)
+            else:
+                revised_words.append(space_splits[index])
+        return possessive_dict, space.join(revised_words)
+    return possessive_dict, text
+
+
 def _update_last_nouns(text: str, text_type: str, text_iri: str, class_maps: list, last_nouns: list) -> (list, str):
     """
     Update the last_nouns array and return the class mappings and IRI.
@@ -286,7 +353,7 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
                    noun is found
     :param ext_sources: A boolean indicating that data from GeoNames, Wikidata, etc. should be
                         added to the parse results if available
-    :return: A tuple holding an array of tuples of the noun's texts, types, mappings and IRIs (also,
+    :return: An array of tuples of the noun's texts, types, mappings and IRIs (also,
              the last_nouns and last_events arrays may be updated)
     """
     nouns = []
@@ -294,26 +361,37 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
         elem_key = key[0:-1]             # Create dictionary key = 'subject' or 'object'
         elem_text = elem[f'{elem_key}_text']
         elem_type = elem[f'{elem_key}_type']
+        # poss_dict = Dictionary of nouns (keys) with their possessive modifiers (values)
+        # Revised elem_text = noun text with possessives removed
+        poss_dict, elem_text = _separate_possessives(elem_text)
         new_tuple = tuple()
-        if elem_type == 'CARDINAL':      # For example, 'one' in 'one of the band'
-            iri = re.sub(r'[^:a-zA-Z0-9_]', '_', f':{elem_text}_{str(uuid.uuid4())[:13]}').replace('__', '_')
-            new_tuple = (elem_text, 'CARDINAL', [owl_thing2], iri)
-            turtle.extend([f'{iri} a owl:Thing .',
-                           f'{iri} rdfs:label "{elem_text}" .'])
-        elif elem_text.lower() in pronouns:
+        possible_name = empty_string     # For a proper name, may contain shortened form = given + surname (any order)
+        if elem_type == 'CARDINAL':      # For example, 'one' in 'he has one' or in 'one of the band'
+            if 'preps' in elem:
+                new_tuple = _account_for_cardinal_noun(elem, elem_text, alet_dict, last_nouns, last_events,
+                                                       turtle, ext_sources)
+            else:
+                iri = re.sub(r'[^:a-zA-Z0-9_]', '_', f':{elem_text}_{str(uuid.uuid4())[:13]}').replace('__', '_')
+                new_tuple = (elem_text, 'CARDINAL', [owl_thing2], iri)
+                turtle.extend([f'{iri} a owl:Thing .',
+                               f'{iri} rdfs:label "{elem_text}" .'])
+        elif elem_text.lower() in personal_pronouns:
             # Array of tuples of matched text, type, mappings and IRIs
-            new_tuples = _check_pronouns(elem_text, last_nouns)
+            new_tuples = _check_personal_pronouns(elem_text, last_nouns)
             nouns.extend(new_tuples)
             last_nouns.extend(new_tuples)
             continue    # More than 1 new tuple, so handled specifically in this code block; No need to 'drop through'
         # Not a pronoun; Check for a match in instances of the ontology
         elif ('PERSON' in elem_type or elem_type.endswith('GPE') or
                 elem_type.endswith('ORG') or elem_type.endswith('NORP')):
-            name_text = get_complete_name_head_words(elem_text)   # Check a complete proper name
-            match_iri, match_type = check_specific_match(name_text, elem_type)
-            if not match_iri:    # Try the head word alone
-                ent_lemma, ent_text = get_head_word(elem_text)
-                match_iri, match_type = check_specific_match(ent_text, elem_type)
+            full_name, name_text = get_head_word(elem_text)   # Check for a complete proper name
+            if space in full_name:
+                # Get last two words in the name (for given+surname or surname+given name, Eastern or Western ordering)
+                names = full_name.split(space)
+                possible_name = f'{names[-2]} {names[-1]}'
+            match_iri, match_type = check_specific_match(full_name, elem_type)
+            if not match_iri and possible_name:
+                match_iri, match_type = check_specific_match(possible_name, elem_type)
             if match_iri:
                 new_tuple = (elem_text, elem_type, match_type, match_iri)
             else:
@@ -324,11 +402,21 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
             match_noun_tuples = _check_last_nouns(elem_text, elem_type, last_nouns)
             if match_noun_tuples:
                 new_tuple = (elem_text, elem_type, match_noun_tuples[0][0], match_noun_tuples[0][1])
+            elif possible_name:
+                # Also check given + surname
+                match_noun_tuples = _check_last_nouns(possible_name, elem_type, last_nouns)
+                if match_noun_tuples:
+                    new_tuple = (possible_name, elem_type, match_noun_tuples[0][0], match_noun_tuples[0][1])
         if not new_tuple:
             # No match - Try to match text and type in alet_dict
             match_maps, match_iri = _check_alet_dict(elem_text, elem_type, alet_dict, last_nouns)  # Updates last nouns
             if match_iri:
                 new_tuple = (elem_text, elem_type, match_maps, match_iri)
+            elif possible_name:
+                # Also check given + surname
+                match_maps, match_iri = _check_alet_dict(possible_name, elem_type, alet_dict, last_nouns)
+                if match_iri:
+                    new_tuple = (possible_name, elem_type, match_maps, match_iri)
         if not new_tuple:
             # No match - Check if the noun is aligned with an event that has already been described
             event_classes, event_iri = check_event(elem_text, last_events)
@@ -338,7 +426,7 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
             # No match - Create new entity
             iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, f':{elem_text.lower()}_{str(uuid.uuid4())[:13]}').\
                 replace('__', '_')
-            noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type,
+            noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type, alet_dict,
                                                          True if key == 'subjects' else False, ext_sources)
             new_tuple = (elem_text, elem_type, noun_mappings, iri)
             turtle.extend(noun_turtle)

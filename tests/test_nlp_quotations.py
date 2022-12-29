@@ -46,8 +46,8 @@ def test_text3():
         'No American should support election deniers']
     assert len(quotation_dict) == 3
     assert quotation_dict['Quotation1'] == \
-           'Our nation is barreling once again toward crisis, lawlessness and violence.'
-    assert quotation_dict['Quotation2'] == 'No American should support election deniers.'
+           'Our nation is barreling once again toward crisis, lawlessness and violence'
+    assert quotation_dict['Quotation2'] == 'No American should support election deniers'
 
 
 def test_text4():

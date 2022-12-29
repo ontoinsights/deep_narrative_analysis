@@ -13,8 +13,6 @@ def _check_if_loc_is_known(loc_text: str, loc_type: str, alet_dict: dict) -> (li
     Determines if the location is already known/defined in either the geo-names country list or if
     it has been already processed (and is therefore in the alet dictionary).
 
-    The acronym, alet, stands for agent-location-event-time.
-
     :param loc_text: Input location string
     :param loc_type: String identifying NER type for the text, as defined by spaCy
     :param alet_dict: A dictionary holding the agents, locations, events & times encountered in

@@ -187,7 +187,7 @@ def _split_advcl_clauses(sentence: str, nlp: Language) -> list:
         conj_verbs = [conj_verb for conj_verb in advcl_verb.children if conj_verb.dep_ == 'conj']
         ccs = [cc for cc in advcl_verb.children if cc.dep_ == 'cc']
         if conj_verbs:
-            # TODO: Scale if more than 1 additional, advcl, conj verb - conj_verbs[0] restricts to the first one
+            # TODO: Scale if more than 1 additional advcl, conj verb - conj_verbs[0] restricts to the first one
             alt_chunks = _get_chunks(conj_verbs[0], None, sent_span, 'advcl', [])
             if len(alt_chunks) > 1:        # 2nd entry should be any new advcl text
                 new_chunks.append(revised_chunks[0])
@@ -222,7 +222,7 @@ def _split_by_conjunctions(sentence: str, nlp: Language) -> list:
     connectors = [conn for conn in sent_span.root.children if conn.dep_ == 'cc']
     if conj_verbs and len(conj_verbs) == len(connectors):
         subjects = [child for child in sent_span.root.children if 'subj' in child.dep_]
-        expls = [child for child in sent_span.root.children if child.dep_ == 'expl']
+        expls = [child for child in sent_span.root.children if child.dep_ == 'expl']  # Noun but not defined as 'subj'
         if expls:
             subjects.extend(expls)
         # Process the first 'chunk' and then return - Subsequent iterations will process the complete text
@@ -282,10 +282,10 @@ def _split_relcl_clauses(clause: str, nlp: Language) -> list:
             noun_details = [ww.text for ww in noun_token.subtree]
             noun_text = ' '.join(noun_details)
             seen = [ww for ww in relcl.subtree]
-            seen_chunk = ' '.join([ww.text for ww in seen])
+            seen_chunk = (' '.join([ww.text for ww in seen]))
             unseen = [ww for ww in clause_span if ww not in seen and
                       ((ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or ww.pos_ != 'PUNCT')]
-            unseen_chunk = ' '.join([ww.text for ww in unseen])
+            unseen_chunk = (' '.join([ww.text for ww in unseen]))
             # Need to remove the relcl subtree from the noun's subtree
             noun_text = noun_text.replace(seen_chunk, empty_string).strip()
             # Relcl may have a relative pronoun or adverb (e.g., 'which Mary bought', 'Arizona where Cheney lost' -
@@ -361,7 +361,7 @@ def split_clauses(sent_text: str, nlp: Language) -> list:
         split_sents2 = []
         for sent in split_sents:
             split_sents2.extend(_split_relcl_clauses(sent, nlp))
-        # Check for advcls that are not directly associated with the root verb but still have a subject/object and verb
+        # Check for advcls that are not directly associated with the root verb but still have a subj or obj and verb
         for sent in split_sents2:
             sent_span = next(nlp(sent).sents)
             advcl_verbs = []

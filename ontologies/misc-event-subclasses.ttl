@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: September 5 2022
+# Last Modified: December 27 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -36,7 +36,7 @@
 #  Updated superclasses of EscapeAndEvasion
 #  Updated synonyms
 #  Added EmotionalResponse as a subclass of Cognition and changed Desire
-#   to be additional synonyms on LongingAndPassition (in emotion-subclasses.ttl)
+#    to be additional synonyms on LongingAndPassition (in emotion-subclasses.ttl)
 #  Updated the superclass of IntentionAndGoal
 #  Renamed Repair to MaintenanceAndRepair; Added Supervision and Forgetting
 #  Added :wordnet_noun_synset details
@@ -45,7 +45,9 @@
 #  Renamed :Learning to :LearningAndEducation
 #  Added Betrayal, DeceptionAndDishonesty, MeaningImplicationAndInference
 #    and SelfControl
-#  Renamed ProvisionOfAid to AidAndAssistance
+#  Renamed ProvisionOfAid to AidAndAssistance, and DefensiveOrProtectiveAct
+#    to DefensiveAndProtectiveAct (for consistency)
+# Updated the subclassing of GiftAndDonation and CaptureAndSeizure
 ########################################################################
 
 
@@ -84,8 +86,8 @@
   rdfs:subClassOf :Cognition ;
   rdfs:label "Assessment and Characterization" ;
   :definition "Events dealing with evaluating, characterizing or estimating something or someone." ;
-  :noun_synonym "evaluation", "estimation", "estimate", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "ranking", "rating", "valuation", "identification", "assessing", "characterizing", "evaluating", "judging", "estimating", "appraising", "gauging", "comparing", "conjecturing", "classifying", "correlating", "determining", "valuing", "identifying", "approximation" ;
-  :verb_synonym "assess", "characterize", "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "rate", "identify", "rank", "recognize", "qualify", "characterize", "characterise", "valuate", "value", "approximate", "guess" ;
+  :noun_synonym "evaluation", "estimation", "estimate", "appraisal", "gauge", "comparison", "conjecture", "classification", "correlation", "ranking", "rating", "valuation", "identification", "assessing", "characterizing", "evaluating", "judging", "estimating", "appraising", "gauging", "comparing", "conjecturing", "classifying", "correlating", "determining", "valuing", "identifying", "approximation", "mark" ;
+  :verb_synonym "assess", "characterize", "evaluate", "judge", "estimate", "appraise", "gauge", "compare", "classify", "correlate", "rate", "identify", "rank", "recognize", "qualify", "characterize", "characterise", "valuate", "value", "approximate", "guess", "mark" ;
   :wordnet_noun_synset "00875745", "05740701", "00143485", "05770995", "05811387" ;
   :wordnet_verb_synset "00672179", "00958719", "00654571", "02170904", "00636134", "01028104", "00594278", "00683348", "00674352" .
 
@@ -93,8 +95,8 @@
   rdfs:subClassOf :AggressiveOrHostileAct ;
   rdfs:label "Attack, Damage and Assault" ;
   :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
-  :noun_synonym "destruction", "assailant", "onslaught", "defacement", "attacking", "damaging", "assaulting", "destroying", "assailing", "defacing", "trashing", "mutilation", "devastation", "brutalization", "brutalisation" ;
-  :verb_synonym "attack", "damage", "assault", "destroy",  "assail", "shoot down", "trash", "deface", "take the offensive", "maim" ;
+  :noun_synonym "destruction", "assailant", "onslaught", "defacement", "attacking", "damaging", "assaulting", "destroying", "assailing", "defacing", "trashing", "mutilation", "devastation", "brutalization", "brutalisation", "incursion" ;
+  :verb_synonym "attack", "damage", "assault", "destroy",  "assail", "shoot down", "trash", "deface", "take offensive", "maim" ;
   :wordnet_noun_synset "00403900", "00974725", "00982124", "00775311", "00217881" ;
   :wordnet_verb_synset "00864347", "00259743", "00090640", "00478872" . 
 
@@ -111,7 +113,7 @@
   rdfs:subClassOf :AttackDamageAndAssault ;
   rdfs:label "Battle" ;
   :definition "Any Event that involves fighting (typically) between military/paramilitary/armed forces." ;
-  :noun_synonym "fight", "skirmish", "dogfight", "raid", "infiltration", "incursion", "surprise attack", "combat", "battling", "fighting", "skirmishing", "raiding", "combatting", "combating", "conflict" ;
+  :noun_synonym "fight", "skirmish", "dogfight", "raid", "infiltration", "combat", "battling", "fighting", "skirmishing", "raiding", "combatting", "combating", "conflict" ;
   :verb_synonym "fight", "battle", "skirmish", "raid", "combat" ;
   :wordnet_noun_synset "00955670", "00961007" ;
   :wordnet_verb_synset "01092746", "01126191" .
@@ -129,8 +131,8 @@
   rdfs:subClassOf :DeceptionAndDishonesty, :ViolationOfAgreement ;
   rdfs:label "Betrayal" ;
   :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Betrayal&oldid=1096433753), Betrayal 'is the breaking or violation of a presumptive contract, trust, or confidence that produces moral and psychological conflict within a relationship amongst individuals, between organizations or between individuals and organizations. Often betrayal is the act of supporting a rival group, or it is a complete break from previously decided upon or presumed norms by one party from the others.'" ;
-  :noun_synonym "disloyalty", "traitor", "treason", "betrayer", "betraying", "spy", "treachery", "unfaithfulness", "faithlessness", "double-dealing", "breach of faith", "stab in the back", "Judas kiss", "double-cross" ;
-  :verb_synonym "be disloyal to", "be unfaithful to", "break faith with", "double-cross", "double-deal", "sell out", "stab in the back", "be a Judas", "rat on", "squeal on", "rat out", "cheat on", "betray", "undermine" ;
+  :noun_synonym "disloyalty", "traitor", "treason", "betrayer", "betraying", "spy", "treachery", "unfaithfulness", "faithlessness", "double-dealing", "breach of faith", "stab in back", "Judas kiss", "double-cross" ;
+  :verb_synonym "be disloyal", "be unfaithful", "break faith", "double-cross", "double-deal", "sell out", "stab in back", "be Judas", "rat on", "squeal on", "rat out", "cheat on", "betray", "undermine" ;
   :wordnet_noun_synset "00751065" ;
   :wordnet_verb_synset "02582588", "02584093", "02543073" . 
 
@@ -144,7 +146,7 @@
   :wordnet_verb_synset "02470917", "02509666" .
 
 :CaptureAndSeizure a owl:Class ;
-  rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct ;
+  rdfs:subClassOf :Acquisition, :AggressiveOrHostileAct, :ChangeOfPossession ;
   rdfs:label "Capture and Seizure" ;
   :definition "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate." ;
   :noun_synonym "arrest", "confiscation", "capturing", "seizing", "confiscating", "arresting", "apprehending", "snatching" ;
@@ -184,13 +186,13 @@
   rdfs:label "Decision Making and Choice" ;
   :definition "An act of concluding or resolving some question or issue by choosing a course of action or alternative." ;
   :noun_synonym "course of action", "deciding", "planning", "choosing", "selection", "pick", "determination" ;
-  :verb_synonym "decide", "resolve", "make a decision", "choose", "make up one's mind", "determine" ;
+  :verb_synonym "decide", "resolve", "make decision", "choose", "make up mind", "determine", "take path" ;
   :wordnet_noun_synset "00162063", "00039000", "00152317" ;
   :wordnet_verb_synset "02486392", "00681856", "00699355" .
 
-:DefensiveOrProtectiveAct a owl:Class ;
+:DefensiveAndProtectiveAct a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
-  rdfs:label "Defensive or Protective Act" ;
+  rdfs:label "Defensive and Protective Act" ;
   :definition "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct." ;
   :noun_synonym "preservation", "conservation", "protection", "security", "safeguarding", "defending", "protecting", "preserving", "conserving", "securing" ;
   :verb_synonym "defend", "protect", "conserve", "preserve", "secure", "safeguard", "shield" ;
@@ -211,7 +213,7 @@
   rdfs:label "Escape and Evasion" ;
   :definition "An act of avoiding/getting away from something, someone or some Event, or of breaking free from captivity or oppression." ;
   :noun_synonym "breakout", "desertion", "extrication", "fleeing", "escaping", "deserting", "evading", "eluding", "extricating", "running away", "disentanglement", "extrication" ;
-  :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away", "get away", "get by", "get out", "break loose" ; 
+  :verb_synonym "escape", "evade", "elude", "desert", "extricate", "flee", "slip away", "get away", "break loose" ; 
   :wordnet_noun_synset "00046918", "01247140", "00060196" ;
   :wordnet_verb_synset "00812391", "02078305", "02078906" .
 
@@ -229,16 +231,16 @@
   rdfs:label "Forgetting" ;
   :definition "An act of Cognition where past occurrences, learning and insights cannot be recalled/remembered." ;
   :noun_synonym "forgetfulness", "absentmindedness" ; 
-  :verb_synonym "forget", "block out", "blank out", "draw a blank", "fail to remember" ;
+  :verb_synonym "forget", "block out", "blank out", "draw blank", "fail to remember" ;
   :wordnet_noun_synset "05681752" ;
   :wordnet_verb_synset "00610654", "00611721", "00616520", "00599897", "00600024" .
 
 :GiftAndDonation a owl:Class ;
-  rdfs:subClassOf :Acquisition, :FriendlyOrSupportiveAct ;
+  rdfs:subClassOf :FriendlyOrSupportiveAct, :ChangeOfPossession ;
   rdfs:label "Gift and Donation" ;
   :definition "An act of giving with no expectation of payment." ;
-  :noun_synonym "contribution", "present", "giveaway", "endowment", "offering", "alms", "gifting", "donating", "contributing", "endowing", "giving" ; 
-  :verb_synonym "give", "donate", "contribute", "endow", "chip in", "kick in" ;
+  :noun_synonym "contribution", "present", "giveaway", "endowment", "offering", "alms", "gifting", "donating", "contributing", "endowing", "beneficiary" ; 
+  :verb_synonym "donate", "contribute", "endow", "chip in", "kick in" ;
   :wordnet_noun_synset "01088005", "01091702", "13285910", "13290913" ;
   :wordnet_verb_synset "01062618", "02206050", "02313721", "02204104", "02205200" .
 
@@ -247,7 +249,7 @@
   rdfs:label "Ignoring and Overlooking" ;
   :definition "An act of purposefully disregarding, not noticing or not acknowledging something or someone." ;
   :noun_synonym "cold-shoulder", "disregard", "neglect", "disregarding", "neglecting", "negligence" ;
-  :verb_synonym "disregard", "neglect", "pay no attention", "overlook", "ignore", "bury one's head in the sand", "look the other way", "pay no mind", "turn blind eye", "dismiss", "brush aside", "brush off", "discount", "push aside", "snub", "leave out", "lose track" ;
+  :verb_synonym "disregard", "neglect", "pay no attention", "overlook", "ignore", "bury head in sand", "look other way", "pay no mind", "turn blind eye", "dismiss", "brush aside", "brush off", "discount", "push aside", "snub", "leave out", "lose track" ;
   :wordnet_noun_synset "00419628", "05714175" ; 
   :wordnet_verb_synset "00596900", "00618547", "00802592", "02123706", "01061436", "00616690", "02170805", "00596701" .
 
@@ -274,7 +276,7 @@
   rdfs:label "Knowledge and Skill" ;
   :definition "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)" ;
   :noun_synonym "understanding", "comprehension", "expertise", "intelligence", "know-how", "proficiency", "knowing", "comprehending", "competency", "competency" ;
-  :verb_synonym "know", "understand", "comprehend", "know the score", "grok" ;
+  :verb_synonym "know", "understand", "comprehend", "know score", "grok" ;
   :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569" ;
   :wordnet_verb_synset "00595732", "00596016", "00597025", "00597330", "00597527", "00597879", "00598039", "00590283", "00589616", "00592510" .
 
@@ -283,7 +285,7 @@
   rdfs:label "Learning and Education" ;
   :definition "An act of acquiring or transferring knowledge and skills through study, repetition, experience, instruction, etc." ;
   :noun_synonym "studying", "practicing", "training", "lesson", "schoolwork", "class", "course", "test", "teaching", "schooling", "tutoring", "instruction", "instructing", "coaching", "degree", "diploma" ;
-  :verb_synonym "study", "practice", "train", "memorize", "learn", "larn", "hit the books", "teach", "instruct", "educate", "test", "tutor", "coach", "take a class", "attend school", "attend college", "go to school", "go to college" ;
+  :verb_synonym "study", "practice", "train", "memorize", "learn", "larn", "hit books", "teach", "instruct", "educate", "test", "tutor", "coach", "take class", "attend school", "attend college", "go to school", "go to college" ;
   :wordnet_noun_synset "05760541", "00729939", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
   :wordnet_verb_synset "00600349", "00599310", "00601387", "00608509", "00830768", "02392628", "02268987" .
 
@@ -292,7 +294,7 @@
   rdfs:label "Maintenance and Repair" ;
   :definition "Any act that maintains/fixes/mends/adjusts/restores an entity." ;
   :noun_synonym "maintaining", "renovation", "patch", "fix", "fixing", "revamping", "renewal", "repairing", "mend", "mending", "renovating", "patching", "rebuilding", "revamping", "reconditioning", "renewing", "care", "upkeep", "improvement", "tending" ;
-  :verb_synonym "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "take care of", "refurbish", "better", "improve" ;
+  :verb_synonym "repair", "restore", "mend", "fix", "renovate", "patch", "rebuild", "revamp", "recondition", "renew", "put back together", "touch up", "refurbish", "better", "improve" ;
   :wordnet_noun_synset "00249844" ; 
   :wordnet_verb_synset "00261534", "01634614", "00206293", "00207826", "00230988", "01572394" .
 
@@ -300,7 +302,7 @@
   rdfs:subClassOf :Cognition ;
   rdfs:label "Meaning, Implication and Inference" ;
   :definition "An act of interpreting the meaning of something or positing a conclusion based on observation, reasoning, experience, etc." ;
-  :noun_synonym "illation", "analogy", "derivation", "extrapolation", "presumption", "entailment", "undertone", "undercurrent", "connotation", "significance", "import", "semantics", "insinuation", "innuendo", "deriving", "extrapolating", "presuming", "entailing", "connoting", "signifyng" ;
+  :noun_synonym "illation", "analogy", "derivation", "extrapolation", "presumption", "entailment", "undertone", "undercurrent", "connotation", "significance", "import", "semantics", "insinuation", "innuendo", "deriving", "extrapolating", "presuming", "entailing", "connoting", "signifyng", "interpretation" ;
   :verb_synonym "derive", "extrapolate", "entail", "connote", "signify", "insinuate", "mean", "implicate", "imply", "denote", "depict", "clarify", "clear up", "elucidate", "decipher", "decode", "translate", "interpret" ;
   :wordnet_noun_synset "05782611", "05928460", "07252762" ; 
   :wordnet_verb_synset "02640889", "02641270", "00931801", "00932561", "00941888" .
@@ -318,8 +320,8 @@
   rdfs:subClassOf :AssessmentAndCharacterization, :TroubleAndProblem ;
   rdfs:label "Mistake" ;
   :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property." ;
-  :noun_synonym "error", "fault", "inaccuracy", "omission", "miscalculation", "blunder", "gaffe", "misconception", "misinterpretation", "misstatement", "false step", "misjudgment", "mistaking", "faulting", "omitting", "miscalculating", "blundering", "misinterpreting", "misconceiving", "misstating", "misjudging", "misunderstanding" ;
-  :verb_synonym "lack judgment", "show a lack of judgment", "make a mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterpret", "misjudge", "misunderstand", "misconstrue", "misconceive", "misapprehend", "be amiss", "err", "mistake", "slip up" ;
+  :noun_synonym "error", "fault", "inaccuracy", "omission", "miscalculation", "blunder", "gaffe", "misconception", "misinterpretation", "misstatement", "false step", "misjudgment", "mistaking", "faulting", "omitting", "miscalculating", "blundering", "misinterpreting", "misconceiving", "misstating", "misjudging", "misunderstanding", "lack of judgment" ;
+  :verb_synonym "lack judgment", "show lack of judgment", "make mistake", "omit", "miscalculate", "blunder", "misconceive", "misinterpret", "misjudge", "misunderstand", "misconstrue", "misconceive", "misapprehend", "be amiss", "err", "mistake", "slip up" ;
   :wordnet_noun_synset "00067036", "05714576", "05902260", "04811700" ;
   :wordnet_verb_synset "00641140", "00621541", "00619438" .
 
@@ -328,7 +330,7 @@
   rdfs:label "Murder and Homicide" ;
   :definition "Any Event that is related to killing a person or living thing." ;
   :noun_synonym "killing", "extermination", "assassination" , "execution", "slaughter", "massacre", "liquidation", "casualty", "beheading", "lynching", "slaying", "strangulation", "asphyxiation", "hanging", "decapitation", "pogrom", "murdering", "exterminating", "assassinating", "executing", "slaughtering", "massacring", "liquidating", "slaying", "strangling", "asphyxiating", "decapitating", "lynching", "manslaughter" ;
-  :verb_synonym "take a life", "knock off", "kill", "murder", "exterminate", "assassinate", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate", "annihilate", "wipe out", "decimate", "butcher", "massacre", "slaughter", "mow down" ;
+  :verb_synonym "take life", "knock off", "kill", "murder", "exterminate", "assassinate", "slaughter", "massacre", "liquidate", "behead", "lynch", "slay", "strangle", "asphyxiate", "decapitate", "annihilate", "wipe out", "decimate", "butcher", "massacre", "slaughter", "mow down" ;
   :wordnet_noun_synset "00220890" ;
   :wordnet_verb_synset "01326622" .
 
@@ -336,8 +338,8 @@
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Pain" ;
   :definition "A reaction of suffering or discomfort." ;
-  :noun_synonym "agony", "suffering", "soreness", "discomfort", "hurting", "ache", "aching", "throb", "throbbing", "sting", "stinging", "first degree burn", "second degree burn", "third degree burn", "torment", "aching", "throbbing", "suffering" ;
-  :verb_synonym "ache", "throb", "suffer", "sting" ;
+  :noun_synonym "agony", "suffering", "soreness", "discomfort", "hurting", "ache", "aching", "throb", "throbbing", "torment", "aching", "throbbing", "suffering" ;
+  :verb_synonym "ache", "throb", "suffer" ;
   :wordnet_noun_synset "05732639", "07509503", "14346126", "07510467" ;
   :wordnet_verb_synset "02125976" . 
 
@@ -351,12 +353,12 @@
   :wordnet_verb_synset "02455370", "02456941", "02456614", "00772186", "00910052", "02563998" .
 
 :PurchaseAndSale a owl:Class ;
-  rdfs:subClassOf :Acquisition, :FinancialEvent ;
+  rdfs:subClassOf :Acquisition, :FinancialEvent, :ChangeOfPossession ;
   rdfs:label "Purchase and Sale" ;
   :definition "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property." ;
   :noun_synonym "buying", "selling", "procurement", "vending", "paying", "shopping", "purchasing", "procuring", "vending", "buyout" ;
   :verb_synonym "buy", "sell", "procure", "vend", "pay", "shop", "purchase" ;
-  :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160" ; 
+  :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160", "10498913" ; 
   :wordnet_verb_synset "02211988", "02262178" .
 
 :Rape a owl:Class ;

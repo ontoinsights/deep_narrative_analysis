@@ -81,7 +81,7 @@ def test_query_class():
 
 
 def test_query_exact_and_approx_match():
-    result = query_exact_and_approx_match('raw material', query_noun)
+    result = query_exact_and_approx_match('raw material', query_noun, False)
     assert 'RawMaterial' in result
 
 

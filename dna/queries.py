@@ -10,6 +10,10 @@ delete_entity = 'prefix : <urn:ontoinsights:dna:> DELETE {?s ?p ?o} WHERE {?s ?p
 query_dbs = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> ' \
             'SELECT * WHERE {?db a :Database ; dc:created ?created}'
 
+query_agent_or_location = 'prefix : <urn:ontoinsights:dna:> SELECT ?result WHERE { ' \
+                          '{{keyword rdfs:subClassOf+ :Agent . BIND(":Agent" as ?result)} UNION ' \
+                          '{keyword rdfs:subClassOf+ :Location . BIND(":Location" as ?result)}} }'
+
 query_emotion = 'prefix : <urn:ontoinsights:dna:> SELECT ?overall ?result WHERE { ' \
                 'keyword rdfs:subClassOf+ :EmotionalResponse . BIND(":EmotionalResponse" as ?overall) . ' \
                 '{{keyword rdfs:subClassOf+ :PositiveEmotion . BIND(":PositiveEmotion" as ?result)} UNION ' \
@@ -26,13 +30,23 @@ query_event = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ' \
               '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(60 as ?prob) } } ' \
               '} ORDER BY DESC(?prob)'
 
-query_event_example = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
-              '?class rdfs:subClassOf+ :EventAndState ; :example ?ex . FILTER(CONTAINS(?ex, "keyword")) }'
+query_example = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
+                '?class rdfs:subClassOf+ :EventAndState ; :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . ' \
+                'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :LineOfBusiness } ' \
+                'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Ethnicity } ' \
+                'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } }'
 
-query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
-              '{ ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") } UNION ' \
-              '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") } UNION ' \
-              '{ ?class rdfs:label ?label . FILTER(lcase(?label) = "keyword") } }'
+query_match = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE { ?class a owl:Class . ' \
+              '{ { ?class :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") . BIND(verb_prob as ?prob) } UNION ' \
+              '{ ?class :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(noun_prob as ?prob) } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(?label = "keyword") . BIND(80 as ?prob) } UNION ' \
+              '{ ?class rdfs:label ?label . FILTER(lcase(?label) = "keyword") . BIND(70 as ?prob) } } ' \
+              '} ORDER BY DESC(?prob)'
+
+query_match_noun = 'prefix : <urn:ontoinsights:dna:> SELECT ?inst ?class ?prob WHERE { ?inst a ?class . ' \
+              '{ { ?inst :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
+              '{ ?inst rdfs:label ?label . FILTER(?label = "keyword") . BIND(90 as ?prob) } } ' \
+              '} ORDER BY DESC(?prob)'
 
 query_narratives = \
     'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> SELECT * WHERE { ' \
@@ -56,41 +70,28 @@ query_norp_emotion_or_lob = \
 query_noun = 'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
              '{ ?class a owl:Class { ' \
              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(100 as ?prob) } UNION ' \
+             '{ ?class :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(99 as ?prob) } UNION ' \
              '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(95 as ?prob) } UNION ' \
+             '{ ?class :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(94 as ?prob) } UNION ' \
              '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(90 as ?prob) } UNION ' \
              '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } UNION ' \
              '{ ?class :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . BIND(80 as ?prob) } } ' \
-             'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :LineOfBusiness } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Ethnicity } ' \
              'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } } ORDER BY DESC(?prob)'
-
-query_noun_as_verb = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class ?prob WHERE ' \
-    '{ ?class a owl:Class ; rdfs:subClassOf+ :EventAndState { ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(100 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(95 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS("keyword", lcase(?label))) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class rdfs:label ?label . FILTER(CONTAINS(lcase(?label), "keyword")) . BIND(85 as ?prob) } } ' \
-    '} ORDER BY DESC(?prob)'
-
-query_noun_example = \
-    'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \
-    '?class a owl:Class ; :example ?ex . FILTER(CONTAINS(?ex, "keyword")) . ' \
-    'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :EventAndState } ' \
-    'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :LineOfBusiness } ' \
-    'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Ethnicity } ' \
-    'FILTER NOT EXISTS { ?class rdfs:subClassOf+ :Enumeration } }'
 
 query_specific_noun = \
     'prefix : <urn:ontoinsights:dna:> SELECT ?iri ?type ?prob WHERE ' \
     '{ ?iri a ?type . ?type rdfs:subClassOf+ class_type . ' \
     '{ { ?iri rdfs:label ?label . FILTER(?label = "keyword") . BIND(100 as ?prob) } UNION ' \
     '{ ?iri :noun_synonym ?nsyn . FILTER(?nsyn = "keyword") . BIND(100 as ?prob) } UNION ' \
+    '{ ?iri :verb_synonym ?vsyn . FILTER(?vsyn = "keyword") . BIND(99 as ?prob) } UNION ' \
     '{ ?iri rdfs:label ?label . FILTER(CONTAINS("keyword", ?label)) . BIND(90 as ?prob) } UNION ' \
-    '{ ?class :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
+    '{ ?iri :noun_synonym ?nsyn . FILTER(CONTAINS("keyword", ?nsyn)) . BIND(90 as ?prob) } UNION ' \
+    '{ ?iri :verb_synonym ?vsyn . FILTER(CONTAINS("keyword", ?vsyn)) . BIND(89 as ?prob) } UNION ' \
     '{ ?iri rdfs:label ?label . FILTER(CONTAINS(?label, "keyword")) . BIND(85 as ?prob) } UNION ' \
-    '{ ?iri :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } } } ' \
+    '{ ?iri :noun_synonym ?nsyn . FILTER(CONTAINS(?nsyn, "keyword")) . BIND(80 as ?prob) } UNION ' \
+    '{ ?iri :verb_synonym ?vsyn . FILTER(CONTAINS(?vsyn, "keyword")) . BIND(79 as ?prob) } } } ' \
     'ORDER BY DESC(?prob)'
 
 query_subclass = 'prefix : <urn:ontoinsights:dna:> SELECT ?class WHERE { ' \

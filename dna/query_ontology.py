@@ -9,7 +9,7 @@ from dna.utilities_and_language_specific import dna_prefix, empty_string, ontolo
 
 def _check_emotion(class_name: str) -> str:
     """
-    Determines if any of the class_name is a positive or negative emotion, or not an emotion.
+    Determines if the class_name is a positive or negative emotion, or not an emotion.
     If an emotion, then either ":PositiveEmotion', ':NegativeEmotion' or ':EmotionalResponse' will
     be returned.
 
@@ -111,7 +111,7 @@ def get_norp_emotion_or_lob(noun_text: str) -> (str, str):
     return empty_string, empty_string
 
 
-def query_exact_and_approx_match(text: str, query_str: str) -> str:
+def query_exact_and_approx_match(text: str, query_str: str, is_verb: bool) -> str:
     """
     Executes a query_match and then approximate match (identified by the query string) for the
     text. An "approximate" match is written using FILTER CONTAINS.
@@ -119,9 +119,14 @@ def query_exact_and_approx_match(text: str, query_str: str) -> str:
     :param text: Text to match
     :param query_str: String holding the "approximate" query to execute; If empty, then only an exact
                       match is performed
+    :param is_verb: Boolean indicating if this is a check for a noun or verb
     :return: The highest probability class name returned by the query
     """
-    class_name = query_class(text, query_match)   # Query exact match
+    if is_verb:
+        exact_query = query_match.replace('verb_prob', '100').replace('noun_prob', '90')
+    else:
+        exact_query = query_match.replace('verb_prob', '90').replace('noun_prob', '100')
+    class_name = query_class(text, exact_query)   # Query exact match
     if class_name != owl_thing2:
         return f':{class_name.split(":")[-1]}'
     # Avoid false matches if the word is < 5 characters (for ex, 'end' or 'old' is in many strings)

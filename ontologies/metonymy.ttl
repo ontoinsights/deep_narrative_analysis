@@ -1,0 +1,120 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+# Extracted from https://en.wikipedia.org/w/index.php?title=List_of_metonyms&oldid=1124677755
+
+# North America
+:CapitolHill a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Capital Hill" ;
+  :noun_synonym "Hill" ; 
+  :definition "A neighborhood in Washington, D.C., and a reference to the United States Congress" ;
+  :has_component :HouseOfRepresentatives, :Senate .
+
+:FoggyBottom a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Foggy Bottom" ;
+  :noun_synonym "US Department of State" ; 
+  :definition "A neighborhood in Washington, D.C., and a reference to the United States Department of State" .
+
+:Hollywood a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "Hollywood" ;
+  :has_line_of_business :EntertainmentBusiness ;
+  :definition "A district of Los Angeles, California, and a metonym for the American film industry" .
+
+:HouseOfRepresentatives a :GovernmentalEntity ;
+  rdfs:label "House of Representatives" ;
+  :noun_synonym "House" ; 
+  :definition "A part of the legislative branch of the United States government, part of 'Capital Hill'." .
+
+:KStreet a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "K Street" ;
+  :has_line_of_business :GovernmentAndPoliticsBusiness ;
+  :definition "A street in downtown Washington, D.C., and a reference to the American lobbying industry" .
+
+:Langley a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Langley" ;
+  :noun_synonym "US Central Intelligence Agency", "CIA" ; 
+  :definition "	A small suburb of Washington, D.C., and a reference to the U.S. Central Intelligence Agency." .
+
+:MadisonAvenue a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "Madison Avenue" ;
+  :has_line_of_business :ProvisionOfServicesBusiness ;
+  :definition "A street in Manhattan, New York City, and a reference to the American advertising industry." .
+
+:MainStreet a :DesignatedArea ;
+  rdfs:label "Main Street" ;
+  :definition "A shopping area of a town, traditionally the site of shops, banks, and local businesses." .
+
+:Ottawa a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Ottawa, Canada" ;
+  :definition "The capital of Canada, and a reference to the Government of Canada." .
+
+:Pentagon a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Pentagon" ;
+  :noun_synonym "US Department of Defense", "DoD" ; 
+  :definition "	A pentagonal building in Arlington County, Virginia, and a reference to	the United States Department of Defense (whose headquarters is housed by the Pentagon building)." .
+
+:Senate  a :GovernmentalEntity ;
+  rdfs:label "Senate" ;
+  :definition "A part of the legislative branch of the United States government, part of 'Capital Hill'." .
+
+:SiliconValley a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "Silicon Valley" ;
+  :has_line_of_business :TechnologyBusiness ;
+  :definition "San Jose and its suburbs on the southwest side of San Francisco Bay, and a reference to the American high-tech industry." .
+
+:WallStreet	a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "Wall Street" ;
+  :has_line_of_business :BankingAndFinanceBusiness ;
+  :definition "A street in Manhattan, New York City, and a reference to the American financial markets or 'big business' more generally." .
+
+:WhiteHouse	a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "White House" ;
+  :definition "The official residence of the president of the United States, and a reference to	the Executive Office of the President of the United States." .
+
+# Europe
+:DowningStreet a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Downing Street" ;
+  :noun_synonym "10 Downing Street", "Number 10" ; 
+  :definition "The official residence of the prime minister of the United Kingdom, and a reference to the prime minister and his/her staff (often meaning more broadly the UK Government)." .
+
+:Brussels a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Brussels" ;	
+  :definition "The capital of Belgium, and a reference to the government of the European Union." .
+
+:BuckinghamPalace a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Buckingham Palace" ;	
+  :definition "A large building in London that is the official residence of the reigning British sovereign, and a reference to the British royal family and its staff." .
+
+:FleetStreet a :PhysicalLocation, :LineOfBusiness ;
+  rdfs:label "Fleet Street" ;
+  :has_line_of_business :PublishingAndMediaBusiness ;
+  :definition "A street in the City of London, and a reference to the British national press." .
+
+:Hague a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Hague" ;
+  :noun_synonym "International Criminal Court", "International Court of Justice" ;
+  :definition "A city in the Netherlands, and a reference to the International Criminal Court or International Court of Justice, both of which have their seat in the city." .
+
+:Holyrood a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Holyrood" ;
+  :definition "An area in Edinburgh, and a reference to the Scottish Parliament (or more generally, the Scottish Government), which is located in that area." .
+
+:Hrad a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Hrad" ; 
+  :definition "The Prague Castle and official residence and office of the president of the Czech Republic. Also a reference to the president of the Czech Republic and his or her staff, and/or the Czech Republic as a whole." .
+
+:Kremlin a :PhysicalLocation, :GeopoliticalEntity ;
+  rdfs:label "Kremlin" ;
+  :definition "The Moscow Kremlin and/or the Russian presidential administration; historically, any Russian or Soviet government." .
+
+:ScotlandYard a :PhysicalLocation, :PoliceForce ;
+  rdfs:label "Scotland Yard" ;
+  :definition "The London or British police, especially detectives." .
+
+:Westminster a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Westminster" ;
+  :definition "A part of Central London, England, and a reference to the Parliament of the United Kingdom." .
+
+:Whitehall a :PhysicalLocation, :GovernmentalEntity ;
+  rdfs:label "Whitehall" ;
+  :definition "A street in the City of Westminster borough of London, and a reference to the Civil Service of the United Kingdom, or more generally the Government of the United Kingdom. The term is used similarly to 'Westminster'." .

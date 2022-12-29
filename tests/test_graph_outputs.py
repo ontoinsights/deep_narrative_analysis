@@ -3,7 +3,8 @@ from dna.nlp import parse_narrative
 
 sent_simple = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming'
 sent_xcomp1 = 'Harry tried to give up the prize.'
-sent_xcomp2 = "Trump urged GOP voters to reject one of his most prominent critics."
+sent_xcomp2 = 'On Tuesday, in Wyoming, Trump urged GOP voters to reject one of his most prominent critics.'
+sent_xcomp2a = 'Trump urged Republican voters to reject his critics.'
 sent_xcomp3 = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, ' \
         'an outcome that was a priority for former President Donald Trump as he urged GOP voters ' \
         'to reject one of his most prominent critics on Capitol Hill.'
@@ -26,6 +27,8 @@ bug1 = 'While Mary exercised, John practiced guitar.'
 bug2 = 'George went along with the plan that Mary outlined.'
 bug3 = 'Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during her concession speech ' \
        'shortly after her loss to Trump-backed Republican challenger Harriet Hageman.'
+bug4 = 'Mary enjoyed being with her grandfather.'
+bug5 = 'Mary can be with her grandfather on Tuesdays.'
 
 
 def test_sent_simple():
@@ -49,28 +52,26 @@ def test_sent_simple():
     assert ':has_location' not in ttl_str
     assert 'Republican primary in Wyoming in Republican primary in Wyoming' not in ttl_str
     # Output:
-    # :Chunk_ef8c9051-c842 a :Chunk ; :offset 1 .
-    # :Chunk_ef8c9051-c842 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming" .
-    # :Chunk_ef8c9051-c842 :sentiment -0.4588 .
-    # :Event_8af281c7-15c9 :has_time :PiT_DayTuesday .
-    # :defeat_88c3f6bc_d9c1 a :Failure .
-    # :defeat_88c3f6bc_d9c1 rdfs:label "defeat" .
-    # :republican_primary_in_wyoming_85ca6796_c4b4 a :Election .
-    # :republican_primary_in_wyoming_85ca6796_c4b4 rdfs:label "Republican primary in Wyoming" .
-    # :Event_8af281c7-15c9 :has_topic :republican_primary_in_wyoming_85ca6796_c4b4 .
-    # :Event_8af281c7-15c9 a :SurrenderAndYielding .
-    # :Event_8af281c7-15c9 :has_active_agent :Liz_Cheney .
-    # :Event_8af281c7-15c9 :has_topic :defeat_88c3f6bc_d9c1 .
-    # :Event_8af281c7-15c9 :has_topic :republican_primary_in_wyoming_85ca6796_c4b4 .
-    # :Event_8af281c7-15c9 rdfs:label "Cheney conceded defeat, in Republican primary in Wyoming" .
-    # :Chunk_ef8c9051-c842 :describes :Event_8af281c7-15c9 .
+    # :Chunk_be193c95-826d a :Chunk ; :offset 1 .
+    # :Chunk_be193c95-826d :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming" .
+    # :Event_b6162062-7ad6 :has_time :PiT_DayTuesday .
+    # :defeat_5629d0d1_b706 a :Failure .
+    # :defeat_5629d0d1_b706 rdfs:label "defeat" .
+    # :republican_primary_in_wyoming_e8f8c661_f274 a :Election .
+    # :republican_primary_in_wyoming_e8f8c661_f274 rdfs:label "Republican primary in Wyoming" .
+    # :Event_b6162062-7ad6 :has_topic :republican_primary_in_wyoming_e8f8c661_f274 .
+    # :Event_b6162062-7ad6 a :SurrenderAndYielding .
+    # :Event_b6162062-7ad6 :has_active_agent :Liz_Cheney .
+    # :Event_b6162062-7ad6 :has_topic :defeat_5629d0d1_b706 .
+    # :Event_b6162062-7ad6 rdfs:label "Liz Cheney conceded defeat, in Republican primary in Wyoming" .
+    # :Chunk_be193c95-826d :describes :Event_b6162062-7ad6 .'
 
 
 def test_sent_xcomp1():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_xcomp1)
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
-    assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert '"Harry"' in ttl_str                  # Person alt name
     assert ':Harry :gender "Male"' in ttl_str    # Gender capture
     # Following are shown in the output pasted below
@@ -80,10 +81,10 @@ def test_sent_xcomp1():
     assert 'a :SurrenderAndYielding' in ttl_str         # Mapping for give up
     assert ':has_time' not in ttl_str
     assert ':has_location' not in ttl_str
+    assert 'Harry tried to give up the prize' in ttl_str
     # Output:
     # :Chunk_6eeea672-9d51 a :Chunk ; :offset 1 .
     # :Chunk_6eeea672-9d51 :text "Harry tried to give up the prize" .
-    # :Chunk_6eeea672-9d51 :sentiment 0.5106.
     # :Chunk_6eeea672-9d51 :describes :Event_656905bc-0770 .
     # :prize_a8ace05f-2908 a :RewardAndCompensation .
     # :prize_a8ace05f-2908 rdfs:label "prize" .
@@ -91,7 +92,7 @@ def test_sent_xcomp1():
     # :Event_656905bc-0770 a :SurrenderAndYielding .
     # :Event_656905bc-0770 :has_active_agent :Harry .
     # :Event_656905bc-0770 :has_topic :prize_a8ace05f-2908 .
-    # :Event_656905bc-0770 rdfs:label "Harry try to give up the prize" .   TODO: Correct root verb tense
+    # :Event_656905bc-0770 rdfs:label "Harry tried to give up the prize" .
 
 
 def test_sent_xcomp2():
@@ -106,31 +107,60 @@ def test_sent_xcomp2():
     assert ':RefusalAndRejection' in ttl_str             # Mapping for reject
     assert ':has_topic :Event_' in ttl_str               # Topic of the urging (another event = rejection)
     assert ':has_active_agent :gop_voters_' in ttl_str   # Voters reject
-    assert ':has_active_agent :Trump' in ttl_str            # Trump urged
+    assert ':has_active_agent :Trump' in ttl_str             # Trump urged
     assert ':has_affected_agent :gop_voters_' in ttl_str     # Voters were urged
-    assert ':has_topic :one_of_his_most_prominent_critics_' in ttl_str    # Topic of rejection
-    assert 'a :OpportunityAndPossibility' in ttl_str             # Urging does not mean that the 'topic' event happens
+    assert 'a :OpportunityAndPossibility' in ttl_str         # Urging does not mean that the 'topic' event happens
+    assert 'Trump urged GOP voters' in ttl_str           # Verify labels
+    assert 'GOP voters reject one' in ttl_str
+    assert 'a :Affiliation' in ttl_str                   # Affiliation of the voters to the GOP
+    assert ':affiliated_agent :gop_voters' in ttl_str and ':affiliated_with :GOP' in ttl_str
     # Output:
-    # :Chunk_6e0c8957-63fd a :Chunk ; :offset 1 .
-    # :Chunk_6e0c8957-63fd :text "Trump urged GOP voters to reject one of his most prominent critics" .
-    # :Chunk_6e0c8957-63fd :sentiment -0.3788 .
-    # :Event_101b3cfe-ecc8 a :RequestAndAppeal .
-    # :Event_101b3cfe-ecc8 :has_topic :Event_383e5706-d5bb .
-    # :gop_voters_1cd38597_a22e :has_context :Election .
-    # :gop_voters_1cd38597_a22e a :Person, :Collection .
-    # :gop_voters_1cd38597_a22e rdfs:label "GOP voters" .
-    # :Event_101b3cfe-ecc8 :has_affected_agent :gop_voters_1cd38597_a22e .
-    # :one_of_his_most_prominent_critics_dd62644a_5d86 a owl:Thing .    TODO: critic is more important than 'one'
-    # :one_of_his_most_prominent_critics_dd62644a_5d86 rdfs:label "one of his most prominent critics" .
-    # :Event_383e5706-d5bb a :RefusalAndRejection .
-    # :Event_101b3cfe-ecc8 :has_active_agent :Trump .
-    # :Event_383e5706-d5bb :has_active_agent :gop_voters_1cd38597_a22e .
-    # :Event_383e5706-d5bb :has_topic :one_of_his_most_prominent_critics_dd62644a_5d86 .
-    # :Event_383e5706-d5bb rdfs:label "Trump urge GOP voters to reject one of his most prominent critics" .
-    # :Event_101b3cfe-ecc8 rdfs:label "Trump urge GOP voters to reject one of his most prominent critics" .
-    # :Chunk_6e0c8957-63fd :describes :Event_383e5706-d5bb .
-    # :Chunk_6e0c8957-63fd :describes :Event_101b3cfe-ecc8 .
-    # :Event_383e5706-d5bb a :OpportunityAndPossibility .
+    # :Chunk_22755898-623d a :Chunk ; :offset 1 .
+    # :Chunk_22755898-623d :text "On Tuesday, in Wyoming, Trump urged GOP voters to reject one of his
+    #                             most prominent critics" .
+    # :Event_c966d908-db52 :has_topic :Event_f90d9252-65bd .
+    # :Event_c966d908-db52 :has_time :PiT_DayTuesday .
+    # :gop_voters_0685e457_e868 :has_context :Election .
+    # :gop_voters_0685e457_e868_GOP_Affiliation a :Affiliation ; :affiliated_with :GOP ;
+    #                                           :affiliated_agent :gop_voters_0685e457_e868 .
+    # :gop_voters_0685e457_e868_GOP_Affiliation rdfs:label "Relationship based on the text, \'GOP voters\'" .
+    # :gop_voters_0685e457_e868 a :Person, :Collection .
+    # :gop_voters_0685e457_e868 rdfs:label "GOP voters" .
+    # :prominent_critics_84802128_b8c2 :has_context :Complaint .
+    # :prominent_critics_84802128_b8c2 a :Person .
+    # :prominent_critics_84802128_b8c2 rdfs:label "one of critics" .
+    # :Event_f90d9252-65bd a :RefusalAndRejection .
+    # :Event_f90d9252-65bd :has_active_agent :gop_voters_0685e457_e868 .
+    # :Event_f90d9252-65bd :has_affected_agent :prominent_critics_84802128_b8c2 .
+    # :Event_f90d9252-65bd rdfs:label "GOP voters reject one of critics" .
+    # :Chunk_22755898-623d :describes :Event_f90d9252-65bd .
+    # :Event_c966d908-db52 :has_location :Wyoming .
+    # :Event_c966d908-db52 a :RequestAndAppeal .
+    # :Event_c966d908-db52 :has_active_agent :Trump .
+    # :Event_c966d908-db52 :has_affected_agent :gop_voters_0685e457_e868 .
+    # :Event_c966d908-db52 rdfs:label "Trump urged GOP voters" .
+    # :Chunk_22755898-623d :describes :Event_c966d908-db52 .
+    # :Event_f90d9252-65bd a :OpportunityAndPossibility .
+
+
+def test_sent_xcomp2a():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_xcomp2a)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    assert success
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # Following are shown in the output pasted below
+    assert '"Republican voters"' in ttl_str
+    assert ':RequestAndAppeal' in ttl_str                # Mapping for urging
+    assert ':RefusalAndRejection' in ttl_str             # Mapping for reject
+    assert ':has_topic :Event_' in ttl_str               # Topic of the urging (another event = rejection)
+    assert ':has_active_agent :republican_voters_' in ttl_str   # Voters reject
+    assert ':has_active_agent :Trump' in ttl_str             # Trump urged
+    assert ':has_affected_agent :republican_voters_' in ttl_str     # Voters were urged
+    # TODO: Republican is captured as amod only, not compound; Check adj modifiers for affiliation
+    assert 'a :Affiliation' not in ttl_str
+    # assert ':affiliated_agent :republican_voters' in ttl_str and ':affiliated_with :Republican' in ttl_str
+    # Output similar to above
 
 
 def test_sent_xcomp3():
@@ -138,6 +168,7 @@ def test_sent_xcomp3():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert '"Trump"' in ttl_str
     # Following are shown in the output pasted below
     assert ':has_time :PiT_DayTuesday' in ttl_str
@@ -147,8 +178,8 @@ def test_sent_xcomp3():
     assert ':RefusalAndRejection' in ttl_str             # Mapping for reject
     assert ':has_active_agent :gop_voters_' in ttl_str   # Voters reject
     assert ':has_active_agent :Donald_Trump' in ttl_str            # Trump urged
-    assert ':has_affected_agent :gop_voters_' in ttl_str     # Voters were urged
-    assert ':has_topic :one_of_his_most_prominent_critics_' in ttl_str    # Topic of urging
+    assert ':has_affected_agent :gop_voters_' in ttl_str           # Voters were urged
+    assert ':has_topic :Event_' in ttl_str    # Topic of urging
     assert 'a :OpportunityAndPossibility' in ttl_str             # Urging does not mean that the xcomp event happens
     assert ':republican_primary_' in ttl_str and 'a :Election' in ttl_str
     assert 'a :SurrenderAndYielding' in ttl_str           # Cheney conceded
@@ -163,10 +194,11 @@ def test_sent_aux_only():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert 'a :EnvironmentAndCondition ; :has_topic :Conservatism' in ttl_str
     assert ':has_holder :Liz_Cheney' in ttl_str
     assert ':Liz_Cheney :has_agent_aspect :Conservatism ; :agent_aspect "neoconservative"' in ttl_str
-    assert 'rdfs:label "Describes that Cheney has an aspect of neoconservative"' in ttl_str
+    assert 'rdfs:label "Describes that Liz Cheney has an aspect of neoconservative"' in ttl_str
     assert ':neoconservative_' not in ttl_str      # Is unused since the mapping is to an EnvAndCondition
     # Output:
     # :Chunk_4a58c6bc-abd2 a :Chunk ; :offset 1 .
@@ -176,7 +208,7 @@ def test_sent_aux_only():
     # :Event_84a7d9d1-2d6f a :EnvironmentAndCondition ; :has_topic :Conservatism .
     # :Liz_Cheney :has_agent_aspect :Conservatism ; :agent_aspect "neoconservative" .
     # :Event_84a7d9d1-2d6f :has_holder :Liz_Cheney.
-    # :Event_84a7d9d1-2d6f rdfs:label "Describes that Cheney has an aspect of neoconservative" .
+    # :Event_84a7d9d1-2d6f rdfs:label "Describes that Liz Cheney has an aspect of neoconservative" .
 
 
 def test_sent_aux_and_verb():
@@ -184,31 +216,31 @@ def test_sent_aux_and_verb():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert ':Harriet_Hageman :gender "Female"' in ttl_str    # Gender capture
-    assert ':Liz_Cheney :gender "Female"' in ttl_str    # Gender capture
+    assert ':Liz_Cheney :gender "Female"' in ttl_str         # Gender capture
     # Following are shown in the output pasted below
-    assert 'a :Failure' in ttl_str                                 # Mapping for defeated
+    assert 'a :Success' in ttl_str                                 # Mapping for 'was defeated', reversing subj/obj
     assert ':has_active_agent :Harriet_Hageman' in ttl_str
     assert ':has_affected_agent :Liz_Cheney' in ttl_str
     assert ':has_time' in ttl_str
     assert ':has_location' not in ttl_str
     # Output:
-    # :Chunk_599134fa-ad30 a :Chunk ; :offset 1 .
-    # :Chunk_599134fa-ad30 :text "Liz Cheney was defeated Tuesday by Harriet Hageman" .
-    # :Chunk_599134fa-ad30 :sentiment -0.4767 .
-    # :Chunk_599134fa-ad30 :describes :Event_7aed4569-edb9 .
-    # :Event_7aed4569-edb9 :has_time :PiT_DayTuesday .
-    # :Event_7aed4569-edb9 a :Failure .    TODO: defeating someone is not failure
-    # :Event_7aed4569-edb9 :has_active_agent :Harriet_Hageman .
-    # :Event_7aed4569-edb9 :has_affected_agent :Liz_Cheney .
-    # :Event_7aed4569-edb9 rdfs:label "Hageman defeated Cheney" .
+    # Chunk_b894a019-1af7 a :Chunk ; :offset 1 .
+    # :Chunk_b894a019-1af7 :text "Liz Cheney was defeated Tuesday by Harriet Hageman" .
+    # :Event_3ce85fd5-19cd :has_time :PiT_DayTuesday .
+    # :Event_3ce85fd5-19cd a :Success .
+    # :Event_3ce85fd5-19cd :has_active_agent :Harriet_Hageman .
+    # :Event_3ce85fd5-19cd :has_affected_agent :Liz_Cheney .
+    # :Event_3ce85fd5-19cd rdfs:label "Harriet Hageman defeated Liz Cheney" .
+    # :Chunk_b894a019-1af7 :describes :Event_3ce85fd5-19cd .
 
 
 def test_sent_possessive_and_aux():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_possessive_and_aux)
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
-    assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     # TODO: Add assertion details
     # :Chunk_baa5049a-e42c a :Chunk ; :offset 1 .
     # :Chunk_baa5049a-e42c :text "a political family has loomed large in Republican politics in the
@@ -280,27 +312,15 @@ def test_paragraphs():
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Add assertion details
-
-
-def test_short_news_turtle():
-    for title in ('LC-FarRight', 'LC-Right', 'LC-Center', 'LC-Left'):
-        with open(f'resources/{title}.txt', 'r') as narr:
-            narrative = narr.read()
-            sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
-            success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
-            print(title)
-            print(turtle)
-            assert success
-    # TODO: Remove in lieu of full-text below
+    # Output:
 
 
 def test_news_far_right_turtle():
     with open(f'resources/LizCheney-FarRight.txt', 'r') as narr:
         narrative = narr.read()
-        sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
-        success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
-        print(turtle)
-        assert success
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
+    success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
+    print(turtle)
     # TODO: More detailed review/asserts
     # Output:
 
@@ -308,10 +328,9 @@ def test_news_far_right_turtle():
 def test_news_right_turtle():
     with open(f'resources/LizCheney-Right.txt', 'r') as narr:
         narrative = narr.read()
-        sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
-        success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
-        print(turtle)
-        assert success
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
+    success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
+    print(turtle)
     # TODO: More detailed review/asserts
     # Output:
 
@@ -319,10 +338,9 @@ def test_news_right_turtle():
 def test_news_center_turtle():
     with open(f'resources/LizCheney-Center.txt', 'r') as narr:
         narrative = narr.read()
-        sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
-        success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
-        print(turtle)
-        assert success
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
+    success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
+    print(turtle)
     # TODO: More detailed review/asserts
     # Output:
 
@@ -330,10 +348,9 @@ def test_news_center_turtle():
 def test_news_left_turtle():
     with open(f'resources/LizCheney-Left.txt', 'r') as narr:
         narrative = narr.read()
-        sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
-        success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
-        print(turtle)
-        assert success
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(narrative)
+    success, turtle = create_graph(sent_dicts, family_dict, '', True, False)
+    print(turtle)
     # TODO: More detailed review/asserts
     # Output:
 
@@ -345,98 +362,5 @@ def test_narrative_turtle():
     print(sent_dicts)
     success, turtle = create_graph(sent_dicts, family_dict, '', True, True)   # Ext sources + Is biography True
     print(turtle)
-    assert success
     # TODO: More detailed review/asserts; Esp need to test isBiography
     # Output:
-
-
-def test_bug1():
-    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(bug1)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
-    ttl_str = str(graph_ttl)
-    assert ':Mary' in ttl_str and ':John' in ttl_str
-    # Following are shown in the output pasted below
-    assert ':has_topic :guitar_' in ttl_str
-    assert 'a :BodyMovement' in ttl_str               # Exercised
-    assert ':HealthAndDiseaseRelated' in ttl_str      # Exercised
-    assert 'a :LearningAndEducation' in ttl_str
-    # Output:
-    # :Chunk_9b821aee-5e44 a :Chunk ; :offset 1 .
-    # :Chunk_9b821aee-5e44 :text "Mary exercised" .
-    # :Chunk_9b821aee-5e44 :sentiment 0.0 .
-    # :Chunk_9b821aee-5e44 :describes :Event_099a1378-81ba .
-    # :Event_099a1378-81ba a :BodyMovement, :HealthAndDiseaseRelated .
-    # :Event_099a1378-81ba :has_active_agent :Mary .
-    # :Event_099a1378-81ba rdfs:label "Mary exercised" .
-    # :Chunk_3071bb08-3279 a :Chunk ; :offset 2 .
-    # :Chunk_3071bb08-3279 :text "John practiced guitar" .
-    # :Chunk_3071bb08-3279 :sentiment 0.0 .
-    # :Chunk_3071bb08-3279 :describes :Event_cb52a553-e0c2 .
-    # :guitar_e801b432_8ec6 a :MusicalInstrument .
-    # :guitar_e801b432_8ec6 rdfs:label "guitar" .
-    # :Event_cb52a553-e0c2 a :LearningAndEducation .
-    # :Event_cb52a553-e0c2 :has_active_agent :John .
-    # :Event_cb52a553-e0c2 :has_topic :guitar_e801b432_8ec6 .
-    # :Event_cb52a553-e0c2 rdfs:label "John practiced guitar" .
-
-
-def test_bug2():
-    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(bug2)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
-    ttl_str = str(graph_ttl)
-    assert ':Mary' in ttl_str and ':George' in ttl_str
-    # Following are shown in the output pasted below
-    assert ':has_topic :plan_' in ttl_str
-    assert 'a :Agreement' in ttl_str
-    assert 'a :AssertionAndDeclaration' in ttl_str    # Outline
-    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :George' in ttl_str
-    # Output:
-    # :Chunk_1b961d7e-8f8a a :Chunk ; :offset 1 .
-    # :Chunk_1b961d7e-8f8a :text "Mary outlined the plan" .
-    # :Chunk_1b961d7e-8f8a :sentiment 0.0 .
-    # :plan_f618881b_a558 a :IntentionAndGoal .
-    # :plan_f618881b_a558 rdfs:label "plan" .
-    # :Event_c008cfc2-7fae a :AssertionAndDeclaration .
-    # :Event_c008cfc2-7fae :has_active_agent :Mary .
-    # :Event_c008cfc2-7fae :has_topic :plan_f618881b_a558 .
-    # :Event_c008cfc2-7fae rdfs:label "Mary outlined plan" .
-    # :Chunk_1b961d7e-8f8a :describes :Event_c008cfc2-7fae .
-    # :Chunk_93e4f425-717a a :Chunk ; :offset 2 .
-    # :Chunk_93e4f425-717a :text "George went along with the plan" .
-    # :Chunk_93e4f425-717a :sentiment 0.0 .
-    # :Event_53cef197-4475 a :Agreement .
-    # :Event_53cef197-4475 :has_active_agent :George .
-    # :Event_53cef197-4475 :has_topic :plan_f618881b_a558 .
-    # :Event_53cef197-4475 rdfs:label "George went plan along with plan" .
-    # :Chunk_93e4f425-717a :describes :Event_53cef197-4475 .
-
-
-def test_bug3():
-    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(bug3)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
-    ttl_str = str(graph_ttl)
-    # Following are shown in the output pasted below
-    assert ':has_topic :her_concession_speech_' in ttl_str
-    assert 'a :AssessmentAndCharacterization' in ttl_str    # Compared
-    assert ':has_active_agent :Liz_Cheney' in ttl_str and ':has_affected_agent :Abraham_Lincoln' in ttl_str
-    # Output:
-    # :Chunk_51acc08f-3598 a :Chunk ; :offset 1 .
-    # :Chunk_51acc08f-3598 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
-    #      during her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman" .
-    # :Chunk_51acc08f-3598 :sentiment -0.2023 .
-    # :Event_bcaff11f-20d2 :has_recipient :Abraham_Lincoln .
-    # TODO: Originally too short, now too long!
-    # :her_concession_speech_shortly_after_her_loss_to_
-    #     trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11 a :EventAndState .   TODO: Mapping incorrect
-    # :her_concession_speech_shortly_after_her_loss_to_trump_backed_republican_challenger_harriet_hageman_9ed99c59_3e11
-    #   rdfs:label "her concession speech shortly after her loss to Trump-backed Republican challenger
-    #   Harriet Hageman" .
-    # :Event_bcaff11f-20d2 a :AssessmentAndCharacterization .
-    # :Event_bcaff11f-20d2 :has_active_agent :Liz_Cheney .
-    # :Event_bcaff11f-20d2 :has_affected_agent :Liz_Cheney .
-    # :Event_bcaff11f-20d2 :has_affected_agent :Abraham_Lincoln .
-    # :Event_bcaff11f-20d2 :has_topic
-    #      :her_concession_speech_shortly_after_her_loss_to_trump_backed_
-    #      republican_challenger_harriet_hageman_9ed99c59_3e11 .
-    # :Event_bcaff11f-20d2 rdfs:label "Cheney compared Cheney, to Lincoln during her concession speech
-    #    shortly after her loss to Trump-backed Republican challenger Harriet Hageman" .

@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 18 2022
+# Last Modified: December 26 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -143,7 +143,7 @@
   rdfs:label "Joke" ;
   :definition "A CommunicationAndSpeechAct intended to amuse and be humorous. The Agent telling the joke is indicated using the :has_active_agent property. The thing that is joked about is indicated using :has_topic." ;
   :noun_synonym "jest", "witticism", "quip", "pun", "wisecrack", "joking", "jesting", "quipping", "wisecracking" ;
-  :verb_synonym "joke", "jest", "wisecrack", "tell a joke", "crack a joke" ;
+  :verb_synonym "joke", "jest", "wisecrack", "tell joke", "crack joke", "play joke" ;
   :wordnet_noun_synset "06788939", "06780568", "06794438" ;
   :wordnet_verb_synset "00105308", "01060752", "01706190" .
 
@@ -161,7 +161,7 @@
   rdfs:label "Promise and Oath" ;
   :definition "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property." ;
   :noun_synonym "vow", "commitment", "guarantee", "pledge", "word of honor", "promising", "vowing", "committing", "guaranteeing", "pledging", "contracting", "assurance" ;
-  :verb_synonym "vow", "commit", "guarantee", "pledge", "give one's word", "promise", "swear", "assure" ;
+  :verb_synonym "vow", "commit", "guarantee", "pledge", "give word", "promise", "swear", "assure" ;
   :wordnet_noun_synset "07241205", "07242432", "01208643", "01242433" ;
   :wordnet_verb_synset "00888280", "00885532", "00885838", "00886738" .
 
@@ -179,7 +179,7 @@
   rdfs:label "Request and Appeal" ;
   :definition "A CommunicationAndSpeechAct that expresses a need or desire for something or someone, or that some event or condition occur. Note that who/what is requested is identified using the :has_topic predicate." ;
   :noun_synonym "entreaty", "plea", "petition", "solicitation", "supplication", "urging", "begging", "invitation", "requesting", "entreating", "petitioning", "soliciting", "supplicating" ;
-  :verb_synonym "request", "make an appeal", "appeal", "ask for", "petition", "solicit", "urge", "beg", "invite" ;
+  :verb_synonym "request", "make appeal", "appeal", "ask for", "petition", "solicit", "urge", "beg", "invite" ;
   :wordnet_noun_synset "07199985", "06525357", "01044000", "07201488" ;
   :wordnet_verb_synset "00747485", "00754499", "00754770", "00761314", "00757492", "00895886", "02275660" .
 
@@ -193,7 +193,7 @@
   :wordnet_verb_synset "00850760", "00851012", "00852181", "02463257", "00848188" .
 
 :SurrenderAndYielding a owl:Class ;
-  rdfs:subClassOf :AssertionAndDeclaration ;
+  rdfs:subClassOf :AssertionAndDeclaration, :Loss ;
   rdfs:label "Surrender and Yielding" ;
   :definition "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another." ;
   :noun_synonym "capitulation", "succombing", "giving in", "giving way", "abdication", "relenting", "relinquishment", "resigning", "surrendering", "capitulating", "abdicating", "relinquishing" ;

@@ -5,16 +5,19 @@ import re
 import uuid
 
 from dna.create_noun_turtle import create_agent_ttl, create_norp_ttl
+from dna.database import query_database
 from dna.get_ontology_mapping import get_agent_or_loc_class
+from dna.queries import query_match_noun
 from dna.query_sources import get_wikidata_labels, get_wikipedia_description
-from dna.utilities_and_language_specific import check_name_gender, empty_string, underscore
+from dna.utilities_and_language_specific import check_name_gender, empty_string, ontologies_database, \
+    dna_prefix, underscore
 
 
 def _check_agent_relevance(agent_text: str, sent_dict: dict) -> bool:
     """
     Determine if the text identified by spaCy NER is actually an Agent. Adjectives may be
     identified - for example, 'Jewish' in a sentence with the words 'Jewish settlement'.
-    These are not actually agents.
+    These are not agents.
 
     :param agent_text: Text identifying the agent
     :param sent_dict: The sentence dictionary
@@ -28,7 +31,7 @@ def _check_agent_relevance(agent_text: str, sent_dict: dict) -> bool:
             indexes.append(chunk_str.index("'subjects'"))
         if chunk_str.find("'objects'") > 0:
             indexes.append(chunk_str.index("'objects'"))
-        indexes.append(chunk_str.index("'verb"))    # Always have a verbs in a chunk, but may have 'verb_processing'
+        indexes.append(chunk_str.index("'verb"))    # Always have 'verb' key in a chunk; May have 'verb_processing'
         details_after_text = min(indexes)           # Get the details directly following the 'chunk_text' entry
         chunk_str = chunk_str[details_after_text:]
         agent_words = agent_text.split()
@@ -41,8 +44,6 @@ def _check_agent_relevance(agent_text: str, sent_dict: dict) -> bool:
 def _check_if_agent_is_known(agent_text: str, agent_type: str, alet_dict: dict) -> (str, str):
     """
     Determines if the agent is already processed and identified in the alet_dict.
-
-    The acronym, alet, stands for agent-location-event-time.
 
     :param agent_text: Input string identifying the agent
     :param agent_type: String identifying NER type for the text, as defined by spaCy
@@ -84,8 +85,9 @@ def _get_agent_iri_and_ttl(agent_text: str, agent_type: str, alet_dict: dict,
     labels = []
     family_names = []
     wiki_details = empty_string
+    wiki_url = empty_string
     if use_sources:
-        wiki_details = get_wikipedia_description(agent_text.replace(' ', underscore))
+        wiki_details, wiki_url = get_wikipedia_description(agent_text.replace(' ', underscore))
         if wiki_details and 'See the web site' not in wiki_details:
             labels = get_wikidata_labels(wiki_details.split('wikibase_item: ')[1].split(')')[0])
     # Update alet_dict
@@ -101,9 +103,9 @@ def _get_agent_iri_and_ttl(agent_text: str, agent_type: str, alet_dict: dict,
     if agent_type.endswith('NORP'):
         agent_iri = f'{agent_iri}_{str(uuid.uuid4())[:13]}'
         return agent_type, agent_class, agent_iri, \
-            create_norp_ttl(agent_text, agent_type, agent_iri, wiki_details, labels)
+            create_norp_ttl(agent_text, agent_type, agent_iri, wiki_details, wiki_url, labels)
     return agent_type, agent_class, agent_iri, \
-        create_agent_ttl(agent_iri, labels, agent_type, agent_class, wiki_details, family_names)
+        create_agent_ttl(agent_iri, labels, agent_type, agent_class, wiki_details, wiki_url, family_names)
 
 
 def _update_agent_names(agent_text: str, alt_names: list) -> list:
@@ -181,9 +183,16 @@ def get_sentence_agents(sent_dict: dict, alet_dict: dict, last_nouns: list, use_
         agent_type, agent_iri = agent_details
         if not agent_iri:
             # Need to define the Turtle for a new agent
-            agent_type, agent_class, agent_iri, agent_ttl = \
-                _get_agent_iri_and_ttl(new_agent, agent_type, alet_dict, use_sources)
-            agents_turtle.extend(agent_ttl)
+            # Is the Agent already defined in the ontology?
+            insts = query_database('select', query_match_noun.replace('keyword', new_agent), ontologies_database)
+            if insts:
+                inst_result = insts[0]
+                agent_class = inst_result['class']['value']
+                agent_iri = inst_result['inst']['value'].replace(dna_prefix, ':')
+            else:
+                agent_type, agent_class, agent_iri, agent_ttl = \
+                    _get_agent_iri_and_ttl(new_agent, agent_type, alet_dict, use_sources)
+                agents_turtle.extend(agent_ttl)
         else:
             agent_class = get_agent_or_loc_class(agent_type)
         last_nouns.append((new_agent, agent_type, [agent_class], agent_iri))

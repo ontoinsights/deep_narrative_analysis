@@ -77,7 +77,7 @@ matcher.add("members_verb_names", [members_verb_names_pattern])
 matcher.add("names_verb_members", [names_verb_members_pattern])
 
 
-def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
+def _add_named_entities_to_dict(nlp_sentence: Doc, sentence_dict: dict):
     """
     Get the GPE, LOC or FAC (location), EVENT, PERSON, NORP or ORG (agent), DATE and TIME entities
     from the input sentence.
@@ -90,12 +90,10 @@ def _get_named_entities_in_sentence(nlp_sentence: Doc, sentence_dict: dict):
     for ent in nlp_sentence.ents:
         ent_text = ent.text
         if ent.label_ in ('PERSON', 'ORG', 'NORP'):
-            # Remove any possessive cases and just use proper nouns for PERSON, ORG, ...
-            # TODO: Correct texts such as 'Billie Holiday's NYC' or '1950's NYC' to address the possessive
             ent_doc = nlp(ent.text)
             ent_names = []
             for token in ent_doc:
-                if token.pos_ == 'PROPN':
+                if token.pos_ == 'PROPN':    # Remove any possessive cases and only keep the proper noun
                     ent_names.append(token.text)
             if ent_names:
                 ent_text = space.join(ent_names)
@@ -172,22 +170,6 @@ def _replace_words(sentence: str) -> str:
     return sentence
 
 
-def get_complete_name_head_words(text: str) -> (str, str):
-    """
-    Creates a spacy Doc from the input text and returns the text of the 'head'/root proper noun
-    as well as its compound nouns.
-
-    :param text: The text to parse
-    :return: The lemma of the root word in the input text and its actual text (for ex, a plural)
-    """
-    doc = nlp(text)
-    for token in doc:
-        if token.dep_ == 'ROOT':
-            complete_names = [ch.text for ch in token.children if ch.dep_ == 'compound']
-            return f'{space.join(complete_names)} {token.text}'.strip()
-    return empty_string
-
-
 def get_family_details(doc: Doc) -> dict:
     """
     Use spaCy rules-based matching to get the proper names of family members from a narrative.
@@ -195,7 +177,7 @@ def get_family_details(doc: Doc) -> dict:
     :param doc: spaCy Document holding the narrative
     :returns: A dictionary keyed by names with values = their family relationship/role
     """
-    # TODO: Logic is incorrect if multiple families are discussed in a single text
+    # TODO: Logic may be incorrect if multiple families are discussed in a single text; Needs testing
     logging.info('Getting family data from narrative')
     family_dict = dict()
     matches = matcher(doc)
@@ -244,14 +226,21 @@ def get_family_details(doc: Doc) -> dict:
 def get_head_word(text: str) -> (str, str):
     """
     Creates a spacy Doc from the input text and returns the lemma and text of the 'head'/root noun/verb.
-    Also returns the text without possessives.
+    If the root is a noun and a proper name, this function assembles the full name.
 
     :param text: The text to parse
-    :return: The lemma of the root word in the input text and its actual text (for ex, a plural)
+    :return: The lemma of the root word in the input text and its actual text (for ex, a plural); If
+             the root is a noun and a proper name, this function assembles the full name and returns it
+             as the lemma and text
     """
     doc = nlp(text)
     for token in doc:
         if token.dep_ == 'ROOT':
+            if token.pos_ == 'PROPN':
+                complete_names = [ch.text for ch in token.children if ch.dep_ == 'compound']
+                complete_name = f'{space.join(complete_names)} {token.text}'.strip()
+                if token.text != complete_name:
+                    return complete_name, complete_name
             return token.lemma_, token.text
     return empty_string, empty_string
 
@@ -267,7 +256,16 @@ def get_named_entities_in_string(text: str) -> list:
     named_entities = []
     for ent in doc.ents:
         if ent.label_ in ner_types:
-            named_entities.append((ent.text, ent.label_))
+            ent_doc = nlp(ent.text)
+            ent_texts = []
+            for token in ent_doc:
+                if token.dep_ != 'case':
+                    ent_texts.append(token.text)
+                else:
+                    ent_texts.append('/poss/')
+            if ent_texts:
+                ent_text = space.join(ent_texts)
+                named_entities.append((ent_text, ent.label_))
     return named_entities
 
 
@@ -344,7 +342,7 @@ def parse_narrative(narr_text: str) -> (list, list, dict):
         sent_dict['text'] = sent_text
         if '?' in sent_text:
             sent_dict['punct'] = '?'
-        _get_named_entities_in_sentence(nlp(sent_text), sent_dict)
+        _add_named_entities_to_dict(nlp(sent_text), sent_dict)
         # Split sentences into chunks based on quotations and whether they have their own verb
         chunk_dicts = []
         for chunk in split_clauses(sent_text, nlp):

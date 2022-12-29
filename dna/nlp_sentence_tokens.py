@@ -8,29 +8,52 @@ from dna.utilities_and_language_specific import add_to_dictionary_values, check_
 
 family_roles = [key for key in family_members.keys()]
 
-unwanted_tokens = ('DET',    # determinant
-                   'INTJ',   # interjection
+unwanted_tokens = ('INTJ',   # interjection
                    'X')      # other
 # Want 'PUNCT' for semantic evaluation and 'SYM' to address statements such as "66.3% of the vote"
-unwanted_dependencies = ('agent', 'appos', 'attr', 'aux', 'auxpass', 'case', 'cc', 'ccomp', 'conj', 'dep',
-                         'mark', 'meta', 'punct', 'xcomp')
 
 
 def _handle_noun(noun_token: Token) -> (str, str):
     """
     When processing a token (in add_token_details) that is a noun, first handle the special
-    cases of a proper noun, pronoun, family member role, etc. Lastly, check a general noun.
+    cases of a proper noun, pronoun, family member role, etc. Lastly, process a general noun.
 
     :param noun_token: Token of the noun
     :return: Two strings, the noun text and type
     """
+    # Get text with adjectives and first level of preposition only
     noun_text = noun_token.text
-    nouns = []
-    full_noun_text = space.join(t.text for t in noun_token.subtree if
-                                (t.pos_ not in unwanted_tokens and t.dep_ not in unwanted_dependencies))
+    noun_texts = [noun_text]
+    for child_token in noun_token.children:
+        if child_token.dep_ == 'prep':
+            noun_texts.append(child_token.text)
+            for child2 in child_token.children:
+                if child2.pos_ not in unwanted_tokens and child2.dep_ != 'prep' and child2.text != '.' and \
+                        ((child2.dep_ == 'det' and child2.text == 'no') or child2.dep_ != 'det'):
+                    if child2.dep_ == 'poss':
+                        noun_texts.append(f'{child2.text}/poss/')
+                    else:
+                        for child3 in child2.children:
+                            if child3.pos_ == 'SYM':
+                                noun_texts.append(child3.text)
+                        noun_texts.append(child2.text)
+        else:
+            if child_token.pos_ not in unwanted_tokens and child_token.text != '.' and \
+                    ((child_token.dep_ == 'det' and child_token.text == 'no') or child_token.dep_ != 'det'):
+                if child_token.dep_ == 'poss':
+                    noun_texts.append(f'{child_token.text}/poss/')
+                else:
+                    noun_texts.append(child_token.text)
+    noun_texts_in_order = []
+    for token in noun_token.subtree:
+        if token.text in noun_texts:
+            noun_texts_in_order.append(token.text)
+        elif f'{token.text}/poss/' in noun_texts:
+            noun_texts_in_order.append(f'{token.text}/poss/')
+    full_noun_text = space.join(noun_texts_in_order)
     # Handle proper nouns and pronouns
     if 'PROPN' in noun_token.pos_:      # Proper noun
-        return _process_proper_noun(noun_token)
+        return _process_proper_noun(noun_token, full_noun_text)
     elif 'Prs' in noun_token.morph.get('PronType'):    # Personal pronoun
         return _process_personal_pronoun(noun_token)
     # Handle references to family members ('brother', 'sister', ...) or 'family'
@@ -43,19 +66,17 @@ def _handle_noun(noun_token: Token) -> (str, str):
     elif noun_text.lower() in family_text:
         return full_noun_text, 'PLURALPERSON'
     else:
-        return _process_noun(noun_token)
+        return _process_noun(noun_token, full_noun_text)
 
 
-def _process_noun(token: Token) -> (str, str):
+def _process_noun(token: Token, full_text: str) -> (str, str):
     """
-    When processing a token (in add_token_details) that is a noun, capture its number, gender, etc.
+    When processing a token that is a general noun, capture its number, gender, etc.
 
     :param token: Token of the noun
+    :param full_text: Full text of the noun, with adjectives, prepositions, ...
     :return: Two strings, the entity text and type
     """
-    # Retrieve the full text with adjectives, etc.
-    ent = space.join(t.text for t in token.subtree if t.pos_ not in unwanted_tokens)
-    # if (t.dep_ in ('advmod', 'amod', 'compound', 'nummod', 'nmod', 'poss')
     symbols = [t.text for t in token.children if t.pos_ == 'SYM']
     ent_type = token.ent_type_ if token.ent_type_ else 'NOUN'
     # Include plurality in ent_type
@@ -72,22 +93,19 @@ def _process_noun(token: Token) -> (str, str):
     # Account for a determiner of 'no' - i.e., nothing (for ex, 'no information was found')
     if any([tc for tc in token.children if tc.dep_ == 'det' and tc.text == 'no']):
         ent_type = f'NEG{ent_type}'
-    if 'PERCENT' in ent_type or 'MONEY' in ent_type:
-        ent = ent.replace(' %', '%')
+    if 'PERCENT' in ent_type or 'MONEY' in ent_type:    # Clean up spaces introduced by the parse
+        full_text = full_text.replace(' %', '%')
         for sym in symbols:
-            if ent[ent.index(sym) + 2].isdigit():
-                ent = ent.replace(f'{sym} ', sym)
-            elif ent[ent.index(sym) - 2].isdigit():
-                ent = ent.replace(f' {sym}', sym)
-    else:
-        ent.replace('.', empty_string)
-    return ent, ent_type
+            if full_text[full_text.index(sym) + 2].isdigit():
+                full_text = full_text.replace(f'{sym} ', sym)
+            elif full_text[full_text.index(sym) - 2].isdigit():
+                full_text = full_text.replace(f' {sym}', sym)
+    return full_text, ent_type
 
 
 def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     """
-    When processing a token (in add_token_details or recursively here), capture prepositions
-    and their objects.
+    When processing a token that is a preposition, capture its object details.
 
     :param token: Token of the preposition
     :param dictionary: Dictionary that the token details should be added to
@@ -101,7 +119,9 @@ def _process_prep_object(token: Token, dictionary: dict, prep_key: str):
     prep_ent_detail['detail_type'] = prep_ent_type
     # Recursively call if there are more objects, related by conjunction
     for child in token.children:
-        if 'conj' == child.dep_:
+        if 'cc' == child.dep_:
+            dictionary[f'{prep_key}_cc'] = child.text
+        elif 'conj' == child.dep_:
             _process_prep_object(child, dictionary, prep_key)
     add_to_dictionary_values(dictionary, 'prep_details', prep_ent_detail, dict)
 
@@ -138,24 +158,24 @@ def _process_personal_pronoun(token: Token) -> (str, str):
     return entity, entity_type
 
 
-def _process_proper_noun(token: Token) -> (str, str):
+def _process_proper_noun(token: Token, full_text: str) -> (str, str):
     """
     When processing a token that is a proper noun, return the text of the noun and its
     'type' (gender + single/plural + PERSON).
 
     :param token: Token of the proper noun
+    :param full_text: Full text of the noun, with adjectives, prepositions, ...
     :return: A tuple holding the text of the noun and its 'type' (gender + single/plural + PERSON/
              GPE/LOC/EVENT/...).
     """
-    entity = token.text
     entity_type = token.ent_type_
     if entity_type.endswith('DATE') or entity_type.endswith('TIME'):
-        return entity, entity_type
+        return full_text, entity_type
     if entity_type.endswith('GPE') or entity_type.endswith('LOC') or entity_type.endswith('FAC') \
             or entity_type.endswith('ORG') or entity_type.endswith('NORP') or entity_type.endswith('EVENT') \
             or entity_type.endswith('NOUN'):
-        return _process_noun(token)
-    return entity, check_name_gender(entity)
+        return _process_noun(token, full_text)
+    return full_text, check_name_gender(full_text)
 
 
 def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, verb_lemma: str = None) -> dict:
@@ -215,8 +235,9 @@ def add_token_details(token: Token, dictionary: dict, token_key: str):
             # else:
             add_token_details(child, ent_dict, objects_string)
         elif 'conj' == child.dep_:
-            # TODO: A "cc" of "or" or "nor" => :alternative true Collection (currently, assumes 'cc' = 'and')
             add_token_details(child, dictionary, token_key)
+        elif 'cc' == child.dep_:
+            dictionary[f'{token_key}_cc'] = child.text
         elif 'prep' in child.dep_:
             if child.text.lower() not in processed_prepositions:
                 continue
@@ -229,6 +250,5 @@ def add_token_details(token: Token, dictionary: dict, token_key: str):
                     _process_prep_object(prep_child, prep_dict,
                                          (token_key[0:-1] if token_key.endswith("s") else token_key))
                     # TODO: Add processing for pcomp
-                    # Only add to the dictionary if the object or attr is processed
                     add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
     add_to_dictionary_values(dictionary, token_key, ent_dict, dict)

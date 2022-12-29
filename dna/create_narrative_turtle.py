@@ -15,19 +15,16 @@
 # There may be more than 1 verb when there is a root verb + an xcomp
 
 import logging
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 import re
 import uuid
 
-from dna.create_specific_turtle import cleanup_turtle
+from dna.create_specific_turtle import cleanup_unused_turtle
 from dna.process_agents import get_name_permutations, get_sentence_agents
 from dna.process_locations import get_sentence_locations
 from dna.process_times import get_sentence_times
 from dna.process_verbs import process_verb
 from dna.utilities_and_language_specific import empty_string, family_members, \
     ttl_prefixes, underscore
-
-sid = SentimentIntensityAnalyzer()
 
 
 def _add_mentions_to_sentence(sentence_iri: str, mention_iris: list, sentence_ttl_list: list):
@@ -47,7 +44,6 @@ def _add_mentions_to_sentence(sentence_iri: str, mention_iris: list, sentence_tt
 def _get_text_sentiment(text: str, negated: bool, emotion: str) -> float:
     """
     Get chunk polarity.
-    TODO: Verify that emotion and sentiment are taken into account.
 
     :param text: The chunk to be analyzed.
     :param negated: Boolean indicating that the verb is negated (if true)
@@ -56,7 +52,7 @@ def _get_text_sentiment(text: str, negated: bool, emotion: str) -> float:
                     emotion/mood
     :return: The polarity (-1 for negative, 1 for positive) of the sentence
     """
-    # TODO: Resolve PolyGlot loading on Mac - Issues with ICU
+    # TODO: SentiWordNet of subj + verb; Verify that emotion and sentiment are taken into account
     text_scores = sid.polarity_scores(text)
     return text_scores['compound']
     # if (emotion == 'negative' and not negated and sentiment > 0) or \
@@ -92,8 +88,8 @@ def _process_chunk(chunk_dict: dict, chunk_iri: str, offset: int, alet_dict: dic
     # TODO: Deal with '$&', special mark, in text
     chunk_text = chunk_dict['chunk_text']
     chunk_ttl_list = [f'{chunk_iri} a :Chunk ; :offset {offset} .',
-                      f'{chunk_iri} :text "{chunk_text}" .',
-                      f'{chunk_iri} :sentiment {_get_text_sentiment(chunk_text, empty_string, empty_string)} .']
+                      f'{chunk_iri} :text "{chunk_text}" .']
+    # f'{chunk_iri} :sentiment {_get_text_sentiment(chunk_text, empty_string, empty_string)} .']
     if chunk_text.startswith('Quotation'):
         return chunk_ttl_list
     new_ttl_list = process_verb(chunk_iri, chunk_dict, alet_dict, loc_time_iris, last_nouns,
@@ -208,5 +204,5 @@ def create_graph(sentence_dicts: list, family_dict: dict, published: str, use_so
                                last_nouns, last_events, use_sources, is_bio))
             chunk_offset += 1
         # Clean up unused subject IRIs (e.g., where the subject never occurs as an object) and save the Turtle
-        graph_ttl_list.extend(cleanup_turtle(sentence_ttl_list))
+        graph_ttl_list.extend(cleanup_unused_turtle(sentence_ttl_list))
     return True, graph_ttl_list

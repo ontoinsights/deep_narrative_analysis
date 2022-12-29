@@ -5,12 +5,14 @@ import re
 import uuid
 
 from dna.create_specific_turtle import create_type_turtle
+from dna.database import query_database
 from dna.get_ontology_mapping import determine_norp_emotion_or_lob, get_noun_mapping
 from dna.nlp import get_named_entities_in_string
+from dna.queries import query_agent_or_location
 from dna.query_ontology import get_norp_emotion_or_lob
 from dna.query_sources import get_geonames_location, get_wikipedia_description
 from dna.utilities_and_language_specific import concept_map, days, empty_string, explicit_plural, months, \
-    names_to_geo_dict, ner_dict, part_of_group
+    names_to_geo_dict, ner_dict, ontologies_database, processed_prepositions
 
 person = ':Person'
 person_collection = ':Person, :Collection'
@@ -56,7 +58,7 @@ def _create_norp_details(noun_text: str, noun_type: str, noun_iri: str, is_subj:
             break
     if ext_sources and (not norp_class or norp_type == 'EmotionalResponse' or norp_type == 'LineOfBusiness'):
         # Check if a type of ethnic, religious or political group by checking the Wikipedia description
-        wikipedia_desc = get_wikipedia_description(noun_text.replace(' ', '_'))
+        wikipedia_desc, wiki_url = get_wikipedia_description(noun_text.replace(' ', '_'))
         if wikipedia_desc:
             wikipedia_lower = wikipedia_desc.lower()
             for concept in concept_map.keys():
@@ -66,11 +68,12 @@ def _create_norp_details(noun_text: str, noun_type: str, noun_iri: str, is_subj:
         # Did not find match of the word or any details from its definition
         norp_class = ':AgentAspect'
     if is_subj:
-        return [norp_class], create_norp_ttl(noun_text, noun_type, noun_iri, norp_class, [])
+        return [norp_class], create_norp_ttl(noun_text, noun_type, noun_iri, norp_class, empty_string, [])
     return [person_collection if 'PLURAL' in noun_type else person], []
 
 
-def create_affiliation_ttl(noun_iri: str, noun_text: str, affiliated_text: str, affiliated_type: str) -> list:
+def create_affiliation_ttl(noun_iri: str, noun_text: str, affiliated_text: str, affiliated_type: str,
+                           alet_dict:dict) -> list:
     """
     Creates the Turtle for an Affiliation.
 
@@ -79,22 +82,41 @@ def create_affiliation_ttl(noun_iri: str, noun_text: str, affiliated_text: str, 
     :param affiliated_text: String specifying the entity (organization, group, etc.) to which the
                             noun is affiliated
     :param affiliated_type: String specifying the class type of the entity
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events',
+             'times' and Values vary by the key; For 'agents', dict = array of arrays with
+             index 0 holding an array of labels associated with the agent (variations on their
+             name), index 1 storing the agent's entity type and index 2 storing the agent's IRI;
+             For 'locs', dict = array of arrays with index 0 holding an array of strings/alt names
+             associated with the location, index 1 storing the class mappings, and index 2 defining
+             the location's IRI
     :return: An array of strings holding the Turtle representation of the Affiliation
     """
-    affiliated_iri = re.sub(r'[^:a-zA-Z0-9_]', '_', f':{affiliated_text}_{str(uuid.uuid4())[:13]}').replace('__', '_')
-    affiliation_iri = f'{noun_iri}_{affiliated_iri}_Affiliation'
+    affiliated_iri = empty_string
+    if 'agents' not in alet_dict and 'locs' not in alet_dict:
+        logging.error(f'Affiliation ({affiliated_text}) indicated for {noun_text} but no values in alet_dict')
+    else:
+        if 'agents' in alet_dict:
+            for known_agent in alet_dict['agents']:
+                if affiliated_text in known_agent[0]:
+                    affiliated_iri = known_agent[2]
+                    break
+        if not affiliated_iri and 'locs' in alet_dict:
+            for known_locs in alet_dict['locs']:
+                if affiliated_text in known_locs[0]:
+                    affiliated_iri = known_locs[2]
+                    break
+    if not affiliated_iri:
+        return []
+    affiliation_iri = f'{noun_iri}_{affiliated_iri[1:]}_Affiliation'
     noun_str = f"'{noun_text}'"
     ttl = [f'{affiliation_iri} a :Affiliation ; :affiliated_with {affiliated_iri} ; :affiliated_agent {noun_iri} .',
-           f'{affiliation_iri} rdfs:label "Relationship based on the text, {noun_str}" .',
-           f'{affiliated_iri} a {ner_dict[affiliated_type]} ; rdfs:label "{affiliated_text}" .']
-    wikipedia_desc = get_wikipedia_description(affiliated_text)
-    if wikipedia_desc:
-        ttl.append(f'{affiliated_iri} :definition "{wikipedia_desc}" .')
+           f'{affiliation_iri} rdfs:label "Relationship based on the text, {noun_str}" .']
     return ttl
 
 
 def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_class: str,
-                     description: str, family_names: list) -> list:
+                     description: str, wiki_url: str, family_names: list) -> list:
     """
     Create the Turtle for a named entity that is identified as an Agent/Person.
 
@@ -104,6 +126,8 @@ def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_cla
     :param agent_class: The mapping of the entity type to the DNA ontology
     :param description: A description of the person from Wikipedia, if available; Otherwise,
                         an empty string
+    :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
+                     Otherwise, an empty string
     :param family_names: An array of family names for a Person (there may be multiple names
                          - for example, for a married woman)
     :return: A tuple holding the agent_class and an array of its Turtle declaration
@@ -113,6 +137,8 @@ def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_cla
                  f'{agent_iri} rdfs:label "{labels}" .']
     if description:
         agent_ttl.append(f'{agent_iri} :description "{description}" .')
+    if wiki_url:
+        agent_ttl.append(f'{agent_iri} :external_link "{wiki_url}" .')
     if 'MALE' in agent_type:
         gender = "Female" if "FEMALE" in agent_type else "Male"
         agent_ttl.append(f'{agent_iri} :gender "{gender}" .')
@@ -139,9 +165,11 @@ def create_geonames_ttl(loc_iri: str, loc_text: str) -> (list, str, list):
         geonames_ttl.extend(create_type_turtle([class_type], loc_iri, False, loc_text))
         names_text = '", "'.join(alt_names)
         geonames_ttl.append(f'{loc_iri} rdfs:label "{names_text}" .')
-        wiki_desc = get_wikipedia_description(loc_text, wiki_link)
+        wiki_desc, wiki_url = get_wikipedia_description(loc_text, wiki_link)
         if wiki_desc:
             geonames_ttl.append(f'{loc_iri} :description "{wiki_desc}" .')
+        if wiki_url:
+            geonames_ttl.append(f'{loc_iri} :external_link "{wiki_url}" .')
         if admin_level > 0:
             geonames_ttl.append(f'{loc_iri} :admin_level {str(admin_level)} .')
         if country and country != "None":
@@ -151,7 +179,7 @@ def create_geonames_ttl(loc_iri: str, loc_text: str) -> (list, str, list):
     return geonames_ttl, class_type, alt_names
 
 
-def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list, description: str,
+def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list, description: str, wiki_url: str,
                            start_time_iri: str, end_time_iri: str) -> list:
     """
     Return the Turtle related to a named event.
@@ -161,6 +189,8 @@ def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list,
     :param event_classes: An array with mappings of the event to the DNA ontology
     :param description: A description of the event from Wikipedia, if available; Otherwise,
                         an empty string
+    :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
+                     Otherwise, an empty string
     :param start_time_iri: The IRI created for the starting time of the event
     :param end_time_iri: The IRI created for the ending time of the event
     :return: An array of Turtle statements
@@ -170,6 +200,8 @@ def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list,
                  f'{event_iri} rdfs:label "{labels}" .']
     if description:
         event_ttl.append(f'{event_iri} :description "{description}" .')
+    if wiki_url:
+        event_ttl.append(f'{event_iri} :external_link "{wiki_url}" .')
     if start_time_iri:
         event_ttl.append(f'{event_iri} :has_beginning {start_time_iri} .')
     if end_time_iri:
@@ -177,7 +209,8 @@ def create_named_event_ttl(event_iri: str, alt_names: list, event_classes: list,
     return event_ttl
 
 
-def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str, description: str, labels: list) -> list:
+def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str, description: str, wiki_url: str,
+                    labels: list) -> list:
     """
     Definition of the Turtle for a Person or Group that was identified by spaCy as a 'NORP'
     (nationality, religious group, political party, ...).
@@ -187,6 +220,8 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str, description: 
     :param noun_iri: String identifying the noun concept as an IRI
     :param description: A description of the nationality, ideology, religion, ... from Wikipedia, if available;
                         Otherwise, an empty string
+    :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
+                     Otherwise, an empty string
     :param labels: An array of labels/alternate names for the noun
     :return: An array defining the Turtle for the NORP entity
     """
@@ -197,6 +232,8 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str, description: 
     norp_ttl = [f'{noun_iri} a {type_str} ; rdfs:label "{labels_str}" .']
     if description:
         norp_ttl.append(f'{noun_iri} :description "{description}" .')
+    if wiki_url:
+        norp_ttl.append(f'{noun_iri} :external_link "{wiki_url}" .')
     norp_class = determine_norp_emotion_or_lob(noun_text, [(empty_string, empty_string, [], noun_iri)])
     if norp_class in (':AgentAspect', ':ReligiousBelief', ':Ethnicity', ':PoliticalIdeology'):
         norp_ttl.append(f'{noun_iri} :has_agent_aspect {norp_class} ; :agent_aspect "{noun_text}" .')
@@ -205,7 +242,7 @@ def create_norp_ttl(noun_text: str, noun_type: str, noun_iri: str, description: 
     return norp_ttl
 
 
-def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool,
+def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, alet_dict: dict, is_subj: bool,
                     ext_sources: bool) -> (list, list):
     """
     Create the Turtle for a noun, given all the input information. And, if a new concept
@@ -214,13 +251,16 @@ def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool
     :param noun_iri: String identifying the IRI/URL/individual associated with the noun_text
     :param noun_text: String specifying the noun text from the original narrative sentence
     :param noun_type: String holding the type of the noun (e.g., 'FEMALESINGPERSON' or 'PLURALNOUN')
+    :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
+             the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events',
+             'times' and Values vary by the key
     :param is_subj: Boolean indicating that the noun is the subject of a sentence
     :param ext_sources: A boolean indicating that data from GeoNames, Wikidata, etc. should be
                         added to the parse results if available
     :return: A tuple holding two arrays - 1) class mappings and 2) the Turtle of the noun semantics
     """
     # Process nouns based on their (mutually exclusive) entity type from spaCy
-    class_name = empty_string
+    init_mapping = []
     noun_ttl = []
     if 'PERSON' in noun_type:
         class_name = person
@@ -228,57 +268,52 @@ def create_noun_ttl(noun_iri: str, noun_text: str, noun_type: str, is_subj: bool
             gender = "Female" if "FEMALE" in noun_type else "Male"
             noun_ttl.append(f'{noun_iri} :gender "{gender}" .')
     if noun_type.endswith('GPE'):
-        class_name = ':GeopoliticalEntity+:Location'
+        init_mapping = [':GeopoliticalEntity+:Location']
     # Nationalities, religious or political groups
     if noun_type.endswith('NORP'):
         return _create_norp_details(noun_text, noun_type, noun_iri, is_subj, ext_sources)
     if noun_type.endswith('ORG'):
-        class_name = ':Organization'
+        init_mapping = [':Organization']
     if noun_type.endswith('LOC'):
-        class_name = ':Location'
-    if not class_name and _check_presence_of_words(noun_text, part_of_group):
-        # Could be a reference to 'members OF'/'people IN'/... an org, group, ...
-        class_name = person_collection if 'PLURAL' in noun_type or \
-                                          _check_presence_of_words(noun_text, explicit_plural) else person
-        # Check if an org, group, ... is mentioned
-        for prep in ('of', 'in', 'from', 'with'):
-            found_prep = (True if noun_text.lower().startswith(f'{prep} ') else False) or \
-                         (True if f' {prep} ' in noun_text.lower() else False)
-            if found_prep:
-                # TODO: Handle general group reference (ex: 'soldiers in the Soviet army')
-                agent_text, agent_type = get_named_entities_in_string(noun_text)[0]  # TODO: Is it ok to assume only 1?
-                if agent_text:  # Found a named entity that is an affiliated agent
-                    new_ttl = create_affiliation_ttl(noun_iri, noun_text, agent_text, agent_type)
-                    new_ttl.append(f'{noun_iri} a {ner_dict[agent_type]} ; rdfs:label "{noun_text}" .')
-                    return [class_name], new_ttl
-    if not class_name:
+        init_mapping = [':Location']
+    if not init_mapping:
         noun_mapping, noun_ttl = get_noun_mapping(noun_text, noun_iri)
-        init_mappings = noun_mapping
-    else:
-        init_mappings = [class_name]
-    class_mappings = []
+        found_agent_or_loc = False      # Focus on finding affiliations for agents and locations; Future: Other nouns?
+        for noun_map in noun_mapping:   # Matches if any mapping is an Agent or Location; Should this be more specific?
+            if '+' in noun_map:
+                for map_name in noun_map.split('+'):
+                    query_results = query_database('select', query_agent_or_location.replace('keyword', map_name),
+                                                   ontologies_database)
+                    if any(['result' in query_result for query_result in query_results]):
+                        found_agent_or_loc = True
+                        init_mapping = [noun_map]
+                        break
+            else:
+                init_mapping = [noun_map]           # Only a single mapping
+                query_results = query_database('select', query_agent_or_location.replace('keyword', noun_map),
+                                               ontologies_database)
+                if any(['result' in query_result for query_result in query_results]):
+                    found_agent_or_loc = True
+            if found_agent_or_loc:
+                # Check for named entity in phrase (already know that it is not the main noun)
+                # Future: Refine by other words in phrase?
+                named_entities = get_named_entities_in_string(noun_text)
+                if named_entities:
+                    for ne_text, ne_type in named_entities:
+                        if ne_type in ('NORP', 'ORG'):
+                            noun_ttl.extend(create_affiliation_ttl(noun_iri, noun_text, ne_text, ne_type, alet_dict))
+                break     # Preference given to Agents
+    class_mapping = []
     if 'PLURAL' in noun_type:
-        for init_map in init_mappings:
-            class_mappings.append(f'{init_map}, :Collection')
+        for init_map in init_mapping:
+            class_mapping.append(f'{init_map}, :Collection')
     else:
-        class_mappings = init_mappings
-    # Optimizations
-    if len(class_mappings) > 1 and is_subj:
-        # Future: For subjects, preference to Person type, defaulting to the first definition; Is this valid?
-        person_map = [mapping for mapping in class_mappings if 'Person' in mapping]
-        if len(person_map) > 0:
-            class_mappings = person_map if len(person_map) == 1 else [person_map[0]]
-    noun_ttl.extend(create_type_turtle(class_mappings, noun_iri, False, noun_text))
+        class_mapping = init_mapping
+    noun_ttl.extend(create_type_turtle(class_mapping, noun_iri, False, noun_text))
     noun_ttl.append(f'{noun_iri} rdfs:label "{noun_text}" .')
     if noun_type.startswith('NEG'):
         noun_ttl.append(f'{noun_iri} :negation true .')
-    # Future: Update logic if more than Countries and Continents are defined in the core DNA ontologies
-    wikipedia_desc = empty_string
-    if not noun_iri.startswith('geo:') and ext_sources and (noun_type.endswith('GPE') or noun_type.endswith('ORG')):
-        wikipedia_desc = get_wikipedia_description(noun_text)
-    if wikipedia_desc:
-        noun_ttl.append(f'{noun_iri} :description "{wikipedia_desc}" .')
-    return class_mappings, noun_ttl
+    return class_mapping, noun_ttl
 
 
 def create_time_ttl(time_text: str, time_iri: str) -> list:
@@ -302,33 +337,3 @@ def create_time_ttl(time_text: str, time_iri: str) -> list:
         else:
             time_ttl.append(f'{time_iri} :day_of_month {day} .')
     return time_ttl
-
-
-def create_using_details(verb_dict: dict, event_iri: str, turtle: list) -> str:
-    """
-    Special case processing if the word, 'using', is in the sentence (e.g., 'he cut the bread
-    using a knife').
-
-    :param verb_dict: The dictionary entry for the verb in the current sentence
-    :param event_iri: String holding the IRI identifier of the verb/event
-    :param turtle: An array of the current Turtle for the sentence
-    :return: A string holding additional label text, if the word 'using' is in the sentence;
-              Otherwise, returns an empty_string
-    """
-    # Special case for the word, 'using'
-    using_label = empty_string
-    if 'verb_advcl' in verb_dict:
-        advcl_text = str(verb_dict['verb_advcl'])
-        if "'verb_lemma': 'use'" in advcl_text:
-            inst_text = advcl_text.split("object_text': '")[1]
-            inst_text2 = inst_text[:inst_text.index("',")]
-            inst_type = advcl_text.split("object_type': '")[1]
-            inst_type2 = inst_type[:inst_type.index("'}")]
-            inst_iri = re.sub(r'[^:a-zA-Z0-9_]', '_', f':{inst_text2}_{str(uuid.uuid4())[:13]}').replace('__', '_')
-            turtle.append(f'{event_iri} :has_instrument {inst_iri} .')
-            # TODO: Is there a need to check previous nouns and/or use external sources for instruments?
-            inst_mappings, inst_ttl = create_noun_ttl(inst_iri, inst_text2, inst_type2, False, False)
-            if inst_ttl:
-                turtle.extend(inst_ttl)
-            using_label = f' using {inst_text2}'
-    return using_label

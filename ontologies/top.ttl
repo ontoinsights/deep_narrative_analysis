@@ -10,7 +10,7 @@
 # ontologies
 # 
 # Created: February 9 2020
-# Last modified: November 1 2022
+# Last modified: November 20 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -39,7 +39,7 @@
 #  Simplified provenance data
 #  Renamed :sentence_offset to :offset to use with sentence chunks
 #  Added Sentence and Chunk as subclasses of InformationSource
-#  Removed :processing and added :description and :mentions
+#  Removed :processing and added :description, :external_link and :mentions
 ########################################################################
 
 
@@ -227,6 +227,11 @@
 :description a owl:DatatypeProperty ;
   rdfs:label "description" ;
   :definition "Text providing a description (usually from Wikipedia) of the entity" ;
+  rdfs:range xsd:string .
+
+:external_link a owl:DatatypeProperty ;
+  rdfs:label "external link" ;
+  :definition "Text specifying a URL where more information about the referencing entity can be found." ;
   rdfs:range xsd:string .
   
 :future a owl:DatatypeProperty, owl:FunctionalProperty ;

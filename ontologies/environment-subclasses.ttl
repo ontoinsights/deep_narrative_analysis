@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: November 1 2022
+# Last Modified: December 27 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -47,6 +47,10 @@
 #  Updated the subclassing of CaptivityAndDetention
 #  Moved StarvationHungerAndFamine to health-subclasses.ttl
 #  Added TroubleAndProblem and Residence
+#  Moved End/StartOfBusiness from event-state-subclasses and 
+#   updated subclassing
+# Renamed Readiness and LackOfReadiness to ReadinessAndAbility and 
+#   LackOfReadinessAndAbility
 ########################################################################
 
 
@@ -106,7 +110,7 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Compliance" ;
   :definition "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate." ;
-  :noun_synonym "conformity", "complying", "conforming", "obedience", "conformation", "abidance" ; 
+  :noun_synonym "conformity", "complying", "conforming", "obedience", "conformation" ; 
   :verb_synonym "is in compliance", "comply", "conform", "obey" ;
   :wordnet_noun_synset "01169636", "01206166" ;
   :wordnet_verb_synset "02548492", "00150107", "00150596" .
@@ -148,9 +152,18 @@
   :definition "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.), as well as specific Events (hiring, lay offs, promotions, etc.) that serve as Evidence for this condition. The overall situation regarding Employment/unemployment can be described using the :has_assessment predicate." ;
   :example "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment and labor rates." ;
   :noun_synonym "job", "position", "work", "hire", "hiring", "layoff", "promotion", "demotion", "demoting", "firing", "hiring freeze", "firing", "layoff", "dismissal", "sacking" ;
-  :verb_synonym "hire", "work", "do work", "fire", "layoff", "promote", "demote", "kick upstairs", "kick downstairs", "give notice", "can", "give the axe", "sack", "force out" ;
+  :verb_synonym "hire", "work", "do work", "fire", "layoff", "promote", "demote", "kick upstairs", "kick downstairs", "give notice", "can", "give axe", "sack", "force out" ;
   :wordnet_noun_synset "13991539", "00585404", "00587299", "00810735", "00810862", "00811034", "00199300", "00199642", "13991755", "00230681", "00217041" ;
   :wordnet_verb_synset "02414542", "02415985", "02402779", "02404473", "02407967" .
+
+:EndOfBusiness a owl:Class ;
+  rdfs:subClassOf :End, :EconomicEnvironment ;
+  rdfs:label "End of Business" ;
+  :definition "An Event indicating that an existing business (Organization) or business location ceased operations. The business is indicated using the property, :has_holder." ;
+  :noun_synonym "closing", "closure", "closedown", "shutdown" ;
+  :verb_synonym "go out of business", "shut its doors", "close its doors", "close up shop", "shut down", "close down" ;
+  :wordnet_noun_synset "00230127" ;
+  :wordnet_verb_synset "02431242" . 
 
 :EnvironmentalIssue a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -214,7 +227,7 @@
   :definition "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate." ;
   :example "Examples of incomes are salaries, received payments for sales of crops, etc." ;
   :noun_synonym "wage", "pay", "earnings", "remuneration", "salary" ;
-  :verb_synonym "take in", "earn", "pull in", "bring in" ;
+  :verb_synonym "earn" ;
   :wordnet_noun_synset "13275704", "13300285" ; 
   :wordnet_verb_synset "02294200", "02295101" . 
 
@@ -235,11 +248,14 @@
   :wordnet_noun_synset "13569553", "13520031", "13520596", "13581941" ;
   :wordnet_verb_synset "00564177" .
 
-:LackOfReadiness a owl:Class ;
+:LackOfReadinessAndAbility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Lack of Readiness" ;
-  :definition "A condition of NOT being prepared for some event or eventuality." ;
-  :verb_synonym "be unready", "be unprepared", "not be ready" .
+  rdfs:label "Lack of Readiness and Ability" ;
+  :definition "A condition of NOT being prepared for some event or eventuality, and/or incapable of handling a situation." ;
+  :noun_synonym "inability", "incompetence", "incapacitation" ;
+  :verb_synonym "be unready", "be unprepared", "not be ready", "disable", "be unable" ;
+  :wordnet_noun_synonym "05161488", "05214398" ;
+  :wordnet_verb_synonym "00513267" .
 
 :LawAndPolicy a owl:Class ;
   rdfs:subClassOf :PoliticalEnvironment ;
@@ -295,14 +311,14 @@
   rdfs:label "(Access to) Potable Water" ;
   :definition "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate." .
 
-:Readiness a owl:Class ;
+:ReadinessAndAbility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Readiness" ;
+  rdfs:label "Readiness and Ability" ;
   :definition "A condition of being prepared for some event or eventuality." ;
   :noun_synonym "preparedness", "preparation" ;
-  :verb_synonym "prepare", "ready", "gear up", "build up", "fortify", "gird", "arm" ;
-  :wordnet_noun_synset "14054590" ;
-  :wordnet_verb_synset "00407168", "01089608", "01654986" . 
+  :verb_synonym "prepare", "ready", "gear up", "build up", "fortify", "gird", "arm", "enable", "be able" ;
+  :wordnet_noun_synset "14054590", "05207437" ;
+  :wordnet_verb_synset "00407168", "01089608", "01654986", "00513958" . 
 
 :Recession a owl:Class ;
   rdfs:subClassOf :Decrease, :EconomicEnvironment ;
@@ -323,7 +339,7 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Residence" ;
   :definition "The condition of residing/living in a Location. The location is defined using the :has_location property." ;
-  :noun_synonym "living in", "residing in", "abidance", "occupancy" ;
+  :noun_synonym "living in", "residing in", "abiding", "occupancy" ;
   :verb_synonym "reside", "live", "inhabit", "settle", "colonize", "abide in" ;
   :wordnet_noun_synset "01055844" ;
   :wordnet_verb_synset "00414801", "00416323", "00540418" . 
@@ -354,6 +370,13 @@
   rdfs:label "Soil Degradation and Erosion" ;
   :definition "SoilDegradation is 'damage to the land's productive capacity because of poor agricultural practices such as the excessive use of pesticides or fertilizers, soil compaction from heavy equipment, or erosion of topsoil, eventually resulting in reduced ability to produce agricultural products'. SoilErosion is 'the removal of soil by the action of water or wind, compounded by poor agricultural practices, deforestation, overgrazing, and desertification'. (https://www.cia.gov/the-world-factbook/field/environment-current-issues)" .
 
+:StartOfBusiness a owl:Class ;
+  rdfs:subClassOf :StartAndBeginning, :EconomicEnvironment ;
+  rdfs:label "Start of Business" ;
+  :definition "An Event indicating that a new Organization has been created/founded. The new Organization is defined by the property, :has_holder." ;
+  :verb_synonym "incorporate", "establish", "open" ;
+  :wordnet_verb_synset "02452944", "01348685" .
+
 :SupportForGovernment a owl:Class ;
   rdfs:subClassOf :PoliticalEnvironment ;
   rdfs:label "Support for Government" ;
@@ -371,8 +394,8 @@
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Trouble and Problem" ;
   :definition "A situation describing and assessing (via the :has_assessment property)  difficulties or problems being experienced by a Person, Organization, community, etc." ;
-  :noun_synonym "hazard", "distress", "travails", "hardship", "discord", "difficulty" ;
-  :verb_synonym "besiege", "tribulate" ;
+  :noun_synonym "hazard", "distress", "travails", "hardship", "discord", "difficulty", "tribulation" ;
+  :verb_synonym "tribulate" ;
   :wordnet_noun_synset "05694760" ;
   :wordnet_verb_synset "01802000", "01802298" .
 
@@ -422,7 +445,7 @@
   owl:members  ( :OpportunityAndPossibility :ImpossibilityAndImprobability ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Readiness :LackOfReadiness ) .
+  owl:members  ( :ReadinessAndAbility :LackOfReadinessAndAbility ) .
 
 
 ########################################################################

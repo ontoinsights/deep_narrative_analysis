@@ -4,7 +4,7 @@
 import re
 
 from dna.create_noun_turtle import create_named_event_ttl, create_time_ttl
-from dna.get_ontology_mapping import get_verb_mapping
+from dna.get_ontology_mapping import get_mapping_detail
 from dna.query_sources import get_event_details_from_wikidata
 from dna.nlp import get_time_details
 from dna.utilities_and_language_specific import add_unique_to_array, days, empty_string, \
@@ -308,15 +308,16 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
         if not event_iri:
             event_iri = f':Event_{new_event.replace(space, underscore)}'.replace('.', empty_string)
             # Try to classify the event, for example 'World War II' is a :War
-            event_classes = get_verb_mapping(new_event, dict(), [])
+            event_classes = get_mapping_detail(new_event, dict(), [])
             if not event_classes:
                 event_classes = [':EventAndState']
             start_time_iri = empty_string
             end_time_iri = empty_string
             alt_names = [new_event]
             wiki_details = empty_string
+            wiki_url = empty_string
             if use_sources:
-                wiki_details, start_time, end_time, alt_names = get_event_details_from_wikidata(new_event)
+                wiki_details, wiki_url, start_time, end_time, alt_names = get_event_details_from_wikidata(new_event)
                 if start_time:
                     start_time_iri = _create_time_iri(empty_string, start_time)
                 if end_time:
@@ -324,7 +325,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
             if new_event not in alt_names:
                 alt_names.append(new_event)
             time_turtle.extend(
-                create_named_event_ttl(event_iri, alt_names, event_classes, wiki_details,
+                create_named_event_ttl(event_iri, alt_names, event_classes, wiki_details, wiki_url,
                                        start_time_iri, end_time_iri))
             known_events.append([alt_names, event_classes, event_iri, start_time_iri, end_time_iri])
         last_nouns.append((new_event, 'EVENT', event_classes, event_iri))

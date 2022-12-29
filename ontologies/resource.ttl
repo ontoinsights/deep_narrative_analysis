@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9 2020
-# Last modified: August 21 2022
+# Last modified: December 9 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -44,6 +44,7 @@
 #  Updated MonetaryAndFinancialInstrument to sub-class from LegalInstrument
 #  Added Schedule
 #  Updated the subclassing of Animal and FungusAndPlant
+#  Added the Wikipedia page link for FossilFuel
 ########################################################################
 
 
@@ -95,10 +96,10 @@
 
 :ComponentPart a owl:Class ;
   rdfs:subClassOf :Resource ;
-  rdfs:label "Component Part (not used for single inheritance)" ;
-  :definition "A ComponentPart is a simple construct to indicate that a piece/part of a whole is referenced - and that it is important to track the origin of that part. When used, the type that classifies the 'whole' should also be specified." ;
+  rdfs:label "Component Part" ;
+  :definition "A ComponentPart is a simple construct to indicate that a piece/part of a whole is referenced - and that it is important to track the origin of that part. When used, the type that classifies the 'whole' should also be specified. Therefore, any entity labeled with ComponentPart would also be labeled (e.g., multiple inheritance) with the type of which it is a part." ;
   :example "For example, an organ such as a heart is a ComponentPart of an Animal - and would be designated using both classes. A tire that is/was part of a Vehicle could be defined using the types, ComponentPart, Vehicle and RubberAndSubstitute." ;
-  :noun_synonym "piece" .
+  :noun_synonym "piece", "appendage" .
 
 :ComputingAndTelecommunicationDevice a owl:Class ;
   rdfs:subClassOf :Machine ;
@@ -167,7 +168,7 @@
 :FossilFuel a owl:Class ;
   rdfs:subClassOf :Fuel ;
   rdfs:label "Fossil Fuel" ;
-  :definition "Per Wikipedia (), a fossil fuel 'is a hydrocarbon-containing material formed naturally in the earth's crust from the remains of dead plants and animals that is extracted and burned as a fuel. The main fossil fuels are coal, crude oil and natural gas'." ;
+  :definition "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Fossil_fuel&oldid=1126123096), a fossil fuel 'is a hydrocarbon-containing material formed naturally in the earth's crust from the remains of dead plants and animals that is extracted and burned as a fuel. The main fossil fuels are coal, crude oil and natural gas'." ;
   :noun_synonym "crude oil", "coal", "natural gas" ;
   :wordnet_noun_synset "14710513" .
 

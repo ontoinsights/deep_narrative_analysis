@@ -32,15 +32,16 @@ concept_map = {'political': ':PoliticalIdeology',
                'religio': ':ReligiousBelief',
                'ethnic': ':Ethnicity'}
 
+# TODO: Move texts to separate file for maintenance/extension by users
+# Times
 days = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
 months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December')
-
 # TODO: Other incremental times?
 incremental_time_keywords = ('ago', 'earlier', 'later', 'next', 'previous', 'prior', 'following')
 
+# People
 explicit_plural = ('group', 'people')
-part_of_group = ('member', 'group', 'citizen', 'people', 'affiliate', 'representative', 'associate', 'comrade')
 
 family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
                   'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
@@ -51,8 +52,14 @@ plural_family_members = ('mothers', 'fathers', 'sisters', 'brothers', 'aunts', '
                          'cousins', 'relatives')
 family_text = ('family', 'families')
 
-# TODO: Mapping is for sentences; Add support for questions (such as asking permission -
-#     can, may, could, or requesting - would, will, can, could)
+# Pronouns
+personal_pronouns = ('I', 'we', 'us', 'they', 'them', 'he', 'she', 'it', 'myself', 'ourselves', 'themselves',
+                     'herself', 'himself', 'itself', 'my', 'our', 'their', 'her', 'his')
+indefinite_pronouns = {'all': 'plural', 'both': 'plural', 'few': 'plural', 'many': 'plural', 'most': 'plural',
+                       'none': 'zero', 'some': 'plural'}
+
+# Verbs
+aux_lemmas = ('be', 'do', 'have', 'become')
 aux_verb_dict = {'can': 'dna:OpportunityAndPossibility',
                  'could': 'dna:OpportunityAndPossibility',
                  'may': 'dna:OpportunityAndPossibility',
@@ -62,20 +69,31 @@ aux_verb_dict = {'can': 'dna:OpportunityAndPossibility',
                  'will': 'dna:IntentionAndGoal,dna:CommandAndDemand',
                  'would': 'dna:OpportunityAndPossibility'}
 
-# TODO: Other prepositions?
-processed_prepositions = ('about', 'after', 'along', 'as', 'at', 'before', 'during', 'in', 'inside', 'into',
-                          'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with', 'without')
-
-prep_to_predicate_for_locs = {'about': ':has_topic',
-                              'at': ':has_location',
-                              'from': ':has_origin',
-                              'to': ':has_destination',
-                              'in': ':has_location',
-                              'near': ':has_location',
-                              'outside': 'has_location'}
-
-pronouns = ('I', 'we', 'us', 'they', 'them', 'he', 'she', 'it', 'myself', 'ourselves', 'themselves',
-            'herself', 'himself', 'itself', 'my', 'our', 'their', 'her', 'his')
+# Prepositions
+# TODO: Other prepositions? Out? Without?
+processed_prepositions = ('about', 'after', 'along', 'at', 'before', 'during', 'in', 'inside', 'into',
+                          'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with')
+prep_to_predicate = {'about': ':has_topic',
+                     'after': 'obj+:before',     # 'obj+' indicates the prep object is the subject of the triple
+                     'along': ':has_active_agent=>:Agent',      # No default
+                     'at': ':has_location|:has_time=>:Time',    # Default + alternatives separated by '|'
+                     'before': ':before',
+                     'during': ':during',
+                     'in': ':has_topic|:has_location=>:Location',
+                     'inside': ':has_location',
+                     'into': ':has_location',
+                     'for': ':has_topic|:has_time=>:Time|has_affected_agent=>:Agent',
+                     'from': ':has_origin|:has_earliest_beginning=>:Time|:has_provider=>:Agent|'
+                             'ProductionManufactureAndCreation=>:has_component',
+                     'near': ':has_location',
+                     'of': 'obj+:has_component',
+                     'on': ':has_location',
+                     'outside': ':has_location',
+                     'to': ':has_topic|:has_recipient=>:Agent|:has_destination=>:Location|:has_latest_end=>:Time',
+                     'with': ':has_topic|:has_instrument=>:Resource|:has_location=>:Location|:has_active_agent=>:Agent'}
+# Indicates the prepositional mapping which should be changed (as the dictionary key),
+#   and the value uses the format, event_state_class=>original_predicate>new_predicate
+prep_to_predicate_mod = {'to': ':AssessmentAndCharacterization=>:has_recipient>:has_topic'}
 
 # Replace multi-word phrases or non-standard terms acting as conjunctions or prepositions with single word terms
 replacement_words = {

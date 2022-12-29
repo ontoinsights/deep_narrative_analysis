@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 26 2022
+# Last Modified: December 27 2022
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Atribution 4.0 International (CC BY 4.0)
@@ -55,8 +55,10 @@
 #  Combined EducationalEvent with Cognition's Learning (and renamed it
 #   to :LearningAndEducation, in misc-event-subclasses.ttl)
 #  Renamed Reward to RewardAndCompensation
-#  Added Alignment, Bribe, Coup, DistributionAndSupply, 
-#    SiegeAndSurrounding and StateOrPhysicalChange
+#  Added Alignment, Bribe, ChangeOfPossession, Coup, DistributionAndSupply, 
+#    EntranceAndExit, SiegeAndSurrounding and StateOrPhysicalChange
+#  Renamed DisagreementOrDispute to DisagreementAndDispute for consistency
+#  Moved End/StartOfBusiness to environment-subclasses 
 ########################################################################
 
 
@@ -67,7 +69,7 @@
 :Acquisition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Acquisition" ;
-  :definition "The obtaining of some object/asset by any means. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
+  :definition "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc." ;
   :noun_synonym "discovery", "find", "acquiring", "obtaining", "discovering", "finding", "collecting" ;
   :verb_synonym "acquire", "obtain", "discover", "find", "collect" ;
   :wordnet_noun_synset "00042637", "00043933" ;
@@ -78,7 +80,7 @@
   rdfs:label "Act of Publishing" ;
   :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..." ;
   :noun_synonym "printing", "reporting", "broadcasting" ;
-  :verb_synonym "publish", "print", "report", "broadcast", "publicize", "publicise", "air", "bring out", "put out", "distribute", "disseminate", "transmit" ;
+  :verb_synonym "publish", "print", "report", "broadcast", "publicize", "publicise", "air", "bring out", "put out", "disseminate", "transmit" ;
   :wordnet_verb_synset "00956640" .
 
 :AggressiveOrHostileAct a owl:Class ;
@@ -168,7 +170,7 @@
   :definition "An activity related to the movement of an animal's or Person's body (such as dancing or running)." ;
   :example "Examples are breathing, bowing, flinching, running, coughing, etc." ;
   :wordnet_noun_synset "00117507", "00283971" ;
-  :wordnet_verb_synset "00105087", "00010047", "00099475", "01548665", "01835473" . 
+  :wordnet_verb_synset "00105087", "00010047", "00099475", "01548665", "01835473", "01514338" . 
 
 :Bribe a owl:Class ;
   rdfs:subClassOf :RewardAndCompensation ;
@@ -184,7 +186,7 @@
   rdfs:label "Ceremony" ;
   :definition "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate." ;
   :noun_synonym "commemoration", "funeral", "graduation", "rededication", "graduating", "rededicating", "memorialization", "memorialisation", "ceremonial", "observance"  ;
-  :verb_synonym "commemorate", "inaugurate", "mark" ;
+  :verb_synonym "commemorate", "inaugurate" ;
   :wordnet_noun_synset "01029321", "01028839", "07467451", "7465442" ; 
   :wordnet_verb_synset "00614139", "02400924", "02430184" .
 
@@ -197,6 +199,15 @@
   :verb_synonym "change", "adjust", "convert", "alter", "adapt", "trend", "mutate" ;
   :wordnet_noun_synset "14057399", "06207399", "00191991" ;
   :wordnet_verb_synset "00109468" .
+
+:ChangeOfPossession a owl:Class ;
+  rdfs:subClassOf :Possession, :Change, :Acquisition ;
+  rdfs:label "Change of Possession" ;
+  :definition "An event or condition describing that the control of some good(s) or property passed from one Agent to another. " ;
+  :noun_synonym "giving", "giver", "taking", "taker", "recipient", "providing", "receiver", "receiving", "receivership", "assignee", "consignee", "inheritor" ;
+  :verb_synonym "take", "get hold of", "get hands on", "give", "provide", "receive", "inherit", "consign", "pawn", "hock" ;
+  :wordnet_noun_synset "14502904", "09783624" ;
+  :wordnet_verb_synset "01216829", "02320505", "02352633" .
 
 :Cognition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -239,7 +250,7 @@
   rdfs:label "Coup" ;
   :definition "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent." ;
   :noun_synonym "coup d'etat", "putsch" ;
-  :verb_synonym "overthrow", "bring down", "revolutionize" ;
+  :verb_synonym "overthrow", "bring down" ;
   :wordnet_noun_synset "01147528" ; 
   :wordnet_verb_synset "02407551", "02407837" .
 
@@ -248,7 +259,7 @@
   rdfs:label "Death" ;
   :definition "The end of a living entity's life." ;
   :noun_synonym "annihilation", "decease", "demise", "dying", "drowning", "annihilating" ;
-  :verb_synonym "die", "decease", "perish", "pass away", "drown", "kick the bucket", "cash in one's chips", "give-up the ghost", "drop dead", "pop off", "choke" ;
+  :verb_synonym "die", "decease", "perish", "pass away", "drown", "kick bucket", "drop dead", "pop off", "choke" ;
   :wordnet_noun_synset "07370091", "07354694", "09919123", "15168437", "13985834" ;
   :wordnet_verb_synset "00359085" . 
 
@@ -271,7 +282,7 @@
   :wordnet_verb_synset "00460731", "02644022", "02648898" . 
 
 :DemonstrationStrikeAndRally a owl:Class ;
-  rdfs:subClassOf :MeetingAndEncounter, :DisagreementOrDispute ;
+  rdfs:subClassOf :MeetingAndEncounter, :DisagreementAndDispute ;
   rdfs:label "Demonstration, Strike and Rally" ;
   :definition "A meeting to support or object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property." ;
   :noun_synonym "march", "demonstrating", "marching", "picket", "sit-in", "walk-out", "hunger strike", "work stoppage" ;
@@ -279,9 +290,9 @@
   :wordnet_noun_synset "01180193", "08375259", "01170859", "01180685", "01245509", "01244711", "01181340" ;
   :wordnet_verb_synset "02417777", "02527482"  .
 
-:DisagreementOrDispute a owl:Class ;
+:DisagreementAndDispute a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Disagreement or Dispute" ;
+  rdfs:label "Disagreement and Dispute" ;
   :definition "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate." ;
   :noun_synonym "discrepancy", "quarrel", "controversy", "disputation", "argument", "disagreeing", "disputing", "quarrelling", "quarreling", "debating", "arguing", "feud", "argumentation", "debate", "difference of opinion" ; 
   :verb_synonym "disagree", "dispute", "quarrel", "debate", "argue", "contend", "quibble", "niggle", "bicker", "squabble" ; 
@@ -300,7 +311,7 @@
   rdfs:label "Distribution and Supply" ;
   :definition "Events related to giving out materials/Resources to Agents (typically Persons)." ;
   :noun_synonym "distributing", "giving out", "handing out", "dispensing", "issuance", "passing around", "doling out", "allocation", "allotment", "apportioning", "apportionment", "meting out", "dissemination", "dispersal", "rationing", "proration", "parceling", "parcelling", "assignation" ;
-  :verb_synonym "distribute", "hand out", "dispense", "issuance", "pass around", "dole out", "allocate", "allot", "apportion", "mete out", "proration", "ration", "spread", "deploy", "bootleg", "circulate", "furnish", "equip" ; 
+  :verb_synonym "distribute", "hand out", "dispense", "issuance", "pass around", "dole out", "allocate", "allot", "apportion", "mete out", "proration", "ration", "deploy", "bootleg", "furnish", "equip" ; 
   :wordnet_noun_synset "00809586", "01085001", "01085569" ;
   :wordnet_verb_synset "01381221", "02047080" .
 
@@ -309,7 +320,7 @@
   rdfs:label "Divorce" ;
   :definition "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage." ;
   :noun_synonym "annulment", "breakup", "annulling" ;
-  :verb_synonym "annul", "breakup", "get a divorce", "end a marriage", "split up", "break up" ;
+  :verb_synonym "annul", "breakup", "get divorce", "end marriage", "split up", "break up" ;
   :wordnet_noun_synset "01203761", "00216181" ;
   :wordnet_verb_synset "02436167" .
 
@@ -332,15 +343,6 @@
   :wordnet_noun_synset "00182630", "00184354", "00181811" ;
   :wordnet_verb_synset "02405902", "02466737" .
 
-:EndOfBusiness a owl:Class ;
-  rdfs:subClassOf :End ;
-  rdfs:label "End of Business" ;
-  :definition "An Event indicating that an existing business (Organization) or business location ceased operations." ;
-  :noun_synonym "closing", "closure", "closedown", "shutdown" ;
-  :verb_synonym "go out of business", "shut its doors", "close its doors", "close up shop", "shut down", "close down" ;
-  :wordnet_noun_synset "00230127" ;
-  :wordnet_verb_synset "02431242" . 
-
 :Enforcement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Enforcement" ;
@@ -349,6 +351,15 @@
   :verb_synonym "enforce", "impose" ;
   :wordnet_noun_synset "01129340", "01129944" ;
   :wordnet_verb_synset "02565990", "02566249" .
+
+:EntranceAndExit a owl:Class ;
+  rdfs:subClassOf :MovementTravelAndTransportation ;
+  rdfs:label "Entrance and Exit" ;
+  :definition "A movement of ." ;
+  :noun_synonym "access", "arrival", "arriving", "departure", "departing", "leaving", "ingress", "entry", "entering", "intrusion", "farewell" ;
+  :verb_synonym "enter", "exit", "leave", "arrive", "depart", "drive out", "get out", "go forth", "step out", "come in", "roll in", "run off", "access" ;
+  :wordnet_noun_synset "00049744", "00049115", "00043495", "00281976" ;
+  :wordnet_verb_synset "02388582", "02019450", "02009962", "02011431" .
 
 :EnvironmentalOrEcologicalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -387,7 +398,7 @@
   rdfs:label "Gambling and Wagering" ;
   :definition "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result." ;
   :noun_synonym "betting", "bet", "poker", "casino", "wager", "gamble" ;
-  :verb_synonym "bet", "gamble", "wager", "place a bet", "lay a bet", "play the horses", "chance", "take chances", "take a chance" ;
+  :verb_synonym "bet", "gamble", "wager", "place bet", "lay bet", "play horses" ;
   :wordnet_noun_synset "00431125", "00491361", "00494042", "00494319", "00495779", "00492724" ;
   :wordnet_verb_synset "01140949", "02550045", "01079346" . 
 
@@ -449,10 +460,10 @@
   rdfs:subClassOf :MovementTravelAndTransportation ;
   rdfs:label "Incremental Movement" ;
   :definition "Any act that changes the location of something by small amounts or makes small changes to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument." ;
-  :noun_synonym "placing", "putting", "funneling", "pouring", "coiling", "spraying", "filling", "pocketing" ;
-  :verb_synonym "place", "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "displace", "set", "pose", "position", "stir", "spill", "splatter", "flick", "ruffle", "pump", "roll", "revolve", "wind", "wind up" ;
+  :noun_synonym "placing", "putting", "funneling", "pouring", "coiling", "spraying", "filling", "pocketing", "pushing", "pulling", "rolling", "sliding" ;
+  :verb_synonym "place", "put", "funnel", "pour", "coil", "spray", "fill", "pocket", "displace", "set", "pose", "position", "stir", "spill", "splatter", "flick", "ruffle", "pump", "roll", "revolve", "wind", "push", "pull", "slide" ;
   :wordnet_noun_synset "00403343", "01053255" ; 
-  :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282" .
+  :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282", "01450719" .
 
 :InformationHandling a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -468,7 +479,7 @@
   rdfs:label "Legal Event" ;
   :definition "Any activity based on following legal practices, or related to or allowed by laws or the legal system." ;
   :noun_synonym "trial", "court case", "jury", "justice", "legal proceedings", "judge", "attorney", "lawyer", "litigation", "litigating", "testifying", "lawsuit", "sentence", "verdict", "testimony", "sentencing", "law", "recusation", "recusal", "sequestration" ;
-  :verb_synonym "try a case", "go to court", "litigate", "testify", "sentence", "reach a verdict", "charge with", "take the stand", "take the Fifth", "sentence", "depose" ;
+  :verb_synonym "try case", "go to court", "litigate", "testify", "sentence", "reach verdict", "charge with", "take stand", "take Fifth", "sentence", "depose" ;
   :wordnet_noun_synset "01183965", "01187304", "01183047", "01183348", "01183702", "01081986", "01204674", "08431076", "06660952", "01194465" ;
   :wordnet_verb_synset "02588535", "01016830", "02267740", "02503473", "00762621", "00896020", "00908688", "01015049" .
 
@@ -482,7 +493,7 @@
   rdfs:label "Loss" ;
   :definition "An event or condition describing NOT having some goods or property, which previously were in an Agent's Possession." ;
   :noun_synonym "mislaying", "losing", "misplacing", "disappearance", "forfeiture", "squandering", "forfeiting", "forfeit", "sacrifice" ;
-  :verb_synonym "mislay", "lose", "misplace", "forfeit", "squander", "give up", "waive", "forgo", "forego", "squander" ;
+  :verb_synonym "mislay", "lose", "misplace", "forfeit", "squander", "waive", "forgo", "forego", "squander" ;
   :wordnet_noun_synset "00068346", "00206740", "00745120" ;
   :wordnet_verb_synset "02292463", "02293000", "01504432", "02308311", "02273196" . 
 
@@ -517,10 +528,10 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Movement, Travel and Transportation" ;
   :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used." ;
-  :noun_synonym "motion", "move", "moving", "arrival", "arriving", "departure", "departing", "shipment", "shipping", "trip", "journey", "transiting", "transit", "transport", "transporting", "haulage", "hauling", "conveying", "vacation", "vacationing", "cargo", "immigrating", "immigration", "emigrating", "emigration", "transfer", "transferring", "sending", "bringing", "driving", "leaving", "approaching", "carrying", "traveling", "travelling", "traveling", "travelling", "pushing", "pulling", "rolling", "sliding" ;
-  :verb_synonym "send", "bring", "drive", "leave", "approach", "arrive", "depart", "carry", "go", "move", "travel", "convey", "ship", "take a trip", "take a vacation", "transport", "haul", "walk out", "immigrate", "emigrate", "push", "pull", "throw", "transfer", "slide" ;
+  :noun_synonym "motion", "move", "moving", "shipment", "shipping", "trip", "journey", "transiting", "transit", "transport", "transporting", "haulage", "hauling", "conveying", "vacation", "vacationing", "cargo", "immigrating", "immigration", "emigrating", "emigration", "transfer", "transferring", "sending", "bringing", "driving", "approach", "approaching", "carrying", "traveling", "travelling", "traveling", "travelling", "migration", "migrating", "ferrying" ;
+  :verb_synonym "send", "bring", "drive", "approach", "carry", "go", "move", "travel", "convey", "ship", "take trip", "take vacation", "transport", "haul", "walk out", "immigrate", "emigrate", "migrate", "transfer", "ferry", "drive" ;
   :wordnet_noun_synset "00280679", "01107164" ;
-  :wordnet_verb_synset "01839438", "00270891", "00415334", "01091334", "01438013", "01450719", "01452567", "01514338", "01517828", "01569697", "01954657", "01955339", "01957669", "02006752", "02060895", "02063390", "02236972" .
+  :wordnet_verb_synset "01839438", "00270891", "00415334", "01091334", "01438013", "01452567", "01517828", "01569697", "01954657", "01955339", "01957669", "02006752", "02060895", "02063390", "02236972" .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -532,16 +543,16 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Possession" ;
   :definition "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed." ;
-  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "possessing", "ownership", "owner" ;
-  :verb_synonym "take possession", "possess", "get hold of", "get one's hands on", "belong to", "keep", "control", "own", "get hold of" ;
-  :wordnet_noun_synset "14503072", "14502904", "00032912", "00811126", "00812259", "13261412", "14503072" ;
-  :wordnet_verb_synset "02209474", "01216829", "02306641" .
+  :noun_synonym "keeping", "proprietorship", "control", "custody", "guardianship", "belongings", "possessing", "ownership", "owner", "possessor", "retention" ;
+  :verb_synonym "possess", "belong to", "keep", "control", "own" ;
+  :wordnet_noun_synset "14503072", "00032912", "00811126", "00812259", "13261412" ;
+  :wordnet_verb_synset "02209474", "02306641" .
 
 :ProductionManufactureAndCreation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Production, Manufacture and Creation" ;
   :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate." ;
-  :noun_synonym "construction", "fabrication", "manufacturing", "modeling", "invention", "producing", "creating", "building", "assembling", "constructing", "inventing", "manufacturer", "maker", "innovation", "excogitation", "conception", "design", "construction" ;
+  :noun_synonym "construction", "fabrication", "manufacturing", "modeling", "invention", "producing", "creating", "building", "assembling", "constructing", "inventing", "manufacturer", "maker", "making", "innovation", "excogitation", "conception", "design", "construction" ;
   :verb_synonym "build", "create", "assemble", "construct", "manufacture", "produce", "fabricate", "invent", "develop", "produce", "make", "put together", "fabricate", "contrive", "devise", "excogitate" ;
   :wordnet_noun_synset "00910607", "00925258", "08077282", "00942228", "03587827", "05641230", "00912746", "01106542" ; 
   :wordnet_verb_synset "00094214", "01624592", "01660471", "01656984", "01635953" .
@@ -615,7 +626,7 @@
   :definition "Proceeding with an act that is dangerous and/or may result in injury, failure or loss." ;
   :definition "Proceeding with an act that is dangerous and/or that has the 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings." ;
   :noun_synonym "audacity", "bravado", "boldness", "daring", "recklessness", "venturing", "danger", "recklessness", "foolhardiness", "rashness", "gutsiness" ;
-  :verb_synonym "risk", "take a risk", "stick one's neck out", "take a leap in the dark", "venture", "put on the line", "lay on the line", "take a chance" ;
+  :verb_synonym "risk", "take risk", "stick neck out", "take leap in dark", "venture", "put on line", "lay on line", "take chance" ;
   :wordnet_noun_synset "00803899", "04669283", "04866016", "04867047" ; 
   :wordnet_verb_synset "02551275" . 
 
@@ -665,13 +676,6 @@
   :wordnet_noun_synset "09300592", "00293825", "00314328", "04272778", "04273014", "04273124", "04273272", "04273485", "07383246", "11527418" ;
   :wordnet_verb_synset "01517688", "01910195" . 
 
-:StartOfBusiness a owl:Class ;
-  rdfs:subClassOf :StartAndBeginning ;
-  rdfs:label "Start of Business" ;
-  :definition "An Event indicating that a new Organization has been created/founded. The new Organization is defined by the property, :has_affected_agent." ;
-  :verb_synonym "incorporate", "establish", "open" ;
-  :wordnet_verb_synset "02452944", "01348685" .
-
 :StateAndPhysicalChange a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "State Change and Physical Change" ;
@@ -685,7 +689,7 @@
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Storage" ;
   :definition "Any act of keeping something for future delivery, sale or use." ;
-  :noun_synonym "warehousing", "storehouse", "repository", "cache", "depot", "warehouse", "stash", "stockpile", "storing", "stocking", "stockpiling", "reserving", "holding", "caching", "hoarding", "stowing", "reserve", "backlog", "stockpile" ;
+  :noun_synonym "warehousing", "storehouse", "repository", "cache", "depot", "warehouse", "stash", "stockpile", "storing", "stocking", "stockpiling", "reserving", "caching", "hoarding", "stowing", "reserve", "backlog", "stockpile" ;
   :verb_synonym "store", "stock", "stockpile", "reserve", "hold", "cache", "hoard", "stow", "set aside", "stash", "lay in", "save up" ;
   :wordnet_noun_synset "00373415", "00813322", "04336084", "13389225", "08479216", "00813016" ; 
   :wordnet_verb_synset "02285938", "02287351", "02290237", "02208876" .  
@@ -704,7 +708,7 @@
   rdfs:label "Suicide" ;
   :definition "The act of an individual (animal or Person) taking their own life." ;
   :noun_synonym "self-destruction", "self-annihilation" ;
-  :verb_synonym "take one's life", "kill oneself", "commit suicide" ;
+  :verb_synonym "take one's life", "kill oneself", "commit suicide", "take own life" ;
   :wordnet_noun_synset "00223352", "10693108" ; 
   :wordnet_verb_synset "01327678" . 
 
@@ -747,7 +751,7 @@
   owl:members  ( :AggressiveOrHostileAct :FriendlyOrSupportiveAct ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Agreement :DisagreementOrDispute ) .
+  owl:members  ( :Agreement :DisagreementAndDispute ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Agreement :ViolationOfAgreement ) .

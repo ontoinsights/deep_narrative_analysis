@@ -7,12 +7,12 @@ import pickle
 from dna.create_specific_turtle import create_environment_ttl
 from dna.database import query_class
 from dna.nlp import get_head_word
-from dna.queries import query_event, query_event_example, query_noun
+from dna.queries import query_event, query_example, query_noun
 from dna.query_ontology import check_subclass, check_emotion_loc_movement, get_norp_emotion_or_lob, \
     query_exact_and_approx_match
 from dna.query_sources import check_wordnet
-from dna.utilities_and_language_specific import dna_dir, dna_prefix, empty_string, event_and_state_class, \
-    ner_dict, objects_string, owl_thing2, preps_string, space
+from dna.utilities_and_language_specific import aux_lemmas, dna_dir, dna_prefix, empty_string, \
+    event_and_state_class, ner_dict, objects_string, owl_thing2, preps_string, space
 
 resources_dir = os.path.join(dna_dir, 'resources/')
 # Pickle files holding nouns/verbs with multiple inheritance and/or multiple mapping choices
@@ -36,8 +36,14 @@ def _check_dicts(text: str, is_verb: bool) -> list:
     """
     if is_verb and text in verbs_multi_dict:
         return verbs_multi_dict[text]
-    if not is_verb and text in nouns_multi_dict:
-        return nouns_multi_dict[text]
+    if not is_verb:
+        if text in nouns_multi_dict:
+            return nouns_multi_dict[text]
+        if space in text:
+            text_words = text.split()
+            check_text = f'{text_words[-2]} {text_words[-1]}'   # Checking for adj+noun such as 'red tape'
+            if check_text in nouns_multi_dict:
+                return nouns_multi_dict[check_text]
     return []
 
 
@@ -248,31 +254,67 @@ def get_event_state_mapping(verb_text: str, verb_dict: dict, subjs: list,
     :return: An array of class mappings for the verb_text or an empty list indicating that the
              semantics are already captured in the turtle
     """
-    if verb_text in ('be', 'being', 'become', 'becoming'):
+    if verb_text in aux_lemmas:
         return _determine_ontology_verb_be(verb_dict, subjs, event_iri, curr_turtle)
     elif verb_text in ('do', 'doing'):
         return _determine_ontology_verb_do(verb_dict)
     elif verb_text in ('have', 'having'):
         return _determine_ontology_verb_have(verb_dict)
     if space in verb_text:    # Indicates a verb + prt
-        verb_classes = get_verb_mapping(verb_text, verb_dict, subjs)
+        verb_classes = get_mapping_detail(verb_text, verb_dict, subjs)
         if verb_classes != [event_and_state_class]:
             return verb_classes
     # Check for verb + preposition mappings
     if preps_string in verb_dict:
         for prep in verb_dict[preps_string]:
             revised_text = f'{verb_text} {prep["prep_text"]}'
-            verb_classes = get_verb_mapping(revised_text, verb_dict, subjs)
+            verb_classes = get_mapping_detail(revised_text, verb_dict, subjs)
             if verb_classes != [event_and_state_class]:
                 return verb_classes
     # Check for verb + object mappings
     if objs:
         for obj_text, obj_type, obj_maps, obj_iri in objs:
-            verb_classes = get_verb_mapping(f'{verb_text} {get_head_word(obj_text)[0]}', verb_dict, [])
+            verb_classes = get_mapping_detail(f'{verb_text} {get_head_word(obj_text)[0]}', verb_dict, [])
             if verb_classes != [event_and_state_class]:
                 return verb_classes
     # Not found, check for the verb alone
-    return get_verb_mapping(verb_text, verb_dict, subjs)
+    return get_mapping_detail(verb_text, verb_dict, subjs)
+
+
+def get_mapping_detail(text: str, verb_dict: dict, subjects: list) -> list:
+    """
+    Get the ontology mapping details for a concept from the multiple inheritance dictionaries
+    (nouns/verbs_multi_dict) and if not found, query the ontology.
+
+    :param text: String holding the text to be mapped
+    :param verb_dict: Dictionary holding the parse details of the verb
+    :param subjects: An array of subject text, type, mappings and IRI details
+    :return: A list of strings representing possible mappings for the verb's text, or an array
+             = [':EventAndState']
+    """
+    verb_classes = _revise_verb_mapping(_check_dicts(text, True), verb_dict, subjects)
+    ontol_class = owl_thing2
+    if not verb_classes:     # No multiple class mappings
+        if space in text:     # verb + prt or verb + prep or event proper noun (such as 'World War II')
+            if text.istitle():     # Proper noun
+                for text_word in text.split():
+                    ontol_class = query_exact_and_approx_match(text_word.lower(), empty_string, True)
+                    if ontol_class != owl_thing2:
+                        return [ontol_class]
+            else:
+                ontol_class = query_exact_and_approx_match(text, empty_string, True)    # Check the ontology for match
+                if ontol_class != owl_thing2:
+                    return check_emotion_loc_movement([ontol_class], 'movement')
+        else:
+            ontol_class = query_exact_and_approx_match(text.lower(), query_event, True)
+        if ontol_class != owl_thing2:
+            return check_emotion_loc_movement([ontol_class], 'movement')
+        ontol_class = query_class(text.lower(), query_example)                  # Check the example text
+        if ontol_class != owl_thing2:
+            return check_emotion_loc_movement([ontol_class], 'movement')
+    else:
+        return check_emotion_loc_movement(verb_classes, 'movement')
+    return [event_and_state_class]
 
 
 def get_noun_mapping(noun_text: str, noun_iri: str) -> (list, list):
@@ -303,24 +345,24 @@ def get_noun_mapping(noun_text: str, noun_iri: str) -> (list, list):
         elif iteration == 2:     # Check the head word's lemma
             noun_classes, noun_ttl = _revise_noun_mapping(_check_dicts(lemma, False), noun_iri)
         elif iteration == 3:
-            ontol_class = query_exact_and_approx_match(noun_text, query_noun)  # Move to checking the ontology
+            ontol_class = query_exact_and_approx_match(head_word, query_noun, False)  # Move to checking the ontology
             if ontol_class == owl_thing2:
-                ontol_class = query_exact_and_approx_match(head_word, query_noun)
-                if ontol_class != owl_thing2:
-                    noun_classes = [ontol_class]
+                ontol_class = query_exact_and_approx_match(lemma, query_noun, False)
+            if ontol_class != owl_thing2:
+                noun_classes = [ontol_class]
         elif iteration == 4:
-            ontol_class = query_class(noun_text, query_event_example)   # Check inclusion of text in dna:example string
+            ontol_class = query_class(head_word, query_example)   # Check inclusion of text in dna:example string
             if ontol_class == owl_thing2:
-                ontol_class = query_exact_and_approx_match(head_word, query_event_example)
-                if ontol_class != owl_thing2:
-                    noun_classes = [ontol_class]
+                ontol_class = query_exact_and_approx_match(lemma, query_example, False)
+            if ontol_class != owl_thing2:
+                noun_classes = [ontol_class]
         elif iteration == 5:
             head_word = check_wordnet(noun_text)    # Get head word from the definition of the top synset in WordNet
             # Future: Also check thesaurus synonyms?
             if head_word:
                 noun_classes, noun_ttl = _revise_noun_mapping(_check_dicts(head_word, False), noun_iri)
             if not noun_classes:
-                ontol_class = query_exact_and_approx_match(head_word, query_noun)  # Move to checking the ontology
+                ontol_class = query_exact_and_approx_match(head_word, query_noun, False)
                 if ontol_class != owl_thing2:
                     noun_classes = [ontol_class]
         else:
@@ -328,39 +370,3 @@ def get_noun_mapping(noun_text: str, noun_iri: str) -> (list, list):
     if noun_classes and noun_classes[0] is not None:
         return check_emotion_loc_movement(noun_classes, 'location'), noun_ttl
     return [owl_thing2], noun_ttl
-
-
-def get_verb_mapping(text: str, verb_dict: dict, subjects: list) -> list:
-    """
-    Get the ontology mapping details for a concept from the multiple inheritance dictionaries
-    (nouns/verbs_multi_dict) and if not found, query the ontology.
-
-    :param text: String holding the text to be mapped
-    :param verb_dict: Dictionary holding the parse details of the verb
-    :param subjects: An array of subject text, type, mappings and IRI details
-    :return: A list of strings representing possible mappings for the verb's text, or an array
-             = [':EventAndState']
-    """
-    verb_classes = _revise_verb_mapping(_check_dicts(text, True), verb_dict, subjects)
-    ontol_class = owl_thing2
-    if not verb_classes:     # No multiple class mappings
-        if space in text:     # verb + prt or verb + prep or event proper noun (such as 'World War II')
-            if text.istitle():     # Proper noun
-                for text_word in text.split():
-                    ontol_class = query_exact_and_approx_match(text_word.lower(), empty_string)
-                    if ontol_class != owl_thing2:
-                        return [ontol_class]
-            else:
-                ontol_class = query_exact_and_approx_match(text, empty_string)    # Check the ontology for exact match
-                if ontol_class != owl_thing2:
-                    return check_emotion_loc_movement([ontol_class], 'movement')
-        else:
-            ontol_class = query_exact_and_approx_match(text.lower(), query_event)     # Check the ontology
-        if ontol_class != owl_thing2:
-            return check_emotion_loc_movement([ontol_class], 'movement')
-        ontol_class = query_class(text.lower(), query_event_example)                  # Check the example text
-        if ontol_class != owl_thing2:
-            return check_emotion_loc_movement([ontol_class], 'movement')
-    else:
-        return check_emotion_loc_movement(verb_classes, 'movement')
-    return [event_and_state_class]

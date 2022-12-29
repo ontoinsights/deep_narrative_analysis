@@ -96,7 +96,7 @@ def _delete_data(db: str, graph: str = empty_string) -> (Response, int):
     :return: Flask JSON response and status code
     """
     if graph:
-        failure = clear_data(db, f'urn:ontoinsights:dna:{graph}')    # Empty string is returned if successful
+        failure = clear_data(db, f'{dna_prefix}{graph}')    # Empty string is returned if successful
     else:
         msg = create_delete_database('delete', db)
         failure = False if 'deleted at' in msg else True
@@ -216,7 +216,7 @@ def repositories():
         if 'created at' in create_msg:
             # Add details to meta-db
             created_at = create_msg.split('created at ')[1]
-            triples = f'@prefix : <urn:ontoinsights:dna:> . @prefix dc: <http://purl.org/dc/terms/> . ' \
+            triples = f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> . ' \
                       f':{repo} a :Database ; dc:created "{created_at}"^^xsd:dateTime .'
             triples_msg = add_remove_data('add', triples, meta_db)
             if not triples_msg:     # Successful
@@ -296,7 +296,7 @@ def narratives():
         if success:
             # Add the triples to the data store, to a named graph with name = dna:graph_uuid
             graph_uuid = str(uuid.uuid4())[:8]
-            msg = add_remove_data('add', ' '.join(graph_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
+            msg = add_remove_data('add', ' '.join(graph_ttl), repo, f'{dna_prefix}{graph_uuid}')
             if not msg:
                 # Successful, so process the quotations and add them to the default/meta-data graph and
                 #    specific narrative graph
@@ -307,7 +307,7 @@ def narratives():
                 if msg:
                     return jsonify({error_str: f'Error adding quotations to the repository {repo}: {msg}'}), 500
                 create_quotations_ttl(graph_uuid, quotations, quotations_dict, quotation_ttl, False)
-                msg = add_remove_data('add', ' '.join(quotation_ttl), repo, f'urn:ontoinsights:dna:{graph_uuid}')
+                msg = add_remove_data('add', ' '.join(quotation_ttl), repo, f'{dna_prefix}{graph_uuid}')
                 if msg:
                     return jsonify({error_str: f'Error adding quotations to narrative graph {graph_uuid}: {msg}'}), 500
                 # Add meta-data to the default graph in the database
@@ -381,15 +381,15 @@ def graphs():
                 {error_str: 'missing',
                  detail: 'A triples element MUST be present in the request body of a /graphs POST.'}), 400
         logging.info(f'Updating narrative, {narr_id}, in {repo}')
-        test_msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'urn:ontoinsights:dna:test_{narr_id}')
+        test_msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'{dna_prefix}test_{narr_id}')
         if not test_msg:     # Successful
             # Delete the test and 'real' narrative graph and recreate the latter
-            clear_data(repo, f'urn:ontoinsights:dna:test_{narr_id}')
-            clear_msg = clear_data(repo, f'urn:ontoinsights:dna:{narr_id}')
+            clear_data(repo, f'{dna_prefix}test_{narr_id}')
+            clear_msg = clear_data(repo, f'{dna_prefix}{narr_id}')
             if clear_msg:
                 error = f'Could not remove the triples from the original narrative graph ({narr_id}) in {repo}'
                 return jsonify({error_str: error}), 500
-            msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'urn:ontoinsights:dna:{narr_id}')
+            msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'{dna_prefix}{narr_id}')
             if not msg:     # Successfully added data to the narr_id narrative graph
                 # Update the narrative meta-data (delete/insert original and new KG created and number of triples)
                 query_database('update', update_narrative.replace('?s', f':{narr_id}'), repo)
@@ -399,7 +399,7 @@ def graphs():
                 if len(numb_triples_results) > 0:
                     numb_triples = numb_triples_results[0]['cnt']['value']
                 new_meta_ttl = [
-                    f'@prefix : <urn:ontoinsights:dna:> . @prefix dc: <http://purl.org/dc/terms/> .',
+                    f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> .',
                     f':{narr_id} dc:created "{created_at}"^^xsd:dateTime ; :number_triples {numb_triples} .']
                 add_msg = add_remove_data('add', ' '.join(new_meta_ttl), repo)
                 if not add_msg:    # Successful

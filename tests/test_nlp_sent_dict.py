@@ -37,7 +37,7 @@ def test_sent_no_quotations():
     assert first_dict['chunks'][0]['verbs'][0]['verb_lemma'] == 'reject'
     assert first_dict['chunks'][0]['verbs'][1]['verb_lemma'] == 'urge'
     assert first_dict['chunks'][1]['verbs'][0]['verb_lemma'] == 'concede'
-    assert first_dict['chunks'][0]['verb_processing'] == ['xcomp > urge, reject']
+    assert first_dict['chunks'][0]['verb_processing'] == ['xcomp > urge/urged, reject']
     assert 'verb_processing' not in first_dict['chunks'][1]
     first_dict_chunk1_verb = first_dict['chunks'][1]['verbs'][0]
     assert first_dict_chunk1_verb['preps'][0]['prep_details'][0]['preps'][0]['prep_details'][0]['detail_type'] == \
@@ -56,7 +56,7 @@ def test_sent_percent():
     assert len(first_dict['chunks'][1]['verbs'][0]['objects'][0]['preps']) == 1
     assert len(first_dict['chunks'][1]['verbs'][0]['preps']) == 1
     assert first_dict['chunks'][1]['verbs'][0]['preps'][0]['prep_text'] == 'to'
-    assert first_dict['chunks'][1]['verbs'][0]['preps'][0]['prep_details'][0]['detail_text'] == 'Ms. Cheney ’s 28.9%'
+    assert first_dict['chunks'][1]['verbs'][0]['preps'][0]['prep_details'][0]['detail_text'] == 'Cheney/poss/ 28.9%'
 
 
 def test_sent_quotation():
@@ -96,7 +96,7 @@ def test_sent_members_of():
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
     assert len(first_dict['chunks']) == 4
-    assert first_dict['chunks'][1]['verb_processing'][0] == 'xcomp > swear, protect'
+    assert first_dict['chunks'][1]['verb_processing'][0] == 'xcomp > swear/sworn, protect'
     assert 'congress+ORG' in first_dict['AGENTS']
 
 
@@ -120,15 +120,16 @@ def test_sent_compound_xcomp1():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_compound_xcomp1)
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
-    assert first_dict['chunks'][1]['verb_processing'] == ['xcomp > fail, win']
+    assert first_dict['chunks'][1]['verb_processing'] == ['xcomp > fail/failed, win']
 
 
 def test_sent_compound_xcomp2():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_compound_xcomp2)
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
-    assert 'xcomp > fail, win' in first_dict['chunks'][0]['verb_processing']
-    assert 'xcomp > fail, finish' in first_dict['chunks'][0]['verb_processing']
+    assert 'xcomp > fail/failed, win' in first_dict['chunks'][0]['verb_processing']
+    assert 'xcomp > fail/failed, finish' in first_dict['chunks'][0]['verb_processing']
+    assert first_dict['chunks'][0]['verb_cc'] == 'or'
 
 
 def test_sent_compound_xcomp_prt():
@@ -136,7 +137,7 @@ def test_sent_compound_xcomp_prt():
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
     assert len(first_dict['chunks'][0]['verb_processing']) == 2
-    assert 'xcomp > fail, give' in first_dict['chunks'][0]['verb_processing']
+    assert 'xcomp > fail/failed, give' in first_dict['chunks'][0]['verb_processing']
     assert 'prt > give up' in first_dict['chunks'][0]['verb_processing']
 
 
