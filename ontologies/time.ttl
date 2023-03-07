@@ -11,10 +11,10 @@
 # (https://www.w3.org/TR/owl-time/).
 # 
 # Created: February 9 2020
-# Last modified: November 5 2022
+# Last modified: January 5 2023
 # 
 # Licensed by OntoInsights, LLC
-# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# Creative Commons Attribution 4.0 International (CC BY 4.0)
 # 
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
@@ -22,18 +22,12 @@
 # either express or implied.
 # 
 # Changes:
-#  Updated to the Mar 2021 semantics
-#  Updated the default and dna prefixes
-#  Added example individuals
-#  Changed :synonym to :noun_synonym
-#  Added Intervals of :Childhood, :TeenYears, :Adulthood, :OldAge
-#  Added :has_earliest_beginning, :has_latest_end and :time_zone
-#  Modified :has_temporal_unit and :has_recurrence_unit to be a restricted 
-#    set of string values
-#  Added sub-classes of Interval, PointInTime and Season; Changed Season 
-#    individuals (Autumn, Winter, ...) to be sub-classes
-#  Added :wordnet_noun_synset details
-#  Changed :Teenage to :Adolescence
+#  Reset change history
+#  Added @en language tags to rdfs:labels, :definitions and :examples
+#  Removed all synonyms to language-specific modules
+#  Changed the :recurrence_unit and :temporal_unit data properties to 
+#    :has_recurrence_unit and :has_temporal_unit (object properties) and
+#    added the class, TemporalUnit
 ########################################################################
 
 
@@ -43,41 +37,43 @@
 
 :Duration a owl:Class ;
   rdfs:subClassOf :Time ;
-  rdfs:label "Duration of Time" ;
-  :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :temporal_unit properties." ;
-  :noun_synonym "temporal distance", "lifespan" ;
+  rdfs:label "Duration of Time"@en ;
+  :definition "A length of time (such as '2 days') as defined by the :numeric_duration and :has_temporal_unit properties."@en ;
   :wordnet_noun_synset "05058400" .
 
 :Interval a owl:Class ;
   rdfs:subClassOf :Time ;
-  rdfs:label "Interval of Time" ;
-  :definition "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."; 
-  :noun_synonym "timeframe", "period" ;
+  rdfs:label "Interval of Time"@en ;
+  :definition "A period of time as defined by its beginning and end points in time, beginning point in time and duration, or end point in time and duration."@en ;
   :wordnet_noun_synset "15294470" .
 
 :PointInTime a owl:Class ;
   rdfs:subClassOf :Time ;
-  rdfs:label "Point in Time" ;
-  :definition "A point in time as specified by the properties, :year, :day_of_month, :day_of_week, :hour_of_day, :minute_of_hour, :month_of_year, :second_of_minute and :week_of_month, or by a specific :date_time timestamp." ;
-  :example "For example, April 1 2016 at noon can be specified by a PointInTime instance with the following properties and values: :year 2016, :month_of_year 4, :day_of_month 1 and :hour_of_day 12 or by the xsd:timestamp, '2016-04-01T12:00:00." ;
-  :noun_synonym "moment", "instant" ;
+  rdfs:label "Point in Time"@en ;
+  :definition "A point in time as specified by the properties, :year, :day_of_month, :day_of_week, :hour_of_day, :minute_of_hour, :month_of_year, :second_of_minute and :week_of_month, or by a specific :date_time timestamp."@en ;
+  :example "For example, April 1 2016 at noon can be specified by a PointInTime instance with the following properties and values: :year 2016, :month_of_year 4, :day_of_month 1 and :hour_of_day 12 or by the xsd:timestamp, '2016-04-01T12:00:00."@en ;
   :wordnet_noun_synset "15205381" .
 
 :RecurrencePattern a owl:Class ;
   rdfs:subClassOf :Time ;
-  rdfs:label "Recurrence Pattern" ;
-  :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property." ;
-  :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :recurrence_unit property would be set to 'Months'. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :recurrence_unit would be 'Weeks' and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :recurrence_unit of 'Seasonal' and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)" ;
-  :noun_synonym "rhythm", "cadence", "cycle", "repetition" ;
+  rdfs:label "Recurrence Pattern"@en ;
+  :definition "Indicates a repeating point in time or repeating interval. Repetition is specified by indicating the overall start and end times of the pattern (via the :has_beginning and :has_end properties) and a time frame for recurrence. The latter is defined using the :has_recurrence_time property and/or by a separation interval between recurrences (indicated using the :separation_interval and :has_recurrence_unit properties). Note that if an end time is not defined, then the pattern is assumed to be ongoing. Also note that specific repetitions can be omitted/cancelled using the :omit_time property."@en ;
+  :example "The possible semantics that can be expressed by RecurrencePattern are best illustrated using several examples. (1) The first example defines a pattern of the first Monday of every month for the years, 2018 and 2019. This would be specified using a :has_beginning property referencing January 2018 (a PointInTime with a :month_of_year property of 1 and a :year property of 2018) and a :has_end property referencing December 2019 (a PointInTime with a :month_of_year property of 12 and a :year property of 2019). The :has_recurrence_unit property would reference :enum:Months. The specific time of recurrence is defined using the :has_recurrence_time property and would reference another PointInTime instance with a :week_of_month property set to 1 (the first week of the month) and a :day_of_week set to 2 (Monday). (2) To indicate a recurrence every last Monday of the month for 2018 and 2019, all instances and property values would be defined as for (1) except that :week_of_month would be set to -1. (3) To indicate a recurrence every alternate Monday, most of the instances and property details from (1) would be valid except that :has_recurrence_unit would be :enum:Weeks and the :week_of_month property would not be needed for the PointInTime instance referenced by the :has_recurrence_time property. However, the instance's :day_of_week property would still be set to 2. A separation_interval of 2 would be used to indicate 'alternate' weeks (every 2 weeks). (4) As a last example, consider a need to reference the rainy season(s) in some area. This would be accomplished by defining a RecurrencePattern instance with a :has_recurrence_unit of :enum:Seasonal and a seasonal_description property set to 'rainy season'. (Other background information could be used to determine the months that are included in the 'rainy season' for the location.)"@en ;
   :wordnet_noun_synset "04775267", "07357963" .
 
 :Season a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Season" ;
-  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains." ;
-  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world." ;
-  :noun_synonym "time of year" ;
+  rdfs:label "Season"@en ;
+  :definition "A time of year characterized by weather (rain, temperatures, etc.), amount of daylight, likelihood of an event occurring, etc. Seasons are defined differently in various localities and in different domains."@en ;
+  :example "Some locations utilize four weather seasons (summer, fall, winter and spring), while others have six seasons (prevernal, vernal, estival, serotinal, autumnal/fall and hibernal/winter), and still others have three seasons (rainy, dry and mild). In other places, season is defined by the occurrence of wildfires, hurricanes, or when plants grow. It is very possible for a Time at a Location to be associated with several seasons. Also, the various Seasons may have synonyms - such as the 'rainy season' instead being known as the 'monsoon season' in different parts of the world."@en ;
   :wordnet_noun_synset "15261272" .
+
+:TemporalUnit a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Temporal Unit"@en ;
+  :definition "An enumeration defining a unit of time such as minutes, days, months, etc."@en ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:Days :enum:Hours :enum:Minutes :enum:Months :enum:Seconds :enum:Seasonal :enum:Weeks :enum:Years ) ] .
 
 
 ########################################################################
@@ -85,14 +81,14 @@
 ########################################################################
 
 :date_time a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "date time" ;
-  :definition "A dateTime value defined using an ISO 8601 format with an optional timezone." ;
+  rdfs:label "date time"@en ;
+  :definition "A dateTime value defined using an ISO 8601 format with an optional timezone."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range xsd:dateTime .
 
 :day_of_month a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "day of month" ;
-  :definition "An integer value indicating a specific day in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a day is specified that does not exist in the month (for example, the 31st/-31st day of February), then the last/first day of the month is assumed. If a value of 0 is used, then the first day of the month is assumed." ;
+  rdfs:label "day of month"@en ;
+  :definition "An integer value indicating a specific day in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a day is specified that does not exist in the month (for example, the 31st/-31st day of February), then the last/first day of the month is assumed. If a value of 0 is used, then the first day of the month is assumed."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -100,8 +96,8 @@
                                       [ xsd:maxInclusive "31"^^xsd:integer ] ) ] .
 
 :day_of_week a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "day of week" ;
-  :definition "An integer value indicating a specific day of the week, where Sunday is represented by 1, Monday by 2, ... through Saturday which is represented by 7." ;
+  rdfs:label "day of week"@en ;
+  :definition "An integer value indicating a specific day of the week, where Sunday is represented by 1, Monday by 2, ... through Saturday which is represented by 7."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -109,8 +105,8 @@
                                       [ xsd:maxInclusive "7"^^xsd:integer ] ) ] .
 
 :hour_of_day a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "hour of day" ;
-  :definition "An integer value indicating a specific hour of the day, where midnight is represented by 0 and 11pm is represented by 23." ;
+  rdfs:label "hour of day"@en ;
+  :definition "An integer value indicating a specific hour of the day, where midnight is represented by 0 and 11pm is represented by 23."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -118,8 +114,8 @@
                                       [ xsd:maxInclusive "23"^^xsd:integer ] ) ] .
 
 :minute_of_hour a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "minute of hour" ;
-  :definition "An integer value indicating a specific minute of an hour. The range of possible values is 0 to 59." ;
+  rdfs:label "minute of hour"@en ;
+  :definition "An integer value indicating a specific minute of an hour. The range of possible values is 0 to 59."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -127,8 +123,8 @@
                                       [ xsd:maxInclusive "59"^^xsd:integer ] ) ] .
 
 :month_of_year a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "month of year" ;
-  :definition "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12." ;
+  rdfs:label "month of year"@en ;
+  :definition "An integer value indicating a specific month of the year, assuming a Gregorian calendar, where January is represented by 1, February by 2, ... through December which is represented by 12."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -136,23 +132,16 @@
                                       [ xsd:maxInclusive "12"^^xsd:integer ] ) ] .
 
 :numeric_duration a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "numeric duration" ;
-  :definition "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :temporal_unit property value." ;
+  rdfs:label "numeric duration"@en ;
+  :definition "A non-negative decimal value indicating a Duration's extent relative to the time unit referenced by the Duration's :has_temporal_unit property value."@en ;
   rdfs:domain :Duration ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ] ) ] .
 
-:recurrence_unit a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "recurrence unit" ;
-  :definition "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
-  rdfs:domain :RecurrencePattern ;
-  rdfs:range [ a rdfs:Datatype ;
-               owl:oneOf ( "Days" "Hours" "Minutes" "Months" "Seconds" "Seasonal" "Weeks" "Years" ) ] .
-
 :second_of_minute a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "second of minute" ;
-  :definition "A decimal value indicating a specific second or sub-second of a minute. The range of possible values is 0.00 through 59.9999..." ;
+  rdfs:label "second of minute"@en ;
+  :definition "A decimal value indicating a specific second or sub-second of a minute. The range of possible values is 0.00 through 59.9999..."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
@@ -160,22 +149,15 @@
                                       [ xsd:maxExclusive "60.00"^^xsd:decimal ] ) ] .
 
 :separation_interval a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "separation interval" ;
-  :definition "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :recurrence_unit property value." ;
-  :example "For example, to indicate an occurrence every day, :recurrence_unit would be set to 'Days' and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed." ;
+  rdfs:label "separation interval"@en ;
+  :definition "A non-negative decimal value defining the time between occurrences in a RecurrencePattern. The interval is relative to the pattern's :has_recurrence_unit property value."@en ;
+  :example "For example, to indicate an occurrence every day, :has_recurrence_unit would reference :enum:Days and :separation_interval set to 1. If a :separation_interval is not specified for a RecurrencePattern, then the value of 1 is assumed."@en ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range xsd:decimal .
 
-:temporal_unit a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "temporal unit" ;
-  :definition "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally." ;
-  rdfs:domain :Duration ;
-  rdfs:range [ a rdfs:Datatype ;
-               owl:oneOf ( "Days" "Hours" "Minutes" "Months" "Seconds" "Seasonal" "Weeks" "Years" ) ] .
-
 :time_zone a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "time zone" ;
-  :definition "An integer indicating that time is specified as an offset from Coordinated Universal Time (UTC). Time zone values are specified as positive or negative numbers representing 'hhmm'. They range from −1200 to +1400. The offsets are usually in hours only (e.g., '##00'), but a few zones are offset by 30 or 45 minutes." ;
+  rdfs:label "time zone"@en ;
+  :definition "An integer indicating that time is specified as an offset from Coordinated Universal Time (UTC). Time zone values are specified as positive or negative numbers representing 'hhmm'. They range from −1200 to +1400. The offsets are usually in hours only (e.g., '##00'), but a few zones are offset by 30 or 45 minutes."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -183,8 +165,8 @@
                                       [ xsd:maxInclusive "1400"^^xsd:decimal ] ) ] .
 
 :week_of_month a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "week of month" ;
-  :definition "An integer value indicating a specific week in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a week is specified that does not exist in the month (for example, the 5th/-5th week of February), then the last/first week of the month is assumed. If a value of 0 is used, then the first week of the month is assumed." ;
+  rdfs:label "week of month"@en ;
+  :definition "An integer value indicating a specific week in a month, counting from the beginning of the month (positive values starting from 1) or from the end of the month (negative values starting from -1). If a week is specified that does not exist in the month (for example, the 5th/-5th week of February), then the last/first week of the month is assumed. If a value of 0 is used, then the first week of the month is assumed."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;
@@ -192,8 +174,8 @@
                                       [ xsd:maxInclusive "5"^^xsd:integer ] ) ] .
 
 :year a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "year" ;
-  :definition "An integer value indicating a year using the conventions of Common Era. Note that negative values indicate BCE." ;
+  rdfs:label "year"@en ;
+  :definition "An integer value indicating a year using the conventions of Common Era. Note that negative values indicate BCE."@en ;
   rdfs:domain :PointInTime ;
   rdfs:range xsd:integer .
 
@@ -203,40 +185,54 @@
 ########################################################################
 
 :has_approximate_time a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has approximate time" ;
+  rdfs:label "has approximate time"@en ;
   rdfs:subPropertyOf :has_time ;
   rdfs:range :Time ;
-  :definition "Estimates the Time of an EventAndState, from a previous reference in the narrative, when no specific Time is defined." .
+  :definition "Estimates the Time of an EventAndState, from a previous reference in the narrative, when no specific Time is defined."@en .
 
 :has_earliest_beginning a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has earliest beginning" ;
+  rdfs:label "has earliest beginning"@en ;
   rdfs:subPropertyOf :has_beginning ;
   rdfs:range :Time ;
-  :definition "References a Time that is the earliest start of the existence/time frame of some entity, or that is the earliest beginning of an Interval or Duration." .
+  :definition "References a Time that is the earliest start of the existence/time frame of some entity, or that is the earliest beginning of an Interval or Duration."@en .
 
 :has_latest_end a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has latest end" ;
+  rdfs:label "has latest end"@en ;
   rdfs:subPropertyOf :has_end;
   rdfs:range :Time ;
-  :definition "References a point in time that is the latest end of the existence/time frame of some entity, or that is the latest end of an Interval or Duration." .
+  :definition "References a point in time that is the latest end of the existence/time frame of some entity, or that is the latest end of an Interval or Duration."@en .
 
 :has_recurrence_time a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:label "has recurrence time" ;
-  :definition "References a PointInTime indicating that a RecurrencePattern repeats at that particular time." ;
-  :example "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also indicate the value, 'Years', using the :recurrence_unit property." ;
+  rdfs:label "has recurrence time"@en ;
+  :definition "References a PointInTime indicating that a RecurrencePattern repeats at that particular time."@en ;
+  :example "For example, to indicate a RecurrencePattern yearly on April 1, a PointInTime instance would be created and use the following properties and values: :month_of_year 4 and :day_of_month 1. This PointInTime instance would be referenced by the :has_recurrence_time property. The RecurrencePattern instance would also indicate the value, :enum:Years, using the :has_recurrence_unit property."@en ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range :PointInTime .
 
+:has_recurrence_unit a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
+  rdfs:label "has recurrence unit"@en ;
+  :definition "Defines a temporal unit for a RecurrencePattern - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally."@en ;
+  rdfs:domain :RecurrencePattern ;
+  rdfs:range :TemporalUnit .
+
 :has_season a owl:ObjectProperty ;
-  rdfs:label "has season" ;
-  :definition "Reference to a Season when a RecurrencePattern has a recurrence unit of :Seasonal, or when an :Interval or :PointInTime is defined by a Season." ;
+  rdfs:label "has season"@en ;
+  :definition "Reference to a Season when a RecurrencePattern has a recurrence unit of :Seasonal, or when an :Interval or :PointInTime is defined by a Season."@en ;
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :RecurrencePattern :PointInTime :Interval ) ] ; 
   rdfs:range :Season .
 
+:has_temporal_unit a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :reference_to_enumerated_value ;
+  rdfs:label "has temporal unit"@en ;
+  :definition "Defines a temporal unit for a Duration - either seconds (or sub-seconds), minutes, hours, days, weeks, months, years or seasonally."@en ;
+  rdfs:domain :Duration ;
+  rdfs:range :TemporalUnit .
+
 :omit_time a owl:ObjectProperty ;
-  rdfs:label "omitted/cancelled/ignored time" ;
-  :definition "A reference to a PointInTime that would typically be included in RecurrencePattern but should be omitted/ignored." ;
+  rdfs:label "omitted/cancelled/ignored time"@en ;
+  :definition "A reference to a PointInTime that would typically be included in RecurrencePattern but should be omitted/ignored."@en ;
   rdfs:domain :RecurrencePattern ;
   rdfs:range :PointInTime .
 
@@ -247,201 +243,208 @@
 
 :Adolescence a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Adolescence" ;
-  :definition "An interval of time in a Person's life, typically from 13 through 19 years old." ;
-  :noun_synonym "teenage", "teenager", "young adult" ;
+  rdfs:label "Adolescence"@en ;
+  :definition "An interval of time in a Person's life, typically from 13 through 19 years old."@en ;
   :wordnet_noun_synset "09791452", "09650451", "14450314", "15172810" .
 
 :Adulthood a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Adulthood" ;
-  :definition "An interval of time in a Person's life, typically from 18-21 through 60-65 years of age." ;
-  :noun_synonym "middle age", "legal age", "maturity" ;
+  rdfs:label "Adulthood"@en ;
+  :definition "An interval of time in a Person's life, typically from 18-21 through 60-65 years of age."@en ;
   :wordnet_noun_synset "14448507" .
 
 :Afternoon a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Afternoon" ;
-  :definition "An interval of time in a day, between noon and evening." ;
+  rdfs:label "Afternoon"@en ;
+  :definition "An interval of time in a day, between noon and evening."@en ;
   :wordnet_noun_synset "15191238" .
 
 :Autumn a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Autumn" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'." ;
+  rdfs:label "Autumn"@en ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the third season of the year, when crops and fruits are gathered and leaves fall, in the northern hemisphere from September to November and in the southern hemisphere from March to May'."@en ;
   :wordnet_noun_synset "15261656" .
 
 :Bedtime a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Bedtime" ;
-  :definition "A PointInTime when a Person goes to bed." ;
-  :noun_synonym "lights-out" ;
+  rdfs:label "Bedtime"@en ;
+  :definition "A PointInTime when a Person goes to bed."@en ;
   :wordnet_noun_synset "15193522", "15193616" .
 
 :Childhood a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Childhood" ;
-  :definition "An interval of time in a Person's life, typically from birth to 12 years old." ;
-  :noun_synonym "infant", "infancy", "youth", "boyhood", "girlhood", "minor" ;
+  rdfs:label "Childhood"@en ;
+  :definition "An interval of time in a Person's life, typically from birth to 12 years old."@en ;
   :wordnet_noun_synset "14450469", "15170546", "15172057", "09645219" .
 
 :ClosingTime a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Closing Time" ;
-  :definition "A PointInTime when a business or location is no longer accessible to the public (e.g., it is 'closed'.)" ;
+  rdfs:label "Closing Time"@en ;
+  :definition "A PointInTime when a business or location is no longer accessible to the public (e.g., it is 'closed'.)"@en ;
   :wordnet_noun_synset "15193712" .
 
 :DrySeason a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Dry Season" ;
-  :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics." ;
+  rdfs:label "Dry Season"@en ;
+  :definition "A period of the year when there is low rainfall, typically describing a time of year in the tropics."@en ;
   :wordnet_noun_synset "15263971" .
 
 :Evening a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Evening" ;
-  :definition "An interval of time in a day, after sunset and before sunrise." ;
-  :noun_synonym "eventide", "night" ;
+  rdfs:label "Evening"@en ;
+  :definition "An interval of time in a day, after sunset and before sunrise."@en ;
   :wordnet_noun_synset "15191509", "15194806" .
 
 :GrowingSeason a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Growing Season" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'." ;
+  rdfs:label "Growing Season"@en ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the part of the year during which rainfall and temperature allow plants to grow'."@en ;
   :wordnet_noun_synset "15262966" .
 
 :HappyHour a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Happy Hour" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Happy_hour&oldid=1086061520), 'a marketing term for a time when a venue such as a restaurant or bar offers reduced prices on alcoholic drinks. Discounted menu items like appetizers are often served during happy hour. This is a way for bars and restaurants to draw in more business before or after peak business hours.'" ;
+  rdfs:label "Happy Hour"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Happy_hour&oldid=1086061520), 'a marketing term for a time when a venue such as a restaurant or bar offers reduced prices on alcoholic drinks. Discounted menu items like appetizers are often served during happy hour. This is a way for bars and restaurants to draw in more business before or after peak business hours.'"@en ;
   :wordnet_noun_synset "15253815" .
 
 :HarvestTime a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Harvest Time" ;
-  :definition "The part of the year during which crops are picked/gathered." ;
+  rdfs:label "Harvest Time"@en ;
+  :definition "The part of the year during which crops are picked/gathered."@en ;
   :wordnet_noun_synset "00923604" .
 
 :HighSeason a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "High Season" ;
-  :definition "Time when many people are traveling and rates for transportation, dining, etc. are highest." ;
-  :noun_synonym "peak season" ;
+  rdfs:label "High Season"@en ;
+  :definition "Time when many people are traveling and rates for transportation, dining, etc. are highest."@en ;
   :wordnet_noun_synset "15263367" .
 
 :Holiday a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Holiday" ;
-  :definition "A day that many people are exempt from work and which commemorates an event, person, religious occasion, etc." ;
-  :noun_synonym "long weekend" ;
+  rdfs:label "Holiday"@en ;
+  :definition "A day that many people are exempt from work and which commemorates an event, person, religious occasion, etc."@en ;
   :wordnet_noun_synset "15208263" .
 
 :Mealtime a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Mealtime" ;
-  :definition "A PointInTime at which food is consumed." ;
-  :noun_synonym "breakfast", "lunch", "dinner", "supper", "lunch period" ;
+  rdfs:label "Mealtime"@en ;
+  :definition "A PointInTime at which food is consumed."@en ;
   :wordnet_noun_synset "15190684" .
 
 :Midday a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Midday" ;
-  :definition "An interval of time in the middle of the day, starting around noon." ;
-  :noun_synonym "noon", "twelve noon", "high noon", "noonday", "noontide" ;
+  rdfs:label "Midday"@en ;
+  :definition "An interval of time in the middle of the day, starting around noon."@en ;
   :wordnet_noun_synset "15190537" .
 
 :Morning a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Morning" ;
-  :definition "An interval of time in a day, between dawn and noon." ;
-  :noun_synonym "morn", "forenoon" ;
+  rdfs:label "Morning"@en ;
+  :definition "An interval of time in a day, between dawn and noon."@en ;
   :wordnet_noun_synset "15190336", "15194183" .
 
 :OffSeason a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Off Season" ;
-  :definition "Time when few people are traveling and rates for transportation, dining, etc. are lowest." ;
-  :noun_synonym "slow season", "off peak", "off-season" ;
+  rdfs:label "Off Season"@en ;
+  :definition "Time when few people are traveling and rates for transportation, dining, etc. are lowest."@en ;
   :wordnet_noun_synset "15263558" .
 
 :OldAge a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Old Age" ;
-  :definition "An interval of time in a Person's life, typically 60-65 years of age or older." ;
-  :noun_synonym "elderliness", "advanced years", "declining years", "oldness", "agedness", "pensioner", "elder", "senior" ;
-  :verb_synonym "be elderly", "be old", "be aged" ;
+  rdfs:label "Old Age"@en ;
+  :definition "An interval of time in a Person's life, typically 60-65 years of age or older."@en ;
   :wordnet_noun_synset "15178747", "10068026" .
 
 :OpeningTime a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Opening Time" ;
-  :definition "A PointInTime when a business or location is accessible to the public (e.g., it is 'open'.)" .
+  rdfs:label "Opening Time"@en ;
+  :definition "A PointInTime when a business or location is accessible to the public (e.g., it is 'open'.)"@en .
 
 :PrisonTime a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Prison Time" ;
-  :definition "An interval of time where a Person was in prison/incarcerated." ;
-  :noun_synonym "hard time", "prison term", "life sentence" ;
+  rdfs:label "Prison Time"@en ;
+  :definition "An interval of time where a Person was in prison/incarcerated."@en ;
   :wordnet_noun_synset "15249488" .
 
 :Probation a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Probation" ;
-  :definition "An interval of time where a Person's activities are examined for assessment for a job or membership in a group, or as a condition of avoiding or being released from prison." ;
-  :noun_synonym "trial period", "parole" ;
+  rdfs:label "Probation"@en ;
+  :definition "An interval of time where a Person's activities are examined for assessment for a job or membership in a group, or as a condition of avoiding or being released from prison."@en ;
   :wordnet_noun_synset "01260931", "15140511" .
 
 :RainySeason a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Rainy Season" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'" ;
-  :noun_synonym "wet season", "green season", "monsoon season" ;
+  rdfs:label "Rainy Season"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'"@en ;
   :wordnet_noun_synset "15263692" .
 
 :RushHour a owl:Class ;
   rdfs:subClassOf :Interval ;
-  rdfs:label "Rush Hour" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Rush_hour&oldid=1096453413), 'a part of the day during which traffic congestion on roads and crowding on public transport is at its highest. Normally, this happens twice every weekday: once in the morning and once in the afternoon or evening, the times during which the most people commute. The term is often used for a period of peak congestion that may last for more than one hour.'" ;
-  :noun_synonym "peak hour" ;
+  rdfs:label "Rush Hour"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Rush_hour&oldid=1096453413), 'a part of the day during which traffic congestion on roads and crowding on public transport is at its highest. Normally, this happens twice every weekday: once in the morning and once in the afternoon or evening, the times during which the most people commute. The term is often used for a period of peak congestion that may last for more than one hour.'"@en ;
   :wordnet_noun_synset "15253940" .
 
 :SeedTime a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Seed Time" ;
-  :definition "The time of year that seeds should be planted." ;
+  rdfs:label "Seed Time"@en ;
+  :definition "The time of year that seeds should be planted."@en ;
   :wordnet_noun_synset "15263068" .
 
 :Spring a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Spring" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'." ;
-  :noun_synonym "springtime" ;
+  rdfs:label "Spring"@en ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the season after winter and before summer, in which vegetation begins to appear, in the northern hemisphere from March to May and in the southern hemisphere from September to November'."@en ;
   :wordnet_noun_synset "15261841" .
 
 :Summer a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Summer" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'." ;
-  :noun_synonym "summertime", "dog days" ;
+  rdfs:label "Summer"@en ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the warmest season of the year, in the northern hemisphere from June to August and in the southern hemisphere from December to February'."@en ;
   :wordnet_noun_synset "15262047", "15262364" .
 
 :Sunrise a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Sunrise" ;
-  :definition "Time when the sun rises above the horizon." ;
-  :noun_synonym "dawn", "dawning", "first light", "daybreak", "break of day", "dayspring", "sunup", "cockcrow" ;
+  rdfs:label "Sunrise"@en ;
+  :definition "Time when the sun rises above the horizon."@en ;
   :wordnet_noun_synset "15193837" .
 
 :Sunset a owl:Class ;
   rdfs:subClassOf :PointInTime ;
-  rdfs:label "Sunset" ;
-  :definition "Time when the sun sets below the horizon." ;
-  :noun_synonym "twilight", "dusk", "gloaming", "gloam", "nightfall", "evenfall", "sundown" ;
+  rdfs:label "Sunset"@en ;
+  :definition "Time when the sun sets below the horizon."@en ;
   :wordnet_noun_synset "15194295", "15194468" .
 
 :Winter a owl:Class ;
   rdfs:subClassOf :Season ;
-  rdfs:label "Winter" ;
-  :definition "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'." ;
-  :noun_synonym "wintertime" ;
+  rdfs:label "Winter"@en ;
+  :definition "From Oxford Languages (https://languages.oup.com/), 'the coldest season of the year, in the northern hemisphere from December to February and in the southern hemisphere from June to August'."@en ;
   :wordnet_noun_synset "15262579", "15262871" .
+
+
+########################################################################
+# Individuals
+########################################################################
+
+:enum:Days a :TemporalUnit ;
+  rdfs:label "Days"@en .
+
+:enum:Hours a :TemporalUnit ;
+  rdfs:label "Hours"@en .
+
+:enum:Minutes a :TemporalUnit ;
+  rdfs:label "Minutes"@en .
+
+:enum:Months a :TemporalUnit ;
+  rdfs:label "Months"@en .
+
+:enum:Seconds a :TemporalUnit ;
+  rdfs:label "Seconds"@en .
+
+:enum:Seasonal a :TemporalUnit ;
+  rdfs:label "Seasonal"@en .
+
+:enum:Weeks a :TemporalUnit ;
+  rdfs:label "Weeks"@en .
+
+:enum:Years a :TemporalUnit ;
+  rdfs:label "Years"@en .

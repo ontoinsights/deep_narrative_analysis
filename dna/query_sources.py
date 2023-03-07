@@ -10,7 +10,7 @@ from nltk.corpus import wordnet as wn
 
 from dna.nlp import get_head_word
 from dna.queries import query_wikidata_labels, query_wikidata_time
-from dna.utilities_and_language_specific import empty_string, space
+from dna.utilities_and_language_specific import concept_map, empty_string, space
 
 geonamesUser = os.environ.get('GEONAMES_ID')
 
@@ -130,11 +130,7 @@ def check_wordnet(word: str) -> str:
     :return: String holding the head word from the definition of the first synset for the term, or
              an empty string
     """
-    if space in word:
-        single_word = get_head_word(word)[0]
-    else:
-        single_word = word
-    synsets = wn.synsets(single_word, pos=wn.NOUN)
+    synsets = wn.synsets(word, pos=wn.NOUN)
     if synsets:
         return get_head_word(synsets[0].definition())[0]
     else:
@@ -259,6 +255,27 @@ def get_wikidata_labels(wikidata_id: str) -> list:
     return labels
 
 
+def get_wikipedia_classification(text: str, wiki_desc: str = empty_string) -> str:
+    """
+    Check if the text is a kind of emotion, ethnicity, religion or political ideology,
+    based on the Wikipedia description.
+
+    :param text: String holding the text to be categorized
+    :param wiki_desc: String holding the Wikipedia description text; If not provided, will be
+                      queried
+    :return: A string indicating either 'EmotionalResponse', 'Ethnicity', 'ReligiousBelief'
+             or 'PoliticalIdeology'
+    """
+    if not wiki_desc:
+        wiki_desc, wiki_url = get_wikipedia_description(text)
+    if wiki_desc:
+        wiki_lower = wiki_desc.lower()
+        for concept in concept_map.keys():
+            if concept in wiki_lower:
+                return concept_map[concept]
+    return empty_string
+
+
 def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (str, str):
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
@@ -283,7 +300,7 @@ def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (
         return empty_string, empty_string
     wikipedia = resp.json()
     if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':
-        # TODO: Can use other nouns and similarity of content links be used to disambiguate?
+        # TODO: Can other nouns and similarity of content links be used to disambiguate?
         return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}', empty_string
     desktop_url = empty_string
     if 'content_urls' in wikipedia:

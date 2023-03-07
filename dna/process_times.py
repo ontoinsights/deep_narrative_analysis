@@ -4,7 +4,7 @@
 import re
 
 from dna.create_noun_turtle import create_named_event_ttl, create_time_ttl
-from dna.get_ontology_mapping import get_mapping_detail
+from dna.get_ontology_mapping import get_event_mapping_detail
 from dna.query_sources import get_event_details_from_wikidata
 from dna.nlp import get_time_details
 from dna.utilities_and_language_specific import add_unique_to_array, days, empty_string, \
@@ -308,7 +308,7 @@ def get_sentence_times(sentence_dictionary: dict, published: str, alet_dict: dic
         if not event_iri:
             event_iri = f':Event_{new_event.replace(space, underscore)}'.replace('.', empty_string)
             # Try to classify the event, for example 'World War II' is a :War
-            event_classes = get_mapping_detail(new_event, dict(), [])
+            event_classes = get_event_mapping_detail(new_event, dict(), [], False)
             if not event_classes:
                 event_classes = [':EventAndState']
             start_time_iri = empty_string

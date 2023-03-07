@@ -98,9 +98,9 @@ def check_subclass(class_name: str, check_superclass: str) -> bool:
 
 def get_norp_emotion_or_lob(noun_text: str) -> (str, str):
     """
-    Check if the input text is a kind of emotion, ethnicity, religion, line of work or political ideology.
+    Check if the noun text is a kind of emotion, ethnicity, religion, line of work or political ideology.
 
-    :param noun_text: String holding the text to be categorized.
+    :param noun_text: String holding the text to be categorized
     :return: A tuple consisting of a string indicating either 'EmotionalResponse', 'Ethnicity',
              'ReligiousBelief', 'LineOfBusiness' or 'PoliticalIdeology', and the specific subclass
     """

@@ -11,11 +11,11 @@ from dna.database import query_database
 from dna.get_ontology_mapping import get_agent_or_loc_class, get_noun_mapping
 from dna.nlp import get_head_word
 from dna.queries import query_specific_noun
-from dna.utilities_and_language_specific import dna_prefix, empty_string, family_members, \
-    names_to_geo_dict, ontologies_database, owl_thing2, personal_pronouns, space, underscore
+from dna.utilities_and_language_specific import dna_prefix, empty_string, family_members, female_titles, \
+    male_titles, names_to_geo_dict, ontologies_database, owl_thing2, personal_pronouns, space, underscore
 
 
-def _account_for_cardinal_noun(elem_dict: dict, phrase: str, alet_dict: dict, last_nouns: list,
+def _account_for_cardinal_noun(elem_dict: dict, phrase: str, cardinal: str, alet_dict: dict, last_nouns: list,
                                last_events: list, turtle: list, ext_sources: bool) -> tuple:
     """
     Get the semantics/mapping for the object of a prepositional phrase associated with a cardinal
@@ -24,6 +24,7 @@ def _account_for_cardinal_noun(elem_dict: dict, phrase: str, alet_dict: dict, la
     :param elem_dict: The dictionary (holding the details for the noun/verb containing the
                       cardinal text)
     :param phrase: The full text of the noun phrase
+    :param cardinal: The text of the cardinal
     :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative - For co-reference resolution; Keys = 'agents', 'locs', 'events',
              'times' and Values vary by the key
@@ -39,7 +40,7 @@ def _account_for_cardinal_noun(elem_dict: dict, phrase: str, alet_dict: dict, la
     """
     # noinspection PyBroadException
     try:
-        card_number = w2n.word_to_num(get_head_word(phrase))
+        card_number = w2n.word_to_num(cardinal)
     except Exception:
         card_number = 1    # TODO: Improve default
     # Evaluate the object of any preposition related to the cardinal; Future: Need to handle > 1 prep?
@@ -233,11 +234,12 @@ def _check_personal_pronouns(pronoun: str, last_nouns: list) -> list:
     return final_details
 
 
-def _process_family_role(person_text: str, person_type: str, alet_dict: dict) -> tuple:
+def _process_family_role(head_text: str, full_text: str, person_type: str, alet_dict: dict) -> tuple:
     """
     Return the noun information for individual(s) in a family role.
 
-    :param person_text: String holding the full text
+    :param head_text: String holding the full text's head word's text
+    :param full_text: String holding the full text
     :param person_type: String holding the noun type from spaCy (such as 'FEMALESINGPERSON')
     :param alet_dict: A dictionary holding the agents, locations, events & times encountered in
              the full narrative; Keys = 'agents', 'locs', 'events' and 'times; Only concerned with
@@ -250,17 +252,32 @@ def _process_family_role(person_text: str, person_type: str, alet_dict: dict) ->
     if 'agents' not in alet_dict:             # Nothing to check
         return tuple()
     role_matches = []
-    head_lemma, head_text = get_head_word(person_text)
     if head_text in family_members.keys():    # Looking for singular family role
         for alet in alet_dict['agents']:
             alet_names, alet_type, alet_iri = alet
             if f'_{head_text}' in alet_iri:
-                role_matches.append((person_text, person_type, [':Person'], alet_iri))
+                role_matches.append((full_text, person_type, [':Person'], alet_iri))
         if len(role_matches) == 1:
             return role_matches[0]
     # TODO: Handle family role plurals
     # No match or multiple matches found
     return tuple()
+
+
+def _remove_title_from_name(titles: tuple, text: str) -> str:
+    """
+    Check for a male/female title (such as 'Ms' or 'Mr') in the noun string, and if present, remove it.
+
+    :param titles: Tuple of male or female titles
+    :param text: String holding the noun text
+    :return: The updated text with the title removed (if present) or the original text
+    """
+    for title in titles:
+        if f'{title}.' in text:
+            return text.replace(f'{title}.', empty_string).replace('  ', space).strip()
+        elif title in text:
+            return text.replace(title, empty_string).replace('  ', space).strip()
+    return text
 
 
 def _separate_possessives(text: str) -> (dict, str):
@@ -312,7 +329,8 @@ def check_event(text: str, last_events: list) -> (list, str):
     :return: A tuple specifying the event class mappings and IRI if there is a type match,
               or an empty list and string otherwise
     """
-    ontol_classes, noun_ttl = get_noun_mapping(text, empty_string)   # Get the event class to which the noun is mapped
+    # Get the event class to which the noun may be mapped
+    ontol_classes, noun_ttl = get_noun_mapping(text, empty_string, False)
     if not ontol_classes:
         return [], empty_string
     poss_events = []
@@ -359,8 +377,14 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
     nouns = []
     for elem in elem_dictionary[key]:    # The subject or object nouns
         elem_key = key[0:-1]             # Create dictionary key = 'subject' or 'object'
-        elem_text = elem[f'{elem_key}_text']
         elem_type = elem[f'{elem_key}_type']
+        elem_text = elem[f'{elem_key}_text']
+        # Get rid of titles (such as Ms, Miss, Mr, ...)
+        if 'FEMALE' in elem_type:
+            elem_text = _remove_title_from_name(female_titles, elem_text)
+        elif 'MALE' in elem_type:
+            elem_text = _remove_title_from_name(male_titles, elem_text)
+        head_lemma, head_text = get_head_word(elem_text)
         # poss_dict = Dictionary of nouns (keys) with their possessive modifiers (values)
         # Revised elem_text = noun text with possessives removed
         poss_dict, elem_text = _separate_possessives(elem_text)
@@ -368,8 +392,8 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
         possible_name = empty_string     # For a proper name, may contain shortened form = given + surname (any order)
         if elem_type == 'CARDINAL':      # For example, 'one' in 'he has one' or in 'one of the band'
             if 'preps' in elem:
-                new_tuple = _account_for_cardinal_noun(elem, elem_text, alet_dict, last_nouns, last_events,
-                                                       turtle, ext_sources)
+                new_tuple = _account_for_cardinal_noun(elem, elem_text, head_lemma,
+                                                       alet_dict, last_nouns, last_events, turtle, ext_sources)
             else:
                 iri = re.sub(r'[^:a-zA-Z0-9_]', '_', f':{elem_text}_{str(uuid.uuid4())[:13]}').replace('__', '_')
                 new_tuple = (elem_text, 'CARDINAL', [owl_thing2], iri)
@@ -384,19 +408,18 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
         # Not a pronoun; Check for a match in instances of the ontology
         elif ('PERSON' in elem_type or elem_type.endswith('GPE') or
                 elem_type.endswith('ORG') or elem_type.endswith('NORP')):
-            full_name, name_text = get_head_word(elem_text)   # Check for a complete proper name
-            if space in full_name:
+            if space in head_lemma:
                 # Get last two words in the name (for given+surname or surname+given name, Eastern or Western ordering)
-                names = full_name.split(space)
+                names = head_lemma.split(space)
                 possible_name = f'{names[-2]} {names[-1]}'
-            match_iri, match_type = check_specific_match(full_name, elem_type)
+            match_iri, match_type = check_specific_match(head_lemma, elem_type)
             if not match_iri and possible_name:
                 match_iri, match_type = check_specific_match(possible_name, elem_type)
             if match_iri:
                 new_tuple = (elem_text, elem_type, match_type, match_iri)
             else:
                 # Check for family role and match to a name
-                new_tuple = _process_family_role(elem_text, elem_type, alet_dict)
+                new_tuple = _process_family_role(head_text, elem_text, elem_type, alet_dict)
         if not new_tuple:
             # No match - Try to match text and type in last_nouns
             match_noun_tuples = _check_last_nouns(elem_text, elem_type, last_nouns)
@@ -426,8 +449,7 @@ def check_nouns(elem_dictionary: dict, key: str, alet_dict: dict, last_nouns: li
             # No match - Create new entity
             iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, f':{elem_text.lower()}_{str(uuid.uuid4())[:13]}').\
                 replace('__', '_')
-            noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type, alet_dict,
-                                                         True if key == 'subjects' else False, ext_sources)
+            noun_mappings, noun_turtle = create_noun_ttl(iri, elem_text, elem_type, alet_dict, ext_sources)
             new_tuple = (elem_text, elem_type, noun_mappings, iri)
             turtle.extend(noun_turtle)
         nouns.append(new_tuple)

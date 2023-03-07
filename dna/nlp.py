@@ -177,7 +177,7 @@ def get_family_details(doc: Doc) -> dict:
     :param doc: spaCy Document holding the narrative
     :returns: A dictionary keyed by names with values = their family relationship/role
     """
-    # TODO: Logic may be incorrect if multiple families are discussed in a single text; Needs testing
+    # TODO: Logic insufficient if multiple families are discussed in a single text
     logging.info('Getting family data from narrative')
     family_dict = dict()
     matches = matcher(doc)

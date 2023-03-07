@@ -1,7 +1,7 @@
 # Functions to process/modify sentence/verb labels
 # Called by create_narrative_turtle.py
 
-from dna.utilities_and_language_specific import empty_string, space
+from dna.utilities_and_language_specific import empty_string, prep_after, space
 
 
 def create_verb_label(labels: list, subj_tuples: list, obj_tuples: list, prep_tuples: list, negated: bool) -> str:
@@ -35,8 +35,8 @@ def create_verb_label(labels: list, subj_tuples: list, obj_tuples: list, prep_tu
     for prep_text, obj_text, obj_type, obj_mappings, obj_iri in prep_tuples:
         if not prep_text or not obj_text:
             continue
-        if prep_text != 'after' and not (obj_type.endswith('GPE') or obj_type.endswith('LOC')
-                                         or obj_type.endswith('FAC')):
+        if prep_text != prep_after and not (obj_type.endswith('GPE') or obj_type.endswith('LOC')
+                                            or obj_type.endswith('FAC')):
             # "after xxx" designates a time which may not be part of the main subject/verb and likely confusing
             if obj_text in event_label:
                 event_label = event_label.replace(f'{obj_text}', empty_string).replace('  ', space).strip()
@@ -61,30 +61,3 @@ def get_prt_label(chunk_dict: dict) -> str:
             if proc.startswith('prt'):
                 return proc.split('prt > ')[1]
     return empty_string
-
-
-def get_xcomp_labels(chunk_dict: dict, root_objects: list) -> list:
-    """
-    Creates an array of strings representing how verb labels need to be modified due to
-    the presence of an xcomp.
-
-    :param chunk_dict: The dictionary for the chunk
-    :param root_objects: An array of tuples of the root verb's objects' texts, spaCy types,
-                         ontology mappings and IRIs
-    :return: An array of labels that add xcomp details
-    """
-    xcomp_labels = []
-    root_texts = []
-    for obj in root_objects:
-        obj_text, obj_type, obj_map, obj_iri = obj
-        root_texts.append(obj_text)
-    if 'verb_processing' in chunk_dict:
-        verb_procs = chunk_dict['verb_processing']
-        for proc in verb_procs:
-            if proc.startswith('xcomp'):
-                verbs = proc.split(', ')
-                root_verb = verbs[0].split("> ")[1]
-                if root_texts:
-                    root_verb += space + ', '.join(root_texts)
-                xcomp_labels.append(f'{root_verb} to {verbs[1]}')
-    return xcomp_labels

@@ -67,7 +67,7 @@
             <a id="nextFileLink" class="nav" href="d_25b971f8815d50a8_process_verbs_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-12-26 17:09 -0500
+            created at 2023-03-06 23:28 -0500
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"/>
@@ -88,7 +88,7 @@
     <p class="run"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="key">import</span> <span class="nam">re</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">create_noun_turtle</span> <span class="key">import</span> <span class="nam">create_named_event_ttl</span><span class="op">,</span> <span class="nam">create_time_ttl</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">get_ontology_mapping</span> <span class="key">import</span> <span class="nam">get_mapping_detail</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t7" href="#t7">7</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">get_ontology_mapping</span> <span class="key">import</span> <span class="nam">get_event_mapping_detail</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t8" href="#t8">8</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">query_sources</span> <span class="key">import</span> <span class="nam">get_event_details_from_wikidata</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t9" href="#t9">9</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">nlp</span> <span class="key">import</span> <span class="nam">get_time_details</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t10" href="#t10">10</a></span><span class="t"><span class="key">from</span> <span class="nam">dna</span><span class="op">.</span><span class="nam">utilities_and_language_specific</span> <span class="key">import</span> <span class="nam">add_unique_to_array</span><span class="op">,</span> <span class="nam">days</span><span class="op">,</span> <span class="nam">empty_string</span><span class="op">,</span> <span class="xx">\</span>&nbsp;</span><span class="r"></span></p>
@@ -392,7 +392,7 @@
     <p class="par run show_par"><span class="n"><a id="t308" href="#t308">308</a></span><span class="t">        <span class="key">if</span> <span class="key">not</span> <span class="nam">event_iri</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">308&#x202F;&#x219B;&#x202F;331</span><span class="annotate long">line 308 didn't jump to line 331, because the condition on line 308 was never false</span></span></p>
     <p class="run"><span class="n"><a id="t309" href="#t309">309</a></span><span class="t">            <span class="nam">event_iri</span> <span class="op">=</span> <span class="str">f':Event_{new_event.replace(space, underscore)}'</span><span class="op">.</span><span class="nam">replace</span><span class="op">(</span><span class="str">'.'</span><span class="op">,</span> <span class="nam">empty_string</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t310" href="#t310">310</a></span><span class="t">            <span class="com"># Try to classify the event, for example 'World War II' is a :War</span>&nbsp;</span><span class="r"></span></p>
-    <p class="run"><span class="n"><a id="t311" href="#t311">311</a></span><span class="t">            <span class="nam">event_classes</span> <span class="op">=</span> <span class="nam">get_mapping_detail</span><span class="op">(</span><span class="nam">new_event</span><span class="op">,</span> <span class="nam">dict</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="op">[</span><span class="op">]</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
+    <p class="run"><span class="n"><a id="t311" href="#t311">311</a></span><span class="t">            <span class="nam">event_classes</span> <span class="op">=</span> <span class="nam">get_event_mapping_detail</span><span class="op">(</span><span class="nam">new_event</span><span class="op">,</span> <span class="nam">dict</span><span class="op">(</span><span class="op">)</span><span class="op">,</span> <span class="op">[</span><span class="op">]</span><span class="op">,</span> <span class="key">False</span><span class="op">)</span>&nbsp;</span><span class="r"></span></p>
     <p class="par run show_par"><span class="n"><a id="t312" href="#t312">312</a></span><span class="t">            <span class="key">if</span> <span class="key">not</span> <span class="nam">event_classes</span><span class="op">:</span>&nbsp;</span><span class="r"><span class="annotate short">312&#x202F;&#x219B;&#x202F;313</span><span class="annotate long">line 312 didn't jump to line 313, because the condition on line 312 was never true</span></span></p>
     <p class="mis show_mis"><span class="n"><a id="t313" href="#t313">313</a></span><span class="t">                <span class="nam">event_classes</span> <span class="op">=</span> <span class="op">[</span><span class="str">':EventAndState'</span><span class="op">]</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t314" href="#t314">314</a></span><span class="t">            <span class="nam">start_time_iri</span> <span class="op">=</span> <span class="nam">empty_string</span>&nbsp;</span><span class="r"></span></p>
@@ -472,7 +472,7 @@
             <a id="nextFileLink" class="nav" href="d_25b971f8815d50a8_process_verbs_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io">coverage.py v6.5.0</a>,
-            created at 2022-12-26 17:09 -0500
+            created at 2023-03-06 23:28 -0500
         </p>
     </div>
 </footer>

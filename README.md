@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 29 December 2022
+Updated 6 March 2023
 
 ## License
 Creative Commons 
@@ -26,6 +26,7 @@ The semantics (ontologies) and processing are captured in the directories of thi
 * _tests_ holds pytest validation code for the dna RESTful services and underlying processing
   * This code is NOT executed when pushing new code (as part of a GitHub workflow) since a Stardog server would have to be deployed 
   * However, the code is run locally and the htmlcov subdirectory is included with the results
+  * To see code coverage data, open the index.html in tests/htmlcov
 * _ontologies_ holds the definitions of the concepts and relationships that are extracted from the narratives and background data
   * All the posted ontology files are written in Turtle (OWL2)
   * In addition, a Protege-ready merge of the ontology files (dna-ontology.ttl) is available in the top-level directory
@@ -93,16 +94,23 @@ Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask ru
 
 ## Multilingual Support
 
-DNA is designated to extend to languages beyond English, although English is the only language that has been tested to-date. The underlying language resources (spaCy, WordNet, etc.) support a variety of languages. Currently, both the Finnish and German languages are being investigated.
+DNA is designated to extend to languages beyond English, although English is the only language that has been tested to-date. As an initial approach, translation from the native language to English can be attempted.
 
-To this end, the following details are relevant for multi-lingual research:
+To directly parse a non-English language, the underlying language resources (spaCy, WordNet, etc.) are usable, as they are designed to support a variety of languages. (Currently, both the Finnish and German languages are being investigated.)
 
-* To update the spaCy language model, download spaCy's '-trf' (if available) or '-lg' models for the desired language and update the model reference in nlp.py (line 59)
-* Translate the prepositions, days/months, etc. English strings in the utilities_and_language_specific.py file
-* Specific pronouns are also directly referenced in the coreference_resolution.py code (see the function, _check_pronouns)
-* Verify that the WordNet synonyms referenced in the _ontologies_ (.ttl) files are also used in the WordNet reference for the desired language
-  * If so, the language-specific noun and verb synonyms can be pulled and directly inserted into the ontology files
-  * If not, a manual + programmatic/translation mapping from the language-specific synsets to the DNA ontology concepts will be required
-* DNA sentiment analysis (in the create_narrative_turtle.py file) is currently disabled 
-  * SentiWordnet is currently being investigated
-* The text details (texts to be ingested) in each of the test*.py files (in the _tests_ directory) should be modified for the desired language
+To this end, the following details are relevant for multi-lingual/non-English research with DNA. The following steps should be performed:
+
+* Update the spaCy language model by downloading spaCy's '-trf' (if available) or '-lg' models for the desired language and updating the model reference in nlp.py (line 62)
+* Modify the SPARQL language tag (for example, '@en') used for Stardog and external queries in the utilities_and_language_specific.py file, line 12
+* Translate the prepositions, days/months, etc. (defined using English strings) in the utilities_and_language_specific.py file to their language-equivalent terms
+* Update the pronouns that are directly referenced in the coreference_resolution.py module (see the function, _check_pronouns) to their language-equivalent terms
+* Update the prepositions ('after' in create_labels.py and 'to' in create_verb_turtle.py) and modals (in nlp_sentence_dictionary.py) that are directly searched for and used in the processing; They should be updated to their language-equivalent terms
+  * The references to be updated are noted by 'TODO' comments
+* Account for multi-lingual access to external services (Wikipedia, Wikidata, GeoNames, ... in query_sources.py), coding for specific language search and results
+* Update the text details (texts to be ingested and results that are expected) in each of the test*.py files (in the _tests_ directory) to the desired language
+
+In addition, all the 'text to DNA class' mappings are based on the use of the :noun/verb_synonym predicates. Each DNA concept has been mapped to an extensive set of English texts using the WordNet hypernym/hyponym trees. (That processing is described in notebooks/Background-WordNet.ipynb.) Note that after the programmatic mapping was completed (as described in the notebook), the list of terms was reviewed and hand-edited. Although more validation is needed, the current list is adequate for semantic alignment.
+
+Each noun/verb synonym term in the Turtle :noun/verb_synonym statements has been identified with '@en' language tags. Each of the terms should be translated to the appropriate language and then their language tags added (for example, '@de' for German). This approach will be easier than attempting to remap from the WordNet hypernyms directly. Synonyms are found in the *-synonyms.ttl files in the ontologies directory.
+
+In addition to translating the snynoyms from the .ttl files, the text preceding the first '[', in the noun/verb-multi-en.txt files (in the notebooks directory), should also be translated - creating *-<language tag>.txt files. Then, the first and third code cells in the notebooks/Background-WordNet.ipynb Jupyter notebook should be updated to reference the new files and create new pickle files. After generation, the pickle files should be moved to the dna/resources directory and appropriately referenced in the get_ontology_mapping.py module (lines 21 and 24).

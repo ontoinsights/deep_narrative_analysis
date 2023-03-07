@@ -37,7 +37,7 @@ def test_sent_simple():
     assert success
     ttl_str = str(graph_ttl)
     assert '"Elizabeth Lynne Cheney"' in ttl_str        # Person alt name
-    assert ':Liz_Cheney :gender "Female"' in ttl_str    # Gender capture
+    assert ':Liz_Cheney :has_gender :enum:Female' in ttl_str    # Gender capture
     assert '"WY"' in ttl_str                            # Abbreviation for location
     assert 'geo:6252001 :has_component :Wyoming' in ttl_str    # Wyoming located in US
     assert ':PiT_DayTuesday a :PointInTime ; rdfs:label "Tuesday"' in ttl_str    # Time capture
@@ -45,35 +45,38 @@ def test_sent_simple():
     assert ':has_topic :republican_primary_' in ttl_str
     assert ':has_topic :defeat_' in ttl_str
     assert ':has_active_agent :Liz_Cheney' in ttl_str
-    assert 'a :SurrenderAndYielding' in ttl_str         # Mapping for conceded
+    assert 'a :AlternativeCollection' in ttl_str        # Mapping for conceded
+    assert ':has_member :Acknowledgment' in ttl_str     # Alternatives
+    assert ':has_member :SurrenderAndYielding' in ttl_str
     assert 'a :Failure' in ttl_str                      # Mapping for defeat
     assert 'a :Election' in ttl_str                     # Mapping for primary
     assert ':has_time :PiT_DayTuesday' in ttl_str
     assert ':has_location' not in ttl_str
     assert 'Republican primary in Wyoming in Republican primary in Wyoming' not in ttl_str
     # Output:
-    # :Chunk_be193c95-826d a :Chunk ; :offset 1 .
-    # :Chunk_be193c95-826d :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming" .
-    # :Event_b6162062-7ad6 :has_time :PiT_DayTuesday .
-    # :defeat_5629d0d1_b706 a :Failure .
-    # :defeat_5629d0d1_b706 rdfs:label "defeat" .
-    # :republican_primary_in_wyoming_e8f8c661_f274 a :Election .
-    # :republican_primary_in_wyoming_e8f8c661_f274 rdfs:label "Republican primary in Wyoming" .
-    # :Event_b6162062-7ad6 :has_topic :republican_primary_in_wyoming_e8f8c661_f274 .
-    # :Event_b6162062-7ad6 a :SurrenderAndYielding .
-    # :Event_b6162062-7ad6 :has_active_agent :Liz_Cheney .
-    # :Event_b6162062-7ad6 :has_topic :defeat_5629d0d1_b706 .
-    # :Event_b6162062-7ad6 rdfs:label "Liz Cheney conceded defeat, in Republican primary in Wyoming" .
-    # :Chunk_be193c95-826d :describes :Event_b6162062-7ad6 .'
+    # :Chunk_d4915475-dec3 a :Chunk ; :offset 1 .
+    # :Chunk_d4915475-dec3 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming" .
+    # :Event_c769ace5-f169 :has_time :PiT_DayTuesday .
+    # :defeat_8805550c_4151 a :Failure .
+    # :defeat_8805550c_4151 rdfs:label "defeat" .
+    # :republican_primary_in_wyoming_c5df03f5_174d a :Election .
+    # :republican_primary_in_wyoming_c5df03f5_174d rdfs:label "Republican primary in Wyoming" .
+    # :Event_c769ace5-f169 :has_topic :republican_primary_in_wyoming_c5df03f5_174d .
+    # :Event_c769ace5-f169 a :AlternativeCollection ; :text "concede" .
+    # :Event_c769ace5-f169 :has_member :Acknowledgment .
+    # :Event_c769ace5-f169 :has_member :SurrenderAndYielding .
+    # :Event_c769ace5-f169 :has_active_agent :Liz_Cheney .
+    # :Event_c769ace5-f169 :has_topic :defeat_8805550c_4151 .
+    # :Event_c769ace5-f169 rdfs:label "Liz Cheney conceded defeat, in Republican primary in Wyoming" .
+    # :Chunk_d4915475-dec3 :describes :Event_c769ace5-f169 .
 
 
 def test_sent_xcomp1():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(sent_xcomp1)
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
-    print(ttl_str)
     assert '"Harry"' in ttl_str                  # Person alt name
-    assert ':Harry :gender "Male"' in ttl_str    # Gender capture
+    assert ':Harry :has_gender :enum:Male' in ttl_str    # Gender capture
     # Following are shown in the output pasted below
     assert ':has_topic :prize_' in ttl_str
     assert ':has_active_agent :Harry' in ttl_str
@@ -115,32 +118,34 @@ def test_sent_xcomp2():
     assert 'a :Affiliation' in ttl_str                   # Affiliation of the voters to the GOP
     assert ':affiliated_agent :gop_voters' in ttl_str and ':affiliated_with :GOP' in ttl_str
     # Output:
-    # :Chunk_22755898-623d a :Chunk ; :offset 1 .
-    # :Chunk_22755898-623d :text "On Tuesday, in Wyoming, Trump urged GOP voters to reject one of his
-    #                             most prominent critics" .
-    # :Event_c966d908-db52 :has_topic :Event_f90d9252-65bd .
-    # :Event_c966d908-db52 :has_time :PiT_DayTuesday .
-    # :gop_voters_0685e457_e868 :has_context :Election .
-    # :gop_voters_0685e457_e868_GOP_Affiliation a :Affiliation ; :affiliated_with :GOP ;
-    #                                           :affiliated_agent :gop_voters_0685e457_e868 .
-    # :gop_voters_0685e457_e868_GOP_Affiliation rdfs:label "Relationship based on the text, \'GOP voters\'" .
-    # :gop_voters_0685e457_e868 a :Person, :Collection .
-    # :gop_voters_0685e457_e868 rdfs:label "GOP voters" .
-    # :prominent_critics_84802128_b8c2 :has_context :Complaint .
-    # :prominent_critics_84802128_b8c2 a :Person .
-    # :prominent_critics_84802128_b8c2 rdfs:label "one of critics" .
-    # :Event_f90d9252-65bd a :RefusalAndRejection .
-    # :Event_f90d9252-65bd :has_active_agent :gop_voters_0685e457_e868 .
-    # :Event_f90d9252-65bd :has_affected_agent :prominent_critics_84802128_b8c2 .
-    # :Event_f90d9252-65bd rdfs:label "GOP voters reject one of critics" .
-    # :Chunk_22755898-623d :describes :Event_f90d9252-65bd .
-    # :Event_c966d908-db52 :has_location :Wyoming .
-    # :Event_c966d908-db52 a :RequestAndAppeal .
-    # :Event_c966d908-db52 :has_active_agent :Trump .
-    # :Event_c966d908-db52 :has_affected_agent :gop_voters_0685e457_e868 .
-    # :Event_c966d908-db52 rdfs:label "Trump urged GOP voters" .
-    # :Chunk_22755898-623d :describes :Event_c966d908-db52 .
-    # :Event_f90d9252-65bd a :OpportunityAndPossibility .
+    # :Chunk_4a3b3672-ee2b a :Chunk ; :offset 1 .
+    # :Chunk_4a3b3672-ee2b :text "On Tuesday, in Wyoming, Trump urged GOP voters to reject one of his most
+    #                             prominent critics" .
+    # :Event_76108e4e-ae21 :has_topic :Event_e89813bd-d1dc .
+    # :Event_76108e4e-ae21 :has_time :PiT_DayTuesday .
+    # :gop_voters_f2f9424c_f9af rdfs:comment "EventAndState context, :Election" .
+    # :gop_voters_f2f9424c_f9af a :Person, :Collection .
+    # :gop_voters_f2f9424c_f9af_GOP_Affiliation a :Affiliation ; :affiliated_with :GOP ;
+    #      :affiliated_agent :gop_voters_f2f9424c_f9af .
+    # :gop_voters_f2f9424c_f9af_GOP_Affiliation rdfs:label "Relationship based on the text, \'GOP voters\'" .
+    # :gop_voters_f2f9424c_f9af a :Person, :Collection .     TODO: Repeated type definition
+    # :gop_voters_f2f9424c_f9af rdfs:label "GOP voters" .
+    # :prominent_critics_b9273179_0395 rdfs:comment "EventAndState context, :AssertionAndDeclaration" .
+    # :prominent_critics_b9273179_0395 a :Person .
+    # :prominent_critics_b9273179_0395 a :Person .           TODO: Repeated type definition
+    # :prominent_critics_b9273179_0395 rdfs:label "one of critics" .
+    # :Event_e89813bd-d1dc a :RefusalAndRejection .
+    # :Event_e89813bd-d1dc :has_active_agent :gop_voters_f2f9424c_f9af .
+    # :Event_e89813bd-d1dc :has_affected_agent :prominent_critics_b9273179_0395 .
+    # :Event_e89813bd-d1dc rdfs:label "GOP voters reject one of critics" .
+    # :Chunk_4a3b3672-ee2b :describes :Event_e89813bd-d1dc .
+    # :Event_76108e4e-ae21 :has_location :Wyoming .
+    # :Event_76108e4e-ae21 a :RequestAndAppeal .
+    # :Event_76108e4e-ae21 :has_active_agent :Trump .
+    # :Event_76108e4e-ae21 :has_affected_agent :gop_voters_f2f9424c_f9af .
+    # :Event_76108e4e-ae21 rdfs:label "Trump urged GOP voters" .
+    # :Chunk_4a3b3672-ee2b :describes :Event_76108e4e-ae21 .
+    # :Event_e89813bd-d1dc a :OpportunityAndPossibility .
 
 
 def test_sent_xcomp2a():
@@ -148,16 +153,15 @@ def test_sent_xcomp2a():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
-    print(ttl_str)
     # Following are shown in the output pasted below
     assert '"Republican voters"' in ttl_str
     assert ':RequestAndAppeal' in ttl_str                # Mapping for urging
     assert ':RefusalAndRejection' in ttl_str             # Mapping for reject
     assert ':has_topic :Event_' in ttl_str               # Topic of the urging (another event = rejection)
-    assert ':has_active_agent :republican_voters_' in ttl_str   # Voters reject
-    assert ':has_active_agent :Trump' in ttl_str             # Trump urged
+    assert ':has_active_agent :republican_voters_' in ttl_str       # Voters reject
+    assert ':has_active_agent :Trump' in ttl_str                    # Trump urged
     assert ':has_affected_agent :republican_voters_' in ttl_str     # Voters were urged
-    # TODO: Republican is captured as amod only, not compound; Check adj modifiers for affiliation
+    # TODO: Republican is captured as amod only, not a compound noun (spacy bug); Check adj modifiers for affiliation
     assert 'a :Affiliation' not in ttl_str
     # assert ':affiliated_agent :republican_voters' in ttl_str and ':affiliated_with :Republican' in ttl_str
     # Output similar to above
@@ -168,7 +172,6 @@ def test_sent_xcomp3():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
-    print(ttl_str)
     assert '"Trump"' in ttl_str
     # Following are shown in the output pasted below
     assert ':has_time :PiT_DayTuesday' in ttl_str
@@ -182,7 +185,9 @@ def test_sent_xcomp3():
     assert ':has_topic :Event_' in ttl_str    # Topic of urging
     assert 'a :OpportunityAndPossibility' in ttl_str             # Urging does not mean that the xcomp event happens
     assert ':republican_primary_' in ttl_str and 'a :Election' in ttl_str
-    assert 'a :SurrenderAndYielding' in ttl_str           # Cheney conceded
+    assert 'a :AlternativeCollection' in ttl_str                 # Mapping for conceded
+    assert ':has_member :Acknowledgment' in ttl_str              # Alternatives
+    assert ':has_member :SurrenderAndYielding' in ttl_str
     assert 'a :Failure' in ttl_str                        # Defeat
     assert ':has_topic :defeat_'                          # Topic of concession
     assert ':has_topic :republican_primary_'              # Topic of concession
@@ -194,21 +199,12 @@ def test_sent_aux_only():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert 'a :EnvironmentAndCondition ; :has_topic :Conservatism' in ttl_str
-    assert ':has_holder :Liz_Cheney' in ttl_str
-    assert ':Liz_Cheney :has_agent_aspect :Conservatism ; :agent_aspect "neoconservative"' in ttl_str
-    assert 'rdfs:label "Describes that Liz Cheney has an aspect of neoconservative"' in ttl_str
-    assert ':neoconservative_' not in ttl_str      # Is unused since the mapping is to an EnvAndCondition
+    assert ':Liz_Cheney :has_agent_aspect :PoliticalIdeology ; :agent_aspect "neoconservative"' in ttl_str
+    assert ':neoconservative_' not in ttl_str      # Is unused since the mapping is to an agent aspect
     # Output:
-    # :Chunk_4a58c6bc-abd2 a :Chunk ; :offset 1 .
-    # :Chunk_4a58c6bc-abd2 :text "Liz Cheney is a neoconservative" .
-    # :Chunk_4a58c6bc-abd2 :sentiment 0.0 .
-    # :Chunk_4a58c6bc-abd2 :describes :Event_84a7d9d1-2d6f .
-    # :Event_84a7d9d1-2d6f a :EnvironmentAndCondition ; :has_topic :Conservatism .
-    # :Liz_Cheney :has_agent_aspect :Conservatism ; :agent_aspect "neoconservative" .
-    # :Event_84a7d9d1-2d6f :has_holder :Liz_Cheney.
-    # :Event_84a7d9d1-2d6f rdfs:label "Describes that Liz Cheney has an aspect of neoconservative" .
+    # :Chunk_e1ae1402-d86c a :Chunk ; :offset 1 .
+    # :Chunk_e1ae1402-d86c :text "Liz Cheney is a neoconservative" .
+    # :Liz_Cheney :has_agent_aspect :PoliticalIdeology ; :agent_aspect "neoconservative" .
 
 
 def test_sent_aux_and_verb():
@@ -216,11 +212,10 @@ def test_sent_aux_and_verb():
     success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     assert success
     ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert ':Harriet_Hageman :gender "Female"' in ttl_str    # Gender capture
-    assert ':Liz_Cheney :gender "Female"' in ttl_str         # Gender capture
+    assert ':Harriet_Hageman :has_gender :enum:Female' in ttl_str    # Gender capture
+    assert ':Liz_Cheney :has_gender :enum:Female' in ttl_str         # Gender capture
     # Following are shown in the output pasted below
-    assert 'a :Success' in ttl_str                                 # Mapping for 'was defeated', reversing subj/obj
+    assert 'a :Success' in ttl_str                           # Mapping for 'was defeated', reversing subj/obj
     assert ':has_active_agent :Harriet_Hageman' in ttl_str
     assert ':has_affected_agent :Liz_Cheney' in ttl_str
     assert ':has_time' in ttl_str
@@ -242,67 +237,6 @@ def test_sent_possessive_and_aux():
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Add assertion details
-    # :Chunk_baa5049a-e42c a :Chunk ; :offset 1 .
-    # :Chunk_baa5049a-e42c :text "a political family has loomed large in Republican politics in the
-    #                             sparsely populated state for more than four decades" .
-    # :Chunk_baa5049a-e42c :sentiment -0.2732 .
-    # :Event_01d9bcf4-14cb :has_time :PiT_more_than_four_decades .
-    # :political_family_27dc3bb4_f1cb a :Person, :Collection .
-    # :political_family_27dc3bb4_f1cb rdfs:label "political family" .
-    # :republican_politics_d757f9df_1b6c a :PoliticalIdeology, :Collection .
-    # :republican_politics_d757f9df_1b6c rdfs:label "Republican politics" .
-    # :Event_01d9bcf4-14cb :has_topic :republican_politics_d757f9df_1b6c .
-    # :sparsely_populated_state_86c1aefd_4bf3 a :AdministrativeDivision .
-    # :sparsely_populated_state_86c1aefd_4bf3 rdfs:label "sparsely populated state" .
-    # :Event_01d9bcf4-14cb :has_topic :sparsely_populated_state_86c1aefd_4bf3 .
-    # :Event_01d9bcf4-14cb a :EventAndState .   TODO: loomed
-    # :Event_01d9bcf4-14cb :has_active_agent :political_family_27dc3bb4_f1cb .
-    # :Event_01d9bcf4-14cb :has_topic :republican_politics_d757f9df_1b6c .
-    # :Event_01d9bcf4-14cb :has_affected_agent :sparsely_populated_state_86c1aefd_4bf3 .
-    # :Event_01d9bcf4-14cb rdfs:label "political family loomed in Republican politics in sparsely populated state" .
-    # :Chunk_949a2de1-4f5f a :Chunk ; :offset 2 .
-    # :Chunk_949a2de1-4f5f :text "Liz Cheney ’s loss marks a remarkable fall for a political family" .
-    # :Chunk_949a2de1-4f5f :sentiment 0.3182 .
-    # :liz_cheney_s_loss_332e1e23_047d a :Failure .
-    # :liz_cheney_s_loss_332e1e23_047d rdfs:label "Liz Cheney ’s loss" .
-    # :remarkable_fall_for_political_family_e5532b36_b81c a :AlternativeCollection ;
-    #     :text "remarkable fall for political family" .
-    # :remarkable_fall_for_political_family_e5532b36_b81c :has_member :Autumn .
-    # :remarkable_fall_for_political_family_e5532b36_b81c :has_member :Decrease .
-    # :remarkable_fall_for_political_family_e5532b36_b81c rdfs:label "remarkable fall for political family" .
-    # :Event_84d6734b-ce16 a :Ceremony .   TODO: marks
-    # :Event_84d6734b-ce16 :has_active_agent :liz_cheney_s_loss_332e1e23_047d .    TODO: Not active agent; loss is obj
-    # :Event_84d6734b-ce16 :has_topic :remarkable_fall_for_political_family_e5532b36_b81c .
-    # :Event_84d6734b-ce16 rdfs:label "Liz Cheney ’s loss marks remarkable fall for political family" .
-    # Second sentence
-    # :PiT_Yr1978 a :PointInTime ; rdfs:label "1978" .
-    # :PiT_Yr1978 :year 1978 .
-    # :PiT_a_decade a :PointInTime ; rdfs:label "a decade" .
-    # :Sentence_a945dd26-b8ce :mentions :Dick_Cheney .
-    # :Sentence_a945dd26-b8ce :mentions :House .
-    # :Dick_Cheney a :Person .
-    # :Dick_Cheney rdfs:label "Richard Cheney", "Richard Bruce \'Dick\' Cheney", "Richard Bruce Cheney",
-    #                         "Dick Cheney", "Dick", "Cheney" .
-    # :Dick_Cheney :description "From Wikipedia (wikibase_item: Q48259): \'Richard Bruce Cheney is an
-    #       American politician and businessman who served as the 46th vice president of the United States
-    #       from 2001 to 2009 under President George W. Bush. He is currently the oldest living former U.S.
-    #       'vice president, following the death of Walter Mondale in 2021.\'" .
-    # :House a :Organization .
-    # :House rdfs:label "living house", "accommodation", "house" .    TODO: Labels do not match ORG; Needs metonymy
-    # :House :description "From Wikipedia (wikibase_item: Q3947): \'A house is a single-unit ..." .
-    # :Chunk_3e5f988d-b910 a :Chunk ; :offset 1 .
-    # :Chunk_3e5f988d-b910 :text "he served for a decade the House" .
-    # :Chunk_3e5f988d-b910 :sentiment 0.0 .
-    # :Event_836882af-0b3b :has_time :PiT_a_decade .
-    # :Event_836882af-0b3b a :EmploymentAndRelatedEvent .   TODO: Can define a topic/affiliation related to the House?
-    # :Event_836882af-0b3b :has_active_agent :Dick_Cheney .
-    # :Event_836882af-0b3b rdfs:label "Dick Cheney served" .
-    # :Chunk_f24fbe29-e210 a :Chunk ; :offset 2 .
-    # :Chunk_f24fbe29-e210 :text "Her father is former Vice President Dick Cheney , who was elected to
-    #                             the House in 1978" .
-    # :Chunk_f24fbe29-e210 :sentiment -0.5106 .
-    # :Event_09ec227f-31da :has_time :PiT_Yr1978 .
-    # TODO: Election event
 
 
 def test_paragraphs():

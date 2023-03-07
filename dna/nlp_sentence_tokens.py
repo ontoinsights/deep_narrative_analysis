@@ -25,6 +25,8 @@ def _handle_noun(noun_token: Token) -> (str, str):
     noun_text = noun_token.text
     noun_texts = [noun_text]
     for child_token in noun_token.children:
+        if child_token.pos_ == 'VERB':
+            continue
         if child_token.dep_ == 'prep':
             noun_texts.append(child_token.text)
             for child2 in child_token.children:
@@ -178,7 +180,7 @@ def _process_proper_noun(token: Token, full_text: str) -> (str, str):
     return full_text, check_name_gender(full_text)
 
 
-def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, verb_lemma: str = None) -> dict:
+def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, ent_lemma: str) -> dict:
     """
     Set up a dictionary to hold the entity's/token's details.
 
@@ -186,7 +188,7 @@ def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, verb_le
                      and modifiers added
     :param ent_type: The type of the entity - For example, SINGPERSON or NOUN
     :param ent_key: Dictionary key where the details are added
-    :param verb_lemma: The lemma if the entity is a verb
+    :param ent_lemma: The lemma of the entity
     :return: A dictionary holding the entity's/token's initial dictionary definition
     """
     ent_dict = dict()
@@ -199,11 +201,37 @@ def _setup_entity_dictionary(ent_text: str, ent_type: str, ent_key: str, verb_le
     elif 'subject' in ent_key:
         ent_base_key = 'subject'
     ent_dict[f'{ent_base_key}_text'] = ent_text
-    if 'verb' in ent_key:
-        ent_dict['verb_lemma'] = verb_lemma
-    else:
+    ent_dict[f'{ent_base_key}_lemma'] = ent_lemma
+    if ent_key != 'verb':
         ent_dict[f'{ent_base_key}_type'] = ent_type
     return ent_dict
+
+
+def add_acomp_details(acomp_token: Token, verb_dict: dict):
+    """
+    Process the token details for an acomp dependency, which is not a noun/verb but an adjective. That
+    adjective may be further expanded by a conjunction, an xcomp clause or preposition with a prepositional
+    clause (pcomp). Although these are different dependency paths, their resultant semantics are similar.
+
+    :param acomp_token: Token from spacy parse for an acomp sentence dependency
+    :param verb_dict: Dictionary to which the acomp details are added
+    :return: None (verb_dict is updated)
+    """
+    token_key = 'acomp'
+    ent_dict = _setup_entity_dictionary(acomp_token.text, 'ADJ', token_key, acomp_token.lemma_)
+    for child in acomp_token.children:
+        if 'conj' == child.dep_:
+            add_acomp_details(child, verb_dict)
+        elif 'cc' == child.dep_:
+            verb_dict[f'{token_key}_cc'] = child.text   # Future: What about and/or combinations?
+        elif child.dep_ in ('xcomp', 'prep'):
+            # acomp -> xcomp; e.g., 'he is able to swim' (acomp = able, xcomp = swim)
+            # acomp -> prep + pcomp; e.g., 'he is tired of running' (acomp = tired, pcomp = running)
+            token_words = [ww for ww in acomp_token.subtree]   # Get the full text of the acomp
+            token_text = ' '.join([ww.text for ww in token_words]).strip()
+            ent_dict[f'full_text'] = token_text
+            # TODO: Expand to extract details of the xcomp verb or if there is a prepositional clause (pcomp)
+    add_to_dictionary_values(verb_dict, token_key, ent_dict, dict)
 
 
 def add_token_details(token: Token, dictionary: dict, token_key: str):
@@ -216,39 +244,49 @@ def add_token_details(token: Token, dictionary: dict, token_key: str):
     :param token_key: Dictionary key where the details are added
     :return: None (Input dictionary is updated)
     """
-    ent = token.text.split('$&')[0]
-    if ent in ('.', ','):   # Erroneous parse sometimes returns punctuation
+    ent_text = token.text.split('$&')[0]
+    if ent_text in ('.', ','):   # Erroneous parse sometimes returns punctuation
         return
     if 'verb' in token_key:
-        ent = token.lemma_
+        ent_text = token.lemma_
         ent_type = 'VERB'
     else:
-        ent, ent_type = _handle_noun(token)
+        ent_text, ent_type = _handle_noun(token)
+    extraneous_words = []
     # Set up the entity's dictionary and add basic details
-    ent_dict = _setup_entity_dictionary(ent, ent_type, token_key, token.lemma_)
+    ent_dict = _setup_entity_dictionary(ent_text, ent_type, token_key, token.lemma_)
     # Process specific children (conjunctions and prepositions)
+    # Note that the conjunction and conjunctive words are included in the original text and are removed
+    #    with the 'extraneous_words' processing
     for child in token.children:
         if ent_type == 'VERB' and ('obj' in child.dep_ or 'attr' in child.dep_):
-            # if 'advcl' in token_key or 'xcomp' in token_key:
-            # Object/attr is part of the adverbial clause, so it adds to the current ent_dict
-            # add_token_details(child, ent_dict, objects_string)
-            # else:
             add_token_details(child, ent_dict, objects_string)
         elif 'conj' == child.dep_:
+            extraneous_words.append(child.text)
             add_token_details(child, dictionary, token_key)
         elif 'cc' == child.dep_:
+            extraneous_words.append(f' {child.text} ')
             dictionary[f'{token_key}_cc'] = child.text
         elif 'prep' in child.dep_:
-            if child.text.lower() not in processed_prepositions:
-                continue
-            prep_dict = dict()
-            # Lists of dictionaries have plural names while individual dictionary keys should not
-            prep_dict['prep_text'] = child.text
-            for prep_child in child.children:
-                if 'obj' in prep_child.dep_ or 'attr' in prep_child.dep_:
-                    # Object/attr is part of the prepositional clause, so it adds to the current prep_dict
-                    _process_prep_object(prep_child, prep_dict,
-                                         (token_key[0:-1] if token_key.endswith("s") else token_key))
-                    # TODO: Add processing for pcomp
-                    add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
+            prep_dict = process_prep_token(child, token_key)
+            if prep_dict:
+                add_to_dictionary_values(ent_dict, 'preps', prep_dict, dict)
+    if extraneous_words and 'object' in token_key:
+        curr_text = ent_dict['object_text']
+        for extraneous_word in extraneous_words:
+            curr_text = curr_text.replace(extraneous_word, empty_string)
+        ent_dict['object_text'] = curr_text.strip()
     add_to_dictionary_values(dictionary, token_key, ent_dict, dict)
+
+
+def process_prep_token(prep_token: Token, token_key: str) -> dict:
+    prep_dict = dict()
+    if prep_token.text.lower() not in processed_prepositions:
+        return prep_dict
+    prep_dict['prep_text'] = prep_token.text
+    for prep_child in prep_token.children:
+        if 'obj' in prep_child.dep_ or 'attr' in prep_child.dep_:
+            # Object/attr is part of the prepositional clause, so it adds to the current prep_dict
+            _process_prep_object(prep_child, prep_dict, (token_key[0:-1] if token_key.endswith("s") else token_key))
+            # TODO: Add processing for pcomp
+    return prep_dict

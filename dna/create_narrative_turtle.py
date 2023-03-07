@@ -163,14 +163,14 @@ def create_graph(sentence_dicts: list, family_dict: dict, published: str, use_so
                 graph_ttl_list.append(f'{fam_iri} a :Person ; rdfs:label "{label_names}" .')
                 gender = 'Female' if 'FEMALE' in ent_type else ('Male' if 'MALE' in ent_type else empty_string)
                 if gender:
-                    graph_ttl_list.append(f'{fam_iri} :gender "{gender}" .')
+                    graph_ttl_list.append(f'{fam_iri} :has_gender :enum:{gender} .')
     last_nouns = []   # Array of tuples of noun texts, types, class mappings and IRIs; Paragraph boundaries highlighted
     last_events = []   # Array of tuples of class mappings and IRIs; Paragraph boundaries highlighted
     # An array with index 0 = last location mentioned, index 1 = last time mentioned
     loc_time_iris = [empty_string, empty_string]
     for sent_dict in sentence_dicts:
         if 'punct' in sent_dict and sent_dict['punct'] == '?':
-            continue     # TODO: Handle questions
+            continue     # Future: Handle questions
         sentence_text = sent_dict['text']
         if sentence_text == 'New line':     # Future: What if last_nouns and last_events arrays become too large?
             last_nouns.append(('new_line', empty_string, empty_string, empty_string))

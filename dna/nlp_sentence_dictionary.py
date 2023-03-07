@@ -18,9 +18,9 @@ import logging
 from spacy.language import Language
 from spacy.tokens import Token
 
-from dna.nlp_sentence_tokens import add_token_details
-from dna.utilities_and_language_specific import add_to_dictionary_values, aux_lemmas, objects_string,  \
-    subjects_string, processed_prepositions
+from dna.nlp_sentence_tokens import add_acomp_details, add_token_details, process_prep_token
+from dna.utilities_and_language_specific import add_to_dictionary_values, aux_lemmas, empty_string, \
+    objects_string,  subjects_string, processed_prepositions
 
 
 def _adjust_xcomp_prt(processing: list) -> list:
@@ -68,7 +68,7 @@ def _process_aux(aux_token: Token, verb_dictionary: dict):
                             being processed
     :return: None (the verb_dictionary is updated)
     """
-    # TODO: Remove assumption of English
+    # TODO: Remove assumption of English and add modals
     if aux_token.lemma_ == 'to':
         return
     elif aux_token.lemma_ in aux_lemmas:
@@ -82,6 +82,32 @@ def _process_aux(aux_token: Token, verb_dictionary: dict):
         # intent (would, will), ability (can/cannot), suggestion (should) or necessity/obligation (must),
         # or is asking permission (can, may, could) or requesting (would, will, can, could)
         verb_dictionary['verb_aux'] = aux_token.text
+
+
+def _process_xcomp(xcomp_token: Token, root_text: str, root_lemma: str, verb_dict: dict):
+    """
+    Processing of one or two xcomp verbs associated with a root verb.
+
+    :param xcomp_token: Token holding the spaCy details for the xcomp verb
+    :param root_text: String holding the root verb's text
+    :param root_lemma: String holding the root verb's lemma
+    :param verb_dict: Dictionary where the xcomp details are added
+    :return: N/A (The verb_dict is updated)
+    """
+    # For 'he attempted robbing the bank', xcomp_token is related to 'robbing' and the root lemma is 'attempt'
+    add_to_dictionary_values(verb_dict, 'verb_processing',
+                             f'xcomp > {root_lemma}/{root_text}, {xcomp_token.lemma_}', str)
+    process_verb(xcomp_token, verb_dict)
+    for child in xcomp_token.children:
+        if child.dep_ == 'cc':
+            verb_dict['verb_cc'] = child.text
+        elif child.dep_ == 'conj':
+            # Conjunction of xcomps ('Sue failed to win the race or to finish.') handled as
+            #     3 verbs with multiple xcomp processing details
+            add_to_dictionary_values(verb_dict, 'verb_processing',
+                                     f'xcomp > {root_lemma}/{root_text}, {child.lemma_}', str)
+            process_verb(child, verb_dict)
+    return
 
 
 def extract_chunk_details(chunk: str, chunk_dict: dict, nlp: Language) -> dict:
@@ -120,23 +146,18 @@ def process_verb(token: Token, dictionary: dict):
     # Dependency tokens are defined at https://downloads.cs.stanford.edu/nlp/software/dependencies_manual.pdf
     for child in token.children:
         if child.dep_ == 'xcomp':   # Clausal complement - e.g., 'he attempted robbing the bank' (xcomp = robbing)
-            # For the above, xcomp > attempt, rob
-            add_to_dictionary_values(dictionary, 'verb_processing',
-                                     f'xcomp > {token.lemma_}/{token.text}, {child.lemma_}', str)
-            process_verb(child, dictionary)
+            _process_xcomp(child, token.text, token.lemma_, dictionary)
+        elif child.dep_ == 'prt':   # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
             for child2 in child.children:
-                if child2.dep_ == 'cc':
-                    dictionary['verb_cc'] = child2.text
-                elif child2.dep_ == 'conj':
-                    # Conjunction of xcomps ('Sue failed to win the race or to finish.') handled as
-                    #     3 verbs with multiple xcomp processing details
-                    add_to_dictionary_values(dictionary, 'verb_processing',
-                                             f'xcomp > {token.lemma_}/{token.text}, {child2.text}', str)
-                    process_verb(child2, dictionary)
-        elif 'prt' in child.dep_:   # Phrasal verb particle - e.g., 'he gave up the jewels' (up = prt)
+                if child2.dep_ == 'prep':
+                    prep_dict = process_prep_token(child2, 'preps')
+                    if prep_dict:
+                        add_to_dictionary_values(verb_dict, 'preps', prep_dict, dict)
             # For the above, prt > give up
             add_to_dictionary_values(dictionary, 'verb_processing', f'prt > {token.lemma_} {child.text}', str)
-        elif child.dep_ in ('acomp', 'advcl', 'ccomp'):    # Various complements of the verb
+        elif child.dep_ == 'acomp':    # Adjectival complement - e.g., 'Jane looks beautiful' (beautiful = acomp)
+            add_acomp_details(child, verb_dict)
+        elif child.dep_ in ('advcl', 'ccomp'):    # Various complements of the verb
             add_token_details(child, verb_dict, f'verb_{child.dep_}')
         elif 'agent' == child.dep_:          # Agent of a passive verb, introduced by the word, 'by'
             for child2 in child.children:
@@ -152,6 +173,7 @@ def process_verb(token: Token, dictionary: dict):
         elif 'nsubjpass' == child.dep_:   # Subject of a passive verb -> Which means that it is an object
             add_token_details(child, dictionary, objects_string)
         # TODO: Handle subjects that are themselves clauses (csubj and csubjpass)
+        # TODO: Can attr be assumed to only be nouns and used with "to be", "to seem" or "to appear" verbs?
         elif 'obj' in child.dep_ or child.dep_ in ('attr', 'dative'):  # Object or attribute of the verb
             add_token_details(child, verb_dict, objects_string)
         elif 'prep' in child.dep_:    # Preposition associated with the verb

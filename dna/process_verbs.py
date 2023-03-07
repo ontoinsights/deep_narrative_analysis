@@ -6,25 +6,28 @@ import logging
 import uuid
 
 from dna.coreference_resolution import check_nouns
-from dna.create_labels import create_verb_label, get_prt_label, get_xcomp_labels
+from dna.create_labels import create_verb_label, get_prt_label
 from dna.create_specific_turtle import create_type_turtle
 from dna.create_verb_turtle import add_subj_obj_to_ttl, create_ttl_for_prep_detail, handle_locations, \
     handle_xcomp_processing, revise_prep_turtle
+from dna.database import query_database
 from dna.get_ontology_mapping import get_event_state_mapping
 from dna.nlp import get_named_entities_in_string
 from dna.process_times import process_chunk_time
+from dna.queries import query_if_subclass
 from dna.query_ontology import check_emotion_loc_movement
 from dna.utilities_and_language_specific import add_unique_to_array, aux_lemmas, aux_verb_dict, empty_string, \
-    objects_string, preps_string, subjects_string, verbs_string
+    objects_string, ontologies_database, preps_string, subjects_string, verbs_string
 
 
 # TODO: Is last_events complete and updated for all events? Check nouns + verbs.
 
 
-def _check_verb_person_mappings(mappings: list, objs: list) -> list:
+def _choose_verb_mapping(mappings: list, objs: list) -> list:
     """
-    If mappings have an alternative with a class mapping of verb + Person, then check the verb's objects.
-    If they are a Person, then that mapping is chosen over the other(s).
+    If mappings have an alternative with a class mapping of "verbs(if<DNAClass_localName>)"
+    (such as 'urn:ontoinsights:dna:CaringForDependents(ifPerson)')), then check the
+    check the verb's objects. If found, then that mapping is chosen over the other(s).
 
     :param mappings: A list of strings holding possible alternative ontology mappings for the verb
     :param objs: Array of tuples that are the noun text, type, mappings and IRI for the sentence's objects
@@ -34,15 +37,22 @@ def _check_verb_person_mappings(mappings: list, objs: list) -> list:
         return mappings     # No alternatives
     new_mappings = []
     for mapping in mappings:
-        if '+' in mapping and (':Person' in mapping or ':NegPerson' in mapping):
+        if '(ifany)' in mapping and 0 < len(objs):
+            return [mapping.split('(if')[0]]
+        if '(if' in mapping:
+            class_name = mapping.split('(if')[1].split(')')[0]
             for obj in objs:
                 text, noun_type, noun_mappings, iri = obj
-                if 'PERSON' in noun_type and ':Person' in mapping:
-                    return [mapping.replace('urn:ontoinsights:dna:Person', empty_string).
-                            replace(':Person', empty_string).replace('+', empty_string)]
-                if 'PERSON' not in noun_type and ':NegPerson' in mapping:
-                    new_mappings.append(mapping.replace('urn:ontoinsights:dna:NegPerson', empty_string).
-                                        replace(':NegPerson', empty_string).replace('+', empty_string))
+                if 'PERSON' in noun_type and 'ifPerson' in mapping:
+                    return [mapping.split('(if')[0]]
+                else:
+                    # Check the object's type superclasses - For example, stomach maps to
+                    #   'urn:ontoinsights:dna:BodilyAct(ifFoodAndDrink)' or 'urn:ontoinsights:dna:TrustAndTolerance'
+                    for noun_map in noun_mappings:
+                        results = query_database('select', query_if_subclass.replace('urnClass', noun_map).
+                                                 replace('searchClass', class_name), ontologies_database)
+                        if len(results) > 0:
+                            return [mapping.split('(if')[0]]
         else:
             new_mappings.append(mapping)
     return new_mappings
@@ -160,28 +170,31 @@ def _process_subjs_objs(chunk_dict: dict, alet_dict: dict, last_nouns: list, las
 
 def _process_xcomp_prt(chunk_dict: dict) -> (dict, dict, bool):
     """
-    Extract the 'verb_processing' details (xcomp and prt) for the chunk.
+    Extract the 'verb_processing' details (acomp-xcomp, xcomp and/or prt) for the chunk.
 
     :param chunk_dict: The dictionary from the spaCy parse for the chunk
     :return: A tuple consisting of a dictionary holding xcomp processing details, a dictionary
-             holding prt processing details and a boolean indicating that subjects and objects
-             are switched (which is done for passive verbs since the object of a passive root
-             verb becomes the subject of the xcomp verb).
+             holding prt processing details, an array of strings with acomp-xcomp details (or an empty
+             array) and a boolean indicating that subjects and objects are switched (which is done for
+             passive verbs since the object of a passive root verb becomes the subject of the xcomp verb).
     """
     # xcomp - for ex, 'she loved to play with her sister' => 'love' is root, 'play' is xcomp
     # These verbs are both found in the same chunk_dict['verbs'] array
     xcomp_dict = dict()
     # prt - for ex, 'she gave up the prize' => 'give' is root, 'up' is prt
     prt_dict = dict()
+    acomp_xcomps = []
     if 'verb_processing' in chunk_dict:
         for processing in chunk_dict['verb_processing']:
+            if 'acomp-xcomp' in processing:
+                acomp_xcomps.append(processing)
             # For example, 'xcomp > love/loved, play'; Both the root lemma and text are given, separated by '/'
             if 'xcomp' in processing:
                 xcomp_dict[processing.split(', ')[1]] = processing
                 xcomp_dict[processing.split('> ')[1].split('/')[0]] = 'root'
             elif 'prt' in processing:    # For example, 'prt > give, up'
                 prt_dict[processing.split('prt > ')[1].split(' ')[0]] = processing
-    return xcomp_dict, prt_dict, \
+    return xcomp_dict, prt_dict, acomp_xcomps, \
         True if (subjects_string not in chunk_dict and objects_string in chunk_dict) else False
 
 
@@ -222,7 +235,7 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
     init_objects, obj_ttl = _process_subjs_objs(chunk_dict, alet_dict, last_nouns,
                                                 last_events, objects_string, ext_sources)
     # Note that obj_ttl may not be added if an auxiliary verb is the main/root verb (for ex, 'John is an attorney')
-    xcomp_dict, prt_dict, switch_subj_obj = _process_xcomp_prt(chunk_dict)
+    xcomp_dict, prt_dict, acomp_xcomps, switch_subj_obj = _process_xcomp_prt(chunk_dict)
     if xcomp_dict and switch_subj_obj:    # Passive root verb => 'subjects' are defined as the chunk's objects
         subjects = init_objects[:]           # Only switch for xcomp and if the switch_ variable is true
         objects = init_subjects[:]           # Passive root subjects become the active xcomp subjects
@@ -268,7 +281,7 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
         if 'verb_processing' in chunk_dict and prt_dict and lemma in prt_dict:
             event_state_mappings = \
                 get_event_state_mapping(prt_dict[lemma].split('prt > ')[1], verb, subjects, objects,
-                                        event_iri, ttl_list)
+                                        event_iri, ttl_list, ext_sources)
         # Third deal with the root or xcomp verbs in a pair
         if 'verb_processing' in chunk_dict and xcomp_dict and lemma in xcomp_dict:
             if xcomp_dict[lemma].startswith('xcomp'):
@@ -276,22 +289,24 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
                 if not event_state_mappings:     # Might have a mapping if the lemma is part of prt processing
                     if xcomp_root_objects:       # Object of the root verb is the subject of the xcomp
                         event_state_mappings = get_event_state_mapping(lemma, verb, xcomp_root_objects, objects,
-                                                                       event_iri, ttl_list)
+                                                                       event_iri, ttl_list, ext_sources)
                     else:
                         event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects,
-                                                                       event_iri, ttl_list)
+                                                                       event_iri, ttl_list, ext_sources)
             else:    # Root verb; Note that at this point, xcomp_root_objects = objects
                 xcomp_root = 'root'
                 event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects,
-                                                               xcomp_root_event_iri, ttl_list)
+                                                               xcomp_root_event_iri, ttl_list, ext_sources)
         # Lastly deal with other verbs
         if 'verb_processing' not in chunk_dict:
-            event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects, event_iri, ttl_list)
-        if xcomp_root == 'root' and not xcomp_root_objects:
+            event_state_mappings = get_event_state_mapping(lemma, verb, subjects, objects, event_iri, ttl_list,
+                                                           ext_sources)
+        if xcomp_root == 'root' and not xcomp_root_objects and len(event_state_mappings) == 1:
+            # TODO: Handle an array of mappings where all may not be collapsed
             # Collapse a root verb (that is an emotion or is Attempt, Continuation, End, ...) to the xcomp
-            event_state_mappings = check_emotion_loc_movement(event_state_mappings, 'emotion')
-            if ':EmotionalResponse' in event_state_mappings or ':PositiveEmotion' in event_state_mappings or \
-                    ':NegativeEmotion' in event_state_mappings or event_state_mappings[0] in \
+            event_state_map = check_emotion_loc_movement(event_state_mappings, 'emotion')[0]
+            if ':EmotionalResponse' in event_state_map or ':PositiveEmotion' in event_state_map or \
+                    ':NegativeEmotion' in event_state_map or event_state_mappings[0] in \
                     (':Attempt', ':Continuation', ':StartAndBeginning', ':End', ':Success', ':Failure'):
                 ttl_list.append(f'{event_iri} a {", ".join(event_state_mappings)} .')
                 xcomp_incorporates_root = True
@@ -303,8 +318,9 @@ def process_verb(chunk_iri: str, chunk_dict: dict, alet_dict: dict, loc_time_iri
             continue
         if len(event_state_mappings) > 1:
             # Logic to possibly select one mapping when there are alternatives
-            event_state_mappings = _check_verb_person_mappings(event_state_mappings, objects)
-        ttl_list.extend(create_type_turtle(event_state_mappings, ref_event_iri, True, lemma))
+            event_state_mappings = _choose_verb_mapping(event_state_mappings, objects)
+        new_ttl, event_state_mappings = create_type_turtle(event_state_mappings, ref_event_iri, lemma)
+        ttl_list.extend(new_ttl)
         # May need to add origin to movement or a location overall for the event
         handle_locations(ttl_list, loc_iri, loc_time_iris, ref_event_iri, is_bio)
         # Add the subject and object details to the Turtle

@@ -10,10 +10,10 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: October 27 2022
+# Last modified: February 8 2023
 # 
 # Licensed by OntoInsights, LLC
-# Creative Commons Atribution 4.0 International (CC BY 4.0)
+# Creative Commons Attribution 4.0 International (CC BY 4.0)
 # 
 # Unless required by applicable law or agreed to in writing,
 # software distributed under the License is distributed on an
@@ -21,45 +21,18 @@
 # either express or implied.
 # 
 # Changes:
-#  Updated to the Mar 2021 semantics
-#  Changed LineOfBusiness from an enumeration to the top of a class hierarchy
-#    and clarified its definition
-#  Added :ArmedForce, :ParamilitaryForce, :PoliceForce and :PoliticalParty
-#  Updated the default and dna prefixes
-#  Renamed Characteristic to AgentAspect
-#  Added subProperty to :has_agent_aspect
-#  Changed :synonym to :noun_synonym and :verb_synonym, and added synonyms
-#  Changed :ReligiousActivities to :Religion, and added :ReligiousBelief
-#  Added :AppointmentAndNomination to the domain of :role
-#  Moved PoliticalIdeology from environment-subclasses.ttl, and added
-#    :has_political_ideology
-#  Added jobs to the LineOfBusiness subclasses' "examples"
-#  Added GovernmentalEntity and noun synonyms for PoliticalIdeologies
-#  Changed InformationTechnologyServices to InformationTechnology
-#  Added the Technology, MultiIndustry, ProvisionOfServices and Space 
-#    lines of business, and updated the LOB subclassing hierarchy
-#  Modified :Gender to be a restricted set of string values
-#    (the :gender property)
-#  Modified the IRIs of the LineOfBusiness subclasses to reflect their
-#    'Business' semantics and avoid name clashes
-#  Added :BodyPart
-#  Added :wordnet_noun_synset details
-#  Renamed AgricultureBusiness to Agribusiness
-#  Removed InformationAndTechnologyBusiness and SpaceBusiness 
-#    in lieu of TechnologyBusiness
-#  Added BodyPart, StorageBusiness and TradeAndCraft subclasses of 
-#    LineOfBusiness
-#  Combined MilitaryBusiness and SecurityBusiness (LoBs) to create
-#    MilitaryAndSecurityBusiness
-#  Renamed Organization to OrganizationalEntity to avoid confusion 
-#    with the Event, Alignment (e.g., organization/organizing)
-#  Subclassed PoliticalIdeology from AgentAspect and reintroduced subclasses
-#  Added :has_context
-#  Added the data property, :agent_aspect, and removed :ethnicity, 
-#    :religion and :political_ideology in lieu of using this 
-#  Removed :has_political_ideology in lieu of using :has_agent_aspect
-#  Clarified that has_agent_aspect applies to any Agent, not just Persons
-#  Removed the class, LeftWing, in lieu of Progressivism, Liberalism, etc.
+#  Reset change history
+#  Moved some :example text to synonyms
+#  Added @en language tags to rdfs:labels, :definitions and :examples
+#  Removed all synonyms to language-specific modules
+#  Simplified the EducationLevel enumeration
+#  Changed the :gender data property to :has_gender (object property) and
+#    added the class, GenderValue
+#  Subclassed AgentAspect and updated the definition of :has_agent_aspect
+#  Removed Republican in lieu of using the superclass, Conservatism
+#  Renamed TechnologyBusiness to ScienceAndTechnologyBusiness
+#  Added Expansionism
+#  Renamed :agent_aspect to :aspect
 ########################################################################
 
 
@@ -69,139 +42,131 @@
 
 :Affiliation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Affiliation" ;
-  :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) or Location, to another entity such as a OrganizationalEntity or GeopoliticalEntity. The individual to whom/which the Agent or Location is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent or Location 'plays' is defined by the :has_role or :role properties. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value." ;
-  :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group." ;
-  :noun_synonym "allying" ;
-  :verb_synonym "affiliate", "associate", "join", "ally" ;
+  rdfs:label "Affiliation"@en ;
+  :definition "An Affiliation defines the (typically) long-term association of an Agent (the :affiliated_agent) or Location, to another entity such as a OrganizationalEntity or GeopoliticalEntity. The individual to whom/which the Agent or Location is associated is identified using the :affiliated_with property, while the time of the Affiliation can be specified using the :has_time property (or its subproperties) and the role that the Agent or Location 'plays' is defined by the :has_role or :role properties. Another possibility to defining an Agent's role is to use the :role datatype property. This permits the capture of the role in the specific text/vocabulary of the narrative, whereas the :has_role property maps that text to an enumerated value."@en ;
+  :example "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company or as a member of a religious or political group."@en ;
   :wordnet_noun_synset "01083552" .
 
 :AgentAspect a owl:Class ;
-  rdfs:label "Agent Aspect" ;
-  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning." ;
+  rdfs:subClassOf :AttributeAndCharacteristic ;
+  rdfs:label "Agent Aspect"@en ;
+  :definition "Some facet, detail or characteristic of a Person that serves to distinguish and/or describe them. Note that AgentAspect is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as EducationLevel and Ethnicity) define the specific semantics of the characterization. These subclasses are directly referenced when used in a :has_agent_aspect triple, via OWL punning."@en ;
   :wordnet_noun_synset "04740358" .
 
 :ArmedForce a owl:Class ;
   rdfs:subClassOf :GovernmentalEntity ;
-  rdfs:label "Armed Force" ;
-  :definition "A GPE's military force." ;
-  :example "Examples of ArmedForces are army, navy, marines, air force, etc." ;
-  :noun_synonym "military", "military force", "army", "navy", "air force", "coast guard", "marines" ;
+  rdfs:label "Armed Force"@en ;
+  :definition "A GPE's military force."@en ;
   :wordnet_noun_synset "08215965", "08207684" .
 
 :BodyPart a owl:Class ;
   rdfs:subClassOf :ComponentPart ;
-  rdfs:label "Body Part" ;
-  :definition "A part of a Person, Animal or Plant. It is related to the entity as the object of the predicate, :has_component." ;
-  :example "Examples of body parts are head, hands, feet, elbow, etc." ;
+  rdfs:label "Body Part"@en ;
+  :definition "A part of a Person, Animal or Plant. It is related to the entity as the object of the predicate, :has_component."@en ;
   :wordnet_noun_synset "05227735", "13107668" .
 
 :DisplacedPerson a owl:Class ;
   rdfs:subClassOf :Person ;
-  rdfs:label "Displaced Person or Refugee" ;
-  :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc." ;
+  rdfs:label "Displaced Person or Refugee"@en ;
+  :definition "A Person or Group who is forced to leave their home due to violence, natural disasters, war, persecution, etc."@en ;
   :wordnet_noun_synset "10037615", "10535609" .
 
 :EducationLevel a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Enumeration ;
-  rdfs:label "Education Level" ;
-  :definition "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation." ;
-  :example "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms." ;
+  rdfs:label "Education Level"@en ;
+  :definition "An enumeration defining a Person's education. The values range from :enum:NoEducation to :enum:PostDoctoralEducation."@en ;
+  :example "Note that 'primary'/'secondary' education may be known by other words in different countries. For example, in the United States, 'primary' education is made up of 'elementary' and 'middle' schooling. 'Secondary' education is called 'high school'. Mappings for a countries' education levels should be considered and may be defined using synonyms."@en ;
   owl:equivalentClass [ a owl:Class ;
                         owl:oneOf ( :enum:NoEducation :enum:CompletedPrimaryEducation :enum:CompletedSecondaryEducation 
                                     :enum:CompletedUndergraduateEducation :enum:CompletedGraduateEducation 
                                     :enum:CompletedDoctoralEducation :enum:PostDoctoralEducation :enum:SomePrimaryEducation 
                                     :enum:SomeSecondaryEducation :enum:SomeUndergraduateEducation :enum:SomeGraduateEducation 
-                                    :enum:SomeDoctoralEducation ) ] ;
-  :wordnet_noun_synset "00884975" .
+                                    :enum:SomeDoctoralEducation ) ] .
 
 :Ethnicity a owl:Class ;
   rdfs:subClassOf :AgentAspect ;
-  rdfs:label "Ethnicity" ;
-  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'." ;
-  :noun_synonym "race" ;
+  rdfs:label "Ethnicity"@en ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'."@en ;
   :wordnet_noun_synset "04806382" .
+
+:GenderValue a owl:Class ;
+  rdfs:subClassOf :Enumeration ;
+  rdfs:label "Gender Value"@en ;
+  :definition "An enumeration defining a Person's gender - female, male, agender or bigender."@en ;
+  owl:equivalentClass [ a owl:Class ;
+                        owl:oneOf ( :enum:Agender :enum:Bigender :enum:Female :enum:Male ) ] . 
 
 :GovernmentalEntity a owl:Class ;
   rdfs:subClassOf :OrganizationalEntity ;
-  rdfs:label "Government Entity" ;
-  :definition "A type of OrganizationalEntity related to the governance of an area." ;
-  :example "Examples are courts, city councils, senates, parliaments, etc." ;
-  :noun_synonym "legislature", "legislative branch", "judiciary", "judicial system", "legislative body", "executive branch" ;
+  rdfs:label "Government Entity"@en ;
+  :definition "A type of OrganizationalEntity related to the governance of an area."@en ;
   :wordnet_noun_synset "08180172", "08183086", "08183217", "08373001" .
 
 :GroupOfAgents a owl:Class ;
   rdfs:subClassOf :Agent, :Collection ;
-  rdfs:label "Group/Collection of Agents" ;
-  :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents." ;
-  :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, OrganizationalEntity, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State." ;
-  :noun_synonym "society", "crowd", "band", "troupe" ;
+  rdfs:label "Group/Collection of Agents"@en ;
+  :definition "A sub-class of both Agent and Collection defining a set/grouping of Agents."@en ;
+  :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, OrganizationalEntity, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State."@en ;
   :wordnet_noun_synset "07967506", "07991473" .
 
 :IntelligenceCommunity a owl:Class ;
   rdfs:subClassOf :Collection, :GovernmentalEntity ;
-  rdfs:label "Intelligence Community" ;
-  :definition "A governmental organization responsible for collecting, storing and analyzing information about other agents in the world." ;
+  rdfs:label "Intelligence Community"@en ;
+  :definition "A governmental organization responsible for collecting, storing and analyzing information about other agents in the world."@en ;
   :wordnet_noun_synset "08356381", "10230113" .
 
 :LineOfBusiness a owl:Class ;
-  rdfs:label "Line/Type of Business" ;
-  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or OrganizationalEntity). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios." ;
-  :noun_synonym "line of work", "occupation", "profession", "career", "specialization" ;
+  rdfs:label "Line/Type of Business"@en ;
+  :definition "Indicates different types of industries/lines of business that may be the focus of an Agent (typically a Person or OrganizationalEntity). Note that LineOfBusiness is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Agriculture or Transport) define the specific semantics of the business. These subclasses are directly referenced when used in a :has_line_of_business triple, via OWL punning. This is NOT defined as an enumeration to allow further extension in domain-specific scenarios."@en ;
   :wordnet_noun_synset "01099024", "01096649", "00583425", "00584498", "00611221", "08082070" .
 
 :OrganizationalEntity a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
-  rdfs:label "Organizational Entity" ;
-  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams." ;
-  :noun_synonym "corporation", "institution", "company", "business", "firm", "consortium", "syndicate" ;
+  rdfs:label "Organizational Entity"@en ;
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams."@en ;
   :wordnet_noun_synset "08076248", "03579706" .
 
 :ParamilitaryForce a owl:Class ;
   rdfs:subClassOf :OrganizationalEntity ;
-  rdfs:label "Paramilitary Force" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'." ;
-  :noun_synonym "quasi military" ;
+  rdfs:label "Paramilitary Force"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'."@en ;
   :wordnet_noun_synset "08224130" .
 
 :Person a owl:Class ;
   rdfs:subClassOf :Agent ;
-  rdfs:label "Person" ;
-  :definition "A human being." ;
-  :noun_synonym "human", "human being", "man", "woman", "child" ;
+  rdfs:label "Person"@en ;
+  :definition "A human being."@en ;
   :wordnet_noun_synset "00007846" .
 
 :PoliceForce a owl:Class ;
   rdfs:subClassOf :GovernmentalEntity ;
-  rdfs:label "Police Force" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'" ;
-  :noun_synonym "constabulary" ;
+  rdfs:label "Police Force"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Police&oldid=1018027470), Police 'are a constituted body of persons empowered by a state, with the aim to enforce the law, to ensure the safety, health and possessions of citizens, and to prevent crime and civil disorder. Their lawful powers include arrest and the use of force legitimized by the state via the monopoly on violence. The term is most commonly associated with the police forces of a sovereign state that are authorized to exercise the police power of that state within a defined legal or territorial area of responsibility.'"@en ;
   :wordnet_noun_synset "08226608", "08228211" .
 
 :PoliticalIdeology a owl:Class ;
   rdfs:subClassOf :AgentAspect ;
-  rdfs:label "Political Ideology" ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property." ;
-  :example "Examples are Authoritarian, Communism, Socialism, etc." ;
+  rdfs:label "Political Ideology"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=List_of_political_ideologies&oldid=1017695528), a PoliticalIdeology is a 'certain set of ethical ideals, principles, doctrines, myths or symbols of a social movement, institution, class or large group that explains how society should work and offers some political and cultural blueprint for a certain social order. A political ideology largely concerns itself with how to allocate power and to what ends it should be used. Some political parties follow a certain ideology very closely while others may take broad inspiration from a group of related ideologies without specifically embracing any one of them ... Political ideologies have two dimensions: (1) goals: how society should be organized; and (2) methods: the most appropriate way to achieve [these goals].' A Location or Agent may be associated with an ideology using the :has_political_ideology property."@en ;
+  :example "Examples are Authoritarian, Communism, Socialism, etc."@en ;
   :wordnet_noun_synset "06222574" .
 
 :PoliticalParty a owl:Class ;
   rdfs:subClassOf :OrganizationalEntity ;
-  rdfs:label "Political Party" ;
-  :definition "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office." ;
+  rdfs:label "Political Party"@en ;
+  :definition "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office."@en ;
   :wordnet_noun_synset "08273889" .
 
 :ReligiousBelief a owl:Class ;
   rdfs:subClassOf :AgentAspect, :Belief ;
-  rdfs:label "Religious Belief" ;
-  :definition "A superclass of the various world religions as well as no religion (nonreligion)." ;
-  :noun_synonym "religion", "faith" ;
+  rdfs:label "Religious Belief"@en ;
+  :definition "A superclass of the various world religions as well as no religion (nonreligion)."@en ;
   :wordnet_noun_synset "05955536" .
 
 :Role a owl:Class ;
-  rdfs:label "Role" ;
-  :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics." ;
-  :example "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads." ;
+  rdfs:label "Role"@en ;
+  :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics."@en ;
+  :example "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads."@en ;
   :wordnet_noun_synset "00723312" .
 
 
@@ -211,218 +176,201 @@
 
 :Agribusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Agribusiness" ;
-  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals." ;
-  :example "Examples are farms, dairies, ranches, apiculture and aquaculture businesses, seed companies, nurseries, fisheries, farmers, beekeepers, farm hands, ranchers, fishers, etc." ;
-  :noun_synonym "agriculture", "apiculture", "aquaculture", "husbandry", "viticulture", "farmer", "beekeeper" ;
+  rdfs:label "Agribusiness"@en ;
+  :definition "Involved with the production of food by raising crops, plants, seeds, fish, insects and/or animals."@en ;
   :wordnet_noun_synset "01106311", "00454755", "00918116", "00917978", "00918295", "00916760", "00917553", "00919445", "00920103", "08092123", "01129030" .
 
 :ArtsLiteratureAndMusic a owl:Class ;
-  rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Arts and Literature" ;
-  :definition "Creativity expressed as painting, sculpture, writing, etc." ;
-  :noun_synonym "artist", "sculptor", "author", "writer" ;
-  :wordnet_noun_synset "00615511", "09831743", "05643893", "10360025", "08263534" .
+  rdfs:subClassOf :EntertainmentBusiness ;
+  rdfs:label "Arts, Literature and Music"@en ;
+  :definition "Creativity expressed as painting, sculpture, writing, etc."@en .
 
 :BankingAndFinanceBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Banking, Finance and Investment Business" ;
-  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc." ;
+  rdfs:label "Banking, Finance and Investment Business"@en ;
+  :definition "Involved with the management of cash, credit and financial transactions by commerical and central banks, wealth management firms, stock traders and stock trading activities, bankers, tellers, etc."@en ;
   :wordnet_noun_synset "01100603", "01102563", "08083327", "08086714", "08087686" .
 
 :ConstructionBusiness a owl:Class ;
   rdfs:subClassOf :ManufacturingBusiness ;
-  rdfs:label "Construction Business" ;
-  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings." ;
-  :example "Examples include architectural firms, trades people, landscape and interior design firms, etc." ;
-  :wordnet_noun_synset "01106542", "00612006", "08084519" .
+  rdfs:label "Construction Business"@en ;
+  :definition "Involved in the building, maintenance and repair of infrasturcture, public and private spaces, and residential and commerical structures/buildings."@en ;
+  :wordnet_noun_synset "01106542", "08084519" .
 
 :CriminalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Criminal Business" ;
-  :noun_synonym "crime boss" ;
+  rdfs:label "Criminal Business"@en ;
   :wordnet_noun_synset "01114037", "08261980", "08262093", "08262346", "08263223", "08260983", "08262723" .
 
 :EducationalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Educational Business" ;
-  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge." ;
-  :example "Examples are schools, universities, tutoring, teachers/instructors/teaching assistants, students/pupils, etc." ;
-  :wordnet_noun_synset "00612720", "00895653" .
+  rdfs:label "Educational Business"@en ;
+  :definition "Involved with the training/instruction of students regarding basic or advanced skills (from reading and writing to trades) and general or specific knowledge."@en ;
+  :wordnet_noun_synset "00612720" .
 
 :ElectronicsAndComputersBusiness a owl:Class ;
-  rdfs:subClassOf :TechnologyBusiness ;
-  rdfs:label "Electronics and Computers Related Business" ;
-  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components." ;
-  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware." ;
+  rdfs:subClassOf :ScienceAndTechnologyBusiness ;
+  rdfs:label "Electronics and Computers Related Business"@en ;
+  :definition "Involved with the design and fabrication of transistors, microchips, semiconductors, etc and the devices made from those components."@en ;
+  :example "Examples include both the engineering, fabrication and testing aspects of electronics and computer hardware."@en ;
   :wordnet_noun_synset "08084637", "08084401", "08019477", "08083801", "00952816" .
 
 :EnergyAndUtilitiesBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Energy and Utilities Business" ;
-  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community." ;
-  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc." ;
+  rdfs:label "Energy and Utilities Business"@en ;
+  :definition "Involved with the infrastructure for and management of the supply of electricity, gas, water, waste, phone, cable, etc. to a community."@en ;
+  :example "Examples are electrical, solar, wind and nuclear generator plants and businesses, water filtration actitivies, power distribution centers, garbage collection and recycling businesses, etc."@en ;
   :wordnet_noun_synset "00580371", "08084296", "08085886", "08086077", "08086323" .
 
 :EntertainmentBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Entertainment Business" ;
-  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc." ;
-  :example "Entertainment includes museums and docents, theaters and actresses/actors, any type of performance acts (dancers, singers, instrumentalists, jugglers, acrobats, ...), etc." ;
-  :wordnet_noun_synset "08084787", "08084987" .
+  rdfs:label "Entertainment Business"@en ;
+  :definition "Involved with the creation, production, distribution and display/performance of film, music, art, sports, etc."@en ;
+  :wordnet_noun_synset "08084787", "08084987", "03036237" .
 
 :EnvironmentalOrEcologicalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Environmental or Ecological Business" ;
-  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change." ;
-  :wordnet_noun_synset "10080429", "00277033", "10062971" .
+  rdfs:label "Environmental or Ecological Business"@en ;
+  :definition "Involved with the preservation, protection and cleanup of the environment, flora and fauna, and with issues such as climate change."@en ;
+  :wordnet_noun_synset "00277033", "14536664" .
 
 :FashionBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Fashion Related Business" ;
-  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc." ;
-  :wordnet_noun_synset "00609277", "10241626", "08083153" .
+  rdfs:label "Fashion Related Business"@en ;
+  :definition "Involved with the design and production of clothing, footwear, accessories, beauty supplies, jewelry, etc."@en ;
+  :wordnet_noun_synset "00609277", "08083153" .
 
 :FoodProcessingAndPreparationBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Food Processing and Preparation Business" ;
-  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)" ;
-  :example "Examples include bakers and bakeries, butchers and slaughterhouses, food storage, meal preparation activities and chefs/cooks, etc." ;
-  :wordnet_noun_synset "00621664", "01105869", "00717095", "08019869" .
+  rdfs:label "Food Processing and Preparation Business"@en ;
+  :definition "Involved with the 'transformation of agricultural products into food [or drink], or of one form of food into other forms. Food processing includes many forms ... from grinding grain to make raw flour to home cooking to complex industrial methods used to make convenience foods ... Primary food processing is necessary to make most foods edible, and secondary food processing turns the ingredients into familiar foods, such as bread.' (https://en.wikipedia.org/w/index.php?title=Food_processing&oldid=1013814848)"@en ;
+  :example "Examples include bakeries, butcher shops and slaughterhouses, restaurants, etc."@en ;
+  :noun_synonym  "abattoir", "butchery", "slaughterhouse" ;
+  :wordnet_noun_synset "00621664", "01105869", "00717095", "08019869", "04088393" .
 
 :GovernmentAndPoliticsBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Government and Politics Business" ;
-  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc." ;
-  :wordnet_noun_synset "01109454", "00586697", "00613259" .
+  rdfs:label "Government and Politics Business"@en ;
+  :definition "Involved with governing bodies and agencies, parliaments and law making, political parties, elected officials, etc."@en ;
+  :wordnet_noun_synset "00613259" .
 
 :HealthcareAndMedicalBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Healthcare and Medical Business" ;
-  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)" ;
-  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520) It is staffed by doctors, nurses, nurse practioners, etc." ;
+  rdfs:label "Healthcare and Medical Business"@en ;
+  :definition "Involved with 'the maintenance or improvement of health via the prevention, diagnosis, treatment, recovery, or cure of disease, illness, injury, and other physical and mental impairments in people. Health care is delivered by health professionals and allied health fields.' (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)"@en ;
+  :example "Medicine, dentistry, pharmacy, midwifery, nursing, optometry, audiology, psychology, occupational therapy, physical therapy, athletic training and other health professions are all part of health care. It includes work done in providing primary care, secondary care, and tertiary care, as well as in public health. (https://en.wikipedia.org/w/index.php?title=Health_care&oldid=1013329520)"@en ;
   :wordnet_noun_synset "00613447", "08019020", "08129596" .
 
 :HospitalityBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Hospitality Business" ;
-  :definition "Involved with food and drink services (performed by wait staff, attendants, etc.), lodging, amusement and theme parks, tour guides and services, travel agencies, etc." ;
+  rdfs:label "Hospitality Business"@en ;
+  :definition "Involved with food and drink services (performed by wait staff, attendants, etc.), lodging, amusement and theme parks, tour guides and services, travel agencies, etc."@en ;
   :wordnet_noun_synset "00298987", "01106229" .
 
 :HumanitarianBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Humanitarian Business" ;
-  :definition "Involved with providing direct services or materials to people and areas in need." ;
-  :noun_synonym "non-profit", "non-profit organization" ;
-  :wordnet_noun_synset "01139918" .
+  rdfs:label "Humanitarian Business"@en ;
+  :definition "Involved with providing direct services or materials to people and areas in need."@en ;
+  :wordnet_noun_synset "01139918", "08026566" .
 
 :InsuranceBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Insurance Business" ;
-  :definition "Involved with protecting against financial loss related to damage to an asset or person." ;
-  :example "Examples include insurance agencies, underwriters, etc." ;
-  :wordnet_noun_synset "08087301", "10229332" .
+  rdfs:label "Insurance Business"@en ;
+  :definition "Involved with protecting against financial loss related to damage to an asset or person."@en ;
+  :wordnet_noun_synset "08087301" .
 
 :LaborAndStaffingBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Labor and Staffing Business" ;
-  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc." ;
-  :noun_synonym "employment agency", "temp agency" ;
-  :wordnet_noun_synset "01100309", "08371279" .
+  rdfs:label "Labor and Staffing Business"@en ;
+  :definition "Involved with organized labor, labor arbitration, providing or finding temporary or permanent staffing, etc."@en ;
+  :wordnet_noun_synset "08371279" .
 
 :LegalAndJudicialBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Legal and Judicial Business" ;
-  :definition "Involved with courts/trials/litigations, attorneys/lawyers, judges, juries/jurists, etc." ;
-  :wordnet_noun_synset "00612411", "08080875", "08129368" .
+  rdfs:label "Legal and Judicial Business"@en ;
+  :definition "Involved with courts/trials/litigations, etc."@en ;
+  :wordnet_noun_synset "00612411", "08080875", "08129368", "08346380", "01189300" .
 
 :ManufacturingBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Manufacturing Business" ;
-  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)" ;
-  :wordnet_noun_synset "00925258", "00910607", "08019967", "08077282", "08083913", "08085624", "08085760" .
+  rdfs:label "Manufacturing Business"@en ;
+  :definition "Involved with 'the production of goods through the use of labor, machines, tools, and chemical or biological processing or formulation ... The term may refer to a range of human activity, from handicraft to high-tech, but it is most commonly applied to industrial design, in which raw materials from the primary sector are transformed into finished goods on a large scale. Such goods may be sold to other manufacturers for the production of other more complex products (such as aircraft, household appliances, furniture, sports equipment or automobiles), or distributed via the tertiary industry to end users and consumers (usually through wholesalers, who in turn sell to retailers, who then sell them to individual customers). Manufacturing engineering, or the manufacturing process, are the steps through which raw materials are transformed into a final product. The manufacturing process begins with the product design, and materials specification from which the product is made. These materials are then modified through manufacturing processes to become the required part.' (https://en.wikipedia.org/w/index.php?title=Manufacturing&oldid=1013964157)"@en ;
+  :wordnet_noun_synset "08077282", "08083913", "08085624", "08085760" .
 
 :MilitaryAndSecurityBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Military and Security Related Business" ;
-  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel and/or the armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these." ;
+  rdfs:label "Military and Security Related Business"@en ;
+  :definition "Involved with the protection of (online and physical) locations, goods or persons via services and personnel and/or the armed forces, troops/officers/enlisted/non-coms, equipment and research/consulting related to these."@en ;
   :wordnet_noun_synset "01112538", "08227903" .
 
 :MultiIndustryBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Multiple Industries Business" ;
-  :definition "Involved with more than one line of business such as an industrial conglomerate." ;
-  :noun_synonym "conglomerate" ;
+  rdfs:label "Multiple Industries Business"@en ;
+  :definition "Involved with more than one line of business such as an industrial conglomerate."@en ;
   :wordnet_noun_synset "08075773" .
 
 :ProvisionOfServicesBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Provision of Services Business" ;
-  :definition "Involved with the sale of services to a business, person or group." ;
-  :example "Examples are companies or individuals that provide education/training or IT/programming services." ;
-  :wordnet_noun_synset "01103234", "01105693", "00586211", "08086178", "08086463", "08090536", "08090680" .
+  rdfs:label "Provision of Services Business"@en ;
+  :definition "Involved with the sale of services to a business, person or group."@en ;
+  :example "Examples are companies or individuals that provide education/training or IT/programming services."@en ;
+  :wordnet_noun_synset "01105693", "00586211", "08086178", "08086463", "08090536" .
 
 :PublishingAndMediaBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Publishing and Media Business" ;
-  :definition "Involved with the creation, production, marketing and distribution of written and visual material." ;
-  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc." ;
-  :wordnet_noun_synset "01103863", "01104341", "00612961", "00613161", "00926528", "08018457", "08019615" .
+  rdfs:label "Publishing and Media Business"@en ;
+  :definition "Involved with the creation, production, marketing and distribution of written and visual material."@en ;
+  :example "Examples are activities related to creating and releasing books, journals, magazines, periodicals, blogs, newspapers, etc."@en ;
+  :wordnet_noun_synset "00612961", "00613161", "00926528", "08018457", "08019615" .
 
 :RawMaterialProcessingAndPreparationBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Raw Material Processing and Preparation Business" ;
-  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)" ;
-  :example "Examples are mining/miners, drilling/boring/reaming, logging/loggers, fishermen and processing such as distillation and refinery." ;
-  :wordnet_noun_synset "00455145", "00924141", "00924782", "00924944", "08020061", "08020281" .
+  rdfs:label "Raw Material Processing and Preparation Business"@en ;
+  :definition "Involved with substances 'used to produce goods, finished products, energy, or intermediate materials that are feedstock for future finished products. As feedstock, the term connotes these materials are bottleneck assets and are required to produce other products. The term raw material denotes materials in unprocessed or minimally processed states; e.g., raw latex, crude oil, cotton, coal, raw biomass, iron ore, air, logs, water, or \"any product of agriculture, forestry, fishing or mineral in its natural form or which has undergone the transformation required to prepare it for international marketing in substantial volumes\".' (https://en.wikipedia.org/w/index.php?title=Raw_material&oldid=1014281791)"@en ;
+  :example "Examples are mining, drilling/boring/reaming, logging, fishing and processing such as distillation and refinery."@en ;
+  :wordnet_noun_synset "00455145", "08020061", "08020281" .
 
 :RealEstateBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Real Estate Business" ;
-  :definition "Involved with the maintenance and sale of property/land and buildings." ;
-  :wordnet_noun_synset "10529671", "01103132" .
+  rdfs:label "Real Estate Business"@en ;
+  :definition "Involved with the maintenance and sale of property/land and buildings."@en ;
+  :wordnet_noun_synset "01103132" .
 
 :ReligiousBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Religious/Religion Related Business" ;
-  :definition "Involved with activities related to spirituality, faith and worship." ;
-  :example "Examples include churches and similar organizations, clergy (priests/pastors, nuns, monks, deacons, ...) and shaman, etc." ;
-  :noun_synonym "theology" ;
-  :wordnet_noun_synset "00615260", "08130409" .
+  rdfs:label "Religious/Religion Related Business"@en ;
+  :definition "Involved with activities related to spirituality, faith and worship."@en ;
+  :example "Examples include churches and similar organizations."@en ;
+  :wordnet_noun_synset "08130409", "03959692" .
 
 :RetailBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Retail Business" ;
-  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)." ;
-  :example "Examples are stores, malls, groceries, etc. and their workers (check-out clerk, bagger, retail associate, buyer, seller, ...)." ;
-  :wordnet_noun_synset "01103019", "04209460", "01103019" .
+  rdfs:label "Retail Business"@en ;
+  :definition "Involved with the sale of goods on a small scale to end-users and direct consumers (versus for resale)."@en ;
+  :example "Examples are stores, malls, groceries, etc."@en ;
+  :wordnet_noun_synset "01103019", "04209460" .
 
 :StorageBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Storage Business" ;
-  :definition "A business related to the storing of goods, materials, foods, etc." ;
+  rdfs:label "Storage Business"@en ;
+  :definition "A business related to the storing of goods, materials, foods, etc."@en ;
   :wordnet_noun_synset "00813322" .
 
-:TechnologyBusiness a owl:Class ;
+:ScienceAndTechnologyBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Technology Business" ;
-  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)" ;
-  :noun_synonym "research and development", "scientist" ;
-  :wordnet_noun_synset "00951435", "10580065", "09638837", "06008975" . 
+  rdfs:label "Science and Technology Business"@en ;
+  :definition "Involved with using knowledge (especially scientific knowledge) and incorporating it in machines. 'Systems (e.g. machines) applying technology by taking an input, changing it according to the system's use, and then producing an outcome are referred to as technology systems or technological systems.' (https://en.wikipedia.org/w/index.php?title=Technology&oldid=1051447059)"@en .
 
 :TradeAndCraft a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Trade and Craft" ;
-  :definition "Involved with making items or performing a job requiring skill and training." ;
-  :noun_synonym "craftsman", "artisan", "journeyman" ;
-  :wordnet_noun_synset "00607485", "09994178" .
+  rdfs:label "Trade and Craft"@en ;
+  :definition "Involved with making items or performing a job requiring skill and training."@en .
 
 :TransportBusiness a owl:Class ;
   rdfs:subClassOf :LineOfBusiness ;
-  rdfs:label "Transport Related Business" ;
-  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc." ;
-  :noun_synonym "truck driver", "rail worker", "dock worker" ;
-  :wordnet_noun_synset "01107164", "01110658", "01113655", "01113857", "08020159", "08020531", "08020652", "08091976" .
+  rdfs:label "Transport Related Business"@en ;
+  :definition "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc."@en ;
+  :wordnet_noun_synset "01107164", "01113655", "01113857", "08020159", "08020531", "08020652", "08091976" .
 
 
 ########################################################################
@@ -432,150 +380,123 @@
 
 :AntiAbortion a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Anti-Abortion Movement" ;
-  :noun_synonym "anti-abortionist" .
+  rdfs:label "Anti-Abortion Movement"@en .
 
 :Authoritarianism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Authoritarianism" ; 
-  :noun_synonym "absolutism", "absolutist", "monarchy", "monarchist", "dictator", "stratocracy", "despotism", "despot", "autocracy", "autocrat", "imperialism", "imperialist", "colonialism", "expansionism", "oligarchy", "oligarch", "plutocracy", "plutocrat", "totalitarianism", "kraterocracy" .
+  rdfs:label "Authoritarianism"@en .
 
 :Centrism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Centrist" ; 
-  :noun_synonym "centralist", "syncretic politics" .
+  rdfs:label "Centrism"@en .
 
 :Communitarianism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Communitarianism" ; 
-  :noun_synonym "socialism", "socialist" .
+  rdfs:label "Communitarianism"@en .
 
 :Communism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Communism" ; 
-  :noun_synonym "communist", "leninism", "leninist", "marxism", "marxist", "trotskyism", "trotskyist", "autonomism", "autonomist", "ergatocracy" .
+  rdfs:label "Communism"@en .
 
 :Conservatism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Conservatism" ; 
-  :noun_synonym "conservative", "alt-right", "alt-lite", "right-wing", "alt right", "alt lite", "right wing", "illiberalism", "illiberalist" .
+  rdfs:label "Conservatism"@en .
 
 :Corporatism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Corporatism" ; 
-  :noun_synonym "corporatist" .
+  rdfs:label "Corporatism"@en .
 
 :Democracy a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Democracy" ; 
-  :noun_synonym "democrat" .
+  rdfs:label "Democracy"@en .
 
 :Environmentalism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Environmentalism" ; 
-  :noun_synonym "environmentalist" .
+  rdfs:label "Environmentalism"@en .
+
+:Expansionism a owl:Class ;
+  rdfs:subClassOf :PoliticalIdeology ;
+  rdfs:label "Expansionism"@en .
 
 :FacismAndNazism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Facism and Nazism" ; 
-  :noun_synonym "fascist", "nazi", "aryanism", "national populist", "national populism" .
+  rdfs:label "Facism and Nazism"@en .
 
 :Feminism a owl:Class ;
   rdfs:subClassOf :IdentityPolitics ;
-  rdfs:label "Feminism" ;
-  :noun_synonym "feminist" .
+  rdfs:label "Feminism"@en .
 
 :Humanism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Humanism" ;
-  :noun_synonym "humanist", "transhumanism", "transhumanist" .
+  rdfs:label "Humanism"@en .
 
 :IdentityPolitics a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Identity Politics" .
+  rdfs:label "Identity Politics"@en .
 
 :LGBTRights a owl:Class ;
   rdfs:subClassOf :IdentityPolitics ;
-  rdfs:label "LGBT Rights Movement" .
+  rdfs:label "LGBT Rights Movement"@en .
 
 :Liberalism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Liberalism" ;
-  :noun_synonym "liberal", "left-wing", "far-left", "left wing", "far left" .
+  rdfs:label "Liberalism"@en .
 
 :Libertarianism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Libertarianism" ;
-  :noun_synonym "libertarian" .
+  rdfs:label "Libertarianism"@en .
 
 :Meritocracy a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Meritocracy" .
+  rdfs:label "Meritocracy"@en .
 
 :Nationalism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Nationalism" ;
-  :noun_synonym "nationalist", "zionist", "zionism" .
+  rdfs:label "Nationalism"@en .
 
 :PoliticalReligiousIdeology a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Political-Religious Ideology" ;
-  :noun_synonym "freemasonry", "freemason", "secularism", "secularist", "theocracy", "theocrat" .
+  rdfs:label "Political-Religious Ideology"@en .
 
 :Populism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Populism" ;
-  :noun_synonym "populist", "anti-austerity", "anti-consumerism", "activism", "activist", "anti-nuclear", "anti-corporate", "peace movement", "pacifism", "pacifist", "egalitarianism", "egalitarian", "labor movement", "labour movement", "occupy movememnt", "syndicalism", "syndicalist"  .
+  rdfs:label "Populism"@en .
 
 :Progressivism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Progressivism" ;
-  :noun_synonym "progressive" .
+  rdfs:label "Progressivism"@en .
 
 :Radicalism a owl:Class ;
   rdfs:subClassOf :PoliticalIdeology ;
-  rdfs:label "Radicalism" ; 
-  :noun_synonym "radical", "reactionary", "anarchism", "anarchist" .
-
-:Republican a owl:Class ;
-  rdfs:subClassOf :Conservatism ;
-  rdfs:label "Republican" .
+  rdfs:label "Radicalism"@en .
 
 :SeparatismAndSegregation a owl:Class ;
   rdfs:subClassOf :IdentityPolitics ;
-  rdfs:label "Separatism and Segregation" ;
-  :noun_synonym "separatist", "segregationism", "segregationist", "supremacism", "supremist", "anti-semitism", "anti-semite", "anti-zionism", "anti-zionist", "racism", "racist", "anti-Jew", "anti-Jewish" . 
+  rdfs:label "Separatism and Segregation"@en .
 
 
 ########################################################################
 # Datatype Properties
 ########################################################################
 
-:agent_aspect a owl:DatatypeProperty ;
-  rdfs:label "agent aspect" ;
+:aspect a owl:DatatypeProperty ;
+  rdfs:label "aspect"@en ;
   rdfs:domain :Agent ;
   rdfs:range xsd:string ;
-  :definition "Specifies a particular a particular ethnicity, religious belief or political ideology (as free form text) for an Agent. Note that the :has_agent_aspect property should also be specified, which maps the text to a predefined set of individuals." .
-  
-:gender a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "gender" ;
-  :definition "A string enumeration of the values, 'Female', 'Male', 'Agender' and 'Bigender'. Note that this property describe how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties can be associated with the :gender property." ;
-  rdfs:domain :Agent ;
-  rdfs:range [ a rdfs:Datatype ;
-               owl:oneOf ( "Female" "Male" "Agender" "Bigender" ) ] .
+  :definition "Specifies a particular ethnicity, belief or physical/mental characteristic (as free form text) for an Agent. Note that the :has_agent_aspect property may also be specified, which maps the text to a predefined set of individuals."@en .
 
 :line_of_business a owl:DatatypeProperty ;
-  rdfs:label "line of business" ;
+  rdfs:label "line of business"@en ;
   rdfs:domain :Agent ;
   rdfs:range xsd:string ;
-  :definition "Specifies a particular a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or OrganizationalEntity). Note that the :has_line_of_business property may also be specified, which maps the text to a set of predefined values." .
+  :definition "Specifies a particular type/line of business (as free form text) that is the focus of an Agent (typically a Person or OrganizationalEntity). Note that the :has_line_of_business property may also be specified, which maps the text to a set of predefined values."@en .
 
 :role a owl:DatatypeProperty ;
-  rdfs:label "role" ;
+  rdfs:label "role"@en ;
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :Affiliation :AppointmentAndNomination ) ] ;
   rdfs:range xsd:string ;
-  :definition "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values." .
+  :definition "Specifies a particular Role (as free-form text) that an Agent 'plays' in an Affiliation or to which an Agent is appointed/nominated. If defined in an Affiliation, the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :has_role property may also be specified for an Affiliation, which maps the text to a set of enumerated values."@en .
 
 
 ########################################################################
@@ -584,98 +505,110 @@
 
 :affiliated_agent a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_holder ;
-  rdfs:label "affiliated agent" ;
+  rdfs:label "affiliated agent"@en ;
   rdfs:domain :Affiliation ;
   rdfs:range :Agent ;
-  :definition "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property." .
+  :definition "References the Agent which is affiliated with some entity. While the Agent is identified using this property, the entity is defined using the :affiliated_with property."@en .
 
 :affiliated_location a owl:ObjectProperty ;
-  rdfs:label "affiliated location" ;
+  rdfs:label "affiliated location"@en ;
   rdfs:domain :Affiliation ;
   rdfs:range :Location ;
-  :definition "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property." ;
-  :example "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the organization." .
+  :definition "References a Location which is affiliated with some entity. While the Location is identified using this property, the entity (to which it is affiliated) is defined using the :affiliated_with property."@en ;
+  :example "An example of :affiliated_location is the headquarters of a company, where the headquarter building is associated with the organization."@en .
 
 :affiliated_with a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_topic ;
-  rdfs:label "affiliated with" ;
+  rdfs:label "affiliated with"@en ;
   rdfs:domain :Affiliation ;
-  :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property." .
+  :definition "References the entity to whom/which an Agent is associated. While the entity is identified using this property, the Agent is defined using the :affiliated_agent property."@en .
 
 :has_agent_aspect a owl:ObjectProperty ;
-  rdfs:label "has agent aspect" ;
+  rdfs:label "has agent aspect"@en ;
   rdfs:domain :Agent ;
   rdfs:range :AgentAspect ;
-  :definition "Indicates some facet, detail or characteristic of a Person, GeoPoliticalEntity or other Agent that serves to distinguish and/or describe them." .
+  :definition "Indicates some facet, detail or characteristic of a Person, GeoPoliticalEntity or other Agent that serves to distinguish and/or describe them. Note that this relationship is the inverse of :has_holder."@en .
 
 :has_citizenship a owl:ObjectProperty ;
-  rdfs:label "has citizenship" ;
+  rdfs:label "has citizenship"@en ;
   rdfs:domain :Person ;
   rdfs:range :Country ;
-  :definition "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship." .
+  :definition "Indicates that the Person holds/held citizenship in the referenced Country. Note that a Person's citizenship may evolve over time as a Person changes residence, marries, etc. The time when a Person holds a particular citizenship may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties are associated with the :has_citizenship property which references the Country of citizenship."@en .
 
 :has_context a owl:ObjectProperty ;
-  rdfs:label "has context" ;
+  rdfs:label "has context"@en ;
   rdfs:domain :Agent ;
   rdfs:range :EventAndState ;
-  :definition "References a particular occurrence or condition that provides context for the Agent." ;
-  :example "For example, a dishonest Person would be associated with the :DeceptionAndDishonesty class type using the :has_context property." .
+  :definition "References a particular occurrence or condition that provides context for the Agent."@en ;
+  :example "For example, a dishonest Person would be associated with the :DeceptionAndDishonesty class type using the :has_context property."@en .
+  
+:has_gender a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "has gender"@en ;
+  :definition "References one of the enumerated :EducationLevel values. Note that this property describes how Persons identify themselves, which can evolve over time - especially as a Person matures, undergoes medical procedures, etc. The time when an Agent identifies as a particular gender may be defined using an RDF* graph property. In this case, the :has_time property or its sub-properties can be associated with the :has_gender property."@en ;
+  rdfs:domain :Agent ;
+  rdfs:range :EducationLevel .
 
 :has_line_of_business a owl:ObjectProperty ;
-  rdfs:label "has line of business" ;
+  rdfs:label "has line of business"@en ;
   rdfs:domain :Agent ;
   rdfs:range :LineOfBusiness ;
-  :definition "References a particular type/line of business that is the focus of an Agent (typically a Person or OrganizationalEntity). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative" .
+  :definition "References a particular type/line of business that is the focus of an Agent (typically a Person or OrganizationalEntity). Note that the :line_of_business property may also be specified, indicating an unmapped value or the type of business using the specific vocabulary/text of the narrative"@en .
 
 :has_political_ideology a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has political ideology" ;
-  :definition "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent." ;
+  rdfs:label "has political ideology"@en ;
+  :definition "Used to indicate the particular ideology (such as authoritarianism or democracy) of a Location or Agent."@en ;
   rdfs:range :PoliticalIdeology .
 
 :has_role a owl:ObjectProperty ;
-  rdfs:label "has role" ;
+  rdfs:label "has role"@en ;
   rdfs:domain :Affiliation ;
   rdfs:range :Role ;
-  :definition "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative" .
+  :definition "References a particular Role that an Agent 'plays' in an Affiliation, where the Agent is identified using the :affiliated_agent property and the entity to which the Agent is affiliated is defined using the :affiliated_with property. Note that the :role property may also be specified, indicating an unmapped value or the role using the specific vocabulary/text of the narrative"@en .
 
 
 ########################################################################
 # Individuals
 ########################################################################
 
+:enum:Androgynous a :GenderValue ;
+  rdfs:label "Androgynous"@en .
+
 :enum:CompletedDoctoralEducation a :EducationLevel ;
-  rdfs:label "Completed Doctoral Education" .
+  rdfs:label "Completed Doctoral Education"@en .
 
 :enum:CompletedGraduateEducation a :EducationLevel ;
-  rdfs:label "Completed Graduate Education" .
-
-:enum:CompletedPrimaryEducation a :EducationLevel ;
-  rdfs:label "Completed Primary Education" .
-
-:enum:CompletedSecondaryEducation a :EducationLevel ;
-  rdfs:label "Completed Secondary Education" .
+  rdfs:label "Completed Graduate Education"@en .
 
 :enum:CompletedUndergraduateEducation a :EducationLevel ;
-  rdfs:label "Completed Undergraduate Education" .
+  rdfs:label "Completed Undergraduate Education"@en .
+
+:enum:DoctoralEducation a :EducationLevel ;
+  rdfs:label "Doctoral Education"@en .
+
+:enum:Female a :GenderValue ;
+  rdfs:label "Female"@en .
+
+:enum:GraduateEducation a :EducationLevel ;
+  rdfs:label "Graduate Education"@en .
+
+:enum:Male a :GenderValue ;
+  rdfs:label "Male"@en .
 
 :enum:NoEducation a :EducationLevel ;
-  rdfs:label "No Education" .
+  rdfs:label "No Education"@en .
+
+:enum:Nonbinary a :GenderValue ;
+  rdfs:label "Nonbinary"@en .
 
 :enum:PostDoctoralEducation a :EducationLevel ;
-  rdfs:label "Post-Doctoral Education" .
+  rdfs:label "Post-Doctoral Education"@en .
 
-:enum:SomeDoctoralEducation a :EducationLevel ;
-  rdfs:label "Some Doctoral Education" .
+:enum:PrimarySchoolEducation a :EducationLevel ;
+  rdfs:label "Primary School Education"@en .
 
-:enum:SomeGraduateEducation a :EducationLevel ;
-  rdfs:label "Some Graduate Education" .
+:enum:SecondarySchoolEducation a :EducationLevel ;
+  rdfs:label "Secondary School Education"@en .
 
-:enum:SomePrimaryEducation a :EducationLevel ;
-  rdfs:label "Some Primary Education" .
-
-:enum:SomeSecondaryEducation a :EducationLevel ;
-  rdfs:label "Some Secondary Education" .
-
-:enum:SomeUndergraduateEducation a :EducationLevel ;
-  rdfs:label "Some Undergraduate Education" .
+:enum:UndergraduateEducation a :EducationLevel ;
+  rdfs:label "Undergraduate Education"@en .

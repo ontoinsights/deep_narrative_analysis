@@ -77,13 +77,15 @@ def _get_chunks(verb: Token, connector: Union[Token, None], chunk_sentence: Span
     if len(subj2) or subj_texts:
         # Yes ... Separate clauses
         # Get the tokens in sentence related to the 'other' verb's subtree
+        # Future: Should other PUNCT be added to the chunk output?
         seen = [ww for ww in verb.subtree if (
-                (ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or
+                (ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',' or ww.lemma_ == '%')) or
                 not ((ww.dep_ == 'dobj' and ww.pos_ == 'PRON') or ww.pos_ == 'PUNCT'))]
         seen_chunk = ' '.join([ww.text for ww in seen]).strip()
         seen_chunk = seen_chunk.replace(' .', empty_string) if seen_chunk.endswith(' .') else seen_chunk
         unseen = [ww for ww in chunk_sentence if ww not in seen and
-                  ((ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',')) or ww.pos_ != 'PUNCT')]
+                  ((ww.pos_ == 'PUNCT' and (ww.lemma_ == '?' or ww.lemma_ == ',' or ww.lemma_ == '%'))
+                   or ww.pos_ != 'PUNCT')]
         unseen_chunk = ' '.join([ww.text for ww in unseen]).strip()
         unseen_chunk = unseen_chunk.replace(' .', empty_string) if unseen_chunk.endswith(' .') else unseen_chunk
         if connector:

@@ -7,7 +7,7 @@ import uuid
 from dna.create_noun_turtle import create_agent_ttl, create_norp_ttl
 from dna.database import query_database
 from dna.get_ontology_mapping import get_agent_or_loc_class
-from dna.queries import query_match_noun
+from dna.queries import query_match_noun, query_match_noun_nsyns
 from dna.query_sources import get_wikidata_labels, get_wikipedia_description
 from dna.utilities_and_language_specific import check_name_gender, empty_string, ontologies_database, \
     dna_prefix, underscore
@@ -63,11 +63,10 @@ def _check_if_agent_is_known(agent_text: str, agent_type: str, alet_dict: dict) 
     return agent_type, empty_string
 
 
-def _get_agent_iri_and_ttl(agent_text: str, agent_type: str, alet_dict: dict,
-                           use_sources: bool) -> (str, str, str, list):
+def _get_agent_ttl(agent_text: str, agent_type: str, alet_dict: dict, use_sources: bool) -> (str, str, str, list):
     """
-    Handle agent names identified by spaCy's NER, stored in the sentence dictionary with the
-    key, 'AGENTS'.
+    Create Turtle for a new agent as identified by spaCy and stored in the sentence dictionary
+    with the key, 'AGENTS'.
 
     :param agent_text: Text identifying the agent
     :param agent_type: String holding the NER type identified by spaCy
@@ -103,7 +102,7 @@ def _get_agent_iri_and_ttl(agent_text: str, agent_type: str, alet_dict: dict,
     if agent_type.endswith('NORP'):
         agent_iri = f'{agent_iri}_{str(uuid.uuid4())[:13]}'
         return agent_type, agent_class, agent_iri, \
-            create_norp_ttl(agent_text, agent_type, agent_iri, wiki_details, wiki_url, labels)
+            create_norp_ttl(agent_text, agent_type, agent_iri, empty_string, wiki_details, wiki_url, labels)
     return agent_type, agent_class, agent_iri, \
         create_agent_ttl(agent_iri, labels, agent_type, agent_class, wiki_details, wiki_url, family_names)
 
@@ -185,13 +184,22 @@ def get_sentence_agents(sent_dict: dict, alet_dict: dict, last_nouns: list, use_
             # Need to define the Turtle for a new agent
             # Is the Agent already defined in the ontology?
             insts = query_database('select', query_match_noun.replace('keyword', new_agent), ontologies_database)
-            if insts:
+            if len(insts) > 0 and 'owl#Class' not in insts[0]['type']['value']:
                 inst_result = insts[0]
-                agent_class = inst_result['class']['value']
                 agent_iri = inst_result['inst']['value'].replace(dna_prefix, ':')
+                agent_class = inst_result['type']['value'].replace(dna_prefix, ':')
+                # Get other synonyms
+                nsyn_results = query_database('select', query_match_noun_nsyns.replace('?inst', agent_iri),
+                                              ontologies_database)
+                agent_labels = []
+                for nsyn in nsyn_results:
+                    agent_labels.append(nsyn['nsyn']['value'])
+                known_agents = alet_dict['agents'] if 'agents' in alet_dict else []
+                known_agents.append([agent_labels, agent_type, agent_iri])
+                alet_dict['agents'] = known_agents
             else:
                 agent_type, agent_class, agent_iri, agent_ttl = \
-                    _get_agent_iri_and_ttl(new_agent, agent_type, alet_dict, use_sources)
+                    _get_agent_ttl(new_agent, agent_type, alet_dict, use_sources)
                 agents_turtle.extend(agent_ttl)
         else:
             agent_class = get_agent_or_loc_class(agent_type)

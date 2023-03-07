@@ -1,7 +1,7 @@
 # Patterns used in spaCy matching
 # Called by nlp.py
 
-from dna.utilities_and_language_specific import family_members, plural_family_members
+from dna.utilities_and_language_specific import family_members, lemma_be, plural_family_members
 
 # spaCy pattern matching for family names
 DEP = 'DEP'
@@ -39,7 +39,7 @@ names_members_pattern = [
 
 # For example, match 'her brother is Bob Smith.'
 member_verb_name_pattern = [
-    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': 'be'}},
+    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': lemma_be}},
     {LEFT_ID: 'verb_be', REL_OP: '>',
      RIGHT_ID: 'family_member', RIGHT_ATTRS: {DEP: 'nsubj', ORTH: {'IN': list(family_members.keys())}}},
     {LEFT_ID: 'verb_be', REL_OP: '>',
@@ -47,7 +47,7 @@ member_verb_name_pattern = [
 
 # For example, match 'her brothers are Bob, George and Paul Smith.'
 members_verb_names_pattern = [
-    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': 'be'}},
+    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': lemma_be}},
     {LEFT_ID: 'verb_be', REL_OP: '>',
      RIGHT_ID: 'family_members', RIGHT_ATTRS: {DEP: 'nsubj', ORTH: {'IN': plural_family_members}}},
     {LEFT_ID: 'verb_be', REL_OP: '>',
@@ -55,7 +55,7 @@ members_verb_names_pattern = [
 
 # For example, match 'Bob Jones is her brother'
 name_verb_member_pattern = [
-    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': 'be'}},
+    {RIGHT_ID: 'verb_be', RIGHT_ATTRS: {DEP: 'ROOT', 'LEMMA': lemma_be}},
     {LEFT_ID: 'verb_be', REL_OP: '>',
      RIGHT_ID: 'family_member', RIGHT_ATTRS: {DEP: 'attr', ORTH: {'IN': list(family_members.keys())}}},
     {LEFT_ID: 'verb_be', REL_OP: '>',

@@ -31,32 +31,35 @@ nlp = spacy.load('en_core_web_trf')
 nlp.tokenizer = custom_tokenizer(nlp)
 nlp.add_pipe('sentencizer')
 
-simple_subj_verb = "Mary went to the store."
-simple_multi_subj_verb = "Mary and John went to the store."
-simple_subj_verb_multi_obj = "Mary went to the store and library."
-compound_subj_multi_verb = "Mary went to the store and took the bus home."
-compound_pass_subj_multi_verb = "Mary was hit by a bus and went to the hospital."
-compound_multi_subj_multi_verb1 = "Mary and John went to the store and took the bus home."
-compound_multi_subj_multi_verb2 = "Mary and the injured John went to the store and took the bus home."
-compound_multi_subj_multi_verb3 = "The injured Mary and the healthy John went to the store and took the bus home."
-compound_multi_subj_multi_verb_conj = "Mary went to the store and John practiced guitar."
-compound_multi_subj_multi_verb_semi = "Mary went to the store; John practiced guitar."
-compound_while_clause = "While Mary reads comics, John reads the newspaper."
-compound_three_clauses = "While Mary reads comics, John reads the newspaper, but Bob only looks at his phone."
-compound_relcl = "I saw the book which you bought."
-compound_advcl = "Mary bought a dress while studying in Thailand."
-compound_advcl_conj = "Mary bought a dress while studying and traveling in Thailand."
-compound_advcl_because = "Because Mary was lonely, John bought her flowers."
-compound_relcl_advcl = "John mopped the floor with the dress Mary bought while studying in Thailand."
+simple_subj_verb = 'Mary went to the store.'
+simple_multi_subj_verb = 'Mary and John went to the store.'
+simple_subj_verb_multi_obj = 'Mary went to the store and library.'
+compound_percent = \
+    'Harriet Hageman, a water and natural-resources attorney who was endorsed by the former president, ' \
+    'won 66.3% of the vote to Ms. Cheney’s 28.9%, with 95% of all votes counted.'
+compound_subj_multi_verb = 'Mary went to the store and took the bus home.'
+compound_pass_subj_multi_verb = 'Mary was hit by a bus and went to the hospital.'
+compound_multi_subj_multi_verb1 = 'Mary and John went to the store and took the bus home.'
+compound_multi_subj_multi_verb2 = 'Mary and the injured John went to the store and took the bus home.'
+compound_multi_subj_multi_verb3 = 'The injured Mary and the healthy John went to the store and took the bus home.'
+compound_multi_subj_multi_verb_conj = 'Mary went to the store and John practiced guitar.'
+compound_multi_subj_multi_verb_semi = 'Mary went to the store; John practiced guitar.'
+compound_while_clause = 'While Mary reads comics, John reads the newspaper.'
+compound_three_clauses = 'While Mary reads comics, John reads the newspaper, but Bob only looks at his phone.'
+compound_relcl = 'I saw the book which you bought.'
+compound_advcl = 'Mary bought a dress while studying in Thailand.'
+compound_advcl_conj = 'Mary bought a dress while studying and traveling in Thailand.'
+compound_advcl_because = 'Because Mary was lonely, John bought her flowers.'
+compound_relcl_advcl = 'John mopped the floor with the dress Mary bought while studying in Thailand.'
 compound_relcl_advcl_conj = \
-    "John mopped the floor with the dress Mary bought while studying and traveling in Thailand."
+    'John mopped the floor with the dress Mary bought while studying and traveling in Thailand.'
 compound_news_text1 = \
-    "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, an outcome that was a " \
-    "priority for former President Donald Trump."
+    'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, an outcome that was a ' \
+    'priority for former President Donald Trump.'
 compound_news_text2 = \
-    "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, an outcome that was a " \
-    "priority for former President Donald Trump as he urged GOP voters to reject one of his most prominent " \
-    "critics on Capitol Hill."
+    'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, an outcome that was a ' \
+    'priority for former President Donald Trump as he urged GOP voters to reject one of his most prominent ' \
+    'critics on Capitol Hill.'
 compound_advcl_relcl_conj = 'Cheney said her opposition to former President Donald Trump was rooted in the ' \
                             'principles that members of congress are sworn to protect and that she well understood ' \
                             'the potential political consequences of opposing Trump.'
@@ -85,6 +88,13 @@ def test_simple_multi_subj_verb():
 def test_simple_subj_verb_multi_obj():
     new_sents = split_clauses(simple_subj_verb_multi_obj, nlp)
     assert new_sents[0] == simple_subj_verb_multi_obj[0:-1]
+
+
+def test_compound_percent():
+    new_sents = split_clauses(compound_percent, nlp)
+    assert new_sents[0] == '95 % of all votes counted'
+    assert new_sents[1] == 'Harriet Hageman , a water and natural-resources attorney who was endorsed by ' \
+                           'the former president , won 66.3 % of the vote to Ms. Cheney ’s 28.9 %'
 
 
 def test_compound_subj_multi_verb():

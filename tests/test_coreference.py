@@ -32,9 +32,9 @@ def test_sent1_alet():
     get_sentence_times(sent_dict, '', alet_dictionary, last_nouns, True)
     get_sentence_agents(sent_dict, alet_dictionary, last_nouns, True)
     assert alet_dictionary['events'] == []
-    assert len(alet_dictionary['locs']) == 1   # Because the country is already known to DNA
+    assert len(alet_dictionary['locs']) == 1      # Because the country is already known to DNA
     assert len(alet_dictionary['locs'][0][0]) == 2
-    assert len(alet_dictionary['agents']) == 6
+    assert len(alet_dictionary['agents']) == 6    # Liz Cheney, Cheneys, Donald Trump, Trumps, Capitol Hill, GOP
     agent_iris = []
     for agent in alet_dictionary['agents']:
         agent_iris.append(agent[2])

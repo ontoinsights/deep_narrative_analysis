@@ -4,7 +4,6 @@
 import uuid
 
 from dna.coreference_resolution import check_nouns
-from dna.create_specific_turtle import create_type_turtle
 from dna.query_ontology import check_subclass
 from dna.utilities_and_language_specific import add_unique_to_array, dna_prefix, empty_string, objects_string, \
     prep_to_predicate, prep_to_predicate_mod
@@ -81,11 +80,11 @@ def add_subj_obj_to_ttl(event_iri: str, subjs: list, objs: list, xcomp_root_proc
         else:
             ttl_list.append(f'{event_iri} :has_active_agent {subj_iri} .')
     for obj_text, obj_type, obj_mappings, obj_iri in objs:
-        if not xcomp_root_processing and f' {obj_iri}' in ttl_str:   # Check the obj is not already ref'ed in the ttl
+        if not xcomp_root_processing and f' {obj_iri}' in ttl_str:   # Check that the obj is not already in the ttl
             continue
         is_agent = False
         if 'PERSON' in obj_type or obj_type.endswith('GPE') or obj_type.endswith('ORG') \
-                or obj_type.endswith('NORP'):
+                or obj_type.endswith('NORP') or any(['Person' in obj_map for obj_map in obj_mappings]):
             is_agent = True
         if not is_agent:     # May not have a type, so have to check the class mappings
             for obj_map in obj_mappings:
@@ -212,8 +211,11 @@ def handle_xcomp_processing(xcomp_iri: str, root_iri: str, xcomp_dict: dict, xco
                 label = turtle_stmt.split('rdfs:label "')[1].split('" .')[0]
                 for verb, processing in xcomp_dict.items():
                     if 'xcomp >' in processing and verb in label:
-                        root_text = processing.split('/')[1].split()[0]
-                        label = label.replace(verb, f'{root_text} to {verb}')
+                        root_text = processing.split('/')[1].split(',')[0]
+                        if f' {verb} ' not in label:
+                            label = label.replace(verb, f'{root_text} to {verb} / {verb}')   # TODO: Non-English, 'to'
+                        else:
+                            label = label.replace(verb, f'{root_text} to {verb}')
                         new_ttl.append(f'{xcomp_iri} rdfs:label "{label}" .')
                         updated = True
                         break

@@ -4,7 +4,7 @@ from dna.nlp import parse_narrative
 text1 = 'While Mary exercised, John practiced guitar.'            # clauses
 text2 = 'George went along with the plan that Mary outlined.'     # clauses, multiple possibilities + verb, prt, prep
 text3 = 'Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during her concession speech ' \
-        'shortly after her loss to Trump-backed Republican challenger Harriet Hageman.'    # bug
+        'shortly after her loss to Trump-backed Republican challenger Harriet Hageman.'    # included based on bug
 text4 = 'Mary enjoyed being with her grandfather.'                # verb, xcomp, prep
 text5 = 'Mary can be with her grandfather on Tuesdays.'           # possibility
 text6 = 'I got tired of running.'                                 # verb, acomp, prep, pcomp
@@ -12,8 +12,8 @@ text7 = 'Jane is unable to tolerate smoking.'                     # verb, acomp,
 text8 = 'George put one over on Harry.'                           # verb, card obj, prt, prep
 text9 = 'Jane has no liking for broccoli.'                        # verb, neg obj
 text10 = 'The connector is compatible with the computer.'         # verb, acomp
-text11 = 'Jane is averse to broccoli.'                            # verb, acomp
-text12 = 'Sue is partial to pumpkin pie.'                         # verb, acomp
+text11 = 'Jane is averse to broccoli and kale.'                   # verb, multiple acomp
+text12 = 'Sue is an attorney and is unable to tolerate lies.'     # verb, multiple acomp
 text13 = 'Sue got hold of a bargain.'                             # verb, obj, prep
 text14 = 'John got rid of the debris.'                            # verb, auxpass, prep
 text15 = 'John looked the other way when it came to Mary.'        # verb, npadvmod, amod
@@ -36,6 +36,12 @@ text31 = 'She holds her sister in esteem.'                        # verb, prep +
 text32 = 'I bought this gift for my friend.'                      # for => has_recipient
 text33 = 'The robber escaped with the aid of the local police.'   # bug
 text34 = 'Jane paid no attention to the mouse.'                   # verb, neg + noun
+text35 = 'Jane and John had a serious difference of opinion.'     # had + noun-prep-noun
+text36 = 'John was accused of breaking and entering.'             # be + idiom
+text37 = 'John escaped with the aid of the local police chief.'   # had + noun-prep-noun
+text38 = 'John liked to ski and to swim.'                         # verb, multiple xcomp
+text39 = 'Susan is with the police.'                              # be + with affiliation
+text40 = 'I am having coffee with breakfast.'                     # aux + have + obj + prep
 # TODO: EnvAndCondition always has_holder
 # TODO: NORP adjective for noun => affiliation
 # TODO: Loc adjective for noun => has_component
@@ -44,20 +50,24 @@ text34 = 'Jane paid no attention to the mouse.'                   # verb, neg + 
 
 def test_text1():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text1)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     # Following are shown in the output pasted below
     assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :John' in ttl_str
     assert ':has_topic :guitar_' in ttl_str
     assert ':has_topic :guitar_' in ttl_str
     assert 'a :MusicalInstrument' in ttl_str
-    assert 'a :BodyMovement, :HealthAndDiseaseRelated' in ttl_str      # Exercised
+    assert 'a :AlternativeCollection' in ttl_str                       # Exercised or utilized
+    assert ':has_member :BodyMovement, :HealthAndDiseaseRelated' in ttl_str      # Exercised
+    assert ':has_member :UtilizationAndConsumption' in ttl_str                   # Utilized
     assert 'a :LearningAndEducation' in ttl_str
     # Output:
     # :Chunk_9b821aee-5e44 a :Chunk ; :offset 1 .
     # :Chunk_9b821aee-5e44 :text "Mary exercised" .
     # :Chunk_9b821aee-5e44 :describes :Event_099a1378-81ba .
-    # :Event_099a1378-81ba a :BodyMovement, :HealthAndDiseaseRelated .
+    # :Event_099a1378-81ba a :AlternativeCollection ; :text "exercise" .
+    # :Event_099a1378-81ba :has_member :BodyMovement, :HealthAndDiseaseRelated .
+    # :Event_099a1378-81ba :has_member :UtilizationAndConsumption .
     # :Event_099a1378-81ba :has_active_agent :Mary .
     # :Event_099a1378-81ba rdfs:label "Mary exercised" .
     # :Chunk_3071bb08-3279 a :Chunk ; :offset 2 .
@@ -73,14 +83,16 @@ def test_text1():
 
 def test_text2():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text2)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     # Following are shown in the output pasted below
     assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :George' in ttl_str
     assert ':has_topic :plan_' in ttl_str
     assert ttl_str.count(':has_topic :plan_') == 2
-    assert 'a :Agreement' in ttl_str                  # Go along with
-    assert 'a :AssertionAndDeclaration' in ttl_str    # Outline
+    assert 'a :AlternativeCollection' in ttl_str                         # Go along with
+    assert ':has_member :MovementTravelAndTransportation' in ttl_str     # Possible alternative
+    assert ':has_member :Agreement' in ttl_str
+    assert 'a :AssertionAndDeclaration' in ttl_str                       # Outline
     # Output:
     # :Chunk_1393cbd6-7367 a :Chunk ; :offset 1 .
     # :Chunk_1393cbd6-7367 :text "Mary outlined the plan" .
@@ -103,7 +115,7 @@ def test_text2():
 
 def test_text3():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text3)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     assert ':Harriet_Hageman' in ttl_str and ':Liz_Cheney' in ttl_str and ':Abraham_Lincoln' in ttl_str
     # Following are shown in the output pasted below
@@ -130,24 +142,47 @@ def test_text3():
 
 def test_text4():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text4)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert False
-    # TODO: Define assertions
+    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :grandfather' in ttl_str
+    assert 'a :DelightAndHappiness' in ttl_str and 'a :MeetingAndEncounter' in ttl_str
+    # Output:
+    # :Chunk_e9e14a01-40dd :text "Mary enjoyed being with her grandfather" .
+    # :grandfather_0db0f775_6d96 :gender "Male" .
+    # :grandfather_0db0f775_6d96 a :Person .
+    # :grandfather_0db0f775_6d96 rdfs:label "grandfather" .
+    # :Event_ecf200ec-83d4 :has_active_agent :grandfather_0db0f775_6d96 .
+    # :Event_ecf200ec-83d4 a :MeetingAndEncounter .
+    # :Event_ecf200ec-83d4 a :DelightAndHappiness .
+    # :Event_ecf200ec-83d4 :has_active_agent :Mary .
+    # :Event_ecf200ec-83d4 rdfs:label "Mary enjoyed to be / being with her grandfather" .
+    # :Chunk_e9e14a01-40dd :describes :Event_ecf200ec-83d4 .
 
 
 def test_text5():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text5)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
-    print(ttl_str)
-    # TODO: Define assertions
+    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :grandfather' in ttl_str
+    assert 'a :OpportunityAndPossibility' in ttl_str      # 'can'
+    assert 'a :MeetingAndEncounter' in ttl_str
+    # Output:
+    # :Event_df51d93b-f5d5 :has_time :PiT_DayTuesday .
+    # TODO: Repeating sequence, 'on Tuesdays'
+    # :grandfather_8e115e79_d60f :gender "Male" .
+    # :grandfather_8e115e79_d60f a :Person .
+    # :grandfather_8e115e79_d60f rdfs:label "grandfather" .
+    # :Event_df51d93b-f5d5 :has_active_agent :grandfather_8e115e79_d60f .
+    # :Event_df51d93b-f5d5 a dna:OpportunityAndPossibility .
+    # :Event_df51d93b-f5d5 a :MeetingAndEncounter .
+    # :Event_df51d93b-f5d5 :has_active_agent :Mary .
+    # :Event_df51d93b-f5d5 rdfs:label "Mary can be with her grandfather" .
+    # :Chunk_e9f09b9c-ac86 :describes :Event_df51d93b-f5d5 .
 
 
 def test_text6():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text6)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -155,7 +190,7 @@ def test_text6():
 
 def test_text7():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text7)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -163,7 +198,7 @@ def test_text7():
 
 def test_text8():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text8)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -171,7 +206,7 @@ def test_text8():
 
 def test_text9():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text9)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -179,7 +214,7 @@ def test_text9():
 
 def test_text10():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text10)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -187,7 +222,7 @@ def test_text10():
 
 def test_text11():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text11)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -195,7 +230,7 @@ def test_text11():
 
 def test_text12():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text12)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -203,7 +238,7 @@ def test_text12():
 
 def test_text13():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text13)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -211,7 +246,7 @@ def test_text13():
 
 def test_text14():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text14)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -219,7 +254,7 @@ def test_text14():
 
 def test_text15():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text15)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -227,7 +262,7 @@ def test_text15():
 
 def test_text16():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text16)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -235,7 +270,7 @@ def test_text16():
 
 def test_text17():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text17)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -243,7 +278,7 @@ def test_text17():
 
 def test_text18():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text18)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -251,7 +286,7 @@ def test_text18():
 
 def test_text19():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text19)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -259,7 +294,7 @@ def test_text19():
 
 def test_text20():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text20)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -267,7 +302,7 @@ def test_text20():
 
 def test_text21():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text21)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -275,7 +310,7 @@ def test_text21():
 
 def test_text22():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text22)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -283,7 +318,7 @@ def test_text22():
 
 def test_text23():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text23)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -291,7 +326,7 @@ def test_text23():
 
 def test_text24():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text24)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -299,7 +334,7 @@ def test_text24():
 
 def test_text25():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text25)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -307,7 +342,7 @@ def test_text25():
 
 def test_text26():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text26)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -315,7 +350,7 @@ def test_text26():
 
 def test_text27():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text27)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -323,7 +358,7 @@ def test_text27():
 
 def test_text28():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text28)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -331,7 +366,7 @@ def test_text28():
 
 def test_text29():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text29)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -339,7 +374,7 @@ def test_text29():
 
 def test_text30():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text30)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -347,7 +382,7 @@ def test_text30():
 
 def test_text31():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text31)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -355,7 +390,7 @@ def test_text31():
 
 def test_text32():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text32)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -363,7 +398,7 @@ def test_text32():
 
 def test_text33():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text33)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions
@@ -371,7 +406,61 @@ def test_text33():
 
 def test_text34():
     sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text34)
-    success, graph_ttl = create_graph(sent_dicts, family_dict, '', False, False)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text35():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text35)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text36():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text36)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text37():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text37)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text38():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text38)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text39():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text39)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    # TODO: Define assertions
+
+
+def test_text40():
+    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text40)
+    print(sent_dicts)
+    success, graph_ttl = create_graph(sent_dicts, family_dict, '', True, False)
     ttl_str = str(graph_ttl)
     print(ttl_str)
     # TODO: Define assertions

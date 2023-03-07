@@ -9,6 +9,8 @@ base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 dna_dir = os.path.join(base_dir, 'dna')
 resources_dir = os.path.join(dna_dir, 'resources/')
 
+language_tag = '@en'
+
 # with open(image_file_logo, "rb") as im_file:
 #    encoded_logo = base64.b64encode(im_file.read())
 
@@ -30,7 +32,9 @@ ontologies_database = 'ontologies'
 concept_map = {'political': ':PoliticalIdeology',
                'ideology': ':PoliticalIdeology',
                'religio': ':ReligiousBelief',
-               'ethnic': ':Ethnicity'}
+               'ethnic': ':Ethnicity',
+               'nationality': 'Ethnicity',
+               'emotion': ':EmotionalResponse'}
 
 # TODO: Move texts to separate file for maintenance/extension by users
 # Times
@@ -59,15 +63,18 @@ indefinite_pronouns = {'all': 'plural', 'both': 'plural', 'few': 'plural', 'many
                        'none': 'zero', 'some': 'plural'}
 
 # Verbs
-aux_lemmas = ('be', 'do', 'have', 'become')
-aux_verb_dict = {'can': 'dna:OpportunityAndPossibility',
-                 'could': 'dna:OpportunityAndPossibility',
-                 'may': 'dna:OpportunityAndPossibility',
-                 'might': 'dna:OpportunityAndPossibility',
-                 'must': 'dna:CommandAndDemand',
-                 'should': 'dna:OpportunityAndPossibility,dna:AdviceAndRecommendation',
-                 'will': 'dna:IntentionAndGoal,dna:CommandAndDemand',
-                 'would': 'dna:OpportunityAndPossibility'}
+aux_lemmas = ('be', 'become', 'do', 'have')
+aux_be_lemmas = ('be', 'become')
+lemma_be = 'be'
+lemma_do = 'do'
+aux_verb_dict = {'can': ':OpportunityAndPossibility',
+                 'could': ':OpportunityAndPossibility',
+                 'may': ':OpportunityAndPossibility',
+                 'might': ':OpportunityAndPossibility',
+                 'must': ':CommandAndDemand',
+                 'should': ':OpportunityAndPossibility,dna:AdviceAndRecommendation',
+                 'will': ':IntentionAndGoal,dna:CommandAndDemand',
+                 'would': ':OpportunityAndPossibility'}
 
 # Prepositions
 # TODO: Other prepositions? Out? Without?
@@ -91,6 +98,8 @@ prep_to_predicate = {'about': ':has_topic',
                      'outside': ':has_location',
                      'to': ':has_topic|:has_recipient=>:Agent|:has_destination=>:Location|:has_latest_end=>:Time',
                      'with': ':has_topic|:has_instrument=>:Resource|:has_location=>:Location|:has_active_agent=>:Agent'}
+prep_after = 'after'
+prep_with = 'with'
 # Indicates the prepositional mapping which should be changed (as the dictionary key),
 #   and the value uses the format, event_state_class=>original_predicate>new_predicate
 prep_to_predicate_mod = {'to': ':AssessmentAndCharacterization=>:has_recipient>:has_topic'}
@@ -134,6 +143,9 @@ ner_dict = {'PERSON': ':Person',
             'EVENT': ':EventAndState'}
 ner_types = list(ner_dict.keys())
 ner_types.append('DATE')
+
+female_titles = ['Miss', 'Ms', 'Mrs']
+male_titles = ['Mr']
 
 ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
                 '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',

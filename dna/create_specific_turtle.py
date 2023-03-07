@@ -4,46 +4,79 @@
 from rdflib import Graph as RDFGraph
 import uuid
 
-from dna.database import query_class
-from dna.queries import query_subclass
-from dna.utilities_and_language_specific import dna_prefix, empty_string, ttl_prefixes
+from dna.database import query_class, query_database
+from dna.queries import query_if_subclass
+from dna.query_ontology import get_norp_emotion_or_lob
+from dna.query_sources import get_wikipedia_classification
+from dna.utilities_and_language_specific import dna_prefix, empty_string, ontologies_database, ttl_prefixes
 
 
-def _process_class_mapping(class_map: str, indiv_iri: str, process_verb: bool, is_alt_coll: bool) -> list:
+def _process_class_mapping(class_map: str, indiv_iri: str, is_alt_coll: bool) -> (list, str):
     """
-    Create the Turtle assigning an individual a type (rdf:type) based on the class mapping string. The
-    individual is identified by the indiv_iri. The details in the class mapping may require special
-    handling - such as when a noun map indicates both a Person and an Event (which indicates that
-    the Person should be associated with an event of that type).
+    Create the Turtle assigning a DNA class type (rdf:type) to an individual based on the class mapping
+    string. The individual is identified by the indiv_iri. The details in the class mapping may require
+    special handling - such as when a noun map indicates both a Person and an Event (which indicates that
+    the Person should be associated with an event of that type). For example, a 'civil servant' is
+    defined as 'urn:ontoinsights:dna:Person+urn:ontoinsights:dna:GovernmentAndPoliticsBusiness'.
+
+    Note that the association of context is only output when the mapping is for a noun that is the
+    object of the sentence.
 
     :param class_map: A possible type definition for an individual
     :param indiv_iri: A string/IRI identifying the individual
-    :param process_verb: Boolean indicating that this processing is for a verb mapping
-    :param is_alt_coll: Boolean indicating that this processing defines a collection of alternative
-                        mappings (an AlternativeCollection)
-    :return: A list of strings holding the Turtle type declaration
+    :param is_alt_coll: Boolean indicating that this processing is related to a collection of
+                        alternative mappings (an AlternativeCollection)
+    :return: A tuple consisting of two entries - 1) a list of strings holding the Turtle representation
+             and 2) a possibly revised class_map string
     """
     type_turtle = []
-    if not process_verb and '+' in class_map and \
-            ('dna:Person+' in class_map or 'dna:OrganizationalEntity' in class_map):
-        for detail in class_map.split('+'):    # Class names that define the type, '+' indicates multiple inheritance
-            if query_class(detail, query_subclass.replace('check', 'LineOfBusiness')):
-                class_map = class_map.replace(f'+{detail}', empty_string)
-                class_map = class_map.replace(detail, empty_string)
-                type_turtle.append(
-                   f'{indiv_iri} :has_line_of_business {detail.replace(dna_prefix, ":")} .')
-            elif query_class(detail, query_subclass.replace('check', 'EventAndState')):
-                class_map = class_map.replace(f'+{detail}', empty_string)
-                class_map = class_map.replace(detail, empty_string)
-                match_iri = f':PersonEvent_{str(uuid.uuid4())[:13]}'
-                type_turtle.append(
-                        f'{match_iri} a {detail.replace(dna_prefix, ":")} ; '
-                        f':has_actor {indiv_iri} .')
+    revised_map = class_map
+    if 'dna:Person+' in class_map:
+        for detail in class_map.split('+'):  # Class names that define the type, '+' = multiple inheritance
+            if ':Person' in detail or ':Collection' in detail:
+                continue
+            if ':enum:Female' in detail:
+                type_turtle.append(f'{indiv_iri} :has_gender :enum:Female .')
+                revised_map = revised_map.replace(f'+{dna_prefix}enum:Female', empty_string)
+                continue
+            elif ':enum:Male' in detail:
+                type_turtle.append(f'{indiv_iri} :has_gender :enum:Male .')
+                revised_map = revised_map.replace(f'+{dna_prefix}enum:Male', empty_string)
+                continue
+            revised_detail = detail.replace(dna_prefix, ":")
+            # TODO: Handle rdfs:comment contexts or aspects
+            if '-or-' in detail:
+                revised_map = revised_map.replace(f'+{detail}', empty_string).replace(detail, empty_string)
+                revised_detail = revised_detail.replace('-or-', ' or ')
+                type_turtle.append(f'{indiv_iri} rdfs:comment "Business and/or Event contexts, {revised_detail}" .')
+                continue
+            if query_database('select', query_if_subclass.replace('urnClass', detail)
+                              .replace('searchClass', 'Interval'), ontologies_database):
+                # Check Interval (such as 'OldAge')
+                revised_map = revised_map.replace(f'+{detail}', empty_string).replace(detail, empty_string)
+                if is_alt_coll:
+                    type_turtle.append(f'{indiv_iri} rdfs:comment "Agent aspect, {revised_detail} .')
+                else:
+                    type_turtle.append(f'{indiv_iri} :has_agent_aspect {revised_detail} .')
+                continue
+            if query_database('select', query_if_subclass.replace('urnClass', detail)
+                              .replace('searchClass', 'LineOfBusiness'), ontologies_database):
+                revised_map = revised_map.replace(f'+{detail}', empty_string).replace(detail, empty_string)
+                if is_alt_coll:
+                    type_turtle.append(f'{indiv_iri} rdfs:comment "LineOfBusiness context, {revised_detail}" .')
+                else:
+                    type_turtle.append(f'{indiv_iri} :has_line_of_business {revised_detail} .')
+                continue
+            if query_database('select', query_if_subclass.replace('urnClass', detail)
+                              .replace('searchClass', 'EventAndState'), ontologies_database):
+                revised_map = revised_map.replace(f'+{detail}', empty_string).replace(detail, empty_string)
+                type_turtle.append(f'{indiv_iri} rdfs:comment "EventAndState context, {revised_detail}" .')
+                continue
     if is_alt_coll:
-        type_turtle.append(f'{indiv_iri} :has_member {class_map.replace("+", ", ")} .')
+        type_turtle.append(f'{indiv_iri} :has_member {revised_map.replace("+", ", ").replace(dna_prefix, ":")} .')
     else:
-        type_turtle.append(f'{indiv_iri} a {class_map.replace("+", ", ")} .')
-    return type_turtle
+        type_turtle.append(f'{indiv_iri} a {revised_map.replace("+", ", ").replace(dna_prefix, ":")} .')
+    return type_turtle, revised_map
 
 
 def cleanup_unused_turtle(turtle: list) -> list:
@@ -60,26 +93,28 @@ def cleanup_unused_turtle(turtle: list) -> list:
     rdf_graph = RDFGraph()
     graph = rdf_graph.parse(data=' '.join(complete_turtle), format='text/turtle')
     unused_iris = []
-    # TODO: graph.subjects() should have a 'unique' positional argument but reports an error
-    subjects = [subj for subj in graph.subjects() if subj.startswith('urn:')]
-    objects = [obj for obj in graph.objects() if obj.startswith('urn:')]
+    subjects = [subj for subj in graph.subjects(unique=True) if subj.startswith('urn:')]
+    objects = [obj for obj in graph.objects(unique=True) if obj.startswith('urn:')]
     for subj in subjects:
         if subj not in objects:
             unused_iris.append(subj)
+    # Also check if a LoB, ideology, religion is referenced as an agent aspect AND as an object
+    new_turtle = []
     if unused_iris:
-        if len(unused_iris) == 1 and ':Sentence' in str(unused_iris[0]):   # The Sentence reference is always 'unused'
-            return turtle
-        new_turtle = []
-        for ttl in turtle:
-            found_unused = False
-            for unused in unused_iris:
-                if ':Sentence_' in unused or '_Affiliation' in unused:
-                    continue
-                if ttl.startswith(f':{str(unused.split(":")[-1])} '):
-                    found_unused = True
-                    continue
-            if not found_unused:
-                new_turtle.append(ttl)
+        # The Sentence reference is always 'unused'
+        if not (len(unused_iris) == 1 and ':Sentence' in str(unused_iris[0])):
+            new_turtle = []
+            for ttl in turtle:
+                found_unused = False
+                for unused in unused_iris:
+                    if ':Sentence_' in unused or '_Affiliation' in unused:
+                        continue
+                    if ttl.startswith(f':{str(unused.split(":")[-1])} '):
+                        found_unused = True
+                        continue
+                if not found_unused:
+                    new_turtle.append(ttl)
+    if new_turtle:
         return new_turtle
     else:
         return turtle
@@ -144,6 +179,7 @@ def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict,
                               meta-data graph of the repository
     :return: An array of Turtle statements
     """
+    # TODO: Quotation summary
     narr_iri = f':Narrative_{graph_id}'
     if for_default_graph:
         for quotation in quotations:
@@ -154,23 +190,63 @@ def create_quotations_ttl(graph_id: str, quotations: list, quot_dict: dict,
     return quotations_ttl
 
 
-def create_type_turtle(class_mappings: list, subj_iri: str, is_verb: bool, noun_text: str) -> list:
+def create_type_turtle(class_mappings: list, subj_iri: str, entity_text: str) -> (list, list):
     """
-    Create the Turtle assigning an individual a type (rdf:type). The individual is identified by the
-    subj_iri and the type(s) are identified by the class_mappings. Due to a word having multiple
+    Create the Turtle assigning a DNA class type (rdf:type) to an individual. The individual is identified
+    by the subj_iri and the type(s) are identified by the class_mappings. Due to a word having multiple
     possible meanings (which may be disambiguated in future code drops), a list of possible
     class types are provided as input.
 
     :param class_mappings: A list of possible types for an individual
     :param subj_iri: A string/IRI identifying the individual
-    :param is_verb: Boolean indicating that this processing is for a verb mapping
-    :param noun_text: A string holding the original text for a noun
-    :return: A list of strings holding the Turtle representation
+    :param entity_text: A string holding the original text for the entity (noun or verb)
+    :return: A tuple consisting of two arrays - 1) a list of strings holding the Turtle representation
+             and 2) a possibly revised class_mappings array
     """
+    if not class_mappings:
+        return [], []
+    revised_mappings = []
+    is_alt_coll = False
     if len(class_mappings) > 1:
-        ttl_list = [f'{subj_iri} a :AlternativeCollection ; :text "{noun_text}" .']
-        for class_map in class_mappings:
-            ttl_list.extend(_process_class_mapping(class_map, subj_iri, is_verb, True))
-        return ttl_list
+        is_alt_coll = True
+        ttl_list = [f'{subj_iri} a :AlternativeCollection ; :text "{entity_text}" .']
     else:
-        return _process_class_mapping(class_mappings[0], subj_iri, is_verb, False)
+        ttl_list = []
+    for class_map in class_mappings:
+        new_ttl, new_map = _process_class_mapping(class_map, subj_iri, is_alt_coll)
+        revised_mappings.append(new_map)
+        ttl_list.extend(new_ttl)
+    return ttl_list, revised_mappings
+
+
+def create_verb_norp_ttl(text_lemma: str, full_text: str, text_type: str, event_iri: str, ext_sources: bool) -> list:
+    """
+    Definition of the Turtle for sentence with the verb, "be", and an acomp or direct object - for
+    example, "I am angry."
+
+    :param text_lemma: String holding the acomp or direct object's lemma
+    :param full_text: String holding the acomp or direct object's full text
+    :param text_type: String holding the type of the text (e.g., 'PERSON', 'ADJ', 'PLURALNOUN', ...)
+    :param event_iri: A string identifying the sentence verb's IRI
+    :param ext_sources: Boolean indicating if external data sources, such as Wikipedia, can be used
+    :return: An array defining the Turtle for the event
+    """
+    norp_ttl = []
+    negated = True if text_type.startswith('NEG') else False
+    norp_type, norp_class = get_norp_emotion_or_lob(text_lemma)
+    if not norp_type and ext_sources:
+        norp_type = get_wikipedia_classification(text_lemma)
+        norp_class = norp_type
+    if norp_type == ':LineOfBusiness':
+        if not negated:   # If negated, then only know that the subject is NOT involved in a LoB; TODO: Handle
+            norp_ttl.append(f'subj :has_line_of_business {norp_class} ; :line_of_business "{full_text}" .')
+    elif norp_type == ':EmotionalResponse' or not norp_type:
+        norp_ttl.append(f'{event_iri} a :AttributeAndCharacteristic .')
+        if negated:
+            norp_ttl.append(f'{event_iri} :negation true .')
+        norp_ttl.append(f'{event_iri} :has_holder subj .')
+        norp_ttl.append(f'{event_iri} rdfs:label "Holder described as {full_text}" .')
+    else:
+        if not negated:   # If negated, then only know that the subject does NOT have a certain aspect; TODO: Handle
+            norp_ttl.append(f'subj :has_agent_aspect {norp_class} ; :agent_aspect "{full_text}" .')
+    return norp_ttl
