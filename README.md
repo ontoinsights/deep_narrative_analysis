@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 6 March 2023
+Updated 22 August 2023
 
 ## License
 Creative Commons 
@@ -10,7 +10,7 @@ CC BY 4.0
 
 ## Overview 
 
-Deep Narrative Analysis (DNA) is a toolset for analyzing narratives (biographical/autobiographical text, news articles, posts in Facebook and public online forums, etc.). It combines semantic, ontological and natural language technologies with machine learning to 1) create knowledge graphs encoding the details of the narratives and any background/contextual knowledge from online and structured data sources, and 2) perform inference, reasoning and statistical and network analyses. 
+Deep Narrative Analysis (DNA) is a toolset for analyzing narratives (biographical/autobiographical text, news articles, posts in Facebook and public online forums, etc.). It combines semantic, ontological and natural language technologies with AI/machine learning to 1) create knowledge graphs encoding the details of the narratives and any background/contextual knowledge from online and structured data sources, and 2) perform inference, reasoning and statistical and network analyses. 
 
 For more detailed information on DNA, see the paper, [_Translating Narratives to Knowledge Graphs_](./Translating%20Narratives%20to%20Knowledge%20Graphs.pdf).
 
@@ -37,11 +37,11 @@ The semantics (ontologies) and processing are captured in the directories of thi
   * The file, dna-ontology-tree.html, holds a downloadable version of the searchable tree view
 * _tools_ contains scripts used to generate the DNA ontology artifacts (the Protege-ready merge and tree output)
   * The create_merged_ontol_and_tree script uses a branched version of the robot.jar from the OBO ROBOT GitHub repository (https://github.com/ontodev/robot/tree/tree-view)
-* _notebooks_ holds the Jupyter notebooks used to scrape/parse web pages, create necessary pickle files for processing, perform initial parsing and analysis experiments on the narratives, etc.
+* _notebooks_ holds the Jupyter notebooks used to scrape/parse web pages, perform input and analysis experiments on the narratives, etc.
 * _yaml_ contains a file with the DNA Repositories RESTful API definintions
   * The APIs are also viewable, in a more human-friendly manner, at https://ontoinsights.github.io/dna-swagger/
 
-The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The code has been refactored to improve the parse of news articles, and enable more automated NL and ML analyses. A majority of the _dna_ python files are removed, as well as the domain-specific ontologies, in order to move to a new set of RESTful APIs and processing flow. In addition, the custom 'idiom' processing was removed (as it was too manually intensive) in lieu of using WordNet.
+The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The second version (using WordNet to include synonyms and do multi-language processing) is _archived with the tag, v0.2.0-wordnet_, in August 2023. The current code has being refactored to obtain news articles using an API, better capture semantics using ChatGPT, and enable more automated NL and ML analyses. 
 
 ## Environment and Execution
 
@@ -52,7 +52,6 @@ Necessary libraries are specified in the _requirements.txt_ file in the main dir
 These environment variables need to be set for the DNA application:
 
 * `PATH` needs to specifically include the GitHub project's dna directory (for ease of testing) and the Stardog install location
-* `TOKENIZERS_PARALLELISM = false` (to resolve warning from HuggingFace transformers and their use in spaCy)
 * `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set (regarding the endpoint for HTTP access, typically http://localhost:5820, and a valid user name/password, admin/admin by default)
 * Stardog execution details:
   * `STARDOG_HOME` should be set to the directory where the data and logs will be stored, as well as where the Stardog license key is available
