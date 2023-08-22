@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: January 29 2023
+# Last modified: July 11 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,6 +24,7 @@
 #  Added @en language tags to rdfs:labels, :definitions and :examples
 #  Removed all synonyms to language-specific modules
 #  Added Negation
+#  Updated Failure to FailureAndLoss, and Success to SuccessAndWinning
 ########################################################################
 
 
@@ -45,9 +46,9 @@
   :wordnet_noun_synset "00210792" ;
   :wordnet_verb_synset "00353480" .
 
-:Failure a owl:Class ;
+:FailureAndLoss a owl:Class ;
   rdfs:subClassOf :End ;
-  rdfs:label "Failure"@en ;
+  rdfs:label "Failure and Loss"@en ;
   :definition "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure time is known."@en ;
   :wordnet_noun_synset "00067036" ;
   :wordnet_verb_synset "02534046" .
@@ -65,9 +66,9 @@
   :wordnet_noun_synset "00236302" ;
   :wordnet_verb_synset "00346415", "00349400" .
 
-:Success a owl:Class ;
+:SuccessAndWinning a owl:Class ;
   rdfs:subClassOf :End ;
-  rdfs:label "Success"@en ;
+  rdfs:label "Success and Winning"@en ;
   :definition "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual end time is known."@en ;
   :wordnet_noun_synset "00064472", "00035910" ;
   :wordnet_verb_synset "02024442" .

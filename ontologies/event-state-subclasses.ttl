@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 27 2023
+# Last Modified: July 13 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -32,9 +32,13 @@
 #    AssessmentMeasurement
 #  For language independence, added AssessmentLevel and the :has_assessment 
 #    object property, and removed the :assessment data property
-#  Added ReligiousCeremony and Influence
+#  Added ReligiousCeremony
 #  Renamed RecreationEvent to RecreationAndSportEvent
 #  Updated the subclassing of Bribe
+#  Renamed AggressiveOrHostileAct to AggressiveCriminalOrHostileAct,
+#  Separated DemonstrationStrikeAndRally into DemonstrationAndStrike 
+#    (protest) and Rally
+#  Added TransferOfPower and subclassed Coup from that class
 ########################################################################
 
 
@@ -49,10 +53,10 @@
   :wordnet_noun_synset "00042637", "00043933" ;
   :wordnet_verb_synset "02215637", "00723361" .
 
-:AggressiveOrHostileAct a owl:Class ;
+:AggressiveCriminalOrHostileAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Aggressive or Hostile Act"@en ;
-  :definition "Unfriendly, offensive, damaging or belligerent actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
+  rdfs:label "Aggressive, Criminal or Hostile Act"@en ;
+  :definition "Unfriendly, offensive, damaging, belligerent and/or criminal actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "14004330", "00966680", "01224100", "07563271", "00734044" ;
   :wordnet_verb_synset "01793315", "01811281", "01827478", "02519655" .
 
@@ -130,7 +134,7 @@
   :wordnet_verb_synset "00105087", "00010047", "00099475", "01548665", "01835473", "01514338" . 
 
 :Bribe a owl:Class ;
-  rdfs:subClassOf :RewardAndCompensation, :Influence ;
+  rdfs:subClassOf :RewardAndCompensation ;
   rdfs:label "Bribe"@en ;
   :definition "Offering of money or thing(s) of value to induce a Person to perform certain actions."@en ;
   :wordnet_noun_synset "00777759" ;
@@ -187,7 +191,7 @@
   :wordnet_verb_synset "02421408", "02300511" .
 
 :Coup a owl:Class ;
-  rdfs:subClassOf :PoliticalEvent ;
+  rdfs:subClassOf :TransferOfPower ;
   rdfs:label "Coup"@en ;
   :definition "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent."@en ;
   :wordnet_noun_synset "01147528" ; 
@@ -214,11 +218,11 @@
   :wordnet_noun_synset "01068087", "01065863" ;
   :wordnet_verb_synset "00460731", "02644022", "02648898" . 
 
-:DemonstrationStrikeAndRally a owl:Class ;
+:DemonstrationAndStrike a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter, :DisagreementAndDispute ;
-  rdfs:label "Demonstration, Strike and Rally"@en ;
-  :definition "A meeting to support or object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
-  :wordnet_noun_synset "01180193", "08375259", "01170859", "01180685", "01245509", "01244711", "01181340" ;
+  rdfs:label "Demonstration and Strike"@en ;
+  :definition "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
+  :wordnet_noun_synset "01180193", "01170859", "01180685", "01245509", "01244711", "01181340" ;
   :wordnet_verb_synset "02417777", "02527482"  .
 
 :DisagreementAndDispute a owl:Class ;
@@ -248,10 +252,10 @@
   :wordnet_noun_synset "01203761", "00216181" ;
   :wordnet_verb_synset "02436167" .
 
-:Eating a owl:Class ;
+:EatingAndDrinking a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
-  rdfs:label "Eating"@en ;
-  :definition "An activity related to an animal's or Person's intake of food/nutrients."@en ;
+  rdfs:label "Eating and Drinking"@en ;
+  :definition "An activity related to an animal's or Person's intake of food/nutrients and/or liquids."@en ;
   :wordnet_noun_synset "00840028", "00839759" ;
   :wordnet_verb_synset "01168667", "01159300", "01203727" .
 
@@ -360,13 +364,6 @@
   :wordnet_noun_synset "00403343", "01053255" ; 
   :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282", "01450719" .
 
-:Influence a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Influence"@en ;
-  :definition "An activity intended to change the behavior or thinking of an Agent or that is a contributor or cause of some EventAndState."@en ;
-  :wordnet_noun_synset "00043049" ; 
-  :wordnet_verb_synset "00702806", "00768463" .
-
 :InformationHandling a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Information Handling"@en ;
@@ -460,6 +457,12 @@
   :definition "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property."@en ;
   :wordnet_noun_synset "01162829" ; 
   :wordnet_verb_synset "00202809", "02505278" . 
+
+:Rally a owl:Class ;
+  rdfs:subClassOf :MeetingAndEncounter, :FriendlyOrSupportiveAct ;
+  rdfs:label "Rally"@en ;
+  :definition "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
+  :wordnet_noun_synset "08375259" .
 
 :RecreationAndSportEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -576,6 +579,11 @@
   :wordnet_noun_synset "00223352", "10693108" ; 
   :wordnet_verb_synset "01327678" . 
 
+:TransferOfPower a owl:Class ;
+  rdfs:subClassOf :PoliticalEvent ;
+  rdfs:label "Transfer of Governmental Power"@en ;
+  :definition "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."@en .
+
 :UtilizationAndConsumption a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Utilization And Consumption"@en ;
@@ -606,7 +614,7 @@
   owl:members  ( :Acquisition :Avoidance ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :AggressiveOrHostileAct :FriendlyOrSupportiveAct ) .
+  owl:members  ( :AggressiveCriminalOrHostileAct :FriendlyOrSupportiveAct ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Agreement :DisagreementAndDispute ) .

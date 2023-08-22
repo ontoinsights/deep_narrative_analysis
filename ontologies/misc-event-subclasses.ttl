@@ -7,13 +7,13 @@
 
 ########################################################################
 # File defining semantics related to a variety of events that are 
-# sub-classes of Acquisition, Avoidance, AggressiveOrHostileAct, 
+# sub-classes of Acquisition, Avoidance, AggressiveCriminalOrHostileAct, 
 # FriendlyOrSupportiveAct and Cognition.
 # 
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 27 2023
+# Last Modified: July 12 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -27,7 +27,9 @@
 #  Reset change history
 #  Added @en language tags to rdfs:labels and :definitions
 #  Removed all synonyms to language-specific modules
-#  Added Influence to the subclassing of CoercionAndIntimidation
+#  Added ScienceAndTechnolog
+#  Renamed AggressiveOrHostileAct to AggressiveCriminalOrHostileAct,
+#    Rape to SexualAssaultAndRape
 ########################################################################
 
 
@@ -64,7 +66,7 @@
   :wordnet_verb_synset "00672179", "00958719", "00654571", "02170904", "00636134", "01028104", "00594278", "00683348", "00674352" .
 
 :AttackDamageAndAssault a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Attack, Damage and Assault"@en ;
   :definition "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "00403900", "00974725", "00982124", "00775311", "00217881" ;
@@ -106,14 +108,14 @@
   :wordnet_verb_synset "02470917", "02509666" .
 
 :CaptureAndSeizure a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct, :ChangeOfPossession ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct, :ChangeOfPossession ;
   rdfs:label "Capture and Seizure"@en ;
   :definition "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00089301", "00097789", "00776783", "00086039" ;
   :wordnet_verb_synset "01217985", "01215136", "01217701", "02210054" .
 
 :CoercionAndIntimidation a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct, :Influence ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Coercion and Intimidation"@en ;
   :definition "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear."@en ;
   :wordnet_noun_synset "00157632", "01224966", "05202630", "14019785" ; 
@@ -127,7 +129,7 @@
   :wordnet_verb_synset "02149298", "02163017", "00314788" . 
 
 :DeceptionAndDishonesty a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Deception and Dishonesty"@en ;
   :definition "An act of preventing something/someone from being known/found."@en ;
   :wordnet_noun_synset "00752488", "00750872", "00751748" ;
@@ -204,7 +206,7 @@
   :wordnet_verb_synset "01128786", "00463047", "02277394", "02308993" .
 
 :KnowledgeAndSkill a owl:Class ;
-  rdfs:subClassOf :Cognition ;
+  rdfs:subClassOf :Cognition, :Resource ;
   rdfs:label "Knowledge and Skill"@en ;
   :definition "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"@en ;
   :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569" ;
@@ -213,7 +215,7 @@
 :LearningAndEducation a owl:Class ;
   rdfs:subClassOf :Acquisition, :KnowledgeAndSkill ;
   rdfs:label "Learning and Education"@en ;
-  :definition "An act of acquiring or transferring knowledge and skills through study, repetition, experience, instruction, etc."@en ;
+  :definition "An act of acquiring or transferring knowledge and skills through study, repetition, experience and instruction. This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
   :wordnet_noun_synset "05760541", "00729939", "00798247", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
   :wordnet_verb_synset "00600349", "00599310", "00601387", "00608509", "00830768", "02392628", "02268987" .
 
@@ -241,7 +243,7 @@
 :Mistake a owl:Class ;
   rdfs:subClassOf :AssessmentAndCharacterization, :TroubleAndProblem ;
   rdfs:label "Mistake"@en ;
-  :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property."@en ;
+  :definition "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveCriminalOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property."@en ;
   :wordnet_noun_synset "05714576", "05902260", "04811700" ;
   :wordnet_verb_synset "00641140", "00621541", "00619438" .
 
@@ -273,15 +275,8 @@
   :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160", "10498913" ; 
   :wordnet_verb_synset "02211988", "02262178" .
 
-:Rape a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault ;
-  rdfs:label "Rape"@en ;
-  :definition "Any Event that involves sexual assault of a Person."@en ;
-  :wordnet_noun_synset "00775604" ;
-  :wordnet_verb_synset "02573434" . 
-
 :Resistance a owl:Class ;
-  rdfs:subClassOf :AggressiveOrHostileAct, :RefusalAndRejection ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct, :RefusalAndRejection ;
   rdfs:label "Resistance"@en ;
   :definition "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00203133", "01171807", "00966007", "00964240" ;
@@ -293,6 +288,12 @@
   :definition "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00782543", "00786699" ;
   :wordnet_verb_synset "02326737" . 
+
+:ScienceAndTechnology a owl:Class ;
+  rdfs:subClassOf :KnowledgeAndSkill ;
+  rdfs:label "Science and Technology"@en ;
+  :definition "Superclass for various areas of study 'of the structure and behavior of the physical world, especially by watching, measuring, and doing experiments, and the development of theories to describe the results of these activities' (https://dictionary.cambridge.org/us/dictionary/english/science)."@en ;
+  :wordnet_noun_synset "06008975", "06005806" .
 
 :SelfControl a owl:Class ;
   rdfs:label "Self-Control"@en ;
@@ -306,6 +307,13 @@
   :definition "An act involving one of the senses - sight, hearing, touch, taste and smell."@en ;
   :wordnet_noun_synset "05729937", "05660241" ;
   :wordnet_verb_synset "02129213", "02133754", "02174146", "02174335", "02110460", "02131823", "02168177", "02195992" . 
+
+:SexualAssaultAndRape a owl:Class ;
+  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:label "Sexual Assault and Rape"@en ;
+  :definition "Any Event that involves sexual assault of a Person."@en ;
+  :wordnet_noun_synset "00775604" ;
+  :wordnet_verb_synset "02573434" . 
 
 :Supervision a owl:Class ;
   rdfs:subClassOf :AttentionAndFocus ;

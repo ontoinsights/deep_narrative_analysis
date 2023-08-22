@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: January 5 2023
+# Last modified: July 11 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -31,6 +31,8 @@
 #  Changed the :terrain data property to :has_terrain (object property) and
 #    added the class, TerrainType
 #  Simplified the TerrainType enumerated values
+#  Added superclass of Resource to BuildingAndDwelling
+#  Added StateAndProvince and updated that Country is not an AdminDivision
 ########################################################################
 
 
@@ -62,7 +64,7 @@
   :wordnet_noun_synset "08647614" .
 
 :BuildingAndDwelling a owl:Class ;
-  rdfs:subClassOf :AnthropogenicFeature ;
+  rdfs:subClassOf :AnthropogenicFeature, :Resource ;
   rdfs:label "Building and Dwelling"@en ;
   :definition "A physical structure that usually is located in a single place, with a roof, walls, door(s) and (possibly) windows and other details. The specific location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en ;
   :wordnet_noun_synset "02916498", "03264208", "02918337", "03745009", "02729230" .
@@ -73,7 +75,7 @@
   :definition "One of the 7 large landmasses (Africa, Antarctica, Asia, Australia, Europe, North America, South America). The continents are instantiated using their GeoName idenfitiers in the file, geonames_countries.ttl."@en .
 
 :Country a owl:Class ;
-  rdfs:subClassOf :AdministrativeDivision ;
+  rdfs:subClassOf :GeopoliticalEntity ;
   rdfs:label "Country"@en ;
   :definition "Describes the government of a nation, the people living in the nation and the land area that is governed."@en ;
   :wordnet_noun_synset "08185877" .
@@ -147,6 +149,12 @@
   :definition "A point or site on/in the Earth defined relative to another, 'established' Location. The 'established' location is referenced using the :near property. The distance from the 'established' Location is defined using the property, :distance_meters (or its sub-properties if an exact distance is not known). The direction from the 'established' :Location is specified using the :has_direction property. Any of the properties can be omitted if not known or not applicable."@en ;
   :wordnet_noun_synset "08578618", "08578767", "08578888", "08578999", "08579120", "08579251", "08579372", "08579483", "13852504" .
 
+:StateAndProvince a owl:Class ;
+  rdfs:subClassOf :AdministrativeDivision ;
+  rdfs:label "State and Province"@en ;
+  :definition "A first-order administrative division that is identified as a state (such as California in the United States) or province (such as British Columbia in Canada)."@en ;
+  :wordnet_noun_synset "08671935" .
+
 :TerrainType a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Terrain Type"@en ;
@@ -175,7 +183,7 @@
 :admin_level a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "administrative level (1-5)"@en ;
   :definition "Integer (1-5) indicating a first-, second-, third-, fourth- or fifth-order administrative division."@en ;
-  :example "A first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a smaller country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc."@en ;
+  :example "A first-order administrative division is typically a state or province, but may be a territory or even a 'parish' in a small country. Other levels are defined below the first-order division - such as counties within states, districts within provinces, etc."@en ;
   rdfs:domain :AdministrativeDivision ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:integer ;

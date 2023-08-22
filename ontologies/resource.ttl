@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9 2020
-# Last modified: January 16 2023
+# Last modified: July 12 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -30,6 +30,7 @@
 #  Added @en language tags to rdfs:labels, :definitions and :examples
 #  Removed all synonyms to language-specific modules
 #  Corrected the spelling of PharmaceuticalAndMedicinal
+#  Added Product, Robot and Vaccine
 ########################################################################
 
 
@@ -230,6 +231,12 @@
   :definition "Entities that are naturally occurring, of high economic value and (usually) rare (due to scarcity or controlled release)."@en ;
   :wordnet_noun_synset "03601980", "13392662" .
 
+:Product a owl:Class ;
+  rdfs:subClassOf :Resource ;
+  rdfs:label "Product"@en ;
+  :definition "A thing that is available for sale."@en ;
+  :wordnet_noun_synset "06858649", "04014270" .
+
 :Publication a owl:Class ;
   rdfs:subClassOf :InformationSource ;
   rdfs:label "Publication"@en ;
@@ -246,6 +253,12 @@
   rdfs:subClassOf :WaterResource ;
   rdfs:label "Renewable Water"@en ;
   :definition "A RenewableWater Resource is water from 'precipitation, recharged ground water, and surface inflows from surrounding countries' (https://www.cia.gov/the-world-factbook/field/total-renewable-water-resources). When calculating the total RenewableWater resources available for a country, that total does not include water reserved (by international agreement) for upstream and downstream countries."@en .
+
+:Robot a owl:Class ;
+  rdfs:subClassOf :ComputingAndTelecommunicationDevice ;
+  rdfs:label "Robot"@en ;
+  :definition "A type of autonomous, computing machine that follows programmed instructions and may be able to sense its environment and make decisions."@en ;
+  :wordnet_noun_synset "02764397" .
 
 :Schedule a owl:Class ;
   rdfs:subClassOf :InformationSource ;
@@ -287,6 +300,12 @@
   rdfs:label "Toy and Gaming Item"@en ;
   :definition "An object used in play or in a game (for recreation or competition)."@en ;
   :wordnet_noun_synset "03419072", "03971038" .
+
+:Vaccine a owl:Class ;
+  rdfs:subClassOf :PharmaceuticalAndMedicinal ;
+  rdfs:label "Vaccine"@en ;
+  :definition "A type of pharmaceutical preparation that stimulates the body's immune response to a disease/infection."@en ;
+  :wordnet_noun_synset "04524830" .
 
 :Vehicle a owl:Class ;
   rdfs:subClassOf :Machine ;

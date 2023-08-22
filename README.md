@@ -31,7 +31,8 @@ The semantics (ontologies) and processing are captured in the directories of thi
   * All the posted ontology files are written in Turtle (OWL2)
   * In addition, a Protege-ready merge of the ontology files (dna-ontology.ttl) is available in the top-level directory
   * A human-friendly, searchable tree view is available at https://ontoinsights.github.io/dna-ontologies/
-  * Note that there is a 'cameo' sub-directory, holding the CAMEO ethnicity and religion details, which have been superceded by the Wikidata information
+  * Note that there is a 'cameo' sub-directory, holding the CAMEO ethnicity and religion details which have been superceded by the Wikidata information
+  * Note also that there is a 'synonyms' directory holding many possible synonyms for the concepts (which has been superceded by the use of ChatGPT)
 * _ontol-docs_ contains documentation explaining the DNA ontologies and their usage
   * The _graphs_ subdirectory contains PNGs of the ontology concepts, where the graph local names correspond to the Turtle file modules' local names
   * The file, dna-ontology-tree.html, holds a downloadable version of the searchable tree view
@@ -41,11 +42,11 @@ The semantics (ontologies) and processing are captured in the directories of thi
 * _yaml_ contains a file with the DNA Repositories RESTful API definintions
   * The APIs are also viewable, in a more human-friendly manner, at https://ontoinsights.github.io/dna-swagger/
 
-The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The second version (using WordNet to include synonyms and do multi-language processing) is _archived with the tag, v0.2.0-wordnet_, in August 2023. The current code has being refactored to obtain news articles using an API, better capture semantics using ChatGPT, and enable more automated NL and ML analyses. 
+The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The second version (using WordNet to include synonyms and do multi-language processing) was _archived with the tag, v0.5.0-preChat, in March 2023. The current code is being refactored to obtain news articles using an API, better capture semantics using ChatGPT, and enable more automated NL and ML analyses. In addition, the ontologies have been updated to remove synonym text, although the WordNet synset ids are still included.
 
 ## Environment and Execution
 
-DNA has been developed and tested in a Python 3.8 environment. It will be migrating to a later version of Python in the near future.
+DNA has been developed and tested in a Python 3.11 environment.
 
 Necessary libraries are specified in the _requirements.txt_ file in the main directory. Please download (e.g. via pip install) all the requirements, and follow the remainder of the instructions in this section to get other, necessary components. (Note that you may need to update Xcode on Mac, install a Rust compiler, etc., if errors occur while doing the pip installs. If errors are reported, pip typically explains how to address them.) Lastly, set the environment variables AND download other components (such as Stardog) BEFORE starting the DNA application or doing any testing.
 
@@ -81,11 +82,6 @@ Other components that must be installed are:
   * Also, the empty database, "meta-dna", should be created (from any directory, execute `stardog-admin db create -n meta-dna`)
 * spaCy transformer language model 
   * Accomplished by executing "python3 -m spacy download en_core_web_trf"
-* nltk components
-  * Accomplished by executing the following instructions in an interactive Python environment (e.g, 'python3')
-    * import nltk
-    * nltk.download('wordnet')
-    * nltk.download('omw-1.4') 
 
 Make sure that you always upgrade the spacy model ("en_core_web_trf") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
 
@@ -93,9 +89,7 @@ Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask ru
 
 ## Multilingual Support
 
-DNA is designated to extend to languages beyond English, although English is the only language that has been tested to-date. As an initial approach, translation from the native language to English can be attempted.
-
-To directly parse a non-English language, the underlying language resources (spaCy, WordNet, etc.) are usable, as they are designed to support a variety of languages. (Currently, both the Finnish and German languages are being investigated.)
+DNA is designated to extend to languages beyond English, although English is the only language that has been tested to-date. To directly parse a non-English language, the underlying language resources (spaCy, ChatGPT, etc.) are usable, as they are designed to support a variety of languages.
 
 To this end, the following details are relevant for multi-lingual/non-English research with DNA. The following steps should be performed:
 
@@ -107,9 +101,3 @@ To this end, the following details are relevant for multi-lingual/non-English re
   * The references to be updated are noted by 'TODO' comments
 * Account for multi-lingual access to external services (Wikipedia, Wikidata, GeoNames, ... in query_sources.py), coding for specific language search and results
 * Update the text details (texts to be ingested and results that are expected) in each of the test*.py files (in the _tests_ directory) to the desired language
-
-In addition, all the 'text to DNA class' mappings are based on the use of the :noun/verb_synonym predicates. Each DNA concept has been mapped to an extensive set of English texts using the WordNet hypernym/hyponym trees. (That processing is described in notebooks/Background-WordNet.ipynb.) Note that after the programmatic mapping was completed (as described in the notebook), the list of terms was reviewed and hand-edited. Although more validation is needed, the current list is adequate for semantic alignment.
-
-Each noun/verb synonym term in the Turtle :noun/verb_synonym statements has been identified with '@en' language tags. Each of the terms should be translated to the appropriate language and then their language tags added (for example, '@de' for German). This approach will be easier than attempting to remap from the WordNet hypernyms directly. Synonyms are found in the *-synonyms.ttl files in the ontologies directory.
-
-In addition to translating the snynoyms from the .ttl files, the text preceding the first '[', in the noun/verb-multi-en.txt files (in the notebooks directory), should also be translated - creating *-<language tag>.txt files. Then, the first and third code cells in the notebooks/Background-WordNet.ipynb Jupyter notebook should be updated to reference the new files and create new pickle files. After generation, the pickle files should be moved to the dna/resources directory and appropriately referenced in the get_ontology_mapping.py module (lines 21 and 24).

@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: February 8 2023
+# Last modified: July 12 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -33,6 +33,10 @@
 #  Renamed TechnologyBusiness to ScienceAndTechnologyBusiness
 #  Added Expansionism
 #  Renamed :agent_aspect to :aspect
+#  Added Corporation, ExecutiveAndLegislativeGroup, JudicialGroup, 
+#    ReligiousGroup and SocialGroup
+#  Renamed ParamilitaryGroup to ParamilitaryAndRebelGroup, and
+#    IntelligenceCommunity to IntelligenceAgency
 ########################################################################
 
 
@@ -65,6 +69,12 @@
   :definition "A part of a Person, Animal or Plant. It is related to the entity as the object of the predicate, :has_component."@en ;
   :wordnet_noun_synset "05227735", "13107668" .
 
+:Corporation a owl:Class ;
+  rdfs:subClassOf :OrganizationalEntity ;
+  rdfs:label "Corporation"@en ;
+  :definition "A business/company that is legally recognized and acts as a single entity."@en ;
+  :wordnet_noun_synset "08076248" .
+
 :DisplacedPerson a owl:Class ;
   rdfs:subClassOf :Person ;
   rdfs:label "Displaced Person or Refugee"@en ;
@@ -89,6 +99,11 @@
   :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Ethnic_group&oldid=932771777), Ethnicity 'is a category of people who identify with each other, usually on the basis of a presumed common genealogy or ancestry or on similarities such as common language or dialect, history, society, culture or nation'."@en ;
   :wordnet_noun_synset "04806382" .
 
+:ExecutiveAndLegislativeGroup a owl:Class ;
+  rdfs:subClassOf :GovernmentalEntity ;
+  rdfs:label "Executive and Legislative Group"@en ;
+  :definition "A type of GovernmentalEntity responsible for legislation (such as the US Congress) and for enforcing those laws and governing."@en .
+
 :GenderValue a owl:Class ;
   rdfs:subClassOf :Enumeration ;
   rdfs:label "Gender Value"@en ;
@@ -109,11 +124,16 @@
   :example "An examples of a groups of Agents that appear to operate as a single entity are the sub-class, OrganizationalEntity, or the concept of a family. However, even an indistinct 'mob' may participate in Events and/or a 'population' of a region may be the holders of State."@en ;
   :wordnet_noun_synset "07967506", "07991473" .
 
-:IntelligenceCommunity a owl:Class ;
-  rdfs:subClassOf :Collection, :GovernmentalEntity ;
-  rdfs:label "Intelligence Community"@en ;
+:IntelligenceAgency a owl:Class ;
+  rdfs:subClassOf :GovernmentalEntity ;
+  rdfs:label "Intelligence Agency"@en ;
   :definition "A governmental organization responsible for collecting, storing and analyzing information about other agents in the world."@en ;
   :wordnet_noun_synset "08356381", "10230113" .
+
+:JudicialGroup a owl:Class ;
+  rdfs:subClassOf :GovernmentalEntity ;
+  rdfs:label "Judicial Group"@en ;
+  :definition "A type of GovernmentalEntity responsible for interpreting laws, and applying them to individual cases."@en .
 
 :LineOfBusiness a owl:Class ;
   rdfs:label "Line/Type of Business"@en ;
@@ -123,13 +143,12 @@
 :OrganizationalEntity a owl:Class ;
   rdfs:subClassOf :GroupOfAgents ;
   rdfs:label "Organizational Entity"@en ;
-  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams."@en ;
-  :wordnet_noun_synset "08076248", "03579706" .
+  :definition "As defined by Wikipedia (https://en.wikipedia.org/w/index.php?title=Organization&oldid=932509999), an organization 'is an entity comprising multiple people, such as an institution or an association, that has a particular purpose'. Note that OrganizationalEntities can themselves contain OrganizationalEntities, which are typically referred to as 'organizational units', or GroupsOfAgents such as project teams."@en .
 
-:ParamilitaryForce a owl:Class ;
+:ParamilitaryAndRebelForce a owl:Class ;
   rdfs:subClassOf :OrganizationalEntity ;
-  rdfs:label "Paramilitary Force"@en ;
-  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'."@en ;
+  rdfs:label "Paramilitary and Rebel Force"@en ;
+  :definition "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Paramilitary&oldid=1015705600), a paramilitary 'organization (also listed as quasi military) is a semi-militarized force whose organizational structure, tactics, training, subculture, and (often) function are similar to those of a professional military, but is not formally part of a country's armed forces'. This class also includes rebel 'armies'."@en ;
   :wordnet_noun_synset "08224130" .
 
 :Person a owl:Class ;
@@ -163,11 +182,21 @@
   :definition "A superclass of the various world religions as well as no religion (nonreligion)."@en ;
   :wordnet_noun_synset "05955536" .
 
+:ReligiousGroup a owl:Class ;
+  rdfs:subClassOf :OrganizationalEntity ;
+  rdfs:label "Religious Group"@en ;
+  :definition "An organized, religious group such as the Jesuits or a Baptist church."@en .
+
 :Role a owl:Class ;
   rdfs:label "Role"@en ;
   :definition "The function performed by/responsibilities of a Person or Group, usually related to being part of a 'larger' group or OrganzationalEntity (i.e., a GroupOfAgents). Note that Role is not currently sub-classed, although it may be in the future. Subclasses are domain specific (such as family role or organizational role), and will define explicit semantics."@en ;
   :example "For example, in an OrganizationalEntity, some Persons are managers while others are employees or team leads."@en ;
   :wordnet_noun_synset "00723312" .
+
+:SocialGroup a owl:Class ;
+  rdfs:subClassOf :OrganizationalEntity ;
+  rdfs:label "Social Group"@en ;
+  :definition "An organized group for social activities such as a bridge club, bowling league, etc."@en .
 
 
 ########################################################################
