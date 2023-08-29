@@ -291,7 +291,16 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NarrativeDetails'
+                type: object
+                properties:
+                  server:
+                    type: string
+                    example: http://example.com
+                  repository:
+                    type: string
+                    example: dna
+                  narrativeDetails:
+                    $ref: '#/components/schemas/NarrativeDetails'
         '400':
           description: Narrative ingest - Missing or invalid content
           content:
@@ -613,6 +622,9 @@ components:
     KnowledgeGraphDetails:
       type: object
       properties:
+        server:
+          type: string
+          example: http://example.com
         repository:
           type: string
           example: dna
