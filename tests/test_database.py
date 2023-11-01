@@ -1,7 +1,6 @@
-from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, \
-    query_class, query_database
-from dna.get_ontology_mapping import query_exact_and_approx_match
-from dna.queries import construct_kg, query_event, query_noun
+import pytest
+from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, query_database
+from dna.database_queries import construct_kg
 
 test_db = 'test-dna-db'
 full_test_graph = 'urn:ontoinsights:dna:testGraph'
@@ -73,16 +72,6 @@ def test_clear_data_from_graph():
     new_results = query_database('select', graph_query, test_db)
     new_cnt = int(new_results[0]['cnt']['value'])
     assert new_cnt == 0
-
-
-def test_query_class():
-    result = query_class('permit', query_event)
-    assert 'Permission' in result
-
-
-def test_query_exact_and_approx_match():
-    result = query_exact_and_approx_match('raw material', query_noun, False)
-    assert 'RawMaterial' in result
 
 
 def test_delete_database():

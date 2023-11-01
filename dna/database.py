@@ -10,8 +10,9 @@ import logging
 import os
 from rdflib import Graph
 import stardog
+from stardog import Connection
 
-from dna.utilities_and_language_specific import empty_string, ontologies_database, owl_thing, owl_thing2
+from dna.utilities_and_language_specific import empty_string, ontologies_database, owl_thing
 
 rdf_graph = Graph()
 text_turtle = 'text/turtle'
@@ -20,6 +21,8 @@ text_turtle = 'text/turtle'
 sd_conn_details = {'endpoint': os.environ.get('STARDOG_ENDPOINT'),
                    'username': os.getenv('STARDOG_USER'),
                    'password': os.environ.get('STARDOG_PASSWORD')}
+
+full_owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
 
 
 def add_remove_data(op_type: str, triples: str, database: str, graph: str = empty_string) -> str:
@@ -35,26 +38,41 @@ def add_remove_data(op_type: str, triples: str, database: str, graph: str = empt
     if op_type != 'add' and op_type != 'remove':
         return "Invalid op_type"
     try:
-        conn = stardog.Connection(database, **sd_conn_details)
-        conn.begin()
+        ar_conn: Connection = stardog.Connection(database, **sd_conn_details)
+        ar_conn.begin()
         if op_type == 'add':
             # Add to the database
             if graph:
-                conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
+                ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
             else:
-                conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
+                ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
         else:
             # Remove from the database
             if graph:
-                conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
+                ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
             else:
-                conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
-        conn.commit()
+                ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
+        ar_conn.commit()
         return empty_string
-    except Exception as e:
-        error = f'Database ({op_type}) exception: {str(e)}'
-        logging.error(error)
-        return error
+    except Exception as add_rem_err:
+        curr_error = f'Database ({op_type}) exception: {str(add_rem_err)}'
+        logging.error(curr_error)
+        return curr_error
+
+
+def check_server_status() -> bool:
+    """
+    Validate that the server at the specified address is functional.
+
+    :return: Boolean indicating that it is functional (True) or not (False)
+    """
+    try:
+        admin = stardog.Admin(**sd_conn_details)
+        return admin.alive()
+    except Exception as stat_err:
+        curr_error = f'Database server exception: {str(stat_err)}'
+        logging.error(curr_error)
+        return False
 
 
 def clear_data(database: str, graph: str = empty_string) -> str:
@@ -66,20 +84,20 @@ def clear_data(database: str, graph: str = empty_string) -> str:
     :return: An empty string if successful, or the error details if not
     """
     try:
-        conn = stardog.Connection(database, **sd_conn_details)
-        conn.begin()
+        clear_conn = stardog.Connection(database, **sd_conn_details)
+        clear_conn.begin()
         if graph:
-            conn.clear(graph)
+            clear_conn.clear(graph)
         else:
-            conn.clear()
-        conn.commit()
+            clear_conn.clear()
+        clear_conn.commit()
         return empty_string
-    except Exception as e:
+    except Exception as clear_err:
         if graph:
-            error = f'Database clear exception for graph {graph} in {database}: {str(e)}'
+            curr_error = f'Database clear exception for graph {graph} in {database}: {str(clear_err)}'
         else:
-            error = f'Database clear exception for database {database}: {str(e)}'
-        logging.error(error)
+            curr_error = f'Database clear exception for database {database}: {str(clear_err)}'
+        logging.error(curr_error)
 
 
 def construct_database(construct: str, database: str) -> (bool, list):
@@ -92,18 +110,18 @@ def construct_database(construct: str, database: str) -> (bool, list):
               with the Turtle results of the CONSTRUCT query or an error message
     """
     try:
-        conn = stardog.Connection(database, **sd_conn_details)
-        construct_results = conn.graph(construct, content_type='text/turtle')
+        const_conn = stardog.Connection(database, **sd_conn_details)
+        construct_results = const_conn.graph(construct, content_type='text/turtle')
         turtle_details = rdf_graph.parse(format='text/turtle', data=construct_results)
         final_turtle = []
         for stmt in turtle_details:
             subj, pred, obj = stmt
             final_turtle.append(f'{subj.n3()} {pred.n3()} {obj.n3()} .\n')
         return True, final_turtle
-    except Exception as e:
-        error = f'Database ({database}) construct exception: {str(e)}'
-        logging.error(error)
-        return False, [str(e)]
+    except Exception as const_err:
+        curr_error = f'Database ({database}) construct exception: {str(const_err)}'
+        logging.error(curr_error)
+        return False, [str(const_err)]
 
 
 def create_delete_database(op_type: str, database: str) -> str:
@@ -129,32 +147,10 @@ def create_delete_database(op_type: str, database: str) -> str:
             database_obj.drop()
         now = datetime.now()
         return f'Database, {database}, {op_type}d at {now.strftime("%Y-%m-%dT%H:%M:%S")}'
-    except Exception as e:
-        error = f'Database ({op_type}) exception: {str(e)}'
-        logging.error(error)
-        return error
-
-
-def query_class(text: str, query: str) -> str:
-    """
-    Attempts to match the input text to verb/noun_synonyms, labels and definitions in the ontology,
-    and returns the highest probability class name as the result.
-
-    :param text: Text to match
-    :param query: String holding the query to execute
-    :return: The highest probability class name returned by the query
-    """
-    if text == owl_thing2:
-        return owl_thing2
-    results = query_database('select', query.replace('keyword', text), ontologies_database)
-    if results:
-        result = results[0]  # Return the first result (assumes that the query is ordered by descending probability)
-        class_name = result['class']['value']
-        if class_name is not None and class_name != owl_thing:
-            return f':{class_name.split(":")[-1]}'
-        else:
-            return owl_thing2
-    return owl_thing2   # No results/no match
+    except Exception as cd_err:
+        curr_error = f'Database ({op_type}) exception: {str(cd_err)}'
+        logging.error(curr_error)
+        return curr_error
 
 
 def query_database(query_type: str, query: str, database: str) -> list:
@@ -170,19 +166,19 @@ def query_database(query_type: str, query: str, database: str) -> list:
         logging.error(f'Invalid query_type {query_type} for query_db')
         return []
     try:
-        conn = stardog.Connection(database, **sd_conn_details)
+        query_conn = stardog.Connection(database, **sd_conn_details)
         if query_type == 'select':
             # Select query, which will return results, if successful
-            query_results = conn.select(query, content_type='application/sparql-results+json')
+            query_results = query_conn.select(query, content_type='application/sparql-results+json')
             if 'results' in query_results and 'bindings' in query_results['results']:
                 return query_results['results']['bindings']
             else:
                 return []
         else:
             # Update query; No results (either success or failure)
-            conn.update(query)
+            query_conn.update(query)
             return ['successful']
-    except Exception as e:
-        error = f'Database ({database}) query exception for {query}: {str(e)}'
-        logging.error(error)
-        return [error]
+    except Exception as query_err:
+        curr_error = f'Database ({database}) query exception for {query}: {str(query_err)}'
+        logging.error(curr_error)
+        return [curr_error]

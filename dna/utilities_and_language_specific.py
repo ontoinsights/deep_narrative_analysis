@@ -11,141 +11,61 @@ resources_dir = os.path.join(dna_dir, 'resources/')
 
 language_tag = '@en'
 
-# with open(image_file_logo, "rb") as im_file:
-#    encoded_logo = base64.b64encode(im_file.read())
+empty_string: str = ''
+space: str = ' '
+subjects_string: str = 'subjects'
+objects_string: str = 'objects'
+preps_string: str = 'preps'
+verbs_string: str = 'verbs'
+underscore: str = '_'
 
-empty_string = ''
-space = ' '
-subjects_string = 'subjects'
-objects_string = 'objects'
-preps_string = 'preps'
-verbs_string = 'verbs'
-underscore = '_'
+dna_prefix: str = 'urn:ontoinsights:dna:'
+meta_db: str = 'meta-dna'
+owl_thing: str = 'owl:Thing'
+event_and_state_class: str = ':EventAndState'
 
-dna_prefix = 'urn:ontoinsights:dna:'
-owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
-owl_thing2 = 'owl:Thing'
-event_and_state_class = ':EventAndState'
-
-ontologies_database = 'ontologies'
+ontologies_database: str = 'ontologies'
 
 concept_map = {'political': ':PoliticalIdeology',
                'ideology': ':PoliticalIdeology',
                'religio': ':ReligiousBelief',
                'ethnic': ':Ethnicity',
-               'nationality': 'Ethnicity',
-               'emotion': ':EmotionalResponse'}
+               'nationality': 'Ethnicity'}
 
-# TODO: Move texts to separate file for maintenance/extension by users
+# Future: Move texts to separate file for maintenance/extension by users
 # Times
 days = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
 months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December')
-# TODO: Other incremental times?
-incremental_time_keywords = ('ago', 'earlier', 'later', 'next', 'previous', 'prior', 'following')
 
 # People
 explicit_plural = ('group', 'people')
 
 family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
                   'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
-                  'parent': empty_string, 'sibling': empty_string, 'cousin': empty_string,
-                  'grandparent': empty_string, 'relative': empty_string}
+                  'grandparent': empty_string, 'parent': empty_string, 'sibling': empty_string,
+                  'cousin': empty_string, 'relative': empty_string}
 plural_family_members = ('mothers', 'fathers', 'sisters', 'brothers', 'aunts', 'uncles',
                          'grandmothers', 'grandfathers', 'grandparents', 'parents', 'siblings',
                          'cousins', 'relatives')
 family_text = ('family', 'families')
 
-# Pronouns
-personal_pronouns = ('I', 'we', 'us', 'they', 'them', 'he', 'she', 'it', 'myself', 'ourselves', 'themselves',
-                     'herself', 'himself', 'itself', 'my', 'our', 'their', 'her', 'his')
-indefinite_pronouns = {'all': 'plural', 'both': 'plural', 'few': 'plural', 'many': 'plural', 'most': 'plural',
-                       'none': 'zero', 'some': 'plural'}
-
-# Verbs
-aux_lemmas = ('be', 'become', 'do', 'have')
-aux_be_lemmas = ('be', 'become')
-lemma_be = 'be'
-lemma_do = 'do'
-aux_verb_dict = {'can': ':OpportunityAndPossibility',
-                 'could': ':OpportunityAndPossibility',
-                 'may': ':OpportunityAndPossibility',
-                 'might': ':OpportunityAndPossibility',
-                 'must': ':CommandAndDemand',
-                 'should': ':OpportunityAndPossibility,dna:AdviceAndRecommendation',
-                 'will': ':IntentionAndGoal,dna:CommandAndDemand',
-                 'would': ':OpportunityAndPossibility'}
-
-# Prepositions
-# TODO: Other prepositions? Out? Without?
-processed_prepositions = ('about', 'after', 'along', 'at', 'before', 'during', 'in', 'inside', 'into',
-                          'for', 'from', 'near', 'of', 'on', 'outside', 'to', 'with')
-prep_to_predicate = {'about': ':has_topic',
-                     'after': 'obj+:before',     # 'obj+' indicates the prep object is the subject of the triple
-                     'along': ':has_active_agent=>:Agent',      # No default
-                     'at': ':has_location|:has_time=>:Time',    # Default + alternatives separated by '|'
-                     'before': ':before',
-                     'during': ':during',
-                     'in': ':has_topic|:has_location=>:Location',
-                     'inside': ':has_location',
-                     'into': ':has_location',
-                     'for': ':has_topic|:has_time=>:Time|has_affected_agent=>:Agent',
-                     'from': ':has_origin|:has_earliest_beginning=>:Time|:has_provider=>:Agent|'
-                             'ProductionManufactureAndCreation=>:has_component',
-                     'near': ':has_location',
-                     'of': 'obj+:has_component',
-                     'on': ':has_location',
-                     'outside': ':has_location',
-                     'to': ':has_topic|:has_recipient=>:Agent|:has_destination=>:Location|:has_latest_end=>:Time',
-                     'with': ':has_topic|:has_instrument=>:Resource|:has_location=>:Location|:has_active_agent=>:Agent'}
-prep_after = 'after'
-prep_with = 'with'
-# Indicates the prepositional mapping which should be changed (as the dictionary key),
-#   and the value uses the format, event_state_class=>original_predicate>new_predicate
-prep_to_predicate_mod = {'to': ':AssessmentAndCharacterization=>:has_recipient>:has_topic'}
-
-# Replace multi-word phrases or non-standard terms acting as conjunctions or prepositions with single word terms
-replacement_words = {
-    'as well as': 'and',
-    'circa': 'in',
-    'in addition to': 'and',
-    'since': 'for',   # Assumes that clauses such as 'since [noun] [verb]' have already been split out
-    'next to': 'near',
-    'on behalf of': 'for',
-    'prior to': 'before',
-    'subsequent to': 'after'
-}
-
-relative_clause_words = ('who', 'whose', 'whom', 'which', 'that', 'where', 'when', 'why')
-conjunction_words = ('for', 'and', 'nor', 'but', 'or', 'yet', 'so')
-special_marks = ('if', 'because', 'since')
-
-# Words that introduce a temporal relation, where the main clause is the following event
-earlier_connectors = ('when', 'because', 'since', 'as', 'while', 'before', 'as long as', 'until', 'til', 'where',
-                      'given', 'given that', 'wherever', 'whenever', 'anywhere', 'everywhere', 'if')
-# Words that introduce a temporal relation with the main clause, where the main clause is the earlier event
-later_connectors = ('after', 'so', 'so that', 'therefore', 'consequently', 'though', 'than', 'in order to',
-                    'in order that', 'although', 'that')
-# If - then only is cause-effect when the tenses of the main and other clause are the same
-cause_effect_pairs = [('if', 'then')]
-# Prepositions that introduce a cause in the form of a noun phrase
-cause_prepositions = ('because of', 'due to', 'as a result [of]', 'as a consequence [of]', 'by means of')
-# Prepositions that introduce an effect in the form of a noun phrase
-effect_prepositions = ['in order to']
+female_titles = ['Miss', 'Ms', 'Mrs']
+male_titles = ['Mr']
 
 # spaCy NER type mapping
 ner_dict = {'PERSON': ':Person',
-            'NORP': ':Person',
+            'NORP': ':Person, :Collection',
             'ORG': ':Organization',
             'GPE': ':GeopoliticalEntity',
             'LOC': ':Location',
-            'FAC': ':AnthropogenicFeature',
-            'EVENT': ':EventAndState'}
+            'FAC': ':Location, :AnthropogenicFeature',
+            'EVENT': ':EventAndState',
+            'DATE': ':PointInTime',
+            'LAW': ':LawAndPolicy',
+            'PRODUCT': ':Resource',
+            'WORK_OF_ART': ':ArtAndCollectible'}
 ner_types = list(ner_dict.keys())
-ner_types.append('DATE')
-
-female_titles = ['Miss', 'Ms', 'Mrs']
-male_titles = ['Mr']
 
 ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoinsights:dna:> .',
                 '@prefix geo: <urn:ontoinsights:geonames:> .', '@prefix dc: <http://purl.org/dc/terms/> .',
@@ -169,6 +89,23 @@ mnames_file = os.path.join(resources_dir, 'male_names.txt')
 with open(mnames_file, 'r') as mnames:
     mnames_content = mnames.read()
 male_names = mnames_content.split('\n')
+
+# Future + other prepositions, clause identifiers and marks?
+personal_pronouns = ('I', 'we', 'us', 'they', 'them', 'he', 'she', 'it', 'myself', 'ourselves', 'themselves',
+                     'herself', 'himself', 'itself')
+plural_pronouns = ('we', 'us', 'they', 'them', 'ourselves', 'themselves')
+possessive_pronouns = ('my', 'our', 'his', 'her', 'their', 'its')
+indefinite_pronouns = {'all': 'plural', 'both': 'plural', 'few': 'plural', 'many': 'plural', 'most': 'plural',
+                       'none': 'zero', 'some': 'plural'}
+processed_prepositions = ('about', 'after', 'along', 'at', 'before', 'during', 'in', 'inside', 'into',
+                          'for', 'from', 'near', 'of', 'on', 'out', 'outside', 'to', 'with')
+relative_clause_words = ('who', 'whose', 'whom', 'which', 'that', 'where', 'when', 'why')
+conjunction_words = ('and', 'nor', 'but', 'or', 'yet')
+special_marks = {
+    'reason': ('as', 'because', 'due to', 'for', 'given', 'given that', 'since', 'so'),
+    'possibility': ('if', 'in case', 'lest', 'provided that', 'unless'),
+    'purpose': ('in order that', 'in order to', 'so that')
+}
 
 
 def add_to_dictionary_values(dictionary: dict, key: str, value, value_type):

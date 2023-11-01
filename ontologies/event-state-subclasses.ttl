@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 13 2023
+# Last Modified: October 31 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,22 +23,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history
-#  Renamed ActOfPublishing to IssuingAndPublishing
-#  Moved some :example text to synonyms
-#  Added @en language tags to rdfs:labels, :definitions and :examples
-#  Removed all synonyms to language-specific modules
-#  Renamed ActOfPublishing to IssuingAndfPublishing, and Assessment to
-#    AssessmentMeasurement
-#  For language independence, added AssessmentLevel and the :has_assessment 
-#    object property, and removed the :assessment data property
-#  Added ReligiousCeremony
-#  Renamed RecreationEvent to RecreationAndSportEvent
-#  Updated the subclassing of Bribe
-#  Renamed AggressiveOrHostileAct to AggressiveCriminalOrHostileAct,
-#  Separated DemonstrationStrikeAndRally into DemonstrationAndStrike 
-#    (protest) and Rally
-#  Added TransferOfPower and subclassed Coup from that class
+#  Reset change history and simplified
 ########################################################################
 
 
@@ -49,108 +34,94 @@
 :Acquisition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Acquisition"@en ;
-  :definition "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."@en ;
+  rdfs:comment "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."@en ;
   :wordnet_noun_synset "00042637", "00043933" ;
   :wordnet_verb_synset "02215637", "00723361" .
 
 :AggressiveCriminalOrHostileAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Aggressive, Criminal or Hostile Act"@en ;
-  :definition "Unfriendly, offensive, damaging, belligerent and/or criminal actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
+  rdfs:comment "Unfriendly, offensive, damaging, belligerent and/or criminal actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "14004330", "00966680", "01224100", "07563271", "00734044" ;
   :wordnet_verb_synset "01793315", "01811281", "01827478", "02519655" .
 
 :Agreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Agreement"@en ;
-  :definition "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate."@en ;
+  rdfs:comment "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate."@en ;
   :wordnet_noun_synset "06783066", "13992690", "01217882" ;
   :wordnet_verb_synset "00799359", "00766267", "00559750" .
 
 :AgricultureApicultureAndAquacultureEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Agriculture, Apiculture, Aquaculture and Viticulture Event"@en ;
-  :definition "Events dealing with farming, ranching, breeding, beekeeping, etc."@en ;
+  rdfs:comment "Events dealing with farming, ranching, breeding, beekeeping, etc."@en ;
   :wordnet_verb_synset "01746607", "01383909", "02425530", "00056076", "01322669" .
 
 :Alignment a owl:Class ;
   rdfs:subClassOf :InclusionAttachmentAndUnification ;
   rdfs:label "Alignment"@en ;
-  :definition "A type of grouping related to the arranging or organizing of the component entities."@en ;
+  rdfs:comment "A type of grouping related to the arranging or organizing of the component entities."@en ;
   :wordnet_noun_synset "05082771" ;
   :wordnet_verb_synset "01466592" .
 
 :ArtAndEntertainmentEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Art and Entertainment Event"@en ;
-  :definition "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."@en ;
+  rdfs:comment "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."@en ;
   :wordnet_verb_synset "01718067", "02497847", "01727101" .
 
 :AssessmentMeasurement a owl:Class ;
   rdfs:subClassOf :Measurement ;
   rdfs:label "Assessment Measurement"@en ;
-  :definition "A type of Measurement describing an event or situation (such as Employment in a Country) on an (enumerated) scale from 'negligible or none' to 'very high'. The assessed value is specified using the :has_assessment prooperty, as one of the enumerated values of AssessmentLevel."@en .
-
-:AssessmentLevel a owl:Class ;
-  rdfs:subClassOf :Enumeration ;
-  rdfs:label "Assessment Level"@en ;
-  :definition "An enumeration indicating how an AssessmentMeasurement for an entity (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is qualitatively evaluated - ranging from :enum:NegligibleNone to :enum:VeryHigh. Note that AssessmentLevel is associated with the AssessmentMeasurement using the :has_assessment object property, while the AssessmentMeasurement is associated with the entity using the :has_measurement property."@en ;
-  owl:equivalentClass [ a owl:Class ;
-                        owl:oneOf ( :enum:VeryHigh :enum:High :enum:Medium :enum:Low :enum:NegligibleNone ) ] .
+  rdfs:comment "A type of Measurement describing an event or situation (such as Employment in a Country) with a restricted set of reported values. The assessment scale varies from 'negligible or none' to 'very high'. The reported value is specified using the :assessment property."@en .
 
 :Attempt a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Attempt"@en ;
-  :definition "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished."@en ;
+  rdfs:comment "Attempt should not be used alone to classify an individual. Another Event subclass should also be specified. Attempt indicates that an effort was made to do/complete the 'other' Event, but it did not succeed/was not accomplished."@en ;
   :wordnet_noun_synset "00787849" ; 
   :wordnet_verb_synset "01654835", "02535833", "01148517" .
 
 :Avoidance a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Avoidance"@en ;
-  :definition "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring."@en ;
+  rdfs:comment "The act of staying away from some object or Agent, purposefully not doing something or preventing something from occurring."@en ;
   :wordnet_noun_synset "00204602", "01070697", "04889817", "01068613" ;
   :wordnet_verb_synset "00813037", "01198570", "02731589" .
 
 :Birth a owl:Class ;
-  rdfs:subClassOf :LifeEvent ;
+  rdfs:subClassOf :LifeEvent, :StartAndBeginning ;
   rdfs:label "Birth"@en ;
-  :definition "An individual (living entity) being born/beginning life."@en ;
+  rdfs:comment "An individual (living entity) being born/beginning life."@en ;
   :wordnet_noun_synset "07334902" ;
   :wordnet_verb_synset "00056644" .
 
 :BodilyAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Bodily Act"@en ;
-  :definition "An activity typically involving the body of an animal or Person (such as coughing, eating or running)."@en ;
+  rdfs:comment "An activity typically involving the body of an animal or Person (such as coughing, eating or running)."@en ;
   :wordnet_noun_synset "13461236" ;
   :wordnet_verb_synset "00072742" .
-
-:BodyMovement a owl:Class ;
-  rdfs:subClassOf :BodilyAct ;
-  rdfs:label "Body Movement"@en ;
-  :definition "An activity related to the movement of an animal's or Person's body (such as dancing or running)."@en ;
-  :wordnet_noun_synset "00117507", "00283971" ;
-  :wordnet_verb_synset "00105087", "00010047", "00099475", "01548665", "01835473", "01514338" . 
 
 :Bribe a owl:Class ;
   rdfs:subClassOf :RewardAndCompensation ;
   rdfs:label "Bribe"@en ;
-  :definition "Offering of money or thing(s) of value to induce a Person to perform certain actions."@en ;
+  rdfs:comment "Offering of money or thing(s) of value to induce a Person to perform certain actions."@en ;
   :wordnet_noun_synset "00777759" ;
   :wordnet_verb_synset "02288941" . 
 
 :Ceremony a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter ;
   rdfs:label "Ceremony"@en ;
-  :definition "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate."@en ;
+  rdfs:comment "A gathering to formally/officially highlight an occurrence of importance (such as a wedding, funeral or the opening of a facility) or to remember a previous event (such as a birthday or historical Event). The occurrence being highlighted or remembered is identified using the :has_topic predicate."@en ;
   :wordnet_noun_synset "01029321", "01028839", "7465442" ; 
   :wordnet_verb_synset "00614139", "02400924", "02430184" .
 
 :Change a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Change"@en ;
-  :definition "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
+  rdfs:comment "Indicates a difference in the availability/count/amount of something or in the demeanor/behavior of an Agent. The thing/Agent which 'changes' is referenced using the :has_topic property. Note that two subclasses are defined, Increase and Decrease. The pace of the Change can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
   :example "Examples are changes in the amount of something (such as food, water or schools), an increase/decrease in the number of certain types of Events (such as murders) or available teachers (a GroupOfAgents with the :has_line_of_business predicate set to :EducationalBusiness and the :prototypical property set to true), etc."@en ;
   :wordnet_noun_synset "00169459", "14057399", "06207399", "00191991" ;
   :wordnet_verb_synset "00109468" .
@@ -158,450 +129,440 @@
 :ChangeOfPossession a owl:Class ;
   rdfs:subClassOf :Possession, :Change, :Acquisition ;
   rdfs:label "Change of Possession"@en ;
-  :definition "An event or condition describing that the control of some good(s) or property passed from one Agent to another. "@en ;
+  rdfs:comment "An event or condition describing that the control of some good(s) or property passed from one Agent to another. "@en ;
   :wordnet_noun_synset "14502904", "09783624" ;
   :wordnet_verb_synset "01216829", "02320505", "02352633" .
 
 :Cognition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Cognition"@en ;
-  :definition "Any thought processes related to learning, making decisions, perception, memory, imagination, forming judgments, etc. Note that the Person who is thinking is defined using the :has_active_agent property. And, details about what is learned/thought/understood is indicated using the :has_topic predicate."@en ;
+  rdfs:comment "Any thought processes related to learning, making decisions, perception, memory, imagination, forming judgments, etc. Note that the Person who is thinking is defined using the :has_active_agent property. And, details about what is learned/thought/understood is indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "05682974", "00023451", "05658174", "05778923", "04667893", "05716379" ;
   :wordnet_verb_synset "00691086", "00630153" .
 
 :CommunicationAndSpeechAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Communication and Speech Act"@en ;
-  :definition "Any act of conveying information via written or spoken word, or non-verbal means. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity listening is defined using :has_affected_agent."@en ;
+  rdfs:comment "Any act of conveying information via written or spoken word, or non-verbal means. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity listening is defined using :has_affected_agent."@en ;
   :wordnet_noun_synset "07253354" ;
   :wordnet_verb_synset "00800905", "00817348", "00742582", "0074428" . 
 
 :Competition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Competition"@en ;
-  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
+  rdfs:comment "An Event or ongoing condition where two or more Agents are striving for a similar goal (such as winning a contest or using scarce Resources), and want to be better/more successful than the others. This class refers to both specific competitive Events, as well as the general condition. The former would be Evidence for the latter. If competing over Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property. The overall competitive situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
   :wordnet_noun_synset "01171059", "07470961" ;
   :wordnet_verb_synset "01074673", "01081873" .
 
 :Cooperation a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
   rdfs:label "Cooperation"@en ;
-  :definition "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
+  rdfs:comment "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
   :wordnet_noun_synset "00412397", "01205394", "13864062" ; 
   :wordnet_verb_synset "02421408", "02300511" .
 
 :Coup a owl:Class ;
   rdfs:subClassOf :TransferOfPower ;
   rdfs:label "Coup"@en ;
-  :definition "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent."@en ;
+  rdfs:comment "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent."@en ;
   :wordnet_noun_synset "01147528" ; 
   :wordnet_verb_synset "02407551", "02407837" .
 
 :Death a owl:Class ;
   rdfs:subClassOf :LifeEvent, :End ;
   rdfs:label "Death"@en ;
-  :definition "The end of a living entity's life."@en ;
+  rdfs:comment "The end of a living entity's life."@en ;
   :wordnet_noun_synset "07370091", "07354694", "09919123", "15168437", "13985834" ;
   :wordnet_verb_synset "00359085" . 
 
 :Decrease a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Decrease"@en ;
-  :definition "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
+  rdfs:comment "Indicates a lowering/decline in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Decrease can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
   :wordnet_noun_synset "13496741", "00352464", "05117108", "13479774" ;
   :wordnet_verb_synset "00223926", "00045548", "00204228", "00269051", "00494865", "00432779", "00275432", "00275523" .
 
 :DelayAndWait a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Delay and Wait"@en ;
-  :definition "A lack of action."@en ;
+  rdfs:comment "A lack of action."@en ;
   :wordnet_noun_synset "01068087", "01065863" ;
   :wordnet_verb_synset "00460731", "02644022", "02648898" . 
 
 :DemonstrationAndStrike a owl:Class ;
   rdfs:subClassOf :MeetingAndEncounter, :DisagreementAndDispute ;
   rdfs:label "Demonstration and Strike"@en ;
-  :definition "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
+  rdfs:comment "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
   :wordnet_noun_synset "01180193", "01170859", "01180685", "01245509", "01244711", "01181340" ;
   :wordnet_verb_synset "02417777", "02527482"  .
 
 :DisagreementAndDispute a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Disagreement and Dispute"@en ;
-  :definition "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."@en ;
+  rdfs:comment "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."@en ;
   :wordnet_noun_synset "07195447", "04756076", "07196595", "07155686", "01238738" ;
   :wordnet_verb_synset "00775477", "00716789" .
 
 :Disaster a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Disaster"@en ;
-  :definition "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."@en ;
+  rdfs:comment "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."@en ;
   :wordnet_noun_synset "00218366", "07329438" .
 
 :DistributionAndSupply a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Distribution and Supply"@en ;
-  :definition "Events related to giving out materials/Resources to Agents (typically Persons)."@en ;
+  rdfs:comment "Events related to giving out materials/Resources to Agents (typically Persons)."@en ;
   :wordnet_noun_synset "00809586", "01085001", "01085569" ;
   :wordnet_verb_synset "01381221", "02047080" .
 
 :Divorce a owl:Class ;
   rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
   rdfs:label "Divorce"@en ;
-  :definition "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."@en ;
+  rdfs:comment "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."@en ;
   :wordnet_noun_synset "01203761", "00216181" ;
   :wordnet_verb_synset "02436167" .
 
 :EatingAndDrinking a owl:Class ;
   rdfs:subClassOf :BodilyAct ;
   rdfs:label "Eating and Drinking"@en ;
-  :definition "An activity related to an animal's or Person's intake of food/nutrients and/or liquids."@en ;
+  rdfs:comment "An activity related to an animal's or Person's intake of food/nutrients and/or liquids."@en ;
   :wordnet_noun_synset "00840028", "00839759" ;
   :wordnet_verb_synset "01168667", "01159300", "01203727" .
 
 :Election a owl:Class ;
   rdfs:subClassOf :PoliticalEvent ;
   rdfs:label "Election"@en ;
-  :definition "The act of choosing an Agent to play a role or to hold a position within a GroupOfAgents."@en ;
+  rdfs:comment "The act of choosing an Agent to play a role or to hold a position within a GroupOfAgents."@en ;
   :example "Examples are the election of a Person to political office, or to serve in a role such as a jury foreman or chairman of a committee."@en ;
   :wordnet_noun_synset "00182630", "00184354", "00181811" ;
   :wordnet_verb_synset "02405902", "02466737" .
 
+:EmotionalResponse a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Emotional Response"@en ;
+  rdfs:comment "A state of mind associated with positive/pleasurable or negative/displeasurable feelings, thoughts and moods."@en ;
+  :wordnet_noun_synset "00026390", "07495208", "11437243" ;
+  :wordnet_verb_synset "00692071", "00719282" .
+
 :Enforcement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Enforcement"@en ;
-  :definition "An act that compels/insists on obedience or compliance to a law or obligation."@en ;
+  rdfs:comment "An act that compels/insists on obedience or compliance to a law or obligation."@en ;
   :wordnet_noun_synset "01129340" ;
   :wordnet_verb_synset "02565990", "02566249" .
 
 :EntranceAndExit a owl:Class ;
   rdfs:subClassOf :MovementTravelAndTransportation ;
   rdfs:label "Entrance and Exit"@en ;
-  :definition "A movement of ."@en ;
+  rdfs:comment "A movement of ."@en ;
   :wordnet_noun_synset "00049744", "00049115", "00043495", "00281976" ;
   :wordnet_verb_synset "02388582", "02019450", "02009962", "02011431" .
-
-:EnvironmentalOrEcologicalEvent a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Environmental or Ecological Event"@en ;
-  :definition "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals."@en ;
-  :wordnet_verb_synset "00493642", "00493246" .
 
 :EnvironmentAndCondition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Environment and Condition"@en ;
-  :definition "A factor, situation or condition related to an Agent's (defined using the :has_holder property) or Resource's (defined using the :has_resource predicate) living conditions, external circumstances or physical environment at some time (defined using the :has_time property or its sub-properties) and place (defined using the :has_location property)."@en ;
+  rdfs:comment "A factor, situation or condition related to an Agent's (defined using the :has_holder property) or Resource's (defined using the :has_resource predicate) living conditions, external circumstances or physical environment at some time (defined using the :has_time property or its sub-properties) and place (defined using the :has_location property)."@en ;
   :example "For example, when hypothesizing about possible (or impossible), future scenarios, one can use a sub-class of EnvironmentAndCondition (OpportunityOrPossibility or Impossibility) to create this world/'environment'. Or, a sub-class (DrinkableWater) can describe that a Person or community lives in an area without potable water."@en ;
   :wordnet_noun_synset "13943868" .
+
+:EnvironmentalOrEcologicalEvent a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Environmental or Ecological Event"@en ;
+  rdfs:comment "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals."@en ;
+  :wordnet_verb_synset "00493642", "00493246" .
 
 :FinancialEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Financial Event"@en ;
-  :definition "Events dealing with monies/currencies, funds and other capital."@en ;
+  rdfs:comment "Events dealing with monies/currencies, funds and other capital."@en ;
   :wordnet_verb_synset "02222048", "02221793", "02220288", "02221492" .
 
 :FriendlyOrSupportiveAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Friendly or Supportive Act"@en ;
-  :definition "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
+  rdfs:comment "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "01216661", "01215009" ;
   :wordnet_verb_synset "00896689" .
 
 :GamblingAndWagering a owl:Class ;
   rdfs:subClassOf :RiskTaking ;
   rdfs:label "Gambling and Wagering"@en ;
-  :definition "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result."@en ;
+  rdfs:comment "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result."@en ;
   :wordnet_noun_synset "00431125", "00491361", "00494042", "00494319", "00495779", "00492724" ;
   :wordnet_verb_synset "01140949", "02550045", "01079346" . 
-
-:Grooming a owl:Class ;
-  rdfs:subClassOf :BodilyAct ;
-  rdfs:label "Grooming"@en ;
-  :definition "An activity related to the cleaning, brushing, etc. of an animal's or Person's body."@en ;
-  :wordnet_noun_synset "00258095", "00662026", "00662200", "00829898" ;
-  :wordnet_verb_synset "00293903" .
 
 :HealthAndDiseaseRelated a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Health and Disease Related"@en ;
-  :definition "Any event or condition concerning disease, disorders, illness, etc. (and recovery from such) by humans, plants and animals. The diseases, illnesses, etc. are indicated using the :has_topic property. Note that several sub-classes are also typed as an AgentAspect to allow them to define 'some facet, detail or characteristic of a Person or group of Persons that serves to distinguish and/or describe them'. When used in that sense, the instance is related to a Person using the :has_agent_aspect property."@en ;
+  rdfs:comment "Any event or condition concerning disease, disorders, illness, etc. (and recovery from such) by humans, plants and animals. Specific diseases, illnesses, etc. are subclasses."@en ;
   :wordnet_noun_synset "04081594", "00830651", "14075528" ; 
   :wordnet_verb_synset "00081478", "00086587" .
 
 :ImitationAndCounterfeit a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Imitation and Counterfeit"@en ;
-  :definition "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."@en ;
+  rdfs:comment "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."@en ;
   :wordnet_noun_synset "03109245" ;
   :wordnet_verb_synset "01657814", "01697776", "01740703" .
 
 :ImpactAndContact a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Impact and Contact"@en ;
-  :definition "An act of coming into physical contact/touching, which may be forceful (e.g., an impact)"@en ;
+  rdfs:comment "An act of coming into physical contact/touching, which may be forceful (e.g., an impact)"@en ;
   :wordnet_noun_synset "07316161", "07316568", "07353152", "00047263" ;
   :wordnet_verb_synset "01208316", "01208838" .
 
 :InclusionAttachmentAndUnification a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Inclusion, Attachment and Unification"@en ;
-  :definition "An act of fastening, joining, grouping or bringing together, etc."@en ;
+  rdfs:comment "An act of fastening, joining, grouping or bringing together, etc."@en ;
   :wordnet_noun_synset "00379793", "14441799", "00148415", "00380230", "01215372" ; 
   :wordnet_verb_synset "00193830", "01464634", "00187671", "00368338", "00244010", "01387824" . 
 
 :Increase a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "Increase"@en ;
-  :definition "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
-  :noun_synonym  "rise", "expansion", "escalation", "addition", "broadening", "rallying", "increasing", "rising", "expanding", "escalating", "adding", "broadening", "extending", "surge", "amplification", "maximization", "maximisation", "maximation", "strengthening" ;
+  rdfs:comment "Indicates a growth/rise in the availability/count/amount of something or in the demeanor/behavior of an Agent. The pace of the Increase can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."@en ;
   :wordnet_noun_synset "00364086" ; 
   :wordnet_verb_synset "00156409", "00231172", "00153083" .
 
 :IncrementalMovement a owl:Class ;
   rdfs:subClassOf :MovementTravelAndTransportation ;
   rdfs:label "Incremental Movement"@en ;
-  :definition "Any act that changes the location of something by small amounts or makes small changes to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument."@en ;
+  rdfs:comment "Any act that changes the location of something by small amounts or makes small changes to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument."@en ;
   :wordnet_noun_synset "00403343", "01053255" ; 
   :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282", "01450719" .
 
 :InformationHandling a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Information Handling"@en ;
-  :definition "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities."@en ;
+  rdfs:comment "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities."@en ;
   :wordnet_noun_synset "00103599", "13476660" ; 
   :wordnet_verb_synset "01751525" .  
 
 :IssuingAndPublishing a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Issuing and Publishing"@en ;
-  :definition "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..., or making an announcement/releasing a public statement."@en ;
+  rdfs:comment "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..., or making an announcement/releasing a public statement."@en ;
   :wordnet_verb_synset "00956640" .
 
 :LegalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Legal Event"@en ;
-  :definition "Any activity based on following legal practices, or related to or allowed by laws or the legal system."@en ;
+  rdfs:comment "Any activity based on following legal practices, or related to or allowed by laws or the legal system."@en ;
   :wordnet_noun_synset "01183965", "01187304", "01183047", "01183348", "01183702", "01081986", "01204674", "08431076", "06660952", "01194465" ;
   :wordnet_verb_synset "02588535", "01016830", "02267740", "02503473", "00762621", "00896020", "00908688", "01015049" .
 
 :LifeEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Life Event"@en ;
-  :definition "Any occurrence in an Agent's existence, such as birth, death, marriage, etc."@en .
-
-:Loss a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Loss"@en ;
-  :definition "An event or condition describing NOT having some goods or property, which previously were in an Agent's Possession."@en ;
-  :wordnet_noun_synset "00068346", "00206740", "00745120" ;
-  :wordnet_verb_synset "02292463", "02293000", "01504432", "02308311", "02273196" . 
+  rdfs:comment "Any occurrence in an Agent's existence, such as birth, death, marriage, etc."@en .
 
 :Marriage a owl:Class ;
   rdfs:subClassOf :LifeEvent, :Ceremony, :PromiseAndOath, :LegalEvent ;
   rdfs:label "Marriage"@en ;
-  :definition "A formal/legal event and condition describing that two people have committed to a relationship with each other."@en ;
+  rdfs:comment "A formal/legal event and condition describing that two people have committed to a relationship with each other."@en ;
   :wordnet_noun_synset "01038810", "01038935", "01039028" ; 
   :wordnet_verb_synset "02494483", "00888123" .
-
-:Measurement a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Measurement"@en ;
-  :definition "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property."@en ;
-  :wordnet_noun_synset "00998911" ; 
-  :wordnet_verb_synset "00490773" . 
 
 :MeetingAndEncounter a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Meeting and Encounter"@en ;
-  :definition "Any Event that is a formal, informal or coincidental gathering or assembly of people."@en ;
+  rdfs:comment "Any Event that is a formal, informal or coincidental gathering or assembly of people."@en ;
   :wordnet_noun_synset "00148007", "01232427" ; 
   :wordnet_verb_synset "02382049", "02026953" . 
 
 :MovementTravelAndTransportation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Movement, Travel and Transportation"@en ;
-  :definition "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used."@en ;
+  rdfs:comment "Any act that changes the location of something or someone. If movement is accomplished using a vehicle (such as an airplane, train, ship or truck), that mode of transport is indicated using the :has_instrument property. The Agent which moves the things or people is specified using the :has_active_agent predicate, while the entity that is moved is identified using the :has_topic property. And, to identify the Agents sending/receiving the entities or their origin/destination locations, the properties, :has_provider/recipient and :has_origin/destination (respectively), should be used."@en ;
   :wordnet_noun_synset "00280679" ;
   :wordnet_verb_synset "01839438", "00270891", "00415334", "01091334", "01438013", "01452567", "01517828", "01569697", "01954657", "01955339", "01957669", "02006752", "02060895", "02063390", "02236972" .
+
+:NegativeEmotion a owl:Class ;
+  rdfs:subClassOf :EmotionalResponse ;
+  rdfs:label "Negative Emotion"@en ;
+  rdfs:comment "Any EmotionalResponse related to unpleasant, pessimistic or insecure feelings."@en ;
+  :example "Examples are unhappiness, fear, frustration, loneliness, disgust, hatred, etc., which are defined as subclasses"@en .
 
 :PoliticalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Political Event"@en ;
-  :definition "Any Event related to the governance, government and public affairs of a community or country."@en ;
+  rdfs:comment "Any Event related to the governance, government and public affairs of a community or country."@en ;
   :wordnet_noun_synset "01126829" .
+
+:PositiveEmotion a owl:Class ;
+  rdfs:subClassOf :EmotionalResponse ;
+  rdfs:label "Positive Emotion"@en ;
+  rdfs:comment "Any EmotionalResponse related to constructive, optimistic or confident feelings."@en ;
+  :example "Examples are happiness, love, forgiveness, hope, gratitude, etc., which are defined as subclasses."@en ;
+  :wordnet_noun_synset "04647533" .
 
 :Possession a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Possession"@en ;
-  :definition "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."@en ;
+  rdfs:comment "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."@en ;
   :wordnet_noun_synset "14503072", "00032912", "00811126", "00812259", "13261412" ;
   :wordnet_verb_synset "02209474", "02306641" .
 
 :ProductionManufactureAndCreation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Production, Manufacture and Creation"@en ;
-  :definition "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate."@en ;
+  rdfs:comment "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00910607", "00942228", "03587827", "05641230", "00912746" ; 
   :wordnet_verb_synset "00094214", "01624592", "01660471", "01656984", "01635953" .
 
 :ProjectAndCampaign a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Project and Campaign"@en ;
-  :definition "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)."@en ;
+  rdfs:comment "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)."@en ;
   :wordnet_noun_synset "00797381", "00410304" ;
   :wordnet_verb_synset "01096497", "02595732" .
 
 :Punishment a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Punishment"@en ;
-  :definition "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property."@en ;
+  rdfs:comment "An act of penalizing an Agent because of some occurrence/offense. The Event which is the (perceived) offense is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is punished is indicated using the :has_affected_agent property. And, the details of the punishment are defined using the :has_instrument property."@en ;
   :wordnet_noun_synset "01162829" ; 
   :wordnet_verb_synset "00202809", "02505278" . 
 
 :Rally a owl:Class ;
-  rdfs:subClassOf :MeetingAndEncounter, :FriendlyOrSupportiveAct ;
+  rdfs:subClassOf :MeetingAndEncounter ;
   rdfs:label "Rally"@en ;
-  :definition "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
+  rdfs:comment "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property. Note that a rally can be supportive or a protest. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or an :AggressiveCriminalOrHostileAct."@en ;
   :wordnet_noun_synset "08375259" .
 
 :RecreationAndSportEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Recreation and Sport Event"@en ;
-  :definition "Any activity done for relaxation and enjoyment (not an Agent's job or business)."@en ;
+  rdfs:comment "Any activity done for relaxation and enjoyment (not an Agent's job or business)."@en ;
   :wordnet_noun_synset "00427931", "00402591", "00041926", "00456623" ;
   :wordnet_verb_synset "00013321", "01075360", "01151936", "02423521" . 
 
 :ReligiousCeremony a owl:Class ;
   rdfs:subClassOf :Ceremony ;
   rdfs:label "Religious Ceremony"@en ;
-  :definition "A type of ceremony related to celebrating a religious event or prescribed by a religion."@en ;
+  rdfs:comment "A type of ceremony related to celebrating a religious event or prescribed by a religion."@en ;
   :wordnet_noun_synset "01030024" ;
   :wordnet_verb_synset "02619310" . 
 
 :RemovalAndRestriction a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Removal and Restriction"@en ;
-  :definition "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)."@en ;
+  rdfs:comment "An act intended to decrease, reduce, take away, dispose of or discard something or someone. What is removed/restricted is identified using the :has_topic property. The thing or Agent that is affected by the removal/restriction is defined using the :has_affected_resource/:has_affected_agent properties (respectively)."@en ;
   :wordnet_noun_synset "00392407", "00809843", "01147872" ; 
   :wordnet_verb_synset "00173351", "00234091", "00450647" . 
 
 :RemovalOfRawMaterials a owl:Class ;
   rdfs:subClassOf :RemovalAndRestriction ;
   rdfs:label "Removal of Raw Materials (Mining, Drilling, Logging, ...)"@en ;
-  :definition "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities"@en ;
+  rdfs:comment "A removal or reduction in raw materials due to mining, logging, fishing, drilling and similar activities"@en ;
   :wordnet_noun_synset "00610057", "00924141", "00924782", "00582809", "00924944", "00944615" ;
   :wordnet_verb_synset "01165936", "01166163", "01313320", "01445640", "01261392" . 
 
 :ReturnRecoveryAndRelease a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Return, Recovery and Release"@en ;
-  :definition "An act of restoring something or someone to their original owner/location/condition, granting freedom to someone or something, or publishing/releasing something. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)."@en ;
+  rdfs:comment "An act of restoring something or someone to their original owner/location/condition, granting freedom to someone or something, or publishing/releasing something. Note that the entity that is returned/released can be described using the :has_topic predicate, while the original (owning) Agent or location can be specified using the :has_affected_agent and :has_origin properties (respectively)."@en ;
   :wordnet_noun_synset "00046648", "07434392", "00096322", "00096791", "00214561", "00090171" ; 
   :wordnet_verb_synset "02557529", "02289796", "02426474", "02502711", "01477180" . 
 
 :RewardAndCompensation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Reward and Compensation"@en ;
-  :definition "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific EventAndState (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property."@en ;
+  rdfs:comment "An act of giving something or someone to an Agent to recognize their services, achievements/accomplishments or efforts. If a specific EventAndState (such as affiliation with an Organization) is being recognized, that is identified using the :has_topic predicate. The Agent (e.g., an Animal, Person or GroupOfAgents) that is rewarded is indicated using the :has_affected_agent property. And, the details of the reward are defined using the :has_instrument property."@en ;
   :wordnet_noun_synset "13304787", "06709228", "13303030" ;
   :wordnet_verb_synset "00789322", "02266695", "02551772" . 
 
 :RiskTaking a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Risk Taking"@en ;
-  :definition "Proceeding with an act that is dangerous and/or may result in injury, failure or loss."@en ;
-  :definition "Proceeding with an act that is dangerous and/or that has the 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings."@en ;
+  rdfs:comment "Proceeding with an act that is dangerous and/or may result in injury, failure or loss."@en ;
+  rdfs:comment "Proceeding with an act that is dangerous and/or that has the 'possibility of something bad happening. Risk involves uncertainty about the effects/implications of an activity with respect to something that humans value (such as health, well-being, wealth, property or the environment), often focusing on negative, undesirable consequences. ... The understanding of risk, the methods of assessment and management, the descriptions of risk and even the definitions of risk differ in different practice areas (business, economics, environment, finance, information technology, health, insurance, safety, security etc).' (https://en.wikipedia.org/w/index.php?title=Risk&oldid=1013804959) It is expected that further subclasses will be defined to clarify the different understandings."@en ;
   :wordnet_noun_synset "00803899", "04669283", "04866016", "04867047" ; 
   :wordnet_verb_synset "02551275" . 
 
-:Searching a owl:Class ;
+:Search a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Searching"@en ;
-  :definition "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property."@en ;
+  rdfs:label "Search"@en ;
+  rdfs:comment "An act of looking for something or someone. The entity that is searched for is identified using the :has_topic property."@en ;
   :wordnet_noun_synset "00453279", "00947217" ;
   :wordnet_verb_synset "01318273", "00790800", "01320383", "01146304", "02004900" .
 
 :Separation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Separation"@en ;
-  :definition "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts."@en ;
+  rdfs:comment "An act of moving two or more things or Agents some distance from each other, or of breaking an entity into its parts."@en ;
   :wordnet_noun_synset "14441101", "14440955", "08664696", "00386599" ; 
   :wordnet_verb_synset "00209582", "02036260", "00331375", "02035003", "00334996", "00369315", "00495205" . 
 
 :SiegeAndSurrounding a owl:Class ;
   rdfs:subClassOf :RemovalAndRestriction ;
   rdfs:label "Siege and Surrounding"@en ;
-  :definition "An act of encircling a Location."@en ;
+  rdfs:comment "An act of encircling a Location."@en ;
   :wordnet_noun_synset "00956197" ; 
   :wordnet_verb_synset "01129272", "01129387", "01129837", "01133033", "01469999", "01571714", "01589983" . 
-
-:SleepAndRest a owl:Class ;
-  rdfs:subClassOf :BodilyAct ;
-  rdfs:label "Sleep and Rest"@en ;
-  :definition "An activity related to not moving/working in order to recover strength or fitness, or to refresh. Sleeping is a more relaxed state than resting where an Agent's eyes are closed, muscles relaxed and consciousness suspended."@en ;
-  :wordnet_noun_synset "00859826", "14048353", "14049464", "15298612", "01066072", "01064507", "05708758" ; 
-  :wordnet_verb_synset "00014398", "01641175" .
 
 :SpaceEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Space Event"@en ;
-  :definition "Any event that occurs beyond the Earth."@en ;
+  rdfs:comment "Any event that occurs beyond the Earth."@en ;
   :example "Examples are comet/asteroid/meteoroid observations and impacts, burn-up of space debris in the atmosphere, etc."@en ;
-  :noun_synonym  "extraterrestrial", "space walk", "spaceflight", "space travel", "spacefaring", "eclipse", "space debris", "meteor shower", "space probe", "space station", "spacesuit", "solar flare", "eclipse" ;
   :wordnet_noun_synset "09300592", "00293825", "00314328", "04272778", "04273014", "04273124", "04273272", "04273485", "07383246", "11527418" ;
   :wordnet_verb_synset "01517688", "01910195" . 
 
 :StateAndPhysicalChange a owl:Class ;
   rdfs:subClassOf :Change ;
   rdfs:label "State Change and Physical Change"@en ;
-  :definition "An Event indicating that some entity has been modified by the application of heat, cooling, pressure, human activity, etc. The entity that is affected is identified using the property, :has_topic."@en ;
+  rdfs:comment "An Event indicating that some entity has been modified by the application of heat, cooling, pressure, human activity, etc. The entity that is affected is identified using the property, :has_topic."@en ;
   :wordnet_noun_synset "00405224", "00199979" ;
   :wordnet_verb_synset "00139943", "00140787", "00144670", "00145958", "00209244", "00238763", "00239753", "00255753", "00283693", "00313162" .
 
 :Storage a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Storage"@en ;
-  :definition "Any act of keeping something for future delivery, sale or use."@en ;
+  rdfs:comment "Any act of keeping something for future delivery, sale or use."@en ;
   :wordnet_noun_synset "00373415", "04336084", "13389225", "08479216", "00813016" ; 
   :wordnet_verb_synset "02285938", "02287351", "02290237", "02208876" .  
 
 :Substitution a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Substitution"@en ;
-  :definition "An act of replacing something or someone with another."@en ;
+  rdfs:comment "An act of replacing something or someone with another."@en ;
   :wordnet_noun_synset "00197334", "07458361" ; 
   :wordnet_verb_synset "02262575", "02263424" . 
 
 :Suicide a owl:Class ;
   rdfs:subClassOf :Death ;
   rdfs:label "Suicide"@en ;
-  :definition "The act of an individual (animal or Person) taking their own life."@en ;
+  rdfs:comment "The act of an individual (animal or Person) taking their own life."@en ;
   :wordnet_noun_synset "00223352", "10693108" ; 
   :wordnet_verb_synset "01327678" . 
 
 :TransferOfPower a owl:Class ;
   rdfs:subClassOf :PoliticalEvent ;
   rdfs:label "Transfer of Governmental Power"@en ;
-  :definition "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."@en .
+  rdfs:comment "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."@en .
 
 :UtilizationAndConsumption a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Utilization And Consumption"@en ;
-  :definition "Any act that uses something or someone."@en ;
+  rdfs:comment "Any act that uses something or someone."@en ;
   :wordnet_noun_synset "00948944", "00357025" ; 
   :wordnet_verb_synset "01159815", "01167359", "01160888", "01161188" . 
 
 :ViolationOfAgreement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Violation of Agreement"@en ;
-  :definition "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."@en ;
+  rdfs:comment "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."@en ;
   :wordnet_noun_synset "00772032", "00069993" ;
   :wordnet_verb_synset "02572443" . 
 
 :WeatherEvent a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Weather Event"@en ;
-  :definition "Any environmental occurrence related to atmospheric conditions in an area."@en ;
+  rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area."@en ;
   :wordnet_noun_synset "06763412", "11445694", "11482925" ;
   :wordnet_verb_synset "02762779", "00217578", "02775199", "02776493" . 
 
@@ -635,9 +596,6 @@
   owl:members  ( :InclusionAttachmentAndUnification :Separation ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Possession :Loss ) .
-
-[] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :ProductionManufactureAndCreation :UtilizationAndConsumption ) .
 
 [] rdf:type owl:AllDisjointClasses ;
@@ -646,17 +604,23 @@
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :RewardAndCompensation :Punishment ) .
 
-[] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :StartOfBusiness :EndOfBusiness ) .
-
 
 ########################################################################
 # Datatype Properties
 ########################################################################
 
+:assessment a owl:DatatypeProperty, owl:FunctionalProperty ; 
+  rdfs:subPropertyOf :reported_value ;
+  rdfs:label "assessment"@en ;
+  rdfs:comment "A restricted set of string values indicating how an AssessmentMeasurement for an entity (typically, a sub-class of EnvironmentAndCondition, such as Employment in a Country) is qualitatively evaluated - ranging from 'negligible or none' to 'very high'."@en ;
+  rdfs:domain :AssessmentMeasurement ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('high' 'low' 'medium' 'negligible or none' 'very high' ) ] .
+
 :reported_value a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "reported value"@en ;
-  :definition "Specifies the value of a Measurement as a decimal (where the value's units are defined using the :has_unit predicate) or a string."@en ;
+  rdfs:comment "Specifies the value of a Measurement as a decimal (where the value's units are defined using the :has_unit predicate) or a string."@en ;
   rdfs:domain :Measurement ;
   rdfs:range [ a rdfs:Datatype ;
                owl:unionOf ( xsd:decimal xsd:string) ].
@@ -666,41 +630,8 @@
 # Object Properties
 ########################################################################
 
-:defined_for a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :has_topic ;
-  rdfs:label "defined for"@en ;
-  :definition "A relationship indicating that a Measurement concerns/is 'about' the referenced instance."@en ;
-  rdfs:domain :Measurement .
-
-:has_assessment a owl:ObjectProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :reference_to_enumerated_value ;
-  rdfs:label "has assessment"@en ;
-  :definition "Assigns an AssessmentLevel to an AssessmentMeasurement."@en ;
-  rdfs:domain :AssessmentMeasurement ;
-  rdfs:range :AssessmentLevel .
-
 :has_unit a owl:ObjectProperty, owl:FunctionalProperty ;
   rdfs:label "has unit of measure"@en ;
-  :definition "Associates the units of a Measurement's :reported_value. Units are defined by QUDT.org and can be searched at http://www.qudt.org/doc/DOC_VOCAB-UNITS.html."@en ;
+  rdfs:comment "Associates the units of a Measurement's :reported_value. Units are defined by QUDT.org and can be searched at http://www.qudt.org/doc/DOC_VOCAB-UNITS.html."@en ;
   rdfs:domain :Measurement ;
   rdfs:range <http://qudt.org/schema/qudt/Unit> .
-
-
-########################################################################
-# Individuals
-########################################################################
-
-:enum:High a :AssessmentLevel ;
-  rdfs:label "High Assessment"@en .
-
-:enum:Low a :AssessmentLevel ;
-  rdfs:label "Low Assessment"@en .
-
-:enum:Medium a :AssessmentLevel ;
-  rdfs:label "Medium Assessment"@en .
-
-:enum:NegligibleNone a :AssessmentLevel ;
-  rdfs:label "Negligible Assessment or None"@en .
-
-:enum:VeryHigh a :AssessmentLevel ;
-  rdfs:label "Very High Assessment"@en .

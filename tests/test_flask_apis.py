@@ -1,5 +1,6 @@
 import json
 import pytest
+from datetime import datetime, timedelta
 from dna.app import app
 
 narrative_ids = []
@@ -104,27 +105,26 @@ def test_repositories_get2(client):
 
 # dna/v1/repositories/narratives
 def test_narratives_post_ok1(client):
+    article_text = "John is a musician. When Mary goes to the grocery store, John practices guitar."
     req_data = json.dumps({
         "narrativeMetadata": {
-            "author": "John Smith",
+            "title": "A narrative title",
             "published": "2022-07-14T17:32:28Z",
-            "publisher": "Wall Street Journal",
-            "source": "Identifier_such_as_URL",
-            "title": "John's Title"},
-        "narrative": "When Mary went to the grocery store, John practiced guitar."
+            "source": "Wall Street Journal",
+            "url": "http://some-site.com/narrative",
+            "length": len(article_text)},
+        "narrative": article_text
     })
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json',
                        query_string={'repository': 'foo'}, data=req_data)
     assert resp.status_code == 201
-    json_data = resp.get_json()
+    json_data = resp.get_json()['narrativeDetails']
     # Will validate encoding in other tests
     assert 'narrativeId' in json_data
     assert 'processed' in json_data
     assert 'numberOfTriples' in json_data
     assert 'narrativeMetadata' in json_data
-    assert 'author' in json_data['narrativeMetadata']
     assert 'published' in json_data['narrativeMetadata']
-    assert 'publisher' in json_data['narrativeMetadata']
     assert 'source' in json_data['narrativeMetadata']
     assert 'title' in json_data['narrativeMetadata']
     narrative_ids.append(json_data['narrativeId'])
@@ -133,17 +133,17 @@ def test_narratives_post_ok1(client):
 def test_narratives_post_ok2(client):
     req_data = json.dumps({
         "narrativeMetadata": {
-            "author": "Jane Doe",
+            "title": "Another Title",
             "published": "2022-07-14T17:32:28Z",
-            "publisher": "New York Times",
-            "source": "Identifier_such_as_URL",
-            "title": "Jane's Title"},
+            "source": "New York Times",
+            "url": "http://nyt.com/article",
+            "length": len("George lived in Detroit in 1980. He moved to Atlanta in 1990.")},
         "narrative": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
     })
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json',
                        query_string={'repository': 'foo'}, data=req_data)
     assert resp.status_code == 201
-    json_data = resp.get_json()
+    json_data = resp.get_json()['narrativeDetails']
     assert 'narrativeId' in json_data
     narrative_ids.append(json_data['narrativeId'])
 
@@ -156,10 +156,10 @@ def test_narratives_get1(client):
     assert json_data['repository'] == 'foo'
     assert 'narratives' in json_data
     assert len(json_data['narratives']) == 2
-    assert 'publisher' in json_data['narratives'][0]['narrativeMetadata']
-    assert 'publisher' in json_data['narratives'][1]['narrativeMetadata']
-    narr_publishers = [json_data['narratives'][0]['narrativeMetadata']['publisher'],
-                       json_data['narratives'][1]['narrativeMetadata']['publisher']]
+    assert 'source' in json_data['narratives'][0]['narrativeMetadata']
+    assert 'source' in json_data['narratives'][1]['narrativeMetadata']
+    narr_publishers = [json_data['narratives'][0]['narrativeMetadata']['source'],
+                       json_data['narratives'][1]['narrativeMetadata']['source']]
     assert 'New York Times' in narr_publishers and 'Wall Street Journal' in narr_publishers
 
 
@@ -194,14 +194,6 @@ def test_narratives_post_missing_narr(client):
     json_data = resp.get_json()
     assert json_data['error'] == 'missing'
     assert 'request body' in json_data['detail']
-
-
-def test_narratives_post_invalid_sources(client):
-    resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo', 'extSources': 'no'})
-    assert resp.status_code == 400
-    json_data = resp.get_json()
-    assert json_data['error'] == 'invalid'
-    assert 'extSources' in json_data['detail']
 
 
 def test_narratives_post_invalid_repo(client):
@@ -315,6 +307,66 @@ def test_graphs_put_bad_triples(client):
     json_data = resp.get_json()
     assert 'error' in json_data
     assert "Invalid triples" in json_data['error']
+
+
+# Get articles using search criteria that are likely to have results
+def test_news_get(client):
+    yesterday = datetime.now() - timedelta(1)
+    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump',
+                                                    'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
+                                                    'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
+    assert resp.status_code == 200
+    json_data = resp.get_json()
+    assert 'articleCount' in json_data and json_data['articleCount'] > 1
+    assert 'articles' in json_data
+    article0 = json_data['articles'][0]
+    assert 'length' in article0
+    assert 'published' in article0
+    assert 'source' in article0
+    assert 'title' in article0
+    assert 'url' in article0
+
+
+# Post articles using search criteria that are likely to have results
+def test_news_post(client):
+    yesterday = datetime.now() - timedelta(1)
+    resp = client.post('/dna/v1/news',
+                       query_string={'repository': 'foo', 'topic': 'Trump', 'numberToIngest': 1,
+                                     'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
+                                     'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
+    assert resp.status_code == 200
+    json_data = resp.get_json()
+    # TODO: Validate
+
+
+# Get articles using incorrect parameters
+def test_news_get_incorrect_parameters(client):
+    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump', 'from': '1899-01-01', 'to': '1899-01-01'})
+    assert resp.status_code == 400
+    json_data = resp.get_json()
+    assert 'error' in json_data and json_data['error'] == 'invalid'
+    assert json_data['detail'] == 'The query parameters, topic, fromDate and toDate, must all be specified'
+
+
+# Get articles using invalid from/to
+def test_news_get_invalid_dates(client):
+    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump', 'fromDate': '1899-01-01', 'toDate': '1899-01-01'})
+    assert resp.status_code == 400
+    json_data = resp.get_json()
+    assert 'error' in json_data and json_data['error'] == 'invalid'
+    assert json_data['detail'] == 'The query parameters, fromDate and toDate, must use recent/valid dates ' \
+                                  'written as YYYY-mm-dd'
+
+
+def test_news_post_no_repo(client):
+    yesterday = datetime.now() - timedelta(1)
+    resp = client.post('/dna/v1/news', query_string={'topic': 'Trump',
+                                                     'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
+                                                     'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
+    assert resp.status_code == 400
+    json_data = resp.get_json()
+    assert 'error' in json_data and json_data['error'] == 'missing'
+    assert json_data['detail'] == 'The argument parameter, repository, is required'
 
 
 def test_repositories_cleanup(client):

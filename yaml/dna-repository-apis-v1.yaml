@@ -1,56 +1,44 @@
 openapi: 3.0.3
 info:
-  title: Deep Narrative Analysis RESTful APIs v1.1
+  title: Deep Narrative Analysis RESTful APIs v1.2
   description: |-
     Defines the interface for ingesting, retrieving, editing and deleting 
     narratives and news articles using the Deep Narrative Analysis (DNA) 
     infrastructure.
     
-    Useful links:
-    - [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis)
-    - [DNA blog](https://hearing-all-voices.blogspot.com/)
+    To use the API and for more information, refer to the README.txt file in 
+    the [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis).
+    Note that this implementation assumes storage of graphs in a Stardog database.
+    An environment variable defines the location of that database (typically a 
+    Stardog Cloud instance). If that does not exist or the environment variable is
+    not defined, DNA will not function.
     
-    To use the API, the following should be downloaded/installed:
-    - The Stardog data store (https://www.stardog.com/get-started/)
-    - The DNA GitHub repository 
-      (https://github.com/ontoinsights/deep_narrative_analysis)
-    - All DNA Python libraries specified in the requirements.txt file (in
-      the GitHub repository)
-    - The appropriate spaCy language model (for English, en_core_web_trf)
-    
-    More information can be found in the GitHub repository's README.txt file.
-    
-    The following workflow is recommended:
-    - Go to the 'dna' directory in the downloaded GitHub DNA file structure
-    - Still in the 'dna' directory, execute "flask run"
+    The following is a typical workflow after starting the DNA application:
     - Create a new repository by POSTing to
-      /dna/v1/repositories?db=db_addr&repository=repo_name, or an existing 
-      repository can be reused
-    - Acquire news articles to be ingested by GETting
+      /dna/v1/repositories?repository=repo_name, or an existing repository may 
+      be reused
+    - Acquire news articles to be ingested by POSTing to
       /dna/v1/news?topic=topic_name&from=from_date&to=to_date&key=news_key
-      - At this time, only English text articles will be acquired; In the future, 
-        another parameter will be added to the API to indicate the language
-    - Ingest narratives or articles to the repository by POSTing to 
-      /dna/v1/repositories/narratives?db=db_addr&repository=repo_name 
+      - At this time, only English text articles will be ingested
+    - OR ingest narratives or articles to the repository by POSTing to 
+      /dna/v1/repositories/narratives?repository=repo_name 
       with a request body holding the narrative metadata and text 
       (the response body will contain the narrative's id)
-      - At this time, only English text narratives and articles are 
-        supported; In the future, another parameter will be added to the 
-        API to indicate the language
+      - As above, only English text narratives and articles are 
+        supported
     - Review the contents of a repository by GETting 
-      /dna/v1/repositories/narratives?db=db_addr&repository=repo_name
+      /dna/v1/repositories/narratives?repository=repo_name
       (the response body will contain a list of all narratives and articles
       and a subset of their data)
     - To obtain the specific triples in a narrative or article, GET 
-      /dna/v1/repositories/narratives/graphs?db=db_addr&
-         repository=repo_name&narrativeId=narr_id
+      /dna/v1/repositories/narratives/graphs?repository=repo_name&narrativeId=narr_id
       (the response body will contain a list of all triples)
       
     Note that GETting /dna/v1/repositories or /dna/v1/repositories/narratives
     will return a list of all DNA repositories or all narratives/articles in
     a repository, respectively.
     
-    DELETE using the /dna/v1/repositories or /dna/v1/repositories/narratives 
+    DELETEing using the /dna/v1/repositories or /dna/v1/repositories/narratives 
     APIs will remove the specified repository or narrative/article. Please use 
     these commands with caution since the results are not reversable.
   contact:
@@ -58,7 +46,7 @@ info:
   license:
     name: Creative Commons Attribution 4.0 International Public License
     url: https://creativecommons.org/licenses/by/4.0/legalcode
-  version: '1.1'
+  version: '1.2'
 paths:
   /dna/v1/news:
     get:
@@ -67,11 +55,14 @@ paths:
         published within the indicated date range
       description: >-
         Using the NewsAPI, return a list of articles relevant to the
-        specified topic and within the indicated date range
+        specified topic and within the indicated date range. Note that
+        the 'free' version of newsapi.org restricts requests to a time
+        period of the previous month. Take care when defining a time 
+        period to match the pricing model associated with your API key.
       parameters:
         - $ref: '#/components/parameters/topic'
-        - $ref: '#/components/parameters/from'
-        - $ref: '#/components/parameters/to'
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
       operationId: getNews
       responses:
         '200':
@@ -92,6 +83,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalError'  
+    post:
+      summary: >-
+        Query for and ingest a list of news articles given the
+        query parameter details 
+      description: >-
+        Get a list of news articles regarding the specified topic,
+        published within the indicated date range, and then ingest
+        ones with sufficient, accessible text to the specified 
+        repository. The number ingested can be limited to the first
+        x, where x is specified using the number_to_ingest query
+        parameter.
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/topic'
+        - $ref: '#/components/parameters/fromDate'
+        - $ref: '#/components/parameters/toDate'
+        - $ref: '#/components/parameters/number_to_ingest'
+      operationId: ingestNews
+      responses:
+        '200':
+          description: News articles ingested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NewsIngested' 
+        '400':
+          description: News ingest - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest' 
+        '404':
+          description: News ingest - Repository not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found at http://example.com
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
   /dna/v1/repositories:
     get:
       summary: >-
@@ -99,8 +137,6 @@ paths:
       description: >-
         Return the names and creation dates of all the DNA repositories 
         of the specified database server
-      parameters:
-        - $ref: '#/components/parameters/db'
       operationId: getRepositories
       responses:
         '200':
@@ -115,16 +151,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
-        '404':
-          description: Repository list - Database server not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Database server at address, http://example.com, was not found
         '500':
           description: Internal processing error
           content:
@@ -135,10 +161,8 @@ paths:
       summary: >-
         Create a new repository
       description: >-
-        Create a new repository with the specified name, 
-        in the specified database server
+        Create a new repository with the specified name
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
       operationId: createRepository
       responses:
@@ -157,17 +181,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadRequest'  
-        '404':
-          description: Repository creation - Database not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Database server at address, http://example.com, was not found
+                $ref: '#/components/schemas/BadRequest' 
         '409':
           description: Repository already exists
           content:
@@ -187,9 +201,8 @@ paths:
     delete:
       summary: Delete a repository
       description: >-
-        Delete the specified repository in the specified database server
+        Delete the specified repository 
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
       operationId: deleteRepository
       responses:
@@ -210,7 +223,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
         '404':
-          description: Repository deletion - DB or repository not found
+          description: Repository deletion - Repository not found
           content:
             application/json:
               schema:
@@ -229,12 +242,11 @@ paths:
     get:
       summary: >-
         Get a list of all narratives or articles (and their meta-data) 
-        in the specified repository, for the specified database server
+        in the specified repository
       description: >-
         Return the meta-data for all narratives or articles in the 
-        specified repository of the indicated database server
+        specified repository
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
       operationId: getNarratives
       responses:
@@ -249,9 +261,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BadRequest'  
+                $ref: '#/components/schemas/BadRequest' 
         '404':
-          description: Narrative list - DB or repository not found
+          description: Narrative list - Repository not found
           content:
             application/json:
               schema:
@@ -270,24 +282,20 @@ paths:
       summary: Ingest a narrative or news article to the specified repository
       description: >-
         Process a narrative or article based on details in the query parameters
-        and request body, and ingest it to the specified repository of the 
-        indicated database server
+        and request body, and ingest it to the specified repository 
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
-        - $ref: '#/components/parameters/extSources'
-        - $ref: '#/components/parameters/isBiography'
       operationId: ingestNarrative
       requestBody:
         description: Ingest narrative
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InputNarrative'  
+              $ref: '#/components/schemas/InputNarrative' 
         required: true
       responses:
         '201':
-          description: Knowledge graph created
+          description: Information graph created
           content:
             application/json:
               schema:
@@ -308,7 +316,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
         '404':
-          description: Narrative ingest - DB or repository not found
+          description: Narrative ingest - Repository not found
           content:
             application/json:
               schema:
@@ -327,9 +335,8 @@ paths:
       summary: Delete a narrative or news article
       description: >-
         Delete the specified narrative or news article in the 
-        specified repository of the indicated database server
+        specified repository 
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
         - $ref: '#/components/parameters/narrativeId'
       operationId: deleteText
@@ -354,7 +361,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
         '404':
-          description: Narrative delete - Db, repository or narrative not found
+          description: Narrative delete - Repository or narrative not found
           content:
             application/json:
               schema:
@@ -373,14 +380,13 @@ paths:
                 $ref: '#/components/schemas/InternalError'  
   /dna/v1/repositories/narratives/graphs:
     get:
-      summary: Get a narrative's or news article's knowledge graph
+      summary: Get a narrative's or news article's information graph
       description: >-
-        Get the knowledge graph for the narrative or article with 
-        the specified id in the repository of the indicated database
+        Get the information graph for the narrative or article with 
+        the specified id in the repository 
         server
       operationId: getGraph
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
         - $ref: '#/components/parameters/narrativeId'
       responses:
@@ -389,7 +395,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/KnowledgeGraphDetails'  
+                $ref: '#/components/schemas/InfoGraphDetails'  
         '400':
           description: Graph retrieval - Missing or invalid content
           content:
@@ -397,7 +403,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
         '404':
-          description: Graph retrieval - Db, repository or narrative not found
+          description: Graph retrieval - Repository or narrative not found
           content:
             application/json:
               schema:
@@ -414,15 +420,13 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalError'  
     put:
-      summary: Update a narrative's or news article's knowledge graph
+      summary: Update a narrative's or news article's information graph
       description: >-
-        Update the knowledge graph for the specific narrative or article
-        in the repository of the indicated database server. At this time,
-        the entire graph must be replaced. In the future, it will be 
-        possible to update select triples.
+        Update the information graph for the specific narrative or article
+        in the repository. At this time, the entire graph must be replaced. 
+        In the future, it will be possible to update select triples.
       operationId: updateGraph
       parameters:
-        - $ref: '#/components/parameters/db'
         - $ref: '#/components/parameters/repository'
         - $ref: '#/components/parameters/narrativeId'
       requestBody:
@@ -465,7 +469,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/BadRequest'  
         '404':
-          description: Graph update - Db, repository or narrative not found
+          description: Graph update - Repository or narrative not found
           content:
             application/json:
               schema:
@@ -483,28 +487,8 @@ paths:
                 $ref: '#/components/schemas/InternalError'
 components:
   parameters:
-    db:
-      name: db
-      in: query
-      description: >-
-        String specifying the address of the database server holding
-        the repository
-      required: false
-      schema:
-        type: string
-        default: http://localhost:5820
-    extSources:
-      name: extSources
-      in: query
-      description: >-
-        Boolean indicating whether details from external sources (such as 
-        Wikipedia/Wikidata or GeoNames) should be included in the parse
-      required: false
-      schema:
-        type: boolean
-        default: false
-    from:
-      name: from
+    fromDate:
+      name: fromDate
       in: query
       description: >-
         Date in yyyy-mm-dd format on or after which the news article
@@ -514,18 +498,6 @@ components:
         type: string
         format: date
         example: 2023-07-09
-    isBiography:
-      name: isBiography
-      in: query
-      description: >-
-        Boolean indicating whether the text is a biography/autobiography (if 
-        true) or a news article/blog post/etc. This has implications for the
-        parse. For example, in a biography, it is likely that a coherent 
-        timeline can be extracted. The default is 'false'.
-      required: false
-      schema:
-        type: boolean
-        default: false
     narrativeId:
       name: narrativeId
       in: query
@@ -535,6 +507,17 @@ components:
         type: string
         format: uuid
         example: 73cf1b89
+    numberToIngest:
+      name: numberToIngest
+      in: query
+      description: >-
+        Number of news articles to ingest from a retrieval
+        from newsorg.api. If not specified, all articles
+        that are retrieved with sufficient, valid text are
+        ingested.
+      required: false
+      schema:
+        type: integer
     repository:
       name: repository
       in: query
@@ -543,8 +526,8 @@ components:
       required: true
       schema:
         type: string
-    to:
-      name: to
+    toDate:
+      name: toDate
       in: query
       description: >-
         Date in yyyy-mm-dd format before which the news article
@@ -619,7 +602,7 @@ components:
           items:
             type: string
             example: error details
-    KnowledgeGraphDetails:
+    InfoGraphDetails:
       type: object
       properties:
         server:
@@ -647,7 +630,7 @@ components:
           example: 2022-09-09T12:41:00Z
         numberOfTriples:
           type: integer
-          description: Number of triples in the knowledge graph
+          description: Number of triples in the information graph
           example: 500
         narrativeMetadata:
           $ref: '#/components/schemas/NarrativeMeta'
@@ -701,6 +684,27 @@ components:
           format: date
           example: 2023-07-11
         articles:
+          $ref: '#/components/schemas/ArticleList'
+    NewsIngested:
+      type: object
+      properties:
+        topic:
+          type: string
+          example: +Omnicron+vaccine
+        fromDate:
+          type: string
+          format: date
+          example: 2023-07-09
+        toDate:
+          type: string
+          format: date
+          example: 2023-07-11
+        repository:
+          type: string
+          example: dna
+        articles:
+          $ref: '#/components/schemas/ArticleList'
+        failed_articles:
           $ref: '#/components/schemas/ArticleList'
     RepositoryList:
       type: array

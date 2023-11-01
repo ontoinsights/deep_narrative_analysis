@@ -1,4 +1,4 @@
-# Query for details from external sources
+# Query for details from GeoNames, Wikidata and Wikipedia
 # Called from get_ontology_mapping.py
 
 import logging
@@ -6,11 +6,9 @@ import os
 import requests
 from typing import Union
 import xml.etree.ElementTree as etree
-from nltk.corpus import wordnet as wn
 
-from dna.nlp import get_head_word
-from dna.queries import query_wikidata_labels, query_wikidata_time
-from dna.utilities_and_language_specific import concept_map, empty_string, space
+# Future: Modify code to 'replace' the language tag when the query is executed, vs at 'compile' time (as it is now)
+from dna.utilities_and_language_specific import concept_map, empty_string, language_tag, space
 
 geonamesUser = os.environ.get('GEONAMES_ID')
 
@@ -21,6 +19,17 @@ geocodes_mapping = {'H': ':WaterFeature',
                     'T': ':GeographicFeature',
                     'U': ':WaterFeature',
                     'V': ':GeographicFeature'}
+
+# Future
+query_wikidata_instance_of = \
+    'SELECT DISTINCT ?instanceOf WHERE {?item wd:P31 ?instanceOf}'
+
+language_filter = f'FILTER(lang(?label) = "{language_tag[1:]}")'
+query_wikidata_labels = \
+    'SELECT DISTINCT ?label WHERE {{?item rdfs:label ?label . ' + language_filter + ' } UNION ' \
+    '{?item skos:altLabel ?label . ' + language_filter + ' }}'
+
+query_wikidata_time = 'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'
 
 
 def _get_geonames_alt_names(root: etree.Element) -> (list, str):
@@ -56,9 +65,12 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     :return: The GeoNames response
     """
     try:
-        response = requests.get(request)
+        response = requests.get(request, timeout=10)
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'GeoNames timeout: Query={request}')
+        return None
     except requests.exceptions.RequestException as e:
-        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        logging.error(f'GeoNames query error: Query={request} and Exception={str(e)}')
         return None
     orig_root = etree.fromstring(response.content)
     toponym_name = _get_xml_value('./geoname/toponymName', orig_root)
@@ -92,10 +104,13 @@ def _get_wikidata_time(query: str, is_start: bool) -> str:
     else:
         query = query.replace('propTime', 'P582')
     try:
-        response = requests.get(f'https://query.wikidata.org/sparql?format=json&query={query}').json()
+        response = requests.get(f'https://query.wikidata.org/sparql?format=json&query={query}', timeout=10).json()
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikidata time timeout: Query={query}')
+        return empty_string
     except requests.exceptions.RequestException as e:
         request = f'https://query.wikidata.org/sparql?format=json&query={query}'
-        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        logging.error(f'Wikidata time query error: Query={request} and Exception={str(e)}')
         return empty_string
     results = []
     if 'results' in response and 'bindings' in response['results']:
@@ -118,21 +133,6 @@ def _get_xml_value(xpath: str, root: etree.Element) -> str:
     elems = root.findall(xpath)
     if elems:
         return elems[0].text
-    else:
-        return empty_string
-
-
-def check_wordnet(word: str) -> str:
-    """
-    Check the most common wordnet definition (the first one) for an unmapped term.
-
-    :param word: The term to be mapped
-    :return: String holding the head word from the definition of the first synset for the term, or
-             an empty string
-    """
-    synsets = wn.synsets(word, pos=wn.NOUN)
-    if synsets:
-        return get_head_word(synsets[0].definition())[0]
     else:
         return empty_string
 
@@ -209,7 +209,7 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
     class_type = ':PopulatedPlace'
     if feature == 'A':     # Administrative area
         if fcode.startswith('ADM'):
-            class_type += '+:AdministrativeDivision'
+            class_type += ', :AdministrativeDivision'
             # Get administrative level
             if any([i for i in fcode if i.isdigit()]):
                 admin_level = [int(i) for i in fcode if i.isdigit()][0]
@@ -220,7 +220,7 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
             # Leased area usually for military installations or a zone, such as a demilitarized zone
             class_type = ':DesignatedArea'
     elif feature == 'P' and fcode.startswith('PPLA'):  # PopulatedPlace that is an administrative division
-        class_type += '+:AdministrativeDivision'
+        class_type += ', :AdministrativeDivision'
         # Get administrative level
         admin_levels = [int(i) for i in fcode if i.isdigit()]
         if admin_levels:
@@ -243,37 +243,19 @@ def get_wikidata_labels(wikidata_id: str) -> list:
     query_labels = query_wikidata_labels.replace('?item', f'wd:{wikidata_id}')
     try:
         response = requests.get(
-            f'https://query.wikidata.org/sparql?format=json&query={query_labels}').json()
+            f'https://query.wikidata.org/sparql?format=json&query={query_labels}', timeout=10).json()
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikidata labels timeout: Query={query_labels}')
+        return labels
     except requests.exceptions.RequestException as e:
         request = f'https://query.wikidata.org/sparql?format=json&query={query_labels}'
-        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        logging.error(f'Wikidata labels query error: Query={request} and Exception={str(e)}')
         return labels
     if 'results' in response and 'bindings' in response['results']:
         results = response['results']['bindings']
         for result in results:
             labels.append(result['label']['value'].replace('"', "'"))
     return labels
-
-
-def get_wikipedia_classification(text: str, wiki_desc: str = empty_string) -> str:
-    """
-    Check if the text is a kind of emotion, ethnicity, religion or political ideology,
-    based on the Wikipedia description.
-
-    :param text: String holding the text to be categorized
-    :param wiki_desc: String holding the Wikipedia description text; If not provided, will be
-                      queried
-    :return: A string indicating either 'EmotionalResponse', 'Ethnicity', 'ReligiousBelief'
-             or 'PoliticalIdeology'
-    """
-    if not wiki_desc:
-        wiki_desc, wiki_url = get_wikipedia_description(text)
-    if wiki_desc:
-        wiki_lower = wiki_desc.lower()
-        for concept in concept_map.keys():
-            if concept in wiki_lower:
-                return concept_map[concept]
-    return empty_string
 
 
 def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (str, str):
@@ -292,11 +274,14 @@ def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (
     noun_underscore = noun.replace(space, '_')
     try:
         resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/'
-                            f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}')
+                            f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}', timeout=10)
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikipedia description timeout: Noun={noun_underscore}')
+        return empty_string, empty_string
     except requests.exceptions.RequestException as e:
         request = f'https://en.wikipedia.org/api/rest_v1/page/summary/' \
                   f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}'
-        logging.error(f'External source query error: Query={request} and Exception={str(e)}')
+        logging.error(f'Wikipedia description query error: Query={request} and Exception={str(e)}')
         return empty_string, empty_string
     wikipedia = resp.json()
     if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':

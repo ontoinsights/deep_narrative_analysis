@@ -1,0 +1,184 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining the properties and relationships of InformationSources
+# and their graphs.
+# 
+# Created: October 31 2023
+# Last modified: October 31 2023
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Attribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  New
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+
+########################################################################
+# Datatype Properties
+########################################################################
+
+:author a owl:DatatypeProperty ;
+  rdfs:label "author"@en ;
+  rdfs:comment "String holding the author/creator of the InformationSource. There may be more than one."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
+:errors a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "errors (boolean)"@en ;
+  rdfs:comment "Boolean indicating whether the referencing Sentence contains grammatical or spelling errors."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range xsd:boolean .
+
+:grade_level a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "grade level"@en ;
+  rdfs:comment "Defines the grade level of an individual who can understand the full semantics of the Sentence."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range xsd:integer .
+
+:interpretation a owl:DatatypeProperty ;
+  rdfs:label "interpretation"@en ;
+  rdfs:comment "Defines how a Narrative might be interpreted by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range xsd:string .
+
+:narrative_goal a owl:DatatypeProperty ;
+  rdfs:label "narrative goal"@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('advocate' 'analyze' 'describe-set' 'describe-current' 'entertain'
+                           'establish-authority' 'inspire' 'life-story' ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate the possible purposes/goals for publishing a narrative. There are many possible goals that may apply to a single Narrative. As an example, values include 'advocate'ing, 'analyze'ing and 'entertain'ing."@en .
+
+:number_characters a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :count ;
+  rdfs:label "number of characters"@en ;
+  rdfs:comment "Integer indicating the length (in characters) of the narrative/news article."@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range xsd:integer .
+
+:number_triples a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :count ;
+  rdfs:label "number of triples"@en ;
+  rdfs:comment "A count of the number of triples in an InformationGraph."@en ;
+  rdfs:domain :InformationGraph ;
+  rdfs:range xsd:integer .
+
+:offset a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "offset"@en ;
+  rdfs:comment "Defines the (incremental) Sentence number extracted from a Narrative."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range xsd:integer .
+
+:rhetorical_device a owl:DatatypeProperty ;
+  rdfs:label "rhetorical device"@en ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :Narrative :Sentence ) ] ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('ad hominem' 'allusion' 'antanagoge' 'aphorism' 'ethos' 'expletive'
+                           'hyperbole' 'imagery' 'invective' 'irony' 'kairos' 'litote' 'logos'
+                           'metaphor' 'nostalgia' 'pathos' 'pleonasm' 'repetition' 'loaded language'
+                           'repeated statements' 'rhetorical question' 'juxtaposition' ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate the rhetorical devices that are observed in a Sentence or Narrative. There are many possible devices that may be employed in an entity. As an example, values include 'allusion', 'loaded language' and 'nostalgia'."@en .
+
+:segment_label a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "segment label"@en ;
+  rdfs:comment "String specifying the perspective/viewpoint for interpreting a Narrative. This is an edge property on the :interpretation string property."@en ;
+  rdfs:range xsd:string .
+
+:sentence_person a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "sentence person"@en ;
+  rdfs:comment "Defines the perspective/person of the Sentence - 1 for first person(I/we), 2 for second person (you) and 3 for third person (he/she/it/they)."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range xsd:integer .
+
+:sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "sentiment"@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ( "negative" "neutral" "positive" ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate whether a Sentence conveys a 'positive', 'negative' or 'neutral' sentiment."@en .
+  
+:source a owl:DatatypeProperty ;
+  rdfs:label "source"@en ;
+  rdfs:comment "String indicates the agent, location or means by which the InformationSource was obtained."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
+:summary a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "summary"@en ;
+  rdfs:comment "Provides a short summarization of a Sentence or Narrative."@en ;
+  rdfs:domain [ a owl:Class ;
+                owl:unionOf ( :Narrative :Sentence ) ] ;
+  rdfs:range xsd:string .
+
+:tense a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "tense"@en ;
+  rdfs:comment "Defines the whether a Sentence is written in the 'past', 'present' or 'future' tense."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('neutral' 'past' 'present') ] .
+                                      
+:text a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "text"@en ;
+  rdfs:comment "String holding the text of an InformationSource."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
+:text_quote a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :text ;
+  rdfs:label "text quote"@en ;
+  rdfs:comment "String holding the text of a quotation in an InformationSource."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+  
+:voice a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "voice"@en ;
+  rdfs:comment "Defines the whether a Sentence is written in the first, second or third person."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:integer ;
+               owl:withRestrictions ( [ xsd:minInclusive "1"^^xsd:integer ]
+                                      [ xsd:maxInclusive "3"^^xsd:integer ] ) ] .
+
+
+########################################################################
+# Object Properties
+########################################################################
+
+:attributed_to a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "attributed to"@en ;
+  rdfs:comment "Relationship between a Quote and the Agent to whom/which it is attributed."@en ;
+  rdfs:domain :Quote ;
+  rdfs:range :Agent .
+
+:has_semantic a owl:ObjectProperty ;
+  rdfs:label "has semantic"@en ;
+  rdfs:comment "Relationship between a Sentence and the events and/or conditions detailed in it."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range :EventAndState .
+
+:mentions a owl:ObjectProperty ;
+  rdfs:label "mentions"@en ;
+  rdfs:domain :Sentence ;
+  rdfs:comment "Indicates that the Sentence includes a reference to a specific named entity such as an agent (organization, person, etc.), time period or specific date/time, historical event (for example, World War II) or location."@en .

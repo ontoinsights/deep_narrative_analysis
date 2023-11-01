@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: July 11 2023
+# Last modified: October 31 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -20,11 +20,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history
-#  Added @en language tags to rdfs:labels, :definitions and :examples
-#  Removed all synonyms to language-specific modules
-#  Added Negation
-#  Updated Failure to FailureAndLoss, and Success to SuccessAndWinning
+#  Reset change history and simplified
 ########################################################################
 
 
@@ -35,43 +31,51 @@
 :Continuation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Continuation"@en ;
-  :definition "Indication that an ongoing EventAndState is still occurring - regardless of whether the actual time is known."@en ;
+  rdfs:comment "Indication that an ongoing EventAndState is still occurring - regardless of whether the actual time is known."@en ;
   :wordnet_noun_synset "01019929" ;
   :wordnet_verb_synset "00118331", "00783045" .
 
 :End a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "End"@en ;
-  :definition "The final point of an ongoing EventAndState - regardless of whether the actual end time is known."@en ;
+  rdfs:comment "The final point of an ongoing EventAndState - regardless of whether the actual end time is known."@en ;
   :wordnet_noun_synset "00210792" ;
   :wordnet_verb_synset "00353480" .
 
-:FailureAndLoss a owl:Class ;
+:Failure a owl:Class ;
   rdfs:subClassOf :End ;
-  rdfs:label "Failure and Loss"@en ;
-  :definition "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure time is known."@en ;
+  rdfs:label "Failure"@en ;
+  rdfs:comment "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure details are known."@en ;
   :wordnet_noun_synset "00067036" ;
   :wordnet_verb_synset "02534046" .
 
-:Negation a owl:Class ;
+:Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Negation"@en ;
-  :definition "Indicates that the EventAndState semantics that are also defined for an occurrence does NOT exist, did NOT occur/has NOT happened, etc. Note that there is also a :negation data property. An EventAndState may semantically indicate a negated concept (for example, Negation and SanitaryCondition indicates that something may be unsanitary). Then, if a sentence states that the 'unsanitary' concept is negated (saying, for example, that this is 'not an unsanitary condition'), both the negation property and the Negation class would be observed in the resulting knowledge graph."@en ;
-  :wordnet_noun_synset "06764286", "07295646" .
+  rdfs:label "Measurement"@en ;
+  rdfs:comment "The act of observing and reporting on properties such as length, size, amount, temperature, pressure, etc. at a specific time and location (as identified by the :has_time and :has_location properties). If the measurement is made by an instrument (such as a sensor), that can be specified using the :has_instrument property. The 'result' of a Measurement is indicated using the :reported_value property, and can be either a decimal or string value. The units of the Measurement are indicated using the :has_unit property."@en ;
+  :wordnet_noun_synset "00998911" ; 
+  :wordnet_verb_synset "00490773" . 
 
 :StartAndBeginning a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Start and Beginning"@en ;
-  :definition "The originating point of an ongoing EventAndState - regardless of whether the actual start time is known."@en ;
+  rdfs:comment "The originating point of an ongoing EventAndState - regardless of whether the actual start time is known."@en ;
   :wordnet_noun_synset "00236302" ;
   :wordnet_verb_synset "00346415", "00349400" .
 
-:SuccessAndWinning a owl:Class ;
+:Success a owl:Class ;
   rdfs:subClassOf :End ;
-  rdfs:label "Success and Winning"@en ;
-  :definition "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual end time is known."@en ;
+  rdfs:label "Success"@en ;
+  rdfs:comment "A good outcome or the accomplishment of an EventAndState - regardless of whether the actual success details are known."@en ;
   :wordnet_noun_synset "00064472", "00035910" ;
   :wordnet_verb_synset "02024442" .
+
+:WinAndLoss a owl:Class ;
+  rdfs:subClassOf :End ;
+  rdfs:label "Win and Loss"@en ;
+  rdfs:comment "An outcome where one entity wins and the other loses - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
+  :wordnet_noun_synset "07369331", "00068346" ;
+  :wordnet_verb_synset "01104324" .
 
 
 ########################################################################
@@ -83,85 +87,70 @@
 # Object Properties
 ########################################################################
 
-:has_active_agent a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_agent ;
-  rdfs:label "has active agent"@en ;
+:has_active_entity a owl:ObjectProperty ;
+  rdfs:label "has active entity"@en ;
   rdfs:domain :EventAndState ;
-  rdfs:range :Agent ;
-  :definition "References an Agent who is an active/animate participant (carries out some action) in an EventAndState."@en .
+  rdfs:comment "References an entity who is an active/animate participant (carries out some action) in an EventAndState."@en .
 
-:has_agent a owl:ObjectProperty ;
-  rdfs:label "has agent"@en ;
+:has_affected_entity a owl:ObjectProperty ;
+  rdfs:label "has affected entity"@en ;
   rdfs:domain :EventAndState ;
-  rdfs:range :Agent ;
-  :definition "References an Agent who participates in or who experiences an EventAndState. Whether the Agent is active in the event/state/condition or experiences/is affected by it can be distinguished by the sub-properties, :has_active_agent, :has_affected_agent or :has_holder."@en .
-
-:has_affected_agent a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_agent ;
-  rdfs:label "has affected agent"@en ;
-  rdfs:domain :EventAndState ;
-  rdfs:range :Agent ;
-  :definition "References an Agent who is affected by an EventAndState but does not actively participate in it."@en ;
-  :example "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_agent property and the attacked Person is identified using the :has_affected_agent property."@en .
+  rdfs:comment "References an entity who is affected by an EventAndState but does not actively participate in it."@en ;
+  :example "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_entity property and the attacked Person is identified using the :has_affected_entity property."@en .
 
 :has_destination a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
-  rdfs:label "has destination location"@en ;
+  rdfs:label "has destination"@en ;
   rdfs:domain :EventAndState ;
   rdfs:range :Location ;
-  :definition "References the final location when an EventAndState involves movement of persons, goods, information, etc."@en .
+  rdfs:comment "References the final location when an EventAndState involves movement of persons, goods, information, etc."@en .
 
-:has_holder a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_agent ;
-  rdfs:label "has holder"@en ;
+:has_described_entity a owl:ObjectProperty ;
+  rdfs:label "has described entity"@en ;
   rdfs:domain :EventAndState ;
-  rdfs:range :Agent ;
-  :definition "References an Agent who experiences some EventAndState."@en ;
-  :example "For example, the general situation regarding the number of employed/unemployed individuals in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment/Unemployment individual (subclasses of Environment) using the property, :has_holder."@en .
+  rdfs:comment "References an entity who experiences some EventAndState."@en ;
+  :example "For example, the general situation regarding the number of employed/unemployed individuals in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment/Unemployment individual (subclasses of Environment) using the property, :has_described_entity"@en .
 
 :has_instrument a owl:ObjectProperty ;
   rdfs:label "has instrument"@en ;
   rdfs:domain :EventAndState ;
   rdfs:range :Resource ;
-  :definition "References an inanimate entity (weapon, tool, etc.) that is/was used in an EventAndState."@en .
+  rdfs:comment "References an inanimate entity (weapon, tool, etc.) that is/was used in an EventAndState."@en .
 
 :has_origin a owl:ObjectProperty ;
   rdfs:subPropertyOf :has_location ;
-  rdfs:label "has origin location"@en ;
+  rdfs:label "has origin"@en ;
   rdfs:domain :EventAndState ;
   rdfs:range :Location ;
-  :definition "References the original location when an EventAndState involves movement of persons, goods, information, etc."@en .
+  rdfs:comment "References the original location when an EventAndState involves movement of persons, goods, information, etc."@en .
 
 :has_provider a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_agent ;
   rdfs:label "has providing agent"@en ;
   rdfs:domain :EventAndState ;
   rdfs:range :Agent ;
-  :definition "References the Agent that provides goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
+  rdfs:comment "References the Agent that provides goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
+
+:has_quantification  a owl:ObjectProperty ;
+  rdfs:label "has quantification"@en ;
+  rdfs:domain :EventAndState ;
+  rdfs:range :Measurement ;
+  rdfs:comment "References a statistic, assessment, time period, etc. pertaining to an EventAndState."@en .
 
 :has_recipient a owl:ObjectProperty ;
-  rdfs:subPropertyOf :has_agent ;
   rdfs:label "has receiving agent"@en ;
   rdfs:domain :EventAndState ;
   rdfs:range :Agent ;
-  :definition "References the Actor that receives goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
-
-:has_resource a owl:ObjectProperty ;
-  rdfs:label "has resource"@en ;
-  rdfs:domain :EventAndState ;
-  rdfs:range :Resource ;
-  :definition "References a Resource which is affected by/described by an EventAndState. This property is similar to the predicates, :has_affected_agent and :has_holder. Note that the semantics of this relationship is different than :has_instrument. The latter refers to a Resource that is used in an EventAndState, whereas here, the semantics refer to the subject."@en ;
-  :example "For example, if a storage facility can hold x cubic feet of materials, then that Resource (a BuildingAndDwelling individual) would be identified as the 'subject' of an instance of a Capacity instance (a subclass of Environment). Or, if a building is defaced, then the BuildingAndDwelling would be identified in an AttackDamageAndAssault instance using the :has_resource predicate."@en .
+  rdfs:comment "References the Actor that receives goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
 
 :has_topic a owl:ObjectProperty ;
   rdfs:label "has topic"@en ;
   rdfs:domain :EventAndState ;
-  :definition "References the subject/topic of an EventAndState."@en ;
-  :example "For example, if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_topic property. As another example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_agent property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property."@en .
+  rdfs:comment "References the subject/topic of an EventAndState."@en ;
+  :example "For example, if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_topic property. As another example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_described_entity property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property."@en .
 
 :scheduled_time a owl:ObjectProperty ;
   rdfs:label "scheduled time"@en ;
   rdfs:subPropertyOf :has_time ;
   rdfs:domain :EventAndState ;
   rdfs:range :Time ;
-  :definition "References a Time at which some event will/should occur or some condition should be in effect."@en .
+  rdfs:comment "References a Time at which some event will/should occur or some condition should be in effect."@en .

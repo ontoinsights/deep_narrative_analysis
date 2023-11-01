@@ -12,7 +12,7 @@
 # or using their APIs - see https://www.geonames.org/)
 # 
 # Created: February 14, 2020
-# Last modified: January 3 2023
+# Last modified: October 31 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,12 +23,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Updated the default and dna prefixes
-#  Corrected prefix for the 'labels' of continents
-#  Changed multiple labels to 1 label and noun_synonyms
-#  Corrected Continent components 
-#  Added @en language tags to rdfs:labels, :definitions and :examples
-#  Removed all synonyms to language-specific modules
+#  Reset change history and simplified
 ########################################################################
 
 
@@ -820,7 +815,7 @@ geo:1522867 :has_currency geo:CurrencyKZT .
 
 geo:1655842 a :Country ;
   rdfs:label "Laos"@en ;
-  :noun_synonym"Lao People's Democratic Republic" ;
+  :synonym"Lao People's Democratic Republic" ;
   :iso_alpha2 "LA" ;
   :iso_alpha3 "LAO" .
 geo:1655842 :has_currency geo:CurrencyLAK .
@@ -1373,7 +1368,7 @@ geo:2363686 :has_currency geo:CurrencyXOF .
 
 geo:1605651 a :Country ;
   rdfs:label "Thailand"@en ;
-  :noun_synonym"Kingdom of Thailand" , "Siam" ;
+  :synonym"Kingdom of Thailand" , "Siam" ;
   :iso_alpha2 "TH" ;
   :iso_alpha3 "THA" .
 geo:1605651 :has_currency geo:CurrencyTHB .
@@ -1416,7 +1411,7 @@ geo:4032283 :has_currency geo:CurrencyTOP .
 
 geo:298795 a :Country ;
   rdfs:label "Turkey"@en ;
-  :noun_synonym"Anatolia" , "Asia Minor" , "Republic of Turkey" ;
+  :synonym"Anatolia" , "Asia Minor" , "Republic of Turkey" ;
   :iso_alpha2 "TR" ;
   :iso_alpha3 "TUR" .
 geo:298795 :has_currency geo:CurrencyTRY .
@@ -1453,7 +1448,7 @@ geo:690791 :has_currency geo:CurrencyUAH .
 
 geo:226074 a :Country ;
   rdfs:label "Uganda"@en ;
-  :noun_synonym"Republic of Uganda" ;
+  :synonym"Republic of Uganda" ;
   :iso_alpha2 "UG" ;
   :iso_alpha3 "UGA" .
 geo:226074 :has_currency geo:CurrencyUGX .
@@ -2324,664 +2319,664 @@ geo:6255152 dna:has_component geo:6697173 .
 # Bordering Neighbors
 ########################################################################
 
-geo:163843 :meets geo:298795 .
+geo:163843 :adjoins geo:298795 .
 
-geo:2993457 :meets geo:3017382 .
+geo:2993457 :adjoins geo:3017382 .
 
-geo:783754 :meets geo:3194884 .
+geo:783754 :adjoins geo:3194884 .
 
-geo:1562822 :meets geo:1814991 .
+geo:1562822 :adjoins geo:1814991 .
 
-geo:878675 :meets geo:953987 .
+geo:878675 :adjoins geo:953987 .
 
-geo:366755 :meets geo:2434508 .
+geo:366755 :adjoins geo:2434508 .
 
-geo:2017370 :meets geo:3144096 .
+geo:2017370 :adjoins geo:3144096 .
 
-geo:223816 :meets geo:338010 .
+geo:223816 :adjoins geo:338010 .
 
-geo:2921044 :meets geo:2960313 .
+geo:2921044 :adjoins geo:2960313 .
 
-geo:3382998 :meets geo:3469034 .
+geo:3382998 :adjoins geo:3469034 .
 
-geo:2510769 :meets geo:3041565 .
+geo:2510769 :adjoins geo:3041565 .
 
-geo:2378080 :meets geo:2453866 .
+geo:2378080 :adjoins geo:2453866 .
 
-geo:927384 :meets geo:1036973 .
+geo:927384 :adjoins geo:1036973 .
 
-geo:1327865 :meets geo:1814991 .
+geo:1327865 :adjoins geo:1814991 .
 
-geo:2782113 :meets geo:3057568 .
+geo:2782113 :adjoins geo:3057568 .
 
-geo:690791 :meets geo:2017370 .
+geo:690791 :adjoins geo:2017370 .
 
-geo:99237 :meets geo:130758 .
+geo:99237 :adjoins geo:130758 .
 
-geo:337996 :meets geo:366755 .
+geo:337996 :adjoins geo:366755 .
 
-geo:1733045 :meets geo:1820814 .
+geo:1733045 :adjoins geo:1820814 .
 
-geo:3658394 :meets geo:3686110 .
+geo:3658394 :adjoins geo:3686110 .
 
-geo:174982 :meets geo:614540 .
+geo:174982 :adjoins geo:614540 .
 
-geo:2275384 :meets geo:2420477 .
+geo:2275384 :adjoins geo:2420477 .
 
-geo:2378080 :meets geo:2461445 .
+geo:2378080 :adjoins geo:2461445 .
 
-geo:3175395 :meets geo:3190538 .
+geo:3175395 :adjoins geo:3190538 .
 
-geo:3439705 :meets geo:3865483 .
+geo:3439705 :adjoins geo:3865483 .
 
-geo:2300660 :meets geo:2361809 .
+geo:2300660 :adjoins geo:2361809 .
 
-geo:2215636 :meets geo:2440476 .
+geo:2215636 :adjoins geo:2440476 .
 
-geo:2260494 :meets geo:2400553 .
+geo:2260494 :adjoins geo:2400553 .
 
-geo:102358 :meets geo:285570 .
+geo:102358 :adjoins geo:285570 .
 
-geo:49518 :meets geo:226074 .
+geo:49518 :adjoins geo:226074 .
 
-geo:895949 :meets geo:1036973 .
+geo:895949 :adjoins geo:1036973 .
 
-geo:69543 :meets geo:102358 .
+geo:69543 :adjoins geo:102358 .
 
-geo:102358 :meets geo:286963 .
+geo:102358 :adjoins geo:286963 .
 
-geo:130758 :meets geo:1218197 .
+geo:130758 :adjoins geo:1218197 .
 
-geo:99237 :meets geo:285570 .
+geo:99237 :adjoins geo:285570 .
 
-geo:1269750 :meets geo:1814991 .
+geo:1269750 :adjoins geo:1814991 .
 
-geo:2782113 :meets geo:3190538 .
+geo:2782113 :adjoins geo:3190538 .
 
-geo:203312 :meets geo:2260494 .
+geo:203312 :adjoins geo:2260494 .
 
-geo:1149361 :meets geo:1168579 .
+geo:1149361 :adjoins geo:1168579 .
 
-geo:3469034 :meets geo:3686110 .
+geo:3469034 :adjoins geo:3686110 .
 
-geo:3381670 :meets geo:3382998 .
+geo:3381670 :adjoins geo:3382998 .
 
-geo:2233387 :meets geo:2309096 .
+geo:2233387 :adjoins geo:2309096 .
 
-geo:2361809 :meets geo:2363686 .
+geo:2361809 :adjoins geo:2363686 .
 
-geo:719819 :meets geo:2782113 .
+geo:719819 :adjoins geo:2782113 .
 
-geo:878675 :meets geo:895949 .
+geo:878675 :adjoins geo:895949 .
 
-geo:783754 :meets geo:831053 .
+geo:783754 :adjoins geo:831053 .
 
-geo:49518 :meets geo:203312 .
+geo:49518 :adjoins geo:203312 .
 
-geo:1252634 :meets geo:1269750 .
+geo:1252634 :adjoins geo:1269750 .
 
-geo:2802361 :meets geo:2960313 .
+geo:2802361 :adjoins geo:2960313 .
 
-geo:3017382 :meets geo:3041565 .
+geo:3017382 :adjoins geo:3041565 .
 
-geo:690791 :meets geo:798544 .
+geo:690791 :adjoins geo:798544 .
 
-geo:2464461 :meets geo:2589581 .
+geo:2464461 :adjoins geo:2589581 .
 
-geo:2461445 :meets geo:2589581 .
+geo:2461445 :adjoins geo:2589581 .
 
-geo:1655842 :meets geo:1831722 .
+geo:1655842 :adjoins geo:1831722 .
 
-geo:933860 :meets geo:3355338 .
+geo:933860 :adjoins geo:3355338 .
 
-geo:99237 :meets geo:102358 .
+geo:99237 :adjoins geo:102358 .
 
-geo:130758 :meets geo:1149361 .
+geo:130758 :adjoins geo:1149361 .
 
-geo:294640 :meets geo:357994 .
+geo:294640 :adjoins geo:357994 .
 
-geo:617790 :meets geo:798549 .
+geo:617790 :adjoins geo:798549 .
 
-geo:2510769 :meets geo:2542007 .
+geo:2510769 :adjoins geo:2542007 .
 
-geo:2782113 :meets geo:3077311 .
+geo:2782113 :adjoins geo:3077311 .
 
-geo:3202326 :meets geo:3277605 .
+geo:3202326 :adjoins geo:3277605 .
 
-geo:248816 :meets geo:294640 .
+geo:248816 :adjoins geo:294640 .
 
-geo:878675 :meets geo:1036973 .
+geo:878675 :adjoins geo:1036973 .
 
-geo:3585968 :meets geo:3595528 .
+geo:3585968 :adjoins geo:3595528 .
 
-geo:2802361 :meets geo:3017382 .
+geo:2802361 :adjoins geo:3017382 .
 
-geo:2921044 :meets geo:3017382 .
+geo:2921044 :adjoins geo:3017382 .
 
-geo:798544 :meets geo:2921044 .
+geo:798544 :adjoins geo:2921044 .
 
-geo:2215636 :meets geo:2434508 .
+geo:2215636 :adjoins geo:2434508 .
 
-geo:1522867 :meets geo:1527747 .
+geo:1522867 :adjoins geo:1527747 .
 
-geo:458258 :meets geo:2017370 .
+geo:458258 :adjoins geo:2017370 .
 
-geo:51537 :meets geo:337996 .
+geo:51537 :adjoins geo:337996 .
 
-geo:719819 :meets geo:798549 .
+geo:719819 :adjoins geo:798549 .
 
-geo:203312 :meets geo:433561 .
+geo:203312 :adjoins geo:433561 .
 
-geo:337996 :meets geo:338010 .
+geo:337996 :adjoins geo:338010 .
 
-geo:149590 :meets geo:192950 .
+geo:149590 :adjoins geo:192950 .
 
-geo:2395170 :meets geo:2440476 .
+geo:2395170 :adjoins geo:2440476 .
 
-geo:895949 :meets geo:927384 .
+geo:895949 :adjoins geo:927384 .
 
-geo:3469034 :meets geo:3865483 .
+geo:3469034 :adjoins geo:3865483 .
 
-geo:934841 :meets geo:953987 .
+geo:934841 :adjoins geo:953987 .
 
-geo:1220409 :meets geo:1814991 .
+geo:1220409 :adjoins geo:1814991 .
 
-geo:719819 :meets geo:3057568 .
+geo:719819 :adjoins geo:3057568 .
 
-geo:3895114 :meets geo:3932488 .
+geo:3895114 :adjoins geo:3932488 .
 
-geo:2750405 :meets geo:2921044 .
+geo:2750405 :adjoins geo:2921044 .
 
-geo:3686110 :meets geo:3932488 .
+geo:3686110 :adjoins geo:3932488 .
 
-geo:630336 :meets geo:690791 .
+geo:630336 :adjoins geo:690791 .
 
-geo:3017382 :meets geo:3175395 .
+geo:3017382 :adjoins geo:3175395 .
 
-geo:783754 :meets geo:6290252 .
+geo:783754 :adjoins geo:6290252 .
 
-geo:1512440 :meets geo:1522867 .
+geo:1512440 :adjoins geo:1522867 .
 
-geo:2245662 :meets geo:2372248 .
+geo:2245662 :adjoins geo:2372248 .
 
-geo:337996 :meets geo:7909807 .
+geo:337996 :adjoins geo:7909807 .
 
-geo:2453866 :meets geo:2589581 .
+geo:2453866 :adjoins geo:2589581 .
 
-geo:1327865 :meets geo:1655842 .
+geo:1327865 :adjoins geo:1655842 .
 
-geo:3351879 :meets geo:3355338 .
+geo:3351879 :adjoins geo:3355338 .
 
-geo:895949 :meets geo:3355338 .
+geo:895949 :adjoins geo:3355338 .
 
-geo:2245662 :meets geo:2453866 .
+geo:2245662 :adjoins geo:2453866 .
 
-geo:953987 :meets geo:1036973 .
+geo:953987 :adjoins geo:1036973 .
 
-geo:2287781 :meets geo:2361809 .
+geo:2287781 :adjoins geo:2361809 .
 
-geo:203312 :meets geo:895949 .
+geo:203312 :adjoins geo:895949 .
 
-geo:2264397 :meets geo:2510769 .
+geo:2264397 :adjoins geo:2510769 .
 
-geo:1252634 :meets geo:1814991 .
+geo:1252634 :adjoins geo:1814991 .
 
-geo:2658434 :meets geo:3017382 .
+geo:2658434 :adjoins geo:3017382 .
 
-geo:2378080 :meets geo:2589581 .
+geo:2378080 :adjoins geo:2589581 .
 
-geo:248816 :meets geo:6254930 .
+geo:248816 :adjoins geo:6254930 .
 
-geo:3190538 :meets geo:3202326 .
+geo:3190538 :adjoins geo:3202326 .
 
-geo:1220409 :meets geo:1512440 .
+geo:1220409 :adjoins geo:1512440 .
 
-geo:3625428 :meets geo:3686110 .
+geo:3625428 :adjoins geo:3686110 .
 
-geo:2440476 :meets geo:2589581 .
+geo:2440476 :adjoins geo:2589581 .
 
-geo:1562822 :meets geo:1831722 .
+geo:1562822 :adjoins geo:1831722 .
 
-geo:1605651 :meets geo:1655842 .
+geo:1605651 :adjoins geo:1655842 .
 
-geo:718075 :meets geo:732800 .
+geo:718075 :adjoins geo:732800 .
 
-geo:163843 :meets geo:248816 .
+geo:163843 :adjoins geo:248816 .
 
-geo:2287781 :meets geo:2300660 .
+geo:2287781 :adjoins geo:2300660 .
 
-geo:3437598 :meets geo:3469034 .
+geo:3437598 :adjoins geo:3469034 .
 
-geo:3378535 :meets geo:3469034 .
+geo:3378535 :adjoins geo:3469034 .
 
-geo:223816 :meets geo:337996 .
+geo:223816 :adjoins geo:337996 .
 
-geo:2275384 :meets geo:2287781 .
+geo:2275384 :adjoins geo:2287781 .
 
-geo:2233387 :meets geo:2434508 .
+geo:2233387 :adjoins geo:2434508 .
 
-geo:51537 :meets geo:192950 .
+geo:51537 :adjoins geo:192950 .
 
-geo:3582678 :meets geo:3996063 .
+geo:3582678 :adjoins geo:3996063 .
 
-geo:298795 :meets geo:732800 .
+geo:298795 :adjoins geo:732800 .
 
-geo:2300660 :meets geo:2363686 .
+geo:2300660 :adjoins geo:2363686 .
 
-geo:2461445 :meets geo:2542007 .
+geo:2461445 :adjoins geo:2542007 .
 
-geo:102358 :meets geo:289688 .
+geo:102358 :adjoins geo:289688 .
 
-geo:3437598 :meets geo:3923057 .
+geo:3437598 :adjoins geo:3923057 .
 
-geo:49518 :meets geo:433561 .
+geo:49518 :adjoins geo:433561 .
 
-geo:719819 :meets geo:8505033 .
+geo:719819 :adjoins geo:8505033 .
 
-geo:690791 :meets geo:798549 .
+geo:690791 :adjoins geo:798549 .
 
-geo:718075 :meets geo:8505033 .
+geo:718075 :adjoins geo:8505033 .
 
-geo:102358 :meets geo:248816 .
+geo:102358 :adjoins geo:248816 .
 
-geo:163843 :meets geo:294640 .
+geo:163843 :adjoins geo:294640 .
 
-geo:3923057 :meets geo:3932488 .
+geo:3923057 :adjoins geo:3932488 .
 
-geo:1814991 :meets geo:1873107 .
+geo:1814991 :adjoins geo:1873107 .
 
-geo:587116 :meets geo:2017370 .
+geo:587116 :adjoins geo:2017370 .
 
-geo:1643084 :meets geo:2088628 .
+geo:1643084 :adjoins geo:2088628 .
 
-geo:99237 :meets geo:248816 .
+geo:99237 :adjoins geo:248816 .
 
-geo:357994 :meets geo:366755 .
+geo:357994 :adjoins geo:366755 .
 
-geo:1168579 :meets geo:1814991 .
+geo:1168579 :adjoins geo:1814991 .
 
-geo:192950 :meets geo:226074 .
+geo:192950 :adjoins geo:226074 .
 
-geo:366755 :meets geo:7909807 .
+geo:366755 :adjoins geo:7909807 .
 
-geo:2782113 :meets geo:2921044 .
+geo:2782113 :adjoins geo:2921044 .
 
-geo:458258 :meets geo:630336 .
+geo:458258 :adjoins geo:630336 .
 
-geo:149590 :meets geo:433561 .
+geo:149590 :adjoins geo:433561 .
 
-geo:3378535 :meets geo:3625428 .
+geo:3378535 :adjoins geo:3625428 .
 
-geo:1210997 :meets geo:1327865 .
+geo:1210997 :adjoins geo:1327865 .
 
-geo:798549 :meets geo:8505033 .
+geo:798549 :adjoins geo:8505033 .
 
-geo:3595528 :meets geo:3608932 .
+geo:3595528 :adjoins geo:3608932 .
 
-geo:130758 :meets geo:298795 .
+geo:130758 :adjoins geo:298795 .
 
-geo:357994 :meets geo:6254930 .
+geo:357994 :adjoins geo:6254930 .
 
-geo:3168068 :meets geo:3175395 .
+geo:3168068 :adjoins geo:3175395 .
 
-geo:3164670 :meets geo:3175395 .
+geo:3164670 :adjoins geo:3175395 .
 
-geo:1814991 :meets geo:2017370 .
+geo:1814991 :adjoins geo:2017370 .
 
-geo:2960313 :meets geo:3017382 .
+geo:2960313 :adjoins geo:3017382 .
 
-geo:2287781 :meets geo:2420477 .
+geo:2287781 :adjoins geo:2420477 .
 
-geo:338010 :meets geo:366755 .
+geo:338010 :adjoins geo:366755 .
 
-geo:2782113 :meets geo:3042058 .
+geo:2782113 :adjoins geo:3042058 .
 
-geo:3508796 :meets geo:3723988 .
+geo:3508796 :adjoins geo:3723988 .
 
-geo:3624060 :meets geo:3703430 .
+geo:3624060 :adjoins geo:3703430 .
 
-geo:3582678 :meets geo:3595528 .
+geo:3582678 :adjoins geo:3595528 .
 
-geo:1149361 :meets geo:1512440 .
+geo:1149361 :adjoins geo:1512440 .
 
-geo:174982 :meets geo:298795 .
+geo:174982 :adjoins geo:298795 .
 
-geo:298795 :meets geo:587116 .
+geo:298795 :adjoins geo:587116 .
 
-geo:3617476 :meets geo:3624060 .
+geo:3617476 :adjoins geo:3624060 .
 
-geo:1562822 :meets geo:1655842 .
+geo:1562822 :adjoins geo:1655842 .
 
-geo:239880 :meets geo:2233387 .
+geo:239880 :adjoins geo:2233387 .
 
-geo:630336 :meets geo:798544 .
+geo:630336 :adjoins geo:798544 .
 
-geo:597427 :meets geo:798544 .
+geo:597427 :adjoins geo:798544 .
 
-geo:3194884 :meets geo:3277605 .
+geo:3194884 :adjoins geo:3277605 .
 
-geo:1210997 :meets geo:1269750 .
+geo:1210997 :adjoins geo:1269750 .
 
-geo:719819 :meets geo:3190538 .
+geo:719819 :adjoins geo:3190538 .
 
-geo:3378535 :meets geo:3382998 .
+geo:3378535 :adjoins geo:3382998 .
 
-geo:1643084 :meets geo:1966436 .
+geo:1643084 :adjoins geo:1966436 .
 
-geo:895949 :meets geo:3351879 .
+geo:895949 :adjoins geo:3351879 .
 
-geo:272103 :meets geo:294640 .
+geo:272103 :adjoins geo:294640 .
 
-geo:99237 :meets geo:298795 .
+geo:99237 :adjoins geo:298795 .
 
-geo:1655842 :meets geo:1814991 .
+geo:1655842 :adjoins geo:1814991 .
 
-geo:587116 :meets geo:614540 .
+geo:587116 :adjoins geo:614540 .
 
-geo:2363686 :meets geo:2395170 .
+geo:2363686 :adjoins geo:2395170 .
 
-geo:2361809 :meets geo:2440476 .
+geo:2361809 :adjoins geo:2440476 .
 
-geo:203312 :meets geo:7909807 .
+geo:203312 :adjoins geo:7909807 .
 
-geo:597427 :meets geo:2017370 .
+geo:597427 :adjoins geo:2017370 .
 
-geo:453733 :meets geo:2017370 .
+geo:453733 :adjoins geo:2017370 .
 
-geo:2542007 :meets geo:2589581 .
+geo:2542007 :adjoins geo:2589581 .
 
-geo:718075 :meets geo:831053 .
+geo:718075 :adjoins geo:831053 .
 
-geo:2215636 :meets geo:2589581 .
+geo:2215636 :adjoins geo:2589581 .
 
-geo:878675 :meets geo:933860 .
+geo:878675 :adjoins geo:933860 .
 
-geo:239880 :meets geo:2260494 .
+geo:239880 :adjoins geo:2260494 .
 
-geo:1149361 :meets geo:1218197 .
+geo:1149361 :adjoins geo:1218197 .
 
-geo:2750405 :meets geo:2802361 .
+geo:2750405 :adjoins geo:2802361 .
 
-geo:203312 :meets geo:226074 .
+geo:203312 :adjoins geo:226074 .
 
-geo:690791 :meets geo:3057568 .
+geo:690791 :adjoins geo:3057568 .
 
-geo:130758 :meets geo:587116 .
+geo:130758 :adjoins geo:587116 .
 
-geo:2328926 :meets geo:2440476 .
+geo:2328926 :adjoins geo:2440476 .
 
-geo:6251999 :meets geo:6252001 .
+geo:6251999 :adjoins geo:6252001 .
 
-geo:1605651 :meets geo:1733045 .
+geo:1605651 :adjoins geo:1733045 .
 
-geo:1282988 :meets geo:1814991 .
+geo:1282988 :adjoins geo:1814991 .
 
-geo:2782113 :meets geo:3175395 .
+geo:2782113 :adjoins geo:3175395 .
 
-geo:1220409 :meets geo:1527747 .
+geo:1220409 :adjoins geo:1527747 .
 
-geo:1327865 :meets geo:1605651 .
+geo:1327865 :adjoins geo:1605651 .
 
-geo:1522867 :meets geo:2017370 .
+geo:1522867 :adjoins geo:2017370 .
 
-geo:2233387 :meets geo:2400553 .
+geo:2233387 :adjoins geo:2400553 .
 
-geo:149590 :meets geo:203312 .
+geo:149590 :adjoins geo:203312 .
 
-geo:660013 :meets geo:2017370 .
+geo:660013 :adjoins geo:2017370 .
 
-geo:458258 :meets geo:597427 .
+geo:458258 :adjoins geo:597427 .
 
-geo:149590 :meets geo:1036973 .
+geo:149590 :adjoins geo:1036973 .
 
-geo:3194884 :meets geo:6290252 .
+geo:3194884 :adjoins geo:6290252 .
 
-geo:390903 :meets geo:718075 .
+geo:390903 :adjoins geo:718075 .
 
-geo:3578421 :meets geo:7609695 .
+geo:3578421 :adjoins geo:7609695 .
 
-geo:2361809 :meets geo:2453866 .
+geo:2361809 :adjoins geo:2453866 .
 
-geo:3381670 :meets geo:3469034 .
+geo:3381670 :adjoins geo:3469034 .
 
-geo:3595528 :meets geo:3996063 .
+geo:3595528 :adjoins geo:3996063 .
 
-geo:831053 :meets geo:3194884 .
+geo:831053 :adjoins geo:3194884 .
 
-geo:239880 :meets geo:2434508 .
+geo:239880 :adjoins geo:2434508 .
 
-geo:298795 :meets geo:390903 .
+geo:298795 :adjoins geo:390903 .
 
-geo:2309096 :meets geo:2400553 .
+geo:2309096 :adjoins geo:2400553 .
 
-geo:798544 :meets geo:3077311 .
+geo:798544 :adjoins geo:3077311 .
 
-geo:1269750 :meets geo:1282988 .
+geo:1269750 :adjoins geo:1282988 .
 
-geo:732800 :meets geo:798549 .
+geo:732800 :adjoins geo:798549 .
 
-geo:149590 :meets geo:895949 .
+geo:149590 :adjoins geo:895949 .
 
-geo:3686110 :meets geo:3703430 .
+geo:3686110 :adjoins geo:3703430 .
 
-geo:2233387 :meets geo:2260494 .
+geo:2233387 :adjoins geo:2260494 .
 
-geo:226074 :meets geo:7909807 .
+geo:226074 :adjoins geo:7909807 .
 
-geo:1218197 :meets geo:1512440 .
+geo:1218197 :adjoins geo:1512440 .
 
-geo:149590 :meets geo:226074 .
+geo:149590 :adjoins geo:226074 .
 
-geo:2635167 :meets geo:2963597 .
+geo:2635167 :adjoins geo:2963597 .
 
-geo:1527747 :meets geo:1814991 .
+geo:1527747 :adjoins geo:1814991 .
 
-geo:2017370 :meets geo:2029969 .
+geo:2017370 :adjoins geo:2029969 .
 
-geo:390903 :meets geo:732800 .
+geo:390903 :adjoins geo:732800 .
 
-geo:3194884 :meets geo:3202326 .
+geo:3194884 :adjoins geo:3202326 .
 
-geo:660013 :meets geo:3144096 .
+geo:660013 :adjoins geo:3144096 .
 
-geo:3439705 :meets geo:3469034 .
+geo:3439705 :adjoins geo:3469034 .
 
-geo:1149361 :meets geo:1814991 .
+geo:1149361 :adjoins geo:1814991 .
 
-geo:3437598 :meets geo:3865483 .
+geo:3437598 :adjoins geo:3865483 .
 
-geo:2233387 :meets geo:2328926 .
+geo:2233387 :adjoins geo:2328926 .
 
-geo:366755 :meets geo:2215636 .
+geo:366755 :adjoins geo:2215636 .
 
-geo:3579143 :meets geo:8505032 .
+geo:3579143 :adjoins geo:8505032 .
 
-geo:1218197 :meets geo:1522867 .
+geo:1218197 :adjoins geo:1522867 .
 
-geo:934841 :meets geo:1036973 .
+geo:934841 :adjoins geo:1036973 .
 
-geo:2361809 :meets geo:2395170 .
+geo:2361809 :adjoins geo:2395170 .
 
-geo:2215636 :meets geo:2464461 .
+geo:2215636 :adjoins geo:2464461 .
 
-geo:1269750 :meets geo:1327865 .
+geo:1269750 :adjoins geo:1327865 .
 
-geo:3469034 :meets geo:3932488 .
+geo:3469034 :adjoins geo:3932488 .
 
-geo:294640 :meets geo:6254930 .
+geo:294640 :adjoins geo:6254930 .
 
-geo:203312 :meets geo:3351879 .
+geo:203312 :adjoins geo:3351879 .
 
-geo:453733 :meets geo:458258 .
+geo:453733 :adjoins geo:458258 .
 
-geo:3865483 :meets geo:3895114 .
+geo:3865483 :adjoins geo:3895114 .
 
-geo:3202326 :meets geo:8505033 .
+geo:3202326 :adjoins geo:8505033 .
 
-geo:2403846 :meets geo:2420477 .
+geo:2403846 :adjoins geo:2420477 .
 
-geo:3562981 :meets geo:6252001 .
+geo:3562981 :adjoins geo:6252001 .
 
-geo:3057568 :meets geo:3077311 .
+geo:3057568 :adjoins geo:3077311 .
 
-geo:718075 :meets geo:6290252 .
+geo:718075 :adjoins geo:6290252 .
 
-geo:798544 :meets geo:2017370 .
+geo:798544 :adjoins geo:2017370 .
 
-geo:174982 :meets geo:587116 .
+geo:174982 :adjoins geo:587116 .
 
-geo:3608932 :meets geo:3617476 .
+geo:3608932 :adjoins geo:3617476 .
 
-geo:2440476 :meets geo:2453866 .
+geo:2440476 :adjoins geo:2453866 .
 
-geo:3469034 :meets geo:3923057 .
+geo:3469034 :adjoins geo:3923057 .
 
-geo:2245662 :meets geo:2378080 .
+geo:2245662 :adjoins geo:2378080 .
 
-geo:933860 :meets geo:953987 .
+geo:933860 :adjoins geo:953987 .
 
-geo:3202326 :meets geo:6290252 .
+geo:3202326 :adjoins geo:6290252 .
 
-geo:3277605 :meets geo:6290252 .
+geo:3277605 :adjoins geo:6290252 .
 
-geo:102358 :meets geo:290557 .
+geo:102358 :adjoins geo:290557 .
 
-geo:2658434 :meets geo:2782113 .
+geo:2658434 :adjoins geo:2782113 .
 
-geo:783754 :meets geo:8505033 .
+geo:783754 :adjoins geo:8505033 .
 
-geo:690791 :meets geo:719819 .
+geo:690791 :adjoins geo:719819 .
 
-geo:2245662 :meets geo:2420477 .
+geo:2245662 :adjoins geo:2420477 .
 
-geo:239880 :meets geo:7909807 .
+geo:239880 :adjoins geo:7909807 .
 
-geo:2328926 :meets geo:2395170 .
+geo:2328926 :adjoins geo:2395170 .
 
-geo:3469034 :meets geo:3625428 .
+geo:3469034 :adjoins geo:3625428 .
 
-geo:163843 :meets geo:272103 .
+geo:163843 :adjoins geo:272103 .
 
-geo:51537 :meets geo:223816 .
+geo:51537 :adjoins geo:223816 .
 
-geo:2287781 :meets geo:2453866 .
+geo:2287781 :adjoins geo:2453866 .
 
-geo:3277605 :meets geo:8505033 .
+geo:3277605 :adjoins geo:8505033 .
 
-geo:2245662 :meets geo:2413451 .
+geo:2245662 :adjoins geo:2413451 .
 
-geo:798544 :meets geo:3057568 .
+geo:798544 :adjoins geo:3057568 .
 
-geo:49518 :meets geo:149590 .
+geo:49518 :adjoins geo:149590 .
 
-geo:130758 :meets geo:1168579 .
+geo:130758 :adjoins geo:1168579 .
 
-geo:1512440 :meets geo:1527747 .
+geo:1512440 :adjoins geo:1527747 .
 
-geo:1835841 :meets geo:1873107 .
+geo:1835841 :adjoins geo:1873107 .
 
-geo:953987 :meets geo:3355338 .
+geo:953987 :adjoins geo:3355338 .
 
-geo:69543 :meets geo:286963 .
+geo:69543 :adjoins geo:286963 .
 
-geo:3996063 :meets geo:6252001 .
+geo:3996063 :adjoins geo:6252001 .
 
-geo:357994 :meets geo:2215636 .
+geo:357994 :adjoins geo:2215636 .
 
-geo:2275384 :meets geo:2403846 .
+geo:2275384 :adjoins geo:2403846 .
 
-geo:1522867 :meets geo:1814991 .
+geo:1522867 :adjoins geo:1814991 .
 
-geo:630336 :meets geo:2017370 .
+geo:630336 :adjoins geo:2017370 .
 
-geo:130758 :meets geo:174982 .
+geo:130758 :adjoins geo:174982 .
 
-geo:2658434 :meets geo:3042058 .
+geo:2658434 :adjoins geo:3042058 .
 
-geo:2510769 :meets geo:3017382 .
+geo:2510769 :adjoins geo:3017382 .
 
-geo:3865483 :meets geo:3923057 .
+geo:3865483 :adjoins geo:3923057 .
 
-geo:203312 :meets geo:239880 .
+geo:203312 :adjoins geo:239880 .
 
-geo:3585968 :meets geo:3608932 .
+geo:3585968 :adjoins geo:3608932 .
 
-geo:932692 :meets geo:953987 .
+geo:932692 :adjoins geo:953987 .
 
-geo:2661886 :meets geo:3144096 .
+geo:2661886 :adjoins geo:3144096 .
 
-geo:1873107 :meets geo:2017370 .
+geo:1873107 :adjoins geo:2017370 .
 
-geo:99237 :meets geo:163843 .
+geo:99237 :adjoins geo:163843 .
 
-geo:390903 :meets geo:783754 .
+geo:390903 :adjoins geo:783754 .
 
-geo:2328926 :meets geo:2434508 .
+geo:2328926 :adjoins geo:2434508 .
 
-geo:2260494 :meets geo:3351879 .
+geo:2260494 :adjoins geo:3351879 .
 
-geo:2420477 :meets geo:2453866 .
+geo:2420477 :adjoins geo:2453866 .
 
-geo:719819 :meets geo:6290252 .
+geo:719819 :adjoins geo:6290252 .
 
-geo:3895114 :meets geo:3923057 .
+geo:3895114 :adjoins geo:3923057 .
 
-geo:2372248 :meets geo:2420477 .
+geo:2372248 :adjoins geo:2420477 .
 
-geo:614540 :meets geo:2017370 .
+geo:614540 :adjoins geo:2017370 .
 
-geo:2411586 :meets geo:2510769 .
+geo:2411586 :adjoins geo:2510769 .
 
-geo:1814991 :meets geo:2029969 .
+geo:1814991 :adjoins geo:2029969 .
 
-geo:617790 :meets geo:690791 .
+geo:617790 :adjoins geo:690791 .
 
-geo:1149361 :meets geo:1220409 .
+geo:1149361 :adjoins geo:1220409 .
 
-geo:2658434 :meets geo:2921044 .
+geo:2658434 :adjoins geo:2921044 .
 
-geo:2658434 :meets geo:3175395 .
+geo:2658434 :adjoins geo:3175395 .
 
-geo:732800 :meets geo:6290252 .
+geo:732800 :adjoins geo:6290252 .
 
-geo:286963 :meets geo:290557 .
+geo:286963 :adjoins geo:290557 .
 
-geo:2802361 :meets geo:2921044 .
+geo:2802361 :adjoins geo:2921044 .
 
-geo:3658394 :meets geo:3932488 .
+geo:3658394 :adjoins geo:3932488 .
 
-geo:831053 :meets geo:6290252 .
+geo:831053 :adjoins geo:6290252 .
 
-geo:798549 :meets geo:6290252 .
+geo:798549 :adjoins geo:6290252 .
 
-geo:719819 :meets geo:3202326 .
+geo:719819 :adjoins geo:3202326 .
 
-geo:2434508 :meets geo:2440476 .
+geo:2434508 :adjoins geo:2440476 .
 
-geo:597427 :meets geo:630336 .
+geo:597427 :adjoins geo:630336 .
 
-geo:192950 :meets geo:337996 .
+geo:192950 :adjoins geo:337996 .
 
-geo:2921044 :meets geo:3077311 .
+geo:2921044 :adjoins geo:3077311 .
 
-geo:1643084 :meets geo:1733045 .
+geo:1643084 :adjoins geo:1733045 .
 
-geo:239880 :meets geo:366755 .
+geo:239880 :adjoins geo:366755 .
 
-geo:149590 :meets geo:927384 .
+geo:149590 :adjoins geo:927384 .
 
-geo:298795 :meets geo:614540 .
+geo:298795 :adjoins geo:614540 .
 
-geo:718075 :meets geo:783754 .
+geo:718075 :adjoins geo:783754 .
 
-geo:192950 :meets geo:7909807 .
+geo:192950 :adjoins geo:7909807 .
 
-geo:2623032 :meets geo:2921044 .
+geo:2623032 :adjoins geo:2921044 .
 
-geo:1605651 :meets geo:1831722 .
+geo:1605651 :adjoins geo:1831722 .
 
-geo:732800 :meets geo:8505033 .
+geo:732800 :adjoins geo:8505033 .
 
-geo:1168579 :meets geo:1269750 .
+geo:1168579 :adjoins geo:1269750 .
 
-geo:660013 :meets geo:2661886 .
+geo:660013 :adjoins geo:2661886 .

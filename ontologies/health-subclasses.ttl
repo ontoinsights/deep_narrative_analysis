@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: January 4 2023
+# Last Modified: October 31 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,9 +23,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history
-#  Added @en language tags to rdfs:labels, :definitions and :examples
-#  Removed all synonyms to language-specific modules
+#  Reset change history, no other changes
 ########################################################################
 
 
@@ -36,112 +34,112 @@
 :Addiction a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Addiction"@en ;
-  :definition "A condition related to being dependent on (and unable to stop taking/using) a substance such as drugs or alcohol, or an activity (such as being addicted to video gaming or online activity). The substance or activity is indicated using the :has_topic property."@en ;
+  rdfs:comment "A condition related to being dependent on (and unable to stop taking/using) a substance such as drugs or alcohol, or an activity (such as being addicted to video gaming or online activity). The substance or activity is indicated using the :has_topic property."@en ;
   :wordnet_noun_synset "14086207" .
 
 :AnimalDisease a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Animal Disease"@en ;
-  :definition "An illness that affects animals, but typically does NOT affect humans."@en ;
+  rdfs:comment "An illness that affects animals, but typically does NOT affect humans."@en ;
   :wordnet_noun_synset "14276606" .
 
 :BodilyInjury a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Bodily Injury"@en ;
-  :definition "Damage/trauma to all or a part of a Person's body."@en ;
+  rdfs:comment "Damage/trauma to all or a part of a Person's body."@en ;
   :wordnet_noun_synset "14309164" .
 
 :ConvulsionAndSpasm a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Convulsion and Spasm"@en ;
-  :definition "Sudden contraction of muscles or constriction of an organ."@en ;
+  rdfs:comment "Sudden contraction of muscles or constriction of an organ."@en ;
   :wordnet_noun_synset "14106077", "00226974" .
 
 :Deformity a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Deformity"@en ;
-  :definition "A condition where a part of the body is disfigured, distored, misshapen or malformed."@en ;
+  rdfs:comment "A condition where a part of the body is disfigured, distored, misshapen or malformed."@en ;
   :wordnet_noun_synset "14236994" .
 
 :Dehydration a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Dehydration"@en ;
-  :definition "A condition where the amount of water in a body is reduced to a harmful/dangerous level."@en ;
+  rdfs:comment "A condition where the amount of water in a body is reduced to a harmful/dangerous level."@en ;
   :wordnet_noun_synset "14064328", "14064142" ;
   :wordnet_verb_synset "02126525" .
 
 :Disability a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Disability"@en ;
-  :definition "A physical or mental condition affecting an individual's ability to move, and perform daily tasks and activities."@en ;
+  rdfs:comment "A physical or mental condition affecting an individual's ability to move, and perform daily tasks and activities."@en ;
   :wordnet_noun_synset "14571935" .
 
 :DiseaseAndInfection a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Disease and Infection"@en ;
-  :definition "An illness with one or more specific Symptoms, that is not the result of injury. An infectious disease is transmitted by bacteria, viruses, parasites or fungi."@en ;
+  rdfs:comment "An illness with one or more specific Symptoms, that is not the result of injury. An infectious disease is transmitted by bacteria, viruses, parasites or fungi."@en ;
   :wordnet_noun_synset "14093842", "14075399", "14198031" .
 
 :Disorder a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated, :AgentAspect ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Disorder"@en ;
-  :definition "A condition characterized by abnormal functioning of physical or mental processes."@en ;
+  rdfs:comment "A condition characterized by abnormal functioning of physical or mental processes."@en ;
   :wordnet_noun_synset "14075885" .
 
 :Frailty a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Frailty"@en ;
-  :definition "A condition where an individual's body is abnormally weakened or weakened due to old age."@en ;
+  rdfs:comment "A condition where an individual's body is abnormally weakened or weakened due to old age."@en ;
   :wordnet_noun_synset "14571235" .
 
 :HypersensitivityAndAllergicReaction a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Hypersensitivity and Allergic Reaction"@en ;
-  :definition "An intense reaction to the environment (such as the cold) and/or an allergen (such as pollen or certain foods). Reactions can range from mild to severe and can result in anaphylactic shock and death."@en ;
+  rdfs:comment "An intense reaction to the environment (such as the cold) and/or an allergen (such as pollen or certain foods). Reactions can range from mild to severe and can result in anaphylactic shock and death."@en ;
   :wordnet_noun_synset "14557398" .
 
 :Intoxication a owl:Class ;
   rdfs:subClassOf :Poisoning ;
   rdfs:label "Intoxication"@en ;
-  :definition "A poisoning induced by drugs, alcohol or other substances."@en ;
+  rdfs:comment "A poisoning induced by drugs, alcohol or other substances."@en ;
   :wordnet_noun_synset "14042038" ;
   :wordnet_verb_synset "00088284" .
 
 :ObstructionAndConcretion a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Obstruction and Concretion"@en ;
-  :definition "A blockage or the formation of a hard, solid mass in some part of the body. The 'hard, solid mass' is sometimes referred to a 'stone', 'calculus' or 'concretion'."@en ;
+  rdfs:comment "A blockage or the formation of a hard, solid mass in some part of the body. The 'hard, solid mass' is sometimes referred to a 'stone', 'calculus' or 'concretion'."@en ;
   :wordnet_noun_synset "14531751", "09253675" .
 
 :PlantDisease a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Plant Disease"@en ;
-  :definition "A disease that affects plants."@en ;
+  rdfs:comment "A disease that affects plants."@en ;
   :wordnet_noun_synset "14300438" .
 
 :Poisoning a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Poisoning"@en ;
-  :definition "A condition resulting from the administration/ingestion of a toxic substance."@en ;
+  rdfs:comment "A condition resulting from the administration/ingestion of a toxic substance."@en ;
   :wordnet_noun_synset "14533314" .
 
 :StarvationHungerAndMalnutrition a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated, :FoodAndNutrition ;
   rdfs:label "Starvation, Hunger and Malnutrition"@en ;
-  :definition "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "01153157", "14223182", "14063016", "07330390" ;
   :wordnet_verb_synset "01190677", "02126423", "01190070", "01190481", "01190273" .
 
 :Sterility a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Sterility"@en ;
-  :definition "A condition where offspring cannot be conceived either due to female issues with her eggs or reproductive organs, or male issues with sperm."@en ;
+  rdfs:comment "A condition where offspring cannot be conceived either due to female issues with her eggs or reproductive organs, or male issues with sperm."@en ;
   :wordnet_noun_synset "14068989" .
 
 :Symptom a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Symptom"@en ;
-  :definition "A physical or mental sensation or change in functioning which is associated with/can indicate a disease or illness."@en ;
+  rdfs:comment "A physical or mental sensation or change in functioning which is associated with/can indicate a disease or illness."@en ;
   :wordnet_noun_synset "14323139" . 
 
 
@@ -156,6 +154,6 @@
 
 :indicated_by a owl:ObjectProperty ;
   rdfs:label "indicated by"@en ;
-  :definition "Relationship between a disease, disorder, illness. etc. and its Symptoms."@en ;
+  rdfs:comment "Relationship between a disease, disorder, illness. etc. and its Symptoms."@en ;
   rdfs:domain :HealthAndDiseaseRelated ;
   rdfs:range :Symptom .
