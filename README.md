@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 31 October 2023
+Updated 4 November 2023
 
 ## License
 Creative Commons 
@@ -12,7 +12,7 @@ CC BY 4.0
 
 Deep Narrative Analysis (DNA) is a toolset for analyzing narratives (biographical/autobiographical text, news articles, posts in Facebook and public online forums, etc.). Currently, it is focused on analyzing news articles to aid readers of news (in understanding how the reporting is "tuned") and to investigate/discover potential mis- and dis-information “flags” across texts. DNA combines semantic, ontological, and natural language and AI/ML technologies to 1) create knowledge graphs encoding the details of the news articles with background/contextual knowledge from online and structured data sources, and 2) perform inference, reasoning and statistical and network analyses. 
 
-For more detailed information on DNA, see the present, [_Populating Knowledge Graphs_](./Populating%20Knowledge%20Graphs.pdf).
+For more detailed information on DNA, see the present, [_Populating Knowledge Graphs_](./Populating%20KGs.pdf).
 
 To view the DNA ontology, see the [dna-ontologies web page](https://ontoinsights.github.io/dna-ontologies/).
 
