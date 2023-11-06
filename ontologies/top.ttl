@@ -9,7 +9,7 @@
 # File defining general concepts used throughout the DNA ontologies
 # 
 # Created: February 9 2020
-# Last modified: October 31 2023
+# Last modified: November 6 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,6 +21,7 @@
 # 
 # Changes:
 #  Reset change history and simplified
+#  Removed invalid "subclassOf" predicate 
 ########################################################################
 
 
@@ -106,7 +107,6 @@
 :Quote a owl:Class ;
   rdfs:subClassOf :Sentence ;
   rdfs:label "Quote"@en ;
-  rdfs:subclassOf :Sentence ;
   rdfs:comment "A statement spoken, written or otherwise communicated by an Agent."@en ;
   :wordnet_noun_synset "01032674" .
 
