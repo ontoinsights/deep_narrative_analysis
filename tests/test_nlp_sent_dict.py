@@ -46,7 +46,7 @@ def test_sent_percent():
     assert len(sent_dicts) == 1
     first_dict = sent_dicts[0]
     assert first_dict['entities'] == ['Harriet Hageman+PERSON', 'Cheney+PERSON']
-    assert '3%' in ttl_str and '5%' in ttl_str
+    assert '3%' in first_dict['text'] and '5%' in first_dict['text']
     # Output, sentence_dictionaries:
     # [{'offset': 1,
     #   'text': 'Harriet Hageman, a water and natural-resources attorney who was endorsed by the former
@@ -59,21 +59,18 @@ def test_sent_quotation1():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent_quotation1)
     assert len(sent_dicts) == 1
     assert len(quotations) == 1 and len(quotations_dict) == 1
-    quote_text, speaker, entities = quotations_dict['Quotation0']
-    assert quote_text.startswith('No House seat')
-    assert speaker == 'Ms. Cheney'
+    quote_text, speaker, entities = quotations_dict[':Quotation0']
+    assert quote_text == 'I lost'
+    assert speaker == 'she'
+    assert not entities
     # Output, sentence dictionaries:
     # [{'offset': 1,
-    #   'text': 'Quotation0 Ms. Cheney said in her concession speech.',
-    #   'entities': ['Cheney+PERSON']
+    #   'text': 'In fact, she said, [Quotation0]'
     # }]
     # Output, quotations array:
-    # ['No House seat, no office in this land is more important than the principles we swore to protect']
+    # ['I lost']
     # Output, quotations dictionary:
-    # {'Quotation0':      # Returns complete quotation, the speaker and any entities mentioned in the quote
-    #     ('No House seat, no office in this land is more important than the principles we swore to protect',
-    #      'Ms. Cheney', ['House+ORG'])
-    # }
+    # {':Quotation0': ('I lost', 'she', [])}
 
 
 def test_sent_quotation2():
@@ -82,15 +79,20 @@ def test_sent_quotation2():
     assert len(quotations) == 1 and len(quotations_dict) == 1
     quote_text, speaker, entities = quotations_dict[':Quotation0']
     assert quote_text.startswith('No House seat')
-    assert speaker != 'Ms. Cheney'       # TODO: Attribution
-    # Output:
-    # {'offset': 1,
-    #  'text': '[Quotation0] Ms. Cheney said in her concession speech.',
-    #  'entities': ['Cheney+PERSON']}]
-    # Quotation dictionary:
-    # {':Quotation0': (
-    #     'No House seat, no office in this land is more important than the principles we swore to protect,',
-    #     '', ['House+ORG'])}       ** Should be Cheney
+    assert speaker == 'Ms. Cheney'
+    assert entities[0] == 'House+ORG'
+    # Output, sentence dictionaries:
+    # [{'offset': 1,
+    #   'text': '[Quotation0] Ms. Cheney said in her concession speech.',
+    #   'entities': ['Cheney+PERSON']
+    # }]
+    # Output, quotations array:
+    # ['No House seat, no office in this land is more important than the principles we swore to protect,']
+    # Output, quotations dictionary:
+    # {':Quotation0':      # Returns complete quotation, the speaker and any entities mentioned in the quote
+    #     ('No House seat, no office in this land is more important than the principles we swore to protect,',
+    #      'Ms. Cheney', ['House+ORG'])
+    # }
 
 
 def test_sent_dative():
@@ -118,17 +120,20 @@ def test_sent_multiple_sentences():
 def test_sent_multiple_quotations():
     sent_dicts, quotations, quotations_dict = parse_narrative(sent_multiple_quotations)
     assert len(sent_dicts) == 2
+    assert sent_dicts[1]['text'] == 'She echoed, [Quotation0]'
     assert len(quotations) == 3
+    assert quotations[0] == 'the principles'
     assert len(quotations_dict) == 1
+    assert quotations_dict[':Quotation0'][1] == 'Cheney'
     # Output, sentence dictionaries:
     # [{'offset': 1,
     #   'text': 'Cheney said her opposition to former President Donald Trump was rooted in the principles
     #            that members of congress are sworn to protect and that she well understood the potential
     #            political consequences of opposing Trump.',
     #   'entities': ['Cheney+PERSON', 'Donald Trump+PERSON', 'congress+ORG', 'Trump+PERSON']},
-    #  {'offset': 2, 'text': 'congress+ORG', 'Trump+PERSON']}, {'offset': 2, 'text': 'She echoed Quotation0.'}
+    #  {'offset': 2, 'text': 'She echoed, [Quotation0]'}
     # ]
     # Output, quotations array:
     # ['the principles', 'well understood the potential political consequences', 'I lost']
     # Output, quotations dictionary:
-    # {'Quotation0': ('I lost', 'Cheney', [])}
+    # {':Quotation0': ('I lost', 'Cheney', [])}

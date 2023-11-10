@@ -42,7 +42,7 @@ def _remove_quotation_marks(text: str) -> str:
             updated_text += f' {token.text}'
     # Some cleanup
     updated_text = re.sub(r'(\[) ', r'\1', updated_text)
-    updated_text = re.sub(r'(^\s)(\[Quotation)', r'\1 \2', updated_text)
+    updated_text = re.sub(r'(\S)(\[Quotation)', r'\1 \2', updated_text)
     updated_text = re.sub(r'(Quotation[0-9]+])\.', r'\1', updated_text)
     return updated_text.replace('  ', space).replace('\n ', space).strip()
 

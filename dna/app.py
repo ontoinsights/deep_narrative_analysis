@@ -6,12 +6,12 @@ import json
 import logging
 import uuid
 
-from dna.app_functions import check_query_parameter, delete_data, parse_narrative_query_binding, process_new_narrative
-from dna.database import add_remove_data, clear_data, construct_database, create_delete_database, query_database
-from dna.database_queries import construct_kg, count_triples, delete_db_metadata, delete_narrative, query_dbs, \
-    query_narratives, update_narrative
+from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative
+from dna.database import add_remove_data, clear_data, construct_graph, query_database
+from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
+    query_narratives, query_repos, query_repo_graphs, update_narrative
 from dna.query_news import get_article_text, get_matching_articles
-from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_db
+from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
@@ -44,6 +44,7 @@ def news():
             return jsonify(dict(values)), scode
         news_details = {x: dict(values)[x] for x in ('topic', 'fromDate', 'toDate')}
         repo = empty_string
+        number_to_ingest = 0
         if request.method == 'POST':
             # Get repository name query parameter
             values, scode = check_query_parameter(repository, True, request)
@@ -51,7 +52,6 @@ def news():
                 return jsonify(dict(values)), scode
             repo = dict(values)[repository]
             news_details['repository'] = repo
-            number_to_ingest = 0
             if 'number' in dict(values):
                 number_str = dict(values)['number_to_ingest']
                 if number_str.isdigit():
@@ -95,42 +95,43 @@ def repositories():
         if scode in (400, 404, 409):
             return jsonify(dict(values)), scode
         repo = dict(values)[repository]
-        logging.info(f'Creating database, {repo}')
-        create_msg = create_delete_database('create', repo)
-        if 'created at' in create_msg:
-            # Add details to meta_db
-            created_at = create_msg.split('created at ')[1]
-            triples = f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> . ' \
-                      f':{repo} a :Database ; dc:created "{created_at}"^^xsd:dateTime .'
-            triples_msg = add_remove_data('add', triples, meta_db)
-            if not triples_msg:     # Successful
-                return jsonify({'created': repo}), 201
-            else:
-                return jsonify({error_str: triples_msg}), 500
+        logging.info(f'Creating repository, {repo}')
+        # Add details to meta_graph
+        created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+        triples = f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> . ' \
+                  f':{repo} a :Database ; dc:created "{created_at}"^^xsd:dateTime .'
+        triples_msg = add_remove_data('add', triples, empty_string)   # Add triples to dna db, default graph
+        if not triples_msg:     # Successful
+            return jsonify({'created': repo}), 201
         else:
-            return jsonify({error_str: create_msg}), 500
+            return jsonify({error_str: triples_msg}), 500
     elif request.method == 'DELETE':
         # Get repository name query parameter
         values, scode = check_query_parameter(repository, True, request)
         if scode in (400, 404):
             return jsonify(dict(values)), scode
         repo = dict(values)[repository]
-        logging.info(f'Deleting database, {repo}')
-        # Delete metadata for the repository in meta_db
-        query_database('update', delete_db_metadata.replace('?db', f':{repo}'), meta_db)
-        return delete_data(repo)    # Delete the repository
+        logging.info(f'Deleting repository, {repo}')
+        # Delete metadata for the repository in dna db's default graph
+        query_database('update', delete_repo_metadata.replace('?repo', f':{repo}'), empty_string)
+        # Delete all the named graphs for the repository
+        graph_bindings = query_database('select', query_repo_graphs.replace('?repo', repo), empty_string)
+        if graph_bindings and 'exception' in graph_bindings[0]:
+            return jsonify({error_str: graph_bindings[0]}), 500
+        for binding in graph_bindings:
+            # Delete the graph
+            clear_data(repo, binding['g']['value'].split(f'{repo}_')[1])
+        return jsonify({'deleted': repo}), 200
     elif request.method == 'GET':
-        logging.info(f'Database list')
-        db_bindings = query_database('select', query_dbs, meta_db)
-        if db_bindings and 'exception' in db_bindings[0]:
-            return jsonify({error_str: db_bindings[0]}), 500
-        db_list = []
-        if len(db_bindings) > 0:
-            for binding in db_bindings:
-                db_dict = {repository: binding['db']['value'].replace(dna_prefix, ''),
-                           'created': binding['created']['value']}
-                db_list.append(db_dict)
-        return jsonify(db_list), 200
+        logging.info(f'Repository list')
+        repo_bindings = query_database('select', query_repos, empty_string)
+        if repo_bindings and 'exception' in repo_bindings[0]:
+            return jsonify({error_str: repo_bindings[0]}), 500
+        repo_list = []
+        for binding in repo_bindings:
+            repo_list.append({repository: binding['repo']['value'].replace(dna_prefix, ''),
+                              'created': binding['created']['value']})
+        return jsonify(repo_list), 200
     return jsonify({error_str: '/repositories API only supports GET, POST and DELETE requests'}), 405
 
 
@@ -175,9 +176,12 @@ def narratives():
         repo = dict(values)[repository]
         narr_id = dict(values)[narrative_id]
         logging.info(f'Deleting narrative, {narr_id}, in {repo}')
-        # Delete the metadata for the narrative in the repository's default graph
-        query_database('update', delete_narrative.replace('narr_id', narr_id), repo)
-        return delete_data(repo, narr_id)    # Delete the narrative
+        # Delete the metadata for the narrative in the dna db repository_default graph
+        query_database('update', delete_narrative.replace('?named', f':{repo}_default')
+                       .replace('narr_id', narr_id), repo)
+        # Delete the narrative graph
+        clear_data(repo, narr_id)
+        return jsonify({'repository': repo, 'deleted': narr_id}), 200
     elif request.method == 'GET':
         # Get repository name query parameter
         values, scode = check_query_parameter(repository, True, request)
@@ -185,7 +189,8 @@ def narratives():
             return jsonify(dict(values)), scode
         repo = dict(values)[repository]
         logging.info(f'Narrative list for {repo}')
-        narrative_bindings = query_database('select', query_narratives, repo)
+        query_text = query_narratives.replace('?named', f':{repo}_default')
+        narrative_bindings = query_database('select', query_text, repo)
         if narrative_bindings and 'exception' in narrative_bindings[0]:
             return jsonify({error_str: narrative_bindings[0]}), 500
         narr_list = []
@@ -206,11 +211,13 @@ def graphs():
         repo = dict(values)[repository]
         narr_id = dict(values)[narrative_id]
         logging.info(f'Get KG for narrative {narr_id} for {repo}')
-        success, turtle = construct_database(construct_kg.replace('?graph', f':{narr_id}'), repo)
+        # Get the triples from dna db's graph, :repo_narrId
+        success, turtle = construct_graph(construct_kg.replace('?g', f':{repo}_{narr_id}'), repo)
         if success:
             # Get narrative metadata
             metadata_dict = parse_narrative_query_binding(
-                query_database('select', query_narratives.replace('?graph', f':{narr_id}'), repo)[0])
+                query_database('select', query_narratives.replace('?named', f':{repo}_default')
+                               .replace('?graph', f':{narr_id}'), repo)[0])
             return jsonify({repository: repo, 'narrativeDetails': metadata_dict, 'triples': turtle}), 200
         return jsonify({error_str: f'Error getting narrative knowledge graph {narr_id}: {turtle[0]}'}), 500
     elif request.method == 'PUT':
@@ -230,29 +237,32 @@ def graphs():
                 {error_str: 'missing',
                  detail: 'A triples element MUST be present in the request body of a /graphs POST.'}), 400
         logging.info(f'Updating narrative, {narr_id}, in {repo}')
-        test_msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'{dna_prefix}test_{narr_id}')
+        # Add triples to dna db's graph, :repo_test_narrId
+        test_msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'test_{narr_id}')
         if not test_msg:     # Successful
             # Delete the test and 'real' narrative graph and recreate the latter
-            clear_data(repo, f'{dna_prefix}test_{narr_id}')
-            clear_msg = clear_data(repo, f'{dna_prefix}{narr_id}')
+            clear_data(repo, f'test_{narr_id}')
+            clear_msg = clear_data(repo, narr_id)
             if clear_msg:
                 error = f'Could not remove the triples from the original narrative graph ({narr_id}) in {repo}'
                 return jsonify({error_str: error}), 500
-            msg = add_remove_data('add', ' '.join(req_data['triples']), repo, f'{dna_prefix}{narr_id}')
+            # Add triples to dna db's graph, :repo_narrId
+            msg = add_remove_data('add', ' '.join(req_data['triples']), repo, narr_id)
             if not msg:     # Successfully added data to the narr_id narrative graph
                 # Update the narrative metadata (delete/insert original and new KG created and number of triples)
-                query_database('update', update_narrative.replace('?s', f':{narr_id}'), repo)
-                created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-                numb_triples_results = query_database('select', count_triples.replace('?g', f':{narr_id}'), repo)
+                query_database('update', update_narrative.replace('?g', f':{repo}_default')
+                               .replace('?s', f':{narr_id}'), repo)
+                modified_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
+                numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'), repo)
                 numb_triples = 0
                 if len(numb_triples_results) > 0:
                     numb_triples = numb_triples_results[0]['cnt']['value']
                 new_meta_ttl = [
                     f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> .',
-                    f':{narr_id} dc:created "{created_at}"^^xsd:dateTime ; :number_triples {numb_triples} .']
-                add_msg = add_remove_data('add', ' '.join(new_meta_ttl), repo)
+                    f':{narr_id} dc:modified "{modified_at}"^^xsd:dateTime ; :number_triples {numb_triples} .']
+                add_msg = add_remove_data('add', ' '.join(new_meta_ttl), repo)   # Add narr metadata to :repo_default
                 if not add_msg:    # Successful
-                    return jsonify({repository: repo, narrative_id: narr_id, 'processed': created_at,
+                    return jsonify({repository: repo, narrative_id: narr_id, 'processed': modified_at,
                                     'numberOfTriples': numb_triples}), 200
                 error = f'Error updating narrative ({narr_id}) metadata from {repo}'
                 return jsonify({error_str: error}), 500

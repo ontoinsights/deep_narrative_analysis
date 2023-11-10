@@ -7,7 +7,7 @@ sents1 = \
     'Republican politics in the sparsely populated state for more than four decades. Her father is former ' \
     'Vice President Dick Cheney, who was elected to the House in 1978, where he served for a decade.'
 sents2 = \
-    'Liz Cheney’s loss was expected, even by herself. In fact, she said, "I hope that I served my constituency well."'
+    'Liz Cheney’s expected her loss. In fact, she said, "I regret that I could not do more."'
 sents3 = \
     'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, ' \
     'an outcome that was a priority for former President Donald Trump as he urged GOP voters ' \
@@ -25,6 +25,7 @@ def test_sents1():
     success, graph_ttl = create_graph(quotations_dict, sent_dicts)
     assert success
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert '"Elizabeth Lynne Cheney"' in ttl_str        # Person alt name
     assert ':gender "female"' in ttl_str                # Gender capture
     # Following are shown in the output pasted below
@@ -34,7 +35,7 @@ def test_sents1():
     assert 'a :End' in ttl_str                          # Mapping for 'marks'
     assert 'a :EnvironmentAndCondition' in ttl_str      # Mapping for 'is'
     assert ':has_quantification' in ttl_str
-    # Output:
+    # Output:   TODO: Validate
     # :Sentence_ae97cf32-b3b5 a :Sentence ; :offset 1 .
     # :Sentence_ae97cf32-b3b5 :text "Liz Cheney’s loss marks a remarkable fall for a political family that has
     #       loomed large in Republican politics in the sparsely populated state for more than four decades." .
@@ -126,7 +127,7 @@ def test_sents2():
     assert ':voice "active' in ttl_str and ':voice "passive' in ttl_str
     assert ':has_time' not in ttl_str
     assert ':has_location' not in ttl_str
-    # Output Turtle:
+    # Output Turtle:   TODO: Validate
     # :Sentence_dcec0566-ac2a a :Sentence ; :offset 1 .
     # :Sentence_dcec0566-ac2a :text "Liz Cheney’s loss was expected, even by herself." .
     # :Cheneys a :Person, :Collection ; rdfs:label "Cheneys" ; :role "family" .
@@ -182,7 +183,7 @@ def test_sents3():
     assert ':has_time' not in ttl_str
     assert ':has_location' not in ttl_str
     assert 'Harry tried to give up the prize' in ttl_str
-    # Output:
+    # Output:   TODO: Validate
     # :Sentence_0139e4a2-94d0 a :Sentence ; :offset 1 .
     # :Sentence_0139e4a2-94d0 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary
     #      in Wyoming, an outcome that was a priority for former President Donald Trump as he urged GOP voters

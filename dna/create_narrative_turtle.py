@@ -68,5 +68,4 @@ def create_graph(quote_dict: dict, sentence_dicts: list) -> (bool, list):
         except Exception:    # Triples not added for quote
             logging.error(f'Exception in getting quote details for the text, {quote_text}')
             continue
-    logging.error(graph_ttl_list)
     return True, graph_ttl_list

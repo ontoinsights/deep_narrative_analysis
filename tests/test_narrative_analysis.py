@@ -19,37 +19,46 @@ narr_text = \
 
 
 def test_narrative_results():
-    goal_dict = access_api(narr_prompt.replace("{narr_text}", narr_text))
-    goals = goal_dict['goal_numbers']
+    narr_dict = access_api(narr_prompt.replace("{narr_text}", narr_text))
+    print(narr_dict)
+    goals = narr_dict['goal_numbers']
     goal_texts = []
     for goal in goals:
         goal_texts.append(narrative_goals[goal - 1])
-    assert 'analyze' in goal_texts and 'describe-current' in goal_texts
-    assert 'conservative_interpretation' in goal_dict
-    assert 'liberal_interpretation' in goal_dict
-    assert 'neutral_interpretation' in goal_dict
-    return
+    assert 'advocate' in goal_texts    # Goal #1
+    assert 'summary' in narr_dict
+    assert 'rhetorical_devices' in narr_dict
+    assert int(narr_dict['rhetorical_devices'][0]['device_number']) in (5, 16)
+    assert 'interpreted_text' in narr_dict
+    assert narr_dict['interpreted_text'][0]['perspective'] in ('conservative', 'liberal', 'neutral')
+    assert 'ranking_by_perspective' in narr_dict
+    assert narr_dict['ranking_by_perspective'][0]['perspective'] in ('conservative', 'liberal', 'neutral')
     # The returned results (in goal_dict) are:
-    #  'goal_numbers': [1, 2],      # advocate and analyze
-    #  'summary': "The author, a professional in U.S. peacemaking policy and conflict resolution, argues that
-    #      peace between Israel and the Palestinians will not be possible as long as Hamas remains in control of
-    #      Gaza. The author believes that Hamas's power and ability to threaten Israel must end, and that if
-    #      Hamas persists as a military force, it will attack Israel again. The author also mentions the
-    #      threat of Hezbollah and Iran's involvement.",
+    #  'goal_numbers': [1, 2],      # advocate/analyze
+    #      Have also seen 1 and 6, advocate/establish authority
+    #  'summary': "The narrative is from a U.S. peacemaking policy and conflict resolution professional who
+    #      has worked on various international conflicts. The focus is on the Israeli-Palestinian conflict,
+    #      specifically the role of Hamas in Gaza. The author argues that peace is unattainable as long as
+    #      Hamas, which is backed by Iran, remains in power and poses a threat to Israel. The narrative
+    #      suggests that for Israelis, the existence of their state is at risk, and that the ultimate goal
+    #      of Hamas and Hezbollah is to make Israel unlivable.",
     #   'rhetorical_devices': [
     #      {'device_number': 5, 'evidence': 'The author refers to his professional experience in U.S. peacemaking
     #             policy and conflict resolution.'},     # ethos
     #      {'device_number': 16, 'evidence': "The author uses wording that appeals to fear, such as 'Israel's
     #             survival as a state is at stake' and 'Hamas will attack Israel again'."}],     # pathos
     #   'interpreted_text': [
-    #      {'perspective': 'conservative', 'interpretation': "A conservative reader might agree with the
-    #           author's argument that Hamas poses a significant threat to Israel and that peace will not be
-    #           possible as long as Hamas remains in control of Gaza. They might also appreciate the author's
-    #           emphasis on the need for strong action against Hamas."},
-    #      {'perspective': 'liberal', 'interpretation': "A liberal reader might question the author's assertion
-    #           that peace is impossible as long as Hamas is in control of Gaza, and might argue for a more
-    #           nuanced approach to the conflict. They might also be concerned about the potential for
-    #           escalation if Hamas's power is forcibly ended."},
-    #      {'perspective': 'neutral', 'interpretation': "A neutral reader would note the author's argument
-    #           and the reasons given for it, but might also seek out other perspectives to gain a more balanced
-    #           understanding of the situation."}]}
+    #      {'perspective': 'conservative', 'interpretation': "Conservatives might view the narrative as a
+    #          validation of security concerns regarding Israel and the threat posed by Hamas and Hezbollah.
+    #          They may agree with the author's assessment that dismantling Hamas is necessary for peace."},
+    #      {'perspective': 'liberal', 'interpretation': "Liberals might be critical of the narrative's hardline
+    #          stance against Hamas and may advocate for a more nuanced approach to resolving the conflict that
+    #          includes addressing the humanitarian situation in Gaza."},
+    #      {'perspective': 'neutral', 'interpretation': "A neutral observer might consider the narrative as one
+    #          perspective on the complex Israeli-Palestinian conflict, recognizing the author's expertise
+    #          while also understanding that the situation has multiple dimensions and viewpoints."}],
+    #    'ranking_by_perspective': [
+    #      {'perspective': 'conservative', 'ranking': 4},
+    #      {'perspective': 'liberal', 'ranking': 2},
+    #      {'perspective': 'neutral', 'ranking': 3}]
+    # }

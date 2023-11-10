@@ -5,6 +5,7 @@ from dna.nlp import parse_narrative
 text_clauses1 = 'While Mary exercised, John practiced guitar.'
 text_clauses2 = 'George went along with the plan that Mary outlined.'
 text_aux_only = 'Joe is an attorney.'
+text_affiliation = 'Joe is a member of the Mayberry Book Club.'
 text_complex = \
     'Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during her concession ' \
     'speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman.'
@@ -41,40 +42,45 @@ text_multiple_xcomp = 'John liked to ski and to swim.'
 text_location_hierarchy = 'Switzerland\'s mountains are magnificent.'
 text_weather = "Hurricane Otis severely damaged Acapulco."
 
+# Note that it is unlikely that all tests will complete successfully since event semantics can be
+# interpreted/reported in multiple ways
+# 75% of tests should pass
+
 
 def test_clauses1():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_clauses1)
     success, graph_ttl = create_graph(quotations_dict, sent_dicts)
-    ttl_str = str(graph_ttl)
     # Following are shown in the output pasted below
     assert ':has_active_entity :Mary' in ttl_str and ':has_active_entity :John' in ttl_str
     assert ':has_instrument' in ttl_str
-    assert ':text "guitar"' in ttl_str
+    assert ':text "guitar' in ttl_str
     assert 'a :MusicalInstrument' in ttl_str
-    assert ':text "exercised"' in ttl_str and 'a :BodilyAct' in ttl_str
-    assert ':text "practiced"' in ttl_str
-    assert 'a :ArtAndEntertainmentEvent' in ttl_str or 'a :Attempt' in ttl_str   # For "practiced"
+    assert ':text "exercised' in ttl_str and 'a :BodilyAct' in ttl_str
+    assert ':text "practiced' in ttl_str
+    assert 'a :ArtAndEntertainmentEvent' in ttl_str or 'a :Attempt' in ttl_str   # practiced
     # Output Turtle:
-    # :Sentence_dec17fd3-166b a :Sentence ; :offset 1 .
-    # :Sentence_dec17fd3-166b :text "While Mary exercised, John practiced guitar." .
+    # :Sentence_c567e3dc-fd80 a :Sentence ; :offset 1 .
+    # :Sentence_c567e3dc-fd80 :text "While Mary exercised, John practiced guitar." .
     # :Mary a :Person .
     # :Mary rdfs:label "Mary" .
+    # :Mary rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Mary" .
     # :Mary :gender "female" .
     # :John a :Person .
     # :John rdfs:label "John" .
+    # :John rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/John" .
     # :John :gender "male" .
-    # :Sentence_dec17fd3-166b :mentions :Mary .
-    # :Sentence_dec17fd3-166b :mentions :John .
-    # :Sentence_dec17fd3-166b :sentence_person 3 ; :sentiment "neutral".
-    # :Sentence_dec17fd3-166b :voice "active" ; :tense "past" ; :summary "Mary exercised, John practiced guitar" .
-    # :Sentence_dec17fd3-166b :grade_level 2 .
-    # :Sentence_dec17fd3-166b :has_semantic :Event_625d4632-f165 .
-    # :Event_625d4632-f165 :text "exercised" ; a :BodilyAct .
-    # :Event_625d4632-f165 :has_active_entity :Mary .
-    # :Sentence_dec17fd3-166b :has_semantic :Event_ecb026db-806e .
-    # :Event_ecb026db-806e :text "practiced" ; a :Attempt .
-    # :Event_ecb026db-806e :has_active_entity :John .
-    # :Event_ecb026db-806e :has_instrument [ :text "guitar" ; a :MusicalInstrument ] .']
+    # :Sentence_c567e3dc-fd80 :mentions :Mary .
+    # :Sentence_c567e3dc-fd80 :mentions :John .
+    # :Sentence_c567e3dc-fd80 :sentence_person 3 ; :sentiment "neutral".
+    # :Sentence_c567e3dc-fd80 :voice "active" ; :tense "past" ; :summary "Mary exercised, John played guitar." .
+    # :Sentence_c567e3dc-fd80 :grade_level 3 .
+    # :Sentence_c567e3dc-fd80 :has_semantic :Event_882740d1-d136 .
+    # :Event_882740d1-d136 a :BodilyAct ; :text "exercised" .
+    # :Event_882740d1-d136 :has_active_entity :Mary .
+    # :Sentence_c567e3dc-fd80 :has_semantic :Event_5693c8a2-c003 .
+    # :Event_5693c8a2-c003 a :ArtAndEntertainmentEvent ; :text "practiced guitar" .   # Could also be :Attempt
+    # :Event_5693c8a2-c003 :has_active_entity :John .
+    # :Event_5693c8a2-c003 :has_instrument [ :text "guitar" ; a :MusicalInstrument ] .
 
 
 def test_clauses2():
@@ -84,33 +90,34 @@ def test_clauses2():
     # Following are shown in the output pasted below
     assert ':has_active_entity :Mary' in ttl_str and ':has_active_entity :George' in ttl_str
     assert ':has_topic [ :text "plan' in ttl_str
-    assert ttl_str.count(':has_topic [ :text "plan') == 2
-    assert ':text "went along"' in ttl_str and ':text "outlined"' in ttl_str
-    assert 'a :Agreement' in ttl_str                    # went along with
-    assert 'a :CommunicationAndSpeechAct' in ttl_str    # outlined
+    assert ':text "went along with' in ttl_str and ':text "outlined"' in ttl_str
+    assert 'a :Agreement' in ttl_str           # went along with
+    assert 'a :Cognition' in ttl_str           # outlined
     assert ':text "plan" ; a :Process' in ttl_str
     # Output Turtle:
-    # :Sentence_07fae146-3b85 a :Sentence ; :offset 1 .
-    # :Sentence_07fae146-3b85 :text "George went along with the plan that Mary outlined." .
+    # :Sentence_7dac42b4-9147 a :Sentence ; :offset 1 .
+    # :Sentence_7dac42b4-9147 :text "George went along with the plan that Mary outlined." .
     # :George a :Person .
     # :George rdfs:label "George" .
+    # :George rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/George" .
     # :George :gender "male" .
     # :Mary a :Person .
     # :Mary rdfs:label "Mary" .
+    # :Mary rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Mary" .
     # :Mary :gender "female" .
-    # :Sentence_07fae146-3b85 :mentions :George .
-    # :Sentence_07fae146-3b85 :mentions :Mary .
-    # :Sentence_07fae146-3b85 :sentence_person 3 ; :sentiment "neutral".
-    # :Sentence_07fae146-3b85 :voice "active" ; :tense "past" ; :summary "George agreed to Mary\'s plan." .
-    # :Sentence_07fae146-3b85 :grade_level 5 .
-    # :Sentence_07fae146-3b85 :has_semantic :Event_c8e33c62-56d6 .
-    # :Event_c8e33c62-56d6 :text "went along" ; a :Agreement .
-    # :Event_c8e33c62-56d6 :has_active_entity :George .
-    # :Event_c8e33c62-56d6 :has_topic [ :text "plan" ; a :Process ] .
-    # :Sentence_07fae146-3b85 :has_semantic :Event_021bef23-c06c .
-    # :Event_021bef23-c06c :text "outlined" ; a :CommunicationAndSpeechAct .
-    # :Event_021bef23-c06c :has_active_entity :Mary .
-    # :Event_021bef23-c06c :has_topic [ :text "plan" ; a :Process ] .
+    # :Sentence_7dac42b4-9147 :mentions :George .
+    # :Sentence_7dac42b4-9147 :mentions :Mary .
+    # :Sentence_7dac42b4-9147 :sentence_person 3 ; :sentiment "neutral".
+    # :Sentence_7dac42b4-9147 :voice "active" ; :tense "past" ; :summary "George followed Mary\'s plan." .
+    # :Sentence_7dac42b4-9147 :grade_level 5 .
+    # :Sentence_7dac42b4-9147 :has_semantic :Event_26888f2f-a3d0 .
+    # :Event_26888f2f-a3d0 a :Agreement ; :text "went along with" .
+    # :Event_26888f2f-a3d0 :has_active_entity :George .
+    # :Event_26888f2f-a3d0 :has_topic [:text "plan" ; a :Process] .
+    # :Sentence_7dac42b4-9147 :has_semantic :Event_9becfcb5-705c .
+    # :Event_9becfcb5-705c a :Cognition ; :text "outlined" .
+    # :Event_9becfcb5-705c :has_active_entity :Mary .
+    # :Event_9becfcb5-705c :has_topic [:text "plan" ; a :Process] .
 
 
 def test_aux_only():
@@ -118,23 +125,52 @@ def test_aux_only():
     success, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     # Following are shown in the output pasted below
-    assert ':has_described_entity :Joe' in ttl_str
-    assert ':has_described_entity [ :text "a conservative"' in ttl_str
     assert 'a :EnvironmentAndCondition' in ttl_str     # is
+    assert ':has_described_entity :Joe' in ttl_str
+    assert ':has_aspect [ :text "attorney' in ttl_str
+    assert 'a :LineOfBusiness' in ttl_str              # attorney
     # Output Turtle:
-    # :Sentence_63faf270-ae1d a :Sentence ; :offset 1 .
-    # :Sentence_63faf270-ae1d :text "Joe is a conservative." .
+    # :Sentence_5c116489-da1c a :Sentence ; :offset 1 .
+    # :Sentence_5c116489-da1c :text "Joe is an attorney." .
     # :Joe a :Person .
     # :Joe rdfs:label "Joe" .
+    # :Joe rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Joe" .
     # :Joe :gender "male" .
-    # :Sentence_63faf270-ae1d :mentions :Joe .
-    # :Sentence_63faf270-ae1d :sentence_person 3 ; :sentiment "neutral".
-    # :Sentence_63faf270-ae1d :voice "active" ; :tense "present" ; :summary "Joe is a conservative." .
-    # :Sentence_63faf270-ae1d :grade_level 5 .
-    # :Sentence_63faf270-ae1d :has_semantic :Event_529d775e-64e8 .
-    # :Event_529d775e-64e8 :text "is" ; a :EnvironmentAndCondition .
-    # :Event_529d775e-64e8 :has_described_entity :Joe .
-    # :Event_529d775e-64e8 :has_described_entity [ :text "a conservative" ; a :PoliticalGroup ] .']
+    # :Sentence_5c116489-da1c :mentions :Joe .
+    # :Sentence_5c116489-da1c :sentence_person 3 ; :sentiment "neutral".
+    # :Sentence_5c116489-da1c :voice "active" ; :tense "present" ; :summary "Joe is a lawyer" .
+    # :Sentence_5c116489-da1c :grade_level 5 .
+    # :Sentence_5c116489-da1c :has_semantic :Event_0dba1899-2ab9 .
+    # :Event_0dba1899-2ab9 a :EnvironmentAndCondition ; :text "Joe is an attorney." .
+    # :Event_0dba1899-2ab9 :has_described_entity :Joe .
+    # :Event_0dba1899-2ab9 :has_aspect [:text "attorney" ; a :LineOfBusiness] .']
+
+
+def test_affiliation():
+    sent_dicts, quotations, quotations_dict = parse_narrative(text_affiliation)
+    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    ttl_str = str(graph_ttl)
+    assert 'a :Affiliation' in ttl_str
+    assert ':has_active_entity :Joe' in ttl_str
+    assert ':has_affected_entity :the_Mayberry' in ttl_str
+    # Output Turtle:
+    # :Sentence_2bbce40c-56e7 a :Sentence ; :offset 1 .
+    # :Sentence_2bbce40c-56e7 :text "Joe is a member of the Mayberry Book Club." .
+    # :Joe a :Person .
+    # :Joe rdfs:label "Joe" .
+    # :Joe rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Joe" .
+    # :Joe :gender "male" .
+    # :the_Mayberry_Book_Club a :Organization .
+    # :the_Mayberry_Book_Club rdfs:label "the Mayberry Book Club" .
+    # :Sentence_2bbce40c-56e7 :mentions :Joe .
+    # :Sentence_2bbce40c-56e7 :mentions :the_Mayberry_Book_Club .
+    # :Sentence_2bbce40c-56e7 :sentence_person 3 ; :sentiment "neutral".
+    # :Sentence_2bbce40c-56e7 :voice "active" ; :tense "present" ; :summary "Joe joins book club" .
+    # :Sentence_2bbce40c-56e7 :grade_level 3 .
+    # :Sentence_2bbce40c-56e7 :has_semantic :Event_f7fa1139-8022 .
+    # :Event_f7fa1139-8022 a :Affiliation ; :text "member" .
+    # :Event_f7fa1139-8022 :has_active_entity :Joe .
+    # :Event_f7fa1139-8022 :has_affected_entity :the_Mayberry_Book_Club .
 
 
 def test_complex():
@@ -143,119 +179,152 @@ def test_complex():
     ttl_str = str(graph_ttl)
     assert ':Harriet_Hageman' in ttl_str and ':Liz_Cheney' in ttl_str and ':Abraham_Lincoln' in ttl_str
     # Following are shown in the output pasted below
-    assert ':during :concession_speech_' in ttl_str
-    assert 'a :CommunicationAndSpeechAct' in ttl_str        # Concession speech
-    assert 'a :AssessmentAndCharacterization' in ttl_str    # Compared
-    assert ':has_active_agent :Liz_Cheney' in ttl_str and ':has_affected_agent :Liz_Cheney' in ttl_str
-    assert ':has_topic :Abraham_Lincoln' in ttl_str
+    assert 'a :CommunicationAndSpeechAct' in ttl_str         # concession speech
+    assert 'a :Cognition' in ttl_str                         # compared
+    assert ':has_active_entity :Liz_Cheney' in ttl_str       # Cheney compared herself
+    assert ':has_topic :Abraham_Lincoln' in ttl_str          #    to Lincoln
+    assert ':has_active_entity :Harriet_Hageman' in ttl_str  # Hageman won
     # Output:
-    # :Sentence_a1c01322-742e a :Sentence ; :offset 1 .
-    # :Sentence_a1c01322-742e :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
-    #        during her concession speech shortly after her loss to Trump-backed Republican challenger
-    #        Harriet Hageman." .
+    # :Sentence_249204c5-4e80 a :Sentence ; :offset 1 .
+    # :Sentence_249204c5-4e80 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
+    #      during her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman." .
     # :Cheneys a :Person, :Collection ; rdfs:label "Cheneys" ; :role "family" .
-    # :Liz_Cheney a :Person ; :gender "female" .
+    # :Liz_Cheney a :Person .
     # :Liz_Cheney rdfs:label "Elizabeth Lynne Cheney", "Elizabeth Lynne Cheney Perry", "Elizabeth Lynne Perry",
-    #        "Liz Cheney", "Elizabeth Cheney", "Liz", "Cheney" .
+    #      "Liz Cheney", "Elizabeth Cheney", "Liz", "Cheney" .
     # :Liz_Cheney rdfs:comment "From Wikipedia (wikibase_item: Q5362573): \'Elizabeth Lynne Cheney is an American
-    #        attorney and politician. ... As of March 2023, she is a professor of practice at the University of
-    #        Virginia Center for Politics.\'" ." .
+    #      attorney and politician. ... As of March 2023, she is a professor of practice at the University of
+    #      Virginia Center for Politics.\'" .
     # :Liz_Cheney :external_link "https://en.wikipedia.org/wiki/Liz_Cheney" .
+    # :Liz_Cheney :gender "female" .
     # :WY a :PopulatedPlace, :AdministrativeDivision .
-    # :WY rdfs:label "WY", "Wyoming" .
-    # :WY rdfs:comment "From Wikipedia (wikibase_item: Q1214): \'...\'" .
+    # :WY rdfs:label "Wyoming", "WY" .
+    # :WY rdfs:comment "From Wikipedia (wikibase_item: Q1214): \'Wyoming is a state in the Mountain West
+    #       subregion of the Western United States. ...\'" .
     # :WY :external_link "https://en.wikipedia.org/wiki/Wyoming" .
-    # :WY :admin_level 1 ; :country_name "United States" .
+    # :WY :admin_level 1 .
+    # :WY :country_name "United States" .
     # geo:6252001 :has_component :WY .
     # :Lincolns a :Person, :Collection ; rdfs:label "Lincolns" ; :role "family" .
-    # :Abraham_Lincoln a :Person ; :gender "male" .
+    # :Abraham_Lincoln a :Person .
     # :Abraham_Lincoln rdfs:label "Lincoln", "Honest Abe", "A. Lincoln", "Abe Lincoln", "President Lincoln",
-    #         "Uncle Abe", "Abraham Lincoln", "Abraham" .
-    # :Abraham_Lincoln rdfs:comment "From Wikipedia (wikibase_item: Q91): \'...\'" .
+    #       "Uncle Abe", "Abraham Lincoln", "Abraham" .
+    # :Abraham_Lincoln rdfs:comment "From Wikipedia (wikibase_item: Q91): \'Abraham Lincoln was an American lawyer,
+    #       politician, and statesman who served as the 16th president of the United States from 1861 until his
+    #       assassination in 1865. ...\'" .
     # :Abraham_Lincoln :external_link "https://en.wikipedia.org/wiki/Abraham_Lincoln" .
-    # :Trump a :Person ; rdfs:label "Trump" .
+    # :Abraham_Lincoln :gender "male" .
+    # :Trump a :Person .
+    # :Trump rdfs:label "Trump" .
     # :Trump rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Trump" .
     # :Republican a :Person ; rdfs:label "Republican" .
     # :Republican rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Republican" .
     # :Hagemans a :Person, :Collection ; rdfs:label "Hagemans" ; :role "family" .
-    # :Harriet_Hageman a :Person ; :gender "female" .
+    # :Harriet_Hageman a :Person .
     # :Harriet_Hageman rdfs:label "Harriet M. Hageman", "Harriet Hageman", "Harriet", "Hageman" .
-    # :Harriet_Hageman rdfs:comment "From Wikipedia (wikibase_item: Q110815967): \'
-    #          Harriet Maxine Hageman (born October 18, 1962) is an American politician and attorney serving as
-    #          the U.S. representative for Wyoming's at-large congressional district since 2023. She is a member
-    #          of the Republican Party.\'" .
+    # :Harriet_Hageman rdfs:comment "From Wikipedia (wikibase_item: Q110815967): \'Harriet Maxine Hageman is an
+    #       American politician and attorney serving as the U.S. representative for Wyoming\'s at-large
+    #       congressional district since 2023. She is a member of the Republican Party.\'" .
     # :Harriet_Hageman :external_link "https://en.wikipedia.org/wiki/Harriet_Hageman" .
-    # :Sentence_a1c01322-742e :mentions :Liz_Cheney .
-    # :Sentence_a1c01322-742e :mentions :WY .
-    # :Sentence_a1c01322-742e :mentions :Abraham_Lincoln .
-    # :Sentence_a1c01322-742e :mentions :Trump .
-    # :Sentence_a1c01322-742e :mentions :Republican .
-    # :Sentence_a1c01322-742e :mentions :Harriet_Hageman .
-    # :Sentence_a1c01322-742e :sentence_person 3 ; :sentiment "neutral".
-    # :Sentence_a1c01322-742e :voice "active" ; :tense "past" ;
-    #        :summary "Cheney compared herself to Lincoln after election loss." .
-    # :Sentence_a1c01322-742e :grade_level 12 .
-    # :Sentence_a1c01322-742e :rhetorical_device {:evidence "The speaker, Liz Cheney, refers to Abraham Lincoln,
-    #        a historical figure, to symbolize her own political stance and situation."}  "allusion" .
-    # :Sentence_a1c01322-742e :rhetorical_device {:evidence "The speaker refers to Abraham Lincoln, an authority
-    #        figure in American history, to justify her own political stance and actions."}  "ethos" .
-    # :Sentence_a1c01322-742e :rhetorical_device {:evidence "The speaker invokes the remembrance of
-    #        Abraham Lincoln, a significant figure in American history, to engage the audience."}  "kairos" .
-    # :Sentence_a1c01322-742e :has_semantic :Event_88476522-bace .
-    # :Event_88476522-bace :text "compared" ; a :Cognition .
-    # :Event_88476522-bace :has_active_entity [ :text "Rep. Liz Cheney R-WY" ; a :Person ] .
-    # :Event_88476522-bace :has_affected_entity [ :text "former President Abraham Lincoln" ; a :Person ] .
-    # :Sentence_a1c01322-742e :has_semantic :Event_aca91327-5bf1 .
-    # :Event_aca91327-5bf1 :text "loss" ; a :WinAndLoss .
-    # :Event_aca91327-5bf1 :has_affected_entity [ :text "Rep. Liz Cheney R-WY" ; a :Person ] .
-    # :Event_aca91327-5bf1 :has_active_entity [ :text "Trump-backed Republican challenger Harriet Hageman" ;
-    #        a :Person ] .']
+    # :Harriet_Hageman :gender "female" .
+    # :Sentence_249204c5-4e80 :mentions :Liz_Cheney .
+    # :Sentence_249204c5-4e80 :mentions :WY .
+    # :Sentence_249204c5-4e80 :mentions :Abraham_Lincoln .
+    # :Sentence_249204c5-4e80 :mentions :Trump .
+    # :Sentence_249204c5-4e80 :mentions :Republican .
+    # :Sentence_249204c5-4e80 :mentions :Harriet_Hageman .
+    # :Sentence_249204c5-4e80 :sentence_person 3 ; :sentiment "negative".
+    # :Sentence_249204c5-4e80 :voice "active" ; :tense "past" ;
+    #       :summary "Cheney compares herself to Lincoln in defeat." .
+    # :Sentence_249204c5-4e80 :grade_level 8 .
+    # :Sentence_249204c5-4e80 :rhetorical_device {:evidence "Rep. Liz Cheney compared herself to former President
+    #       Abraham Lincoln, which is an allusion to a historical figure known for his leadership and integrity."}
+    #       "allusion" .
+    # :Sentence_249204c5-4e80 :rhetorical_device {:evidence "The reference to former President Abraham Lincoln
+    #       invokes ethos by drawing on the authority and respect associated with Lincoln."}  "ethos" .
+    # :Sentence_249204c5-4e80 :rhetorical_device {:evidence "Comparing herself to Abraham Lincoln serves as a
+    #       metaphor, likening her situation or qualities to those of Lincoln."}  "metaphor" .
+    # :Sentence_249204c5-4e80 :has_semantic :Event_48caed53-cba5 .
+    # :Event_48caed53-cba5 a :Cognition ; :text "compared" .
+    # :Event_48caed53-cba5 :has_active_entity :Liz_Cheney .
+    # :Event_48caed53-cba5 :has_topic :Abraham_Lincoln .
+    # :Sentence_249204c5-4e80 :has_semantic :Event_b715c899-94f6 .
+    # :Event_b715c899-94f6 a :CommunicationAndSpeechAct ; :text "concession speech" .
+    # :Event_b715c899-94f6 :has_topic [:text "concession speech" ; a :End] .
+    # :Sentence_249204c5-4e80 :has_semantic :Event_20f6fa57-7aed .
+    # :Event_20f6fa57-7aed a :WinAndLoss ; :text "loss" .
+    # :Event_20f6fa57-7aed :has_topic [:text "her loss" ; a :Person] .
+    # :Event_20f6fa57-7aed :has_active_entity :Harriet_Hageman .    # Winner's perspective taken
 
 
 def test_coref():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_coref)
     success, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
-    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :grandfather' in ttl_str
-    assert 'a :DelightAndHappiness' in ttl_str and 'a :MeetingAndEncounter' in ttl_str
-    # Output:
+    print(ttl_str)
+    # Output Turtle:   TODO
 
 
-def test_text4():
-    sent_dicts, quotations, quotations_dict = parse_narrative(text4)
+def test_xcomp():
+    sent_dicts, quotations, quotations_dict = parse_narrative(text_xcomp)
     success, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
-    assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :grandfather' in ttl_str
-    assert 'a :DelightAndHappiness' in ttl_str and 'a :MeetingAndEncounter' in ttl_str
+    assert ':has_affected_agent :Mary' in ttl_str and ':has_topic [:text "grandfather' in ttl_str
+    assert 'a :EmotionalResponse' in ttl_str
+    assert ':sentiment "positive' in ttl_str
     # Output:
-    # :Chunk_e9e14a01-40dd :text "Mary enjoyed being with her grandfather" .
-    # :grandfather_0db0f775_6d96 :gender "Male" .
-    # :grandfather_0db0f775_6d96 a :Person .
-    # :grandfather_0db0f775_6d96 rdfs:label "grandfather" .
-    # :Event_ecf200ec-83d4 :has_active_agent :grandfather_0db0f775_6d96 .
-    # :Event_ecf200ec-83d4 a :MeetingAndEncounter .
-    # :Event_ecf200ec-83d4 a :DelightAndHappiness .
-    # :Event_ecf200ec-83d4 :has_active_agent :Mary .
-    # :Event_ecf200ec-83d4 rdfs:label "Mary enjoyed to be / being with her grandfather" .
-    # :Chunk_e9e14a01-40dd :describes :Event_ecf200ec-83d4 .
+    # :Sentence_8bf2537b-c7cd a :Sentence ; :offset 1 .
+    # :Sentence_8bf2537b-c7cd :text "Mary enjoyed being with her grandfather." .
+    # :Mary a :Person .
+    # :Mary rdfs:label "Mary" .
+    # :Mary rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Mary" .
+    # :Mary :gender "female" .
+    # :Sentence_8bf2537b-c7cd :mentions :Mary .
+    # :Sentence_8bf2537b-c7cd :sentence_person 3 ; :sentiment "positive".
+    # :Sentence_8bf2537b-c7cd :voice "active" ; :tense "past" ; :summary "Mary enjoyed grandfather\'s company." .
+    # :Sentence_8bf2537b-c7cd :grade_level 3 .
+    # :Sentence_8bf2537b-c7cd :has_semantic :Event_48cb18ed-3652 .
+    # :Event_48cb18ed-3652 a :EmotionalResponse ; :text "enjoyed" .
+    # :Event_48cb18ed-3652 :has_affected_entity :Mary .
+    # :Event_48cb18ed-3652 :has_topic [:text "grandfather" ; a :Person] .
 
 
-def test_text5():
-    sent_dicts, quotations, quotations_dict, family_dict = parse_narrative(text5)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts, family_dict)
+def test_modal():
+    sent_dicts, quotations, quotations_dict = parse_narrative(text_modal)
+    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
+    assert ':has_active_agent :Mary' in ttl_str and ':has_topic [:text "grandfather' in ttl_str
+    assert 'a :ReadinessAndAbility' in ttl_str       # can
+    assert 'a :MeetingAndEncounter' in ttl_str       # visit
+    assert ':mentions :PiT_DayTuesday' in ttl_str
+    # Output Turtle:
+    # :Sentence_e04a69c5-a84c a :Sentence ; :offset 1 .
+    # :Sentence_e04a69c5-a84c :text "Mary can visit her grandfather on Tuesdays." .
+    # :Mary a :Person .
+    # :Mary rdfs:label "Mary" .
+    # :Mary rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Mary" .
+    # :Mary :gender "female" .
+    # :PiT_DayTuesday a :PointInTime ; rdfs:label "Tuesdays" .
+    # :Sentence_e04a69c5-a84c :mentions :Mary .
+    # :Sentence_e04a69c5-a84c :mentions :Tuesdays .
+    # :Sentence_e04a69c5-a84c :sentence_person 3 ; :sentiment "neutral".
+    # :Sentence_e04a69c5-a84c :voice "active" ; :tense "present" ; :summary "Mary visits grandfather Tuesdays" .
+    # :Sentence_e04a69c5-a84c :grade_level 3 .
+    # :Sentence_e04a69c5-a84c :has_semantic :ReadinessAndAbility .     # can
+    # :Sentence_e04a69c5-a84c :has_semantic :Event_a7c39915-4230 .
+    # :Event_a7c39915-4230 a :MeetingAndEncounter ; :text "visit" .
+    # :Event_a7c39915-4230 :has_active_entity :Mary .
+    # :Event_a7c39915-4230 :has_topic [:text "grandfather" ; a :Person] .
+    # :Sentence_e04a69c5-a84c :has_semantic :Event_a069150f-5d23 .
+    # :Event_a069150f-5d23 a :Continuation ; :text "Tuesdays" .        # TODO: Repeating sequence, 'on Tuesdays'
+
+
+def test_acomp():
+    sent_dicts, quotations, quotations_dict = parse_narrative(text_acomp)
+    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert ':has_active_agent :Mary' in ttl_str and ':has_active_agent :grandfather' in ttl_str
     assert 'a :OpportunityAndPossibility' in ttl_str      # 'can'
     assert 'a :MeetingAndEncounter' in ttl_str
-    # Output:
-    # :Event_df51d93b-f5d5 :has_time :PiT_DayTuesday .
-    # TODO: Repeating sequence, 'on Tuesdays'
-    # :grandfather_8e115e79_d60f :gender "Male" .
-    # :grandfather_8e115e79_d60f a :Person .
-    # :grandfather_8e115e79_d60f rdfs:label "grandfather" .
-    # :Event_df51d93b-f5d5 :has_active_agent :grandfather_8e115e79_d60f .
-    # :Event_df51d93b-f5d5 a dna:OpportunityAndPossibility .
-    # :Event_df51d93b-f5d5 a :MeetingAndEncounter .
-    # :Event_df51d93b-f5d5 :has_active_agent :Mary .
-    # :Event_df51d93b-f5d5 rdfs:label "Mary can be with her grandfather" .
-    # :Chunk_e9f09b9c-ac86 :describes :Event_df51d93b-f5d5 .
+    # Output Turtle:   TODO

@@ -12,7 +12,7 @@ from rdflib import Graph
 import stardog
 from stardog import Connection
 
-from dna.utilities_and_language_specific import empty_string, ontologies_database, owl_thing
+from dna.utilities_and_language_specific import dna_db, dna_prefix, empty_string, owl_thing
 
 rdf_graph = Graph()
 text_turtle = 'text/turtle'
@@ -25,33 +25,41 @@ sd_conn_details = {'endpoint': os.environ.get('STARDOG_ENDPOINT'),
 full_owl_thing = 'http://www.w3.org/2002/07/owl#Thing'
 
 
-def add_remove_data(op_type: str, triples: str, database: str, graph: str = empty_string) -> str:
+def add_remove_data(op_type: str, triples: str, repo: str, graph: str = empty_string) -> str:
     """
-    Add or remove data to/from the database/store
+    Add or remove triples to/from Stardog for narratives to be stored in the specified "repository"
 
     :param op_type: A string = 'add' or 'remove'
     :param triples: A string with the triples to be inserted/removed
-    :param database: The database name
-    :param graph: An optional named graph in which to insert/remove the triples
+    :param repo: The repository name
+    :param graph: An optional ID indicating that triples for a specific narrative are added to the repository
     :return: An empty string if successful, or the error details if not
     """
     if op_type != 'add' and op_type != 'remove':
         return "Invalid op_type"
     try:
-        ar_conn: Connection = stardog.Connection(database, **sd_conn_details)
+        ar_conn: Connection = stardog.Connection(dna_db, **sd_conn_details)
         ar_conn.begin()
         if op_type == 'add':
             # Add to the database
-            if graph:
-                ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
-            else:
+            if not repo:
                 ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
+            elif graph:
+                ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle),
+                            graph_uri=f'{dna_prefix}{repo}_{graph}')
+            else:
+                ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle),
+                            graph_uri=f'{dna_prefix}{repo}_default')
         else:
             # Remove from the database
-            if graph:
-                ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle), graph_uri=graph)
-            else:
+            if not repo:
                 ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
+            elif graph:
+                ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle),
+                               graph_uri=f'{dna_prefix}{repo}_{graph}')
+            else:
+                ar_conn.remove(stardog.content.Raw(triples.encode('utf-8'), text_turtle),
+                               graph_uri=f'{dna_prefix}{repo}_default')
         ar_conn.commit()
         return empty_string
     except Exception as add_rem_err:
@@ -62,7 +70,7 @@ def add_remove_data(op_type: str, triples: str, database: str, graph: str = empt
 
 def check_server_status() -> bool:
     """
-    Validate that the server at the specified address is functional.
+    Validate that the server at the dna_db address is functional.
 
     :return: Boolean indicating that it is functional (True) or not (False)
     """
@@ -75,42 +83,42 @@ def check_server_status() -> bool:
         return False
 
 
-def clear_data(database: str, graph: str = empty_string) -> str:
+def clear_data(repo: str, graph: str = empty_string) -> str:
     """
-    Clear all triples from a graph or the complete database
+    Clear all triples from a graph or for the complete repository
 
-    :param database: The database name
-    :param graph: An optional named graph which to clear
+    :param repo: The repository name
+    :param graph: An optional ID indicating that triples in a specific graph are cleared
     :return: An empty string if successful, or the error details if not
     """
     try:
-        clear_conn = stardog.Connection(database, **sd_conn_details)
+        clear_conn = stardog.Connection(dna_db, **sd_conn_details)
         clear_conn.begin()
         if graph:
-            clear_conn.clear(graph)
+            clear_conn.clear(f'{dna_prefix}{repo}_{graph}')
         else:
-            clear_conn.clear()
+            clear_conn.clear(f'{dna_prefix}{repo}_default')
         clear_conn.commit()
         return empty_string
     except Exception as clear_err:
         if graph:
-            curr_error = f'Database clear exception for graph {graph} in {database}: {str(clear_err)}'
+            curr_error = f'Clear exception for narrative {graph} in repository {repo}: {str(clear_err)}'
         else:
-            curr_error = f'Database clear exception for database {database}: {str(clear_err)}'
+            curr_error = f'Clear exception for repository {repo}: {str(clear_err)}'
         logging.error(curr_error)
 
 
-def construct_database(construct: str, database: str) -> (bool, list):
+def construct_graph(construct: str, repo: str) -> (bool, list):
     """
     Process a CONSTRUCT query
 
     :param construct: The text of the CONSTRUCT query
-    :param database: The database (name) to be queried
+    :param repo: The repository to be queried
     :return: A tuple holding a boolean indicating success (if true) or failure and an array
               with the Turtle results of the CONSTRUCT query or an error message
     """
     try:
-        const_conn = stardog.Connection(database, **sd_conn_details)
+        const_conn = stardog.Connection(dna_db, **sd_conn_details)
         construct_results = const_conn.graph(construct, content_type='text/turtle')
         turtle_details = rdf_graph.parse(format='text/turtle', data=construct_results)
         final_turtle = []
@@ -119,14 +127,16 @@ def construct_database(construct: str, database: str) -> (bool, list):
             final_turtle.append(f'{subj.n3()} {pred.n3()} {obj.n3()} .\n')
         return True, final_turtle
     except Exception as const_err:
-        curr_error = f'Database ({database}) construct exception: {str(const_err)}'
+        curr_error = f'Narrative graph ({narr_id}) construct for repository ({repo}) exception: {str(const_err)}'
         logging.error(curr_error)
         return False, [str(const_err)]
 
 
+# Future: Multiple separate database repositories are not currently supported
 def create_delete_database(op_type: str, database: str) -> str:
     """
-    Create or delete a database. If created, add the DNA ontologies.
+    Create or delete a database. In order to use Stardog Cloud's Free tier, all
+    repositories/databases are collapsed to 1. TODO: Allow for separate repositories.
 
     :param op_type: A string = 'create' or 'delete'
     :param database: The database name
@@ -153,20 +163,20 @@ def create_delete_database(op_type: str, database: str) -> str:
         return curr_error
 
 
-def query_database(query_type: str, query: str, database: str) -> list:
+def query_database(query_type: str, query: str, repo: str) -> list:
     """
     Process a SELECT or UPDATE query
 
     :param query_type: A string = 'select' or 'update'
     :param query: The text of a SPARQL query
-    :param database: The database (name) to be queried
+    :param repo: The repository name, which may be empty when querying for all repositories
     :return: The bindings array from the query results
     """
     if query_type != 'select' and query_type != 'update':
         logging.error(f'Invalid query_type {query_type} for query_db')
         return []
     try:
-        query_conn = stardog.Connection(database, **sd_conn_details)
+        query_conn = stardog.Connection(dna_db, **sd_conn_details)
         if query_type == 'select':
             # Select query, which will return results, if successful
             query_results = query_conn.select(query, content_type='application/sparql-results+json')
@@ -179,6 +189,6 @@ def query_database(query_type: str, query: str, database: str) -> list:
             query_conn.update(query)
             return ['successful']
     except Exception as query_err:
-        curr_error = f'Database ({database}) query exception for {query}: {str(query_err)}'
+        curr_error = f'Query exception for {query} in repository {repo}: {str(query_err)}'
         logging.error(curr_error)
         return [curr_error]

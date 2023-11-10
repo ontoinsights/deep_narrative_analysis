@@ -9,7 +9,7 @@ import os
 from dna.utilities_and_language_specific import add_to_dictionary_values
 
 openai.api_key = os.environ.get('OPENAI_API_KEY')
-model_engine = "gpt-4"
+model_engine = "gpt-4-1106-preview"   # gpt-4 or gpt-4-1106-preview
 
 any_boolean = 'true/false'
 interpretation_views = 'conservative, liberal or neutral'
@@ -22,19 +22,23 @@ sentiment = 'positive, negative or neutral'
 tense = 'past, present, future'
 voice = 'active or passive'
 
+possible_content1 = '\n\n{'
+possible_content2 = 'json\n{'
+
 # JSON formats
 consistency_format = '{"consistent": "bool"}'
 
 coref_format = '{"references_resolved": "bool", ' \
                '"updated_text": "string"}'
 
-goal_format = '{"goal_numbers": ["int"], ' \
-               '"summary": "string", ' \
-               '"rhetorical_devices": [{"device_number": "int", "evidence": "string"}], ' \
-               '"interpreted_text": [{ "perspective": "string", "interpretation": "string"}]}'
-
 name_check_format = '{"same": "boolean",' \
                     '"simplified_name: "string"}'
+
+narr_format = '{"goal_numbers": ["int"], ' \
+               '"summary": "string", ' \
+               '"rhetorical_devices": [{"device_number": "int", "evidence": "string"}], ' \
+               '"interpreted_text": [{"perspective": "string", "interpretation": "string"}], ' \
+               '"ranking_by_perspective": [{"perspective": "string", "ranking": "int"}]}'
 
 quote_format1 = '{"sentiment": "string", ' \
                 '"grade_level": "int", ' \
@@ -77,7 +81,8 @@ categories = [':Acquisition', ':AggressiveCriminalOrHostileAct', ':CaptureAndSei
               ':Measurement', ':MeetingAndEncounter', ':MovementTravelAndTransportation', ':PoliticalEvent',
               ':ProductionManufactureAndCreation', ':Punishment', ':RewardAndCompensation',
               ':RemovalAndRestriction', ':ReturnRecoveryAndRelease', ':RiskTaking', ':Searching', ':SpaceEvent',
-              ':Storage', ':Substitution', ':UtilizationAndConsumption', ':Possession', ':Process', ':EventAndState']
+              ':Storage', ':Substitution', ':UtilizationAndConsumption', ':Possession', ':Process', ':Affiliation',
+              ':EventAndState']
 
 categories_text = 'The semantic categories are: ' \
     '1. acquisition such as by purchase or sale, gifting, donation, finding something, seizure and theft ' \
@@ -87,9 +92,10 @@ categories_text = 'The semantic categories are: ' \
     '4. agreement such as consensus and signing a contract ' \
     '5. disagreement or dispute ' \
     '6. violation of agreement ' \
-    '7. any type of agricultural, apiculture, viniculture and aquacultural act or event ' \
+    '7. any type of agricultural, apiculture, viniculture and aquacultural act or event (do NOT use for agribusiness ' \
+    'occupations)' \
     '8. any type of art and entertainment act or event including attending a movie or sporting event, ' \
-    'visiting a museum and playing a game ' \
+    'visiting a museum and playing a game (do NOT use for art, entertainment, sporting occupations)' \
     '9. any attempt to do or achieve something ' \
     '10. avoidance such as bans, boycotts, escape, evasion, ignoring, overlooking, prevention and concealment ' \
     '11. bodily act such as movement, eating, drinking, grooming and sleeping ' \
@@ -101,8 +107,8 @@ categories_text = 'The semantic categories are: ' \
     '15. any type of sensory perception including pain, hunger and exhaustion ' \
     '16. any type of communication and speech act such as recommending, acknowledging, denying, ' \
     'promising, requesting, boasting, asking a question, granting permission, refusing, deriding and surrendering ' \
-    '17. description of a characteristic or an attribute of a person, place, event, or thing such as its shape, ' \
-    'temperature, color, weight, population, etc. ' \
+    '17. description of a characteristic or an attribute of a person, place, event, or thing such as its physical ' \
+    'appearance, weight, population, job, etc. ' \
     '18. continuation ' \
     '19. delay or wait' \
     '20. distribution or supply of something ' \
@@ -113,21 +119,25 @@ categories_text = 'The semantic categories are: ' \
     '25. any type of economic condition such as a recession, inflation, and increased/decreased taxes, income or ' \
     'debt ' \
     '26. any type of financial event such as depositing or withdrawing money, releasing an annual report or ' \
-    'paying taxes ' \
+    'paying taxes (do NOT use for finance-related occupations)' \
     '27. health-related event or act such as contracting a disease, addiction, a physical injury, frailty, ' \
-    'having an allergic reaction, getting a vaccine, malnutrition, pandemic and sterility ' \
+    'having an allergic reaction, getting a vaccine, malnutrition, pandemic and sterility (do NOT use for health-' \
+    'related occupations)' \
     '28. impact and collision ' \
     '29. inclusion, unification and attachment such as adding to a list and assembling something ' \
     '30. separation ' \
-    '31. information and data handling including IT operations ' \
+    '31. information and data handling including IT operations (do NOT use for IT-related occupations) ' \
     '32. issuing and publishing such as a newspaper, magazine or press release ' \
-    '33. any legal or judicial event such as a trial, verdict, jury selection and judicial ruling ' \
+    '33. any legal or judicial event such as a trial, verdict, jury selection and judicial ruling (do NOT use for ' \
+    'legal or judicial occupations)' \
     '34. life event such as birth, death, marriage and divorce ' \
     '35. measurement, measuring and reported assessment, count, percentages, etc. ' \
     '36. meeting and encounter such as party, chance encounter or ceremony ' \
     '37. any type of movement, travel or transportation such as entering/leaving a port or train station, ' \
-    'loading a truck or rail car, or making incremental changes such as pouring liquid into a container ' \
-    '38. any political occurrence such as an election, coup or transfer of power, and political campaign ' \
+    'loading a truck or rail car, or making incremental changes such as pouring liquid into a container (do NOT ' \
+    'use for transportation-related occupations)' \
+    '38. any political occurrence such as an election, coup or transfer of power, and political campaign (do NOT ' \
+    'use for political occupations)' \
     '39. any type of production, manufacture and creation event such as designing, building or producing ' \
     'products in a factory ' \
     '40. punishment ' \
@@ -136,14 +146,17 @@ categories_text = 'The semantic categories are: ' \
     '43. return, recovery and release ' \
     '44. risk taking including gambling ' \
     '45. search ' \
-    '46. any type of space event such as a meteor shower, sun spots, eclipse, or rocket or satellite launch ' \
+    '46. any type of space event such as a meteor shower, sun spots, eclipse, or rocket or satellite launch (do NOT ' \
+    'use for space-related occupations)' \
     '47. any type of storage event such as moving cargo into or from storage, stockpiling or hoarding ' \
     '48. substitution or imitation of something or someone ' \
     '49. utilization and consumption ' \
     '50. possession ' \
     '51. natural or goal-directed process which is a set of interrelated/interdependent events or conditions ' \
     'that progress along a timeline such as a plan, script, the aging process or climate change' \
-    '52. other'
+    '52. affiliation of a person to another person, group, location, etc. or membership of a person in a group ' \
+    'or organization ' \
+    '53. other'
 
 narrative_goals = ['advocate', 'analyze', 'describe-set', 'describe-current', 'entertain',
                    'establish-authority', 'inspire', 'life-story']
@@ -155,7 +168,7 @@ narrative_goals_text = 'The narrative goal categories are: ' \
     '4. Describe/report a current event, trend or condition ' \
     '5. Entertain using humor and engaging content ' \
     '6. Establish authority by citing facts, statistics and quotes from experts ' \
-    '7. Inspire or motivate through personal stories, uplifting news, or other means ' \
+    '7. Inspire and motivate through uplifting stories, news, etc. ' \
     '8. Relate a personal narrative or life story ' \
 
 noun_categories = [':Person', ':Person, :Collection', ':GovernmentalEntity', ':OrganizationalEntity', ':EthnicGroup',
@@ -230,10 +243,10 @@ additional_devices_text = \
 
 # Co-reference related prompting - Future
 coref_prompt = 'You are a linguist and NLP expert, analyzing text. Here are a series of sentences (ending with the ' \
-    'string "**" which should be ignored): {sentences} ** Resolve co-references in the sentences, updating the ' + \
-    f'co-references with their more specific details. Return the results using the JSON format, {coref_format} ' + \
-    f'If there were no references to resolve, indicate this using the "references_resolved" boolean - setting it ' \
-    f'to false. In this case, the "updated_text" element would be set to the original inputted text.'
+    'string "**" which should be ignored): {sentences} ** Resolve co-references in the following sentences, ' \
+    'updating the co-references with their more specific details. Return the sentences using the JSON format, ' + \
+    f'{coref_format}. If there were no references to resolve, indicate this using the "references_resolved" boolean ' \
+    f'- setting it to false. In this case, the "updated_text" element would be set to the original inputted text.'
 
 # Validation prompting
 name_check_prompt = 'You are a student researching whether two individuals could be the same, given only their ' \
@@ -244,16 +257,17 @@ name_check_prompt = 'You are a student researching whether two individuals could
     f'object with keys and values as defined by {name_check_format}.'
 
 # Narrative-level prompting
-narr_prompt = f'You are a political observer analyzing narratives and news articles. ' \
+narr_prompt = f'You are a political observer analyzing news articles. ' \
     'Here is the text of a narrative or article (ending with the string "**" which should be ignored): ' \
     '{narr_text} **' + \
     f'Here is a numbered list of the possible goals of the narrative. {narrative_goals_text} ' \
     f'Here is a numbered list of the possible rhetorical devices that may be used in the narrative. ' \
     f'{rhetorical_devices_text} {additional_devices_text} ' + \
     'Indicate the numbers of the 2 most likely narrative goals. Indicate the numbers of the rhetorical' \
-    'devices used, and explain why those devices were returned. Also, summarize the narrative and explain ' + \
-    f'how it would be interpreted from each of the following perspectives: {interpretation_views}. Return the ' \
-    f'response as a JSON object with keys and values as defined by {goal_format}.'
+    'devices used, and explain why those devices were returned. Also, summarize the narrative, and explain ' + \
+    f'how it would be interpreted from each of the following perspectives: {interpretation_views}. Rank the ' \
+    f'text from 1-5 for each perspective. Return the response as a JSON object with keys and values as ' \
+    f'defined by {narr_format}.'
 
 # Sentence-level prompting
 nothing_else = 'Do NOT return any free-form string text in the response.'
@@ -317,7 +331,7 @@ quote_prompt3 = 'You are a linguist and NLP expert, analyzing quotations from ne
     'which should be ignored): {sent_text} ** For the quotation, indicate the numbers of the 1-3 most appropriate ' + \
     f'semantic categories. {statement_of_the_form} ONLY return the maximum of 3 semantics IF there is ' + \
     'justification/evidence for each one. If there is insufficient evidence to justify assigning any semantic ' \
-    'category, return the number 52 ("other"). In the response, provide the text that triggered the semantic ' + \
+    'category, return the number 53 ("other"). In the response, provide the text that triggered the semantic ' + \
     f'categorization. {short_or_vague} Also indicate whether each (discovered or inferred) semantic is ' \
     f'negated ({any_boolean}). Return the response as a JSON object with keys and values as defined ' \
     f'by {quote_format3}. {nothing_else}'
@@ -352,7 +366,7 @@ wikipedia_prompt = 'You are a student researching a proper noun and are given it
 
 
 # @retry(stop=stop_after_attempt(5), wait=(wait_fixed(3) + wait_random(0, 2)))
-def access_api(content: str, attempts: int = 1) -> dict:
+def access_api(content: str) -> dict:
     """
     Surrounding the calls to the OpenAI API with retry logic.
 
@@ -362,7 +376,7 @@ def access_api(content: str, attempts: int = 1) -> dict:
     """
     try:
         response = openai.ChatCompletion.create(
-            model="gpt-4",
+            model=model_engine,
             messages=[
                 {"role": "user", "content": content}
             ],
@@ -377,11 +391,19 @@ def access_api(content: str, attempts: int = 1) -> dict:
     try:
         resp_dict = json.loads(response['choices'][0]['message']['content'].replace('\n', ' '))
     except Exception:
-        logging.error(f'Response is not JSON formatted: {str(response)}')
-        if (('The response for the given text ' in str(response) and 'would be:' in str(response))
-                or 'JSON response:' in str(response)) and attempts < 3:
-            attempts += 1
-            return access_api(content, attempts)
+        revised_content = ''
+        if possible_content1 in response['choices'][0]['message']['content']:
+            revised_content = ' { ' + response['choices'][0]['message']['content'].split(possible_content1)[1]
+        elif possible_content2 in response['choices'][0]['message']['content']:
+            revised_content = ' { ' + response['choices'][0]['message']['content'].split(possible_content2)[1]
+            revised_content = revised_content.split('```')[0]
+        if revised_content:
+            try:
+                resp_dict = json.loads(revised_content.replace('\n', ' '))
+            except:
+                logging.error(f'Tried revised JSON content: {revised_content}')
+                return dict()
         else:
+            logging.error(f'Response is not JSON formatted: {str(response)}')
             return dict()
     return resp_dict

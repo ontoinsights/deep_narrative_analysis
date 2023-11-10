@@ -9,11 +9,11 @@ from datetime import datetime
 from flask import Request, Response, jsonify
 
 from dna.create_narrative_turtle import create_graph
-from dna.database import add_remove_data, check_server_status, clear_data, create_delete_database, query_database
-from dna.database_queries import count_triples, delete_entity, query_narratives, query_dbs
+from dna.database import add_remove_data, check_server_status, query_database
+from dna.database_queries import count_triples, query_narratives, query_repos
 from dna.nlp import parse_narrative
 from dna.query_openai import access_api, narrative_goals, narr_prompt, rhetorical_devices
-from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_db, ttl_prefixes
+from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph, ttl_prefixes
 
 detail: str = 'detail'
 error_str: str = 'error'
@@ -42,19 +42,20 @@ def _check_from_to_date(date_value: str) -> bool:
     return True
 
 
-def _entity_exists(db: str, graph: str = empty_string) -> bool:
+def _entity_exists(repo: str, graph: str = empty_string) -> bool:
     """
-    Validate that the database exists at the specified server address (if no graph id is provided),
-    or that the specified graph exists in the database at the server address.
+    Validate that the repository exists (if no graph id is provided), or that the specified graph exists
+    for the database.
 
-    :param db: Database to be validated or where the narrative graph is found
+    :param repo: The repository nae
     :param graph: String identifying the narrative/narrative graph
     :return: True if the database or graph exists for the specified server, False otherwise
     """
     if graph:
-        bindings = query_database('select', query_narratives.replace('?graph', f':{graph}'), db)
+        bindings = query_database('select', query_narratives.replace('?named', f':{repo}_default')
+                                  .replace('?graph', f':{graph}'), repo)
     else:
-        bindings = query_database('select', query_dbs.replace('?db', f':{db}'), meta_db)
+        bindings = query_database('select', query_repos.replace('?repo', f':{repo}'), empty_string)
     if bindings:
         return True
     return False
@@ -128,41 +129,11 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
     return dict(), 200
 
 
-def delete_data(db: str, graph: str = empty_string) -> (Response, int):
-    """
-    Delete either an entire database (if a graph name is not defined) or the specified
-    graph in the database at the indicated server address.
-
-    :param db: Database to be deleted or where the narrative graph is found
-    :param graph: String identifying the narrative/narrative graph
-    :return: Flask JSON response and status code
-    """
-    if graph:
-        failure = clear_data(db, f'{dna_prefix}{graph}')    # Empty string is returned if successful
-    else:
-        msg = create_delete_database('delete', db)
-        failure = False if 'deleted at' in msg else True
-    if not failure:
-        if graph:
-            query_database('update', delete_entity.replace('?s', f':{graph}'), db)
-            del_results = query_database('update', delete_entity.replace('?s', f':Narrative_{graph}'), db)
-        else:
-            del_results = query_database('update', delete_entity.replace('?s', f':{db}'), meta_db)
-        if del_results[0] == 'successful':
-            if graph:
-                resp_dict = {'repository': db, 'deleted': graph}
-            else:
-                resp_dict = {'deleted': db}
-            return jsonify(resp_dict), 200
-        return jsonify({error_str: del_results[0]}), 500
-    return jsonify({error_str: failure}), 500
-
-
-def get_metadata_ttl(db: str, narr_id: str, narr: str, narr_details: list) -> (bool, list, str, int):
+def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list) -> (bool, list, str, int):
     """
     Add the meta-data triples for a narrative to the specified database of the server.
 
-    :param db: Database where the meta-data and narrative graph are found
+    :param repo: The repository name
     :param narr_id: String identifying the narrative/narrative graph
     :param narr: String holding the text of the narrative
     :param narr_details: Array holding the details related to the original text -
@@ -173,7 +144,7 @@ def get_metadata_ttl(db: str, narr_id: str, narr: str, narr_details: list) -> (b
              of triples in the narrative graph
     """
     created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-    numb_triples_results = query_database('select', count_triples.replace('?g', f':{narr_id}'), db)
+    numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'), repo)
     if len(numb_triples_results) > 0:
         numb_triples = numb_triples_results[0]['cnt']['value']
     else:
@@ -221,7 +192,7 @@ def parse_narrative_query_binding(binding_set: dict) -> dict:
                                   'length': binding_set['length']['value']}}
 
 
-def process_new_narrative(metadata: list, narr_text: str, db_name: str) -> (dict, str, int):
+def process_new_narrative(metadata: list, narr_text: str, repo: str) -> (dict, str, int):
     """
     Performs the sentence and quotation extractions and analysis, adding a narrative to
     the database with the specified name and address.
@@ -229,7 +200,7 @@ def process_new_narrative(metadata: list, narr_text: str, db_name: str) -> (dict
     :param metadata: Array holding the details related to the original text - The order of the entries
                      are title, date published, source/publisher, url and length of text
     :param narr_text: String holding the narrative text
-    :param db_name: String holding the database name where the narrative graph is stored
+    :param repo: String holding the repository name for the narrative graph
     :return: A tuple consisting of a dictionary with the details for the narrative added
              to the database, an error message if an error occurred or an empty string, and an
              integer holding the HTTP status code
@@ -248,27 +219,27 @@ def process_new_narrative(metadata: list, narr_text: str, db_name: str) -> (dict
         narr = narr_text
     graph_uuid = str(uuid.uuid4())[:8]   # IRI of the named graph for the narrative, and the narrative itself
     title = metadata[0]
-    logging.info(f'Ingesting {title} to {db_name}')
+    logging.info(f'Ingesting {title} to {repo}')
     sentence_dicts, quotations, quotations_dict = parse_narrative(narr)
     success, graph_ttl = create_graph(quotations_dict, sentence_dicts)
     if not success:
         return dict(), f'Error creating the graph for {title}', 500
     logging.info('Loading knowledge graph')
-    msg = add_remove_data('add', ' '.join(graph_ttl), db_name, f'{dna_prefix}{graph_uuid}')
+    msg = add_remove_data('add', ' '.join(graph_ttl), repo, graph_uuid)   # Add to dna db's repo_graphUUID graph
     if msg:
         return dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500
     # Process the metadata and add individual quotes to the meta-db
     logging.info("Loading metadata")
-    success, meta_ttl, created, numb_triples = get_metadata_ttl(db_name, graph_uuid, narr, metadata)
+    success, meta_ttl, created, numb_triples = get_metadata_ttl(repo, graph_uuid, narr, metadata)
     if not success:
         return dict(), f'Error creating the metadata for {title}', 500
     for quotation in quotations:
         meta_ttl.append(f':{graph_uuid} :text_quote "{quotation}" .')
-    msg = add_remove_data('add', ' '.join(meta_ttl), db_name)   # Add to default graph
+    msg = add_remove_data('add', ' '.join(meta_ttl), repo)   # Add to dna db's repo graph
     if msg:
         return dict(), f'Error adding metadata for {title}: {msg}', 500
     # All is successful
-    resp_dict = {repository: db_name,
+    resp_dict = {repository: repo,
                  'narrativeDetails': {
                      narrative_id: graph_uuid, 'processed': created, 'numberOfTriples': numb_triples,
                      'narrativeMetadata': {'title': title, 'published': metadata[1],

@@ -42,13 +42,14 @@ semantic_role_mapping = {"agent": ":has_active_entity",
                          "theme": ":has_topic"}
 
 
-def _determine_predicate(noun_text: str, noun_category: str, event_category: str, semantic_role: str,
-                         event_semantics: str) -> (str, str):
+def _determine_predicate(noun_text: str, noun_iri: str, noun_category: str, event_category: str,
+                         semantic_role: str, event_semantics: str) -> (str, str):
     """
     Logic needed to choose the appropriate predicate for the noun relationships to the sentence's
     verb/semantic.
 
     :param noun_text: String holding the noun text
+    :param noun_iri: An IRI for the noun, if the noun is a proper noun/already known
     :param noun_category: String holding the DNA class of the noun
     :param event_category: String holding the DNA EventAndState class (or subclass) if the noun
                            can be classified as an event or state
@@ -57,21 +58,26 @@ def _determine_predicate(noun_text: str, noun_category: str, event_category: str
     :return: A tuple of the predicate and object of the triple defining the noun relationship
              to the sentence's semantic.
     """
-    if event_category:
-        noun_category = event_category
-    blank_node = f':text "{noun_text}" ; a {noun_category}'
-    # TODO Need to refine the logic below
+    triple_object = noun_iri if noun_iri else f'[:text "{noun_text}" ; ' \
+                                              f'a {event_category if event_category else noun_category}]'
+    # TODO: Further refine mapping rules
     if event_semantics == ':EnvironmentAndCondition':
-        if noun_category in (':Person', ':Person, :Collection', ':GovernmentalEntity', ':OrganizationalEntity',
-                             ':EthnicGroup', ':PoliticalGroup', ':ReligiousGroup', ':Animal', ':Plant'):
-            return ':has_described_entity', blank_node
+        if (semantic_role == 'agent' or
+                noun_category in (':Person', ':Person, :Collection', ':GovernmentalEntity', ':OrganizationalEntity',
+                                  ':EthnicGroup', ':PoliticalGroup', ':ReligiousGroup', ':Animal', ':Plant')):
+            return ':has_described_entity', triple_object
+        if noun_category == ':Occupation':
+            return ':has_aspect', triple_object
+    elif event_semantics == ':Affiliation':
+        if semantic_role == 'agent':
+            return ':has_active_entity', triple_object
         else:
-            return ':has_aspect', blank_node
+            return ':has_affected_entity', triple_object
     elif semantic_role in semantic_roles:
         if event_category:
-            return ':has_topic', blank_node
+            return ':has_topic', triple_object
         else:
-            return semantic_role_mapping[semantic_role], blank_node
+            return semantic_role_mapping[semantic_role], triple_object
     return empty_string, empty_string
 
 
@@ -180,27 +186,22 @@ def get_sentence_details(sent_iri: str, sent_text: str, ttl_list: list, attribut
                 predicate = ':has_semantic'
             event_iri = f':Event_{str(uuid.uuid4())[:13]}'
             ttl_list.append(f'{sent_iri} {predicate} {event_iri} .')
-            ttl_list.append(f'{event_iri} a {categories[semantic["category_number"] - 1]} .')
+            trigger_text = semantic['trigger_text']
+            event_semantics = categories[semantic["category_number"] - 1]
+            ttl_list.append(f'{event_iri} a {event_semantics} ; :text "{trigger_text}" .')
             if 'nouns' in semantic:     # Not returned for quotations
                 for noun in semantic['nouns']:
                     noun_text = noun['text']
                     semantic_role = noun['semantic_role']
+                    noun_category = noun_categories[noun['noun_type'] - 1]
+                    if (noun['singular'] == 'false' or noun_text in plural_pronouns) and \
+                            ':Collection' not in noun_category:
+                        noun_category += ', :Collection'
+                    event_category = categories[noun['semantic_category'] - 1] \
+                        if noun['semantic_category'] - 1 > -1 else empty_string
                     entity_type, noun_iri = check_if_noun_is_known(noun_text, empty_string, nouns_dict)
-                    if noun_iri:
-                        if categories[semantic["category_number"] - 1] == ':EnvironmentAndCondition':
-                            ttl_list.append(f'{event_iri} :has_described_entity {noun_iri} .')
-                        else:
-                            ttl_list.append(f'{event_iri} {semantic_role_mapping[semantic_role]} {noun_iri} .')
-                    else:
-                        noun_category = noun_categories[noun['noun_type'] - 1]
-                        if (noun['singular'] == 'false' or noun_text in plural_pronouns) and \
-                                ':Collection' not in noun_category:
-                            noun_category += ', :Collection'
-                        event_category = categories[noun['semantic_category'] - 1] \
-                            if noun['semantic_category'] - 1 > -1 else empty_string
-                        predicate, blank_node = \
-                            _determine_predicate(noun_text, noun_category, event_category, semantic_role,
-                                                 categories[semantic["category_number"] - 1])
-                        if predicate:     # TODO: Handle no mappings vs just ignoring
-                            ttl_list.append(f'{event_iri} {predicate} [ {blank_node} ] .')
+                    predicate, triple_object = _determine_predicate(noun_text, noun_iri, noun_category, event_category,
+                                                                    semantic_role, event_semantics)
+                    if predicate:     # TODO: Handle no mappings vs just ignoring
+                        ttl_list.append(f'{event_iri} {predicate} {triple_object} .')
     return

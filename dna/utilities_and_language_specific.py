@@ -19,12 +19,11 @@ preps_string: str = 'preps'
 verbs_string: str = 'verbs'
 underscore: str = '_'
 
+dna_db = 'dna'
 dna_prefix: str = 'urn:ontoinsights:dna:'
-meta_db: str = 'meta-dna'
+meta_graph: str = 'meta'
 owl_thing: str = 'owl:Thing'
 event_and_state_class: str = ':EventAndState'
-
-ontologies_database: str = 'ontologies'
 
 concept_map = {'political': ':PoliticalIdeology',
                'ideology': ':PoliticalIdeology',

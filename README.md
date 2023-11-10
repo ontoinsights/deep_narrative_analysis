@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 4 November 2023
+Updated 9 November 2023
 
 ## License
 Creative Commons 
@@ -35,7 +35,7 @@ The semantics (ontologies) and processing are captured in the directories of thi
   * Note that there is a 'archive' sub-directory, holding WordNet synonym and emotion, ethnicity and religion details which have been superceded by the use of Wikidata information 
   * Note also that there is a 'synonyms' directory that was used in a previous version of DNA, before the move to using LLMs for this purpose
 * _ontol-docs_ contains documentation explaining the DNA ontologies and their usage
-  * The _graphs_ subdirectory contains PNGs of the ontology concepts, where the graph local names correspond to the Turtle file modules' local names
+  * The _ontol-diagrams_ subdirectory contains PNGs of the ontology concepts, where the graph local names correspond to the Turtle file modules' local names
   * The file, dna-ontology-tree.html, holds a downloadable version of the searchable tree view
 * _papers-presentations_ contains documentation related to what has been publicly presented
 * _tools_ contains scripts used to generate the DNA ontology artifacts (the Protege-ready merge and tree output)
@@ -56,25 +56,23 @@ Necessary libraries are specified in the _requirements.txt_ file in the main dir
 These environment variables need to be set for the DNA application:
 
 * `PATH` needs to specifically include the GitHub project's dna directory (for ease of testing) 
-* `OPENAI_API_KEY`(openai.com) MUST be set and reference a billable account 
-* `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set (where STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable)
 * `GEONAMES_ID` (geonames.org) MUST be set for background information retrieval
 * `NEWS_API_KEY` (newsapi.org) MUST be set if the dna/v1/news API is used
+* `OPENAI_API_KEY`(openai.com) MUST be set and reference a billable account 
+* `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set (where STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable)
 
 Other components that must be installed or set up are:
 
 * spaCy language model 
   * Accomplished by executing "python3 -m spacy download en_core_web_trf"
 * Stardog Cloud
-  * The database, "ontologies", should be created and the files from the DNA _ontologies_ directory uploaded to it
-    * Do not load any of the files in the sub-directories. They are provided for reference.
-    * As regards the database configuration, the following settings should be used as DNA 'defaults':
-      * edge.properties=true
-      * query.all.graphs=false
-      * query.timeout=5m
-      * preserve.bnode.ids=false
-      * reasoning.punning.enabled=true
-  * Also, the empty database, "meta-dna", should be created
+  * The database, "dna", should be created and the files from the DNA _ontologies_ directory uploaded to it's default graph
+    * Do not load any of the files in the ontologies_ sub-directories. They are provided for reference.
+    * As regards the database 'namespaces':
+      * Remove the entry for http://api.stardog.com/ (with no prefix name)
+      * Add an entry for 'urn:ontoinsights:dna:' (with no prefix name)
+      * Add an entry for 'urn:ontoinsights:dna:' (with the prefix name, 'dna')
+    * As regards the database configuration, when creating the database, use the stardog.properties file in the _tools_ directory
 
 Make sure that you always upgrade the spacy model ("en_core_web_trf") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
 
@@ -85,3 +83,13 @@ Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask ru
 Only the English language is currently supported and tested. Support for multi-lingual text would be possible using a translation tool or an LLM to create the English rendering.
 
 This is an area which should be further researched.
+
+## Frequently Asked Questions
+* __Question__: Where can I review the prompts sent to OpenAI?
+  * All of the prompts are defined in the query_openai.py file in the _dna_ directory. The prompts are used at various points in the code base. They are invoked by calling the access_api function, defined at the end of the file.
+
+* __Question__: What responses are generated from OpenAI and how are they processed?
+  * All of the responses from OpenAI _should_ be JSON compliant, although string text is sometimes returned. The access_api exception handling tries to address this situation, although more work is needed. The JSON results are defined in the query_api.py file and are returned as a Pyhton dictionary by the access_api function. The Python dictionaries are subsequently converted to RDF. To examine the result processing, search for the 'access_api' function calls in the DNA codebase. (The majority of processing occurs in the process_sentences.py file.)
+
+* __Question__: What RDF is generated from processing the OpenAI responses?
+  * To review RDF output, please see the test_sentence_analysis.py file in the _tests_ directory. A set of sample sentences are there with their corresponding RDF. (Assert statements make up the tests, but the complete RDF output is posted as '# comments' following the test details.) Also, the test_narrative_analysis.py file can be reviewed to understand the RDF results for a news article. Note that the tests and their results are still being updated.
