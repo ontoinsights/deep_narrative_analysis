@@ -183,7 +183,7 @@ def test_complex():
     assert 'a :Cognition' in ttl_str                         # compared
     assert ':has_active_entity :Liz_Cheney' in ttl_str       # Cheney compared herself
     assert ':has_topic :Abraham_Lincoln' in ttl_str          #    to Lincoln
-    assert ':has_active_entity :Harriet_Hageman' in ttl_str  # Hageman won
+    assert ':has_active_entity :Harriet_Hageman' in ttl_str  # Hageman won  TODO: WinLoss?
     # Output:
     # :Sentence_249204c5-4e80 a :Sentence ; :offset 1 .
     # :Sentence_249204c5-4e80 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
@@ -314,7 +314,7 @@ def test_modal():
     # :Sentence_e04a69c5-a84c :has_semantic :Event_a7c39915-4230 .
     # :Event_a7c39915-4230 a :MeetingAndEncounter ; :text "visit" .
     # :Event_a7c39915-4230 :has_active_entity :Mary .
-    # :Event_a7c39915-4230 :has_topic [:text "grandfather" ; a :Person] .
+    # :Event_a7c39915-4230 :has_topic [:text "grandfather" ; a :Person] .   TODO
     # :Sentence_e04a69c5-a84c :has_semantic :Event_a069150f-5d23 .
     # :Event_a069150f-5d23 a :Continuation ; :text "Tuesdays" .        # TODO: Repeating sequence, 'on Tuesdays'
 

@@ -92,14 +92,14 @@ paths:
         published within the indicated date range, and then ingest
         ones with sufficient, accessible text to the specified 
         repository. The number ingested can be limited to the first
-        x, where x is specified using the number_to_ingest query
+        x, where x is specified using the numberToIngest query
         parameter.
       parameters:
         - $ref: '#/components/parameters/repository'
         - $ref: '#/components/parameters/topic'
         - $ref: '#/components/parameters/fromDate'
         - $ref: '#/components/parameters/toDate'
-        - $ref: '#/components/parameters/number_to_ingest'
+        - $ref: '#/components/parameters/numberToIngest'
       operationId: ingestNews
       responses:
         '200':

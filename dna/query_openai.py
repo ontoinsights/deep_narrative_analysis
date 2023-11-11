@@ -14,7 +14,6 @@ model_engine = "gpt-4-1106-preview"   # gpt-4 or gpt-4-1106-preview
 any_boolean = 'true/false'
 interpretation_views = 'conservative, liberal or neutral'
 modal_text = '"can", "could", "have to", "may", "might", "must", "ought to", "shall", "should", "will" and "would"'
-noun_role = '"active", "affected", "used", "described"'
 person = 'using the numbers 1, 2, 3'
 semantic_labels = '"agent", "dative", "experiencer", "force", "instrument", "location", ' \
                   '"measure", "patient" or "theme"'
@@ -180,8 +179,8 @@ noun_categories = [':Person', ':Person, :Collection', ':GovernmentalEntity', ':O
 
 noun_categories_text = 'The noun types are: ' \
     '1. Person ' \
-    '2. Group of people that are not governmental, business or organizational entities such as a family or ' \
-    'people at a party ' \
+    '2. Group of people such as a family or ' \
+    'people at a party (NOT governmental, business or organizational entities)  ' \
     '3. Government or government-funded entity ' \
     '4. Organization, sub-organization, club or society ' \
     '5. Ethnic group ' \
@@ -317,7 +316,7 @@ sent_prompt2 = 'You are a linguist and NLP expert, analyzing the text from narra
     f'Provide the numbers associated with any rhetorical devices found in the sentence. ' \
     f'{common_prompt2_text} {nothing_else}'
 
-short_or_vague = 'For very short or vague texts (perhaps with a single noun/verb), infer the semantics. ' \
+short_or_vague = 'For very short or vague texts (perhaps with a single noun/verb), infer the semantics, ' \
                  'and do NOT mention vagueness or inference in the response.'
 
 statement_of_the_form = 'If the analyzed text is a statement of the form, "x was/is/will be y", then the ' \
