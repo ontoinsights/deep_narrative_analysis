@@ -49,7 +49,7 @@
 ###  urn:ontoinsights:dna:affiliated
 <urn:ontoinsights:dna:affiliated> rdf:type owl:ObjectProperty ;
                                   rdfs:domain <urn:ontoinsights:dna:Person> ;
-                                  rdfs:comment "Relationship indicating that the referencing Person is associated with another entity, such as another Agent, OrganizationalEntity or Location. The time of the Affiliation can be specified using the :has_time property (or one of its subproperties) as an RDF* graph property on :affiliated. Another possibility is to use the :role property as another RDF* graph property. This permits the capture of the role of the Person, for the indicated time."@en ;
+                                  rdfs:comment "Relationship indicating that the referencing individual is associated with another entity, such as another Agent, OrganizationalEntity or Location. The time of the Affiliation can be specified using the :has_time property (or one of its subproperties) as an RDF* graph property on :affiliated. Another possibility is to use the :role property as another RDF* graph property. This permits the capture of the role of the Person, for the indicated time."@en ;
                                   rdfs:label "has citizenship"@en ;
                                   <urn:ontoinsights:dna:example> "Examples of Affiliations are a Person associated as an alumnus of their university, as an employee of a company, or as a member of a religious or political group."@en ;
                                   <urn:ontoinsights:dna:wordnet_noun_synset> "01083552" .
@@ -1265,7 +1265,7 @@
 
 ###  urn:ontoinsights:dna:Abduction
 <urn:ontoinsights:dna:Abduction> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:CaptureAndSeizure> ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ;
                                  rdfs:comment "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."@en ;
                                  rdfs:label "Abduction"@en ;
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "00776957" ,
@@ -1273,6 +1273,15 @@
                                                                             "00784853" ;
                                  <urn:ontoinsights:dna:wordnet_verb_synset> "01473673" ,
                                                                             "01474455" .
+
+
+###  urn:ontoinsights:dna:AchievementAndAccomplishment
+<urn:ontoinsights:dna:AchievementAndAccomplishment> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:dna:Success> ;
+                                                    rdfs:comment "The successful conclusion of an activity, where an achievement is more focused on the overall goal or purpose of the activity."@en ;
+                                                    rdfs:label "Achievement and Accomplishment"@en ;
+                                                    <urn:ontoinsights:dna:wordnet_noun_synset> "00035910" ;
+                                                    <urn:ontoinsights:dna:wordnet_verb_synset> "02531751" .
 
 
 ###  urn:ontoinsights:dna:Acknowledgment
@@ -1291,16 +1300,27 @@
                                                                                  "00818972" .
 
 
-###  urn:ontoinsights:dna:Acquisition
-<urn:ontoinsights:dna:Acquisition> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                   owl:disjointWith <urn:ontoinsights:dna:Avoidance> ;
-                                   rdfs:comment "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."@en ;
-                                   rdfs:label "Acquisition"@en ;
-                                   <urn:ontoinsights:dna:wordnet_noun_synset> "00042637" ,
-                                                                              "00043933" ;
-                                   <urn:ontoinsights:dna:wordnet_verb_synset> "00723361" ,
-                                                                              "02215637" .
+###  urn:ontoinsights:dna:AcquisitionPossessionAndTransfer
+<urn:ontoinsights:dna:AcquisitionPossessionAndTransfer> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                                        rdfs:comment "The acquiring/obtaining and possessing of some object/asset/knowledge/skill. Subclasses indicate whether this occurred by a gift, purchase, recovered item, theft, etc. In addition, acquisition implies having or controlling some object or asset (e.g., possession). However, possession may or may not indicate ownership."@en ;
+                                                        rdfs:label "Acquisition, Possession and Transfer"@en ;
+                                                        <urn:ontoinsights:dna:wordnet_noun_synset> "00032912" ,
+                                                                                                   "00042637" ,
+                                                                                                   "00043933" ,
+                                                                                                   "00811126" ,
+                                                                                                   "00812259" ,
+                                                                                                   "09783624" ,
+                                                                                                   "13261412" ,
+                                                                                                   "14502904" ,
+                                                                                                   "14503072" ;
+                                                        <urn:ontoinsights:dna:wordnet_verb_synset> "00723361" ,
+                                                                                                   "01216829" ,
+                                                                                                   "02209474" ,
+                                                                                                   "02215637" ,
+                                                                                                   "02306641" ,
+                                                                                                   "02320505" ,
+                                                                                                   "02352633" .
 
 
 ###  urn:ontoinsights:dna:Addiction
@@ -1403,8 +1423,7 @@
 ###  urn:ontoinsights:dna:Agreement
 <urn:ontoinsights:dna:Agreement> rdf:type owl:Class ;
                                  rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                 owl:disjointWith <urn:ontoinsights:dna:DisagreementAndDispute> ,
-                                                  <urn:ontoinsights:dna:ViolationOfAgreement> ;
+                                 owl:disjointWith <urn:ontoinsights:dna:DisagreementAndDispute> ;
                                  rdfs:comment "Events where two or more Agents share the same opinion and/or make arrangements (perhaps legally) to do something. Note that the property, :has_topic, indicates 'what is agreed to' and the involved Agents are identified using the :has_active_agent predicate."@en ;
                                  rdfs:label "Agreement"@en ;
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "01217882" ,
@@ -1527,6 +1546,21 @@
                                                                              "08215965" .
 
 
+###  urn:ontoinsights:dna:ArrestAndImprisonment
+<urn:ontoinsights:dna:ArrestAndImprisonment> rdf:type owl:Class ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:RemovalAndRestriction> ;
+                                             rdfs:comment "An act involving the taking and/or detention of a Person by authority of the law. However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
+                                             rdfs:label "Arrest and Incarceration"@en ;
+                                             <urn:ontoinsights:dna:wordnet_noun_synset> "00089545" ,
+                                                                                        "01149089" ,
+                                                                                        "01149281" ,
+                                                                                        "14020535" ;
+                                             <urn:ontoinsights:dna:wordnet_verb_synset> "01217701" ,
+                                                                                        "02500005" ,
+                                                                                        "02500687" ,
+                                                                                        "02502345" .
+
+
 ###  urn:ontoinsights:dna:Arson
 <urn:ontoinsights:dna:Arson> rdf:type owl:Class ;
                              rdfs:subClassOf <urn:ontoinsights:dna:AttackDamageAndAssault> ;
@@ -1559,8 +1593,16 @@
                                                 rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
                                                 rdfs:comment "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."@en ;
                                                 rdfs:label "Art and Entertainment Event"@en ;
-                                                <urn:ontoinsights:dna:wordnet_verb_synset> "01718067" ,
+                                                <urn:ontoinsights:dna:wordnet_noun_synset> "00041926" ,
+                                                                                           "00402591" ,
+                                                                                           "00427931" ,
+                                                                                           "00456623" ;
+                                                <urn:ontoinsights:dna:wordnet_verb_synset> "00013321" ,
+                                                                                           "01075360" ,
+                                                                                           "01151936" ,
+                                                                                           "01718067" ,
                                                                                            "01727101" ,
+                                                                                           "02423521" ,
                                                                                            "02497847" .
 
 
@@ -1739,8 +1781,7 @@
 
 ###  urn:ontoinsights:dna:Betrayal
 <urn:ontoinsights:dna:Betrayal> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:DeceptionAndDishonesty> ,
-                                                <urn:ontoinsights:dna:ViolationOfAgreement> ;
+                                rdfs:subClassOf <urn:ontoinsights:dna:DeceptionAndDishonesty> ;
                                 rdfs:comment "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Betrayal&oldid=1096433753), Betrayal 'is the breaking or violation of a presumptive contract, trust, or confidence that produces moral and psychological conflict within a relationship amongst individuals, between organizations or between individuals and organizations. Often betrayal is the act of supporting a rival group, or it is a complete break from previously decided upon or presumed norms by one party from the others.'"@en ;
                                 rdfs:label "Betrayal"@en ;
                                 <urn:ontoinsights:dna:wordnet_noun_synset> "00751065" ;
@@ -1846,35 +1887,6 @@
                                                                            "13801244" .
 
 
-###  urn:ontoinsights:dna:CaptivityAndDetention
-<urn:ontoinsights:dna:CaptivityAndDetention> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ,
-                                                             <urn:ontoinsights:dna:RemovalAndRestriction> ;
-                                             rdfs:comment "The condition of an Agent being held captive and confined to a certain location."@en ;
-                                             rdfs:label "Captivity and Detention"@en ;
-                                             <urn:ontoinsights:dna:wordnet_noun_synset> "01149089" ,
-                                                                                        "14020535" ;
-                                             <urn:ontoinsights:dna:wordnet_verb_synset> "02500687" ,
-                                                                                        "02502345" .
-
-
-###  urn:ontoinsights:dna:CaptureAndSeizure
-<urn:ontoinsights:dna:CaptureAndSeizure> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                         <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ,
-                                                         <urn:ontoinsights:dna:ChangeOfPossession> ;
-                                         rdfs:comment "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate."@en ;
-                                         rdfs:label "Capture and Seizure"@en ;
-                                         <urn:ontoinsights:dna:wordnet_noun_synset> "00086039" ,
-                                                                                    "00089301" ,
-                                                                                    "00097789" ,
-                                                                                    "00776783" ;
-                                         <urn:ontoinsights:dna:wordnet_verb_synset> "01215136" ,
-                                                                                    "01217701" ,
-                                                                                    "01217985" ,
-                                                                                    "02210054" .
-
-
 ###  urn:ontoinsights:dna:CaringForDependents
 <urn:ontoinsights:dna:CaringForDependents> rdf:type owl:Class ;
                                            rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
@@ -1920,20 +1932,6 @@
                                                                          "06207399" ,
                                                                          "14057399" ;
                               <urn:ontoinsights:dna:wordnet_verb_synset> "00109468" .
-
-
-###  urn:ontoinsights:dna:ChangeOfPossession
-<urn:ontoinsights:dna:ChangeOfPossession> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                          <urn:ontoinsights:dna:Change> ,
-                                                          <urn:ontoinsights:dna:Possession> ;
-                                          rdfs:comment "An event or condition describing that the control of some good(s) or property passed from one Agent to another. "@en ;
-                                          rdfs:label "Change of Possession"@en ;
-                                          <urn:ontoinsights:dna:wordnet_noun_synset> "09783624" ,
-                                                                                     "14502904" ;
-                                          <urn:ontoinsights:dna:wordnet_verb_synset> "01216829" ,
-                                                                                     "02320505" ,
-                                                                                     "02352633" .
 
 
 ###  urn:ontoinsights:dna:ChemicalElementAndCompound
@@ -2052,6 +2050,15 @@
                                                                                    "02396945" .
 
 
+###  urn:ontoinsights:dna:Commemoration
+<urn:ontoinsights:dna:Commemoration> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                     rdfs:comment "An event that remembers and respects someone, something or some occurrence in the past. The thing that is remembered is identified using the :has_topic property. The Person who is remembering is indicated using the :has_active_agent property."@en ;
+                                     rdfs:label "Commemoration"@en ;
+                                     <urn:ontoinsights:dna:wordnet_noun_synset> "06701267" ;
+                                     <urn:ontoinsights:dna:wordnet_verb_synset> "00613035" .
+
+
 ###  urn:ontoinsights:dna:CommunicationAndSpeechAct
 <urn:ontoinsights:dna:CommunicationAndSpeechAct> rdf:type owl:Class ;
                                                  rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
@@ -2131,7 +2138,8 @@
 
 ###  urn:ontoinsights:dna:Concealment
 <urn:ontoinsights:dna:Concealment> rdf:type owl:Class ;
-                                   rdfs:subClassOf <urn:ontoinsights:dna:Prevention> ;
+                                   rdfs:subClassOf <urn:ontoinsights:dna:DeceptionAndDishonesty> ,
+                                                   <urn:ontoinsights:dna:Prevention> ;
                                    rdfs:comment "An act of preventing something/someone from being known/found."@en ;
                                    rdfs:label "Concealment"@en ;
                                    <urn:ontoinsights:dna:wordnet_noun_synset> "01050836" ,
@@ -2282,7 +2290,7 @@
 ###  urn:ontoinsights:dna:DeceptionAndDishonesty
 <urn:ontoinsights:dna:DeceptionAndDishonesty> rdf:type owl:Class ;
                                               rdfs:subClassOf <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ;
-                                              rdfs:comment "An act of preventing something/someone from being known/found."@en ;
+                                              rdfs:comment "An act of concealing or misrepresenting the truth."@en ;
                                               rdfs:label "Deception and Dishonesty"@en ;
                                               <urn:ontoinsights:dna:wordnet_noun_synset> "00750872" ,
                                                                                          "00751748" ,
@@ -2377,20 +2385,20 @@
                                                                                "02648898" .
 
 
-###  urn:ontoinsights:dna:DemonstrationAndStrike
-<urn:ontoinsights:dna:DemonstrationAndStrike> rdf:type owl:Class ;
-                                              rdfs:subClassOf <urn:ontoinsights:dna:DisagreementAndDispute> ,
-                                                              <urn:ontoinsights:dna:MeetingAndEncounter> ;
-                                              rdfs:comment "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
-                                              rdfs:label "Demonstration and Strike"@en ;
-                                              <urn:ontoinsights:dna:wordnet_noun_synset> "01170859" ,
-                                                                                         "01180193" ,
-                                                                                         "01180685" ,
-                                                                                         "01181340" ,
-                                                                                         "01244711" ,
-                                                                                         "01245509" ;
-                                              <urn:ontoinsights:dna:wordnet_verb_synset> "02417777" ,
-                                                                                         "02527482" .
+###  urn:ontoinsights:dna:DemonstrationStrikeAndRally
+<urn:ontoinsights:dna:DemonstrationStrikeAndRally> rdf:type owl:Class ;
+                                                   rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
+                                                   rdfs:comment "A meeting to support or object to something, someone or some cause. The thing or Agent which is the focus of the Event is defined using the :has_topic property.  Note that these types of events can be supportive or show opposition. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or a :DisagreementOrDispute."@en ;
+                                                   rdfs:label "Demonstration, Strike and Rally"@en ;
+                                                   <urn:ontoinsights:dna:wordnet_noun_synset> "01170859" ,
+                                                                                              "01180193" ,
+                                                                                              "01180685" ,
+                                                                                              "01181340" ,
+                                                                                              "01244711" ,
+                                                                                              "01245509" ,
+                                                                                              "08375259" ;
+                                                   <urn:ontoinsights:dna:wordnet_verb_synset> "02417777" ,
+                                                                                              "02527482" .
 
 
 ###  urn:ontoinsights:dna:Denial
@@ -2422,15 +2430,18 @@
 ###  urn:ontoinsights:dna:DisagreementAndDispute
 <urn:ontoinsights:dna:DisagreementAndDispute> rdf:type owl:Class ;
                                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                              rdfs:comment "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."@en ;
+                                              rdfs:comment "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate. This semantic may also be used to indicate that an agreement has been violated/is 'in dispute' where the agreement is indicated using :has_topic."@en ;
                                               rdfs:label "Disagreement and Dispute"@en ;
-                                              <urn:ontoinsights:dna:wordnet_noun_synset> "01238738" ,
+                                              <urn:ontoinsights:dna:wordnet_noun_synset> "00069993" ,
+                                                                                         "00772032" ,
+                                                                                         "01238738" ,
                                                                                          "04756076" ,
                                                                                          "07155686" ,
                                                                                          "07195447" ,
                                                                                          "07196595" ;
                                               <urn:ontoinsights:dna:wordnet_verb_synset> "00716789" ,
-                                                                                         "00775477" .
+                                                                                         "00775477" ,
+                                                                                         "02572443" .
 
 
 ###  urn:ontoinsights:dna:Disaster
@@ -2440,6 +2451,19 @@
                                 rdfs:label "Disaster"@en ;
                                 <urn:ontoinsights:dna:wordnet_noun_synset> "00218366" ,
                                                                            "07329438" .
+
+
+###  urn:ontoinsights:dna:DiscriminationAndPrejudice
+<urn:ontoinsights:dna:DiscriminationAndPrejudice> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
+                                                  rdfs:comment "An act or thought that is intolerant, unjust, unfair or inappropriate, especially when biased by ethnicity, age, sexual orientation, disability, etc."@en ;
+                                                  rdfs:label "Discrimination and Prejudice"@en ;
+                                                  <urn:ontoinsights:dna:wordnet_noun_synset> "01156043" ,
+                                                                                             "06214889" ,
+                                                                                             "06671913" ;
+                                                  <urn:ontoinsights:dna:wordnet_verb_synset> "02487728" ,
+                                                                                             "02517971" ,
+                                                                                             "02519408" .
 
 
 ###  urn:ontoinsights:dna:DiseaseAndInfection
@@ -2481,17 +2505,17 @@
                                                                                         "02047080" .
 
 
-###  urn:ontoinsights:dna:Divorce
-<urn:ontoinsights:dna:Divorce> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:LegalEvent> ,
-                                               <urn:ontoinsights:dna:LifeEvent> ,
-                                               <urn:ontoinsights:dna:Separation> ;
-                               owl:disjointWith <urn:ontoinsights:dna:Marriage> ;
-                               rdfs:comment "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."@en ;
-                               rdfs:label "Divorce"@en ;
-                               <urn:ontoinsights:dna:wordnet_noun_synset> "00216181" ,
-                                                                          "01203761" ;
-                               <urn:ontoinsights:dna:wordnet_verb_synset> "02436167" .
+###  urn:ontoinsights:dna:DivorceAndSeparation
+<urn:ontoinsights:dna:DivorceAndSeparation> rdf:type owl:Class ;
+                                            rdfs:subClassOf <urn:ontoinsights:dna:LegalEvent> ,
+                                                            <urn:ontoinsights:dna:LifeEvent> ,
+                                                            <urn:ontoinsights:dna:Separation> ;
+                                            owl:disjointWith <urn:ontoinsights:dna:Marriage> ;
+                                            rdfs:comment "An event and condition indicating that two people have dissolved their relationship/Marriage."@en ;
+                                            rdfs:label "Divorce and Separation"@en ;
+                                            <urn:ontoinsights:dna:wordnet_noun_synset> "00216181" ,
+                                                                                       "01203761" ;
+                                            <urn:ontoinsights:dna:wordnet_verb_synset> "02436167" .
 
 
 ###  urn:ontoinsights:dna:DrySeason
@@ -2525,16 +2549,38 @@
 ###  urn:ontoinsights:dna:EconomicEnvironment
 <urn:ontoinsights:dna:EconomicEnvironment> rdf:type owl:Class ;
                                            rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentAndCondition> ;
-                                           rdfs:comment "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy."@en ;
+                                           rdfs:comment "A superclass for a variety of characterizations related to the overall state of an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Inflation) define the specific semantics of an economy."@en ;
                                            rdfs:label "Economic Environment"@en ;
                                            <urn:ontoinsights:dna:wordnet_noun_synset> "14512178" .
 
 
-###  urn:ontoinsights:dna:Education
-<urn:ontoinsights:dna:Education> rdf:type owl:Class ;
-                                 rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                 rdfs:comment "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."@en ;
-                                 rdfs:label "(Access to) Education"@en .
+###  urn:ontoinsights:dna:EconomyAndFinanceRelated
+<urn:ontoinsights:dna:EconomyAndFinanceRelated> rdf:type owl:Class ;
+                                                rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                                rdfs:comment "Events dealing with monies/currencies, funds and other capital, as well as events related to the economy such as a change in taxes, becoming unemployed, etc."@en ;
+                                                rdfs:label "Economy and Finance Related"@en ;
+                                                <urn:ontoinsights:dna:wordnet_verb_synset> "02220288" ,
+                                                                                           "02221492" ,
+                                                                                           "02221793" ,
+                                                                                           "02222048" .
+
+
+###  urn:ontoinsights:dna:EducationAccess
+<urn:ontoinsights:dna:EducationAccess> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                       rdfs:comment "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."@en ;
+                                       rdfs:label "Access to Education"@en .
+
+
+###  urn:ontoinsights:dna:EducationEvent
+<urn:ontoinsights:dna:EducationEvent> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                      rdfs:comment "Events dealing with education and related learning activities such as science or book fairs, mentoring, classroom lessons, practice and drills, etc."@en ;
+                                      rdfs:label "Education Event"@en ;
+                                      <urn:ontoinsights:dna:wordnet_noun_synset> "00884975" ,
+                                                                                 "00895653" ;
+                                      <urn:ontoinsights:dna:wordnet_verb_synset> "00604200" ,
+                                                                                 "00830768" .
 
 
 ###  urn:ontoinsights:dna:EducationalBusiness
@@ -2590,30 +2636,6 @@
                                                                                     "11437243" ;
                                          <urn:ontoinsights:dna:wordnet_verb_synset> "00692071" ,
                                                                                     "00719282" .
-
-
-###  urn:ontoinsights:dna:EmploymentAndRelatedEvent
-<urn:ontoinsights:dna:EmploymentAndRelatedEvent> rdf:type owl:Class ;
-                                                 rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
-                                                 rdfs:comment "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.), as well as specific Events (hiring, lay offs, promotions, etc.) that serve as Evidence for this condition. The overall situation regarding Employment/unemployment can be described using the :has_assessment predicate."@en ;
-                                                 rdfs:label "Employment and Related Event"@en ;
-                                                 <urn:ontoinsights:dna:example> "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment and labor rates."@en ;
-                                                 <urn:ontoinsights:dna:wordnet_noun_synset> "00199300" ,
-                                                                                            "00199642" ,
-                                                                                            "00217041" ,
-                                                                                            "00230681" ,
-                                                                                            "00585404" ,
-                                                                                            "00587299" ,
-                                                                                            "00810735" ,
-                                                                                            "00810862" ,
-                                                                                            "00811034" ,
-                                                                                            "13991539" ,
-                                                                                            "13991755" ;
-                                                 <urn:ontoinsights:dna:wordnet_verb_synset> "02402779" ,
-                                                                                            "02404473" ,
-                                                                                            "02407967" ,
-                                                                                            "02414542" ,
-                                                                                            "02415985" .
 
 
 ###  urn:ontoinsights:dna:End
@@ -2779,21 +2801,6 @@
                                                                              "00074774" .
 
 
-###  urn:ontoinsights:dna:Expenses
-<urn:ontoinsights:dna:Expenses> rdf:type owl:Class ;
-                                rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
-                                owl:disjointWith <urn:ontoinsights:dna:Income> ;
-                                rdfs:comment "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate."@en ;
-                                rdfs:label "Expenses"@en ;
-                                <urn:ontoinsights:dna:example> "Examples of expenses are rent or mortgage payments, tuition for education, money spent to buy food or water, etc."@en ;
-                                <urn:ontoinsights:dna:wordnet_noun_synset> "13296311" ,
-                                                                           "13296518" ,
-                                                                           "13296870" ;
-                                <urn:ontoinsights:dna:wordnet_verb_synset> "02256551" ,
-                                                                           "02271905" ,
-                                                                           "02708368" .
-
-
 ###  urn:ontoinsights:dna:ExpressiveAndExclamation
 <urn:ontoinsights:dna:ExpressiveAndExclamation> rdf:type owl:Class ;
                                                 rdfs:subClassOf <urn:ontoinsights:dna:CommunicationAndSpeechAct> ;
@@ -2844,17 +2851,6 @@
                                                                                   "08083153" .
 
 
-###  urn:ontoinsights:dna:FinancialEvent
-<urn:ontoinsights:dna:FinancialEvent> rdf:type owl:Class ;
-                                      rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                      rdfs:comment "Events dealing with monies/currencies, funds and other capital."@en ;
-                                      rdfs:label "Financial Event"@en ;
-                                      <urn:ontoinsights:dna:wordnet_verb_synset> "02220288" ,
-                                                                                 "02221492" ,
-                                                                                 "02221793" ,
-                                                                                 "02222048" .
-
-
 ###  urn:ontoinsights:dna:FoodAndDrink
 <urn:ontoinsights:dna:FoodAndDrink> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -2863,11 +2859,11 @@
                                     <urn:ontoinsights:dna:wordnet_noun_synset> "00021445" .
 
 
-###  urn:ontoinsights:dna:FoodAndNutrition
-<urn:ontoinsights:dna:FoodAndNutrition> rdf:type owl:Class ;
-                                        rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                        rdfs:comment "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate."@en ;
-                                        rdfs:label "(Access to) Food and Nutrition"@en .
+###  urn:ontoinsights:dna:FoodAndNutritionAccess
+<urn:ontoinsights:dna:FoodAndNutritionAccess> rdf:type owl:Class ;
+                                              rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                              rdfs:comment "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate."@en ;
+                                              rdfs:label "Access to Food and Nutrition"@en .
 
 
 ###  urn:ontoinsights:dna:FoodProcessingAndPreparationBusiness
@@ -2932,7 +2928,7 @@
 
 ###  urn:ontoinsights:dna:FriendlyOrSupportiveAct
 <urn:ontoinsights:dna:FriendlyOrSupportiveAct> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:Agreement> ;
                                                rdfs:comment "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
                                                rdfs:label "Friendly or Supportive Act"@en ;
                                                <urn:ontoinsights:dna:wordnet_noun_synset> "01215009" ,
@@ -3006,8 +3002,7 @@
 
 ###  urn:ontoinsights:dna:GiftAndDonation
 <urn:ontoinsights:dna:GiftAndDonation> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                       <urn:ontoinsights:dna:ChangeOfPossession> ,
+                                       rdfs:subClassOf <urn:ontoinsights:dna:AcquisitionPossessionAndTransfer> ,
                                                        <urn:ontoinsights:dna:FriendlyOrSupportiveAct> ;
                                        owl:disjointWith <urn:ontoinsights:dna:RobberyAndTheft> ;
                                        rdfs:comment "An act of giving with no expectation of payment."@en ;
@@ -3028,7 +3023,11 @@
                                            rdfs:subClassOf <urn:ontoinsights:dna:Process> ;
                                            rdfs:comment "A series of interrelated/interdependent events or states/conditions that progress along a timeline that are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)."@en ;
                                            rdfs:label "Goal-Directed Process"@en ;
-                                           <urn:ontoinsights:dna:wordnet_noun_synset> "01025762" .
+                                           <urn:ontoinsights:dna:wordnet_noun_synset> "00410304" ,
+                                                                                      "00797381" ,
+                                                                                      "01025762" ;
+                                           <urn:ontoinsights:dna:wordnet_verb_synset> "01096497" ,
+                                                                                      "02595732" .
 
 
 ###  urn:ontoinsights:dna:GovernmentAndPoliticsBusiness
@@ -3106,11 +3105,11 @@
                                                                                           "00086587" .
 
 
-###  urn:ontoinsights:dna:Healthcare
-<urn:ontoinsights:dna:Healthcare> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                  rdfs:comment "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."@en ;
-                                  rdfs:label "(Access to) Healthcare"@en .
+###  urn:ontoinsights:dna:HealthcareAccess
+<urn:ontoinsights:dna:HealthcareAccess> rdf:type owl:Class ;
+                                        rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                        rdfs:comment "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."@en ;
+                                        rdfs:label "Access to Healthcare"@en .
 
 
 ###  urn:ontoinsights:dna:HealthcareAndMedicalBusiness
@@ -3149,17 +3148,17 @@
                                                                                       "01106229" .
 
 
-###  urn:ontoinsights:dna:Housing
-<urn:ontoinsights:dna:Housing> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                               rdfs:comment "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate."@en ;
-                               rdfs:label "(Access to) Housing and Lodging"@en ;
-                               <urn:ontoinsights:dna:wordnet_noun_synset> "01055844" ,
-                                                                          "13966105" ,
-                                                                          "13966288" ;
-                               <urn:ontoinsights:dna:wordnet_verb_synset> "00414801" ,
-                                                                          "00416323" ,
-                                                                          "00540418" .
+###  urn:ontoinsights:dna:HousingAccess
+<urn:ontoinsights:dna:HousingAccess> rdf:type owl:Class ;
+                                     rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                     rdfs:comment "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate."@en ;
+                                     rdfs:label "Access to Housing and Lodging"@en ;
+                                     <urn:ontoinsights:dna:wordnet_noun_synset> "01055844" ,
+                                                                                "13966105" ,
+                                                                                "13966288" ;
+                                     <urn:ontoinsights:dna:wordnet_verb_synset> "00414801" ,
+                                                                                "00416323" ,
+                                                                                "00540418" .
 
 
 ###  urn:ontoinsights:dna:HumanitarianBusiness
@@ -3169,6 +3168,16 @@
                                             rdfs:label "Humanitarian Business"@en ;
                                             <urn:ontoinsights:dna:wordnet_noun_synset> "01139918" ,
                                                                                        "08026566" .
+
+
+###  urn:ontoinsights:dna:Hunger
+<urn:ontoinsights:dna:Hunger> rdf:type owl:Class ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:SensoryPerception> ;
+                              rdfs:comment "Sensation of needing food."@en ;
+                              rdfs:label "Hunger"@en ;
+                              <urn:ontoinsights:dna:wordnet_noun_synset> "14063016" ,
+                                                                         "14063792" ;
+                              <urn:ontoinsights:dna:wordnet_verb_synset> "01190677" .
 
 
 ###  urn:ontoinsights:dna:HypersensitivityAndAllergicReaction
@@ -3209,7 +3218,7 @@
 
 ###  urn:ontoinsights:dna:ImitationAndCounterfeit
 <urn:ontoinsights:dna:ImitationAndCounterfeit> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                               rdfs:subClassOf <urn:ontoinsights:dna:Substitution> ;
                                                rdfs:comment "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."@en ;
                                                rdfs:label "Imitation and Counterfeit"@en ;
                                                <urn:ontoinsights:dna:wordnet_noun_synset> "03109245" ;
@@ -3248,18 +3257,6 @@
                                                                                                     "00368338" ,
                                                                                                     "01387824" ,
                                                                                                     "01464634" .
-
-
-###  urn:ontoinsights:dna:Income
-<urn:ontoinsights:dna:Income> rdf:type owl:Class ;
-                              rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
-                              rdfs:comment "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate."@en ;
-                              rdfs:label "Income"@en ;
-                              <urn:ontoinsights:dna:example> "Examples of incomes are salaries, received payments for sales of crops, etc."@en ;
-                              <urn:ontoinsights:dna:wordnet_noun_synset> "13275704" ,
-                                                                         "13300285" ;
-                              <urn:ontoinsights:dna:wordnet_verb_synset> "02294200" ,
-                                                                         "02295101" .
 
 
 ###  urn:ontoinsights:dna:Increase
@@ -3307,16 +3304,6 @@
                                         rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
                                         rdfs:comment "A collection of entities (the 'nodes') representing specific instances of the types of things in a domain of interest, interconnected by named 'edges' which identify the entities' properties (such as string or integer values) and relationships between them. The structure and semantics of the graph ('knowledge') are derived by this (DNA) ontology."@en ;
                                         rdfs:label "Information Graph"@en .
-
-
-###  urn:ontoinsights:dna:InformationHandling
-<urn:ontoinsights:dna:InformationHandling> rdf:type owl:Class ;
-                                           rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                           rdfs:comment "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities."@en ;
-                                           rdfs:label "Information Handling"@en ;
-                                           <urn:ontoinsights:dna:wordnet_noun_synset> "00103599" ,
-                                                                                      "13476660" ;
-                                           <urn:ontoinsights:dna:wordnet_verb_synset> "01751525" .
 
 
 ###  urn:ontoinsights:dna:InformationSource
@@ -3384,7 +3371,7 @@
 
 ###  urn:ontoinsights:dna:InvasionAndOccupation
 <urn:ontoinsights:dna:InvasionAndOccupation> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:CaptureAndSeizure> ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ;
                                              rdfs:comment "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."@en ;
                                              rdfs:label "Invasion and Occupation"@en ;
                                              <urn:ontoinsights:dna:wordnet_noun_synset> "00079356" ,
@@ -3416,15 +3403,25 @@
 <urn:ontoinsights:dna:KnowledgeAndSkill> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ,
                                                          <urn:ontoinsights:dna:Resource> ;
-                                         rdfs:comment "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"@en ;
+                                         rdfs:comment "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.'  (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309). This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
                                          rdfs:label "Knowledge and Skill"@en ;
-                                         <urn:ontoinsights:dna:wordnet_noun_synset> "04897307" ,
+                                         <urn:ontoinsights:dna:wordnet_noun_synset> "00637704" ,
+                                                                                    "00729939" ,
+                                                                                    "00730147" ,
+                                                                                    "00798247" ,
+                                                                                    "00884975" ,
+                                                                                    "00891150" ,
+                                                                                    "00895653" ,
+                                                                                    "04897307" ,
                                                                                     "05160767" ,
                                                                                     "05624569" ,
                                                                                     "05625389" ,
                                                                                     "05629222" ,
                                                                                     "05648278" ,
-                                                                                    "05813910" ;
+                                                                                    "05760541" ,
+                                                                                    "05813910" ,
+                                                                                    "06490253" ,
+                                                                                    "06710094" ;
                                          <urn:ontoinsights:dna:wordnet_verb_synset> "00589616" ,
                                                                                     "00590283" ,
                                                                                     "00592510" ,
@@ -3434,7 +3431,14 @@
                                                                                     "00597330" ,
                                                                                     "00597527" ,
                                                                                     "00597879" ,
-                                                                                    "00598039" .
+                                                                                    "00598039" ,
+                                                                                    "00599310" ,
+                                                                                    "00600349" ,
+                                                                                    "00601387" ,
+                                                                                    "00608509" ,
+                                                                                    "00830768" ,
+                                                                                    "02268987" ,
+                                                                                    "02392628" .
 
 
 ###  urn:ontoinsights:dna:LaborAndStaffingBusiness
@@ -3465,31 +3469,6 @@
                                                                                "08458195" ;
                                     <urn:ontoinsights:dna:wordnet_verb_synset> "00717773" ,
                                                                                "02432763" .
-
-
-###  urn:ontoinsights:dna:LearningAndEducation
-<urn:ontoinsights:dna:LearningAndEducation> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                            <urn:ontoinsights:dna:KnowledgeAndSkill> ;
-                                            rdfs:comment "An act of acquiring or transferring knowledge and skills through study, repetition, experience and instruction. This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
-                                            rdfs:label "Learning and Education"@en ;
-                                            <urn:ontoinsights:dna:wordnet_noun_synset> "00637704" ,
-                                                                                       "00729939" ,
-                                                                                       "00730147" ,
-                                                                                       "00798247" ,
-                                                                                       "00884975" ,
-                                                                                       "00891150" ,
-                                                                                       "00895653" ,
-                                                                                       "05760541" ,
-                                                                                       "06490253" ,
-                                                                                       "06710094" ;
-                                            <urn:ontoinsights:dna:wordnet_verb_synset> "00599310" ,
-                                                                                       "00600349" ,
-                                                                                       "00601387" ,
-                                                                                       "00608509" ,
-                                                                                       "00830768" ,
-                                                                                       "02268987" ,
-                                                                                       "02392628" .
 
 
 ###  urn:ontoinsights:dna:LegalAndJudicialBusiness
@@ -3707,7 +3686,7 @@
 <urn:ontoinsights:dna:Mistake> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:AssessmentAndCharacterization> ,
                                                <urn:ontoinsights:dna:TroubleAndProblem> ;
-                               rdfs:comment "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveCriminalOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property."@en ;
+                               rdfs:comment "An act of Cognition/judgment indicating that a thought or action is/was in error or faulty. If the erroneous thought/action is known, such as an AggressiveCriminalOrHostileAct, decision or Belief,  that can be identified using the :has_topic property."@en ;
                                rdfs:label "Mistake"@en ;
                                <urn:ontoinsights:dna:wordnet_noun_synset> "04811700" ,
                                                                           "05714576" ,
@@ -4025,20 +4004,6 @@
                                        <urn:ontoinsights:dna:wordnet_noun_synset> "04647533" .
 
 
-###  urn:ontoinsights:dna:Possession
-<urn:ontoinsights:dna:Possession> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                  rdfs:comment "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."@en ;
-                                  rdfs:label "Possession"@en ;
-                                  <urn:ontoinsights:dna:wordnet_noun_synset> "00032912" ,
-                                                                             "00811126" ,
-                                                                             "00812259" ,
-                                                                             "13261412" ,
-                                                                             "14503072" ;
-                                  <urn:ontoinsights:dna:wordnet_verb_synset> "02209474" ,
-                                                                             "02306641" .
-
-
 ###  urn:ontoinsights:dna:PostalAddress
 <urn:ontoinsights:dna:PostalAddress> rdf:type owl:Class ;
                                      rdfs:subClassOf <urn:ontoinsights:dna:PhysicalLocation> ;
@@ -4047,11 +4012,11 @@
                                      <urn:ontoinsights:dna:wordnet_noun_synset> "08508037" .
 
 
-###  urn:ontoinsights:dna:PotableWater
-<urn:ontoinsights:dna:PotableWater> rdf:type owl:Class ;
-                                    rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
-                                    rdfs:comment "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate."@en ;
-                                    rdfs:label "(Access to) Potable Water"@en .
+###  urn:ontoinsights:dna:PotableWaterAccess
+<urn:ontoinsights:dna:PotableWaterAccess> rdf:type owl:Class ;
+                                          rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                                          rdfs:comment "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate."@en ;
+                                          rdfs:label "Access to Potable Water"@en .
 
 
 ###  urn:ontoinsights:dna:PreciousMetalPearlAndGemstone
@@ -4110,17 +4075,6 @@
                                                                                                    "01660471" .
 
 
-###  urn:ontoinsights:dna:ProjectAndCampaign
-<urn:ontoinsights:dna:ProjectAndCampaign> rdf:type owl:Class ;
-                                          rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                          rdfs:comment "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)."@en ;
-                                          rdfs:label "Project and Campaign"@en ;
-                                          <urn:ontoinsights:dna:wordnet_noun_synset> "00410304" ,
-                                                                                     "00797381" ;
-                                          <urn:ontoinsights:dna:wordnet_verb_synset> "01096497" ,
-                                                                                     "02595732" .
-
-
 ###  urn:ontoinsights:dna:PromiseAndOath
 <urn:ontoinsights:dna:PromiseAndOath> rdf:type owl:Class ;
                                       rdfs:subClassOf <urn:ontoinsights:dna:Agreement> ,
@@ -4176,9 +4130,7 @@
 
 ###  urn:ontoinsights:dna:PurchaseAndSale
 <urn:ontoinsights:dna:PurchaseAndSale> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:Acquisition> ,
-                                                       <urn:ontoinsights:dna:ChangeOfPossession> ,
-                                                       <urn:ontoinsights:dna:FinancialEvent> ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:AcquisitionPossessionAndTransfer> ;
                                        rdfs:comment "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."@en ;
                                        rdfs:label "Purchase and Sale"@en ;
                                        <urn:ontoinsights:dna:wordnet_noun_synset> "00079838" ,
@@ -4204,14 +4156,6 @@
                                    rdfs:comment "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Wet_season&oldid=1024415698), 'time of year when most of a region's average annual rainfall occurs. Generally, the season lasts at least a month ... Areas with [rainy] seasons are dispersed across portions of the tropics and subtropics.'"@en ;
                                    rdfs:label "Rainy Season"@en ;
                                    <urn:ontoinsights:dna:wordnet_noun_synset> "15263692" .
-
-
-###  urn:ontoinsights:dna:Rally
-<urn:ontoinsights:dna:Rally> rdf:type owl:Class ;
-                             rdfs:subClassOf <urn:ontoinsights:dna:MeetingAndEncounter> ;
-                             rdfs:comment "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property. Note that a rally can be supportive or a protest. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or an :AggressiveCriminalOrHostileAct."@en ;
-                             rdfs:label "Rally"@en ;
-                             <urn:ontoinsights:dna:wordnet_noun_synset> "08375259" .
 
 
 ###  urn:ontoinsights:dna:RawMaterialProcessingAndPreparationBusiness
@@ -4253,21 +4197,6 @@
                                  rdfs:comment "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate."@en ;
                                  rdfs:label "Recession"@en ;
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "14036839" .
-
-
-###  urn:ontoinsights:dna:RecreationAndSportEvent
-<urn:ontoinsights:dna:RecreationAndSportEvent> rdf:type owl:Class ;
-                                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                               rdfs:comment "Any activity done for relaxation and enjoyment (not an Agent's job or business)."@en ;
-                                               rdfs:label "Recreation and Sport Event"@en ;
-                                               <urn:ontoinsights:dna:wordnet_noun_synset> "00041926" ,
-                                                                                          "00402591" ,
-                                                                                          "00427931" ,
-                                                                                          "00456623" ;
-                                               <urn:ontoinsights:dna:wordnet_verb_synset> "00013321" ,
-                                                                                          "01075360" ,
-                                                                                          "01151936" ,
-                                                                                          "02423521" .
 
 
 ###  urn:ontoinsights:dna:RecurrencePattern
@@ -4325,6 +4254,18 @@
                                                                                             "13852504" .
 
 
+###  urn:ontoinsights:dna:ReligionRelated
+<urn:ontoinsights:dna:ReligionRelated> rdf:type owl:Class ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                       rdfs:comment "Any type of thing, activity, ceremony or condition related to faith, devotion and belief in a deity, or a higher meaning or consciousness. If the individual is a specific Ceremony, then also classify the instance using that type."@en ;
+                                       rdfs:label "Religion Related"@en ;
+                                       <urn:ontoinsights:dna:wordnet_noun_synset> "01030024" ,
+                                                                                  "01042678" ,
+                                                                                  "05793890" ,
+                                                                                  "05955536" ;
+                                       <urn:ontoinsights:dna:wordnet_verb_synset> "02619310" .
+
+
 ###  urn:ontoinsights:dna:ReligiousBusiness
 <urn:ontoinsights:dna:ReligiousBusiness> rdf:type owl:Class ;
                                          rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -4333,15 +4274,6 @@
                                          <urn:ontoinsights:dna:example> "Examples include churches and similar organizations."@en ;
                                          <urn:ontoinsights:dna:wordnet_noun_synset> "03959692" ,
                                                                                     "08130409" .
-
-
-###  urn:ontoinsights:dna:ReligiousCeremony
-<urn:ontoinsights:dna:ReligiousCeremony> rdf:type owl:Class ;
-                                         rdfs:subClassOf <urn:ontoinsights:dna:Ceremony> ;
-                                         rdfs:comment "A type of ceremony related to celebrating a religious event or prescribed by a religion."@en ;
-                                         rdfs:label "Religious Ceremony"@en ;
-                                         <urn:ontoinsights:dna:wordnet_noun_synset> "01030024" ;
-                                         <urn:ontoinsights:dna:wordnet_verb_synset> "02619310" .
 
 
 ###  urn:ontoinsights:dna:ReligiousGroup
@@ -4500,7 +4432,7 @@
 
 ###  urn:ontoinsights:dna:RobberyAndTheft
 <urn:ontoinsights:dna:RobberyAndTheft> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:CaptureAndSeizure> ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ;
                                        rdfs:comment "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."@en ;
                                        rdfs:label "Robbery and Theft"@en ;
                                        <urn:ontoinsights:dna:wordnet_noun_synset> "00782543" ,
@@ -4540,17 +4472,6 @@
                                          <urn:ontoinsights:dna:wordnet_noun_synset> "14518300" ;
                                          <urn:ontoinsights:dna:wordnet_verb_synset> "00062353" ,
                                                                                     "00555545" .
-
-
-###  urn:ontoinsights:dna:SavingsAndInvestment
-<urn:ontoinsights:dna:SavingsAndInvestment> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ;
-                                            rdfs:comment "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate."@en ;
-                                            rdfs:label "Savings and Investment"@en ;
-                                            <urn:ontoinsights:dna:wordnet_noun_synset> "01101341" ,
-                                                                                       "13379722" ;
-                                            <urn:ontoinsights:dna:wordnet_verb_synset> "02270824" ,
-                                                                                       "02275982" .
 
 
 ###  urn:ontoinsights:dna:ScienceAndTechnology
@@ -4733,21 +4654,21 @@
                                                                                     "00349400" .
 
 
-###  urn:ontoinsights:dna:StarvationHungerAndMalnutrition
-<urn:ontoinsights:dna:StarvationHungerAndMalnutrition> rdf:type owl:Class ;
-                                                       rdfs:subClassOf <urn:ontoinsights:dna:FoodAndNutrition> ,
-                                                                       <urn:ontoinsights:dna:HealthAndDiseaseRelated> ;
-                                                       rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
-                                                       rdfs:label "Starvation, Hunger and Malnutrition"@en ;
-                                                       <urn:ontoinsights:dna:wordnet_noun_synset> "01153157" ,
-                                                                                                  "07330390" ,
-                                                                                                  "14063016" ,
-                                                                                                  "14223182" ;
-                                                       <urn:ontoinsights:dna:wordnet_verb_synset> "01190070" ,
-                                                                                                  "01190273" ,
-                                                                                                  "01190481" ,
-                                                                                                  "01190677" ,
-                                                                                                  "02126423" .
+###  urn:ontoinsights:dna:StarvationAndMalnutrition
+<urn:ontoinsights:dna:StarvationAndMalnutrition> rdf:type owl:Class ;
+                                                 rdfs:subClassOf <urn:ontoinsights:dna:FoodAndNutritionAccess> ,
+                                                                 <urn:ontoinsights:dna:HealthAndDiseaseRelated> ;
+                                                 rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
+                                                 rdfs:label "Starvation and Malnutrition"@en ;
+                                                 <urn:ontoinsights:dna:wordnet_noun_synset> "01153157" ,
+                                                                                            "07330390" ,
+                                                                                            "14063016" ,
+                                                                                            "14223182" ;
+                                                 <urn:ontoinsights:dna:wordnet_verb_synset> "01190070" ,
+                                                                                            "01190273" ,
+                                                                                            "01190481" ,
+                                                                                            "01190677" ,
+                                                                                            "02126423" .
 
 
 ###  urn:ontoinsights:dna:StateAndPhysicalChange
@@ -4922,6 +4843,18 @@
                              <urn:ontoinsights:dna:wordnet_verb_synset> "02311442" .
 
 
+###  urn:ontoinsights:dna:TechnologyRelated
+<urn:ontoinsights:dna:TechnologyRelated> rdf:type owl:Class ;
+                                         rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                         rdfs:comment "An activity involved with understanding or using science and technology, involving computers, computer networks, and scientific devices and instruments. Included in this semantic is the collection, manipulation, protection or disruption of data/information. Note that the activities of protection and disruption are often referred to as 'cyber' activities."@en ;
+                                         rdfs:label "Technology Related"@en ;
+                                         <urn:ontoinsights:dna:wordnet_noun_synset> "00103599" ,
+                                                                                    "00643063" ,
+                                                                                    "00951435" ,
+                                                                                    "13476660" ;
+                                         <urn:ontoinsights:dna:wordnet_verb_synset> "01751525" .
+
+
 ###  urn:ontoinsights:dna:ThreatAndWarning
 <urn:ontoinsights:dna:ThreatAndWarning> rdf:type owl:Class ;
                                         rdfs:subClassOf <urn:ontoinsights:dna:CoercionAndIntimidation> ,
@@ -4962,7 +4895,8 @@
 
 ###  urn:ontoinsights:dna:TransferOfPower
 <urn:ontoinsights:dna:TransferOfPower> rdf:type owl:Class ;
-                                       rdfs:subClassOf <urn:ontoinsights:dna:PoliticalEvent> ;
+                                       rdfs:subClassOf <urn:ontoinsights:dna:Change> ,
+                                                       <urn:ontoinsights:dna:PoliticalEvent> ;
                                        rdfs:comment "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."@en ;
                                        rdfs:label "Transfer of Governmental Power"@en .
 
@@ -5048,16 +4982,6 @@
                                                                           "04537861" .
 
 
-###  urn:ontoinsights:dna:ViolationOfAgreement
-<urn:ontoinsights:dna:ViolationOfAgreement> rdf:type owl:Class ;
-                                            rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                            rdfs:comment "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."@en ;
-                                            rdfs:label "Violation of Agreement"@en ;
-                                            <urn:ontoinsights:dna:wordnet_noun_synset> "00069993" ,
-                                                                                       "00772032" ;
-                                            <urn:ontoinsights:dna:wordnet_verb_synset> "02572443" .
-
-
 ###  urn:ontoinsights:dna:VolatileOrganicCompound
 <urn:ontoinsights:dna:VolatileOrganicCompound> rdf:type owl:Class ;
                                                rdfs:subClassOf <urn:ontoinsights:dna:AdverseCompound> ;
@@ -5122,7 +5046,7 @@
 ###  urn:ontoinsights:dna:WeatherEvent
 <urn:ontoinsights:dna:WeatherEvent> rdf:type owl:Class ;
                                     rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalOrEcologicalEvent> ;
-                                    rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area."@en ;
+                                    rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area. If the event is also a Disaster, also add that class as a type."@en ;
                                     rdfs:label "Weather Event"@en ;
                                     <urn:ontoinsights:dna:wordnet_noun_synset> "06763412" ,
                                                                                "11445694" ,
@@ -5144,7 +5068,7 @@
 ###  urn:ontoinsights:dna:WinAndLoss
 <urn:ontoinsights:dna:WinAndLoss> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:End> ;
-                                  rdfs:comment "An outcome where one entity wins and the other loses - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
+                                  rdfs:comment "An outcome where one entity wins and other(s) lose - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
                                   rdfs:label "Win and Loss"@en ;
                                   <urn:ontoinsights:dna:wordnet_noun_synset> "00068346" ,
                                                                              "07369331" ;

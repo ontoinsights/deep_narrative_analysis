@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 31 2023
+# Last Modified: March 1 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,11 @@
 # 
 # Changes:
 #  Reset change history and simplified
+#  Simplified the EconomicEnvironment hierarchy by removing subclasses
+#    such as SavingsAndInvestment that are better captured as Measurements
+#  Removed CaptivityAndDetention as its semantics are similar to 
+#    ArrestAndImprisonment
+#  Clarified semantics by adding "Access" to several class names
 ########################################################################
 
 
@@ -48,13 +53,6 @@
   rdfs:label "Capacity"@en ;
   rdfs:comment "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate."@en ;
   :wordnet_noun_synset "00916626", "05112565", "05209765", "13801244" .
-
-:CaptivityAndDetention a owl:Class ;
-  rdfs:subClassOf :LivingCondition, :RemovalAndRestriction ;
-  rdfs:label "Captivity and Detention"@en ;
-  rdfs:comment "The condition of an Agent being held captive and confined to a certain location."@en ;
-  :wordnet_noun_synset "14020535", "01149089" ;
-  :wordnet_verb_synset "02500687", "02502345" .
 
 :CaringForDependents a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
@@ -92,21 +90,13 @@
 :EconomicEnvironment a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Economic Environment"@en ;
-  rdfs:comment "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy."@en ;
+  rdfs:comment "A superclass for a variety of characterizations related to the overall state of an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Inflation) define the specific semantics of an economy."@en ;
   :wordnet_noun_synset "14512178" .
 
-:Education a owl:Class ;
+:EducationAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "(Access to) Education"@en ;
+  rdfs:label "Access to Education"@en ;
   rdfs:comment "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."@en .
-
-:EmploymentAndRelatedEvent a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
-  rdfs:label "Employment and Related Event"@en ;
-  rdfs:comment "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.), as well as specific Events (hiring, lay offs, promotions, etc.) that serve as Evidence for this condition. The overall situation regarding Employment/unemployment can be described using the :has_assessment predicate."@en ;
-  :example "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment and labor rates."@en ;
-  :wordnet_noun_synset "13991539", "00585404", "00587299", "00810735", "00810862", "00811034", "00199300", "00199642", "13991755", "00230681", "00217041" ;
-  :wordnet_verb_synset "02414542", "02415985", "02402779", "02404473", "02407967" .
 
 :EnvironmentalIssue a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -114,17 +104,9 @@
   rdfs:comment "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "00820935", "14540103", "13508041" .
 
-:Expenses a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
-  rdfs:label "Expenses"@en ;
-  rdfs:comment "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate."@en ;
-  :example "Examples of expenses are rent or mortgage payments, tuition for education, money spent to buy food or water, etc."@en ;
-  :wordnet_noun_synset "13296870", "13296518", "13296311" ;
-  :wordnet_verb_synset "02708368", "02271905", "02256551" .
-
-:FoodAndNutrition a owl:Class ;
+:FoodAndNutritionAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "(Access to) Food and Nutrition"@en ;
+  rdfs:label "Access to Food and Nutrition"@en ;
   rdfs:comment "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate."@en .
 
 :FreedomAndSupportForHumanRights a owl:Class ;
@@ -140,25 +122,17 @@
   :example "Examples of greenhouse gases are water vapor, carbon dioxide, nitrous oxide, methane, hydrofluorocarbons, and ozone' (https://www.cia.gov/the-world-factbook/field/environment-current-issues)."@en ;
   :wordnet_noun_synset "14901385" .
 
-:Healthcare a owl:Class ;
+:HealthcareAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "(Access to) Healthcare"@en ;
+  rdfs:label "Access to Healthcare"@en ;
   rdfs:comment "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."@en .
 
-:Housing a owl:Class ;
+:HousingAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "(Access to) Housing and Lodging"@en ;
+  rdfs:label "Access to Housing and Lodging"@en ;
   rdfs:comment "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "13966105",  "13966288", "01055844" ;
   :wordnet_verb_synset "00414801", "00416323", "00540418" . 
-
-:Income a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
-  rdfs:label "Income"@en ;
-  rdfs:comment "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate."@en ;
-  :example "Examples of incomes are salaries, received payments for sales of crops, etc."@en ;
-  :wordnet_noun_synset "13275704", "13300285" ; 
-  :wordnet_verb_synset "02294200", "02295101" . 
 
 :Inflation a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment, :Increase ;
@@ -197,9 +171,9 @@
   rdfs:comment "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics."@en ;
   :wordnet_noun_synset "08384807" .
 
-:PotableWater a owl:Class ;
+:PotableWaterAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "(Access to) Potable Water"@en ;
+  rdfs:label "Access to Potable Water"@en ;
   rdfs:comment "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate."@en .
 
 :ReadinessAndAbility a owl:Class ;
@@ -234,13 +208,6 @@
   rdfs:comment "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "14518300" ;
   :wordnet_verb_synset "00555545", "00062353" .
-
-:SavingsAndInvestment a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
-  rdfs:label "Savings and Investment"@en ;
-  rdfs:comment "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate."@en ;
-  :wordnet_noun_synset "13379722", "01101341" ;
-  :wordnet_verb_synset "02270824", "02275982" .
 
 :SoilDegradation a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue ;
@@ -292,9 +259,6 @@
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Deflation :Inflation ) .
-
-[] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Income :Expenses ) .
 
 
 ########################################################################

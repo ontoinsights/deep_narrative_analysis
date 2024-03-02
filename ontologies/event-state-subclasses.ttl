@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 31 2023
+# Last Modified: March 1 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,6 +24,24 @@
 # 
 # Changes:
 #  Reset change history and simplified
+#  Modified superclasses for several classes
+#  Acquisition renamed to AcquisitionPossessionAndTransfer; Possession
+#    and ChangeOfPossession merged into this semantic
+#  Removed ViolationOfAgreement and merged its semantics with
+#    DisagreementAndDispute
+#  Added Commemoration and EducationEvent
+#  Removed Rally and merged its semantic into DemonstrationStrikeAndRally
+#  Clarified FinancialEvent to become EconomyAndFinanceRelated
+#  Moved InformationHandling into the semantics of a new class, 
+#    TechnologyRelated
+#  Removed ProjectAndCampaign since its semantics are addressed by
+#     GoalDirectedProcess (defined in top.ttl)
+#  Removed RecreationAndSportEvent and merged its semantic into
+#    ArtAndEntertainmentEvent
+#  Expanded ReligiousCeremony to a more general ReligiousEvent
+#  Moved (from misc-event-subclasses.ttl), clarified and renamed 
+#    CaptureAndSeizure and CaptivityAndDetention (from environment-
+#    subclasses.ttl) to become ArrestAndImprisonment
 ########################################################################
 
 
@@ -31,12 +49,12 @@
 # Classes
 ########################################################################
 
-:Acquisition a owl:Class ;
+:AcquisitionPossessionAndTransfer a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Acquisition"@en ;
-  rdfs:comment "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."@en ;
-  :wordnet_noun_synset "00042637", "00043933" ;
-  :wordnet_verb_synset "02215637", "00723361" .
+  rdfs:label "Acquisition, Possession and Transfer"@en ;
+  rdfs:comment "The acquiring/obtaining and possessing of some object/asset/knowledge/skill. Subclasses indicate whether this occurred by a gift, purchase, recovered item, theft, etc. In addition, acquisition implies having or controlling some object or asset (e.g., possession). However, possession may or may not indicate ownership."@en ;
+  :wordnet_noun_synset "14503072", "00032912", "00811126", "00812259", "13261412", "00042637", "00043933", "14502904", "09783624" ;
+  :wordnet_verb_synset "02209474", "02306641", "02215637", "00723361", "01216829", "02320505", "02352633" .
 
 :AggressiveCriminalOrHostileAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -65,11 +83,19 @@
   :wordnet_noun_synset "05082771" ;
   :wordnet_verb_synset "01466592" .
 
+:ArrestAndImprisonment a owl:Class ;
+  rdfs:subClassOf :RemovalAndRestriction ;
+  rdfs:label "Arrest and Incarceration"@en ;
+  rdfs:comment "An act involving the taking and/or detention of a Person by authority of the law. However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
+  :wordnet_noun_synset "00089545", "01149281", "14020535", "01149089" ;
+  :wordnet_verb_synset "01217701", "02500005", "02500687", "02502345" .
+
 :ArtAndEntertainmentEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Art and Entertainment Event"@en ;
   rdfs:comment "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."@en ;
-  :wordnet_verb_synset "01718067", "02497847", "01727101" .
+  :wordnet_noun_synset "00427931", "00402591", "00041926", "00456623" ;
+  :wordnet_verb_synset "00013321", "01075360", "01151936", "02423521", "01718067", "02497847", "01727101" .
 
 :AssessmentMeasurement a owl:Class ;
   rdfs:subClassOf :Measurement ;
@@ -126,19 +152,19 @@
   :wordnet_noun_synset "00169459", "14057399", "06207399", "00191991" ;
   :wordnet_verb_synset "00109468" .
 
-:ChangeOfPossession a owl:Class ;
-  rdfs:subClassOf :Possession, :Change, :Acquisition ;
-  rdfs:label "Change of Possession"@en ;
-  rdfs:comment "An event or condition describing that the control of some good(s) or property passed from one Agent to another. "@en ;
-  :wordnet_noun_synset "14502904", "09783624" ;
-  :wordnet_verb_synset "01216829", "02320505", "02352633" .
-
 :Cognition a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Cognition"@en ;
   rdfs:comment "Any thought processes related to learning, making decisions, perception, memory, imagination, forming judgments, etc. Note that the Person who is thinking is defined using the :has_active_agent property. And, details about what is learned/thought/understood is indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "05682974", "00023451", "05658174", "05778923", "04667893", "05716379" ;
   :wordnet_verb_synset "00691086", "00630153" .
+
+:Commemoration a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Commemoration"@en ;
+  rdfs:comment "An event that remembers and respects someone, something or some occurrence in the past. The thing that is remembered is identified using the :has_topic property. The Person who is remembering is indicated using the :has_active_agent property."@en ;
+  :wordnet_noun_synset "06701267" ;
+  :wordnet_verb_synset "00613035" . 
 
 :CommunicationAndSpeechAct a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -189,19 +215,19 @@
   :wordnet_noun_synset "01068087", "01065863" ;
   :wordnet_verb_synset "00460731", "02644022", "02648898" . 
 
-:DemonstrationAndStrike a owl:Class ;
-  rdfs:subClassOf :MeetingAndEncounter, :DisagreementAndDispute ;
-  rdfs:label "Demonstration and Strike"@en ;
-  rdfs:comment "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."@en ;
-  :wordnet_noun_synset "01180193", "01170859", "01180685", "01245509", "01244711", "01181340" ;
+:DemonstrationStrikeAndRally a owl:Class ;
+  rdfs:subClassOf :MeetingAndEncounter ;
+  rdfs:label "Demonstration, Strike and Rally"@en ;
+  rdfs:comment "A meeting to support or object to something, someone or some cause. The thing or Agent which is the focus of the Event is defined using the :has_topic property.  Note that these types of events can be supportive or show opposition. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or a :DisagreementOrDispute."@en ;
+  :wordnet_noun_synset "08375259", "01180193", "01170859", "01180685", "01245509", "01244711", "01181340" ;
   :wordnet_verb_synset "02417777", "02527482"  .
 
 :DisagreementAndDispute a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Disagreement and Dispute"@en ;
-  rdfs:comment "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."@en ;
-  :wordnet_noun_synset "07195447", "04756076", "07196595", "07155686", "01238738" ;
-  :wordnet_verb_synset "00775477", "00716789" .
+  rdfs:comment "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate. This semantic may also be used to indicate that an agreement has been violated/is 'in dispute' where the agreement is indicated using :has_topic."@en ;
+  :wordnet_noun_synset "07195447", "04756076", "07196595", "07155686", "01238738", "00772032", "00069993" ;
+  :wordnet_verb_synset "00775477", "00716789",  "02572443" .
 
 :Disaster a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
@@ -216,10 +242,10 @@
   :wordnet_noun_synset "00809586", "01085001", "01085569" ;
   :wordnet_verb_synset "01381221", "02047080" .
 
-:Divorce a owl:Class ;
+:DivorceAndSeparation a owl:Class ;
   rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
-  rdfs:label "Divorce"@en ;
-  rdfs:comment "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."@en ;
+  rdfs:label "Divorce and Separation"@en ;
+  rdfs:comment "An event and condition indicating that two people have dissolved their relationship/Marriage."@en ;
   :wordnet_noun_synset "01203761", "00216181" ;
   :wordnet_verb_synset "02436167" .
 
@@ -229,6 +255,19 @@
   rdfs:comment "An activity related to an animal's or Person's intake of food/nutrients and/or liquids."@en ;
   :wordnet_noun_synset "00840028", "00839759" ;
   :wordnet_verb_synset "01168667", "01159300", "01203727" .
+
+:EconomyAndFinanceRelated a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Economy and Finance Related"@en ;
+  rdfs:comment "Events dealing with monies/currencies, funds and other capital, as well as events related to the economy such as a change in taxes, becoming unemployed, etc."@en ;
+  :wordnet_verb_synset "02222048", "02221793", "02220288", "02221492" .
+
+:EducationEvent a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Education Event"@en ;
+  rdfs:comment "Events dealing with education and related learning activities such as science or book fairs, mentoring, classroom lessons, practice and drills, etc."@en ;
+  :wordnet_noun_synset "00895653", "00884975" ;
+  :wordnet_verb_synset "00604200", "00830768" .
 
 :Election a owl:Class ;
   rdfs:subClassOf :PoliticalEvent ;
@@ -272,14 +311,8 @@
   rdfs:comment "An occurrence in some geographic region that affects the natural world and the habitats of (and relationships between) plants and animals."@en ;
   :wordnet_verb_synset "00493642", "00493246" .
 
-:FinancialEvent a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Financial Event"@en ;
-  rdfs:comment "Events dealing with monies/currencies, funds and other capital."@en ;
-  :wordnet_verb_synset "02222048", "02221793", "02220288", "02221492" .
-
 :FriendlyOrSupportiveAct a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
+  rdfs:subClassOf :Agreement ;
   rdfs:label "Friendly or Supportive Act"@en ;
   rdfs:comment "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "01216661", "01215009" ;
@@ -300,7 +333,7 @@
   :wordnet_verb_synset "00081478", "00086587" .
 
 :ImitationAndCounterfeit a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
+  rdfs:subClassOf :Substitution ;
   rdfs:label "Imitation and Counterfeit"@en ;
   rdfs:comment "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."@en ;
   :wordnet_noun_synset "03109245" ;
@@ -333,13 +366,6 @@
   rdfs:comment "Any act that changes the location of something by small amounts or makes small changes to the location of something, such as putting an object on a table, pouring a liquid into a container, etc. The Agent which places the thing(s) is specified using the :has_active_agent predicate, while the entity(ies) that are placed/moved are identified using the :has_topic property. The thing that 'receives' the entity(ies) that are moved is defined using :has_instrument."@en ;
   :wordnet_noun_synset "00403343", "01053255" ; 
   :wordnet_verb_synset "01446765", "01544249", "01857055", "01870596", "01524685", "01854282", "01450719" .
-
-:InformationHandling a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Information Handling"@en ;
-  rdfs:comment "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities."@en ;
-  :wordnet_noun_synset "00103599", "13476660" ; 
-  :wordnet_verb_synset "01751525" .  
 
 :IssuingAndPublishing a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -399,26 +425,12 @@
   :example "Examples are happiness, love, forgiveness, hope, gratitude, etc., which are defined as subclasses."@en ;
   :wordnet_noun_synset "04647533" .
 
-:Possession a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Possession"@en ;
-  rdfs:comment "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."@en ;
-  :wordnet_noun_synset "14503072", "00032912", "00811126", "00812259", "13261412" ;
-  :wordnet_verb_synset "02209474", "02306641" .
-
 :ProductionManufactureAndCreation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Production, Manufacture and Creation"@en ;
   rdfs:comment "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00910607", "00942228", "03587827", "05641230", "00912746" ; 
   :wordnet_verb_synset "00094214", "01624592", "01660471", "01656984", "01635953" .
-
-:ProjectAndCampaign a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Project and Campaign"@en ;
-  rdfs:comment "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)."@en ;
-  :wordnet_noun_synset "00797381", "00410304" ;
-  :wordnet_verb_synset "01096497", "02595732" .
 
 :Punishment a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -427,24 +439,11 @@
   :wordnet_noun_synset "01162829" ; 
   :wordnet_verb_synset "00202809", "02505278" . 
 
-:Rally a owl:Class ;
-  rdfs:subClassOf :MeetingAndEncounter ;
-  rdfs:label "Rally"@en ;
-  rdfs:comment "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property. Note that a rally can be supportive or a protest. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or an :AggressiveCriminalOrHostileAct."@en ;
-  :wordnet_noun_synset "08375259" .
-
-:RecreationAndSportEvent a owl:Class ;
+:ReligionRelated a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Recreation and Sport Event"@en ;
-  rdfs:comment "Any activity done for relaxation and enjoyment (not an Agent's job or business)."@en ;
-  :wordnet_noun_synset "00427931", "00402591", "00041926", "00456623" ;
-  :wordnet_verb_synset "00013321", "01075360", "01151936", "02423521" . 
-
-:ReligiousCeremony a owl:Class ;
-  rdfs:subClassOf :Ceremony ;
-  rdfs:label "Religious Ceremony"@en ;
-  rdfs:comment "A type of ceremony related to celebrating a religious event or prescribed by a religion."@en ;
-  :wordnet_noun_synset "01030024" ;
+  rdfs:label "Religion Related"@en ;
+  rdfs:comment "Any type of thing, activity, ceremony or condition related to faith, devotion and belief in a deity, or a higher meaning or consciousness. If the individual is a specific Ceremony, then also classify the instance using that type."@en ;
+  :wordnet_noun_synset "01030024", "05793890", "01042678", "05955536" ;
   :wordnet_verb_synset "02619310" . 
 
 :RemovalAndRestriction a owl:Class ;
@@ -540,8 +539,15 @@
   :wordnet_noun_synset "00223352", "10693108" ; 
   :wordnet_verb_synset "01327678" . 
 
+:TechnologyRelated a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Technology Related"@en ;
+  rdfs:comment "An activity involved with understanding or using science and technology, involving computers, computer networks, and scientific devices and instruments. Included in this semantic is the collection, manipulation, protection or disruption of data/information. Note that the activities of protection and disruption are often referred to as 'cyber' activities."@en ;
+  :wordnet_noun_synset "00103599", "13476660", "00643063", "00951435" ; 
+  :wordnet_verb_synset "01751525" .  
+
 :TransferOfPower a owl:Class ;
-  rdfs:subClassOf :PoliticalEvent ;
+  rdfs:subClassOf :Change, :PoliticalEvent ;
   rdfs:label "Transfer of Governmental Power"@en ;
   rdfs:comment "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."@en .
 
@@ -552,17 +558,10 @@
   :wordnet_noun_synset "00948944", "00357025" ; 
   :wordnet_verb_synset "01159815", "01167359", "01160888", "01161188" . 
 
-:ViolationOfAgreement a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Violation of Agreement"@en ;
-  rdfs:comment "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."@en ;
-  :wordnet_noun_synset "00772032", "00069993" ;
-  :wordnet_verb_synset "02572443" . 
-
 :WeatherEvent a owl:Class ;
   rdfs:subClassOf :EnvironmentalOrEcologicalEvent ;
   rdfs:label "Weather Event"@en ;
-  rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area."@en ;
+  rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area. If the event is also a Disaster, also add that class as a type."@en ;
   :wordnet_noun_synset "06763412", "11445694", "11482925" ;
   :wordnet_verb_synset "02762779", "00217578", "02775199", "02776493" . 
 
@@ -572,16 +571,10 @@
 ########################################################################
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Acquisition :Avoidance ) .
-
-[] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :AggressiveCriminalOrHostileAct :FriendlyOrSupportiveAct ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Agreement :DisagreementAndDispute ) .
-
-[] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Agreement :ViolationOfAgreement ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Cooperation :Competition ) .
@@ -590,7 +583,7 @@
   owl:members  ( :Decrease :Increase ) .
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :Divorce :Marriage ) .
+  owl:members  ( :DivorceAndSeparation :Marriage ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :InclusionAttachmentAndUnification :Separation ) .

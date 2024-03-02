@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 31 2023
+# Last Modified: March 2 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,6 +24,8 @@
 # 
 # Changes:
 #  Reset change history, no other changes
+#  Clarified StarvationHungerAndMalnutrition to be StarvationAndMalNutrition
+#    (Hunger is now a subclass of SensoryPerception in misc-event-subclasses.ttl)
 ########################################################################
 
 
@@ -123,9 +125,9 @@
   rdfs:comment "A condition resulting from the administration/ingestion of a toxic substance."@en ;
   :wordnet_noun_synset "14533314" .
 
-:StarvationHungerAndMalnutrition a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated, :FoodAndNutrition ;
-  rdfs:label "Starvation, Hunger and Malnutrition"@en ;
+:StarvationAndMalnutrition a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :FoodAndNutritionAccess ;
+  rdfs:label "Starvation and Malnutrition"@en ;
   rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "01153157", "14223182", "14063016", "07330390" ;
   :wordnet_verb_synset "01190677", "02126423", "01190070", "01190481", "01190273" .

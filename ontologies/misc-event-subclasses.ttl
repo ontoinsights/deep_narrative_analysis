@@ -7,13 +7,13 @@
 
 ########################################################################
 # File defining semantics related to a variety of events that are 
-# sub-classes of Acquisition, Avoidance, AggressiveCriminalOrHostileAct, 
-# FriendlyOrSupportiveAct and Cognition.
+# sub-classes of AcquisitionPossesionAndTransfer, Avoidance, 
+# AggressiveCriminalOrHostileAct, FriendlyOrSupportiveAct and Cognition.
 # 
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: October 31 2023
+# Last Modified: March 1 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -25,6 +25,10 @@
 # 
 # Changes:
 #  Reset change history and simplified
+#  Removed LearningAndEducation from the KnowledgeAndSkill hierarchy
+#  Removed CaptureAndSeizure as overlapping with the AcquisitionPossession
+#    AndTransfer superclass
+#  Added DiscriminationAndPrejudice
 ########################################################################
 
 
@@ -33,7 +37,7 @@
 ########################################################################
 
 :Abduction a owl:Class ;
-  rdfs:subClassOf :CaptureAndSeizure ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Abduction"@en ;
   rdfs:comment "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."@en ;
   :wordnet_noun_synset "00776957", "00777199", "00784853" ;
@@ -89,7 +93,7 @@
   :wordnet_verb_synset "00685199", "00923043" . 
 
 :Betrayal a owl:Class ;
-  rdfs:subClassOf :DeceptionAndDishonesty, :ViolationOfAgreement ;
+  rdfs:subClassOf :DeceptionAndDishonesty ;
   rdfs:label "Betrayal"@en ;
   rdfs:comment "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Betrayal&oldid=1096433753), Betrayal 'is the breaking or violation of a presumptive contract, trust, or confidence that produces moral and psychological conflict within a relationship amongst individuals, between organizations or between individuals and organizations. Often betrayal is the act of supporting a rival group, or it is a complete break from previously decided upon or presumed norms by one party from the others.'"@en ;
   :wordnet_noun_synset "00751065" ;
@@ -102,13 +106,6 @@
   :wordnet_noun_synset "00206979", "07269842", "06673141" ;
   :wordnet_verb_synset "02470917", "02509666" .
 
-:CaptureAndSeizure a owl:Class ;
-  rdfs:subClassOf :Acquisition, :AggressiveCriminalOrHostileAct, :ChangeOfPossession ;
-  rdfs:label "Capture and Seizure"@en ;
-  rdfs:comment "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate."@en ;
-  :wordnet_noun_synset "00089301", "00097789", "00776783", "00086039" ;
-  :wordnet_verb_synset "01217985", "01215136", "01217701", "02210054" .
-
 :CoercionAndIntimidation a owl:Class ;
   rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Coercion and Intimidation"@en ;
@@ -117,7 +114,7 @@
   :wordnet_verb_synset "02510211", "01823521", "01037071", "02512195", "02502465" .
 
 :Concealment a owl:Class ;
-  rdfs:subClassOf :Prevention ;
+  rdfs:subClassOf :Prevention, :DeceptionAndDishonesty ;
   rdfs:label "Concealment"@en ;
   rdfs:comment "An act of preventing something/someone from being known/found."@en ;
   :wordnet_noun_synset "01050836", "04659534", "04254139" ;
@@ -126,7 +123,7 @@
 :DeceptionAndDishonesty a owl:Class ;
   rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Deception and Dishonesty"@en ;
-  rdfs:comment "An act of preventing something/someone from being known/found."@en ;
+  rdfs:comment "An act of concealing or misrepresenting the truth."@en ;
   :wordnet_noun_synset "00752488", "00750872", "00751748" ;
   :wordnet_verb_synset "02581157",  "02580280", "02583006", "02580591" .
 
@@ -144,12 +141,12 @@
   :wordnet_noun_synset "00819341" ;
   :wordnet_noun_synset "01130221", "01130619" .
 
-:EmotionalResponse a owl:Class ;
+:DiscriminationAndPrejudice a owl:Class ;
   rdfs:subClassOf :Cognition ;
-  rdfs:label "Emotional Response"@en ;
-  rdfs:comment "A state of mind associated with positive/pleasurable or negative/displeasurable feelings, thoughts and moods."@en ;
-  :wordnet_noun_synset "00026390", "07495208", "11437243" ;
-  :wordnet_verb_synset "00692071", "00719282" .
+  rdfs:label "Discrimination and Prejudice"@en ;
+  rdfs:comment "An act or thought that is intolerant, unjust, unfair or inappropriate, especially when biased by ethnicity, age, sexual orientation, disability, etc."@en ;
+  :wordnet_noun_synset "06214889", "06671913", "01156043" ;
+  :wordnet_verb_synset "02487728", "02517971", "02519408" .
 
 :EscapeAndEvasion a owl:Class ;
   rdfs:subClassOf :Avoidance, :MovementTravelAndTransportation ;
@@ -173,11 +170,18 @@
   :wordnet_verb_synset "00610654", "00611721", "00616520", "00599897", "00600024" .
 
 :GiftAndDonation a owl:Class ;
-  rdfs:subClassOf :Acquisition, :FriendlyOrSupportiveAct, :ChangeOfPossession ;
+  rdfs:subClassOf :AcquisitionPossessionAndTransfer, :FriendlyOrSupportiveAct ;
   rdfs:label "Gift and Donation"@en ;
   rdfs:comment "An act of giving with no expectation of payment."@en ;
   :wordnet_noun_synset "01088005", "01091702", "13285910", "13290913" ;
   :wordnet_verb_synset "01062618", "02206050", "02313721", "02204104", "02205200" .
+
+:Hunger a owl:Class ;
+  rdfs:subClassOf :SensoryPerception ;
+  rdfs:label "Hunger"@en ;
+  rdfs:comment "Sensation of needing food."@en ;
+  :wordnet_noun_synset "14063016", "14063792" ; 
+  :wordnet_verb_synset "01190677" .
 
 :IgnoringAndOverlooking a owl:Class ;
   rdfs:subClassOf :Avoidance, :Cognition ;
@@ -194,7 +198,7 @@
   :wordnet_verb_synset "00710809", "00710367", "00711208", "00706456" .
 
 :InvasionAndOccupation a owl:Class ;
-  rdfs:subClassOf :CaptureAndSeizure ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Invasion and Occupation"@en ;
   rdfs:comment "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."@en ;
   :wordnet_noun_synset "00977538", "00079356", "00089847", "01135427" ;
@@ -203,16 +207,9 @@
 :KnowledgeAndSkill a owl:Class ;
   rdfs:subClassOf :Cognition, :Resource ;
   rdfs:label "Knowledge and Skill"@en ;
-  rdfs:comment "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"@en ;
-  :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569" ;
-  :wordnet_verb_synset "00595732", "00596016", "00597025", "00597330", "00597527", "00597879", "00598039", "00590283", "00589616", "00592510" .
-
-:LearningAndEducation a owl:Class ;
-  rdfs:subClassOf :Acquisition, :KnowledgeAndSkill ;
-  rdfs:label "Learning and Education"@en ;
-  rdfs:comment "An act of acquiring or transferring knowledge and skills through study, repetition, experience and instruction. This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
-  :wordnet_noun_synset "05760541", "00729939", "00798247", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
-  :wordnet_verb_synset "00600349", "00599310", "00601387", "00608509", "00830768", "02392628", "02268987" .
+  rdfs:comment "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.'  (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309). This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
+  :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569", "05760541", "00729939", "00798247", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
+  :wordnet_verb_synset "00595732", "00596016", "00597025", "00597330", "00597527", "00597879", "00598039", "00590283", "00589616", "00592510", "00600349", "00599310", "00601387", "00608509", "00830768", "02392628", "02268987" .
 
 :MaintenanceAndRepair a owl:Class ;
   rdfs:subClassOf :FriendlyOrSupportiveAct ;
@@ -231,7 +228,7 @@
 :Mistake a owl:Class ;
   rdfs:subClassOf :AssessmentAndCharacterization, :TroubleAndProblem ;
   rdfs:label "Mistake"@en ;
-  rdfs:comment "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveCriminalOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property."@en ;
+  rdfs:comment "An act of Cognition/judgment indicating that a thought or action is/was in error or faulty. If the erroneous thought/action is known, such as an AggressiveCriminalOrHostileAct, decision or Belief,  that can be identified using the :has_topic property."@en ;
   :wordnet_noun_synset "05714576", "05902260", "04811700" ;
   :wordnet_verb_synset "00641140", "00621541", "00619438" .
 
@@ -257,7 +254,7 @@
   :wordnet_verb_synset "02455370", "02456941", "02456614", "00772186", "00910052", "02563998" .
 
 :PurchaseAndSale a owl:Class ;
-  rdfs:subClassOf :Acquisition, :FinancialEvent, :ChangeOfPossession ;
+  rdfs:subClassOf :AcquisitionPossessionAndTransfer ;
   rdfs:label "Purchase and Sale"@en ;
   rdfs:comment "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."@en ;
   :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160", "10498913" ; 
@@ -271,7 +268,7 @@
   :wordnet_verb_synset "01093838", "02712676", "02590043", "02589224" .
 
 :RobberyAndTheft a owl:Class ;
-  rdfs:subClassOf :CaptureAndSeizure ;
+  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
   rdfs:label "Robbery and Theft"@en ;
   rdfs:comment "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00782543", "00786699" ;

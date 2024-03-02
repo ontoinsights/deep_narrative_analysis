@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 11 November 2023
+Updated 2 March 2024
 
 ## License
 Creative Commons 
@@ -64,7 +64,7 @@ These environment variables need to be set for the DNA application:
 Other components that must be installed or set up are:
 
 * spaCy language model 
-  * Accomplished by executing "python3 -m spacy download en_core_web_trf"
+  * Accomplished by executing "python3 -m spacy download en_core_web_lg"
 * Stardog Cloud
   * The database, "dna", should be created and the files from the DNA _ontologies_ directory uploaded to it's default graph
     * Do not load any of the files in the ontologies_ sub-directories. They are provided for reference.

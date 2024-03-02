@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: October 31 2023
+# Last modified: March 1 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,12 +21,20 @@
 # 
 # Changes:
 #  Reset change history and simplified
+#  Added AchievementAndAccomplishment
 ########################################################################
 
 
 ########################################################################
 # Classes
 ########################################################################
+
+:AchievementAndAccomplishment a owl:Class ;
+  rdfs:subClassOf :Success ;
+  rdfs:label "Achievement and Accomplishment"@en ;
+  rdfs:comment "The successful conclusion of an activity, where an achievement is more focused on the overall goal or purpose of the activity."@en ;
+  :wordnet_noun_synset "00035910" ;
+  :wordnet_verb_synset "02531751" .
 
 :Continuation a owl:Class ;
   rdfs:subClassOf :EventAndState ;
@@ -73,7 +81,7 @@
 :WinAndLoss a owl:Class ;
   rdfs:subClassOf :End ;
   rdfs:label "Win and Loss"@en ;
-  rdfs:comment "An outcome where one entity wins and the other loses - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
+  rdfs:comment "An outcome where one entity wins and other(s) lose - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
   :wordnet_noun_synset "07369331", "00068346" ;
   :wordnet_verb_synset "01104324" .
 

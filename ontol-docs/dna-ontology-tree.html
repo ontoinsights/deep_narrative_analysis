@@ -770,8 +770,8 @@ p {
   "Agent": {
     "iri": "urn:ontoinsights:dna:Agent",
     "WordNet noun synset": [
-      "09506868",
       "09786620",
+      "09506868",
       "00007347",
       "09836176"
     ],
@@ -786,87 +786,6 @@ p {
     ],
     "comment": [
       "A grouping whose members are defined using the :has_member property, or whose members are specifically excluded using the :excluded_member property."
-    ]
-  },
-  "Abduction": {
-    "iri": "urn:ontoinsights:dna:Abduction",
-    "WordNet verb synset": [
-      "01473673",
-      "01474455"
-    ],
-    "WordNet noun synset": [
-      "00776957",
-      "00777199",
-      "00784853"
-    ],
-    "comment": [
-      "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
-    ]
-  },
-  "Invasion and Occupation": {
-    "iri": "urn:ontoinsights:dna:InvasionAndOccupation",
-    "WordNet verb synset": [
-      "01128786",
-      "00463047",
-      "02308993",
-      "02277394"
-    ],
-    "WordNet noun synset": [
-      "01135427",
-      "00089847",
-      "00079356",
-      "00977538"
-    ],
-    "comment": [
-      "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
-    ]
-  },
-  "Robbery and Theft": {
-    "iri": "urn:ontoinsights:dna:RobberyAndTheft",
-    "WordNet verb synset": [
-      "02326737"
-    ],
-    "WordNet noun synset": [
-      "00782543",
-      "00786699"
-    ],
-    "comment": [
-      "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Capture and Seizure')\">'Capture and Seizure'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Gift and Donation')\">'Gift and Donation'</a>"
-    ]
-  },
-  "Capture and Seizure": {
-    "iri": "urn:ontoinsights:dna:CaptureAndSeizure",
-    "WordNet verb synset": [
-      "01217985",
-      "01215136",
-      "02210054",
-      "01217701"
-    ],
-    "WordNet noun synset": [
-      "00097789",
-      "00086039",
-      "00776783",
-      "00089301"
-    ],
-    "comment": [
-      "An act involved taking possession or control of some Resource or some Agent, by force. The Agent who performs the act is specified using the :has_active_agent property, while the Agent which is taken, controlled, or otherwise affected by the act is identified using :has_affected_agent. If a thing/Resource is captured, that entity is indicated using the :has_topic predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>",
-      "<a href=\"javascript:jumpTo('Change of Possession')\">'Change of Possession'</a>"
     ]
   },
   "Gift and Donation": {
@@ -888,8 +807,7 @@ p {
       "An act of giving with no expectation of payment."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Change of Possession')\">'Change of Possession'</a>",
+      "<a href=\"javascript:jumpTo('Acquisition, Possession and Transfer')\">'Acquisition, Possession and Transfer'</a>",
       "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
     ],
     "Disjoint Classes": [
@@ -906,87 +824,61 @@ p {
       "10498913",
       "01115160",
       "00079838",
-      "00084549",
-      "00791195"
+      "00791195",
+      "00084549"
     ],
     "comment": [
       "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Change of Possession')\">'Change of Possession'</a>",
-      "<a href=\"javascript:jumpTo('Financial Event')\">'Financial Event'</a>"
+      "<a href=\"javascript:jumpTo('Acquisition, Possession and Transfer')\">'Acquisition, Possession and Transfer'</a>"
     ]
   },
-  "Change of Possession": {
-    "iri": "urn:ontoinsights:dna:ChangeOfPossession",
-    "WordNet verb synset": [
-      "02352633",
-      "01216829",
-      "02320505"
-    ],
-    "WordNet noun synset": [
-      "14502904",
-      "09783624"
-    ],
-    "comment": [
-      "An event or condition describing that the control of some good(s) or property passed from one Agent to another. "
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Change')\">Change</a>",
-      "<a href=\"javascript:jumpTo('Possession')\">Possession</a>"
-    ]
-  },
-  "Learning and Education": {
-    "iri": "urn:ontoinsights:dna:LearningAndEducation",
-    "WordNet verb synset": [
-      "00608509",
-      "00600349",
-      "02392628",
-      "00830768",
-      "02268987",
-      "00601387",
-      "00599310"
-    ],
-    "WordNet noun synset": [
-      "05760541",
-      "06490253",
-      "06710094",
-      "00798247",
-      "00891150",
-      "00884975",
-      "00729939",
-      "00637704",
-      "00895653",
-      "00730147"
-    ],
-    "comment": [
-      "An act of acquiring or transferring knowledge and skills through study, repetition, experience and instruction. This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>",
-      "<a href=\"javascript:jumpTo('Knowledge and Skill')\">'Knowledge and Skill'</a>"
-    ]
-  },
-  "Acquisition": {
-    "iri": "urn:ontoinsights:dna:Acquisition",
+  "Acquisition, Possession and Transfer": {
+    "iri": "urn:ontoinsights:dna:AcquisitionPossessionAndTransfer",
     "WordNet verb synset": [
       "02215637",
-      "00723361"
+      "00723361",
+      "02352633",
+      "02209474",
+      "01216829",
+      "02320505",
+      "02306641"
     ],
     "WordNet noun synset": [
+      "14503072",
+      "00032912",
+      "13261412",
       "00043933",
+      "14502904",
+      "09783624",
+      "00811126",
+      "00812259",
       "00042637"
     ],
     "comment": [
-      "The obtaining of some object/asset/knowledge/skill. Subclasses indicate whether the Acquisition was a gift, purchase, recovered item, theft, etc."
+      "The acquiring/obtaining and possessing of some object/asset/knowledge/skill. Subclasses indicate whether this occurred by a gift, purchase, recovered item, theft, etc. In addition, acquisition implies having or controlling some object or asset (e.g., possession). However, possession may or may not indicate ownership."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Abduction": {
+    "iri": "urn:ontoinsights:dna:Abduction",
+    "WordNet verb synset": [
+      "01473673",
+      "01474455"
     ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Avoidance')\">Avoidance</a>"
+    "WordNet noun synset": [
+      "00776957",
+      "00777199",
+      "00784853"
+    ],
+    "comment": [
+      "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
     ]
   },
   "Arson": {
@@ -1059,8 +951,8 @@ p {
   "Attack, Damage and Assault": {
     "iri": "urn:ontoinsights:dna:AttackDamageAndAssault",
     "WordNet verb synset": [
-      "00864347",
       "00259743",
+      "00864347",
       "00090640",
       "00478872"
     ],
@@ -1084,8 +976,8 @@ p {
   "Threat and Warning": {
     "iri": "urn:ontoinsights:dna:ThreatAndWarning",
     "WordNet verb synset": [
-      "02246403",
       "01069216",
+      "02246403",
       "00871877",
       "01784999",
       "00012130"
@@ -1138,8 +1030,27 @@ p {
       "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Betrayal&oldid=1096433753), Betrayal 'is the breaking or violation of a presumptive contract, trust, or confidence that produces moral and psychological conflict within a relationship amongst individuals, between organizations or between individuals and organizations. Often betrayal is the act of supporting a rival group, or it is a complete break from previously decided upon or presumed norms by one party from the others.'"
     ],
     "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Deception and Dishonesty')\">'Deception and Dishonesty'</a>"
+    ]
+  },
+  "Concealment": {
+    "iri": "urn:ontoinsights:dna:Concealment",
+    "WordNet verb synset": [
+      "00314788",
+      "02163017",
+      "02149298"
+    ],
+    "WordNet noun synset": [
+      "04254139",
+      "01050836",
+      "04659534"
+    ],
+    "comment": [
+      "An act of preventing something/someone from being known/found."
+    ],
+    "SubClass Of": [
       "<a href=\"javascript:jumpTo('Deception and Dishonesty')\">'Deception and Dishonesty'</a>",
-      "<a href=\"javascript:jumpTo('Violation of Agreement')\">'Violation of Agreement'</a>"
+      "<a href=\"javascript:jumpTo('Prevention')\">Prevention</a>"
     ]
   },
   "Deception and Dishonesty": {
@@ -1156,7 +1067,28 @@ p {
       "00752488"
     ],
     "comment": [
-      "An act of preventing something/someone from being known/found."
+      "An act of concealing or misrepresenting the truth."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
+    ]
+  },
+  "Invasion and Occupation": {
+    "iri": "urn:ontoinsights:dna:InvasionAndOccupation",
+    "WordNet verb synset": [
+      "01128786",
+      "00463047",
+      "02308993",
+      "02277394"
+    ],
+    "WordNet noun synset": [
+      "01135427",
+      "00089847",
+      "00079356",
+      "00977538"
+    ],
+    "comment": [
+      "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
@@ -1182,6 +1114,25 @@ p {
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>",
       "<a href=\"javascript:jumpTo('Refusal and Rejection')\">'Refusal and Rejection'</a>"
+    ]
+  },
+  "Robbery and Theft": {
+    "iri": "urn:ontoinsights:dna:RobberyAndTheft",
+    "WordNet verb synset": [
+      "02326737"
+    ],
+    "WordNet noun synset": [
+      "00782543",
+      "00786699"
+    ],
+    "comment": [
+      "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Gift and Donation')\">'Gift and Donation'</a>"
     ]
   },
   "Aggressive, Criminal or Hostile Act": {
@@ -1226,6 +1177,102 @@ p {
       "<a href=\"javascript:jumpTo('Legal Instrument')\">'Legal Instrument'</a>"
     ]
   },
+  "Aid and Assistance": {
+    "iri": "urn:ontoinsights:dna:AidAndAssistance",
+    "WordNet verb synset": [
+      "00081834",
+      "02553283"
+    ],
+    "WordNet noun synset": [
+      "01063127",
+      "13286803",
+      "01090092",
+      "00656128"
+    ],
+    "comment": [
+      "An act that helps someone/something."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ]
+  },
+  "Cooperation": {
+    "iri": "urn:ontoinsights:dna:Cooperation",
+    "WordNet verb synset": [
+      "02300511",
+      "02421408"
+    ],
+    "WordNet noun synset": [
+      "13864062",
+      "01205394",
+      "00412397"
+    ],
+    "comment": [
+      "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Competition')\">Competition</a>"
+    ]
+  },
+  "Defensive and Protective Act": {
+    "iri": "urn:ontoinsights:dna:DefensiveAndProtectiveAct",
+    "WordNet noun synset": [
+      "01130221",
+      "01130619",
+      "00819341"
+    ],
+    "comment": [
+      "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ]
+  },
+  "Maintenance and Repair": {
+    "iri": "urn:ontoinsights:dna:MaintenanceAndRepair",
+    "WordNet verb synset": [
+      "01572394",
+      "00207826",
+      "01634614",
+      "00206293",
+      "00261534",
+      "00230988"
+    ],
+    "WordNet noun synset": [
+      "00249844"
+    ],
+    "comment": [
+      "Any act that maintains/fixes/mends/adjusts/restores an entity."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Attack, Damage and Assault')\">'Attack, Damage and Assault'</a>"
+    ]
+  },
+  "Friendly or Supportive Act": {
+    "iri": "urn:ontoinsights:dna:FriendlyOrSupportiveAct",
+    "WordNet verb synset": [
+      "00896689"
+    ],
+    "WordNet noun synset": [
+      "01215009",
+      "01216661"
+    ],
+    "comment": [
+      "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Agreement')\">Agreement</a>"
+    ],
+    "Disjoint Classes": [
+      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
+    ]
+  },
   "Marriage": {
     "iri": "urn:ontoinsights:dna:Marriage",
     "WordNet verb synset": [
@@ -1247,7 +1294,7 @@ p {
       "<a href=\"javascript:jumpTo('Promise and Oath')\">'Promise and Oath'</a>"
     ],
     "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Divorce')\">Divorce</a>"
+      "<a href=\"javascript:jumpTo('Divorce and Separation')\">'Divorce and Separation'</a>"
     ]
   },
   "Promise and Oath": {
@@ -1291,15 +1338,14 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ],
     "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Violation of Agreement')\">'Violation of Agreement'</a>",
       "<a href=\"javascript:jumpTo('Disagreement and Dispute')\">'Disagreement and Dispute'</a>"
     ]
   },
   "Agriculture, Apiculture, Aquaculture and Viticulture Event": {
     "iri": "urn:ontoinsights:dna:AgricultureApicultureAndAquacultureEvent",
     "WordNet verb synset": [
-      "01746607",
       "01383909",
+      "01746607",
       "01322669",
       "02425530",
       "00056076"
@@ -1314,9 +1360,19 @@ p {
   "Art and Entertainment Event": {
     "iri": "urn:ontoinsights:dna:ArtAndEntertainmentEvent",
     "WordNet verb synset": [
+      "00013321",
+      "01075360",
+      "01151936",
+      "02423521",
       "01718067",
       "01727101",
       "02497847"
+    ],
+    "WordNet noun synset": [
+      "00402591",
+      "00427931",
+      "00456623",
+      "00041926"
     ],
     "comment": [
       "Events involved with the display and/or performance of art, music, films, plays, etc., as well as other occurrences such as sporting events. These activities are 'observed' by Agents for enjoyment (who are indicated using the :has_affected_agent predicate) and may be 'performed by' other Agents (specified using the :has_active_agent property)."
@@ -1409,25 +1465,6 @@ p {
       "<a href=\"javascript:jumpTo('Attention and Focus')\">'Attention and Focus'</a>"
     ]
   },
-  "Concealment": {
-    "iri": "urn:ontoinsights:dna:Concealment",
-    "WordNet verb synset": [
-      "00314788",
-      "02163017",
-      "02149298"
-    ],
-    "WordNet noun synset": [
-      "04254139",
-      "01050836",
-      "04659534"
-    ],
-    "comment": [
-      "An act of preventing something/someone from being known/found."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Prevention')\">Prevention</a>"
-    ]
-  },
   "Prevention": {
     "iri": "urn:ontoinsights:dna:Prevention",
     "WordNet verb synset": [
@@ -1466,9 +1503,6 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Acquisition')\">Acquisition</a>"
     ]
   },
   "Eating and Drinking": {
@@ -1539,8 +1573,8 @@ p {
     "WordNet verb synset": [
       "00204228",
       "00275432",
-      "00432779",
       "00275523",
+      "00432779",
       "00269051",
       "00045548",
       "00494865",
@@ -1569,8 +1603,8 @@ p {
     ],
     "WordNet noun synset": [
       "13581941",
-      "13520031",
       "13569553",
+      "13520031",
       "13520596"
     ],
     "comment": [
@@ -1614,8 +1648,8 @@ p {
       "00313162",
       "00140787",
       "00145958",
-      "00238763",
       "00239753",
+      "00238763",
       "00144670"
     ],
     "WordNet noun synset": [
@@ -1627,6 +1661,32 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Change')\">Change</a>"
+    ]
+  },
+  "Coup": {
+    "iri": "urn:ontoinsights:dna:Coup",
+    "WordNet verb synset": [
+      "02407837",
+      "02407551"
+    ],
+    "WordNet noun synset": [
+      "01147528"
+    ],
+    "comment": [
+      "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Transfer of Governmental Power')\">'Transfer of Governmental Power'</a>"
+    ]
+  },
+  "Transfer of Governmental Power": {
+    "iri": "urn:ontoinsights:dna:TransferOfPower",
+    "comment": [
+      "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Change')\">Change</a>",
+      "<a href=\"javascript:jumpTo('Political Event')\">'Political Event'</a>"
     ]
   },
   "Change": {
@@ -1663,7 +1723,7 @@ p {
       "04811700"
     ],
     "comment": [
-      "An act of Cognition/judgment indicating that a previous EventAndState (such as an AggressiveCriminalOrHostileAct, decision or Belief) was incorrect, wrong or faulty. The previous EventAndState is identified using the :has_topic property."
+      "An act of Cognition/judgment indicating that a thought or action is/was in error or faulty. If the erroneous thought/action is known, such as an AggressiveCriminalOrHostileAct, decision or Belief,  that can be identified using the :has_topic property."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Assessment and Characterization')\">'Assessment and Characterization'</a>",
@@ -1675,8 +1735,8 @@ p {
     "WordNet verb synset": [
       "01028104",
       "00672179",
-      "00958719",
       "00594278",
+      "00958719",
       "02170904",
       "00683348",
       "00636134",
@@ -1684,8 +1744,8 @@ p {
       "00674352"
     ],
     "WordNet noun synset": [
-      "05770995",
       "05740701",
+      "05770995",
       "05811387",
       "00875745",
       "00143485"
@@ -1725,8 +1785,8 @@ p {
       "05708052",
       "05658424",
       "05712213",
-      "04670308",
-      "05712641"
+      "05712641",
+      "04670308"
     ],
     "comment": [
       "The act of a Person paying attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property."
@@ -1769,6 +1829,25 @@ p {
     ],
     "comment": [
       "An act of concluding or resolving some question or issue by choosing a course of action or alternative."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
+    ]
+  },
+  "Discrimination and Prejudice": {
+    "iri": "urn:ontoinsights:dna:DiscriminationAndPrejudice",
+    "WordNet verb synset": [
+      "02519408",
+      "02517971",
+      "02487728"
+    ],
+    "WordNet noun synset": [
+      "06214889",
+      "01156043",
+      "06671913"
+    ],
+    "comment": [
+      "An act or thought that is intolerant, unjust, unfair or inappropriate, especially when biased by ethnicity, age, sexual orientation, disability, etc."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>"
@@ -1852,8 +1931,8 @@ p {
     "WordNet noun synset": [
       "00023953",
       "05907175",
-      "05991800",
       "05989760",
+      "05991800",
       "00164054"
     ],
     "comment": [
@@ -1880,27 +1959,44 @@ p {
     "iri": "urn:ontoinsights:dna:KnowledgeAndSkill",
     "WordNet verb synset": [
       "00597025",
+      "00608509",
       "00590283",
       "00598039",
+      "00600349",
       "00596016",
+      "00830768",
       "00595732",
       "00589616",
+      "02268987",
       "00592510",
       "00597527",
       "00597879",
+      "02392628",
+      "00601387",
+      "00599310",
       "00597330"
     ],
     "WordNet noun synset": [
+      "05760541",
       "05624569",
-      "05629222",
+      "06490253",
       "04897307",
+      "00798247",
       "05648278",
+      "00891150",
       "05813910",
-      "05160767",
-      "05625389"
+      "00884975",
+      "00729939",
+      "00637704",
+      "00895653",
+      "05625389",
+      "00730147",
+      "06710094",
+      "05629222",
+      "05160767"
     ],
     "comment": [
-      "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.' (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309)"
+      "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.'  (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309). This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Cognition')\">Cognition</a>",
@@ -1910,8 +2006,8 @@ p {
   "Memory": {
     "iri": "urn:ontoinsights:dna:Memory",
     "WordNet verb synset": [
-      "00612810",
       "00611237",
+      "00612810",
       "00609334",
       "00613356"
     ],
@@ -1948,6 +2044,22 @@ p {
       "<a href=\"javascript:jumpTo('Sensory Perception')\">'Sensory Perception'</a>"
     ]
   },
+  "Hunger": {
+    "iri": "urn:ontoinsights:dna:Hunger",
+    "WordNet verb synset": [
+      "01190677"
+    ],
+    "WordNet noun synset": [
+      "14063792",
+      "14063016"
+    ],
+    "comment": [
+      "Sensation of needing food."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Sensory Perception')\">'Sensory Perception'</a>"
+    ]
+  },
   "Pain": {
     "iri": "urn:ontoinsights:dna:Pain",
     "WordNet verb synset": [
@@ -1971,16 +2083,16 @@ p {
     "WordNet verb synset": [
       "02110460",
       "02168177",
+      "02133754",
       "02195992",
       "02174146",
-      "02133754",
       "02174335",
       "02131823",
       "02129213"
     ],
     "WordNet noun synset": [
-      "05729937",
-      "05660241"
+      "05660241",
+      "05729937"
     ],
     "comment": [
       "An act involving one of the senses - sight, hearing, touch, taste and smell."
@@ -2010,13 +2122,28 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
+  "Commemoration": {
+    "iri": "urn:ontoinsights:dna:Commemoration",
+    "WordNet verb synset": [
+      "00613035"
+    ],
+    "WordNet noun synset": [
+      "06701267"
+    ],
+    "comment": [
+      "An event that remembers and respects someone, something or some occurrence in the past. The thing that is remembered is identified using the :has_topic property. The Person who is remembering is indicated using the :has_active_agent property."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
   "Advice and Recommendation": {
     "iri": "urn:ontoinsights:dna:AdviceAndRecommendation",
     "WordNet verb synset": [
       "02444597",
       "02003830",
-      "00878196",
       "00876925",
+      "00878196",
       "00876672",
       "00877973"
     ],
@@ -2060,8 +2187,8 @@ p {
     ],
     "WordNet noun synset": [
       "07230608",
-      "07217786",
       "07194603",
+      "07217786",
       "06641368",
       "06483913",
       "00154781"
@@ -2157,8 +2284,8 @@ p {
       "07222998",
       "06699481",
       "07216025",
-      "06735202",
-      "07245162"
+      "07245162",
+      "06735202"
     ],
     "comment": [
       "A claim or statement of fact or of belief. The Agent making the declaration is indicated using the :has_active_agent property, while the entity discussed is defined using :has_topic."
@@ -2260,8 +2387,8 @@ p {
       "06646602",
       "01228486",
       "01228670",
-      "07270069",
       "07221933",
+      "07270069",
       "00202772",
       "00204191"
     ],
@@ -2317,8 +2444,8 @@ p {
   "Request and Appeal": {
     "iri": "urn:ontoinsights:dna:RequestAndAppeal",
     "WordNet verb synset": [
-      "00895886",
       "02275660",
+      "00895886",
       "00761314",
       "00757492",
       "00747485",
@@ -2410,43 +2537,24 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
-  "Demonstration and Strike": {
-    "iri": "urn:ontoinsights:dna:DemonstrationAndStrike",
-    "WordNet verb synset": [
-      "02417777",
-      "02527482"
-    ],
-    "WordNet noun synset": [
-      "01181340",
-      "01244711",
-      "01180685",
-      "01245509",
-      "01170859",
-      "01180193"
-    ],
-    "comment": [
-      "A meeting to object to something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Disagreement and Dispute')\">'Disagreement and Dispute'</a>",
-      "<a href=\"javascript:jumpTo('Meeting and Encounter')\">'Meeting and Encounter'</a>"
-    ]
-  },
   "Disagreement and Dispute": {
     "iri": "urn:ontoinsights:dna:DisagreementAndDispute",
     "WordNet verb synset": [
       "00775477",
+      "02572443",
       "00716789"
     ],
     "WordNet noun synset": [
       "01238738",
       "04756076",
-      "07196595",
       "07155686",
-      "07195447"
+      "07196595",
+      "00772032",
+      "07195447",
+      "00069993"
     ],
     "comment": [
-      "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate."
+      "Events where two or more Agents do NOT share the same opinion and argue. Note that the property, :has_topic, indicates 'what is in disagreement' and the involved Agents are identified using the :has_active_agent predicate. This semantic may also be used to indicate that an agreement has been violated/is 'in dispute' where the agreement is indicated using :has_topic."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -2468,6 +2576,38 @@ p {
     ],
     "comment": [
       "Events related to giving out materials/Resources to Agents (typically Persons)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Economy and Finance Related": {
+    "iri": "urn:ontoinsights:dna:EconomyAndFinanceRelated",
+    "WordNet verb synset": [
+      "02221793",
+      "02220288",
+      "02222048",
+      "02221492"
+    ],
+    "comment": [
+      "Events dealing with monies/currencies, funds and other capital, as well as events related to the economy such as a change in taxes, becoming unemployed, etc."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Education Event": {
+    "iri": "urn:ontoinsights:dna:EducationEvent",
+    "WordNet verb synset": [
+      "00830768",
+      "00604200"
+    ],
+    "WordNet noun synset": [
+      "00884975",
+      "00895653"
+    ],
+    "comment": [
+      "Events dealing with education and related learning activities such as science or book fairs, mentoring, classroom lessons, practice and drills, etc."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -2527,6 +2667,21 @@ p {
       "<a href=\"javascript:jumpTo('End')\">End</a>"
     ]
   },
+  "Achievement and Accomplishment": {
+    "iri": "urn:ontoinsights:dna:AchievementAndAccomplishment",
+    "WordNet verb synset": [
+      "02531751"
+    ],
+    "WordNet noun synset": [
+      "00035910"
+    ],
+    "comment": [
+      "The successful conclusion of an activity, where an achievement is more focused on the overall goal or purpose of the activity."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Success')\">Success</a>"
+    ]
+  },
   "Success": {
     "iri": "urn:ontoinsights:dna:Success",
     "WordNet verb synset": [
@@ -2553,7 +2708,7 @@ p {
       "07369331"
     ],
     "comment": [
-      "An outcome where one entity wins and the other loses - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."
+      "An outcome where one entity wins and other(s) lose - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('End')\">End</a>"
@@ -2634,8 +2789,8 @@ p {
   "Compliance": {
     "iri": "urn:ontoinsights:dna:Compliance",
     "WordNet verb synset": [
-      "02548492",
       "00150596",
+      "02548492",
       "00150107"
     ],
     "WordNet noun synset": [
@@ -2647,103 +2802,6 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
-    ]
-  },
-  "Employment and Related Event": {
-    "iri": "urn:ontoinsights:dna:EmploymentAndRelatedEvent",
-    "WordNet verb synset": [
-      "02415985",
-      "02407967",
-      "02402779",
-      "02404473",
-      "02414542"
-    ],
-    "example": [
-      "Examples of Employment for Persons are job roles such as supervisor, manager, etc. Examples of Employment for Organzations are reports of number of employees. Examples for GPEs are employment, unemployment and labor rates."
-    ],
-    "WordNet noun synset": [
-      "00585404",
-      "00217041",
-      "00811034",
-      "13991755",
-      "00587299",
-      "00810862",
-      "13991539",
-      "00199642",
-      "00810735",
-      "00199300",
-      "00230681"
-    ],
-    "comment": [
-      "An environmental condition describing the overall state of employment for an Agent (GeopoliticalEntity, Organization, Person, etc.), as well as specific Events (hiring, lay offs, promotions, etc.) that serve as Evidence for this condition. The overall situation regarding Employment/unemployment can be described using the :has_assessment predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Economic Environment')\">'Economic Environment'</a>"
-    ]
-  },
-  "Expenses": {
-    "iri": "urn:ontoinsights:dna:Expenses",
-    "WordNet verb synset": [
-      "02256551",
-      "02271905",
-      "02708368"
-    ],
-    "example": [
-      "Examples of expenses are rent or mortgage payments, tuition for education, money spent to buy food or water, etc."
-    ],
-    "WordNet noun synset": [
-      "13296311",
-      "13296870",
-      "13296518"
-    ],
-    "comment": [
-      "An economic condition describing the outflow of money or assets for goods, services, etc. by an Agent. The overall situation regarding Expenses can be described using the :has_assessment predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Economic Environment')\">'Economic Environment'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Income')\">Income</a>"
-    ]
-  },
-  "Income": {
-    "iri": "urn:ontoinsights:dna:Income",
-    "WordNet verb synset": [
-      "02295101",
-      "02294200"
-    ],
-    "example": [
-      "Examples of incomes are salaries, received payments for sales of crops, etc."
-    ],
-    "WordNet noun synset": [
-      "13300285",
-      "13275704"
-    ],
-    "comment": [
-      "An economic condition describing the influx of money or assets due to the sale of goods and service by an Agent. The overall situation regarding Income can be described using the :has_assessment predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Economic Environment')\">'Economic Environment'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Expenses')\">Expenses</a>"
-    ]
-  },
-  "Savings and Investment": {
-    "iri": "urn:ontoinsights:dna:SavingsAndInvestment",
-    "WordNet verb synset": [
-      "02270824",
-      "02275982"
-    ],
-    "WordNet noun synset": [
-      "13379722",
-      "01101341"
-    ],
-    "comment": [
-      "An economic condition describing that an Agent (such as a Person, Family or Organization) has money, income or assets that are not spent and are put aside for later use. The overall situation regarding SavingsAndInvestment can be described using the :has_assessment predicate."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Economic Environment')\">'Economic Environment'</a>"
     ]
   },
   "Taxes": {
@@ -2768,7 +2826,7 @@ p {
       "14512178"
     ],
     "comment": [
-      "A superclass for a variety of characterizations related to production/consumption, savings/incomes/debts, trade, etc. for an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Employment and Inflation) define the specific semantics of an economy."
+      "A superclass for a variety of characterizations related to the overall state of an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Inflation) define the specific semantics of an economy."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
@@ -2886,8 +2944,8 @@ p {
       "<a href=\"javascript:jumpTo('Environment and Condition')\">'Environment and Condition'</a>"
     ]
   },
-  "(Access to) Education": {
-    "iri": "urn:ontoinsights:dna:Education",
+  "Access to Education": {
+    "iri": "urn:ontoinsights:dna:EducationAccess",
     "comment": [
       "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."
     ],
@@ -2895,8 +2953,8 @@ p {
       "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>"
     ]
   },
-  "Starvation, Hunger and Malnutrition": {
-    "iri": "urn:ontoinsights:dna:StarvationHungerAndMalnutrition",
+  "Starvation and Malnutrition": {
+    "iri": "urn:ontoinsights:dna:StarvationAndMalnutrition",
     "WordNet verb synset": [
       "01190677",
       "02126423",
@@ -2914,12 +2972,12 @@ p {
       "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."
     ],
     "SubClass Of": [
-      "<a href=\"javascript:jumpTo('(Access to) Food and Nutrition')\">'(Access to) Food and Nutrition'</a>",
+      "<a href=\"javascript:jumpTo('Access to Food and Nutrition')\">'Access to Food and Nutrition'</a>",
       "<a href=\"javascript:jumpTo('Health and Disease Related')\">'Health and Disease Related'</a>"
     ]
   },
-  "(Access to) Food and Nutrition": {
-    "iri": "urn:ontoinsights:dna:FoodAndNutrition",
+  "Access to Food and Nutrition": {
+    "iri": "urn:ontoinsights:dna:FoodAndNutritionAccess",
     "comment": [
       "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate."
     ],
@@ -2927,8 +2985,8 @@ p {
       "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>"
     ]
   },
-  "(Access to) Healthcare": {
-    "iri": "urn:ontoinsights:dna:Healthcare",
+  "Access to Healthcare": {
+    "iri": "urn:ontoinsights:dna:HealthcareAccess",
     "comment": [
       "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."
     ],
@@ -2936,8 +2994,8 @@ p {
       "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>"
     ]
   },
-  "(Access to) Housing and Lodging": {
-    "iri": "urn:ontoinsights:dna:Housing",
+  "Access to Housing and Lodging": {
+    "iri": "urn:ontoinsights:dna:HousingAccess",
     "WordNet verb synset": [
       "00414801",
       "00540418",
@@ -2955,31 +3013,13 @@ p {
       "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>"
     ]
   },
-  "(Access to) Potable Water": {
-    "iri": "urn:ontoinsights:dna:PotableWater",
+  "Access to Potable Water": {
+    "iri": "urn:ontoinsights:dna:PotableWaterAccess",
     "comment": [
       "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>"
-    ]
-  },
-  "Captivity and Detention": {
-    "iri": "urn:ontoinsights:dna:CaptivityAndDetention",
-    "WordNet verb synset": [
-      "02502345",
-      "02500687"
-    ],
-    "WordNet noun synset": [
-      "14020535",
-      "01149089"
-    ],
-    "comment": [
-      "The condition of an Agent being held captive and confined to a certain location."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Living Condition')\">'Living Condition'</a>",
-      "<a href=\"javascript:jumpTo('Removal and Restriction')\">'Removal and Restriction'</a>"
     ]
   },
   "Caring for Dependents": {
@@ -3202,7 +3242,7 @@ p {
       "11445694"
     ],
     "comment": [
-      "Any environmental occurrence related to atmospheric conditions in an area."
+      "Any environmental occurrence related to atmospheric conditions in an area. If the event is also a Disaster, also add that class as a type."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Environmental or Ecological Event')\">'Environmental or Ecological Event'</a>"
@@ -3219,117 +3259,6 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
-  "Financial Event": {
-    "iri": "urn:ontoinsights:dna:FinancialEvent",
-    "WordNet verb synset": [
-      "02221793",
-      "02222048",
-      "02220288",
-      "02221492"
-    ],
-    "comment": [
-      "Events dealing with monies/currencies, funds and other capital."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
-  "Aid and Assistance": {
-    "iri": "urn:ontoinsights:dna:AidAndAssistance",
-    "WordNet verb synset": [
-      "00081834",
-      "02553283"
-    ],
-    "WordNet noun synset": [
-      "01063127",
-      "13286803",
-      "01090092",
-      "00656128"
-    ],
-    "comment": [
-      "An act that helps someone/something."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
-    ]
-  },
-  "Cooperation": {
-    "iri": "urn:ontoinsights:dna:Cooperation",
-    "WordNet verb synset": [
-      "02300511",
-      "02421408"
-    ],
-    "WordNet noun synset": [
-      "01205394",
-      "13864062",
-      "00412397"
-    ],
-    "comment": [
-      "An Event or ongoing condition where two or more Agents are striving for a similar goal, and are mutually assisting/supporting one another. This class refers to both specific coooperative Events, as well as the general condition. The former would be Evidence for the latter. If cooperating/sharing Resources, these are defined using the :has_topic predicate. The Agents are identified using the :has_agent property.  The overall cooperative situation can be described using an associated instance of :AssessmentMeasurement (associated using the :has_measurement property)."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Competition')\">Competition</a>"
-    ]
-  },
-  "Defensive and Protective Act": {
-    "iri": "urn:ontoinsights:dna:DefensiveAndProtectiveAct",
-    "WordNet noun synset": [
-      "01130221",
-      "01130619",
-      "00819341"
-    ],
-    "comment": [
-      "An action intended to prevent or lessen harm or damage, or to protect from aggression. If the action involved the use of weapons, these can identified using the :has_instrument property. Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
-    ]
-  },
-  "Maintenance and Repair": {
-    "iri": "urn:ontoinsights:dna:MaintenanceAndRepair",
-    "WordNet verb synset": [
-      "01572394",
-      "00207826",
-      "01634614",
-      "00206293",
-      "00261534",
-      "00230988"
-    ],
-    "WordNet noun synset": [
-      "00249844"
-    ],
-    "comment": [
-      "Any act that maintains/fixes/mends/adjusts/restores an entity."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Friendly or Supportive Act')\">'Friendly or Supportive Act'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Attack, Damage and Assault')\">'Attack, Damage and Assault'</a>"
-    ]
-  },
-  "Friendly or Supportive Act": {
-    "iri": "urn:ontoinsights:dna:FriendlyOrSupportiveAct",
-    "WordNet verb synset": [
-      "00896689"
-    ],
-    "WordNet noun synset": [
-      "01215009",
-      "01216661"
-    ],
-    "comment": [
-      "Favorable, encouraging or helpful actions or statements. Note that if the Event involved a statement/communication, then the individual should also be classified as a :CommunicationAndSpeechAct."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Aggressive, Criminal or Hostile Act')\">'Aggressive, Criminal or Hostile Act'</a>"
     ]
   },
   "Addiction": {
@@ -3565,23 +3494,6 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
-  "Imitation and Counterfeit": {
-    "iri": "urn:ontoinsights:dna:ImitationAndCounterfeit",
-    "WordNet verb synset": [
-      "01697776",
-      "01657814",
-      "01740703"
-    ],
-    "WordNet noun synset": [
-      "03109245"
-    ],
-    "comment": [
-      "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
   "Impact and Contact": {
     "iri": "urn:ontoinsights:dna:ImpactAndContact",
     "WordNet verb synset": [
@@ -3643,22 +3555,6 @@ p {
       "<a href=\"javascript:jumpTo('Separation')\">Separation</a>"
     ]
   },
-  "Information Handling": {
-    "iri": "urn:ontoinsights:dna:InformationHandling",
-    "WordNet verb synset": [
-      "01751525"
-    ],
-    "WordNet noun synset": [
-      "13476660",
-      "00103599"
-    ],
-    "comment": [
-      "An activity involved with the collection, manipulation, storage, transmission, protection or disruption of data/information, especially digital information and cyber activities."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
   "Issuing and Publishing": {
     "iri": "urn:ontoinsights:dna:IssuingAndPublishing",
     "WordNet verb synset": [
@@ -3671,8 +3567,8 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
-  "Divorce": {
-    "iri": "urn:ontoinsights:dna:Divorce",
+  "Divorce and Separation": {
+    "iri": "urn:ontoinsights:dna:DivorceAndSeparation",
     "WordNet verb synset": [
       "02436167"
     ],
@@ -3681,7 +3577,7 @@ p {
       "00216181"
     ],
     "comment": [
-      "A formal/legal event and condition describing that two people have dissolved their relationship/Marriage."
+      "An event and condition indicating that two people have dissolved their relationship/Marriage."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Legal Event')\">'Legal Event'</a>",
@@ -3696,8 +3592,8 @@ p {
     "iri": "urn:ontoinsights:dna:LegalEvent",
     "WordNet verb synset": [
       "01016830",
-      "00762621",
       "01015049",
+      "00762621",
       "02267740",
       "02588535",
       "00908688",
@@ -3706,9 +3602,9 @@ p {
     ],
     "WordNet noun synset": [
       "08431076",
-      "01187304",
-      "01194465",
       "01183047",
+      "01194465",
+      "01187304",
       "01081986",
       "01204674",
       "01183702",
@@ -3772,27 +3668,12 @@ p {
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
-  "Religious Ceremony": {
-    "iri": "urn:ontoinsights:dna:ReligiousCeremony",
-    "WordNet verb synset": [
-      "02619310"
-    ],
-    "WordNet noun synset": [
-      "01030024"
-    ],
-    "comment": [
-      "A type of ceremony related to celebrating a religious event or prescribed by a religion."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Ceremony')\">Ceremony</a>"
-    ]
-  },
   "Ceremony": {
     "iri": "urn:ontoinsights:dna:Ceremony",
     "WordNet verb synset": [
       "02400924",
-      "02430184",
-      "00614139"
+      "00614139",
+      "02430184"
     ],
     "WordNet noun synset": [
       "7465442",
@@ -3806,13 +3687,23 @@ p {
       "<a href=\"javascript:jumpTo('Meeting and Encounter')\">'Meeting and Encounter'</a>"
     ]
   },
-  "Rally": {
-    "iri": "urn:ontoinsights:dna:Rally",
+  "Demonstration, Strike and Rally": {
+    "iri": "urn:ontoinsights:dna:DemonstrationStrikeAndRally",
+    "WordNet verb synset": [
+      "02417777",
+      "02527482"
+    ],
     "WordNet noun synset": [
-      "08375259"
+      "01244711",
+      "01181340",
+      "01180685",
+      "08375259",
+      "01245509",
+      "01170859",
+      "01180193"
     ],
     "comment": [
-      "A meeting to support something or someone. The thing or Agent which is the focus of the Event is defined using the :has_topic property. Note that a rally can be supportive or a protest. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or an :AggressiveCriminalOrHostileAct."
+      "A meeting to support or object to something, someone or some cause. The thing or Agent which is the focus of the Event is defined using the :has_topic property.  Note that these types of events can be supportive or show opposition. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or a :DisagreementOrDispute."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Meeting and Encounter')\">'Meeting and Encounter'</a>"
@@ -3840,8 +3731,8 @@ p {
     "WordNet verb synset": [
       "02011431",
       "02019450",
-      "02388582",
-      "02009962"
+      "02009962",
+      "02388582"
     ],
     "WordNet noun synset": [
       "00281976",
@@ -3859,8 +3750,8 @@ p {
   "Incremental Movement": {
     "iri": "urn:ontoinsights:dna:IncrementalMovement",
     "WordNet verb synset": [
-      "01446765",
       "01450719",
+      "01446765",
       "01870596",
       "01544249",
       "01854282",
@@ -3881,20 +3772,20 @@ p {
   "Movement, Travel and Transportation": {
     "iri": "urn:ontoinsights:dna:MovementTravelAndTransportation",
     "WordNet verb synset": [
-      "01957669",
       "02063390",
+      "01957669",
       "02006752",
       "01955339",
-      "01954657",
       "02236972",
+      "01954657",
       "01517828",
       "00270891",
       "01452567",
       "02060895",
       "01091334",
       "01438013",
-      "00415334",
       "01839438",
+      "00415334",
       "01569697"
     ],
     "WordNet noun synset": [
@@ -3928,31 +3819,6 @@ p {
       "<a href=\"javascript:jumpTo('Political Event')\">'Political Event'</a>"
     ]
   },
-  "Coup": {
-    "iri": "urn:ontoinsights:dna:Coup",
-    "WordNet verb synset": [
-      "02407837",
-      "02407551"
-    ],
-    "WordNet noun synset": [
-      "01147528"
-    ],
-    "comment": [
-      "A seizure of power from an existing government, establishing a new one. The government which is overthrown is identified using the :has_affected_agent property, while the new regime is identified using :has_active_agent."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Transfer of Governmental Power')\">'Transfer of Governmental Power'</a>"
-    ]
-  },
-  "Transfer of Governmental Power": {
-    "iri": "urn:ontoinsights:dna:TransferOfPower",
-    "comment": [
-      "Change of a government or government official. The Person or PoliticalParty who is out-going is identified using the :has_affected_agent property, while the new official/party is identified using :has_active_agent."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Political Event')\">'Political Event'</a>"
-    ]
-  },
   "Political Event": {
     "iri": "urn:ontoinsights:dna:PoliticalEvent",
     "WordNet noun synset": [
@@ -3960,26 +3826,6 @@ p {
     ],
     "comment": [
       "Any Event related to the governance, government and public affairs of a community or country."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
-  "Possession": {
-    "iri": "urn:ontoinsights:dna:Possession",
-    "WordNet verb synset": [
-      "02209474",
-      "02306641"
-    ],
-    "WordNet noun synset": [
-      "14503072",
-      "00032912",
-      "13261412",
-      "00812259",
-      "00811126"
-    ],
-    "comment": [
-      "An event or condition describing having or controlling goods or property. This semantic is about 'having' the Resource (identified using the :has_topic property) and not about 'owning' it. Although ownership can imply possession, that is not guaranteed."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -3998,8 +3844,8 @@ p {
       "00910607",
       "00912746",
       "03587827",
-      "00942228",
-      "05641230"
+      "05641230",
+      "00942228"
     ],
     "comment": [
       "Events involved with defining, supervising and engaging in the construction of some entity. The entity that is manufactured/created/produced is defined using the :has_topic predicate."
@@ -4009,23 +3855,6 @@ p {
     ],
     "Disjoint Classes": [
       "<a href=\"javascript:jumpTo('Utilization And Consumption')\">'Utilization And Consumption'</a>"
-    ]
-  },
-  "Project and Campaign": {
-    "iri": "urn:ontoinsights:dna:ProjectAndCampaign",
-    "WordNet verb synset": [
-      "01096497",
-      "02595732"
-    ],
-    "WordNet noun synset": [
-      "00797381",
-      "00410304"
-    ],
-    "comment": [
-      "An undertaking that is an organized effort to accomplish a goal (which is indicated using the :has_goal property)."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
   "Punishment": {
@@ -4047,25 +3876,43 @@ p {
       "<a href=\"javascript:jumpTo('Reward and Compensation')\">'Reward and Compensation'</a>"
     ]
   },
-  "Recreation and Sport Event": {
-    "iri": "urn:ontoinsights:dna:RecreationAndSportEvent",
+  "Religion Related": {
+    "iri": "urn:ontoinsights:dna:ReligionRelated",
     "WordNet verb synset": [
-      "01075360",
-      "00013321",
-      "01151936",
-      "02423521"
+      "02619310"
     ],
     "WordNet noun synset": [
-      "00402591",
-      "00427931",
-      "00456623",
-      "00041926"
+      "01030024",
+      "05955536",
+      "01042678",
+      "05793890"
     ],
     "comment": [
-      "Any activity done for relaxation and enjoyment (not an Agent's job or business)."
+      "Any type of thing, activity, ceremony or condition related to faith, devotion and belief in a deity, or a higher meaning or consciousness. If the individual is a specific Ceremony, then also classify the instance using that type."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Arrest and Incarceration": {
+    "iri": "urn:ontoinsights:dna:ArrestAndImprisonment",
+    "WordNet verb synset": [
+      "02502345",
+      "01217701",
+      "02500005",
+      "02500687"
+    ],
+    "WordNet noun synset": [
+      "01149281",
+      "00089545",
+      "14020535",
+      "01149089"
+    ],
+    "comment": [
+      "An act involving the taking and/or detention of a Person by authority of the law. However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Removal and Restriction')\">'Removal and Restriction'</a>"
     ]
   },
   "Removal of Raw Materials (Mining, Drilling, Logging, ...)": {
@@ -4211,8 +4058,8 @@ p {
       "00494042",
       "00494319",
       "00492724",
-      "00431125",
-      "00491361"
+      "00491361",
+      "00431125"
     ],
     "comment": [
       "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result."
@@ -4243,8 +4090,8 @@ p {
   "Search": {
     "iri": "urn:ontoinsights:dna:Search",
     "WordNet verb synset": [
-      "01146304",
       "01318273",
+      "01146304",
       "02004900",
       "00790800",
       "01320383"
@@ -4299,13 +4146,13 @@ p {
     "WordNet noun synset": [
       "04273485",
       "09300592",
-      "04273014",
       "04273124",
-      "04272778",
+      "04273014",
       "00293825",
+      "04272778",
       "07383246",
-      "00314328",
       "04273272",
+      "00314328",
       "11527418"
     ],
     "comment": [
@@ -4342,8 +4189,8 @@ p {
     "WordNet noun synset": [
       "00813016",
       "04336084",
-      "00373415",
       "08479216",
+      "00373415",
       "13389225"
     ],
     "comment": [
@@ -4351,6 +4198,23 @@ p {
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Imitation and Counterfeit": {
+    "iri": "urn:ontoinsights:dna:ImitationAndCounterfeit",
+    "WordNet verb synset": [
+      "01697776",
+      "01657814",
+      "01740703"
+    ],
+    "WordNet noun synset": [
+      "03109245"
+    ],
+    "comment": [
+      "An act of simulating or making a copy or duplicate of something or someone. If done to deceive, then this is counterfeiting."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Substitution')\">Substitution</a>"
     ]
   },
   "Substitution": {
@@ -4365,6 +4229,24 @@ p {
     ],
     "comment": [
       "An act of replacing something or someone with another."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "Technology Related": {
+    "iri": "urn:ontoinsights:dna:TechnologyRelated",
+    "WordNet verb synset": [
+      "01751525"
+    ],
+    "WordNet noun synset": [
+      "00643063",
+      "13476660",
+      "00951435",
+      "00103599"
+    ],
+    "comment": [
+      "An activity involved with understanding or using science and technology, involving computers, computer networks, and scientific devices and instruments. Included in this semantic is the collection, manipulation, protection or disruption of data/information. Note that the activities of protection and disruption are often referred to as 'cyber' activities."
     ],
     "SubClass Of": [
       "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
@@ -4390,25 +4272,6 @@ p {
     ],
     "Disjoint Classes": [
       "<a href=\"javascript:jumpTo('Production, Manufacture and Creation')\">'Production, Manufacture and Creation'</a>"
-    ]
-  },
-  "Violation of Agreement": {
-    "iri": "urn:ontoinsights:dna:ViolationOfAgreement",
-    "WordNet verb synset": [
-      "02572443"
-    ],
-    "WordNet noun synset": [
-      "00772032",
-      "00069993"
-    ],
-    "comment": [
-      "Any act that disregards or goes against a previous Agreement or any of its conditions. The previous Agreement is indicated using the :has_topic property."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ],
-    "Disjoint Classes": [
-      "<a href=\"javascript:jumpTo('Agreement')\">Agreement</a>"
     ]
   },
   "Event and State": {
@@ -4523,15 +4386,15 @@ p {
   "Agribusiness": {
     "iri": "urn:ontoinsights:dna:Agribusiness",
     "WordNet noun synset": [
-      "01129030",
       "00918116",
+      "01129030",
       "00454755",
       "00917553",
       "00919445",
       "00917978",
       "00918295",
-      "00920103",
       "01106311",
+      "00920103",
       "00916760",
       "08092123"
     ],
@@ -4976,8 +4839,8 @@ p {
       "01113857",
       "08091976",
       "08020159",
-      "08020652",
-      "08020531"
+      "08020531",
+      "08020652"
     ],
     "comment": [
       "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc."
@@ -4989,8 +4852,8 @@ p {
   "Line/Type of Business": {
     "iri": "urn:ontoinsights:dna:LineOfBusiness",
     "WordNet noun synset": [
-      "08082070",
       "00583425",
+      "08082070",
       "00611221",
       "01096649",
       "01099024",
@@ -5051,8 +4914,8 @@ p {
       "04505257",
       "02690680",
       "04055680",
-      "00491580",
       "04356155",
+      "00491580",
       "02688444",
       "02695091",
       "04471218",
@@ -5141,8 +5004,8 @@ p {
       "08578999",
       "08578888",
       "08578767",
-      "08579251",
       "08579372",
+      "08579251",
       "08578618",
       "08579120",
       "08579483"
@@ -5190,7 +5053,13 @@ p {
   },
   "Goal-Directed Process": {
     "iri": "urn:ontoinsights:dna:GoalDirectedProcess",
+    "WordNet verb synset": [
+      "01096497",
+      "02595732"
+    ],
     "WordNet noun synset": [
+      "00797381",
+      "00410304",
       "01025762"
     ],
     "comment": [
@@ -5242,8 +5111,8 @@ p {
   "Clothing and Accessory": {
     "iri": "urn:ontoinsights:dna:ClothingAndAccessory",
     "WordNet noun synset": [
-      "02759103",
       "03055525",
+      "02759103",
       "02731365",
       "02674410"
     ],
@@ -5309,8 +5178,8 @@ p {
   "Furniture and Household Goods": {
     "iri": "urn:ontoinsights:dna:FurnitureAndHouseGoods",
     "WordNet noun synset": [
-      "03410635",
       "03256767",
+      "03410635",
       "03262580"
     ],
     "comment": [
@@ -5409,9 +5278,9 @@ p {
       "13377127",
       "06492177",
       "06483696",
-      "13399691",
-      "13419414",
       "13309007",
+      "13419414",
+      "13399691",
       "13399521"
     ],
     "comment": [
@@ -5504,14 +5373,14 @@ p {
       "03739416",
       "04459089",
       "02732781",
-      "03705309",
       "04154560",
+      "03705309",
       "04479147",
       "03857800",
       "03818716",
       "03745184",
-      "04371632",
       "04077657",
+      "04371632",
       "04077839"
     ],
     "comment": [
@@ -6319,8 +6188,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3865483",
     "synonym": [
       "Argentine Republic",
-      "Argentine Nation",
       "United Provinces of the Río de la Plata",
+      "Argentine Nation",
       "Argentine Confederation",
       "Argentina"
     ],
@@ -6351,8 +6220,8 @@ p {
     "iri": "urn:ontoinsights:geonames:2077456",
     "synonym": [
       "Commonwealth of Australia",
-      "Australia",
-      "New Holland"
+      "New Holland",
+      "Australia"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -6841,8 +6710,8 @@ p {
   "Democratic Republic of the Congo": {
     "iri": "urn:ontoinsights:geonames:203312",
     "synonym": [
-      "Zaire",
       "Democratic Republic of the Congo",
+      "Zaire",
       "Congo Kinshasa",
       "Democratic Republic of Congo"
     ],
@@ -6863,8 +6732,8 @@ p {
   "Djibouti": {
     "iri": "urn:ontoinsights:geonames:223816",
     "synonym": [
-      "French Somaliland",
       "Obock Territory",
+      "French Somaliland",
       "Republic of Djibouti",
       "Djibouti",
       "French Territory of the Afars and the Issas"
@@ -7029,8 +6898,8 @@ p {
   "French Guinea": {
     "iri": "urn:ontoinsights:geonames:2420477",
     "synonym": [
-      "Guinea-Conakry",
       "French Guinea",
+      "Guinea-Conakry",
       "Guinea",
       "Republic of Guinea"
     ],
@@ -7205,8 +7074,8 @@ p {
   "Haiti": {
     "iri": "urn:ontoinsights:geonames:3723988",
     "synonym": [
-      "Haiti",
       "Hayti",
+      "Haiti",
       "Republic of Haiti"
     ],
     "Type": [
@@ -7798,8 +7667,8 @@ p {
     "iri": "urn:ontoinsights:geonames:2750405",
     "synonym": [
       "Batavia",
-      "Holland",
       "Netherlands",
+      "Holland",
       "Kingdom of the Netherlands"
     ],
     "Type": [
@@ -7935,8 +7804,8 @@ p {
   "Palestine": {
     "iri": "urn:ontoinsights:geonames:6254930",
     "synonym": [
-      "Palestinian territories",
       "Occupied Palestinian Territory",
+      "Palestinian territories",
       "State of Palestine",
       "Palestine",
       "Palestinian National Authority",
@@ -8031,8 +7900,8 @@ p {
     "iri": "urn:ontoinsights:geonames:4566966",
     "synonym": [
       "Commonwealth of Puerto Rico",
-      "Puerto Rico",
-      "Associated Free State of Puerto Rico"
+      "Associated Free State of Puerto Rico",
+      "Puerto Rico"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -8092,8 +7961,8 @@ p {
       "Russia",
       "U.S.S.R.",
       "Russian Federation",
-      "USSR",
       "Soviet Union",
+      "USSR",
       "Union of Soviet Socialist Republics"
     ],
     "Type": [
@@ -8115,8 +7984,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3578476",
     "synonym": [
       "St. Bartholomew",
-      "Saint Bartholomew",
       "St Bartholomew",
+      "Saint Bartholomew",
       "Saint Barthelemy",
       "St Barthelemy",
       "St. Barts",
@@ -8138,9 +8007,9 @@ p {
       "St. Kitts",
       "Federation of Saint Christopher and Nevis",
       "Nevis",
-      "Saint Kitts",
-      "St Kitts",
       "Saint Kitts and Nevis",
+      "St Kitts",
+      "Saint Kitts",
       "Federation of Saint Kitts and Nevis"
     ],
     "Type": [
@@ -8150,8 +8019,8 @@ p {
   "Saint Helena and Ascension and Tristan da Cunha": {
     "iri": "urn:ontoinsights:geonames:3370751",
     "synonym": [
-      "Saint Helena",
       "St Helena",
+      "Saint Helena",
       "Ascension",
       "St. Helena",
       "Tristan da Cunha",
@@ -8186,8 +8055,8 @@ p {
   "Saint Pierre and Miquelon": {
     "iri": "urn:ontoinsights:geonames:3424932",
     "synonym": [
-      "Saint Pierre",
       "St Pierre",
+      "Saint Pierre",
       "St. Pierre",
       "Miquelon",
       "Saint Pierre and Miquelon"
@@ -8228,8 +8097,8 @@ p {
   "Sao Tome and Principe": {
     "iri": "urn:ontoinsights:geonames:2410758",
     "synonym": [
-      "Principe",
       "Sao Tome",
+      "Principe",
       "Sao Tome and Principe"
     ],
     "Type": [
@@ -8261,8 +8130,8 @@ p {
     "iri": "urn:ontoinsights:geonames:6290252",
     "synonym": [
       "Republic of Serbia",
-      "Serbia",
-      "Yugoslavia"
+      "Yugoslavia",
+      "Serbia"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -8418,8 +8287,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3382998",
     "synonym": [
       "Dutch Guiana",
-      "Netherlands Guiana",
       "Republic of Suriname",
+      "Netherlands Guiana",
       "Suriname"
     ],
     "Type": [
@@ -8649,8 +8518,8 @@ p {
   "United Kingdom": {
     "iri": "urn:ontoinsights:geonames:2635167",
     "synonym": [
-      "Britain",
       "United Kingdom of Great Britain and Northern Ireland",
+      "Britain",
       "Great Britain",
       "U.K.",
       "UK"
@@ -10564,7 +10433,7 @@ p {
       "01083552"
     ],
     "comment": [
-      "Relationship indicating that the referencing Person is associated with another entity, such as another Agent, OrganizationalEntity or Location. The time of the Affiliation can be specified using the :has_time property (or one of its subproperties) as an RDF* graph property on :affiliated. Another possibility is to use the :role property as another RDF* graph property. This permits the capture of the role of the Person, for the indicated time."
+      "Relationship indicating that the referencing individual is associated with another entity, such as another Agent, OrganizationalEntity or Location. The time of the Affiliation can be specified using the :has_time property (or one of its subproperties) as an RDF* graph property on :affiliated. Another possibility is to use the :role property as another RDF* graph property. This permits the capture of the role of the Person, for the indicated time."
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Person')\">Person</a>"
@@ -11127,52 +10996,10 @@ p {
         "id": "Event and State",
         "children": [
           {
-            "id": "Acquisition",
+            "id": "Acquisition, Possession and Transfer",
             "children": [
               {
-                "id": "Capture and Seizure",
-                "children": [
-                  {
-                    "id": "Abduction"
-                  },
-                  {
-                    "id": "Invasion and Occupation"
-                  },
-                  {
-                    "id": "Robbery and Theft"
-                  }
-                ]
-              },
-              {
-                "id": "Change of Possession",
-                "children": [
-                  {
-                    "id": "Capture and Seizure",
-                    "children": [
-                      {
-                        "id": "Abduction"
-                      },
-                      {
-                        "id": "Invasion and Occupation"
-                      },
-                      {
-                        "id": "Robbery and Theft"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "Gift and Donation"
-                  },
-                  {
-                    "id": "Purchase and Sale"
-                  }
-                ]
-              },
-              {
                 "id": "Gift and Donation"
-              },
-              {
-                "id": "Learning and Education"
               },
               {
                 "id": "Purchase and Sale"
@@ -11182,6 +11009,9 @@ p {
           {
             "id": "Aggressive, Criminal or Hostile Act",
             "children": [
+              {
+                "id": "Abduction"
+              },
               {
                 "id": "Attack, Damage and Assault",
                 "children": [
@@ -11200,20 +11030,6 @@ p {
                 ]
               },
               {
-                "id": "Capture and Seizure",
-                "children": [
-                  {
-                    "id": "Abduction"
-                  },
-                  {
-                    "id": "Invasion and Occupation"
-                  },
-                  {
-                    "id": "Robbery and Theft"
-                  }
-                ]
-              },
-              {
                 "id": "Coercion and Intimidation",
                 "children": [
                   {
@@ -11226,11 +11042,20 @@ p {
                 "children": [
                   {
                     "id": "Betrayal"
+                  },
+                  {
+                    "id": "Concealment"
                   }
                 ]
               },
               {
+                "id": "Invasion and Occupation"
+              },
+              {
                 "id": "Resistance"
+              },
+              {
+                "id": "Robbery and Theft"
               }
             ]
           },
@@ -11239,6 +11064,26 @@ p {
             "children": [
               {
                 "id": "Contract"
+              },
+              {
+                "id": "Friendly or Supportive Act",
+                "children": [
+                  {
+                    "id": "Aid and Assistance"
+                  },
+                  {
+                    "id": "Cooperation"
+                  },
+                  {
+                    "id": "Defensive and Protective Act"
+                  },
+                  {
+                    "id": "Gift and Donation"
+                  },
+                  {
+                    "id": "Maintenance and Repair"
+                  }
+                ]
               },
               {
                 "id": "Promise and Oath",
@@ -11293,31 +11138,6 @@ p {
             "id": "Change",
             "children": [
               {
-                "id": "Change of Possession",
-                "children": [
-                  {
-                    "id": "Capture and Seizure",
-                    "children": [
-                      {
-                        "id": "Abduction"
-                      },
-                      {
-                        "id": "Invasion and Occupation"
-                      },
-                      {
-                        "id": "Robbery and Theft"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "Gift and Donation"
-                  },
-                  {
-                    "id": "Purchase and Sale"
-                  }
-                ]
-              },
-              {
                 "id": "Decrease",
                 "children": [
                   {
@@ -11338,6 +11158,14 @@ p {
               },
               {
                 "id": "State Change and Physical Change"
+              },
+              {
+                "id": "Transfer of Governmental Power",
+                "children": [
+                  {
+                    "id": "Coup"
+                  }
+                ]
               }
             ]
           },
@@ -11367,6 +11195,9 @@ p {
                 "id": "Decision Making and Choice"
               },
               {
+                "id": "Discrimination and Prejudice"
+              },
+              {
                 "id": "Emotional Response",
                 "children": [
                   {
@@ -11390,9 +11221,6 @@ p {
                 "id": "Knowledge and Skill",
                 "children": [
                   {
-                    "id": "Learning and Education"
-                  },
-                  {
                     "id": "Science and Technology"
                   }
                 ]
@@ -11407,11 +11235,17 @@ p {
                     "id": "Exhaustion"
                   },
                   {
+                    "id": "Hunger"
+                  },
+                  {
                     "id": "Pain"
                   }
                 ]
               }
             ]
+          },
+          {
+            "id": "Commemoration"
           },
           {
             "id": "Communication and Speech Act",
@@ -11498,15 +11332,16 @@ p {
             "id": "Delay and Wait"
           },
           {
-            "id": "Disagreement and Dispute",
-            "children": [
-              {
-                "id": "Demonstration and Strike"
-              }
-            ]
+            "id": "Disagreement and Dispute"
           },
           {
             "id": "Distribution and Supply"
+          },
+          {
+            "id": "Economy and Finance Related"
+          },
+          {
+            "id": "Education Event"
           },
           {
             "id": "End",
@@ -11526,7 +11361,12 @@ p {
                 "id": "Failure"
               },
               {
-                "id": "Success"
+                "id": "Success",
+                "children": [
+                  {
+                    "id": "Achievement and Accomplishment"
+                  }
+                ]
               },
               {
                 "id": "Win and Loss",
@@ -11563,22 +11403,10 @@ p {
                     "id": "Deflation"
                   },
                   {
-                    "id": "Employment and Related Event"
-                  },
-                  {
-                    "id": "Expenses"
-                  },
-                  {
-                    "id": "Income"
-                  },
-                  {
                     "id": "Inflation"
                   },
                   {
                     "id": "Recession"
-                  },
-                  {
-                    "id": "Savings and Investment"
                   },
                   {
                     "id": "Taxes"
@@ -11620,27 +11448,24 @@ p {
                 "id": "Living Condition",
                 "children": [
                   {
-                    "id": "(Access to) Education"
+                    "id": "Access to Education"
                   },
                   {
-                    "id": "(Access to) Food and Nutrition",
+                    "id": "Access to Food and Nutrition",
                     "children": [
                       {
-                        "id": "Starvation, Hunger and Malnutrition"
+                        "id": "Starvation and Malnutrition"
                       }
                     ]
                   },
                   {
-                    "id": "(Access to) Healthcare"
+                    "id": "Access to Healthcare"
                   },
                   {
-                    "id": "(Access to) Housing and Lodging"
+                    "id": "Access to Housing and Lodging"
                   },
                   {
-                    "id": "(Access to) Potable Water"
-                  },
-                  {
-                    "id": "Captivity and Detention"
+                    "id": "Access to Potable Water"
                   },
                   {
                     "id": "Caring for Dependents"
@@ -11698,34 +11523,6 @@ p {
             ]
           },
           {
-            "id": "Financial Event",
-            "children": [
-              {
-                "id": "Purchase and Sale"
-              }
-            ]
-          },
-          {
-            "id": "Friendly or Supportive Act",
-            "children": [
-              {
-                "id": "Aid and Assistance"
-              },
-              {
-                "id": "Cooperation"
-              },
-              {
-                "id": "Defensive and Protective Act"
-              },
-              {
-                "id": "Gift and Donation"
-              },
-              {
-                "id": "Maintenance and Repair"
-              }
-            ]
-          },
-          {
             "id": "Health and Disease Related",
             "children": [
               {
@@ -11776,7 +11573,7 @@ p {
                 ]
               },
               {
-                "id": "Starvation, Hunger and Malnutrition"
+                "id": "Starvation and Malnutrition"
               },
               {
                 "id": "Sterility"
@@ -11785,9 +11582,6 @@ p {
                 "id": "Symptom"
               }
             ]
-          },
-          {
-            "id": "Imitation and Counterfeit"
           },
           {
             "id": "Impact and Contact"
@@ -11801,16 +11595,13 @@ p {
             ]
           },
           {
-            "id": "Information Handling"
-          },
-          {
             "id": "Issuing and Publishing"
           },
           {
             "id": "Legal Event",
             "children": [
               {
-                "id": "Divorce"
+                "id": "Divorce and Separation"
               },
               {
                 "id": "Marriage"
@@ -11835,7 +11626,7 @@ p {
                 ]
               },
               {
-                "id": "Divorce"
+                "id": "Divorce and Separation"
               },
               {
                 "id": "Marriage"
@@ -11858,17 +11649,11 @@ p {
                 "children": [
                   {
                     "id": "Marriage"
-                  },
-                  {
-                    "id": "Religious Ceremony"
                   }
                 ]
               },
               {
-                "id": "Demonstration and Strike"
-              },
-              {
-                "id": "Rally"
+                "id": "Demonstration, Strike and Rally"
               }
             ]
           },
@@ -11903,52 +11688,19 @@ p {
             ]
           },
           {
-            "id": "Possession",
-            "children": [
-              {
-                "id": "Change of Possession",
-                "children": [
-                  {
-                    "id": "Capture and Seizure",
-                    "children": [
-                      {
-                        "id": "Abduction"
-                      },
-                      {
-                        "id": "Invasion and Occupation"
-                      },
-                      {
-                        "id": "Robbery and Theft"
-                      }
-                    ]
-                  },
-                  {
-                    "id": "Gift and Donation"
-                  },
-                  {
-                    "id": "Purchase and Sale"
-                  }
-                ]
-              }
-            ]
-          },
-          {
             "id": "Production, Manufacture and Creation"
-          },
-          {
-            "id": "Project and Campaign"
           },
           {
             "id": "Punishment"
           },
           {
-            "id": "Recreation and Sport Event"
+            "id": "Religion Related"
           },
           {
             "id": "Removal and Restriction",
             "children": [
               {
-                "id": "Captivity and Detention"
+                "id": "Arrest and Incarceration"
               },
               {
                 "id": "Removal of Raw Materials (Mining, Drilling, Logging, ...)"
@@ -11984,7 +11736,7 @@ p {
             "id": "Separation",
             "children": [
               {
-                "id": "Divorce"
+                "id": "Divorce and Separation"
               }
             ]
           },
@@ -12003,18 +11755,18 @@ p {
             "id": "Storage"
           },
           {
-            "id": "Substitution"
+            "id": "Substitution",
+            "children": [
+              {
+                "id": "Imitation and Counterfeit"
+              }
+            ]
+          },
+          {
+            "id": "Technology Related"
           },
           {
             "id": "Utilization And Consumption"
-          },
-          {
-            "id": "Violation of Agreement",
-            "children": [
-              {
-                "id": "Betrayal"
-              }
-            ]
           }
         ]
       },
@@ -12285,9 +12037,6 @@ p {
           {
             "id": "Knowledge and Skill",
             "children": [
-              {
-                "id": "Learning and Education"
-              },
               {
                 "id": "Science and Technology"
               }
