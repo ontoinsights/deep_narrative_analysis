@@ -2250,6 +2250,15 @@
                                                                                    "08263223" .
 
 
+###  urn:ontoinsights:dna:Culture
+<urn:ontoinsights:dna:Culture> rdf:type owl:Class ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ;
+                               rdfs:comment "Concepts related to the customs, arts, social constructs and behaviors of a particular society or of society in general."@en ;
+                               rdfs:label "Culture"@en ;
+                               <urn:ontoinsights:dna:wordnet_noun_synset> "00411260" ,
+                                                                          "05759791" .
+
+
 ###  urn:ontoinsights:dna:Currency
 <urn:ontoinsights:dna:Currency> rdf:type owl:Class ;
                                 rdfs:subClassOf <urn:ontoinsights:dna:MonetaryAndFinancialInstrument> ;
@@ -3449,6 +3458,14 @@
                                                 <urn:ontoinsights:dna:wordnet_noun_synset> "08371279" .
 
 
+###  urn:ontoinsights:dna:LaborRelated
+<urn:ontoinsights:dna:LaborRelated> rdf:type owl:Class ;
+                                    rdfs:subClassOf <urn:ontoinsights:dna:EconomicEnvironment> ,
+                                                    <urn:ontoinsights:dna:Increase> ;
+                                    rdfs:comment "A concept related to labor such as employment/unemployment, the labor market, labor relations, retirement, and union negotiations and representation. Note that a reference to a union should be defined as an OrganizationalEntity."@en ;
+                                    rdfs:label "Inflation"@en .
+
+
 ###  urn:ontoinsights:dna:LandAndWaterResource
 <urn:ontoinsights:dna:LandAndWaterResource> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
@@ -4051,7 +4068,7 @@
 ###  urn:ontoinsights:dna:Product
 <urn:ontoinsights:dna:Product> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:Resource> ;
-                               rdfs:comment "A thing identified by a specific name (such as a box of 'Kleenex') that is available for sale. A Product should also be classified by another sub-class of Resource to further distinguish it."@en ;
+                               rdfs:comment "A thing or a service/assistance identified by a specific name (such as a box of 'Kleenex') that is available for sale. A Product should also be classified by another sub-class of Resource to further distinguish it."@en ;
                                rdfs:label "Product"@en ;
                                <urn:ontoinsights:dna:wordnet_noun_synset> "04014270" ,
                                                                           "06858649" .

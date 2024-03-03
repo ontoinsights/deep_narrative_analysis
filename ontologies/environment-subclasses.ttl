@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 1 2024
+# Last Modified: March 2 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -30,6 +30,7 @@
 #  Removed CaptivityAndDetention as its semantics are similar to 
 #    ArrestAndImprisonment
 #  Clarified semantics by adding "Access" to several class names
+#  Added Culture and LaborRelated
 ########################################################################
 
 
@@ -80,6 +81,12 @@
   rdfs:comment "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "01169636", "01206166" ;
   :wordnet_verb_synset "02548492", "00150107", "00150596" .
+
+:Culture  a owl:Class ;
+  rdfs:subClassOf :LivingCondition ;
+  rdfs:label "Culture"@en ;
+  rdfs:comment "Concepts related to the customs, arts, social constructs and behaviors of a particular society or of society in general."@en ;
+  :wordnet_noun_synset "00411260", "05759791" .
 
 :Deflation a owl:Class ;
   rdfs:subClassOf :EconomicEnvironment, :Decrease ;
@@ -140,6 +147,11 @@
   rdfs:comment "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate."@en ;
   :wordnet_noun_synset "13569553", "13520031", "13520596", "13581941" ;
   :wordnet_verb_synset "00564177" .
+
+:LaborRelated a owl:Class ;
+  rdfs:subClassOf :EconomicEnvironment, :Increase ;
+  rdfs:label "Inflation"@en ;
+  rdfs:comment "A concept related to labor such as employment/unemployment, the labor market, labor relations, retirement, and union negotiations and representation. Note that a reference to a union should be defined as an OrganizationalEntity."@en .
 
 :LawAndPolicy a owl:Class ;
   rdfs:subClassOf :PoliticalEnvironment ;

@@ -59,12 +59,14 @@ These environment variables need to be set for the DNA application:
 * `GEONAMES_ID` (geonames.org) MUST be set for background information retrieval
 * `NEWS_API_KEY` (newsapi.org) MUST be set if the dna/v1/news API is used
 * `OPENAI_API_KEY`(openai.com) MUST be set and reference a billable account 
-* `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set (where STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable)
+* `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set where:
+  * The STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable
+  * A user/password is defined and given a "cloud" role - enabling read and write
 
 Other components that must be installed or set up are:
 
 * spaCy language model 
-  * Accomplished by executing "python3 -m spacy download en_core_web_lg"
+  * Accomplished by executing "python3 -m spacy download en_core_web_trf"
 * Stardog Cloud
   * The database, "dna", should be created and the files from the DNA _ontologies_ directory uploaded to it's default graph
     * Do not load any of the files in the ontologies_ sub-directories. They are provided for reference.
@@ -72,9 +74,10 @@ Other components that must be installed or set up are:
       * Remove the entry for http://api.stardog.com/ (with no prefix name)
       * Add an entry for 'urn:ontoinsights:dna:' (with no prefix name)
       * Add an entry for 'urn:ontoinsights:dna:' (with the prefix name, 'dna')
-    * As regards the database configuration, when creating the database, use the stardog.properties file in the _tools_ directory
+    * As regards the database configuration, when creating the database, use the stardog.properties file in the _tools_ directory for reference
+      * The important properties to set are "edge.properties = true" and "preserve.bnode.ids = false"
 
-Make sure that you always upgrade the spacy model ("en_core_web_trf") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
+Make sure that you always upgrade the spacy model ("en_core_web_lg") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
 
 Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask run". The RESTful DNA APIs will be accessible at http://127.0.0.1:5000/dna/v1/repositories (local only).
 
