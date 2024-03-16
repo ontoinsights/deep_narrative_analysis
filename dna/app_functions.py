@@ -207,10 +207,10 @@ def process_new_narrative(metadata: list, narr_text: str, repo: str) -> (dict, s
     """
     # Future: Do we care if a narrative with this or similar metadata already exists?
     # TODO: Check that the text is not similar since the same article could be picked up by different publishers
-    # Process first 1250 characters   TODO: Are 1250 chars enough?
-    if int(metadata[4]) > 1250:
+    # Process first 1000 characters   TODO: Are 1000 chars enough?
+    if int(metadata[4]) > 1000:
         length = 1250
-        narr = narr_text[:1250]
+        narr = narr_text[:1000]
         # End on a '.' vs potentially a partial sentence (ideally end on '. ')
         # TODO: Some publishers do not have spaces after periods if on paragraph boundary, in schema.org/articleBody
         narr = narr[0:(narr.rindex('.') + 1)]

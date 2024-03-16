@@ -139,7 +139,8 @@ def resolve_quotations(narr: str) -> (str, list, dict):
     if len(quotation_dict) > 0:
         for quote_numb, quote_text in quotation_dict.items():
             # Get named entities mentioned
-            quote_doc = nlp(quote_text)
+            # spacy 3.7.4 has issues with finding named entities if the names are enclosed by brackets
+            quote_doc = nlp(quote_text.replace('[', empty_string).replace(']', empty_string))
             entities = []
             for ent in quote_doc.ents:
                 ent_text = ent.text

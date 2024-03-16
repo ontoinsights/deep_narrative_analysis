@@ -9,6 +9,12 @@ from dna.query_sources import get_event_details_from_wikidata, get_wikidata_labe
 from dna.utilities_and_language_specific import check_name_gender, days, empty_string, months, \
     names_to_geo_dict, ner_dict, underscore
 
+agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':OrganizationalEntity',
+                 ':EthnicGroup', ':PoliticalGroup', ':ReligiousGroup', ':Animal', ':Plant')
+
+honorifics = ('Mr. ', 'Mrs. ', 'Ms. ', 'Doctor ', 'Dr. ', 'Messrs. ', 'Miss ', 'Mx. ', 'Sir ',
+              'Dame ', 'Lady ', 'Esq. ', 'Professor ', 'Fr. ', 'Sr. ')
+
 # TODO: Non-US dates
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
@@ -143,16 +149,17 @@ def _get_noun_ttl(noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str
         if noun_text not in labels:
             labels.append(noun_text)
         if 'NORP' not in noun_type:
+            family_names = []
             if 'PERSON' in noun_type:
                 noun_type = check_name_gender(noun_text)
                 family_names = _get_family_names(noun_text, labels)
-                for fam_name in family_names:
-                    if fam_name not in nouns_dict:
-                        nouns_dict[fam_name] = ('PLURALPERSON', f':{fam_name}')
-                        noun_ttl.append(f':{fam_name} a :Person, :Collection ; '
-                                        f'rdfs:label "{fam_name}" ; :role "family" .')
             noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, wiki_details,
-                                             wiki_url))
+                                             wiki_url))      # Put more specific name first
+            for fam_name in family_names:
+                if fam_name not in nouns_dict:
+                    nouns_dict[fam_name] = ('PLURALPERSON', f':{fam_name}')
+                    noun_ttl.append(f':{fam_name} a :Person, :Collection ; '
+                                    f'rdfs:label "{fam_name}" ; :role "family" .')
         else:   # NORP
             noun_ttl.extend(
                 create_norp_ttl(noun_iri, noun_type, labels, class_map, wiki_details, wiki_url))
@@ -211,20 +218,13 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
     for noun_key in nouns_dict:                                  # Key is text
         if noun_key == noun_text:                                # Strings match
             return nouns_dict[noun_key]
-        elif noun_text in noun_key or noun_key in noun_text:     # Strings might match
-            entity_type, possible_iri = nouns_dict[noun_key]
-            # But do semantics match?
-            all_labels_for_iri = []
-            for another_key, value in nouns_dict.items():
-                ent_type, ent_iri = value
-                if ent_iri == possible_iri:
-                    all_labels_for_iri.append(another_key)
-            aligned_dict = access_api(
-                name_check_prompt.replace("{noun_text}", noun_text).replace("{labels}", ", ".join(all_labels_for_iri)))
-            if aligned_dict['same']:
-                return nouns_dict[noun_key]
-            elif aligned_dict['simplified_name'] != noun_text:
-                return check_if_noun_is_known(aligned_dict['simplified_name'], noun_type, nouns_dict)
+    for noun_key in nouns_dict:                                  # Trying again with partial match
+        if noun_text in noun_key or noun_key in noun_text:       # Strings might match
+            match_dict = access_api(
+                name_check_prompt.replace("{noun1_text}", noun_text).replace("{noun2_text}", noun_key))
+            if 'probability' in match_dict:
+                if int(match_dict['probability']) > 85:
+                    return nouns_dict[noun_key]
     return noun_type, empty_string
 
 

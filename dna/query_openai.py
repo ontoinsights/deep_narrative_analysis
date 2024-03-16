@@ -2,36 +2,34 @@
 
 import json
 import logging
-import openai
 import os
+
+from openai import OpenAI
 # from tenacity import *
 
 from dna.utilities_and_language_specific import add_to_dictionary_values
 
-openai.api_key = os.environ.get('OPENAI_API_KEY')
+openai_api_key = os.environ.get('OPENAI_API_KEY')
 model_engine = "gpt-4-1106-preview"   # gpt-4 or gpt-4-1106-preview
+client = OpenAI()
 
 any_boolean = 'true/false'
+same_opposite = 'same/opposite'
 interpretation_views = 'conservative, liberal or neutral'
-modal_text = '"can", "could", "have to", "may", "might", "must", "ought to", "shall", "should", "will" and "would"'
+modal_text = '"can", "could", "have to", "may", "might", "must", "ought to", "shall", "should" and "would"'
 person = 'using the numbers 1, 2, 3'
-semantic_labels = '"agent", "dative", "experiencer", "force", "instrument", "location", ' \
-                  '"measure", "patient" or "theme"'
+semantic_labels = '"agent", "dative", "experiencer", "instrument", "location", "measure", ' \
+                  '"patient", "source" or "theme"'
 sentiment = 'positive, negative or neutral'
 tense = 'past, present, future'
 voice = 'active or passive'
 
-possible_content1 = '\n\n{'
-possible_content2 = 'json\n{'
-
 # JSON formats
 consistency_format = '{"consistent": "bool"}'
 
-coref_format = '{"references_resolved": "bool", ' \
-               '"updated_text": "string"}'
+coref_format = '{"updated_text": "string"}'
 
-name_check_format = '{"same": "boolean",' \
-                    '"simplified_name: "string"}'
+name_check_probability = '{"probability": "int"}'
 
 narr_format = '{"goal_numbers": ["int"], ' \
                '"summary": "string", ' \
@@ -39,123 +37,143 @@ narr_format = '{"goal_numbers": ["int"], ' \
                '"interpreted_text": [{"perspective": "string", "interpretation": "string"}], ' \
                '"ranking_by_perspective": [{"perspective": "string", "ranking": "int"}]}'
 
+passive_format = '{"semantics": {' \
+                 '"category_number": "int", ' \
+                 '"same_or_opposite": "string"}}'
+
 quote_format1 = '{"sentiment": "string", ' \
                 '"grade_level": "int", ' \
                 '"summary": "string"}'
 
 sent_format1 = '{"person": "int", ' \
                 '"sentiment": "string", ' \
-                '"voice": "string", ' \
                 '"tense": "string", ' \
-                '"modal": {"text": "string", "negated": "boolean"}, ' \
-                '"errors": "boolean", ' \
+                '"modal_text": "string", ' \
                 '"grade_level": "int", ' \
                 '"summary": "string"}'
 
 sent_format2 = '{"rhetorical_devices": [{"device_number": "int", "evidence": "string"}]}'
 
 quote_format3 = '{"semantics": [{' \
-                  '"trigger_text": "string", ' \
-                  '"category_number": "int", ' \
-                  '"negated": "boolean"}'
+                 '"trigger_text": "string", ' \
+                 '"justification": "string", ' \
+                 '"category_number": "int", ' \
+                 '"same_or_opposite": "string"}'
 
 sent_format3 = '{"semantics": [{' \
                 '"trigger_text": "string", ' \
+                '"justification": "string", ' \
                 '"category_number": "int", ' \
-                '"negated": "boolean", ' \
-                '"nouns": [{"text": "string", "singular": "boolean", "semantic_role": "string", ' \
-                '"noun_type": "int", "semantic_category": "int"}] }]}'
+                '"same_or_opposite": "string", ' \
+                '"nouns": [{"semantic_role": "string", "text": "string", "singular": "boolean", ' \
+                '"noun_type": "int", "semantic_category": "int"}]}]}'
 
 speaker_format = '{"speaker": "string"}'
 
 # Ontology details
-categories = [':Acquisition', ':AggressiveCriminalOrHostileAct', ':CaptureAndSeizure', ':Agreement',
-              ':DisagreementAndDispute', ':ViolationOfAgreement', ':AgricultureApicultureAndAquacultureEvent',
-              ':ArtAndEntertainmentEvent', ':Attempt', ':Avoidance', ':BodilyAct', ':Change', ':Cognition',
-              ':EmotionalResponse', ':SensoryPerception', ':CommunicationAndSpeechAct', ':EnvironmentAndCondition',
-              ':Continuation', ':DelayAndWait', ':DistributionAndSupply', ':StartAndBeginning', ':End',
-              ':WinAndLoss', ':EnvironmentalOrEcologicalEvent', ':EconomicEnvironment', ':FinancialEvent',
-              ':HealthAndDiseaseRelated', ':ImpactAndContact', ':InclusionAttachmentAndUnification',
-              ':Separation', ':InformationHandling', ':IssuingAndPublishing', ':LegalEvent', ':LifeEvent',
-              ':Measurement', ':MeetingAndEncounter', ':MovementTravelAndTransportation', ':PoliticalEvent',
-              ':ProductionManufactureAndCreation', ':Punishment', ':RewardAndCompensation',
-              ':RemovalAndRestriction', ':ReturnRecoveryAndRelease', ':RiskTaking', ':Searching', ':SpaceEvent',
-              ':Storage', ':Substitution', ':UtilizationAndConsumption', ':Possession', ':Process', ':Affiliation',
-              ':EventAndState']
+categories = [':AchievementAndAccomplishment', ':AcquisitionPossessionAndTransfer', ':Affiliation',
+              ':AggressiveCriminalOrHostileAct', ':Agreement', ':AgricultureApicultureAndAquacultureEvent',
+              ':ArrestAndImprisonment', ':ArtAndEntertainmentEvent', ':Attempt', ':Attendance', ':Avoidance',
+              ':Birth', ':BodilyAct', ':Change', ':Cognition', ':Commemoration', ':CommunicationAndSpeechAct',
+              ':Continuation', ':Death', ':DeceptionAndDishonesty', ':DelayAndWait', ':DemonstrationStrikeAndRally',
+              ':DisagreementAndDispute', ':DiscriminationAndPrejudice', ':DistributionAndSupply',
+              ':DivorceAndSeparation', ':EconomyAndFinanceRelated', ':EducationRelated', ':EmotionalResponse',
+              ':End', ':EnvironmentAndCondition', ':EnvironmentalOrEcologicalEvent', ':HealthAndDiseaseRelated',
+              ':ImpactAndContact', ':InclusionAttachmentAndUnification', ':IssuingAndPublishing',
+              ':KnowledgeAndSkill', ':LegalEvent', ':Marriage', ':Measurement', ':MeetingAndEncounter', ':Mistake',
+              ':MovementTravelAndTransportation', ':PoliticalEvent', ':Process',
+              ':ProductionManufactureAndCreation', ':Punishment', ':ReadinessAndAbility', ':ReligionRelated',
+              ':RemovalAndRestriction', ':ReturnRecoveryAndRelease', ':RewardAndCompensation', ':RiskTaking',
+              ':Searching', ':SensoryPerception', ':Separation', ':SpaceEvent', ':StartAndBeginning', ':Storage',
+              ':Substitution', ':TechnologyRelated', ':UtilizationAndConsumption', ':War', ':WinAndLoss',
+              ':Causation', ':EventAndState']
 
-categories_text = 'The semantic categories are: ' \
-    '1. acquisition such as by purchase or sale, gifting, donation, finding something, seizure and theft ' \
-    '2. aggressive, hostile or criminal act such as attack, assault, coercion, intimidation, bribery, threatening, ' \
-    'dishonesty, betrayal, resistance, homicide and invasion' \
-    '3. taking captive or capturing a person or animal ' \
-    '4. agreement such as consensus and signing a contract ' \
-    '5. disagreement or dispute ' \
-    '6. violation of agreement ' \
-    '7. any type of agricultural, apiculture, viniculture and aquacultural act or event (do NOT use for agribusiness ' \
-    'occupations)' \
-    '8. any type of art and entertainment act or event including attending a movie or sporting event, ' \
-    'visiting a museum and playing a game (do NOT use for art, entertainment, sporting occupations)' \
-    '9. any attempt to do or achieve something ' \
-    '10. avoidance such as bans, boycotts, escape, evasion, ignoring, overlooking, prevention and concealment ' \
-    '11. bodily act such as movement, eating, drinking, grooming and sleeping ' \
-    '12. change such as increase, decrease or physical change such as melting, bending and vaporization ' \
-    '13. any type of cognition such as thinking, focusing, reading, assessing, characterizing, comparing, ' \
-    'making a decision, remembering, forgetting, learning and having knowledge or skills, with the exception of ' \
-    'emotions, feelings and sensory perception ' \
-    '14. any type of emotion or feeling ' \
-    '15. any type of sensory perception including pain, hunger and exhaustion ' \
-    '16. any type of communication and speech act such as recommending, acknowledging, denying, ' \
-    'promising, requesting, boasting, asking a question, granting permission, refusing, deriding and surrendering ' \
-    '17. description of a characteristic or an attribute of a person, place, event, or thing such as its physical ' \
-    'appearance, weight, population, job, etc. ' \
+categories_text = 'The semantic topic categories are: ' \
+    '1. achieving or accomplishing something' \
+    '2. acquisition such as by purchase or sale, finding or stealing something, seizure or transfer of possession ' \
+    '3. affiliation or close association of a person or thing with another entity, or membership of a ' \
+    'person in a group ' \
+    '4. aggressive, hostile or criminal act such as an attack, purposeful destruction such as looting, ' \
+    'intimidation, betrayal, murder, abduction, etc. ' \
+    '5. agreement such as consensus and signing a contract, approval of a course of action, or compliance/accordance ' \
+    '6. an agricultural, apiculture, viniculture and aquacultural act such as planting seeds, bottling wine, or' \
+    'harvesting honey ' \
+    '7. arrest, incarceration, capture, detention, imprisonment or police/law enforcement activity ' \
+    '8. performing or playing in an art, entertainment or sporting event such as a playing in a football game, ' \
+    'singing in a musical performance, acting in a movie, etc. ' \
+    '9. attempt ' \
+    '10. attendance at an event AND the semantic category of the event should also be specified ' \
+    '11. avoidance such as bans, boycotts, escape, ignoring something, prevention and concealment ' \
+    '12. birth of a living being ' \
+    '13. bodily act such as movement, eating, drinking, grooming and sleeping ' \
+    '14. change such as increase, decrease or physical change such as melting, bending and vaporization ' \
+    '15. any type of thinking, focusing, reading, assessing, characterizing, comparing, making a decision, ' \
+    'planning, and remembering ' \
+    '16. commemorative event such as celebrating "Independence Day" or "Juneteenth", or celebrating a birthday ' \
+    '17. any type of communication and speech act such as asking or responding to a question, making a ' \
+    'recommendation, denying something, granting or refusing permission, etc. ' \
     '18. continuation ' \
-    '19. delay or wait' \
-    '20. distribution or supply of something ' \
-    '21. start of something ' \
-    '22. end of something ' \
-    '23. win or loss (when doing further analysis, use the perspective of the winner) ' \
-    '24. any type of environmental or ecological event such as a disaster, weather event, or natural phenomenon ' \
-    '25. any type of economic condition such as a recession, inflation, and increased/decreased taxes, income or ' \
-    'debt ' \
-    '26. any type of financial event such as depositing or withdrawing money, releasing an annual report or ' \
-    'paying taxes (do NOT use for finance-related occupations)' \
-    '27. health-related event or act such as contracting a disease, addiction, a physical injury, frailty, ' \
-    'having an allergic reaction, getting a vaccine, malnutrition, pandemic and sterility (do NOT use for health-' \
-    'related occupations)' \
-    '28. impact and collision ' \
-    '29. inclusion, unification and attachment such as adding to a list and assembling something ' \
-    '30. separation ' \
-    '31. information and data handling including IT operations (do NOT use for IT-related occupations) ' \
-    '32. issuing and publishing such as a newspaper, magazine or press release ' \
-    '33. any legal or judicial event such as a trial, verdict, jury selection and judicial ruling (do NOT use for ' \
-    'legal or judicial occupations)' \
-    '34. life event such as birth, death, marriage and divorce ' \
-    '35. measurement, measuring and reported assessment, count, percentages, etc. ' \
-    '36. meeting and encounter such as party, chance encounter or ceremony ' \
-    '37. any type of movement, travel or transportation such as entering/leaving a port or train station, ' \
-    'loading a truck or rail car, or making incremental changes such as pouring liquid into a container (do NOT ' \
-    'use for transportation-related occupations)' \
-    '38. any political occurrence such as an election, coup or transfer of power, and political campaign (do NOT ' \
-    'use for political occupations)' \
-    '39. any type of production, manufacture and creation event such as designing, building or producing ' \
-    'products in a factory ' \
-    '40. punishment ' \
-    '41. reward and compensation ' \
-    '42. removal or restriction of something, including blockage of movement, access, flow or freedom ' \
-    '43. return, recovery and release ' \
-    '44. risk taking including gambling ' \
-    '45. search ' \
-    '46. any type of space event such as a meteor shower, sun spots, eclipse, or rocket or satellite launch (do NOT ' \
-    'use for space-related occupations)' \
-    '47. any type of storage event such as moving cargo into or from storage, stockpiling or hoarding ' \
-    '48. substitution or imitation of something or someone ' \
-    '49. utilization and consumption ' \
-    '50. possession ' \
-    '51. natural or goal-directed process which is a set of interrelated/interdependent events or conditions ' \
+    '19. death of a living being (if murder or homicide, ALSO report semantic category 4) ' \
+    '20. an act of deceiving, of concealing or misrepresenting the truth, or of being fraudulent or dishonest ' \
+    '21. delay, postponement or need to wait for something or someone' \
+    '22. a protest, demonstration, rally or strike ' \
+    '23. disagreement, disapproval, dispute, controversy or violation of agreement ' \
+    '24. discriminative or prejudicial act, or any act that is intolerant, unjust, unfair or inappropriate, ' \
+    'especially when biased by ethnicity, age, sexual orientation, disability, etc. ' \
+    '25. distribution or supply of something ' \
+    '26. divorce or separation of a couple in a relationship ' \
+    '27. related to economic or financial matters and conditions such as being in recession, going bankrupt, etc. ' \
+    '28. related to educational events such as attending school, graduating, practicing or drilling, etc. ' \
+    '29. any type of emotion or emotional response ' \
+    '30. end of something ' \
+    '31. description of a characteristic or an attribute of a person, place, event, or thing such as its physical ' \
+    'appearance, weight, population, role or occupation, etc. ' \
+    '32. any type of environmental or ecological event such as a natural disaster, weather event, or other natural ' \
+    'phenomenon or emergency ' \
+    '33. related to health and disease such as contracting a disease, addiction, physical injury, frailty, ' \
+    'allergic reactions, vaccinations and sterility ' \
+    '34. impact, contact and collision ' \
+    '35. inclusion, unification, alignment and attachment such as adding to a list and assembling something ' \
+    '36. issuing and publishing information such as a publishing a newspaper, or releasing a document such as a ' \
+    'press briefing ' \
+    '37. having or using knowledge or skills which may be conveyed via a job, hobby, schooling or practice ' \
+    '38. any legal or judicial event such as testifying or arguing at a trial, reaching a verdict, selecting a ' \
+    'jury, or handing down or appealing a judicial ruling ' \
+    '39. marriage ' \
+    '40. measurement, measuring and reported assessment, count, percentages, etc. ' \
+    '41. meeting and encounter such as a seminar or conference, spending time with or visiting someone ' \
+    '42. accident, error or mistake ' \
+    '43. any type of movement, travel or transportation such as entering/leaving a port, loading a truck, and ' \
+    'making incremental changes such as pouring liquid into a container ' \
+    '44. any political event or occurrence such as an election, referendum, coup, transfer of power, and ' \
+    'political campaign ' \
+    '45. a natural or goal-directed process (including plans and strategies) which is a set of ' \
+    'interrelated/interdependent events and conditions, ' \
     'that progress along a timeline such as a plan, script, the aging process or climate change' \
-    '52. affiliation of a person to another person, group, location, etc. or membership of a person in a group ' \
-    'or organization ' \
-    '53. other'
+    '46. any type of production, manufacture and creation event such as designing, building or producing ' \
+    'a product or creative work ' \
+    '47. punishment ' \
+    '48. readiness, preparation and ability ' \
+    '49. related to religion and religious events and activities such as church services, observance of Ramadan ' \
+    'or Lent, daily prayers or meditation, etc. ' \
+    '50. removal or restriction of something, including blockage of movement, access, flow or personal activities ' \
+    '51. an act of restoring or releasing something or someone to their original owner/location/condition, or ' \
+    'granting freedom or parole to someone or something ' \
+    '52. reward, compensation, award and prize ' \
+    '53. risk taking including gambling ' \
+    '54. search, research and investigation ' \
+    '55. any type of sensory perception such as pain, hunger, exhaustion and other sensations ' \
+    '56. separation (but NOT divorce) ' \
+    '57. any type of space event such as a meteor shower, sun spots, eclipse, or rocket or satellite launch ' \
+    '58. start or beginning of something ' \
+    '59. any type of storage event such as stockpiling, hoarding or refrigerating something ' \
+    '60. substitution, imitation or counterfeiting of something or someone ' \
+    '61. related to science and technology, and activities involving computers and scientific devices/instruments ' \
+    '62. utilization and consumption ' \
+    '63. war or sustained armed conflict between two or more entities ' \
+    '64. win or loss ' \
+    '65. causation, cause and effect ' \
+    '66. other'
 
 narrative_goals = ['advocate', 'analyze', 'describe-set', 'describe-current', 'entertain',
                    'establish-authority', 'inspire', 'life-story']
@@ -170,44 +188,57 @@ narrative_goals_text = 'The narrative goal categories are: ' \
     '7. Inspire and motivate through uplifting stories, news, etc. ' \
     '8. Relate a personal narrative or life story ' \
 
-noun_categories = [':Person', ':Person, :Collection', ':GovernmentalEntity', ':OrganizationalEntity', ':EthnicGroup',
-                   ':PoliticalGroup', ':ReligiousGroup', ':Animal', ':Plant', ':Location', ':LineOfBusiness',
-                   ':EventAndState', ':SubstanceAndRawMaterial', ':EnvironmentAndCondition', ':LawAndPolicy',
-                   ':MusicalInstrument', ':PharmaceuticalAndMedicinal', ':HealthAndDiseaseRelated',
-                   ':ElectricityAndPower', ':MachineAndTool', ':WeaponAndAmmunition', ':WasteAndResidue',
-                   ':Measurement', 'owl:Thing']
+noun_categories = [':Animal', ':War', ':Ceremony', ':ComponentPart', ':ComponentPart',
+                   ':Culture', ':ElectricityAndPower', ':EthnicGroup', ':FreedomAndSupportForHumanRights',
+                   ':GovernmentalEntity', ':HealthAndDiseaseRelated', ':InformationSource', ':LaborRelated',
+                   ':LawAndPolicy', ':LineOfBusiness', ':Location', ':MachineAndTool', ':Measurement',
+                   ':MusicalInstrument', ':OrganizationalEntity', ':Person', ':Person, :Collection',
+                   ':PharmaceuticalAndMedicinal', ':Plant', ':PoliticalGroup', ':Product',
+                   ':ReligiousGroup', ':ScienceAndTechnology', ':SubstanceAndRawMaterial', ':WeaponAndAmmunition',
+                   ':WasteAndResidue', 'owl:Thing']
 
 noun_categories_text = 'The noun types are: ' \
-    '1. Person ' \
-    '2. Group of people such as a family or ' \
-    'people at a party (NOT governmental, business or organizational entities)  ' \
-    '3. Government or government-funded entity ' \
-    '4. Organization, sub-organization, club or society ' \
-    '5. Ethnic group ' \
-    '6. Political group ' \
-    '7. Religious group ' \
-    '8. Animal ' \
-    '9. Plant ' \
-    '10. Place or location ' \
-    '11. Occupation ' \
-    '12. Event that can be further classified using the semantic categories defined for the sentence ' \
-    '13. Chemical substance or raw material ' \
-    '14. Environmental, economic or ecological condition ' \
-    '15. Law, policy or legal decision ' \
-    '16. Musical instrument ' \
-    '17. Pharmaceutical or medicinal entity ' \
-    '18. Disease, illness or symptom ' \
-    '19. Electricity and power-related ' \
-    '20. Machine or tool ' \
-    '21. Weapon or ammunition ' \
-    '22. Waste or residue ' \
-    '23. Quantity or measurement ' \
-    '24. Other'
+    '1. animal ' \
+    '2. armed conflict, war, insurgency or armed clash ' \
+    '3. ceremony ' \
+    '4. part of a living thing such as a the leg of a person or animal or leaf of a plant ' \
+    '5. part of a non-living thing such as a wheel on a car or valve in an engine ' \
+    '6. related to the customs, practices, traditions and behaviors of a particular society ' \
+    '7. electricity and power-related ' \
+    '8. related to ethnicity and ethnic groups ' \
+    '9. fundamental rights such as life, liberty, freedom of speech, etc. ' \
+    '10. government or government-funded entity ' \
+    '11. disease, illness and their symptoms ' \
+    '12. any entity that holds text, data/numbers, video, visual or audible content, etc. including documents, ' \
+    'books, news articles, databases, spreadsheets, computer files or web pages ' \
+    '13. related to labor such as employment/unemployment, the labor market, labor relations, retirement and unions ' \
+    '(if a union, also report noun type 20)' \
+    '14. a specific law, policy, legislation and legal decision (NOT including any legal occupations) ' \
+    '15. occupation or business ' \
+    '16. place or location including buildings, roads, bodies of water, etc. ' \
+    '17. machine, tool or instrument ' \
+    '18. quantity, assessment or measurement including demographics ' \
+    '19. musical instrument ' \
+    '20. organization, sub-organization, club, social group, etc. ' \
+    '21. person ' \
+    '22. group of people such as a family or people at a party or in the park that are NOT named governmental, ' \
+    'business, social or organizational entities ' \
+    '23. pharmaceutical or medicinal entity ' \
+    '24. plant ' \
+    '25. political group ' \
+    '26. product or service which is bought, sold or traded ' \
+    '27. related to religion, religious groups or religious practices ' \
+    '28. any of the sciences such as biomedical science, computer science, mathematics, natural science, ' \
+    'social science, standards, engineering, etc. ' \
+    '29. any chemical substance, raw material or natural material ' \
+    '30. weapon or ammunition ' \
+    '31. waste or residue ' \
+    '32. other'
 
 rhetorical_devices = ['ad hominem', 'allusion', 'antanagoge', 'aphorism', 'ethos', 'expletive',
                       'hyperbole', 'imagery', 'invective', 'irony', 'kairos', 'litote', 'logos',
                       'metaphor', 'nostalgia', 'pathos', 'pleonasm', 'repetition', 'loaded language',
-                      'repeated statements', 'rhetorical question', 'juxtaposition']
+                      'rhetorical question', 'juxtaposition']
 
 rhetorical_devices_text = 'The rhetorical device categories are: ' \
     '1. Use of wording that verbally demeans or attacks a person (ad hominem) ' \
@@ -236,24 +267,23 @@ rhetorical_devices_text = 'The rhetorical device categories are: ' \
 
 # Additional rhetorical devices for narratives
 additional_devices_text = \
-    '20. Repeating statements such that they are remembered ' \
-    '21. Asking rhetorical questions ' \
-    '22. Placing contrasting ideas or situations side by side (juxtaposition)'
+    '20. Asking rhetorical questions ' \
+    '21. Placing contrasting ideas or situations side by side (juxtaposition)'
 
 # Co-reference related prompting - Future
-coref_prompt = 'You are a linguist and NLP expert, analyzing text. Here are a series of sentences (ending with the ' \
-    'string "**" which should be ignored): {sentences} ** Resolve co-references in the following sentences, ' \
-    'updating the co-references with their more specific details. Return the sentences using the JSON format, ' + \
-    f'{coref_format}. If there were no references to resolve, indicate this using the "references_resolved" boolean ' \
-    f'- setting it to false. In this case, the "updated_text" element would be set to the original inputted text.'
+coref_prompt = 'You are a linguist and NLP expert, analyzing text. Here are a series of zero to three preceding ' \
+    'sentences (ending with the string "**" which should be ignored): {sentences} ** Here is the next sentence ' \
+    '(also ending with the string "**" which is ignored): {sent_text} ** ' \
+    'Resolve ALL pronomial anaphora that are references to personal pronouns found in the "next sentence". ' \
+    'Update each of the personal pronouns with their more specific details. Return the updated ' + \
+    f'sentence using the JSON format, {coref_format}.'
 
 # Validation prompting
-name_check_prompt = 'You are a student researching whether two individuals could be the same, given only their ' \
-    'names. The name that you are researching is {noun_text}. You think that the person with this name might be ' \
-    'the same as someone who has the following names and nicknames: {labels}. Evaluate if the two people could ' \
-    'be the same. If they are not, evaluate if the name can be simplified by removing adjectives, formal ' \
-    'titles, etc. When simplifying, do not add or change the remaining text. Return the response as a JSON ' + \
-    f'object with keys and values as defined by {name_check_format}.'
+name_check_prompt = 'You are a student researching whether two individuals described in text could be the same ' \
+    'entities. The two texts that you are asked about are: 1. {noun1_text} and 2. {noun2_text}. Estimate the ' \
+    'probability (an integer from 0-100) that the entities could be the same by removing honorifics from the first ' \
+    'name, and checking plurality of the names. Return the response as a JSON object with keys and values ' + \
+    f'as defined by {name_check_probability}. '
 
 # Narrative-level prompting
 narr_prompt = f'You are a political observer analyzing news articles. ' \
@@ -269,35 +299,24 @@ narr_prompt = f'You are a political observer analyzing news articles. ' \
     f'defined by {narr_format}.'
 
 # Sentence-level prompting
-nothing_else = 'Do NOT return any free-form string text in the response.'
-
 quote_prompt1 = \
     'You are a linguist and NLP expert, analyzing quotations from news articles. ' \
     'Here is the text of a quotation from an article (ending with the string "**" which should be ignored): ' \
     '{quote_text} ** ' + \
     f'For the text, indicate its sentiment ({sentiment}) and create a summary in 8 words or less. ' \
     f'Indicate the grade level that is expected of a reader to understand its semantics. ' + \
-    f'Return the response as a JSON object with keys and values as defined by {quote_format1}. {nothing_else}'
+    f'Return the response as a JSON object with keys and values as defined by {quote_format1}.'
 
 sent_prompt1 = \
     'You are a linguist and NLP expert, analyzing the text from narratives and news articles. ' \
     'Here is the text of a sentence from an article that should be analyzed. The text ends with the string ' \
     '"**" which should be ignored. {sent_text} ** ' + \
     f'For the sentence, indicate if it is in the first, second or third person ({person}), its sentiment ' \
-    f'({sentiment}), whether it is in the {voice} voice, and its tense ({tense}). Create a summary of the ' \
-    f'sentence in 8 words or less. Indicate the grade level that is expected of a reader to understand the ' \
-    f'semantics of the sentence, and whether any grammatical or spelling errors are present ({any_boolean}. ' \
-    f'Lastly, ONLY if there is a "modal" auxiliary verb in the sentence that is one of: {modal_text}, return its ' \
-    f'text and indicate whether it is negated ({any_boolean}). If one of the listed modal auxiliary verbs is ' \
-    f'not found, indicate the modal text as "none" and its negation flag as false. Return the response as a JSON ' \
-    f'object with keys and values as defined by {sent_format1}. {nothing_else}'
-
-common_prompt2_text = \
-    f'ONLY return a rhetorical device result if a justification/evidence can be provided for it. Explain the ' \
-    f'evidence in the results. Note that there may be no devices used in the text. If so, do NOT report this in ' \
-    f'the results. Return the results ONLY as a JSON object with keys and values defined by ' \
-    f'{sent_format2} {nothing_else} IF there are no rhetorical devices used in the text, return an empty ' \
-    f'array for the value of the "rhetorical_devices" JSON key.'
+    f'({sentiment}), and its tense ({tense}). Create a summary of the sentence in 8 words or less. Indicate' \
+    f'the grade level that is expected of a reader to understand the sentence semantics. Lastly, consider ' \
+    f'the modal auxiliary verbs: {modal_text}. If one of these modal verbs is used in the sentence, return its ' \
+    f'text. If one of the listed modal verbs is not found, return the string, "none". ' \
+    f'Return the response as a JSON object with keys and values as defined by {sent_format1}.'
 
 quote_prompt2 = \
     'You are a linguist and NLP expert, analyzing quotations from news articles. ' \
@@ -305,55 +324,55 @@ quote_prompt2 = \
     f'{rhetorical_devices_text} ' + \
     'Here is the text of a quotation from an article (ending with the string "**" which should be ignored): ' \
     '{sent_text} ** ' + \
-    f'Provide the numbers associated with any rhetorical devices found in the quotation. ' \
-    f'{common_prompt2_text} {nothing_else}'
+    f'Provide the numbers associated with any rhetorical devices found in the quotation and explain why they are' \
+    f'identified. Return the results as a JSON object with keys and values defined by {sent_format2} IF there are ' \
+    f'no rhetorical devices used in the text, return an empty array for the "rhetorical_devices" JSON key.'
 
 sent_prompt2 = 'You are a linguist and NLP expert, analyzing the text from narratives and news articles. ' \
     'Here is a numbered list of the possible types of rhetorical devices that may be used in the text of ' + \
     f'a sentence from the narrative or article. {rhetorical_devices_text} ' + \
     'Here is the text of a specific sentence to be analyzed. The text ends with the string "**" which should be ' \
     'ignored. {sent_text} ** ' + \
-    f'Provide the numbers associated with any rhetorical devices found in the sentence. ' \
-    f'{common_prompt2_text} {nothing_else}'
+    f'Provide the numbers associated with any rhetorical devices found in the sentence and explain why they are ' \
+    f'identified. Return the results as a JSON object with keys and values defined by {sent_format2} IF there are ' \
+    f'no rhetorical devices used in the text, return an empty array for the "rhetorical_devices" JSON key.'
 
-short_or_vague = 'For very short or vague texts (perhaps with a single noun/verb), infer the semantics, ' \
-                 'and do NOT mention vagueness or inference in the response.'
+statement_of_the_form = 'If the analyzed text is a statement of the form, "<noun> was/is/will be <something>", then ' \
+    'the verb should be reported using the category number 31 (a description).'
 
-statement_of_the_form = 'If the analyzed text is a statement of the form, "x was/is/will be y", then the ' \
-    'verb should be reported using the category number 17 (a description). The text should be processed assuming ' \
-    'that "is"/"was"/"will be" is the verb and nothing should be mentioned in the response.'
-
-# TODO: Are 3 categories the correct #, or more? (Also applies to sent_prompt3)
-quote_prompt3 = 'You are a linguist and NLP expert, analyzing quotations from news articles. ' \
-    'Here is a numbered list of categories of the possible semantics that may be discussed in a quotation. ' + \
+# TODO: Should more categories be reported? 2 are reported now (Also applies to sent_prompt3)
+quote_prompt3 = 'You are a linguist and NLP expert, analyzing quotations from news articles. Here ' \
+    'is a numbered list of categories of the possible semantic topics that may be discussed in a quotation. ' + \
     f'{categories_text} Here is the text of a specific quotation from an article (ending with the string "**" ' + \
-    'which should be ignored): {sent_text} ** For the quotation, indicate the numbers of the 1-3 most appropriate ' + \
-    f'semantic categories. {statement_of_the_form} ONLY return the maximum of 3 semantics IF there is ' + \
-    'justification/evidence for each one. If there is insufficient evidence to justify assigning any semantic ' \
-    'category, return the number 53 ("other"). In the response, provide the text that triggered the semantic ' + \
-    f'categorization. {short_or_vague} Also indicate whether each (discovered or inferred) semantic is ' \
-    f'negated ({any_boolean}). Return the response as a JSON object with keys and values as defined ' \
-    f'by {quote_format3}. {nothing_else}'
+    'which should be ignored): {sent_text} ** For the quotation, indicate the numbers of at most ' + \
+    f'three semantic topics found in the quotation, the specific words that triggered the categorization, and the ' \
+    f'justification for the selection. {statement_of_the_form} Only return three topics if they are significant to ' \
+    f'the semantics of the quote. If none of the semantic categories apply, return the number 66 ("other"). ' \
+    f'If the quotation includes a negation, compare the trigger words to the semantic topic and indicate ' \
+    f'if their meanings are the same or opposite ({same_opposite}). Return the response as a JSON object with ' \
+    f'keys and values as defined by {quote_format3}.'
 
 sent_prompt3 = 'You are a linguist and NLP expert, analyzing the text of narratives and news articles. ' \
-    'Here is a numbered list of categories of the possible semantics that may be discussed in the text. ' + \
-    f'{categories_text} ' + \
-    'Here is the text of a sentence from a narrative or article to be analyzed. The text ends with ' \
-    'the string "**" which should be ignored. {sent_text} ** For the sentence, indicate the numbers of the' \
-    '2 most appropriate semantic categories. Provide the text that triggered the semantic categorization. ' + \
-    f'{short_or_vague} For each categorization, indicate if it is negated ({any_boolean}), and determine the ' \
-    f'nouns that are associated with it via one of these semantic role labels: {semantic_labels}. For an associated ' \
+    'Here is a numbered list of categories of the possible semantic topics that may be discussed in the text. ' + \
+    f'{categories_text} Here is the text of a sentence from a narrative or article to be analyzed. The text ends ' + \
+    'with the string "**" which should be ignored. {sent_text} ** For the sentence, indicate the numbers of at ' + \
+    f'most three semantic topics found in the text, the specific words that triggered the categorization, and the ' \
+    f'justification for the selection. {statement_of_the_form} Only return three topics if they are significant to ' \
+    f'the semantics of the sentence. If none of the semantic categories apply, return the number 66 ("other"). ' \
+    f'If the sentence includes a negation, compare the trigger words to the semantic topic and indicate if ' \
+    f'their meanings are the same or opposite ({same_opposite}). For each topic, determine the nouns that ' \
+    f'are associated with it via one of these semantic role labels: {semantic_labels}. For an associated ' \
     f'noun, return its role label and text string, whether it is singular ({any_boolean}), and its noun type. ' \
-    f'{noun_categories_text} Return the number of the noun type. If the type is either number 12 or 24, also ' \
-    f'assign a semantic category to it. If the number is not 12 or 24, return 0 for the semantic category. ' \
-    f'Return the response as a JSON object with keys and values as defined by {sent_format3}. {nothing_else}'
+    f'{noun_categories_text} Return the number of the noun type that best corresponds to the meaning of ' \
+    f'the noun. If the type is number 32 ("other"), attempt to match the meaning to a semantic category. If the ' \
+    f'noun type number is not 32, return 0 for the semantic category. Return the response as a JSON object with ' \
+    f'keys and values as defined by {sent_format3}.'
 
 speaker_prompt = 'You are a linguist and NLP expert, analyzing quotations from news articles. ' \
     'Here is the text of a news article (ending with the string "**" which should be ignored): {narr_text} ** ' \
     'Here is a quotation contained in the article (ending with the string "**" which should be ignored): ' \
-    '{quote_text} ** ' \
-    'For the quotation, find it in the news article, and indicate the name of the person who spoke/' \
-    'communicated it. If the speaker is identified using a pronoun, analyze the text to dereference it. ' + \
+    '{quote_text} ** For the quotation, find it in the news article, and indicate the name of the person who ' \
+    'spoke/communicated it. If the speaker is identified using a pronoun, analyze the text to dereference it. ' + \
     f'Return the response as a JSON object with keys and values as defined by {speaker_format}.'
 
 wikipedia_prompt = 'You are a student researching a proper noun and are given its text and information ' \
@@ -364,45 +383,33 @@ wikipedia_prompt = 'You are a student researching a proper noun and are given it
     f'values as defined by {consistency_format}.'
 
 
-# @retry(stop=stop_after_attempt(5), wait=(wait_fixed(3) + wait_random(0, 2)))
+# @retry(stop=stop_after_delay(20) | stop_after_attempt(2), wait=(wait_fixed(3) + wait_random(0, 2)))
 def access_api(content: str) -> dict:
     """
     Surrounding the calls to the OpenAI API with retry logic.
 
     :param content: String holding the content of the completion request
-    :param attempts: Number of current retry attempt
     :return: The 'content' response from the API as a Python dictionary
     """
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model=model_engine,
             messages=[
                 {"role": "user", "content": content}
             ],
-            temperature=0
+            response_format={"type": "json_object"},
+            temperature=0.2,
+            top_p=0.15
         )
-        if '"finish_reason": "stop"' not in str(response):
-            logging.error(f'Non-stop finish reason for content, {content}')
+        if "finish_reason='stop'" not in str(response):
+            logging.error(f'Non-stop finish response, {str(response)}, for content, {content}')
             return dict()
     except Exception:
         logging.error(f'OpenAI exception for content, {content}: {str(e)}')
         return dict()
     try:
-        resp_dict = json.loads(response['choices'][0]['message']['content'].replace('\n', ' '))
+        resp_dict = json.loads(response.choices[0].message.content.replace('\n', ' '))
     except Exception:
-        revised_content = ''
-        if possible_content1 in response['choices'][0]['message']['content']:
-            revised_content = ' { ' + response['choices'][0]['message']['content'].split(possible_content1)[1]
-        elif possible_content2 in response['choices'][0]['message']['content']:
-            revised_content = ' { ' + response['choices'][0]['message']['content'].split(possible_content2)[1]
-            revised_content = revised_content.split('```')[0]
-        if revised_content:
-            try:
-                resp_dict = json.loads(revised_content.replace('\n', ' '))
-            except:
-                logging.error(f'Tried revised JSON content: {revised_content}')
-                return dict()
-        else:
-            logging.error(f'Response is not JSON formatted: {str(response)}')
-            return dict()
+        logging.error(f'Invalid JSON content: {response.choices[0].message.content}')
+        return dict()
     return resp_dict

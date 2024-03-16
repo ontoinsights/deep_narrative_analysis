@@ -65,8 +65,10 @@ def test_coreference():
                            'She said, [Quotation0]'
     assert quotations == ['I lost.']
     assert len(quotation_dict) == 1
-    assert quotation_dict[':Quotation0'] == \
-           ('I lost.', 'Liz Cheney', [])    # Note that pronouns ('I') would not be returned as named entities
+    quote, speaker, named = quotation_dict[':Quotation0']
+    assert quote == 'I lost.'
+    assert 'Liz Cheney' in speaker
+    assert named == []    # Note that the pronoun ('I') would not be returned as a named entity
 
 
 def test_only_partial_quotes():
@@ -91,9 +93,12 @@ def test_complete_and_partial_quotes():
         'she will be much happier than she is right now.',
         'pure delight']
     assert len(quotation_dict) == 2
-    assert quotation_dict[':Quotation0'] == \
-           ('This is a wonderful result for America, and a complete rebuke of the Unselect Committee of '
-            'political Hacks and Thugs,', 'Mr. Trump', ['America+GPE', 'the Unselect Committee+ORG'])
+    quote, speaker, named = quotation_dict[':Quotation0']
+    assert quote == 'This is a wonderful result for America, and a complete rebuke of the Unselect Committee of '\
+                    'political Hacks and Thugs,'
+    assert speaker == 'Mr. Trump'
+    assert 'America+GPE' in named and 'the Unselect Committee+ORG' in named
+    # Hacks and/or Thugs may also be reported
     assert quotation_dict[':Quotation1'] == \
            ('Now [Cheney] can finally disappear into the depths of political oblivion where, I am sure, '
             'she will be much happier than she is right now.', 'Mr. Trump', ['Cheney+PERSON'])

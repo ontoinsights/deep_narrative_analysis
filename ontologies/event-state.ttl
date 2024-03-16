@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: March 1 2024
+# Last modified: March 11 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,7 +21,7 @@
 # 
 # Changes:
 #  Reset change history and simplified
-#  Added AchievementAndAccomplishment
+#  Added AchievementAndAccomplishment and has_source
 ########################################################################
 
 
@@ -149,6 +149,11 @@
   rdfs:domain :EventAndState ;
   rdfs:range :Agent ;
   rdfs:comment "References the Actor that receives goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
+
+:has_source a owl:ObjectProperty ;
+  rdfs:label "has source"@en ;
+  rdfs:domain :EventAndState ;
+  rdfs:comment "References an entity in the semantic role of 'source'. That is the original location of something, the entity from which a sensation (such as smell) originates, or the owner of something when involved in a transfer."@en .
 
 :has_topic a owl:ObjectProperty ;
   rdfs:label "has topic"@en ;

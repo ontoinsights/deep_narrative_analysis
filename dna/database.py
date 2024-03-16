@@ -136,7 +136,7 @@ def construct_graph(construct: str, repo: str) -> (bool, list):
 def create_delete_database(op_type: str, database: str) -> str:
     """
     Create or delete a database. In order to use Stardog Cloud's Free tier, all
-    repositories/databases are collapsed to 1. TODO: Allow for separate repositories.
+    repositories/databases are collapsed to 1.    Future: Allow for separate repositories.
 
     :param op_type: A string = 'create' or 'delete'
     :param database: The database name

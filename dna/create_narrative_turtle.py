@@ -14,7 +14,7 @@ import uuid
 from dna.process_entities import get_name_permutations
 from dna.process_sentences import get_sentence_details
 from dna.query_openai import access_api, coref_prompt
-from dna.utilities_and_language_specific import empty_string, space, ttl_prefixes, underscore
+from dna.utilities_and_language_specific import empty_string, personal_pronouns, space, ttl_prefixes, underscore
 
 
 def create_graph(quote_dict: dict, sentence_dicts: list) -> (bool, list):
@@ -48,24 +48,46 @@ def create_graph(quote_dict: dict, sentence_dicts: list) -> (bool, list):
         named_entities = []
         if 'entities' in sentence_dicts[index]:
             named_entities = sentence_dicts[index]['entities']
+        # Get a version of the sentence with co-references resolved, if needed
+        need_coref = False
+        for pers_pronoun in personal_pronouns:
+            if f'{pers_pronoun} ' in sentence_text.lower() or f'{pers_pronoun}.' in sentence_text:
+                need_coref = True
+                break
+        if need_coref:
+            # TODO: Can this be improved? Too much previous text distorts pronomial de-referencing
+            if index == 0:
+                preceding_sentences = empty_string
+            elif index == 1:
+                preceding_sentences = sentence_dicts[0]['text']
+            else:
+                preceding_sentences = sentence_dicts[index - 2]['text'] + space + sentence_dicts[index - 1]['text']
+            try:
+                coref_dict = access_api(coref_prompt.replace('{sentences}', preceding_sentences)
+                                        .replace("{sent_text}", sentence_text))
+                updated_text = coref_dict['updated_text']
+            except Exception:
+                logging.error(f'Exception in getting coreference details for the text, {sentence_text}')
+                continue
+        else:
+            updated_text = sentence_text
         # Get all the sentence details using OpenAI prompting
-        # TODO: Get a version of the sentence with co-references resolved
         try:
-            get_sentence_details(sentence_iri, sentence_text, sentence_ttl_list,
+            get_sentence_details(sentence_iri, sentence_text, updated_text, sentence_ttl_list,
                                  empty_string, False, named_entities, nouns_dictionary)
             graph_ttl_list.extend(sentence_ttl_list)
-        except Exception:   # Triples not added for sentence
-            logging.error(f'Exception in getting sentence details for the text, {sentence_text}')
+        except Exception as e:   # Triples not added for sentence
+            logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {sentence_text}')
             continue
     # Add the quotation sentence details to the Turtle
     for quote_iri, quote_tuple in quote_dict.items():
         quote_text, attribution, entities = quote_tuple
         quote_ttl_list = [f'{quote_iri} a :Quote ; :text "{quote_text}" .']
         try:
-            get_sentence_details(f'{quote_iri}', quote_text, quote_ttl_list, attribution,
+            get_sentence_details(f'{quote_iri}', quote_text, quote_text, quote_ttl_list, attribution,
                                  True, entities, nouns_dictionary)
             graph_ttl_list.extend(quote_ttl_list)
-        except Exception:    # Triples not added for quote
-            logging.error(f'Exception in getting quote details for the text, {quote_text}')
+        except Exception as e:    # Triples not added for quote
+            logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quote_text}')
             continue
     return True, graph_ttl_list
