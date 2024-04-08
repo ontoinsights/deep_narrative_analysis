@@ -137,27 +137,27 @@ def _get_xml_value(xpath: str, root: etree.Element) -> str:
         return empty_string
 
 
-def get_event_details_from_wikidata(event_text: str) -> (str, str, str, list):
+def get_event_details_from_wikidata(event_text: str) -> (str, str, str, str, list):
     """
     Get the start and end times and alternate names of an event, if it is known to Wikidata.
 
     :param event_text: Text defining the event
     :return: A tuple consisting of strings holding the Wikipedia description of the event, the
-             URL of the web page from Wikipedia, strings identifying the start and end times,
+             URL of the web page from Wikipedia, the Wikidata identifier for the event,
+             strings identifying the start and end times,
              and an array of labels/alternate names
     """
     logging.info(f'Getting Wikidata event details for {event_text}')
     start_time = empty_string
     end_time = empty_string
     labels = []
-    wiki_details, wiki_url = get_wikipedia_description(event_text.replace(space, '_'))
+    wiki_details, wiki_url, wikidata_id = get_wikipedia_description(event_text.replace(space, '_'))
     if wiki_details and 'See the web site' not in wiki_details:
-        wikidata_id = wiki_details.split('wikibase_item: ')[1].split(')')[0]
         labels = get_wikidata_labels(wikidata_id)
         time_query = query_wikidata_time.replace('?item', f'wd:{wikidata_id}')
         start_time = _get_wikidata_time(time_query, True)
         end_time = _get_wikidata_time(time_query, False)
-    return wiki_details, wiki_url, start_time, end_time, labels
+    return wiki_details, wiki_url, wikidata_id, start_time, end_time, labels
 
 
 def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
@@ -254,11 +254,14 @@ def get_wikidata_labels(wikidata_id: str) -> list:
     if 'results' in response and 'bindings' in response['results']:
         results = response['results']['bindings']
         for result in results:
-            labels.append(result['label']['value'].replace('"', "'"))
+            label = result['label']['value'].replace('"', "'")
+            if not label.isalpha():
+                continue
+            labels.append(label)
     return labels
 
 
-def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (str, str):
+def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (str, str, str):
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
     and a link to display the full page.
@@ -266,9 +269,9 @@ def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (
     :param noun: String holding the organization/group name
     :param explicit_link: A link retrieved from another source (such as GeoNames) to a Wikipedia
                           entry for the noun
-    :return: A tuple holding two strings - (1) that is the first paragraph of the Wikipedia page
-             (if found and not ambiguous) and (2) a link to the full Wikipedia article; Otherwise,
-             two empty strings
+    :return: A tuple holding three strings - (1) the first paragraph of the Wikipedia page
+             (if found and not ambiguous), (2) a link to the full Wikipedia article, and
+             (3) the Wikibase/Wikidata identifier; Otherwise, 3 empty strings
     """
     logging.info(f'Getting wikipedia details for {noun}')
     noun_underscore = noun.replace(space, '_')
@@ -277,23 +280,27 @@ def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (
                             f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}', timeout=10)
     except requests.exceptions.ConnectTimeout:
         logging.error(f'Wikipedia description timeout: Noun={noun_underscore}')
-        return empty_string, empty_string
+        return empty_string, empty_string, empty_string
     except requests.exceptions.RequestException as e:
         request = f'https://en.wikipedia.org/api/rest_v1/page/summary/' \
                   f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}'
         logging.error(f'Wikipedia description query error: Query={request} and Exception={str(e)}')
-        return empty_string, empty_string
+        return empty_string, empty_string, empty_string
     wikipedia = resp.json()
     if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':
         # TODO: Can other nouns and similarity of content links be used to disambiguate?
-        return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}', empty_string
+        return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}', \
+            empty_string, empty_string
     desktop_url = empty_string
     if 'content_urls' in wikipedia:
         desktop_url = wikipedia['content_urls']['desktop']['page']
+    wikidata_id = empty_string
+    if 'wikibase_item' in wikipedia:
+        wikidata_id = wikipedia['wikibase_item']
     extract = empty_string
     if 'extract' in wikipedia:
         extract_text = wikipedia['extract'].replace('"', "'").replace('\xa0', space).replace('\n', space).\
             encode('ASCII', errors='replace').decode('utf-8')
         wiki_text = f"'{extract_text}'"
-        extract = f'From Wikipedia (wikibase_item: {wikipedia["wikibase_item"]}): {wiki_text}'
-    return extract, desktop_url
+        extract = f'From Wikipedia (wikibase_item: {wikidata_id}): {wiki_text}'
+    return extract, desktop_url, wikidata_id

@@ -137,14 +137,13 @@ def _get_noun_ttl(noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str
         geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map)
         noun_ttl.extend(geo_ttl)
     elif 'PERSON' in noun_type or 'NORP' in noun_type or 'ORG' in noun_type:
-        wiki_details, wiki_url = get_wikipedia_description(noun_text.replace(' ', underscore))
+        wiki_details, wiki_url, wikidata_id = get_wikipedia_description(noun_text.replace(' ', underscore))
         if wiki_details and 'See the web site' not in wiki_details:
             consistent_semantics = _check_wikipedia_match(noun_type, wiki_details)
             if consistent_semantics:
-                labels = get_wikidata_labels(wiki_details.split('wikibase_item: ')[1].split(')')[0])
+                labels = get_wikidata_labels(wikidata_id)
             else:
-                wiki_details = empty_string
-                wiki_url = empty_string
+                wiki_details = wiki_url = wikidata_id = empty_string
                 labels = []
         if noun_text not in labels:
             labels.append(noun_text)
@@ -154,7 +153,7 @@ def _get_noun_ttl(noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str
                 noun_type = check_name_gender(noun_text)
                 family_names = _get_family_names(noun_text, labels)
             noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, wiki_details,
-                                             wiki_url))      # Put more specific name first
+                                             wiki_url, wikidata_id))      # Put more specific name first
             for fam_name in family_names:
                 if fam_name not in nouns_dict:
                     nouns_dict[fam_name] = ('PLURALPERSON', f':{fam_name}')
@@ -162,37 +161,35 @@ def _get_noun_ttl(noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str
                                     f'rdfs:label "{fam_name}" ; :role "family" .')
         else:   # NORP
             noun_ttl.extend(
-                create_norp_ttl(noun_iri, noun_type, labels, class_map, wiki_details, wiki_url))
+                create_norp_ttl(noun_iri, noun_type, labels, class_map, wiki_details, wiki_url, wikidata_id))
     elif 'DATE' in noun_type:
         time_iri = _create_time_iri(empty_string, noun_text, True)
         if not time_iri:
             return empty_string, empty_string, []
         noun_ttl.append(f'{time_iri} a :PointInTime ; rdfs:label "{noun_text}" .')
     else:
+        start_time_iri = empty_string
+        end_time_iri = empty_string
         if 'EVENT' in noun_type:
-            start_time_iri = empty_string
-            end_time_iri = empty_string
-            wiki_details, wiki_url, start_time, end_time, labels = get_event_details_from_wikidata(noun_text)
+            wiki_details, wiki_url, wikidata_id, start_time, end_time, labels = \
+                get_event_details_from_wikidata(noun_text)
             if start_time:
                 start_time_iri = _create_time_iri(empty_string, start_time, False)
             if end_time:
                 end_time_iri = _create_time_iri(empty_string, end_time, False)
         else:
-            start_time_iri = empty_string
-            end_time_iri = empty_string
-            wiki_details, wiki_url = get_wikipedia_description(noun_text.replace(' ', underscore))
+            wiki_details, wiki_url, wikidata_id = get_wikipedia_description(noun_text.replace(' ', underscore))
             if wiki_details and 'See the web site' not in wiki_details:
                 consistent_semantics = _check_wikipedia_match(noun_type, wiki_details)
                 if consistent_semantics:
                     labels = get_wikidata_labels(wiki_details.split('wikibase_item: ')[1].split(')')[0])
                 else:
-                    wiki_details = empty_string
-                    wiki_url = empty_string
+                    wikidata_id = wiki_details = wiki_url = empty_string
                     labels = []
         if noun_text not in labels:
             labels.append(noun_text)
         noun_ttl.extend(create_named_entity_ttl(noun_iri, labels, class_map, wiki_details,
-                                                wiki_url, start_time_iri, end_time_iri))
+                                                wiki_url, wikidata_id, start_time_iri, end_time_iri))
     for label in labels:
         if label not in nouns_dict:
             nouns_dict[label] = (noun_type, noun_iri)
@@ -283,6 +280,13 @@ def get_sentence_entities(sentence: str, entities: list, nouns_dict: dict) -> (l
     for new_entity in new_entities:
         entity_split = new_entity.split('+')
         entity_text = entity_split[0]
+        # Remove articles
+        if entity_text.startswith('a ') or entity_text.startswith('A '):
+            entity_text = entity_text[2:]
+        if entity_text.startswith('an ') or entity_text.startswith('An '):
+            entity_text = entity_text[3:]
+        if entity_text.startswith('the ') or entity_text.startswith('The '):
+            entity_text = entity_text[4:]
         if len(entity_text) < 2:
             continue
         # Remove "apostrophe" or "apostrophe s" at the end of the entity text (spaCy includes possessive)

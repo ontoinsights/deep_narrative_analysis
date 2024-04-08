@@ -59,16 +59,20 @@ def parse_narrative(narr_text: str) -> (list, list, dict):
              and a dictionary of quotations that have a subject and verb (whose keys are the text,
              "Quotation#" and whose values are a tuple of the text and likely 'speaker')
     """
-    updated_narr, quotations, quotations_dict = resolve_quotations(narr_text)
+    narrative = narr_text.replace('\n', space).replace("  ", space)
+    updated_narr, quotations, quotations_dict = resolve_quotations(narrative)
     doc = nlp(updated_narr)
     sentence_dicts = []
     sentence_offset = 0
     for sentence in doc.sents:
+        prelim_text = sentence.text.strip()
+        if len(prelim_text) < 3 or not any(c.isalnum() for c in prelim_text):
+            continue
         sent_dict = dict()
         sentence_offset += 1
         sent_dict['offset'] = sentence_offset
         # Reset spacy's separation of tokens
-        sent_text = re.sub(r'([0-9]) %', r'\1%', sentence.text.strip())
+        sent_text = re.sub(r'([0-9]) %', r'\1%', prelim_text)
         sent_text = re.sub(r' (]) ', r'\1', sent_text)
         # Need to execute re.sub twice since a string of hyphens may be defined (e.g., xxx- xxx- xxx)
         sent_text = re.sub(r'([a-zA-Z])- ([a-zA-Z])', r'\1-\2', sent_text)
@@ -102,17 +106,17 @@ def resolve_quotations(narr: str) -> (str, list, dict):
              likely 'speaker')
     """
     quot_dict = dict()
+    # TODO: What about single quote (apostrophe)? But, that should be used for possessives
     quot_dict[0] = re.findall(r"\u0022(.*?)\u0022", narr)   # Double quotes
-    quot_dict[1] = re.findall(r"\u0027(.*?)\u0027", narr)   # Single quotes
-    quot_dict[2] = re.findall(r"\u2018(.*?)\u2019", narr)   # Left and right single quotes
-    quot_dict[3] = re.findall(r"\u201c(.*?)\u201d", narr)   # Left and right double quotes
-    lengths = [len(quot_dict[0]), len(quot_dict[1]), len(quot_dict[2]), len(quot_dict[3])]
+    quot_dict[1] = re.findall(r"\u2018(.*?)\u2019", narr)   # Left and right single quotes
+    quot_dict[2] = re.findall(r"\u201c(.*?)\u201d", narr)   # Left and right double quotes
+    lengths = [len(quot_dict[0]), len(quot_dict[1]), len(quot_dict[2])]
     if len([gt for gt in lengths if gt > 0]) > 0:   # Are there any quotes in the text?
         # Yes, but may have quotes within quotes
         # Assume that the quotation mark type with the largest number of quotations is the main choice for quoting
         index_max = max(range(len(lengths)), key=lengths.__getitem__)
         quotations = quot_dict[int(index_max)]
-    else:    # No quotes, just return
+    else:    # No left/right or double quotes
         return narr.replace('  ', space).replace('\n ', space).strip(), [], dict()
     # Create quotations dictionary and update narrative to remove quotations that are sentences with subjs/verbs
     index = 0

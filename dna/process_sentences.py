@@ -3,8 +3,8 @@
 import logging
 import re
 import uuid
-
 from PassivePySrc import PassivePy
+from rdflib import Literal
 
 from dna.process_entities import agent_classes, check_if_noun_is_known, get_sentence_entities
 from dna.query_openai import access_api, categories, noun_categories, quote_prompt1, quote_prompt2, quote_prompt3, \
@@ -49,8 +49,9 @@ def _get_passive_verbs(sentence_text: str) -> list:
     :param sentence_text: String holding the sentence text
     :return: Array of the text of all passive verbs
     """
-    passive_result = passivepy.match_text(sentence_text, full_passive=True, truncated_passive=True)
-    return passive_result.all_passives
+    # TODO: Track both full and truncated? ChatGPT seems to return correct 'fully' passive Agent information
+    passive_result = passivepy.match_text(sentence_text, full_passive=False, truncated_passive=True)
+    return passive_result.all_passives    # Given the parameters above, only returning truncated passives
 
 
 def _sentence_semantics_processing(sentence_dict: dict, sentence_iri: str, sentence_text: str, nouns_dict: dict,
@@ -73,7 +74,11 @@ def _sentence_semantics_processing(sentence_dict: dict, sentence_iri: str, sente
     """
     if sentence_dict:
         for semantic in sentence_dict['semantics']:
-            event_semantics = categories[semantic["category_number"] - 1]
+            if 0 < semantic['category_number'] < len(categories) + 1:
+                event_semantics = categories[semantic['category_number'] - 1]
+            else:
+                logging.error(f'Invalid semantic category ({semantic["category_number"]}) for {sentence_text}')
+                event_semantics = ':EventAndState'
             trigger_text = semantic['trigger_text']
             if semantic['same_or_opposite'] == 'opposite' and \
                     (event_semantics != ':EmotionalResponse' or
@@ -84,7 +89,7 @@ def _sentence_semantics_processing(sentence_dict: dict, sentence_iri: str, sente
                 edges = '{:summary true}' if is_summary else ''
             event_iri = f':Event_{str(uuid.uuid4())[:13]}'
             curr_turtle.append(f'{sentence_iri} :has_semantic {edges} {event_iri} .')
-            curr_turtle.append(f'{event_iri} a {event_semantics} ; :text "{trigger_text}" .')
+            curr_turtle.append(f'{event_iri} a {event_semantics} ; :text {Literal(trigger_text).n3()} .')
             if 'nouns' in semantic:     # Not returned for quotations
                 passive_verbs = _get_passive_verbs(sentence_text)
                 for noun in semantic['nouns']:
@@ -119,13 +124,21 @@ def _update_turtle(noun: dict, noun_iri: str, event_semantics: str, event_iri: s
             break
     noun_text = noun['text']
     semantic_role = noun['semantic_role']
-    noun_category = noun_categories[noun['noun_type'] - 1]
+    if 0 < noun['noun_type'] < len(noun_categories) + 1:
+        noun_category = noun_categories[noun['noun_type'] - 1]
+    else:
+        logging.error(f'Invalid noun type ({noun["noun_type"]}) for {noun_text}')
+        noun_category = 'owl:Thing'
     if (noun['singular'] == 'false' or noun_text in plural_pronouns) and \
             ':Collection' not in noun_category:
         noun_category += ', :Collection'
-    event_category = categories[noun['semantic_category'] - 1] \
-        if noun['semantic_category'] - 1 > -1 else empty_string
-    triple_object = noun_iri if noun_iri else f'[ :text "{noun_text}" ; ' \
+    if 0 < noun['semantic_category'] < len(categories) + 1:
+        event_category = categories[noun['semantic_category'] - 1]
+    else:
+        if noun['semantic_category'] != 0:
+            logging.error(f'Invalid noun semantic category ({noun["semantic_category"]}) for {noun_text}')
+        event_category = empty_string
+    triple_object = noun_iri if noun_iri else f'[ :text {Literal(noun_text).n3()} ; ' \
                                               f'a {event_category if event_category else noun_category} ]'
     # TODO: Mapping rules; more needed?
     if noun_category == ':Measurement':
@@ -203,10 +216,6 @@ def get_sentence_details(sent_iri: str, sent_text: str, updated_text: str, ttl_l
         quote_texts = re.findall(r'Quotation[0-9]+', sent_text)
         for quote_text in quote_texts:
             ttl_list.append(f'{sent_iri} :has_component :{quote_text} .')
-        if quote_texts:
-            # Quotation indicates a speech act and the quote text is analyzed separately
-            # TODO: Should the sentence containing the quote be analyzed further?
-            return ttl_list
     # Processing the first prompt for details such as sentence person, sentiment, tense, ...
     summary = empty_string
     if for_quote:
@@ -247,8 +256,12 @@ def get_sentence_details(sent_iri: str, sent_text: str, updated_text: str, ttl_l
         if 'rhetorical_devices' in sent_dict and len(sent_dict['rhetorical_devices']) > 0:
             for device_detail in sent_dict['rhetorical_devices']:
                 device_numb = int(device_detail['device_number'])
-                predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
-                ttl_list.append(f'{sent_iri} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
+                if 0 < device_numb < len(rhetorical_devices) + 1:
+                    predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
+                    ttl_list.append(f'{sent_iri} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
+                else:
+                    logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sent_text}')
+                    continue
     # Processing the events and states, and related nouns
     if for_quote:
         _sentence_semantics_processing(access_api(quote_prompt3.replace("{sent_text}", sent_text)),

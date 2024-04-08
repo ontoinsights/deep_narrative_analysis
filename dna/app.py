@@ -6,7 +6,8 @@ import json
 import logging
 import uuid
 
-from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative
+from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative, \
+    detail, error_str, narrative_id, repository, sentences
 from dna.database import add_remove_data, clear_data, construct_graph, query_database
 from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
     query_narratives, query_repos, query_repo_graphs, update_narrative
@@ -16,11 +17,7 @@ from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_g
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
 
-detail: str = 'detail'
-error_str: str = 'error'
-narrative_id: str = 'narrativeId'
 not_defined: str = 'not defined'
-repository: str = 'repository'
 
 # Main
 app = Flask(__name__)
@@ -36,55 +33,18 @@ def index():
         '<a href="https://ontoinsights.github.io/dna-swagger/">Swagger/YAML documentation</a>.'
 
 
-@app.route('/dna/v1/news', methods=['GET', 'POST'])
-def news():
-    if request.method == 'POST' or request.method == 'GET':
-        values, scode = check_query_parameter('news', False, request)
-        if scode == 400:
-            return jsonify(dict(values)), scode
-        news_details = {x: dict(values)[x] for x in ('topic', 'fromDate', 'toDate')}
-        repo = empty_string
-        number_to_ingest = 0
-        if request.method == 'POST':
-            # Get repository name query parameter
-            values, scode = check_query_parameter(repository, True, request)
-            if scode in (400, 404, 409):
-                return jsonify(dict(values)), scode
-            repo = dict(values)[repository]
-            news_details['repository'] = repo
-            if 'number' in dict(values):
-                number_str = dict(values)['number_to_ingest']
-                if number_str.isdigit():
-                    number_to_ingest = int(number_str)
-                else:
-                    return jsonify(
-                        {error_str: 'invalid',
-                         detail: f'The query parameter, number_to_ingest, must be an integer'}), 400
-        articles = get_matching_articles(news_details)   # Array of article metadata dictionaries
-        if request.method == 'POST':
-            article_number = 0
-            failed_retrievals = []
-            for article in articles:
-                article_text = get_article_text(article['url'])
-                if article_text:
-                    metadata = [article['title'], article['published'], article['source'], article['url'],
-                                article['length']]
-                    resp_dict, resp_str, status_code = process_new_narrative(metadata, article_text, repo)
-                    if resp_str:
-                        failed_retrievals.append(article)
-                else:
-                    failed_retrievals.append(article)
-                article_number += 1
-                if number_to_ingest > 0 and article_number == number_ingested:
-                    break
-            news_details['articles'] = articles
-            news_details['failed_articles'] = failed_retrievals
-            return jsonify(news_details), 200
-        elif request.method == 'GET':
-            news_details['articleCount'] = len(articles)
-            news_details['articles'] = articles
-            return jsonify(news_details), 200
-    return jsonify({error_str: '/news API only supports GET and POST requests'}), 405
+# @app.route('/dna/v1/news', methods=['GET'])
+# def news():
+#    if request.method == 'GET':
+#        values, scode = check_query_parameter('news', False, request)
+#        if scode == 400:
+#            return jsonify(dict(values)), scode
+#        news_details = {x: dict(values)[x] for x in ('topic', 'fromDate', 'toDate')}
+#        articles = get_matching_articles(news_details)   # Array of article metadata dictionaries
+#        news_details['articleCount'] = len(articles)
+#        news_details['articles'] = articles
+#       return jsonify(news_details), 200
+#    return jsonify({error_str: '/news API only supports GET requests'}), 405
 
 
 @app.route('/dna/v1/repositories', methods=['GET', 'POST', 'DELETE'])
@@ -143,28 +103,27 @@ def narratives():
         if scode in (400, 404, 409):
             return jsonify(dict(values)), scode
         repo = dict(values)[repository]
-        # Get text from request body
+        # Get number of sentences to ingest
+        values, scode = check_query_parameter(sentences, False, request)
+        number_sentences = dict(values)[sentences]
+        # Process the request body
         if not request.data:
             return jsonify(
                 {error_str: 'missing',
                  detail: 'A request body MUST be defined when issuing a /narratives POST.'}), 400
         narr_data = json.loads(request.data)
-        if 'narrative' not in narr_data:
+        if 'title' not in narr_data or 'source' not in narr_data or 'text' not in narr_data:
             return jsonify(
                 {error_str: 'missing',
-                 detail: 'A narrative element MUST be present in the request body of a /narratives POST.'}), 400
-        if 'narrativeMetadata' not in narr_data:
-            title = 'No title provided'
-            narr_details = [title, not_defined, not_defined, not_defined]
-        else:
-            narr_meta = narr_data['narrativeMetadata']
-            title = narr_meta['title'] if 'title' in narr_meta else not_defined
-            narr_details = [title,
-                            narr_meta['published'] if 'published' in narr_meta else not_defined,
-                            narr_meta['source'] if 'source' in narr_meta else not_defined,
-                            narr_meta['url'] if 'url' in narr_meta else not_defined,
-                            narr_meta['length'] if 'length' in narr_meta else not_defined]
-        resp_dict, resp_str, status_code = process_new_narrative(narr_details, narr_data['narrative'], repo)
+                 detail: 'A "title", "source" and "text" MUST be specified in the request body '
+                         'of a /narratives POST.'}), 400
+        logging.info(f'narr_data {type(narr_data)} {narr_data}')
+        narr_details = [narr_data['title'],
+                        narr_data['published'] if 'published' in narr_data else not_defined,
+                        narr_data['source'],
+                        narr_data['url'] if 'url' in narr_data else not_defined,
+                        number_sentences]
+        resp_dict, resp_str, status_code = process_new_narrative(narr_details, narr_data['text'], repo)
         if status_code != 201:
             return jsonify({error_str: resp_str}), status_code
         return jsonify(resp_dict), 201

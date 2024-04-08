@@ -112,13 +112,11 @@ def test_repositories_get2(client):
 def test_narratives_post_ok1(client):
     article_text = "John is a musician. When Mary goes to the grocery store, John practices guitar."
     req_data = json.dumps({
-        "narrativeMetadata": {
-            "title": "A narrative title",
-            "published": "2022-07-14T17:32:28Z",
-            "source": "Wall Street Journal",
-            "url": "http://some-site.com/narrative",
-            "length": len(article_text)},
-        "narrative": article_text
+        "title": "A narrative title",
+        "published": "2022-07-14T17:32:28Z",
+        "source": "Wall Street Journal",
+        "url": "http://some-site.com/narrative",
+        "text": article_text
     })
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json',
                        query_string={'repository': 'foo'}, data=req_data)
@@ -137,13 +135,10 @@ def test_narratives_post_ok1(client):
 
 def test_narratives_post_ok2(client):
     req_data = json.dumps({
-        "narrativeMetadata": {
-            "title": "Another Title",
-            "published": "2022-07-14T17:32:28Z",
-            "source": "New York Times",
-            "url": "http://nyt.com/article",
-            "length": len("George lived in Detroit in 1980. He moved to Atlanta in 1990.")},
-        "narrative": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
+        "title": "Another Title",
+        "published": "2022-07-14T17:32:28Z",
+        "source": "internal",
+        "text": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
     })
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json',
                        query_string={'repository': 'foo'}, data=req_data)
@@ -165,7 +160,7 @@ def test_narratives_get1(client):
     assert 'source' in json_data['narratives'][1]['narrativeMetadata']
     narr_publishers = [json_data['narratives'][0]['narrativeMetadata']['source'],
                        json_data['narratives'][1]['narrativeMetadata']['source']]
-    assert 'New York Times' in narr_publishers and 'Wall Street Journal' in narr_publishers
+    assert 'internal' in narr_publishers and 'Wall Street Journal' in narr_publishers
 
 
 def test_narratives_post_missing_all(client):
@@ -178,13 +173,10 @@ def test_narratives_post_missing_all(client):
 
 def test_narratives_post_missing_repo(client):
     req_data = json.dumps({
-        "narrativeMetadata": {
-            "author": "Jane Doe",
-            "published": "2022-07-14T17:32:28Z",
-            "publisher": "New York Times",
-            "source": "Identifier_such_as_URL",
-            "title": "Jane's Title"},
-        "narrative": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
+        "published": "2022-07-14T17:32:28Z",
+        "source": "internal",
+        "title": "Jane's Title",
+        "text": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
     })
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json', data=req_data)
     assert resp.status_code == 400
@@ -203,19 +195,30 @@ def test_narratives_post_missing_narr(client):
 
 def test_narratives_post_invalid_repo(client):
     req_data = json.dumps({
-        "narrativeMetadata": {
-            "author": "Jane Doe",
-            "published": "2022-07-14T17:32:28Z",
-            "publisher": "New York Times",
-            "source": "Identifier_such_as_URL",
-            "title": "Jane's Title"},
-        "narrative": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
+        "published": "2022-07-14T17:32:28Z",
+        "source": "internal",
+        "title": "Jane's Title",
+        "text": "George lived in Detroit in 1980. He moved to Atlanta in 1990."
     })
     resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foobar'},
                        content_type='application/json', data=req_data)
     assert resp.status_code == 404
     json_data = resp.get_json()
     assert 'Repository with the name' in json_data['error']
+
+
+def test_narratives_post_no_text(client):
+    req_data = json.dumps({
+        "published": "2022-07-14T17:32:28Z",
+        "source": "internal",
+        "title": "Jane's Title"
+    })
+    resp = client.post('/dna/v1/repositories/narratives', query_string={'repository': 'foo'},
+                       content_type='application/json', data=req_data)
+    assert resp.status_code == 400
+    json_data = resp.get_json()
+    assert json_data['error'] == 'missing'
+    assert 'A "title"' in json_data['detail']
 
 
 def test_narratives_delete(client):
@@ -314,64 +317,16 @@ def test_graphs_put_bad_triples(client):
     assert "Invalid triples" in json_data['error']
 
 
-# Get articles using search criteria that are likely to have results
-def test_news_get(client):
-    yesterday = datetime.now() - timedelta(1)
-    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump',
-                                                    'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
-                                                    'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
-    assert resp.status_code == 200
-    json_data = resp.get_json()
-    assert 'articleCount' in json_data and json_data['articleCount'] > 1
-    assert 'articles' in json_data
-    article0 = json_data['articles'][0]
-    assert 'length' in article0
-    assert 'published' in article0
-    assert 'source' in article0
-    assert 'title' in article0
-    assert 'url' in article0
-
-
-# Post articles using search criteria that are likely to have results
-# def test_news_post(client):
-#     yesterday = datetime.now() - timedelta(1)
-#     resp = client.post('/dna/v1/news',
-#                        query_string={'repository': 'foo', 'topic': 'Trump', 'numberToIngest': 1,
-#                                      'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
-#                                      'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
-#     assert resp.status_code == 200
-#     json_data = resp.get_json()
-    # TODO: Validate
-
-
-# Get articles using incorrect parameters
-def test_news_get_incorrect_parameters(client):
-    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump', 'from': '1899-01-01', 'to': '1899-01-01'})
-    assert resp.status_code == 400
-    json_data = resp.get_json()
-    assert 'error' in json_data and json_data['error'] == 'invalid'
-    assert json_data['detail'] == 'The query parameters, topic, fromDate and toDate, must all be specified'
-
-
-# Get articles using invalid from/to
-def test_news_get_invalid_dates(client):
-    resp = client.get('/dna/v1/news', query_string={'topic': 'Trump', 'fromDate': '1899-01-01', 'toDate': '1899-01-01'})
-    assert resp.status_code == 400
-    json_data = resp.get_json()
-    assert 'error' in json_data and json_data['error'] == 'invalid'
-    assert json_data['detail'] == 'The query parameters, fromDate and toDate, must use recent/valid dates ' \
-                                  'written as YYYY-mm-dd'
-
-
-def test_news_post_no_repo(client):
-    yesterday = datetime.now() - timedelta(1)
-    resp = client.post('/dna/v1/news', query_string={'topic': 'Trump',
-                                                     'fromDate': datetime.strftime(yesterday, '%Y-%m-%d'),
-                                                     'toDate': datetime.strftime(yesterday, '%Y-%m-%d')})
-    assert resp.status_code == 400
-    json_data = resp.get_json()
-    assert 'error' in json_data and json_data['error'] == 'missing'
-    assert json_data['detail'] == 'The argument parameter, repository, is required'
+def test_end_to_end(client):
+    req_data = \
+        {'title': 'UN Security Council demands immediate Gaza ceasefire as US abstains',
+         'published': '2024-03-25T00:00:00',
+         'source': 'Al Jazeera',
+         'url': 'https://www.aljazeera.com/news/2024/3/25/un-security-council-adopts-resolution',
+         'text': 'The United Nations Security Council (UNSC) demands an immediate ceasefire between Israel and the Palestinian group Hamas in the Gaza Strip and the release of all hostages as the United States abstains from the vote.\n\nThe remaining 14 council members voted in favour of the resolution, which was proposed by the 10 elected members of the council. There was a round of applause in the council chamber after the vote on Monday.\n\nThe resolution calls for an immediate ceasefire for the Muslim fasting month of Ramadan, which ends in two weeks, and also demands the release of all hostages seized in the Hamas-led attack on southern Israel on October 7.\n\n“The bloodbath has continued for far too long,” said Amar Bendjama, the ambassador from Algeria, the Arab bloc’s current Security Council member and a sponsor of the resolution. “Finally, the Security Council is shouldering its responsibility.”\n\nThe US had repeatedly blocked Security Council resolutions that put pressure on Israel but has increasingly shown frustration with its ally as civilian casualties mount and the UN warns of impending famine in Gaza.\n\nSpeaking after the vote, US Ambassador Linda Thomas-Greenfield blamed Hamas for the delay in passing a ceasefire resolution.\n\n“We did not agree with everything with the resolution,” which she said was the reason why the US abstained.\n\n“Certain key edits were ignored, including our request to add a condemnation of Hamas,” Thomas-Greenfield said. She stressed that the release of Israeli captives would lead to an increase in humanitarian aid supplies going into the besieged coastal enclave.\n\nThe White House said the final resolution did not have language the US considers essential and its abstention does not represent a shift in policy.\n\nBut Israeli Prime Minister Benjamin Netanyahu’s office said the US failure to veto the resolution is a “clear retreat” from its previous position and would hurt war efforts against Hamas as well as efforts to release Israeli captives held in Gaza.\n\nHis office also said Netanyahu will not be sending a high-level delegation to Washington, DC, in light of the new US position.\n\nUS President Joe Biden had requested to meet Israeli officials to discuss Israeli plans for a ground invasion of Rafah in southern Gaza, where more than 1 million displaced Palestinians are sheltering.\n\nWhite House spokesperson John Kirby said the US was “disappointed” by Netanyahu’s decision.\n\n“We’re very disappointed that they won’t be coming to Washington, DC, to allow us to have a fulsome conversation with them about viable alternatives to them going in on the ground in Rafah,” Kirby told reporters.\n\nHe said senior US officials would still meet for separate talks with Israeli Defence Minister Yoav Gallant, who is currently in Washington, on issues including the captives, humanitarian aid and protecting civilians in Rafah.\n\nLast week, Netanyahu promised to defy US appeals and expand Israel’s military campaign to Rafah even without its ally’s support.\n\nAl Jazeera’s diplomatic editor James Bays said the vote is still a “very, very significant” development.\n\n“After almost six months, … the vote, almost unanimous,” has demanded a lasting and immediate ceasefire in Gaza.\n\n“The US has used its veto three times,” Bays said. “This time, the US let this pass.”\n\n“Resolutions of the Security Council are international law. They are always seen as binding on all the member states of the United Nations,” he added.\n\nUN Secretary-General Antonio Guterres said in a post on X that the resolution “must be implemented”, adding that “failure would be unforgivable”.\n\nThe vote came amid international calls to bring the nearly six-month-long conflict to an end as Israeli forces pummel Gaza and humanitarian conditions in the besieged strip reach critical levels.\n\nMore than 90 percent of Gaza’s 2.3 million residents have been displaced, and conditions under Israeli siege and bombardment have pushed Gaza to the brink of famine, the UN said.\n\nMore than 32,000 Palestinians have been killed in the Israeli assault since October 7, mostly women and children, according to Palestinian health authorities.\n\nIsrael began its military offensive in Gaza after Hamas led an attack on southern Israel on October 7, killing at least 1,139 people, mostly civilians, and seizing about 250 others as hostages, according to Israeli tallies.\n\nPalestinian leaders welcomed the adoption of the resolution, saying it was a step in the right direction.\n\n“This must be a turning point,” Palestinian Ambassador Riyad Mansour told the UNSC, holding back tears. “This must signal the end of this assault, of atrocities against our people.”\n\nIn a statement, the Palestinian Ministry of Foreign Affairs called on UNSC member states to fulfill their legal responsibilities to implement the resolution immediately.\n\nThe ministry also stressed the importance of intensifying efforts to achieve a permanent ceasefire that extends beyond Ramadan, secure the entry of aid, work on the release Palestinian prisoners held in Israeli jails and prevent forced displacement of Palestinians.\n\nHamas welcomed the resolution and said in a statement it “affirms readiness to engage in immediate prisoner swaps on both sides”.\n\nFrance called for more work on securing a permanent ceasefire between Israel and Hamas.\n\n“This crisis is not over. Our council will have to remain mobilised and immediately get back to work. After Ramadan, which ends in two weeks, it will have to establish a permanent ceasefire,” French Ambassador Nicolas de Riviere said.\n\nThe latest vote was held after Russia and China vetoed a US-sponsored resolution on Friday that would have supported “an immediate and sustained ceasefire”.\n\nRussian Ambassador Vasily Alekseyevich Nebenzya said his country hopes Monday’s resolution will be used in the “interests of peace” rather than advancing the “inhumane Israeli operation against Palestinians”.\n\n“It is of fundamental importance that the UN Security Council, for the first time, is demanding the parties observe an immediate ceasefire, even if it is limited to the month of Ramadan,” he said. “Unfortunately, what happens after that ends remains unclear.”\n\nRussia tried to push for the use of the word “permanent” in regards to the ceasefire. It had complained that dropping the word could allow Israel “to resume its military operation in the Gaza Strip at any moment” after Ramadan, which ends on April 9.\n\n“We are disappointed that it did not make it through,” Nebenzya said.\n'}
+    resp = client.post('v1/repositories/narratives', content_type='application/json',
+                       query_string={'repository': 'foo'},
+                       data=req_data)
 
 
 def test_repositories_cleanup(client):

@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 2 March 2024
+Updated 29 March 2024
 
 ## License
 Creative Commons 
@@ -51,17 +51,17 @@ The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narr
 
 DNA has been developed and tested in a Python 3.11 environment.
 
-Necessary libraries are specified in the _requirements.txt_ file in the main directory. Please download (e.g. via pip install) all the requirements, and follow the remainder of the instructions in this section to get other, necessary components. (Note that you may need to update Xcode on Mac, install a Rust compiler, etc., if errors occur while doing the pip installs. If errors are reported, pip typically explains how to address them.) Lastly, set the environment variables  BEFORE starting the DNA application or doing any testing.
+Necessary libraries are specified in the _requirements.txt_ file in the main directory. Please download (e.g. via pip install) all the requirements, and follow the remainder of the instructions in this section to get other, necessary components. (Note that you may need to update Xcode on Mac, install a Rust compiler, etc., if errors occur while doing the pip installs. If errors are reported, pip typically explains how to address them.) Lastly, set the environment variables BEFORE starting the DNA application or doing any testing.
 
 These environment variables need to be set for the DNA application:
 
 * `PATH` needs to specifically include the GitHub project's dna directory (for ease of testing) 
 * `GEONAMES_ID` (geonames.org) MUST be set for background information retrieval
-* `NEWS_API_KEY` (newsapi.org) MUST be set if the dna/v1/news API is used
 * `OPENAI_API_KEY`(openai.com) MUST be set and reference a billable account 
 * `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set where:
   * The STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable
   * A user/password is defined and given a "cloud" role - enabling read and write
+
 
 Other components that must be installed or set up are:
 
@@ -77,7 +77,7 @@ Other components that must be installed or set up are:
     * As regards the database configuration, when creating the database, use the stardog.properties file in the _tools_ directory for reference
       * The important properties to set are "edge.properties = true" and "preserve.bnode.ids = false"
 
-Make sure that you always upgrade the spacy model ("en_core_web_lg") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
+Make sure that you always upgrade the spacy model ("en_core_web_trf") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
 
 Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask run". The RESTful DNA APIs will be accessible at http://127.0.0.1:5000/dna/v1/repositories (local only).
 

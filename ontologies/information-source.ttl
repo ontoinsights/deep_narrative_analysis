@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: October 31 2023
+# Last modified: April 7 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,7 +21,7 @@
 # either express or implied.
 # 
 # Changes:
-#  New
+#  Added number_sentences, number_ingested and new rhetorical devices
 ########################################################################
 
 
@@ -74,6 +74,20 @@
   rdfs:domain :Narrative ;
   rdfs:range xsd:integer .
 
+:number_ingested a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :count ;
+  rdfs:label "number of sentences ingested"@en ;
+  rdfs:comment "A count of the number of sentences from an InformationSource that were ingested."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:integer .
+
+:number_sentences a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:subPropertyOf :count ;
+  rdfs:label "number of sentences"@en ;
+  rdfs:comment "A count of the number of sentences in an InformationSource."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:integer .
+
 :number_triples a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :count ;
   rdfs:label "number of triples"@en ;
@@ -93,10 +107,10 @@
                 owl:unionOf ( :Narrative :Sentence ) ] ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
-               owl:oneOf  ('ad hominem' 'allusion' 'antanagoge' 'aphorism' 'ethos' 'expletive'
-                           'hyperbole' 'imagery' 'invective' 'irony' 'kairos' 'litote' 'logos'
-                           'metaphor' 'nostalgia' 'pathos' 'pleonasm' 'repetition' 'loaded language'
-                           'repeated statements' 'rhetorical question' 'juxtaposition' ) ] ;
+               owl:oneOf  ('ad baculum' 'ad hominem' 'ad populum' 'allusion' 'antanagoge' 'aphorism' 'ethos' 'exceptionalism' 
+                           'expletive' 'hyperbole' 'imagery' 'invective' 'irony' 'juxtaposition' 'kairos' 'litote' 
+                           'loaded language' 'logos' 'metaphor' 'nostalgia' 'paralipsis' 'pathos' 'pleonasm' 'repetition' 
+                           'rhetorical question') ] ;
   rdfs:comment "String restricted to a set of values that indicate the rhetorical devices that are observed in a Sentence or Narrative. There are many possible devices that may be employed in an entity. As an example, values include 'allusion', 'loaded language' and 'nostalgia'."@en .
 
 :segment_label a owl:DatatypeProperty, owl:FunctionalProperty ;

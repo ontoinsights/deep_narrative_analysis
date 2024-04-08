@@ -9,7 +9,7 @@
 # File defining general concepts used throughout the DNA ontologies
 # 
 # Created: February 9 2020
-# Last modified: March 1 2024
+# Last modified: April 3 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -20,8 +20,9 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Removed invalid "subclassOf" predicate 
+#   Reset change history and simplified
+#   Removed invalid "subclassOf" predicate 
+#   Added external_identifier
 ########################################################################
 
 
@@ -153,6 +154,11 @@
   rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
+:external_identifier a owl:DatatypeProperty ;
+  rdfs:label "external identifier"@en ;
+  rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en ;
+  rdfs:range xsd:string .
+
 :external_link a owl:DatatypeProperty ;
   rdfs:label "external link"@en ;
   rdfs:comment "Text specifying a URL/URI where more information about the referencing entity can be found."@en ;
@@ -162,6 +168,11 @@
   rdfs:label "future (boolean)"@en ;
   rdfs:comment "Boolean indicating that the individual describes somthing possible in, or planned for, a 'future' time."@en ;
   rdfs:range xsd:boolean .
+
+:identifier_source a owl:DatatypeProperty ;
+  rdfs:label "identifier source"@en ;
+  rdfs:comment "Text specifying the source 'system' (such as Wikidata) for an external identifier for an entity. This is used as an RDF edge property for :external_identifier."@en ;
+  rdfs:range xsd:string .
   
 :imaginary a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "imaginary (boolean)"@en ;

@@ -2,6 +2,7 @@
 
 import re
 import uuid
+from rdflib import Literal
 
 from dna.query_sources import get_geonames_location, get_wikipedia_description
 from dna.utilities_and_language_specific import concept_map, empty_string, explicit_plural, names_to_geo_dict, ner_dict
@@ -10,8 +11,31 @@ person = ':Person'
 person_collection = ':Person, :Collection'
 
 
+def _add_wikidata_triples(entity_iri: str, description: str, wiki_url: str, wiki_id: str, ttl_list: list):
+    """
+    Definition of triples defining Wikipedia/Wikidata information.
+
+    :param entity_iri: String holding the IRI of the entity
+    :param description: Text of the first paragraph of the Wikipedia description of the entity
+                        (if available); Otherwise, an empty string
+    :param wiki_url: String holding the Wikipedia page URL where the paragraph and full article
+                     are found (if available); Otherwise, an empty string
+    :param wiki_id: Text holding the Wikidata identifier for the entity (if available);
+                    Otherwise, an empty string
+    :param ttl_list: An array of the current Turtle for the entity
+    :return: None (ttl_list is updated)
+    """
+    if description:
+        ttl_list.append(f'{entity_iri} rdfs:comment "{description}" .')
+    if wiki_url:
+        ttl_list.append(f'{entity_iri} :external_link "{wiki_url}" .')
+    if wiki_id:
+        predicate = ':external_identifier {:identifier_source "Wikidata"}'
+        ttl_list.append(f'{entity_iri} {predicate} "{wiki_id}" .')
+
+
 def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_class: str,
-                     description: str, wiki_url: str) -> list:
+                     description: str, wiki_url: str, wikidata_id: str) -> list:
     """
     Create the Turtle for a named entity that is identified as an Agent (Person, Organization, ...).
 
@@ -23,15 +47,14 @@ def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_cla
                         an empty string
     :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
                      Otherwise, an empty string
+    :param wikidata_id: A string holding the Wikidata identifier of the entity (if available);
+                        Otherwise, an empty string
     :return: Returns an array of the Agent's Turtle declaration
     """
     labels = '", "'.join(alt_names)
     agent_ttl = [f'{agent_iri} a {agent_class} .',
                  f'{agent_iri} rdfs:label "{labels}" .']
-    if description:
-        agent_ttl.append(f'{agent_iri} rdfs:comment "{description}" .')
-    if wiki_url:
-        agent_ttl.append(f'{agent_iri} :external_link "{wiki_url}" .')
+    _add_wikidata_triples(agent_iri, description, wiki_url, wikidata_id, agent_ttl)
     if 'MALE' in agent_type:
         gender = "female" if "FEMALE" in agent_type else "male"
         agent_ttl.append(f'{agent_iri} :gender "{gender}" .')
@@ -54,11 +77,8 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str) -> (list, l
         geonames_ttl.append(f'{loc_iri} a {class_type} .')
         names_text = '", "'.join(alt_names)
         geonames_ttl.append(f'{loc_iri} rdfs:label "{names_text}" .')
-        wiki_desc, wiki_url = get_wikipedia_description(loc_text, wiki_link)
-        if wiki_desc:
-            geonames_ttl.append(f'{loc_iri} rdfs:comment "{wiki_desc}" .')
-        if wiki_url:
-            geonames_ttl.append(f'{loc_iri} :external_link "{wiki_url}" .')
+        wiki_desc, wiki_url, wikidata_id = get_wikipedia_description(loc_text, wiki_link)
+        _add_wikidata_triples(loc_iri, wiki_desc, wiki_url, wikidata_id, geonames_ttl)
         if admin_level > 0:
             geonames_ttl.append(f'{loc_iri} :admin_level {str(admin_level)} .')
         if country and country != "None":
@@ -66,12 +86,12 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str) -> (list, l
             if country in names_to_geo_dict:
                 geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_iri} .')
     else:
-        geonames_ttl.extend(f'{loc_iri} a {loc_class} ; :text "{loc_text}" .')
+        geonames_ttl.append(f'{loc_iri} a {loc_class} ; :text {Literal(loc_text).n3()} .')
     return geonames_ttl, alt_names
 
 
 def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, description: str,
-                            wiki_url: str, start_time_iri: str, end_time_iri: str) -> list:
+                            wiki_url: str, wikidata_id: str, start_time_iri: str, end_time_iri: str) -> list:
     """
     Return the Turtle for a 'default' named entity (not addressed by the other functions).
 
@@ -82,6 +102,8 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
                         an empty string
     :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
                      Otherwise, an empty string
+    :param wikidata_id: A string holding the Wikidata identifier of the entity (if available);
+                        Otherwise, an empty string
     :param start_time_iri: The IRI created for the starting time of an event;
                            Otherwise, an empty string
     :param end_time_iri: The IRI created for the ending time of the event; Otherwise, an empty string
@@ -90,10 +112,7 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
     labels = '", "'.join(alt_names)
     entity_ttl = [f'{ent_iri} a {class_map} .',
                   f'{ent_iri} rdfs:label "{labels}" .']
-    if description:
-        entity_ttl.append(f'{ent_iri} rdfs:comment "{description}" .')
-    if wiki_url:
-        entity_ttl.append(f'{ent_iri} :external_link "{wiki_url}" .')
+    _add_wikidata_triples(ent_iri, description, wiki_url, wikidata_id, entity_ttl)
     if start_time_iri:
         entity_ttl.append(f'{ent_iri} :has_beginning {start_time_iri} .')
     if end_time_iri:
@@ -102,7 +121,7 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
 
 
 def create_norp_ttl(norp_iri: str, norp_type: str, labels: list, norp_class: str,
-                    description: str, wiki_url: str) -> list:
+                    description: str, wiki_url: str, wikidata_id: str) -> list:
     """
     Definition of the Turtle for a Group that was identified by spaCy as a 'NORP'
     (nationality, religious group, political party, ...).
@@ -115,6 +134,8 @@ def create_norp_ttl(norp_iri: str, norp_type: str, labels: list, norp_class: str
                         Otherwise, an empty string
     :param wiki_url: A string holding the URL of the full Wikipedia article (if available);
                      Otherwise, an empty string
+    :param wikidata_id: A string holding the Wikidata identifier of the entity (if available);
+                        Otherwise, an empty string
     :return: An array defining the Turtle declarations for the NORP entity
     """
     type_str = person_collection if 'PLURAL' in norp_type else person
@@ -127,9 +148,7 @@ def create_norp_ttl(norp_iri: str, norp_type: str, labels: list, norp_class: str
             if concept in wiki_lower:
                 norp_aspect = concept_map[concept]
                 break
-        norp_ttl.append(f'{norp_iri} rdfs:comment "{description}" .')
         if norp_aspect:
-            norp_ttl.append(f'{norp_iri} :has_aspect {norp_class} .')
-    if wiki_url:
-        norp_ttl.append(f'{norp_iri} :external_link "{wiki_url}" .')
+            norp_ttl.append(f'{norp_iri} :has_aspect {norp_aspect} .')
+    _add_wikidata_triples(norp_iri, description, wiki_url, wikidata_id, norp_ttl)
     return norp_ttl

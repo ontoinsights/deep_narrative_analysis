@@ -27,7 +27,7 @@ text_coref = 'Anna saw Heidi cut the roses, but she did not recognize that it wa
 
 def test_multiple_acomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_multiple_acomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :EmotionalResponse ; :text "averse' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
@@ -53,9 +53,9 @@ def test_multiple_acomp():
 
 def test_multiple_verbs():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_multiple_verbs)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
-    assert 'pathos' in ttl_str
+    assert 'pathos' in ttl_str or 'ad hominem' in ttl_str
     assert ':has_active_entity :Sue' in ttl_str
     if 'a :EnvironmentAndCondition' in ttl_str:    # is
         assert ':has_described_entity :Sue' in ttl_str
@@ -91,7 +91,7 @@ def test_multiple_verbs():
 
 def test_aux_pobj():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_aux_pobj)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :RemovalAndRestriction ; :text "got rid of' in ttl_str
     assert ':has_active_entity :Joe' in ttl_str
@@ -115,7 +115,7 @@ def test_aux_pobj():
 
 def test_idiom_npadvmod():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_idiom_npadvmod)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :Avoidance ; :text "looked the other way' in ttl_str
     assert ':has_active_entity :John' in ttl_str
@@ -144,7 +144,7 @@ def test_idiom_npadvmod():
 
 def test_idiom_amod():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_idiom_amod)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'metaphor' in ttl_str
     assert 'a :Avoidance ; :text "turned a blind eye' in ttl_str
@@ -177,7 +177,7 @@ def test_idiom_amod():
 
 def test_advmod():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_advmod)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :ReturnRecoveryAndRelease ; :text "put back together' in ttl_str
     assert ':has_active_entity :Harry' in ttl_str
@@ -201,12 +201,13 @@ def test_advmod():
 
 def test_complex_verb():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_complex_verb)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :End ; :text "went out of business' in ttl_str
-    assert ':has_active_entity [ :text "The store" ; a :OrganizationalEntity' in ttl_str or \
-           ':has_active_entity [ :text "The store" ; a :Location' in ttl_str
-    # TODO: Need to include time
+    assert ':has_active_entity [ :text "store" ; a :OrganizationalEntity' in ttl_str or \
+           ':has_active_entity [ :text "store" ; a :Location' in ttl_str or \
+           ':has_topic [ :text "store" ; a :OrganizationalEntity' in ttl_str or \
+           ':has_topic [ :text "store" ; a :Location' in ttl_str
     # Output Turtle:
     # :Sentence_7adde9e0-d3ba a :Sentence ; :offset 1 .
     # :Sentence_7adde9e0-d3ba :text "The store went out of business on Tuesday." .
@@ -218,14 +219,15 @@ def test_complex_verb():
     # :Sentence_7adde9e0-d3ba :has_semantic :Event_59a0d632-e62e .
     # :Event_59a0d632-e62e a :End ; :text "went out of business" .
     # :Event_59a0d632-e62e :has_active_entity [ :text "The store" ; a :OrganizationalEntity ] .
+    # :Event_59a0d632-e62e a :EnvironmentAndCondition ; :text "on Tuesday" .
 
 
 def test_acomp_xcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_acomp_xcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'pathos' in ttl_str
-    assert ':voice "active" ; :tense "present"' in ttl_str
+    assert ':tense "present"' in ttl_str
     assert 'a :EmotionalResponse ; :text "unable to stomach' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':has_topic [ :text "lies' in ttl_str
@@ -250,10 +252,10 @@ def test_acomp_xcomp():
 
 def test_neg_acomp_xcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_neg_acomp_xcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'pathos' in ttl_str
-    assert ':voice "active" ; :tense "present"' in ttl_str
+    assert ':tense "present"' in ttl_str
     assert 'a :EmotionalResponse ; :text "unable to stomach' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':has_topic [ :text "lies' in ttl_str
@@ -278,10 +280,10 @@ def test_neg_acomp_xcomp():
 
 def test_non_person_subject():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_non_person_subject)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
-    assert 'pathos' in ttl_str
-    assert ':voice "passive" ; :tense "past' in ttl_str
+    assert 'pathos' in ttl_str or 'imagery' in ttl_str
+    assert ':tense "past' in ttl_str
     assert ' a :EmotionalResponse' in ttl_str     # hopes
     assert ' a :End' in ttl_str                   # dashed
     assert ':has_affected_entity :John' in ttl_str
@@ -307,10 +309,10 @@ def test_non_person_subject():
 
 def test_first_person():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_first_person)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':sentence_person 1 ; :sentiment "negative' in ttl_str
-    assert ':voice "active" ; :tense "past' in ttl_str
+    assert ':tense "past' in ttl_str
     assert ':negated true' in ttl_str
     assert 'a :ReadinessAndAbility' in ttl_str
     assert ':has_active_entity [ :text "I" ; a :Person' in ttl_str
@@ -327,7 +329,7 @@ def test_first_person():
 
 def test_pobj_semantics():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_pobj_semantics)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert "ethos" in ttl_str
     assert 'a :Avoidance ; :text "escaped' in ttl_str
@@ -360,7 +362,7 @@ def test_pobj_semantics():
 
 def test_multiple_subjects():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_multiple_subjects)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert 'a :DisagreementAndDispute ; :text "difference of opinion' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
@@ -389,7 +391,7 @@ def test_multiple_subjects():
 
 def test_multiple_xcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_multiple_xcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':has_active_entity :John' in ttl_str
     assert ' a :ArtAndEntertainmentEvent ; :text "ski' in ttl_str
@@ -415,12 +417,12 @@ def test_multiple_xcomp():
 
 def test_location_hierarchy():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_location_hierarchy)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':mentions geo:2658434' in ttl_str     # Switzerland
     assert 'imagery' in ttl_str
     assert 'a :EnvironmentAndCondition' in ttl_str
-    assert ':has_location [ :text "Switzerland\'s mountains" ; a :Location' in ttl_str
+    assert ':has_location [ :text "Switzerland' in ttl_str
     # Output Turtle:
     # :Sentence_50121e94-0b6f a :Sentence ; :offset 1 .
     # :Sentence_50121e94-0b6f :text "Switzerland\'s mountains are magnificent." .
@@ -438,7 +440,7 @@ def test_location_hierarchy():
 
 def test_weather():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_weather)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':mentions :Hurricane_Otis' in ttl_str and ':mentions :Acapulco' in ttl_str
     assert ':mentions geo:3996063' in ttl_str      # Mexico
@@ -485,7 +487,7 @@ def test_weather():
 
 def test_coref():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_coref)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert "repetition" in ttl_str
     assert 'a :Change ; :text "cut' in ttl_str

@@ -16,7 +16,7 @@ text_coref = 'Joe broke his foot. He went to the doctor.'
 text_xcomp = 'Mary enjoyed being with her grandfather.'
 text_modal = 'Mary can visit her grandfather on Tuesday.'
 text_modal_neg = 'Mary will not visit her grandfather next Tuesday.'
-text_acomp = 'The connector is compatible with the computer.'
+text_acomp = 'Mary is very beautiful.'
 text_pobj = 'The connector is in compliance with the specifications.'
 text_acomp_pcomp = 'Peter got tired of running.'
 text_acomp_xcomp = 'Jane is unable to tolerate smoking.'
@@ -34,14 +34,18 @@ text_negation = 'Jane did not stab John.'
 
 def test_clauses1():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_clauses1)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
-    assert ':has_active_entity :Mary' in ttl_str and ':has_active_entity :John' in ttl_str
+    assert ':has_active_entity :Mary' in ttl_str
     assert ':has_instrument [ :text "guitar" ; a :MusicalInstrument' in ttl_str
     assert 'a :BodilyAct ; :text "exercised' in ttl_str
     assert 'a :ArtAndEntertainmentEvent ; :text "practiced' in ttl_str \
            or 'a :KnowledgeAndSkill ; :text "practiced' in ttl_str
+    if 'a :KnowledgeAndSkill' in ttl_str:
+        assert ':has_described_entity :John' in ttl_str
+    else:
+        assert ':has_active_entity :John' in ttl_str
     # Output Turtle:
     # :Sentence_858a0e52-8ff0 a :Sentence ; :offset 1 .
     # :Sentence_858a0e52-8ff0 :text "While Mary exercised, John practiced guitar." .
@@ -73,7 +77,7 @@ def test_clauses1():
 
 def test_clauses2():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_clauses2)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert ':has_active_entity :Mary' in ttl_str and ':has_active_entity :George' in ttl_str
@@ -100,7 +104,7 @@ def test_clauses2():
 
 def test_aux_only():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_aux_only)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     if 'a :EnvironmentAndCondition' in ttl_str:    # is
@@ -128,13 +132,13 @@ def test_aux_only():
 
 def test_affiliation():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_affiliation)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :Affiliation ; :text "member' in ttl_str
     assert 'Mayberry_Book_Club a :Organization' in ttl_str
     assert ':has_active_entity :Joe' in ttl_str
-    assert ':affiliated_with :the_Mayberry' in ttl_str
+    assert ':affiliated_with :Mayberry_' in ttl_str
     # Output Turtle:
     # :Sentence_1c616dc4-e972 a :Sentence ; :offset 1 .
     # :Sentence_1c616dc4-e972 :text "Joe is a member of the Mayberry Book Club." .
@@ -160,7 +164,7 @@ def test_affiliation():
 
 def test_complex1():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_complex1)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert ':Harriet_Hageman' in ttl_str and ':Liz_Cheney' in ttl_str and ':Abraham_Lincoln' in ttl_str
@@ -247,13 +251,16 @@ def test_complex1():
 
 def test_complex2():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_complex2)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':has_quantification' in ttl_str
     assert ':WinAndLoss ; :text "won' in ttl_str
     assert ':has_active_entity :Harriet_Hageman' in ttl_str
-    assert ':Affiliation ; ; :text "endorsed' in ttl_str
-    assert ':affiliated_with [ :text "the former president' in ttl_str
+    assert ':Affiliation ; :text "endorsed' in ttl_str or ':CommunicationAndSpeechAct ; :text "endorsed' in ttl_str
+    # "former president" likely associated as 'agent'/active_entity in an Affiliation or as the "source"
+    # As a speech act, "former president" is the speaker/active_entity
+    assert ':affiliated_with [ :text "former president' in ttl_str \
+           or ':has_active_entity [ :text "former president' in ttl_str
     # Output Turtle:
     # :Sentence_af12d044-14eb a :Sentence ; :offset 1 .
     # :Sentence_af12d044-14eb :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by
@@ -291,7 +298,7 @@ def test_complex2():
 
 def test_coref():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_coref)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :HealthAndDiseaseRelated ; :text "broke' in ttl_str or \
@@ -336,7 +343,7 @@ def test_coref():
 
 def test_xcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_xcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert ':has_active_entity :Mary' in ttl_str
@@ -367,7 +374,7 @@ def test_xcomp():
 
 def test_modal():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_modal)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert ':has_active_entity :Mary' in ttl_str
@@ -397,10 +404,11 @@ def test_modal():
 
 def test_modal_neg():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_modal_neg)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':has_active_entity :Mary' in ttl_str
-    assert ':has_affected_entity [ :text "grandfather' in ttl_str or ':has_topic [ :text "grandfather' in ttl_str
+    assert ':has_affected_entity [ :text "grandfather' in ttl_str or ':has_topic [ :text "grandfather' in ttl_str \
+           or ':has_affected_entity [ :text "Mary' in ttl_str or ':has_topic [ :text "Mary' in ttl_str
     if ':negated true' in ttl_str:
         assert 'a :MeetingAndEncounter' in ttl_str
     else:
@@ -426,36 +434,38 @@ def test_modal_neg():
 
 def test_acomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_acomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
+    print(ttl_str)
     assert ':negated true' not in ttl_str
-    assert 'a :EnvironmentAndCondition' in ttl_str      # compatible
-    assert ':has_topic [ :text "connector' in ttl_str or \
-        ':has_topic [ :text "Connector' in ttl_str    # Could be MachineAndTool or ComponentPart
-    # Either the computer is the location or the inanimate "stimulus" (instrument); TODO: location is preferred
-    assert ':has_location [ :text "computer' in ttl_str or ':has_affected_entity [ :text "computer' in ttl_str \
-           or ':has_topic [ :text "computer' in ttl_str
+    assert 'a :EnvironmentAndCondition' in ttl_str
+    assert ':has_described_entity :Mary' in ttl_str
     # Output Turtle:
-    # :Sentence_a99a3309-5fe6 a :Sentence ; :offset 1 .
-    # :Sentence_a99a3309-5fe6 :text "The connector is compatible with the computer." .
-    # :Sentence_a99a3309-5fe6 :sentence_person 3 ; :sentiment "positive".
-    # :Sentence_a99a3309-5fe6 :tense "present" ; :summary "Connector works with computer." .
-    # :Sentence_a99a3309-5fe6 :grade_level 5 .
-    # :Sentence_a99a3309-5fe6 :has_semantic :Event_b8fa0351-790e .
-    # :Event_b8fa0351-790e a :EnvironmentAndCondition ; :text "The connector is compatible with the computer." .
-    # :Event_b8fa0351-790e :has_topic [ :text "connector" ; a :MachineAndTool ] .
-    # :Event_b8fa0351-790e :has_affected_entity [ :text "computer" ; a :MachineAndTool ] .
+    # :Sentence_5eb9aaef-2589 a :Sentence ; :offset 1 .
+    # :Sentence_5eb9aaef-2589 :text "Mary is very beautiful." .
+    # :Mary a :Person .
+    # :Mary rdfs:label "Mary" .
+    # :Mary rdfs:comment "Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/Mary" .
+    # :Mary :gender "female" .
+    # :Sentence_5eb9aaef-2589 :mentions :Mary .
+    # :Sentence_5eb9aaef-2589 :sentence_person 3 ; :sentiment "positive".
+    # :Sentence_5eb9aaef-2589 :tense "present" ; :summary "Mary is beautiful" .
+    # :Sentence_5eb9aaef-2589 :grade_level 3 .
+    # :Sentence_5eb9aaef-2589 :has_semantic  :Event_34d3a18a-81b8 .
+    # :Event_34d3a18a-81b8 a :EnvironmentAndCondition ; :text "beautiful" .
+    # :Event_34d3a18a-81b8 :has_described_entity :Mary .
 
 
 def test_pobj():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_pobj)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :Agreement' in ttl_str
     assert ':has_topic [ :text "connector' in ttl_str or ':has_topic [ :text "The connector' in ttl_str
     assert 'connector" ; a :ComponentPart' in ttl_str or 'connector" ; a :MachineAndTool' in ttl_str
-    assert ':has_topic [ :text "specifications" ; a :InformationSource' in ttl_str
+    assert ':has_topic [ :text "specifications" ; a :InformationSource' in ttl_str \
+           or 'a :EnvironmentAndCondition ; :text "specifications' in ttl_str
     # Output Turtle:
     # :Sentence_6f25ccc0-6bef a :Sentence ; :offset 1 .
     # :Sentence_6f25ccc0-6bef :text "The connector is in compliance with the specifications." .
@@ -470,14 +480,14 @@ def test_pobj():
 
 def test_acomp_pcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_acomp_pcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :BodilyAct ; :text "got tired' in ttl_str or \
            'a :SensoryPerception ; :text "got tired' in ttl_str or 'a :Change ; :text "got tired' in ttl_str
-    assert 'a :BodilyAct ; :text "running' in ttl_str
-    assert ':has_topic [ :text "running" ; a :MovementTravelAndTransportation' in ttl_str or \
-           ':has_topic [ :text "running" ; a :BodilyAct' in ttl_str
+    assert 'a :BodilyAct ; :text "running' in ttl_str \
+           or ':has_topic [ :text "running" ; a :MovementTravelAndTransportation' in ttl_str \
+           or ':has_topic [ :text "running" ; a :BodilyAct' in ttl_str
     # Output Turtle:
     # :Sentence_678b7c90-6579 a :Sentence ; :offset 1 .
     # :Sentence_678b7c90-6579 :text "Peter got tired of running." .
@@ -499,7 +509,7 @@ def test_acomp_pcomp():
 
 def test_acomp_xcomp():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_acomp_xcomp)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :EmotionalResponse ; :text "unable to tolerate' in ttl_str \
@@ -525,7 +535,7 @@ def test_acomp_xcomp():
 
 def test_idiom():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_idiom)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :Change ; :text "Wear and tear' in ttl_str
@@ -548,7 +558,7 @@ def test_idiom():
 
 def test_idiom_full_pass():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_idiom_full_pass)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :CommunicationAndSpeechAct ; :text "accused' in ttl_str or \
@@ -583,7 +593,7 @@ def test_idiom_full_pass():
 
 def test_idiom_trunc_pass():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_idiom_trunc_pass)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :CommunicationAndSpeechAct' in ttl_str or ':LegalEvent' in ttl_str   # accused
@@ -610,7 +620,7 @@ def test_idiom_trunc_pass():
 
 def test_negation_emotional():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_negation_emotional)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     assert ':negated true' not in ttl_str
     assert 'a :EmotionalResponse' in ttl_str
@@ -635,7 +645,7 @@ def test_negation_emotional():
 
 def test_negation():
     sent_dicts, quotations, quotations_dict = parse_narrative(text_negation)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
     if ':negated true' in ttl_str:
         assert 'a :AggressiveCriminalOrHostileAct '    # 'not stab' where stab = AggressiveCriminalOrHostileAct

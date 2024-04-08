@@ -22,7 +22,6 @@ semantic_labels = '"agent", "dative", "experiencer", "instrument", "location", "
                   '"patient", "source" or "theme"'
 sentiment = 'positive, negative or neutral'
 tense = 'past, present, future'
-voice = 'active or passive'
 
 # JSON formats
 consistency_format = '{"consistent": "bool"}'
@@ -36,10 +35,6 @@ narr_format = '{"goal_numbers": ["int"], ' \
                '"rhetorical_devices": [{"device_number": "int", "evidence": "string"}], ' \
                '"interpreted_text": [{"perspective": "string", "interpretation": "string"}], ' \
                '"ranking_by_perspective": [{"perspective": "string", "ranking": "int"}]}'
-
-passive_format = '{"semantics": {' \
-                 '"category_number": "int", ' \
-                 '"same_or_opposite": "string"}}'
 
 quote_format1 = '{"sentiment": "string", ' \
                 '"grade_level": "int", ' \
@@ -119,7 +114,7 @@ categories_text = 'The semantic topic categories are: ' \
     '22. a protest, demonstration, rally or strike ' \
     '23. disagreement, disapproval, dispute, controversy or violation of agreement ' \
     '24. discriminative or prejudicial act, or any act that is intolerant, unjust, unfair or inappropriate, ' \
-    'especially when biased by ethnicity, age, sexual orientation, disability, etc. ' \
+    'especially when motivated by ethnicity, age, sexual orientation, disability, etc. ' \
     '25. distribution or supply of something ' \
     '26. divorce or separation of a couple in a relationship ' \
     '27. related to economic or financial matters and conditions such as being in recession, going bankrupt, etc. ' \
@@ -136,7 +131,7 @@ categories_text = 'The semantic topic categories are: ' \
     '35. inclusion, unification, alignment and attachment such as adding to a list and assembling something ' \
     '36. issuing and publishing information such as a publishing a newspaper, or releasing a document such as a ' \
     'press briefing ' \
-    '37. having or using knowledge or skills which may be conveyed via a job, hobby, schooling or practice ' \
+    '37. having or using knowledge or skills which may be indicated by a job, hobby, schooling or practice ' \
     '38. any legal or judicial event such as testifying or arguing at a trial, reaching a verdict, selecting a ' \
     'jury, or handing down or appealing a judicial ruling ' \
     '39. marriage ' \
@@ -235,48 +230,51 @@ noun_categories_text = 'The noun types are: ' \
     '31. waste or residue ' \
     '32. other'
 
-rhetorical_devices = ['ad hominem', 'allusion', 'antanagoge', 'aphorism', 'ethos', 'expletive',
-                      'hyperbole', 'imagery', 'invective', 'irony', 'kairos', 'litote', 'logos',
-                      'metaphor', 'nostalgia', 'pathos', 'pleonasm', 'repetition', 'loaded language',
-                      'rhetorical question', 'juxtaposition']
+rhetorical_devices = ['ad baculum', 'ad hominem', 'ad populum', 'allusion', 'antanagoge', 'aphorism',
+                      'ethos', 'exceptionalism', 'expletive', 'hyperbole', 'imagery', 'invective', 'irony',
+                      'juxtaposition', 'kairos', 'litote', 'loaded language', 'logos', 'metaphor',
+                      'nostalgia', 'paralipsis', 'pathos', 'pleonasm', 'repetition', 'rhetorical question']
 
 rhetorical_devices_text = 'The rhetorical device categories are: ' \
-    '1. Use of wording that verbally demeans or attacks a person (ad hominem) ' \
-    '2. Reference to an historical/literary person, place or thing that has symbolic meaning such as ' \
+    '1. An appeal to force or a threat of force in order to compel a conclusion (ad baculum)' \
+    '2. Use of wording that verbally demeans or attacks a person (ad hominem) ' \
+    '3. Reference to general or popular knowledge such as "the most popular xyz" or "everyone says xyz" (ad populum) ' \
+    '4. Reference to an historical/literary person, place or thing that has symbolic meaning such as ' \
     'saying that "sleeping late is my Achilles heel" where "Achilles heel" is the reference (allusion) ' \
-    '3. Balancing negative wording with positive (antanagoge) ' \
-    '4. Expressing a truth or moral principle such as "a stitch in time saves nine" (aphorism) ' \
-    '5. Reference to authority figures, things that are popular, and/or to people in occupations that should ' \
-    'have knowledge (such as doctors or professors) in order to justify a statement (ethos) ' \
-    '6. Use of emphasis words, such as "in fact", "of course", "clearly" or "certainly" (expletive) ' \
-    '7. Use of exaggerated wording (hyperbole) ' \
-    '8. Use of imagery and descriptive phrases that paint a vivid picture that emotionally engages a reader ' \
-    '9. Use of ridicule, or angry or insulting language (invective) ' \
-    '10. Use of irony or satire ' \
-    '11. Reference invoking feelings/remembrances of specific day, time, event or season such as ' \
+    '5. Balancing negative wording with positive (antanagoge) ' \
+    '6. Expressing a truth or moral principle such as "a stitch in time saves nine" (aphorism) ' \
+    '7. Reference to authority figures and/or to people in occupations that should have knowledge ' \
+    '(such as doctors or professors) in order to justify a statement (ethos) ' \
+    '8. Use of language that indicates that a particular entity is somehow unique, extraordinary or ' \
+    'exemplary (exceptionalism)' \
+    '9. Use of emphasis words, such as "in fact", "of course", "clearly" or "certainly" (expletive) ' \
+    '10. Use of exaggerated wording (hyperbole) ' \
+    '11. Use of imagery and descriptive phrases that paint a vivid picture that emotionally engages a reader ' \
+    '12. Use of ridicule, or angry or insulting language (invective) ' \
+    '13. Use of irony or satire ' \
+    '14. Placing contrasting ideas or situations side by side (juxtaposition)' \
+    '15. Reference invoking feelings/remembrances of specific day, time, event or season such as ' \
     'discussing the Civil War in order to engage a reader (kairos) ' \
-    '12. Use of double negative (litote) ' \
-    '13. Use of logical reasoning terms, statistics and numbers (logos) ' \
-    '14. Use of analogy, metaphor and simile to compare one thing with another of a different kind ' \
-    '15. Use of wording that invokes nostalgia ' \
-    '16. Wording that appeals to emotion such as fear or empathy (pathos) ' \
-    '17. Use of superfluous or redundant language such as referring to a "burning fire" (pleonasm) ' \
-    '18. Repeating words for emphasis ' \
-    '19. Use of "loaded language" such as words like "double-dealing", with strong connotations which invoke ' \
-    'emotions and judgments'
-
-# Additional rhetorical devices for narratives
-additional_devices_text = \
-    '20. Asking rhetorical questions ' \
-    '21. Placing contrasting ideas or situations side by side (juxtaposition)'
+    '16. Use of double negative (litote) ' \
+    '17. Use of "loaded language" such as words like "double-dealing", with strong connotations which invoke ' \
+    'emotions and judgments' \
+    '18. Use of logical reasoning terms, statistics and numbers (logos) ' \
+    '19. Use of analogy, metaphor and simile to compare one thing with another of a different kind, or to ' \
+    'compare an abstract thing with a concrete entity (such as peace being described as a dove) ' \
+    '20. Use of wording that invokes nostalgia ' \
+    '21. Indicating that little or nothing is said about a subject in order to bring attention to it, ' \
+    'such as saying "I will not mention their many crimes" (paralipsis)' \
+    '22. Wording that appeals to emotion such as fear or empathy (pathos) ' \
+    '23. Use of superfluous or redundant language such as referring to a "burning fire" (pleonasm) ' \
+    '24. Repeating words, phrases or sentences for emphasis ' \
+    '25. Asking rhetorical questions '
 
 # Co-reference related prompting - Future
 coref_prompt = 'You are a linguist and NLP expert, analyzing text. Here are a series of zero to three preceding ' \
     'sentences (ending with the string "**" which should be ignored): {sentences} ** Here is the next sentence ' \
-    '(also ending with the string "**" which is ignored): {sent_text} ** ' \
-    'Resolve ALL pronomial anaphora that are references to personal pronouns found in the "next sentence". ' \
-    'Update each of the personal pronouns with their more specific details. Return the updated ' + \
-    f'sentence using the JSON format, {coref_format}.'
+    '(also ending with the string "**" which is ignored): {sent_text} ** Resolve ALL personal pronouns found in ' \
+    'the "next sentence". Update each of the personal pronouns with their specific noun references. Return the ' + \
+    f'updated sentence using the JSON format, {coref_format}.'
 
 # Validation prompting
 name_check_prompt = 'You are a student researching whether two individuals described in text could be the same ' \
@@ -291,7 +289,7 @@ narr_prompt = f'You are a political observer analyzing news articles. ' \
     '{narr_text} **' + \
     f'Here is a numbered list of the possible goals of the narrative. {narrative_goals_text} ' \
     f'Here is a numbered list of the possible rhetorical devices that may be used in the narrative. ' \
-    f'{rhetorical_devices_text} {additional_devices_text} ' + \
+    f'{rhetorical_devices_text} ' + \
     'Indicate the numbers of the 2 most likely narrative goals. Indicate the numbers of the rhetorical' \
     'devices used, and explain why those devices were returned. Also, summarize the narrative, and explain ' + \
     f'how it would be interpreted from each of the following perspectives: {interpretation_views}. Rank the ' \
@@ -404,7 +402,7 @@ def access_api(content: str) -> dict:
         if "finish_reason='stop'" not in str(response):
             logging.error(f'Non-stop finish response, {str(response)}, for content, {content}')
             return dict()
-    except Exception:
+    except Exception as e:
         logging.error(f'OpenAI exception for content, {content}: {str(e)}')
         return dict()
     try:

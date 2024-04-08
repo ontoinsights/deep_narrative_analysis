@@ -3,6 +3,7 @@
 
 import json
 import logging
+from rdflib import Literal
 from typing import Union
 import uuid
 from datetime import datetime
@@ -19,6 +20,7 @@ detail: str = 'detail'
 error_str: str = 'error'
 narrative_id: str = 'narrativeId'
 repository: str = 'repository'
+sentences: str = 'sentences'
 
 
 def _check_from_to_date(date_value: str) -> bool:
@@ -70,7 +72,7 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
     and 'narrativeId' query parameters. Then, check that a graph with the narrativeId exists or not in the
     specified repository (depending on the should_exist parameter) in that database. (3) If the check_param ==
     'news', validate that the contents of 'from' and 'to' are of the form, YYYY-mm-dd. Also verify that
-    'topic' is not blank.
+    'topic' is not blank. (4) If the check_param == 'sentences', validate that this is a positive integer.
 
     :param check_param: String indicating the argument name ('repository', 'narrativeId', 'news')
     :param should_exist: If true, indicates that the entity SHOULD exist
@@ -81,7 +83,15 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
     args_dict = req.args.to_dict()
     if check_param in (repository, narrative_id):
         if not check_server_status():
-            return {error_str: f'Database server at the address in the environment variable, STARDOG_ENDPOINT'}, 404
+            return {error_str: f'Database server must be active at the address in the environment variable, '
+                               f'STARDOG_ENDPOINT'}, 404
+    elif check_param == sentences:
+        if sentences not in args_dict:
+            return {sentences: 100}, 200
+        else:
+            if not args_dict[sentences].isdigit() or int(args_dict[sentences]) < 2:
+                return {error_str: f'Number of sentences to ingest must be an integer, greater than 1.'}, 400
+            return {sentences: int(args_dict[sentences])}, 200
     elif check_param == 'news':
         if 'topic' not in args_dict or not args_dict['topic'] or 'fromDate' not in args_dict \
                 or 'toDate' not in args_dict:
@@ -129,7 +139,8 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
     return dict(), 200
 
 
-def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list) -> (bool, list, str, int):
+def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list,
+                     sentence_info: list) -> (bool, list, str, int):
     """
     Add the meta-data triples for a narrative to the specified database of the server.
 
@@ -138,7 +149,9 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list) -> 
     :param narr: String holding the text of the narrative
     :param narr_details: Array holding the details related to the original text -
                          The order of the entries are title, date published,
-                         source/publisher, url and length of text
+                         source/publisher, and url
+    :param sentence_info: Array holding the number of sentences in the narrative/article
+                         and the actual number of ingested
     :return: A tuple holding a success boolean (T/F), a list of Turtle statements defining
              the metadata, a string indicated the date/time created and a count of the number
              of triples in the narrative graph
@@ -153,9 +166,10 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list) -> 
     turtle.extend([f':{narr_id} a :InformationGraph ; dc:created "{created_at}"^^xsd:dateTime ; ',
                    f':number_triples {numb_triples} ; :encodes :Narrative_{narr_id} .',
                    f':Narrative_{narr_id} a :Narrative ; '
+                   f':number_sentences "{sentence_info[0]}" ; :number_ingested "{sentence_info[1]}" ; '
                    f':source "{narr_details[2]}" ; :external_link "{narr_details[3]}" ; '
-                   f'dc:title "{narr_details[0]}" ; :number_characters {narr_details[4]} .',
-                   f':Narrative_{narr_id} :text "{narr}" .'])
+                   f'dc:title "{narr_details[0]}" .',
+                   f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
     if narr_details[1] != 'not defined':
         turtle.append(f':Narrative_{narr_id} dc:created "{narr_details[1]}"^^xsd:dateTime .')
     goal_dict = access_api(narr_prompt.replace("{narr_text}", narr))
@@ -164,7 +178,7 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list) -> 
     for goal in goal_dict['goal_numbers']:
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[goal - 1]}" .')
     for device_detail in goal_dict['rhetorical_devices']:
-        device_numb = device_detail['device_number']
+        device_numb = int(device_detail['device_number'])
         predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
         turtle.append(f':Narrative_{narr_id} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
     for key in goal_dict:
@@ -192,36 +206,24 @@ def parse_narrative_query_binding(binding_set: dict) -> dict:
                                   'length': binding_set['length']['value']}}
 
 
-def process_new_narrative(metadata: list, narr_text: str, repo: str) -> (dict, str, int):
+def process_new_narrative(metadata: list, narr: str, repo: str) -> (dict, str, int):
     """
     Performs the sentence and quotation extractions and analysis, adding a narrative to
     the database with the specified name and address.
 
     :param metadata: Array holding the details related to the original text - The order of the entries
-                     are title, date published, source/publisher, url and length of text
-    :param narr_text: String holding the narrative text
+                     are title, date published, source/publisher, url and number of sentences to ingest
+    :param narr: String holding the narrative text
     :param repo: String holding the repository name for the narrative graph
     :return: A tuple consisting of a dictionary with the details for the narrative added
              to the database, an error message if an error occurred or an empty string, and an
              integer holding the HTTP status code
     """
-    # Future: Do we care if a narrative with this or similar metadata already exists?
-    # TODO: Check that the text is not similar since the same article could be picked up by different publishers
-    # Process first 1000 characters   TODO: Are 1000 chars enough?
-    if int(metadata[4]) > 1000:
-        length = 1250
-        narr = narr_text[:1000]
-        # End on a '.' vs potentially a partial sentence (ideally end on '. ')
-        # TODO: Some publishers do not have spaces after periods if on paragraph boundary, in schema.org/articleBody
-        narr = narr[0:(narr.rindex('.') + 1)]
-    else:
-        length = metadata[4]
-        narr = narr_text
     graph_uuid = str(uuid.uuid4())[:8]   # IRI of the named graph for the narrative, and the narrative itself
     title = metadata[0]
     logging.info(f'Ingesting {title} to {repo}')
     sentence_dicts, quotations, quotations_dict = parse_narrative(narr)
-    success, graph_ttl = create_graph(quotations_dict, sentence_dicts)
+    success, actual_sentences, graph_ttl = create_graph(quotations_dict, sentence_dicts, metadata[4])
     if not success:
         return dict(), f'Error creating the graph for {title}', 500
     logging.info('Loading knowledge graph')
@@ -230,7 +232,8 @@ def process_new_narrative(metadata: list, narr_text: str, repo: str) -> (dict, s
         return dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500
     # Process the metadata and add individual quotes to the meta-db
     logging.info("Loading metadata")
-    success, meta_ttl, created, numb_triples = get_metadata_ttl(repo, graph_uuid, narr, metadata)
+    success, meta_ttl, created, numb_triples = get_metadata_ttl(repo, graph_uuid, narr, metadata,
+                                                                [len(sentence_dicts), actual_sentences])
     if not success:
         return dict(), f'Error creating the metadata for {title}', 500
     for quotation in quotations:
@@ -242,7 +245,7 @@ def process_new_narrative(metadata: list, narr_text: str, repo: str) -> (dict, s
     resp_dict = {repository: repo,
                  'narrativeDetails': {
                      narrative_id: graph_uuid, 'processed': created, 'numberOfTriples': numb_triples,
+                     'numberOfSentences': len(sentence_dicts), 'numberIngested': actual_sentences,
                      'narrativeMetadata': {'title': title, 'published': metadata[1],
-                                           'source': metadata[2], 'url': metadata[3],
-                                           'length': length}}}
+                                           'source': metadata[2], 'url': metadata[3]}}}
     return resp_dict, empty_string, 201

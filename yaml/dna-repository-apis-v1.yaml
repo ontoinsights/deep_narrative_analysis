@@ -9,127 +9,64 @@ info:
     To use the API and for more information, refer to the README.txt file in 
     the [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis).
     Note that this implementation assumes storage of graphs in a Stardog database.
-    An environment variable defines the location of that database (typically a 
-    Stardog Cloud instance). If that does not exist or the environment variable is
-    not defined, DNA will not function.
+    Environment variables define the location of that database (typically a 
+    Stardog Cloud instance), and a username/password to access it (specially, 
+    STARDOG_ENDPOINT, STARDOG_USER and STARDOG_PASSWORD). In addition,
+    GEONAMES_ID and OPENAI_API_KEY environment variables MUST be set. If the 
+    environment variables are not defined, DNA will not function.
     
     The following is a typical workflow after starting the DNA application:
     - Create a new repository by POSTing to
       /dna/v1/repositories?repository=repo_name, or an existing repository may 
       be reused
-    - Acquire news articles to be ingested by POSTing to
-      /dna/v1/news?topic=topic_name&from=from_date&to=to_date&key=news_key
-      - At this time, only English text articles will be ingested
-    - OR ingest narratives or articles to the repository by POSTing to 
-      /dna/v1/repositories/narratives?repository=repo_name 
-      with a request body holding the narrative metadata and text 
-      (the response body will contain the narrative's id)
-      - As above, only English text narratives and articles are 
-        supported
-    - Review the contents of a repository by GETting 
+    - OR -
+    - Use an existing repository (existing repositories are listed by 
+      GETting /dna/v1/repositories)
+    - THEN - 
+    - Ingest a narrative or news article by POSTing its metadata 
+      and text to 
+      /dna/v1/repositories/narrative-texts?repository=repo_name 
+      with a request body holding the metadata details and full text
+      (the response body will contain the narrative's id as stored in
+      the repository)
+      - Only English text articles are currently processed
+      - Automated ingest is possible but many sites require subscriptions
+        which are not currently supported 
+    - OR - 
+    - Determine which (already ingested) articles or narratives 
+      are of interest by GETting 
       /dna/v1/repositories/narratives?repository=repo_name
-      (the response body will contain a list of all narratives and articles
-      and a subset of their data)
-    - To obtain the specific triples in a narrative or article, GET 
-      /dna/v1/repositories/narratives/graphs?repository=repo_name&narrativeId=narr_id
-      (the response body will contain a list of all triples)
+      (the response body will contain a list of all narratives/articles
+      and their metadata)
+    - THEN -
+    - Select articles to be analyzed/compared
+      - Note that these APIs are currently under development
       
-    Note that GETting /dna/v1/repositories or /dna/v1/repositories/narratives
+    To review the specific triples in a narrative or article, GET 
+    /dna/v1/repositories/narratives/graphs?repository=repo_name&narrativeId=narr_id
+    (the response body will contain a list of all triples).
+    
+    To update the triples or to add the narrative/article to another
+    repository, POST to 
+    /dna/v1/repositories/narratives/graphs?repository=repo_name&narrativeId=narr_id
+    where the narrativeId must be the same id if updating in the original 
+    repository, or can be any UNIQUE id if posting to a new repository. Note 
+    that the request body must contain the complete list of triples.
+      
+    GETting /dna/v1/repositories or /dna/v1/repositories/narratives
     will return a list of all DNA repositories or all narratives/articles in
     a repository, respectively.
     
     DELETEing using the /dna/v1/repositories or /dna/v1/repositories/narratives 
     APIs will remove the specified repository or narrative/article. Please use 
-    these commands with caution since the results are not reversable.
+    these commands with caution since the results are not reversible.
   contact:
     email: andrea@ontoinsights.com
   license:
     name: Creative Commons Attribution 4.0 International Public License
     url: https://creativecommons.org/licenses/by/4.0/legalcode
-  version: '1.2'
+  version: '1.15'
 paths:
-  /dna/v1/news:
-    get:
-      summary: >-
-        Get a list of news articles regarding the specified topic,
-        published within the indicated date range
-      description: >-
-        Using the NewsAPI, return a list of articles relevant to the
-        specified topic and within the indicated date range. Note that
-        the 'free' version of newsapi.org restricts requests to a time
-        period of the previous month. Take care when defining a time 
-        period to match the pricing model associated with your API key.
-      parameters:
-        - $ref: '#/components/parameters/topic'
-        - $ref: '#/components/parameters/fromDate'
-        - $ref: '#/components/parameters/toDate'
-      operationId: getNews
-      responses:
-        '200':
-          description: Successful operation (may be empty)
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NewsList' 
-        '400':
-          description: News list - Missing or invalid content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest'  
-        '500':
-          description: Internal processing error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalError'  
-    post:
-      summary: >-
-        Query for and ingest a list of news articles given the
-        query parameter details 
-      description: >-
-        Get a list of news articles regarding the specified topic,
-        published within the indicated date range, and then ingest
-        ones with sufficient, accessible text to the specified 
-        repository. The number ingested can be limited to the first
-        x, where x is specified using the numberToIngest query
-        parameter.
-      parameters:
-        - $ref: '#/components/parameters/repository'
-        - $ref: '#/components/parameters/topic'
-        - $ref: '#/components/parameters/fromDate'
-        - $ref: '#/components/parameters/toDate'
-        - $ref: '#/components/parameters/numberToIngest'
-      operationId: ingestNews
-      responses:
-        '200':
-          description: News articles ingested
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/NewsIngested' 
-        '400':
-          description: News ingest - Missing or invalid content
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BadRequest' 
-        '404':
-          description: News ingest - Repository not found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  error:
-                    type: string
-                    example: Repository with the name, foo, was not found at http://example.com
-        '500':
-          description: Internal processing error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/InternalError'  
   /dna/v1/repositories:
     get:
       summary: >-
@@ -279,12 +216,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalError'  
     post:
-      summary: Ingest a narrative or news article to the specified repository
+      summary: Ingest a news article to the specified repository
       description: >-
-        Process a narrative or article based on details in the query parameters
-        and request body, and ingest it to the specified repository 
+        Process a narrative or article based on details in the request body, 
+        and ingest it to the specified repository. Note that the full
+        text of the narrative/article must be specified in the body's "text"
+        field. Also, the "title" and "source" details must be provided.
       parameters:
         - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/sentences'
       operationId: ingestNarrative
       requestBody:
         description: Ingest narrative
@@ -301,12 +241,9 @@ paths:
               schema:
                 type: object
                 properties:
-                  server:
-                    type: string
-                    example: http://example.com
                   repository:
                     type: string
-                    example: dna
+                    example: foo
                   narrativeDetails:
                     $ref: '#/components/schemas/NarrativeDetails'
         '400':
@@ -487,17 +424,6 @@ paths:
                 $ref: '#/components/schemas/InternalError'
 components:
   parameters:
-    fromDate:
-      name: fromDate
-      in: query
-      description: >-
-        Date in yyyy-mm-dd format on or after which the news article
-        is published
-      required: true
-      schema:
-        type: string
-        format: date
-        example: 2023-07-09
     narrativeId:
       name: narrativeId
       in: query
@@ -507,17 +433,18 @@ components:
         type: string
         format: uuid
         example: 73cf1b89
-    numberToIngest:
-      name: numberToIngest
+    sentences:
+      name: sentences
       in: query
-      description: >-
-        Number of news articles to ingest from a retrieval
-        from newsorg.api. If not specified, all articles
-        that are retrieved with sufficient, valid text are
-        ingested.
+      description: >
+        Number of sentences of the narrative/article to ingest.
+        If omitted, up to 100 sentences are ingested, but the
+        processing time is lengthy. (This is being addressed
+        by current development.)
       required: false
       schema:
         type: integer
+        example: 10
     repository:
       name: repository
       in: query
@@ -526,56 +453,7 @@ components:
       required: true
       schema:
         type: string
-    toDate:
-      name: toDate
-      in: query
-      description: >-
-        Date in yyyy-mm-dd format before which the news article
-        is published
-      required: true
-      schema:
-        type: string
-        format: date
-        example: 2023-07-11
-    topic:
-      name: topic
-      in: query
-      description: >-
-        String specifying keywords/phrases to locate in news article 
-        titles and bodies. Format rules: 1) Surround phrases with 
-        quotes (") for exact match; 2) Prepend words or phrases that 
-        must appear with a + symbol; 3) Prepend words that must not 
-        appear with a - symbol; 4) Alternatively, use AND / OR / NOT 
-        keywords, and group these with parenthesis; 5) URL-encode 
-        the string
-      required: true
-      schema:
-        type: string
-        example: +Omnicron+vaccine
   schemas:
-    ArticleList:
-      type: array
-      items:
-        $ref: '#/components/schemas/ArticleDetails'  
-    ArticleDetails:
-      type: object
-      properties:
-        title:
-          type: string
-          example: New vaccine released
-        published:
-          type: string
-          format: date-time
-          example: 2023-07-10T23:12:45
-        source:
-          type: string
-          example: New York Times
-        url:
-          type: string
-          example: https://www.nytimes.com/2023/07/10/example/foo.html
-        length:
-          type: integer
-          example: 2351
     BadRequest:
       type: object
       properties:
@@ -589,11 +467,30 @@ components:
     InputNarrative:
       type: object
       properties:
-        narrativeMetadata: 
-          $ref: '#/components/schemas/NarrativeMeta'
-        narrative:
-          type: string
-          example: This is the text of the narrative.
+        title:
+            type: string
+            description: Article, blog post, ... title
+            example: A Narrative Title
+        published:
+            type: string
+            description: Date/time when the text was published; May be omitted
+            format: date-time
+            example: 2022-07-14T17:32:28Z
+        source:
+            type: string
+            description: >
+              String identifying the source of the narrative
+            example: Wall Street Journal
+        url:
+            type: string
+            description: >-
+              String identifying the online location of the article, its 
+              reference in an online repository, etc.; May be omitted
+            example: http://example_news.com/abc123
+        text:
+            type: string
+            description: >-
+              String holding the text of the narrative/news article
     InternalError:
       type: object
       properties:
@@ -632,6 +529,16 @@ components:
           type: integer
           description: Number of triples in the information graph
           example: 500
+        numberOfSentences:
+            type: integer
+            description: >
+              Integer indicating the total number of sentences in the text
+            example: 60
+        numberIngested:
+            type: integer
+            description: >
+              Integer indicating the number of sentences ingested
+            example: 10
         narrativeMetadata:
           $ref: '#/components/schemas/NarrativeMeta'
     NarrativeList:
@@ -653,7 +560,7 @@ components:
             example: A Narrative Title
         published:
             type: string
-            description: Date/time when the text was published
+            description: Date/time when the text was published; May be blank
             format: date-time 
             example: 2022-07-14T17:32:28Z
         source:
@@ -663,49 +570,8 @@ components:
             type: string
             description: >-
               String identifying the online location of the article, its 
-              reference in an online repository, etc. 
-            example: Identifier_such_as_URL
-        length:
-            type: integer
-            description: Length of the narrative
-            example: 2351
-    NewsList:
-      type: object
-      properties:
-        topic:
-          type: string
-          example: +Omnicron+vaccine
-        fromDate:
-          type: string
-          format: date
-          example: 2023-07-09
-        toDate:
-          type: string
-          format: date
-          example: 2023-07-11
-        articles:
-          $ref: '#/components/schemas/ArticleList'
-    NewsIngested:
-      type: object
-      properties:
-        topic:
-          type: string
-          example: +Omnicron+vaccine
-        fromDate:
-          type: string
-          format: date
-          example: 2023-07-09
-        toDate:
-          type: string
-          format: date
-          example: 2023-07-11
-        repository:
-          type: string
-          example: dna
-        articles:
-          $ref: '#/components/schemas/ArticleList'
-        failed_articles:
-          $ref: '#/components/schemas/ArticleList'
+              reference in an online repository, etc.; May be blank
+            example: http://example_news.com/abc123
     RepositoryList:
       type: array
       items:

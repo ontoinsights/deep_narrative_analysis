@@ -310,6 +310,13 @@
                                     rdfs:label "has semantic"@en .
 
 
+###  urn:ontoinsights:dna:has_source
+<urn:ontoinsights:dna:has_source> rdf:type owl:ObjectProperty ;
+                                  rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                  rdfs:comment "References an entity in the semantic role of 'source'. That is the original location of something, the entity from which a sensation (such as smell) originates, or the owner of something when involved in a transfer."@en ;
+                                  rdfs:label "has source"@en .
+
+
 ###  urn:ontoinsights:dna:has_time
 <urn:ontoinsights:dna:has_time> rdf:type owl:ObjectProperty ;
                                 rdfs:range <urn:ontoinsights:dna:Time> ;
@@ -591,6 +598,13 @@
                               rdfs:label "errors (boolean)"@en .
 
 
+###  urn:ontoinsights:dna:external_identifier
+<urn:ontoinsights:dna:external_identifier> rdf:type owl:DatatypeProperty ;
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en ;
+                                           rdfs:label "external identifier"@en .
+
+
 ###  urn:ontoinsights:dna:external_link
 <urn:ontoinsights:dna:external_link> rdf:type owl:DatatypeProperty ;
                                      rdfs:range xsd:string ;
@@ -636,6 +650,13 @@
                                    rdfs:range xsd:integer ;
                                    rdfs:comment "Defines the grade level of an individual who can understand the full semantics of the Sentence."@en ;
                                    rdfs:label "grade level"@en .
+
+
+###  urn:ontoinsights:dna:identifier_source
+<urn:ontoinsights:dna:identifier_source> rdf:type owl:DatatypeProperty ;
+                                         rdfs:range xsd:string ;
+                                         rdfs:comment "Text specifying the source 'system' (such as Wikidata) for an external identifier for an entity. This is used as an RDF edge property for :external_identifier."@en ;
+                                         rdfs:label "identifier source"@en .
 
 
 ###  urn:ontoinsights:dna:imaginary
@@ -802,6 +823,26 @@
                                          rdfs:label "number of characters"@en .
 
 
+###  urn:ontoinsights:dna:number_ingested
+<urn:ontoinsights:dna:number_ingested> rdf:type owl:DatatypeProperty ;
+                                       rdfs:subPropertyOf <urn:ontoinsights:dna:count> ;
+                                       rdf:type owl:FunctionalProperty ;
+                                       rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
+                                       rdfs:range xsd:integer ;
+                                       rdfs:comment "A count of the number of sentences from an InformationSource that were ingested."@en ;
+                                       rdfs:label "number of sentences ingested"@en .
+
+
+###  urn:ontoinsights:dna:number_sentences
+<urn:ontoinsights:dna:number_sentences> rdf:type owl:DatatypeProperty ;
+                                        rdfs:subPropertyOf <urn:ontoinsights:dna:count> ;
+                                        rdf:type owl:FunctionalProperty ;
+                                        rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
+                                        rdfs:range xsd:integer ;
+                                        rdfs:comment "A count of the number of sentences in an InformationSource."@en ;
+                                        rdfs:label "number of sentences"@en .
+
+
 ###  urn:ontoinsights:dna:number_triples
 <urn:ontoinsights:dna:number_triples> rdf:type owl:DatatypeProperty ;
                                       rdfs:subPropertyOf <urn:ontoinsights:dna:count> ;
@@ -949,50 +990,59 @@
                                                      ] ;
                                          rdfs:range [ rdf:type rdfs:Datatype ;
                                                       owl:oneOf [ rdf:type rdf:List ;
-                                                                  rdf:first "ad hominem" ;
+                                                                  rdf:first "ad baculum" ;
                                                                   rdf:rest [ rdf:type rdf:List ;
-                                                                             rdf:first "allusion" ;
+                                                                             rdf:first "ad hominem" ;
                                                                              rdf:rest [ rdf:type rdf:List ;
-                                                                                        rdf:first "antanagoge" ;
+                                                                                        rdf:first "ad populum" ;
                                                                                         rdf:rest [ rdf:type rdf:List ;
-                                                                                                   rdf:first "aphorism" ;
+                                                                                                   rdf:first "allusion" ;
                                                                                                    rdf:rest [ rdf:type rdf:List ;
-                                                                                                              rdf:first "ethos" ;
+                                                                                                              rdf:first "antanagoge" ;
                                                                                                               rdf:rest [ rdf:type rdf:List ;
-                                                                                                                         rdf:first "expletive" ;
+                                                                                                                         rdf:first "aphorism" ;
                                                                                                                          rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                    rdf:first "hyperbole" ;
+                                                                                                                                    rdf:first "ethos" ;
                                                                                                                                     rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                               rdf:first "imagery" ;
+                                                                                                                                               rdf:first "exceptionalism" ;
                                                                                                                                                rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                          rdf:first "invective" ;
+                                                                                                                                                          rdf:first "expletive" ;
                                                                                                                                                           rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                     rdf:first "irony" ;
+                                                                                                                                                                     rdf:first "hyperbole" ;
                                                                                                                                                                      rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                rdf:first "juxtaposition" ;
+                                                                                                                                                                                rdf:first "imagery" ;
                                                                                                                                                                                 rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                           rdf:first "kairos" ;
+                                                                                                                                                                                           rdf:first "invective" ;
                                                                                                                                                                                            rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                      rdf:first "litote" ;
+                                                                                                                                                                                                      rdf:first "irony" ;
                                                                                                                                                                                                       rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                 rdf:first "loaded language" ;
+                                                                                                                                                                                                                 rdf:first "juxtaposition" ;
                                                                                                                                                                                                                  rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                            rdf:first "logos" ;
+                                                                                                                                                                                                                            rdf:first "kairos" ;
                                                                                                                                                                                                                             rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                       rdf:first "metaphor" ;
+                                                                                                                                                                                                                                       rdf:first "litote" ;
                                                                                                                                                                                                                                        rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                  rdf:first "nostalgia" ;
+                                                                                                                                                                                                                                                  rdf:first "loaded language" ;
                                                                                                                                                                                                                                                   rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                             rdf:first "pathos" ;
+                                                                                                                                                                                                                                                             rdf:first "logos" ;
                                                                                                                                                                                                                                                              rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                                        rdf:first "pleonasm" ;
+                                                                                                                                                                                                                                                                        rdf:first "metaphor" ;
                                                                                                                                                                                                                                                                         rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                                                   rdf:first "repeated statements" ;
+                                                                                                                                                                                                                                                                                   rdf:first "nostalgia" ;
                                                                                                                                                                                                                                                                                    rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                                                              rdf:first "repetition" ;
+                                                                                                                                                                                                                                                                                              rdf:first "paralipsis" ;
                                                                                                                                                                                                                                                                                               rdf:rest [ rdf:type rdf:List ;
-                                                                                                                                                                                                                                                                                                         rdf:first "rhetorical question" ;
-                                                                                                                                                                                                                                                                                                         rdf:rest rdf:nil
+                                                                                                                                                                                                                                                                                                         rdf:first "pathos" ;
+                                                                                                                                                                                                                                                                                                         rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                                                                                                                                                    rdf:first "pleonasm" ;
+                                                                                                                                                                                                                                                                                                                    rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                                                                                                                                                               rdf:first "repetition" ;
+                                                                                                                                                                                                                                                                                                                               rdf:rest [ rdf:type rdf:List ;
+                                                                                                                                                                                                                                                                                                                                          rdf:first "rhetorical question" ;
+                                                                                                                                                                                                                                                                                                                                          rdf:rest rdf:nil
+                                                                                                                                                                                                                                                                                                                                        ]
+                                                                                                                                                                                                                                                                                                                             ]
+                                                                                                                                                                                                                                                                                                                  ]
                                                                                                                                                                                                                                                                                                        ]
                                                                                                                                                                                                                                                                                             ]
                                                                                                                                                                                                                                                                                  ]

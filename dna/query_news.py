@@ -9,20 +9,33 @@ from bs4 import BeautifulSoup
 
 from dna.utilities_and_language_specific import add_to_dictionary_values, empty_string, space
 
-news_key = os.environ.get('NEWS_API_KEY')
-newsapi_url = 'https://newsapi.org/v2/everything?'\
-    'q={topic}&from={from}&to={to}&searchIn=title,description&'\
-    'page={page}&sources={sources}&sortBy=popularity&language=en&apiKey={news_key}'
+news_key = os.environ.get('NEWS_API_KEY', 'None')
+newsapi_url = 'https://newsapi.org/v2/everything?q={topic}&from={from}&to={to}&sortBy=relevancy&'\
+    'page={page}&sources={sources}&language=en&apiKey={news_key}'
 
 # Sources limited to 20 at a time
 sources1 = 'abc-news,al-jazeera-english,associated-press,axios,bbc-news,bloomberg,breitbart-news,'\
            'business-insider,cbc-news,cbs-news,cnn,fox-news,google-news,independent,msnbc,national-review,'\
            'nbc-news,newsweek'
 sources2 = 'politico,reuters,the-american-conservative,the-globe-and-mail,the-hill,the-hindu,'\
-           'the-huffington-post,the-irish-times,the-jerusalem-post,the-times-of-india,the-wall-street-journal,'\
+           'the-huffington-post,the-irish-times,the-jerusalem-post,the-times-of-india,'\
            'the-washington-post,the-washington-times,time,usa-today'
 
 excluded_urls = ['/video', '/live', '/tv', 'bbc.co.uk/programmes']
+
+# NYTimes API - 10 results per page; sorted by relevance
+nyt_key = os.environ.get('NYT_API_KEY', 'None')
+nyt_user = os.environ.get('NYT_USER', 'None')
+nyt_password = os.environ.get('NYT_PASSWORD', 'None')
+nyt_url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q="{topic}"&begin_date={from}&end_date={to}&' \
+          'page={page}&fq=document_type:("article")%20AND%20source:("The%20New%20York%20Times")&fl=headline&' \
+          'fl=pub_date&fl=web_url&sort=relevance&api-key={nyt_key}'
+
+# WSJ search
+wsj_user = os.environ.get('WSJ_USER', 'None')
+wsj_password = os.environ.get('WSJ_PASSWORD', 'None')
+wsj_url = 'https://www.wsj.com/search?query={topic}&isToggleOn=true&operator=OR&sort=relevance&' \
+          'startDate={from}&endDate={to}&source=wsjie'
 
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) '
                          'Chrome/50.0.2661.102 Safari/537.36'}
@@ -55,7 +68,7 @@ extraction_details = {
     '.ndtv.': ['div&itemprop&articleBody', 'p'],
     '.newsweek.': ['schemaorg', 'articleBody'],
     'nypost.': ['', 'p'],
-    '.nytimes.': [],         # ['', 'p&class&css-at9mc1'],
+    '.nytimes.': ['', 'p&class&css-at9mc1'],
     '.politico.': ['', 'p&class&story-text__paragraph'],
     '.reuters.': ['', 'p&data-testid&*paragraph-'],
     '.rt.': ['div&class&article__text', 'p', 'div&class&article__share article__share_bottom'],
@@ -106,15 +119,81 @@ def _find_element(soup, start: str) -> list:
         for alt_start in starts:
             elements.extend(find_element(soup, alt_start))
             return elements
+    elif '&' in start:
+        strings = start.split('&')
+        tag = strings[0]
+        attrib_name = strings[1]
+        name = strings[2]
+        return soup.find(tag, {attrib_name: name})
     else:
-        if '&' in start:
-            strings = start.split('&')
-            tag = strings[0]
-            attrib_name = strings[1]
-            name = strings[2]
-            return soup.find(tag, {attrib_name: name})
-        else:
-            return soup.find(start)
+        return soup.find(start)
+
+
+def _get_nyt(dictionary: dict, nyt_request: str, page_number: int):
+    """
+    Use the New York Times API to retrieve articles with the specified topic, published within the
+    indicated date range.
+
+    :param dictionary: Dictionary storing the articles' details
+    :param nyt_request: The NYT API request
+    :param page_number: The page number of results if there are more than 10 results
+    :return: N/A (the dictionary is updated)
+    """
+    request = nyt_request.replace('{page}', str(page_number))
+    try:
+        resp = requests.get(request, timeout=10)
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'NYT API timeout: Query={request}')
+        return
+    except requests.exceptions.RequestException as e:
+        logging.error(f'NYT API query error: Query={request} and Exception={str(e)}')
+        return
+    if resp.status_code == 200:
+        json_response = resp.json()["response"]
+        number_results = json_response['meta']['hits']
+        if number_results > 0:
+            list_articles = json_response['docs']
+            for article in list_articles:
+                add_to_dictionary_values(dictionary, 'titles', article['headline']['main'], str)
+                add_to_dictionary_values(dictionary, 'dates', article['pub_date'], str)
+                add_to_dictionary_values(dictionary, 'sources', 'New York Times', str)
+                add_to_dictionary_values(dictionary, 'urls', article['web_url'], str)
+        if page_number == 1:
+            logging.info(f'Found {number_results} articles for the request {request}')
+            if number_results > 10:
+                number_pages = int(number_results/10)
+                if number_results % 10 > 0:
+                    number_pages += 1
+                for i in range(2, number_pages+1):
+                    get_nyt_articles(dictionary, request, i)
+    else:
+        logging.error(f'Failed to retrieve NYT articles for {request}, response code {resp.status_code}')
+
+
+def _get_wsj(dictionary: dict, wsj_request: str):
+    """
+    Use the Wall Street Journal online query to retrieve articles with the specified topic,
+    published within the indicated date range.
+
+    :param dictionary: Dictionary storing the articles' details
+    :param wsj_request: The WSJ search request
+    :return: N/A (the dictionary is updated)
+    """
+    try:
+        web_page = requests.get(wsj_request, headers=headers, timeout=10)
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'WSJ search timeout, {url}')
+        return empty_string
+    except requests.exceptions.RequestException as e:
+        logging.error(f'WSJ search error for url, {url}, Exception={str(e)}')
+        return empty_string
+    if web_page.status_code == 200:
+        soup = BeautifulSoup(web_page.text, 'html.parser')
+        articles = soup.find_all('article')
+        for article in articles:
+            anchor = article.findNext('a')  # Text and href
+            timestamp = article.findNext('p', 'WSJTheme--timestamp--22sfkNDv ')
+    # TODO: Page the WSJ results
 
 
 def _process_extraction(soup, value) -> str:
@@ -178,6 +257,9 @@ def _process_html(url: str) -> str:
     :return: The extracted text or an empty string
     """
     text = ''
+    # if '.nytimes.' in url:    TODO: Return _nytimes_text(url)
+    # elif '.wsj.' in url:      TODO: Return _wsj_text(url)
+    # else:
     try:
         web_page = requests.get(url, headers=headers, timeout=10)
     except requests.exceptions.ConnectTimeout:
@@ -223,18 +305,18 @@ def _process_json(soup) -> str:
     return empty_string
 
 
-def get_articles(dictionary: dict, request: str, source_list: str, page_number: int):
+def get_articles(dictionary: dict, news_request: str, source_list: str, page_number: int):
     """
     Use the News API to retrieve articles with the specified topic, published within the
     indicated date range.
 
     :param dictionary: Dictionary storing the articles' details
-    :param request: The query parameters specifying the topic and from/to dates
+    :param news_request: The query parameters specifying the topic and from/to dates
     :param source_list: A list of publications to query
     :param page_number: The page number of results if there are more than 200 results
     :return: N/A (the dictionary is updated)
     """
-    request = request.replace('{sources}', source_list).replace('{page}', str(page_number))
+    request = news_request.replace('{sources}', source_list).replace('{page}', str(page_number))
     try:
         resp = requests.get(request, timeout=10)
     except requests.exceptions.ConnectTimeout:
@@ -256,9 +338,6 @@ def get_articles(dictionary: dict, request: str, source_list: str, page_number: 
                 add_to_dictionary_values(dictionary, 'sources', article['source']['name'], str)
                 add_to_dictionary_values(dictionary, 'urls',
                                          article['url'].replace('https://consent.google.com/ml?continue=', ''), str)
-                contents = article['content'].split(' [+')   # For ex, "content text ... [+xxx chars]"
-                length_content = len(contents[0]) + int(contents[1].split(' chars')[0])
-                add_to_dictionary_values(dictionary, 'lengths', length_content, int)
         if page_number == 1:
             logging.info(f'Found {number_results} articles for the request {request}')
             if number_results > 100:
@@ -306,14 +385,24 @@ def get_matching_articles(match_details: dict) -> list:
     :return: A list of articles' metadata which match the details (metadata includes title, date, source
              url and length)
     """
-    # Get the articles and capture their metadata
-    curr_request = newsapi_url.replace('{topic}', match_details['topic']).replace('{news_key}', news_key) \
-        .replace('{from}', match_details['fromDate']).replace('{to}', match_details['toDate'])
     article_dict = {
-        'titles': [], 'dates': [], 'sources': [], 'urls': [], 'lengths': []
+        'titles': [], 'dates': [], 'sources': [], 'urls': []
     }
-    get_articles(article_dict, curr_request, sources1, 1)
-    get_articles(article_dict, curr_request, sources2, 1)
+    # Get the articles and capture their metadata
+    if news_key != 'None':
+        news_request = newsapi_url.replace('{topic}', f"+{match_details['topic'].replace(space, '+')}")\
+            .replace('{news_key}', news_key).replace('{from}', match_details['fromDate'])\
+            .replace('{to}', match_details['toDate'])
+        get_articles(article_dict, news_request, sources1, 1)
+        get_articles(article_dict, news_request, sources2, 1)
+    if nyt_key != 'None':
+        nyt_request = nyt_url.replace('{topic}', match_details['topic']).replace('{nyt_key}', nyt_key) \
+            .replace('{from}', match_details['fromDate'].replace('-', empty_string)) \
+            .replace('{to}', match_details['toDate'].replace('-', empty_string))
+        _get_nyt(article_dict, nyt_request, 1)
+    wsj_request = wsj_url.replace('{topic}', query_details['topic'].replace(space, '%20AND%20'))\
+        .replace('{from}', query_details['fromDate']).replace('{to}', query_details['toDate'])
+    _get_wsj(article_dict, wsj_request)
     # Remove duplicate titles if in Google News and another source
     remove_indices = []
     for i in range(0, len(article_dict['titles'])):
@@ -341,6 +430,5 @@ def get_matching_articles(match_details: dict) -> list:
         art_detail['published'] = article_dict['dates'][i]
         art_detail['source'] = article_dict['sources'][i]
         art_detail['url'] = article_dict['urls'][i]
-        art_detail['length'] = article_dict['lengths'][i]
         articles.append(art_detail)
     return articles

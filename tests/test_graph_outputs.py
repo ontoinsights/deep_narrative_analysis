@@ -12,10 +12,11 @@ sentences = \
     'an insidious lie about the recent FBI raid of his Mar-a-Lago residence.'
 
 
-def test_sentences():
+def test_sentences1():
     sent_dicts, quotations, quotations_dict = parse_narrative(sentences)
-    success, graph_ttl = create_graph(quotations_dict, sent_dicts)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts)
     ttl_str = str(graph_ttl)
+    assert index == 3
     assert 'a :WinAndLoss ; :text "conceded defeat' in ttl_str
     assert 'a :WinAndLoss ; :text "won' in ttl_str
     assert ':has_active_entity :Harriet_Hageman' in ttl_str and ':has_active_entity :Liz_Cheney' in ttl_str
@@ -157,3 +158,10 @@ def test_sentences():
     # :Event_2b9e96b2-5bfb a :ArrestAndImprisonment ; :text "FBI raid" .
     # :Event_2b9e96b2-5bfb :has_active_entity :FBI .
     # :Event_2b9e96b2-5bfb :has_location :Mar_a_Lago .
+
+
+def test_sentences2():
+    sent_dicts, quotations, quotations_dict = parse_narrative(sentences)
+    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts, 2)
+    ttl_str = str(graph_ttl)
+    assert index == 2

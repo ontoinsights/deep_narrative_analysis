@@ -52,7 +52,7 @@ def test_add_data():
 
 
 def test_construct():
-    success, turtle = construct_graph(construct_kg.replace('?graph', f':{test_repo}_{test_graph}'), test_repo)
+    success, turtle = construct_graph(construct_kg.replace('?g', f':{test_repo}_{test_graph}'), test_repo)
     assert success
     print(turtle)
     assert len(turtle) == 2
