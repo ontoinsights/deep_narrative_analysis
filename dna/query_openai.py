@@ -10,7 +10,7 @@ from openai import OpenAI
 from dna.utilities_and_language_specific import add_to_dictionary_values
 
 openai_api_key = os.environ.get('OPENAI_API_KEY')
-model_engine = "gpt-4-1106-preview"   # gpt-4 or gpt-4-1106-preview
+model_engine = "gpt-4-turbo"
 client = OpenAI()
 
 any_boolean = 'true/false'

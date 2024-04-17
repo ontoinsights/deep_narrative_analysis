@@ -154,7 +154,7 @@ def resolve_quotations(narr: str) -> (str, list, dict):
                     entities.append(f'{ent_text}+{ent.label_}')
             # Get attribution for the quote
             speaker_dict = access_api(speaker_prompt.replace("{narr_text}", narr).replace("{quote_text}", quote_text))
-            if 'speaker' in speaker_dict:
+            if 'speaker' in speaker_dict and speaker_dict['speaker'] not in ('error', 'string'):
                 attribution = speaker_dict['speaker']
                 quotation_dict[quote_numb] = (quote_text, attribution, entities)
             else:

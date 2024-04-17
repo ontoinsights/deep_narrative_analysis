@@ -18,8 +18,8 @@ delete_narrative = 'prefix : <urn:ontoinsights:dna:> WITH ?named ' \
 query_narratives = \
     'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> SELECT * WHERE { GRAPH ?named { ' \
     '?graph a :InformationGraph ; dc:created ?created ; :number_triples ?numbTriples ; :encodes ?narrative . ' \
-    '?narrative :source ?source ; :external_link ?url ; dc:title ?title ; :number_characters ?length . ' \
-    'OPTIONAL {?narrative dc:created ?published} } }'
+    '?narrative :source ?source ; dc:title ?title ; :number_sentences ?sents ; :number_ingested ?ingested ; ' \
+    'dc:created ?published ; :external_link ?url } }'
 
 query_repos = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> ' \
               'SELECT * WHERE {?repo a :Database ; dc:created ?created}'

@@ -179,7 +179,7 @@ def get_sentence_details(sent_iri: str, sent_text: str, updated_text: str, ttl_l
     (or quotation) level Turtle.
 
     :param sent_iri: The IRI identifying the current sentence
-    :param sent_text: String holding the text of up to the 3 last sentences
+    :param sent_text: String holding the original text of the sentence
     :param updated_text: String holding the sentence text if anaphora (co-references) are de-referenced;
                         Otherwise is the original sent_text
     :param ttl_list: The current Turtle definition where the new declarations will be stored
@@ -217,24 +217,34 @@ def get_sentence_details(sent_iri: str, sent_text: str, updated_text: str, ttl_l
         for quote_text in quote_texts:
             ttl_list.append(f'{sent_iri} :has_component :{quote_text} .')
     # Processing the first prompt for details such as sentence person, sentiment, tense, ...
-    summary = empty_string
     if for_quote:
         quote_dict = access_api(quote_prompt1.replace("{quote_text}", sent_text))   # Note different prompts
         if quote_dict:   # Might not get reply from OpenAI
-            sentiment = quote_dict['sentiment']
-            summary = quote_dict['summary']
-            ttl_list.extend([f'{sent_iri} :sentiment "{sentiment}" ; :summary "{summary}" .',
-                             f'{sent_iri} :grade_level {quote_dict["grade_level"]} .'])
+            if quote_dict['summary'] not in ('error', 'string'):
+                summary = quote_dict['summary']
+                ttl_list.append(f'{sent_iri} :summary "{summary}" .')
+            if quote_dict['sentiment'] in ('positive', 'negative', 'neutral'):
+                sentiment = quote_dict['sentiment']
+                ttl_list.append(f'{sent_iri} :sentiment "{sentiment}" .')
+            if type(quote_dict["grade_level"]) is int or quote_dict["grade_level"].isdigit():
+                ttl_list.append(f'{sent_iri} :grade_level {quote_dict["grade_level"]} .')
     else:
         sent_dict = access_api(sent_prompt1.replace("{sent_text}", sent_text))
         if sent_dict:   # Might not get reply from OpenAI
-            sentiment = sent_dict['sentiment']
-            tense = sent_dict['tense']
-            summary = sent_dict['summary']
-            ttl_list.extend([f'{sent_iri} :sentence_person {sent_dict["person"]} ; :sentiment "{sentiment}".',
-                             f'{sent_iri} :tense "{tense}" ; :summary "{summary}" .',
-                             f'{sent_iri} :grade_level {sent_dict["grade_level"]} .'])
-            if sent_dict['modal_text'].lower() != "none":
+            if sent_dict['summary'] not in ('error', 'string'):
+                summary = sent_dict['summary']
+                ttl_list.append(f'{sent_iri} :summary "{summary}" .')
+            if sent_dict['sentiment'] in ('positive', 'negative', 'neutral'):
+                sentiment = sent_dict['sentiment']
+                ttl_list.append(f'{sent_iri} :sentiment "{sentiment}" .')
+            if sent_dict['tense'] in ('past', 'present', 'future'):
+                tense = sent_dict['tense']
+                ttl_list.append(f'{sent_iri} :tense "{tense}" .')
+            if type(sent_dict['person']) is int or sent_dict['person'].isdigit():
+                ttl_list.append(f'{sent_iri} :sentence_person {sent_dict["person"]} .')
+            if type(sent_dict['grade_level']) is int or sent_dict['grade_level'].isdigit():
+                ttl_list.append(f'{sent_iri} :grade_level {sent_dict["grade_level"]} .')
+            if sent_dict['modal_text'].lower() not in ('none', 'error', 'string'):
                 modal_text = sent_dict['modal_text']
                 if modal_text not in modal_mapping:
                     if modal_text == 'can':
@@ -255,13 +265,14 @@ def get_sentence_details(sent_iri: str, sent_text: str, updated_text: str, ttl_l
     if sent_dict:   # Might not get reply from OpenAI or there are no rhetorical devices
         if 'rhetorical_devices' in sent_dict and len(sent_dict['rhetorical_devices']) > 0:
             for device_detail in sent_dict['rhetorical_devices']:
-                device_numb = int(device_detail['device_number'])
-                if 0 < device_numb < len(rhetorical_devices) + 1:
-                    predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
-                    ttl_list.append(f'{sent_iri} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
-                else:
-                    logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sent_text}')
-                    continue
+                if type(device_detail['device_number']) is int or device_detail['device_number'].isdigit():
+                    device_numb = int(device_detail['device_number'])
+                    if 0 < device_numb < len(rhetorical_devices) + 1:
+                        predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
+                        ttl_list.append(f'{sent_iri} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
+                    else:
+                        logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sent_text}')
+                        continue
     # Processing the events and states, and related nouns
     if for_quote:
         _sentence_semantics_processing(access_api(quote_prompt3.replace("{sent_text}", sent_text)),

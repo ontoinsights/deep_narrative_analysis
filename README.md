@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 29 March 2024
+Updated 17 April 2024
 
 ## License
 Creative Commons 
@@ -62,7 +62,6 @@ These environment variables need to be set for the DNA application:
   * The STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable
   * A user/password is defined and given a "cloud" role - enabling read and write
 
-
 Other components that must be installed or set up are:
 
 * spaCy language model 
@@ -77,9 +76,9 @@ Other components that must be installed or set up are:
     * As regards the database configuration, when creating the database, use the stardog.properties file in the _tools_ directory for reference
       * The important properties to set are "edge.properties = true" and "preserve.bnode.ids = false"
 
-Make sure that you always upgrade the spacy model ("en_core_web_trf") when upgrading spacy itself. Also, when updating the model, if you run into the error, "cannot import name 'get_terminal_size' from 'click.termui'", make sure that you have upgraded the _typer_ package to the latest version (at least >= 0.4.1). 
+Make sure that you always upgrade/download the current spacy model ("en_core_web_trf") when upgrading spacy itself. 
 
-Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask run". The RESTful DNA APIs will be accessible at http://127.0.0.1:5000/dna/v1/repositories (local only).
+Lastly, to run the DNA services, cd to the _dna_ directory and execute "flask run". The RESTful DNA APIs will be accessible at http://127.0.0.1:5000/dna/v1/repositories (local only). A log of DNA information and error messages is available in the _dna_ directory in the file, dna.log.
 
 ## Multilingual Support
 

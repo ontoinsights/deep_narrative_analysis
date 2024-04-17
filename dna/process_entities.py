@@ -44,7 +44,10 @@ def _check_wikipedia_match(entity_type: str, wiki_details: str) -> bool:
     """
     results_dict = access_api(
         wikipedia_prompt.replace("{text_type}", ner_translation[entity_type]).replace("{wiki_def}", wiki_details))
-    return results_dict['consistent']
+    if type(results_dict['consistent']) is int:
+        return results_dict['consistent']
+    else:
+        return False
 
 
 def _create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -> str:
@@ -219,7 +222,8 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
         if noun_text in noun_key or noun_key in noun_text:       # Strings might match
             match_dict = access_api(
                 name_check_prompt.replace("{noun1_text}", noun_text).replace("{noun2_text}", noun_key))
-            if 'probability' in match_dict:
+            if 'probability' in match_dict and (type(match_dict['probability']) is int or
+                                                match_dict['probability'].isdigit()):
                 if int(match_dict['probability']) > 85:
                     return nouns_dict[noun_key]
     return noun_type, empty_string

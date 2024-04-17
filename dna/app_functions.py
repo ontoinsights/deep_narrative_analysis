@@ -165,13 +165,10 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, narr_details: list,
     turtle = ttl_prefixes[:]
     turtle.extend([f':{narr_id} a :InformationGraph ; dc:created "{created_at}"^^xsd:dateTime ; ',
                    f':number_triples {numb_triples} ; :encodes :Narrative_{narr_id} .',
-                   f':Narrative_{narr_id} a :Narrative ; '
+                   f':Narrative_{narr_id} a :Narrative ; dc:created "{narr_details[1]}"^^xsd:dateTime ; ',
                    f':number_sentences "{sentence_info[0]}" ; :number_ingested "{sentence_info[1]}" ; '
-                   f':source "{narr_details[2]}" ; :external_link "{narr_details[3]}" ; '
-                   f'dc:title "{narr_details[0]}" .',
+                   f':source "{narr_details[2]}" ; dc:title "{narr_details[0]}" ; :external_link "{narr_details[3]}" .',
                    f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
-    if narr_details[1] != 'not defined':
-        turtle.append(f':Narrative_{narr_id} dc:created "{narr_details[1]}"^^xsd:dateTime .')
     goal_dict = access_api(narr_prompt.replace("{narr_text}", narr))
     summary = goal_dict['summary']
     turtle.append(f':Narrative_{narr_id} :summary "{summary}" .')
@@ -199,11 +196,12 @@ def parse_narrative_query_binding(binding_set: dict) -> dict:
     return {narrative_id: binding_set['narrative']['value'].split(':')[-1],
             'processed': binding_set['created']['value'],
             'numberOfTriples': binding_set['numbTriples']['value'],
+            'numberOfSentences': binding_set['sents']['value'],
+            'numberIngested': binding_set['ingested']['value'],
             'narrativeMetadata': {'title': binding_set['title']['value'],
                                   'published': binding_set['published']['value'],
                                   'source': binding_set['source']['value'],
-                                  'url': binding_set['url']['value'],
-                                  'length': binding_set['length']['value']}}
+                                  'url': binding_set['url']['value']}}
 
 
 def process_new_narrative(metadata: list, narr: str, repo: str) -> (dict, str, int):
@@ -229,6 +227,7 @@ def process_new_narrative(metadata: list, narr: str, repo: str) -> (dict, str, i
     logging.info('Loading knowledge graph')
     msg = add_remove_data('add', ' '.join(graph_ttl), repo, graph_uuid)   # Add to dna db's repo_graphUUID graph
     if msg:
+        logging.info(graph_ttl)
         return dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500
     # Process the metadata and add individual quotes to the meta-db
     logging.info("Loading metadata")
@@ -240,6 +239,7 @@ def process_new_narrative(metadata: list, narr: str, repo: str) -> (dict, str, i
         meta_ttl.append(f':{graph_uuid} :text_quote "{quotation}" .')
     msg = add_remove_data('add', ' '.join(meta_ttl), repo)   # Add to dna db's repo graph
     if msg:
+        logging.info(meta_ttl)
         return dict(), f'Error adding metadata for {title}: {msg}', 500
     # All is successful
     resp_dict = {repository: repo,

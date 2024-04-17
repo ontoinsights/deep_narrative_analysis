@@ -71,7 +71,10 @@ def create_graph(quote_dict: dict, sentence_dicts: list, number_sentences: int =
             try:
                 coref_dict = access_api(coref_prompt.replace('{sentences}', preceding_sentences)
                                         .replace("{sent_text}", sentence_text))
-                updated_text = coref_dict['updated_text']
+                if coref_dict['updated_text'] not in ('error', 'string'):
+                    updated_text = coref_dict['updated_text']
+                else:
+                    updated_text = sentence_text
             except Exception:
                 logging.error(f'Exception in getting coreference details for the text, {sentence_text}')
                 continue
