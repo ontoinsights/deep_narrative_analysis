@@ -170,12 +170,12 @@ def _get_nyt(dictionary: dict, nyt_request: str, page_number: int):
         logging.error(f'Failed to retrieve NYT articles for {request}, response code {resp.status_code}')
 
 
-def _get_wsj(dictionary: dict, wsj_request: str):
+def _get_wsj(request_details: dict, wsj_request: str):
     """
     Use the Wall Street Journal online query to retrieve articles with the specified topic,
     published within the indicated date range.
 
-    :param dictionary: Dictionary storing the articles' details
+    :param request_details: Dictionary storing the articles' details
     :param wsj_request: The WSJ search request
     :return: N/A (the dictionary is updated)
     """

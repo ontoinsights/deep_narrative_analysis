@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 1 2024
+# Last Modified: May 5 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -28,7 +28,7 @@
 #  Removed LearningAndEducation from the KnowledgeAndSkill hierarchy
 #  Removed CaptureAndSeizure as overlapping with the AcquisitionPossession
 #    AndTransfer superclass
-#  Added DiscriminationAndPrejudice
+#  Added DiscriminationAndPrejudice and OpenMindednessAndTolerance
 ########################################################################
 
 
@@ -239,6 +239,13 @@
   :wordnet_noun_synset "00220890" ;
   :wordnet_verb_synset "01326622" .
 
+:OpenMindednessAndTolerance a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Open-mindedness and Tolerance"@en ;
+  rdfs:comment "An ability to consider something without bias or prejudice."@en ;
+  :wordnet_noun_synset "01073014" ;
+  :wordnet_verb_synset "00670017" .
+
 :Pain a owl:Class ;
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Pain"@en ;
@@ -311,6 +318,9 @@
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :AttentionAndFocus :IgnoringAndOverlooking ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :DiscriminationAndPrejudice :OpenMindednessAndTolerance ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :Forgetting :Memory ) .

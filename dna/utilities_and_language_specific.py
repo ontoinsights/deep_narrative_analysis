@@ -25,7 +25,7 @@ meta_graph: str = 'meta'
 owl_thing: str = 'owl:Thing'
 event_and_state_class: str = ':EventAndState'
 
-concept_map = {'political': ':PoliticalIdeology',
+concept_map = {'politic': ':PoliticalIdeology',
                'ideolog': ':PoliticalIdeology',
                'religio': ':ReligiousBelief',
                'ethnic': ':Ethnicity',
@@ -55,8 +55,8 @@ male_titles = ['Mr']
 
 # spaCy NER type mapping
 ner_dict = {'PERSON': ':Person',
-            'NORP': ':Person, :Collection',
-            'ORG': ':Organization',
+            'NORP': ':Affiliation',
+            'ORG': ':OrganizationalEntity',    # TODO: Subclasses such as GovernmentalEntity?
             'GPE': ':GeopoliticalEntity',
             'LOC': ':Location',
             'FAC': ':Location, :AnthropogenicFeature',

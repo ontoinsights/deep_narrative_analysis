@@ -1,0 +1,37 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining pre-loaded background details for concepts that need
+# clarification. The individuals labeled as :Corrections are loaded
+# into DNA's nouns_dict.
+# 
+# Created: May 3 2024
+# Last modified: May 3 2024
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Attribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  New
+########################################################################
+
+
+########################################################################
+# Individuals
+########################################################################
+
+:House_of_Representatives a :GovernmentalEntity, :Correction ;
+  rdfs:label "House of Representatives"@en, "House"@en, "U.S. House of Representatives"@en, "HOR"@en, "House of Representatives of the United States"@en, "house.gov"@en, "U.S. House"@en, "United States Congress House"@en, "US HOR"@en, "US House of Representatives"@en, "USHOR"@en, "United States House of Representatives"@en ;
+  :external_identifier {:identifier_source "Wikidata"} "Q11701" ;
+  rdfs:comment "From Wikipedia (wikibase_item: Q11701): The United States House of Representatives is the lower chamber of the United States Congress, with the Senate being the upper chamber. Together, they comprise the national bicameral legislature of the United States. The House is charged with the passage of federal legislation, known as bills; those that are also passed by the Senate are sent to the president for signature or veto. The House's exclusive powers include initiating all revenue bills, impeaching federal officers, and electing the president if no candidate receives a majority of votes in the Electoral College."@en ;
+  :external_link "https://en.wikipedia.org/wiki/United_States_House_of_Representatives" .

@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: March 11 2024
+# Last modified: April 29 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -22,6 +22,8 @@
 # Changes:
 #  Reset change history and simplified
 #  Added AchievementAndAccomplishment and has_source
+#  Separated Win, Loss
+#  Added disjointess
 ########################################################################
 
 
@@ -57,6 +59,13 @@
   :wordnet_noun_synset "00067036" ;
   :wordnet_verb_synset "02534046" .
 
+:Loss a owl:Class ;
+  rdfs:subClassOf :Failure ;
+  rdfs:label "Loss"@en ;
+  rdfs:comment "An outcome of some type of competition/engagement where an entity loses. The property, :has_active_entity defines the 'loser'."@en ;
+  :wordnet_noun_synset "00068346" ;
+  :wordnet_verb_synset "01102003" .
+
 :Measurement a owl:Class ;
   rdfs:subClassOf :EventAndState ;
   rdfs:label "Measurement"@en ;
@@ -78,12 +87,12 @@
   :wordnet_noun_synset "00064472", "00035910" ;
   :wordnet_verb_synset "02024442" .
 
-:WinAndLoss a owl:Class ;
-  rdfs:subClassOf :End ;
-  rdfs:label "Win and Loss"@en ;
-  rdfs:comment "An outcome where one entity wins and other(s) lose - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
-  :wordnet_noun_synset "07369331", "00068346" ;
-  :wordnet_verb_synset "01104324" .
+:Win a owl:Class ;
+  rdfs:subClassOf :Success ;
+  rdfs:label "Win"@en ;
+  rdfs:comment "An outcome of some type of competition/engagement where an entity is victorious/wins. Note that the property, :has_active_entity, defines the 'winner'."@en ;
+  :wordnet_noun_synset "07369331" ;
+  :wordnet_verb_synset "01102556" .
 
 
 ########################################################################
@@ -167,3 +176,17 @@
   rdfs:domain :EventAndState ;
   rdfs:range :Time ;
   rdfs:comment "References a Time at which some event will/should occur or some condition should be in effect."@en .
+
+
+########################################################################
+# Disjointness
+########################################################################
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :StartAndBeginning :End ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Success :Failure ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+  owl:members  ( :Win :Loss ) .

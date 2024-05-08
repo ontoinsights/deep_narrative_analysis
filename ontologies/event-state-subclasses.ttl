@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 1 2024
+# Last Modified: April 29 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -42,6 +42,7 @@
 #  Moved (from misc-event-subclasses.ttl), clarified and renamed 
 #    CaptureAndSeizure and CaptivityAndDetention (from environment-
 #    subclasses.ttl) to become ArrestAndImprisonment
+#  Combined Storage into DistributionSupplyAndStorage
 ########################################################################
 
 
@@ -235,12 +236,12 @@
   rdfs:comment "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."@en ;
   :wordnet_noun_synset "00218366", "07329438" .
 
-:DistributionAndSupply a owl:Class ;
+:DistributionSupplyAndStorage a owl:Class ;
   rdfs:subClassOf :EventAndState ;
-  rdfs:label "Distribution and Supply"@en ;
-  rdfs:comment "Events related to giving out materials/Resources to Agents (typically Persons)."@en ;
-  :wordnet_noun_synset "00809586", "01085001", "01085569" ;
-  :wordnet_verb_synset "01381221", "02047080" .
+  rdfs:label "Distribution, Supply and Storage"@en ;
+  rdfs:comment "Events related to giving out materials/Resources to Agents (typically Persons) or keeping materials/Resources for future delivery, sale or use."@en ;
+  :wordnet_noun_synset "00373415", "04336084", "13389225", "08479216", "00813016", "00809586", "01085001", "01085569" ;
+  :wordnet_verb_synset "02285938", "02287351", "02290237", "02208876", "01381221", "02047080" .
 
 :DivorceAndSeparation a owl:Class ;
   rdfs:subClassOf :LifeEvent, :LegalEvent, :Separation ;
@@ -517,13 +518,6 @@
   rdfs:comment "An Event indicating that some entity has been modified by the application of heat, cooling, pressure, human activity, etc. The entity that is affected is identified using the property, :has_topic."@en ;
   :wordnet_noun_synset "00405224", "00199979" ;
   :wordnet_verb_synset "00139943", "00140787", "00144670", "00145958", "00209244", "00238763", "00239753", "00255753", "00283693", "00313162" .
-
-:Storage a owl:Class ;
-  rdfs:subClassOf :EventAndState ;
-  rdfs:label "Storage"@en ;
-  rdfs:comment "Any act of keeping something for future delivery, sale or use."@en ;
-  :wordnet_noun_synset "00373415", "04336084", "13389225", "08479216", "00813016" ; 
-  :wordnet_verb_synset "02285938", "02287351", "02290237", "02208876" .  
 
 :Substitution a owl:Class ;
   rdfs:subClassOf :EventAndState ;

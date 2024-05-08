@@ -43,7 +43,6 @@ def test_create_repo():
 
 def test_add_data():
     org_results = query_database('select', graph_query, test_repo)
-    print(org_results)
     org_cnt = int(org_results[0]['cnt']['value'])
     add_remove_data('add', triples, test_repo, test_graph)
     new_results = query_database('select', graph_query, test_repo)
@@ -51,10 +50,9 @@ def test_add_data():
     assert new_cnt - org_cnt == 2
 
 
-def test_construct():
-    success, turtle = construct_graph(construct_kg.replace('?g', f':{test_repo}_{test_graph}'), test_repo)
+def test_construct():    # TODO: Construct test with edge properties (which will currently fail)
+    success, turtle = construct_graph(construct_kg.replace('?named', f':{test_repo}_{test_graph}'), test_repo)
     assert success
-    print(turtle)
     assert len(turtle) == 2
     triples_str = str(turtle)
     assert 'testS' in triples_str
@@ -65,7 +63,6 @@ def test_construct():
 
 def test_remove_data():
     org_results = query_database('select', graph_query, test_repo)
-    print(org_results)
     org_cnt = int(org_results[0]['cnt']['value'])
     add_remove_data('remove', triples, test_repo, test_graph)
     new_results = query_database('select', graph_query, test_repo)

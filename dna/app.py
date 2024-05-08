@@ -4,13 +4,13 @@ from datetime import datetime
 from flask import Flask, Request, Response, jsonify, request
 import json
 import logging
-import uuid
 
 from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative, \
     detail, error_str, narrative_id, repository, sentences
 from dna.database import add_remove_data, clear_data, construct_graph, query_database
 from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
     query_narratives, query_repos, query_repo_graphs, update_narrative
+from dna.sentence_element_classes import Metadata
 from dna.query_news import get_article_text, get_matching_articles
 from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph
 
@@ -28,11 +28,12 @@ app = Flask(__name__)
 def index():
     return \
         '<h1>Deep Narrative Analysis APIs V1.2</h1> ' \
-        '<div>DNA APIs to acquire news, and ingest and manage narratives and news articles. <br /><br />' \
+        '<div>DNA APIs to ingest and analyze narratives and news articles. <br /><br />' \
         'For detailed information about the APIs, see the ' \
         '<a href="https://ontoinsights.github.io/dna-swagger/">Swagger/YAML documentation</a>.'
 
 
+# TODO: Pending resolution of subscription issues
 # @app.route('/dna/v1/news', methods=['GET'])
 # def news():
 #    if request.method == 'GET':
@@ -118,12 +119,10 @@ def narratives():
                  detail: 'A "title", "source" and "text" MUST be specified in the request body '
                          'of a /narratives POST.'}), 400
         logging.info(f'narr_data {type(narr_data)} {narr_data}')
-        narr_details = [narr_data['title'],
-                        narr_data['published'] if 'published' in narr_data else not_defined,
-                        narr_data['source'],
-                        narr_data['url'] if 'url' in narr_data else not_defined,
-                        number_sentences]
-        resp_dict, resp_str, status_code = process_new_narrative(narr_details, narr_data['text'], repo)
+        metadata = Metadata(narr_data['title'], narr_data['published'] if 'published' in narr_data else not_defined,
+                            narr_data['source'], narr_data['url'] if 'url' in narr_data else not_defined,
+                            number_sentences)
+        resp_dict, resp_str, status_code = process_new_narrative(metadata, narr_data['text'], repo)
         if status_code != 201:
             return jsonify({error_str: resp_str}), status_code
         return jsonify(resp_dict), 201
@@ -171,7 +170,8 @@ def graphs():
         narr_id = dict(values)[narrative_id]
         logging.info(f'Get KG for narrative {narr_id} for {repo}')
         # Get the triples from dna db's graph, :repo_narrId
-        success, turtle = construct_graph(construct_kg.replace('?g', f':{repo}_{narr_id}'), repo)
+        # TODO: Error in construct with edge properties
+        success, turtle = construct_graph(construct_kg.replace('?named', f':{repo}_{narr_id}'), repo)
         if success:
             # Get narrative metadata
             metadata_dict = parse_narrative_query_binding(

@@ -3,7 +3,7 @@
 from dna.utilities_and_language_specific import dna_prefix
 
 construct_kg = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> ' \
-               'CONSTRUCT {?s ?p ?o} WHERE { GRAPH ?g {?s ?p ?o} } ORDER BY ?s ?p ?o'
+               'CONSTRUCT {?s ?p ?o} FROM ?named WHERE {?s ?p ?o} ORDER BY ?s ?p ?o'
 
 count_triples = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(*) as ?cnt) WHERE { GRAPH ?g {?s ?p ?o} }'
 

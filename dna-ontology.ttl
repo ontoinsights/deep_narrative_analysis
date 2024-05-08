@@ -209,7 +209,6 @@
                                                             <urn:ontoinsights:dna:EventAndState>
                                                           )
                                             ] ;
-                                rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                 rdfs:comment "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc."@en ;
                                 rdfs:label "has goal"@en .
 
@@ -600,16 +599,12 @@
 
 ###  urn:ontoinsights:dna:external_identifier
 <urn:ontoinsights:dna:external_identifier> rdf:type owl:DatatypeProperty ;
-                                           rdfs:range xsd:string ;
-                                           rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en ;
-                                           rdfs:label "external identifier"@en .
+                                           rdfs:range xsd:string .
 
 
 ###  urn:ontoinsights:dna:external_link
 <urn:ontoinsights:dna:external_link> rdf:type owl:DatatypeProperty ;
-                                     rdfs:range xsd:string ;
-                                     rdfs:comment "Text specifying a URL/URI where more information about the referencing entity can be found."@en ;
-                                     rdfs:label "external link"@en .
+                                     rdfs:range xsd:string .
 
 
 ###  urn:ontoinsights:dna:future
@@ -805,12 +800,12 @@
                                       rdfs:label "narrative goal"@en .
 
 
-###  urn:ontoinsights:dna:negation
-<urn:ontoinsights:dna:negation> rdf:type owl:DatatypeProperty ,
-                                         owl:FunctionalProperty ;
-                                rdfs:range xsd:boolean ;
-                                rdfs:comment "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc."@en ;
-                                rdfs:label "negation (boolean)"@en .
+###  urn:ontoinsights:dna:negated
+<urn:ontoinsights:dna:negated> rdf:type owl:DatatypeProperty ,
+                                        owl:FunctionalProperty ;
+                               rdfs:range xsd:boolean ;
+                               rdfs:comment "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc."@en ;
+                               rdfs:label "negated (boolean)"@en .
 
 
 ###  urn:ontoinsights:dna:number_characters
@@ -2017,6 +2012,13 @@
                                                                                        "01709116" .
 
 
+###  urn:ontoinsights:dna:Clause
+<urn:ontoinsights:dna:Clause> rdf:type owl:Class ;
+                              rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                              rdfs:comment "A portion of a Sentence with an identifiable subject and verb. Typically, it is referenced as the 'topic' of event, such as a CommunicationAndSpeechAct."@en ;
+                              rdfs:label "Clause"@en .
+
+
 ###  urn:ontoinsights:dna:ClimateChange
 <urn:ontoinsights:dna:ClimateChange> rdf:type owl:Class ;
                                      rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
@@ -2269,6 +2271,13 @@
                                                                               "02421408" .
 
 
+###  urn:ontoinsights:dna:Correction
+<urn:ontoinsights:dna:Correction> rdf:type owl:Class ;
+                                  rdfs:subClassOf <urn:ontoinsights:dna:InformationSource> ;
+                                  rdfs:comment "A concept added to DNA's background knowledge to improve the semantic analysis."@en ;
+                                  rdfs:label "Correction"@en .
+
+
 ###  urn:ontoinsights:dna:Country
 <urn:ontoinsights:dna:Country> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:GeopoliticalEntity> ;
@@ -2515,6 +2524,7 @@
 ###  urn:ontoinsights:dna:DiscriminationAndPrejudice
 <urn:ontoinsights:dna:DiscriminationAndPrejudice> rdf:type owl:Class ;
                                                   rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
+                                                  owl:disjointWith <urn:ontoinsights:dna:OpenMindednessAndTolerance> ;
                                                   rdfs:comment "An act or thought that is intolerant, unjust, unfair or inappropriate, especially when biased by ethnicity, age, sexual orientation, disability, etc."@en ;
                                                   rdfs:label "Discrimination and Prejudice"@en ;
                                                   <urn:ontoinsights:dna:wordnet_noun_synset> "01156043" ,
@@ -2552,16 +2562,25 @@
                                                                                   "10535609" .
 
 
-###  urn:ontoinsights:dna:DistributionAndSupply
-<urn:ontoinsights:dna:DistributionAndSupply> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                                             rdfs:comment "Events related to giving out materials/Resources to Agents (typically Persons)."@en ;
-                                             rdfs:label "Distribution and Supply"@en ;
-                                             <urn:ontoinsights:dna:wordnet_noun_synset> "00809586" ,
-                                                                                        "01085001" ,
-                                                                                        "01085569" ;
-                                             <urn:ontoinsights:dna:wordnet_verb_synset> "01381221" ,
-                                                                                        "02047080" .
+###  urn:ontoinsights:dna:DistributionSupplyAndStorage
+<urn:ontoinsights:dna:DistributionSupplyAndStorage> rdf:type owl:Class ;
+                                                    rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                                                    rdfs:comment "Events related to giving out materials/Resources to Agents (typically Persons) or keeping materials/Resources for future delivery, sale or use."@en ;
+                                                    rdfs:label "Distribution, Supply and Storage"@en ;
+                                                    <urn:ontoinsights:dna:wordnet_noun_synset> "00373415" ,
+                                                                                               "00809586" ,
+                                                                                               "00813016" ,
+                                                                                               "01085001" ,
+                                                                                               "01085569" ,
+                                                                                               "04336084" ,
+                                                                                               "08479216" ,
+                                                                                               "13389225" ;
+                                                    <urn:ontoinsights:dna:wordnet_verb_synset> "01381221" ,
+                                                                                               "02047080" ,
+                                                                                               "02208876" ,
+                                                                                               "02285938" ,
+                                                                                               "02287351" ,
+                                                                                               "02290237" .
 
 
 ###  urn:ontoinsights:dna:DivorceAndSeparation
@@ -2700,6 +2719,7 @@
 ###  urn:ontoinsights:dna:End
 <urn:ontoinsights:dna:End> rdf:type owl:Class ;
                            rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
+                           owl:disjointWith <urn:ontoinsights:dna:StartAndBeginning> ;
                            rdfs:comment "The final point of an ongoing EventAndState - regardless of whether the actual end time is known."@en ;
                            rdfs:label "End"@en ;
                            <urn:ontoinsights:dna:wordnet_noun_synset> "00210792" ;
@@ -2888,6 +2908,7 @@
 ###  urn:ontoinsights:dna:Failure
 <urn:ontoinsights:dna:Failure> rdf:type owl:Class ;
                                rdfs:subClassOf <urn:ontoinsights:dna:End> ;
+                               owl:disjointWith <urn:ontoinsights:dna:Success> ;
                                rdfs:comment "A bad outcome or the inability to achieve a desired outcome - regardless of whether the actual failure details are known."@en ;
                                rdfs:label "Failure"@en ;
                                <urn:ontoinsights:dna:wordnet_noun_synset> "00067036" ;
@@ -3615,6 +3636,16 @@
                                 <urn:ontoinsights:dna:wordnet_noun_synset> "05633662" .
 
 
+###  urn:ontoinsights:dna:Loss
+<urn:ontoinsights:dna:Loss> rdf:type owl:Class ;
+                            rdfs:subClassOf <urn:ontoinsights:dna:Failure> ;
+                            owl:disjointWith <urn:ontoinsights:dna:Win> ;
+                            rdfs:comment "An outcome of some type of competition/engagement where an entity loses. The property, :has_active_entity defines the 'loser'."@en ;
+                            rdfs:label "Loss"@en ;
+                            <urn:ontoinsights:dna:wordnet_noun_synset> "00068346" ;
+                            <urn:ontoinsights:dna:wordnet_verb_synset> "01102003" .
+
+
 ###  urn:ontoinsights:dna:LossOfHabitatAndBiodiversity
 <urn:ontoinsights:dna:LossOfHabitatAndBiodiversity> rdf:type owl:Class ;
                                                     rdfs:subClassOf <urn:ontoinsights:dna:EnvironmentalIssue> ;
@@ -3900,6 +3931,15 @@
                                       rdfs:comment "A location defined in/on a network, such as a wireless network (e.g., a mobile phone number), the Internet (such an IP address, email adress or URL) or a wired network. The properties that define OnlineLocations include :url, :email_address, :ip_v4_address and :phone_number, among others."@en ;
                                       rdfs:label "Online Location"@en ;
                                       <urn:ontoinsights:dna:wordnet_noun_synset> "06367922" .
+
+
+###  urn:ontoinsights:dna:OpenMindednessAndTolerance
+<urn:ontoinsights:dna:OpenMindednessAndTolerance> rdf:type owl:Class ;
+                                                  rdfs:subClassOf <urn:ontoinsights:dna:Cognition> ;
+                                                  rdfs:comment "An ability to consider something without bias or prejudice."@en ;
+                                                  rdfs:label "Open-mindedness and Tolerance"@en ;
+                                                  <urn:ontoinsights:dna:wordnet_noun_synset> "01073014" ;
+                                                  <urn:ontoinsights:dna:wordnet_verb_synset> "00670017" .
 
 
 ###  urn:ontoinsights:dna:OpeningTime
@@ -4764,22 +4804,6 @@
                                  <urn:ontoinsights:dna:wordnet_noun_synset> "14068989" .
 
 
-###  urn:ontoinsights:dna:Storage
-<urn:ontoinsights:dna:Storage> rdf:type owl:Class ;
-                               rdfs:subClassOf <urn:ontoinsights:dna:EventAndState> ;
-                               rdfs:comment "Any act of keeping something for future delivery, sale or use."@en ;
-                               rdfs:label "Storage"@en ;
-                               <urn:ontoinsights:dna:wordnet_noun_synset> "00373415" ,
-                                                                          "00813016" ,
-                                                                          "04336084" ,
-                                                                          "08479216" ,
-                                                                          "13389225" ;
-                               <urn:ontoinsights:dna:wordnet_verb_synset> "02208876" ,
-                                                                          "02285938" ,
-                                                                          "02287351" ,
-                                                                          "02290237" .
-
-
 ###  urn:ontoinsights:dna:StorageBusiness
 <urn:ontoinsights:dna:StorageBusiness> rdf:type owl:Class ;
                                        rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -4874,8 +4898,8 @@
 ###  urn:ontoinsights:dna:SurrenderAndYielding
 <urn:ontoinsights:dna:SurrenderAndYielding> rdf:type owl:Class ;
                                             rdfs:subClassOf <urn:ontoinsights:dna:AssertionAndDeclaration> ,
-                                                            <urn:ontoinsights:dna:WinAndLoss> ;
-                                            rdfs:comment "An act where one Agent admits defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another."@en ;
+                                                            <urn:ontoinsights:dna:Loss> ;
+                                            rdfs:comment "An act where one Agent admits/concedes defeat and/or agrees to give up fighting or to relinquish power, possession or control of something to another."@en ;
                                             rdfs:label "Surrender and Yielding"@en ;
                                             <urn:ontoinsights:dna:wordnet_noun_synset> "00068527" ,
                                                                                        "00213657" ,
@@ -5131,14 +5155,13 @@
                                <urn:ontoinsights:dna:wordnet_noun_synset> "06370307" .
 
 
-###  urn:ontoinsights:dna:WinAndLoss
-<urn:ontoinsights:dna:WinAndLoss> rdf:type owl:Class ;
-                                  rdfs:subClassOf <urn:ontoinsights:dna:End> ;
-                                  rdfs:comment "An outcome where one entity wins and other(s) lose - regardless of whether the actual win/loss details are known. Note that the properties of :has_active_entity and :has_affected_entity are written from the perpsective of the 'winner'."@en ;
-                                  rdfs:label "Win and Loss"@en ;
-                                  <urn:ontoinsights:dna:wordnet_noun_synset> "00068346" ,
-                                                                             "07369331" ;
-                                  <urn:ontoinsights:dna:wordnet_verb_synset> "01104324" .
+###  urn:ontoinsights:dna:Win
+<urn:ontoinsights:dna:Win> rdf:type owl:Class ;
+                           rdfs:subClassOf <urn:ontoinsights:dna:Success> ;
+                           rdfs:comment "An outcome of some type of competition/engagement where an entity is victorious/wins. Note that the property, :has_active_entity, defines the 'winner'."@en ;
+                           rdfs:label "Win"@en ;
+                           <urn:ontoinsights:dna:wordnet_noun_synset> "07369331" ;
+                           <urn:ontoinsights:dna:wordnet_verb_synset> "01102556" .
 
 
 ###  urn:ontoinsights:dna:Winter
@@ -5187,6 +5210,27 @@
                                                                           <urn:ontoinsights:geonames:798549> ;
                                      <urn:ontoinsights:dna:synonym> "EU"@en ,
                                                                     "European Union"@en .
+
+
+###  urn:ontoinsights:dna:House_of_Representatives
+<urn:ontoinsights:dna:House_of_Representatives> rdf:type owl:NamedIndividual ,
+                                                         <urn:ontoinsights:dna:Correction> ,
+                                                         <urn:ontoinsights:dna:GovernmentalEntity> ;
+                                                rdfs:comment "From Wikipedia (wikibase_item: Q11701): The United States House of Representatives is the lower chamber of the United States Congress, with the Senate being the upper chamber. Together, they comprise the national bicameral legislature of the United States. The House is charged with the passage of federal legislation, known as bills; those that are also passed by the Senate are sent to the president for signature or veto. The House's exclusive powers include initiating all revenue bills, impeaching federal officers, and electing the president if no candidate receives a majority of votes in the Electoral College."@en ;
+                                                rdfs:label "HOR"@en ,
+                                                           "House"@en ,
+                                                           "House of Representatives"@en ,
+                                                           "House of Representatives of the United States"@en ,
+                                                           "U.S. House"@en ,
+                                                           "U.S. House of Representatives"@en ,
+                                                           "US HOR"@en ,
+                                                           "US House of Representatives"@en ,
+                                                           "USHOR"@en ,
+                                                           "United States Congress House"@en ,
+                                                           "United States House of Representatives"@en ,
+                                                           "house.gov"@en ;
+                                                <urn:ontoinsights:dna:external_identifier> "Q11701" ;
+                                                <urn:ontoinsights:dna:external_link> "https://en.wikipedia.org/wiki/United_States_House_of_Representatives" .
 
 
 ###  urn:ontoinsights:geonames:CurrencyAED
@@ -9741,6 +9785,14 @@
 
 <urn:ontoinsights:dna:adjoins> rdfs:label "adjoins"@en ;
                                rdfs:comment "Indicates that the boundaries of an entity touch/join with another/share a border or boundary."@en .
+
+
+<urn:ontoinsights:dna:external_identifier> rdfs:label "external identifier"@en ;
+                                           rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en .
+
+
+<urn:ontoinsights:dna:external_link> rdfs:comment "Text specifying a URL/URI where more information about the referencing entity can be found."@en ;
+                                     rdfs:label "external link"@en .
 
 
 <urn:ontoinsights:dna:has_component> rdfs:label "has component"@en ;

@@ -9,7 +9,7 @@
 # File defining general concepts used throughout the DNA ontologies
 # 
 # Created: February 9 2020
-# Last modified: April 3 2024
+# Last modified: April 24 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -20,9 +20,11 @@
 # either express or implied.
 # 
 # Changes:
-#   Reset change history and simplified
-#   Removed invalid "subclassOf" predicate 
-#   Added external_identifier
+#  Reset change history and simplified
+#  Removed invalid "subclassOf" predicate 
+#  Added external_identifier
+#  Changed negation to negated
+#  Updated has_goal to have a range of anything
 ########################################################################
 
 
@@ -193,8 +195,8 @@
   rdfs:domain :Collection ;
   rdfs:range xsd:integer .
 
-:negation a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:label "negation (boolean)"@en ;
+:negated a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "negated (boolean)"@en ;
   rdfs:range xsd:boolean ;
   rdfs:comment "Indicates whether the referencing entity does NOT exist, did NOT occur/has NOT happened, etc."@en .
 
@@ -280,7 +282,6 @@
   rdfs:label "has goal"@en ;
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :EventAndState :Agent ) ] ;
-  rdfs:range :EventAndState ;
   rdfs:comment "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc."@en .
 
 :has_last a owl:ObjectProperty ;

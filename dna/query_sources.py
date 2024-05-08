@@ -3,12 +3,16 @@
 
 import logging
 import os
+import re
 import requests
 from typing import Union
 import xml.etree.ElementTree as etree
 
 # Future: Modify code to 'replace' the language tag when the query is executed, vs at 'compile' time (as it is now)
-from dna.utilities_and_language_specific import concept_map, empty_string, language_tag, space
+from dna.query_openai import access_api, wikipedia_prompt
+from dna.utilities_and_language_specific import concept_map, empty_string, language_tag, space, underscore
+
+country_qualifier = 'United_States'
 
 geonamesUser = os.environ.get('GEONAMES_ID')
 
@@ -30,6 +34,27 @@ query_wikidata_labels = \
     '{?item skos:altLabel ?label . ' + language_filter + ' }}'
 
 query_wikidata_time = 'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'
+
+
+def _call_wikipedia(noun_text: str) -> dict:
+    """
+    Queries the REST API of Wikipedia for information about a specific concept/noun.
+
+    :param noun_text: String holding the noun/concept text
+    :return: Dictionary holding the details returned from Wikipedia
+    """
+    try:
+        resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/{noun_text}', timeout=10)
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikipedia description timeout: Noun={noun_text}')
+        return dict()
+    except requests.exceptions.RequestException as e:
+        logging.error(f'Wikipedia description query exception for noun: {noun_text}. Exception: {str(e)}')
+        return dict()
+    wiki_dict = resp.json()
+    if 'title' in wiki_dict and 'not found' in wiki_dict['title'].lower():
+        return dict()
+    return wiki_dict
 
 
 def _get_geonames_alt_names(root: etree.Element) -> (list, str):
@@ -89,6 +114,36 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     return None
 
 
+def _get_wikidata_labels(wikidata_id: str) -> list:
+    """
+    Get the labels (labels and alt_names) for a Wikidata item.
+
+    :param wikidata_id: String holding the Q ID of the Wikidata item
+    :return: An array of strings that are the rdfs:label and skos:alt_names of the item
+    """
+    if not wikidata_id:
+        return []
+    labels = []
+    query_labels = query_wikidata_labels.replace('?item', f'wd:{wikidata_id}')
+    try:
+        response = requests.get(
+            f'https://query.wikidata.org/sparql?format=json&query={query_labels}', timeout=10).json()
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikidata labels timeout: Query={query_labels}')
+        return labels
+    except requests.exceptions.RequestException as e:
+        request = f'https://query.wikidata.org/sparql?format=json&query={query_labels}'
+        logging.error(f'Wikidata labels query error: Query={request} and Exception={str(e)}')
+        return labels
+    if 'results' in response and 'bindings' in response['results']:
+        results = response['results']['bindings']
+        for result in results:
+            label = result['label']['value'].replace('"', "'")
+            # TODO: Should this be validated as an RDF Literal?
+            labels.append(label)
+    return labels
+
+
 def _get_wikidata_time(query: str, is_start: bool) -> str:
     """
     Send the query, query_wikidata_time, to WDQS asking for the start and end times of an
@@ -121,6 +176,37 @@ def _get_wikidata_time(query: str, is_start: bool) -> str:
         return empty_string
 
 
+def _get_wikipedia_description(noun_text: str, noun_class: str, explicit_link: str) -> dict:
+    """
+    Wikipedia call to get page summary information for a concept. If information is not retrieved
+    due to the need to disambiguate or due to the return of non-relevant information, the request is
+    retried with the addition of the country name.
+
+    :param noun_text: String holding the concept text (with spaces replaced by underscores)
+    :param noun_class: DNA class name corresponding to the concept
+    :param explicit_link: A link to a Wikipedia article provided by another source
+    :return: A dictionary with the Wikipedia information returned from the request
+    """
+    wiki_dict = dict()
+    if explicit_link:       # Order of processing - explicit link, country-qualified noun text, unmodified noun text
+        wiki_dict = _call_wikipedia(explicit_link.split('/')[-1])
+    if not wiki_dict:
+        noun_text = noun_text.replace(' ', underscore)
+        wiki_dict = _call_wikipedia(f'{country_qualifier}_{noun_text}')
+        if not wiki_dict:
+            wiki_dict = _call_wikipedia(noun_text)
+    # Check if the wikipedia text/extract matches the DNA class semantic
+    if wiki_dict and 'extract' in wiki_dict and 'See the web site' not in wiki_dict['extract']:
+        # Remove a second class name and the beginning ':' from noun_class and then split the upper camel case
+        #    text into individual words
+        concept = space.join(re.findall(r'[A-Z](?:[a-z]+|[A-Z]*(?=[A-Z]|$))', noun_class.split(',')[0][1:]))
+        wikipedia_dict = access_api(
+            wikipedia_prompt.replace("{text_type}", concept).replace("{wiki_def}", wiki_dict['extract']))
+        if type(wikipedia_dict['consistent']) is bool and wikipedia_dict['consistent']:
+            return wiki_dict    # Consistent - return the result
+    return dict()
+
+
 def _get_xml_value(xpath: str, root: etree.Element) -> str:
     """
     Use the input xpath string to access specific elements in an XML tree.
@@ -150,10 +236,8 @@ def get_event_details_from_wikidata(event_text: str) -> (str, str, str, str, lis
     logging.info(f'Getting Wikidata event details for {event_text}')
     start_time = empty_string
     end_time = empty_string
-    labels = []
-    wiki_details, wiki_url, wikidata_id = get_wikipedia_description(event_text.replace(space, '_'))
+    wiki_details, wiki_url, wikidata_id, labels = get_wikipedia_description(event_text, ':Event')
     if wiki_details and 'See the web site' not in wiki_details:
-        labels = get_wikidata_labels(wikidata_id)
         time_query = query_wikidata_time.replace('?item', f'wd:{wikidata_id}')
         start_time = _get_wikidata_time(time_query, True)
         end_time = _get_wikidata_time(time_query, False)
@@ -232,75 +316,34 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
     return class_type, country, admin_level, alt_names, wiki_link
 
 
-def get_wikidata_labels(wikidata_id: str) -> list:
-    """
-    Get the labels (labels and alt_names) for a Wikidata item.
-
-    :param wikidata_id: String holding the Q ID of the Wikidata item
-    :return: An array of strings that are the rdfs:label and skos:alt_names of the item
-    """
-    labels = []
-    query_labels = query_wikidata_labels.replace('?item', f'wd:{wikidata_id}')
-    try:
-        response = requests.get(
-            f'https://query.wikidata.org/sparql?format=json&query={query_labels}', timeout=10).json()
-    except requests.exceptions.ConnectTimeout:
-        logging.error(f'Wikidata labels timeout: Query={query_labels}')
-        return labels
-    except requests.exceptions.RequestException as e:
-        request = f'https://query.wikidata.org/sparql?format=json&query={query_labels}'
-        logging.error(f'Wikidata labels query error: Query={request} and Exception={str(e)}')
-        return labels
-    if 'results' in response and 'bindings' in response['results']:
-        results = response['results']['bindings']
-        for result in results:
-            label = result['label']['value'].replace('"', "'")
-            if not label.isalpha():
-                continue
-            labels.append(label)
-    return labels
-
-
-def get_wikipedia_description(noun: str, explicit_link: str = empty_string) -> (str, str, str):
+def get_wikipedia_description(noun: str, noun_class: str, explicit_link: str = empty_string) -> (str, str, str, list):
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
     and a link to display the full page.
 
-    :param noun: String holding the organization/group name
+    :param noun: String holding the concept name
+    :param noun_class: DNA class name corresponding to the concept
     :param explicit_link: A link retrieved from another source (such as GeoNames) to a Wikipedia
                           entry for the noun
     :return: A tuple holding three strings - (1) the first paragraph of the Wikipedia page
-             (if found and not ambiguous), (2) a link to the full Wikipedia article, and
-             (3) the Wikibase/Wikidata identifier; Otherwise, 3 empty strings
+             (if found and not ambiguous), (2) a link to the full Wikipedia article,
+             (3) the Wikibase/Wikidata identifier, or 3 empty strings; and (4) a list
+             of text labels
     """
     logging.info(f'Getting wikipedia details for {noun}')
-    noun_underscore = noun.replace(space, '_')
-    try:
-        resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/'
-                            f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}', timeout=10)
-    except requests.exceptions.ConnectTimeout:
-        logging.error(f'Wikipedia description timeout: Noun={noun_underscore}')
-        return empty_string, empty_string, empty_string
-    except requests.exceptions.RequestException as e:
-        request = f'https://en.wikipedia.org/api/rest_v1/page/summary/' \
-                  f'{explicit_link.split("/")[-1] if explicit_link else noun_underscore}'
-        logging.error(f'Wikipedia description query error: Query={request} and Exception={str(e)}')
-        return empty_string, empty_string, empty_string
-    wikipedia = resp.json()
-    if 'type' in wikipedia and wikipedia['type'] == 'disambiguation':
-        # TODO: Can other nouns and similarity of content links be used to disambiguate?
-        return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun_underscore}', \
-            empty_string, empty_string
-    desktop_url = empty_string
-    if 'content_urls' in wikipedia:
-        desktop_url = wikipedia['content_urls']['desktop']['page']
-    wikidata_id = empty_string
-    if 'wikibase_item' in wikipedia:
-        wikidata_id = wikipedia['wikibase_item']
+    wikipedia_dict = _get_wikipedia_description(noun.replace(space, '_'), noun_class, explicit_link)
+    if not wikipedia_dict:
+        return empty_string, empty_string, empty_string, []
+    if 'type' in wikipedia_dict and wikipedia_dict['type'] == 'disambiguation':
+        return f'Needs disambiguation; See the web site, https://en.wikipedia.org/wiki/{noun.replace(space, "_")}', \
+            empty_string, empty_string, []
+    desktop_url = empty_string if 'content_urls' not in wikipedia_dict else \
+        wikipedia_dict['content_urls']['desktop']['page']
+    wikidata_id = empty_string if 'wikibase_item' not in wikipedia_dict else wikipedia_dict['wikibase_item']
     extract = empty_string
-    if 'extract' in wikipedia:
-        extract_text = wikipedia['extract'].replace('"', "'").replace('\xa0', space).replace('\n', space).\
+    if 'extract' in wikipedia_dict:
+        extract_text = wikipedia_dict['extract'].replace('"', "'").replace('\xa0', space).replace('\n', space).\
             encode('ASCII', errors='replace').decode('utf-8')
         wiki_text = f"'{extract_text}'"
         extract = f'From Wikipedia (wikibase_item: {wikidata_id}): {wiki_text}'
-    return extract, desktop_url, wikidata_id
+    return extract, desktop_url, wikidata_id, _get_wikidata_labels(wikidata_id)

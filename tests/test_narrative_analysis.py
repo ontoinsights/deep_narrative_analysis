@@ -20,7 +20,6 @@ narr_text = \
 
 def test_narrative_results():
     narr_dict = access_api(narr_prompt.replace("{narr_text}", narr_text))
-    print(narr_dict)
     goals = narr_dict['goal_numbers']
     goal_texts = []
     for goal in goals:
@@ -28,7 +27,7 @@ def test_narrative_results():
     assert 'advocate' in goal_texts    # Goal #1
     assert 'summary' in narr_dict
     assert 'rhetorical_devices' in narr_dict
-    assert int(narr_dict['rhetorical_devices'][0]['device_number']) in (5, 16)
+    assert int(narr_dict['rhetorical_devices'][0]['device_number']) in (7, 22)
     assert 'interpreted_text' in narr_dict
     assert narr_dict['interpreted_text'][0]['perspective'] in ('conservative', 'liberal', 'neutral')
     assert 'ranking_by_perspective' in narr_dict
@@ -43,10 +42,10 @@ def test_narrative_results():
     #      suggests that for Israelis, the existence of their state is at risk, and that the ultimate goal
     #      of Hamas and Hezbollah is to make Israel unlivable.",
     #   'rhetorical_devices': [
-    #      {'device_number': 5, 'evidence': 'The author refers to his professional experience in U.S. peacemaking
-    #             policy and conflict resolution.'},     # ethos
-    #      {'device_number': 16, 'evidence': "The author uses wording that appeals to fear, such as 'Israel's
-    #             survival as a state is at stake' and 'Hamas will attack Israel again'."}],     # pathos
+    #      {'device_number': 7, 'evidence': 'The author establishes authority by discussing their 35 years
+    #          of experience in U.S. peacemaking and conflict resolution.'},    # ethos
+    #      {'device_number': 22, 'evidence': 'The narrative appeals to emotions by discussing the existential
+    #          threat to Israel and the impact of ongoing conflict on civilians.'}]    # pathos
     #   'interpreted_text': [
     #      {'perspective': 'conservative', 'interpretation': "Conservatives might view the narrative as a
     #          validation of security concerns regarding Israel and the threat posed by Hamas and Hezbollah.
