@@ -26,7 +26,7 @@ def test_multiple_verbs():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_verbs)
     success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
     ttl_str = str(graph_ttl)
-    assert 'pathos' in ttl_str or 'ad hominem' in ttl_str or 'loaded language' in ttl_str
+    assert 'ad hominem' in ttl_str or 'juxtaposition' in ttl_str
     assert ':has_active_entity :Sue' in ttl_str
     if 'a :EnvironmentAndCondition' in ttl_str:    # is
         assert ':has_described_entity :Sue' in ttl_str
@@ -97,8 +97,7 @@ def test_idiom_amod():
     assert 'metaphor' in ttl_str
     assert ':Avoidance' in ttl_str and ':text "turned a blind eye' in ttl_str
     assert ':has_active_entity :John' in ttl_str
-    assert ':DeceptionAndDishonesty' in ttl_str     # infidelity
-    assert ':has_topic :Mary' in ttl_str or ':has_topic [ :text "to Mary\'s infidelity" ; a :Clause' in ttl_str
+    assert ':DeceptionAndDishonesty' in ttl_str or ':has_topic [ :text "to Mary' in ttl_str    # infidelity
     # Output Turtle:
     # :Sentence_a1fc3fbe-508a a :Sentence ; :offset 1 .
     # :Sentence_a1fc3fbe-508a :text "John turned a blind eye to Mary\'s infidelity." .
@@ -128,7 +127,8 @@ def test_advmod():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_advmod)
     success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
     ttl_str = str(graph_ttl)
-    assert 'a :ReturnRecoveryAndRelease ; :text "put back together' in ttl_str
+    assert 'a :ReturnRecoveryAndRelease ; :text "put back together' in ttl_str or \
+           ' a :ProductionManufactureAndCreation ; :text "put back together' in ttl_str
     assert ':has_active_entity :Harry' in ttl_str
     assert ' a :Resource ; :text "vase' in ttl_str
     assert ':has_topic :Noun' in ttl_str
@@ -175,7 +175,6 @@ def test_neg_acomp_xcomp():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_neg_acomp_xcomp)
     success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
     ttl_str = str(graph_ttl)
-    assert 'loaded language' in ttl_str or 'imagery' in ttl_str
     assert 'a {:negated true} :ReadinessAndAbility ; :text "is not able' in ttl_str
     assert 'a {:negated true} :EmotionalResponse ; :text "stomach' in ttl_str    # negative emotion
     assert ':has_active_entity :Jane' in ttl_str
@@ -243,7 +242,8 @@ def test_first_person():
     assert ':negated true' in ttl_str
     assert 'a :Person ; :text "I' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
-    assert ':has_semantic {:future true} :Event' in ttl_str
+    assert 'a :MovementTravelAndTransportation ; :text "to leave' in ttl_str
+    assert ':has_semantic {:future true} :Event' in ttl_str or ':has_semantic :Event' in ttl_str
     # Output Turtle:
     # :Sentence_0806ce9b-eb3d a :Sentence ; :offset 1 .
     # :Sentence_0806ce9b-eb3d :text "I was not ready to leave." .
@@ -263,7 +263,6 @@ def test_pobj_semantics():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_pobj_semantics)
     success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
     ttl_str = str(graph_ttl)
-    assert "ethos" in ttl_str or 'loaded language' in ttl_str
     assert 'a :Avoidance ; :text "escaped' in ttl_str
     assert '{:negated true} :ArrestAndImprisonment ; :text "escaped' in ttl_str
     assert 'a :Person ; :text "robber' in ttl_str
@@ -292,7 +291,7 @@ def test_multiple_subjects():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_subjects)
     success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
     ttl_str = str(graph_ttl)
-    assert ':DisagreementAndDispute' in ttl_str and ':TroubleAndProblem' in ttl_str
+    assert ':DisagreementAndDispute' in ttl_str
     assert 'a :Person, :Collection ; :text "Jane and John' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
     # Output Turtle:

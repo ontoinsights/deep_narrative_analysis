@@ -59,13 +59,14 @@ def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_cla
     return agent_ttl
 
 
-def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str) -> (list, list):
+def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: str) -> (list, list):
     """
     Create the Turtle for a location including additional details as described by GeoNames.
 
     :param loc_iri: String holding the IRI to be assigned to the location
     :param loc_text: The text of the location
     :param loc_class: The mapping of the entity type to the DNA ontology
+    :param ner_type: The NER type assigned by spaCy
     :return: A tuple consisting of a list of the Location's Turtle declaration, and a list of
              alternate names for the Location
     """
@@ -83,7 +84,7 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str) -> (list, l
             geonames_ttl.append(f'{loc_iri} :country_name "{country}" .')
             if country in names_to_geo_dict:
                 geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_iri} .')
-    else:
+    elif ner_type != 'ORG':
         geonames_ttl.append(f'{loc_iri} a {loc_class} ; :text {Literal(loc_text).n3()} .')
     return geonames_ttl, alt_names
 

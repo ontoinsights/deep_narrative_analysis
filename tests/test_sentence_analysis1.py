@@ -24,6 +24,7 @@ text_idiom_full_pass = 'John was accused by George of breaking and entering.'
 text_idiom_trunc_pass = 'John was accused of breaking and entering.'
 text_negation_emotion = 'Jane has no liking for broccoli.'
 text_negation = 'Jane did not stab John.'
+text_wikipedia = 'The FBI raided the house.'
 
 
 # Note that it is unlikely that all tests will complete successfully since event semantics can be
@@ -616,3 +617,36 @@ def test_negation():
     # :Event_931e5fdf-be34 a {:negated true} :AggressiveCriminalOrHostileAct ; :text "did not stab" .
     # :Event_931e5fdf-be34 :has_active_entity :Jane .
     # :Event_931e5fdf-be34 :has_affected_entity :John .
+
+
+def test_wikipedia():
+    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_wikipedia)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 5)
+    ttl_str = str(graph_ttl)
+    assert ':identifier_source "Wikidata"' in ttl_str
+    assert ':ArrestAndImprisonment' in ttl_str      # raid
+    assert ':has_active_entity :FBI' in ttl_str
+    assert ':has_location :Noun' in ttl_str
+    # Output Turtle:
+    # :Sentence_bd1c68b9-6545 a :Sentence ; :offset 1 .
+    # :Sentence_bd1c68b9-6545 :text "The FBI raided the house." .
+    # :FBI :text "FBI" .
+    # :FBI a :OrganizationalEntity .
+    # :FBI rdfs:label "FBI", "F.B.I.", "Federal Bureau of Investigation" .
+    # :FBI rdfs:comment "From Wikipedia (wikibase_item: Q8333): \'The Federal Bureau of Investigation (FBI) is the
+    #     domestic intelligence and security service of the United States and its principal federal law enforcement
+    #     agency. An agency of the United States Department of Justice, the FBI is also a member of the U.S.
+    #     Intelligence Community and reports to both the Attorney General and the Director of National Intelligence.
+    #     A leading U.S. counterterrorism, counterintelligence, and criminal investigative organization, the FBI
+    #     has jurisdiction over violations of more than 200 categories of federal crimes.\'" .
+    # :FBI :external_link "https://en.wikipedia.org/wiki/Federal_Bureau_of_Investigation" .
+    # :FBI :external_identifier {:identifier_source "Wikidata"} "Q8333" .
+    # :Sentence_bd1c68b9-6545 :mentions :FBI .
+    # :Sentence_bd1c68b9-6545 :summary "FBI conducted raid on a house." .
+    # :Sentence_bd1c68b9-6545 :sentiment "negative" .
+    # :Sentence_bd1c68b9-6545 :grade_level 5 .
+    # :Sentence_bd1c68b9-6545 :has_semantic :Event_b59f6e1e-fa55 .
+    # :Event_b59f6e1e-fa55 a :ArrestAndImprisonment, :AggressiveCriminalOrHostileAct ; :text "raided" .
+    # :Event_b59f6e1e-fa55 :has_active_entity :FBI .
+    # :Noun_aaff033e-18e4 a :Location ; :text "house" ; rdfs:label "the house" .
+    # :Event_b59f6e1e-fa55 :has_location :Noun_aaff033e-18e4 .

@@ -123,7 +123,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
     # Process by location, agent, and event/other NER types
     org_as_loc = False
     if base_type in ('GPE', 'LOC', 'FAC', 'ORG'):     # spaCy incorrectly reports some locations as ORG
-        geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map)
+        geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type)
         if geo_ttl:
             noun_ttl.extend(geo_ttl)
             org_as_loc = True if base_type == 'ORG' else False

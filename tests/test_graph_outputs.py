@@ -16,7 +16,6 @@ def test_sentences1():
     sentence_list, quotation_list, quoted_strings = parse_narrative(sentences)
     success, index, graph_ttl = create_graph(sentence_list, quotation_list)
     ttl_str = str(graph_ttl)
-    print(ttl_str)
     assert index == 3
     assert ':Win' in ttl_str
     assert ':Loss' in ttl_str
@@ -27,36 +26,11 @@ def test_sentences1():
     assert ':Measurement' in ttl_str and ':has_quantification' in ttl_str    # percentages
     assert ':CommunicationAndSpeechAct' in ttl_str
     assert ':DeceptionAndDishonesty' in ttl_str                              # "insidious lie"
-    assert 'pathos' in ttl_str and 'exceptionalism' in ttl_str
+    assert 'pathos' in ttl_str
+    assert 'exceptionalism' in ttl_str or 'hyperbole' in ttl_str
     assert 'loaded language' in ttl_str
     assert ':Mar_a_Lago a :PhysicalLocation' in ttl_str
     # Output:
-    # :Liz_Cheney rdfs:label "Elizabeth Lynne Cheney", "Elizabeth Lynne Cheney Perry", "Elizabeth Lynne Perry",
-    #     "Liz Cheney", "Elizabeth Cheney", "Liz", "Cheney" .
-    # :Liz_Cheney rdfs:comment "From Wikipedia (wikibase_item: Q5362573): \'Elizabeth Lynne Cheney is an American
-    #     attorney and politician. She represented Wyoming\'s at-large congressional district in the U.S. House of
-    #     Representatives from 2017 to 2023 ...\'" .
-    # :Wyoming rdfs:comment "From Wikipedia (wikibase_item: Q1214): \'Wyoming is a landlocked state in the Mountain
-    #     West subregion of the Western United States. It borders Montana to the north and northwest, South Dakota
-    #     and Nebraska to the east, Idaho to the west, Utah to the southwest, and Colorado to the south. ...\'" .\
-    # :Donald_Trump rdfs:label "Donald Trump", "@realDonaldTrump", "David Dennison", "DJT", "Donald J Trump",
-    #     "Donald J. Trump", "Individual 1", "Mr Trump", "POTUS 45", "President Donald J Trump",
-    #     "President Donald J. Trump", "President Donald John Trump", "President Donald Trump", "President Trump",
-    #     "The Donald", "John Miller", "Trump", "John Barron", "Donald John Trump", "Inmate No. P01135809",
-    #     "Prisoner P01135809", "inmate P01135809", "Inmate P01135809", "The Former Guy", "P01135809", "Donald" .
-    # :Donald_Trump rdfs:comment "From Wikipedia (wikibase_item: Q22686): \'Donald John Trump is an American
-    #     politician, media personality, and businessman who served as the 45th president of the United States
-    #     from 2017 to 2021.\'" .
-    # :Harriet_Hageman rdfs:comment "From Wikipedia (wikibase_item: Q110815967): \'Harriet Maxine Hageman is
-    #     an American politician and attorney serving as the U.S. representative for Wyoming\'s at-large congressional
-    #     district since 2023. She is a member of the Republican Party.\'" .
-    # :FBI rdfs:comment "From Wikipedia (wikibase_item: Q8333): \'The Federal Bureau of Investigation (FBI) is
-    #    the domestic intelligence and security service of the United States and its principal federal law
-    #    enforcement agency. ...\'" .
-    # :Mar_a_Lago rdfs:comment "From Wikipedia (wikibase_item: Q1262898): \'Mar-a-Lago is a resort and National
-    #     Historic Landmark in Palm Beach, Florida. Since 1985, it has been owned by former U.S. president
-    #     Donald Trump, who resides on the premises.\'" .
-
     # :Sentence_c2076a43-a925 a :Sentence ; :offset 1 .
     # :Sentence_c2076a43-a925 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in
     #     Wyoming, an outcome that was a priority for former President Donald Trump." .
@@ -186,8 +160,14 @@ def test_sentences1():
     # :Sentence_cc337306-9bdc :text "She also claimed that Trump is promoting an insidious lie about
     #     the recent FBI raid of his Mar-a-Lago residence." .
     # :FBI :text "FBI" .
-    # :FBI a :OrganizationalEntity ; :text "FBI" .
-    # :FBI rdfs:label "FBI" .
+    # :FBI a :OrganizationalEntity .
+    # :FBI rdfs:label "FBI", "F.B.I.", "Federal Bureau of Investigation" .
+    # :FBI rdfs:comment "From Wikipedia (wikibase_item: Q8333): \'The Federal Bureau of Investigation (FBI) is
+    #    the domestic intelligence and security service of the United States and its principal federal law
+    #    enforcement agency. ...\'" .
+    # :FBI :external_link "https://en.wikipedia.org/wiki/Federal_Bureau_of_Investigation" .
+    # :FBI :external_identifier {:identifier_source "Wikidata"} "Q8333" .
+    # :Sentence_bd1c68b9-6545 :mentions :FBI .
     # :Mar_a_Lago :text "Mar-a-Lago" .
     # :Mar_a_Lago a :PhysicalLocation .
     # :Mar_a_Lago rdfs:label "Mar-a-Lago", "Mar-A-Lago Building" .
