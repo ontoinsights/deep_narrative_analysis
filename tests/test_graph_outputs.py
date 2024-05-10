@@ -30,7 +30,7 @@ def test_sentences1():
     assert 'exceptionalism' in ttl_str or 'hyperbole' in ttl_str
     assert 'loaded language' in ttl_str
     assert ':Mar_a_Lago a :PhysicalLocation' in ttl_str
-    # Output:
+    # Output with RDF* properties:
     # :Sentence_c2076a43-a925 a :Sentence ; :offset 1 .
     # :Sentence_c2076a43-a925 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in
     #     Wyoming, an outcome that was a priority for former President Donald Trump." .
@@ -212,6 +212,176 @@ def test_sentences1():
     #     extraordinary, or exemplary compared to any political position."}  "exceptionalism" .
     # :Quotation_e0947ef0-892f :rhetorical_device {:evidence "The emphasis on the importance of principles over
     #     any political office appeals to the emotions of duty and integrity."}  "pathos" .'
+    #
+    # Output pending pystardog fix:
+    # :Sentence_a2c03547-b427 a :Sentence ; :offset 1 .
+    # :Sentence_a2c03547-b427 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in
+    #     Wyoming, an outcome that was a priority for former President Donald Trump." .
+    # :Liz_Cheney :text "Liz Cheney" .
+    # :Liz_Cheney a :Person .
+    # :Liz_Cheney rdfs:label "Elizabeth Lynne Cheney", "Elizabeth Lynne Cheney Perry", "Elizabeth Lynne Perry",
+    #     "Liz Cheney", "Elizabeth Cheney", "Liz", "Cheney" .
+    # :Liz_Cheney rdfs:comment "From Wikipedia (wikibase_item: Q5362573): ..." .
+    # :Liz_Cheney :external_link "https://en.wikipedia.org/wiki/Liz_Cheney" .
+    # :Liz_Cheney :external_identifier "Q5362573" .
+    # :Liz_Cheney :gender "female" .
+    # :Cheneys a :Person, :Collection ; rdfs:label "Cheneys" ; :role "family" .
+    # :Republican :text "Republican" .
+    # :Republican rdfs:label "The Republicans", "GOP", "Grand Old Party", "Republicans",
+    #     "Republican Party (United States)", "United States Republican Party", "US Republican Party",
+    #     "Republican Party", "Republican" .
+    # :Republican a :PoliticalIdeology .
+    # :Republican rdfs:comment "From Wikipedia (wikibase_item: Q29468): ..." .
+    # :Republican :external_link "https://en.wikipedia.org/wiki/Republican_Party_(United_States)" .
+    # :Republican :external_identifier "Q29468" .
+    # :Wyoming :text "Wyoming" .
+    # :Wyoming a :PopulatedPlace, :AdministrativeDivision .
+    # :Wyoming rdfs:label "Wyoming", "WY" .
+    # :Wyoming rdfs:comment "From Wikipedia (wikibase_item: Q1214): ..." .
+    # :Wyoming :external_link "https://en.wikipedia.org/wiki/Wyoming" .
+    # :Wyoming :external_identifier "Q1214" .
+    # :Wyoming :admin_level 1 .
+    # :Wyoming :country_name "United States" .
+    # geo:6252001 :has_component :Wyoming .
+    # :Wyoming a :GeopoliticalEntity .
+    # :Wyoming rdfs:label "Wyoming", "WY" .
+    # :Donald_Trump :text "Donald Trump" .
+    # :Donald_Trump a :Person .
+    # :Donald_Trump rdfs:label "Donald Trump", "@realDonaldTrump", "David Dennison", "DJT", "Donald J Trump", ...
+    # :Donald_Trump rdfs:comment "From Wikipedia (wikibase_item: Q22686): ..."
+    # :Donald_Trump :external_link "https://en.wikipedia.org/wiki/Donald_Trump" .
+    # :Donald_Trump :external_identifier "Q22686" .
+    # :Donald_Trump :gender "male" .
+    # :Trumps a :Person, :Collection ; rdfs:label "Trumps" ; :role "family" .
+    # :Sentence_a2c03547-b427 :mentions geo:6252001 .
+    # :Sentence_a2c03547-b427 :mentions :Liz_Cheney .
+    # :Sentence_a2c03547-b427 :mentions :Republican .
+    # :Sentence_a2c03547-b427 :mentions :Wyoming .
+    # :Sentence_a2c03547-b427 :mentions :Donald_Trump .
+    # :Sentence_a2c03547-b427 :summary "Liz Cheney loses Wyoming Republican primary, Trump priority." .
+    # :Sentence_a2c03547-b427 :sentiment "negative" .
+    # :Sentence_a2c03547-b427 :grade_level 8 .
+    # :Sentence_a2c03547-b427 :has_semantic :Event_9857343b-5325 .
+    # :Event_9857343b-5325 a :Loss ; :text "conceded defeat" .
+    # :Event_9857343b-5325 :has_active_entity :Liz_Cheney .
+    # :Noun_60d6a0a0-d0bd a :End ; :text "defeat" ; rdfs:label "defeat" .
+    # :Event_9857343b-5325 :has_topic :Noun_60d6a0a0-d0bd .
+    # :Event_9857343b-5325 :has_time [ :text "Tuesday" ; a :Time ] .
+    # :Event_9857343b-5325 :has_location :Wyoming .
+    # :Sentence_a2c03547-b427 :has_semantic :Event_a95774ce-689c .
+    # :Event_a95774ce-689c a :EnvironmentAndCondition ; :text "was a priority" .
+    # :Noun_bcdcacf8-a96c a :Change ; :text "outcome" ; rdfs:label "an outcome" .
+    # :Event_a95774ce-689c :has_topic :Noun_bcdcacf8-a96c .
+    # :Event_a95774ce-689c :has_topic [ :text "a priority" ; a :Clause ] .
+    # :Event_a95774ce-689c :has_described_entity :Donald_Trump .
+    # :Sentence_c07b43e6-258e a :Sentence ; :offset 2 .
+    # :Sentence_c07b43e6-258e :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by
+    #     the former president, won 66.3% of the vote to Ms. Cheney’s 28.9%, with 95% of all votes counted." .
+    # :Harriet_Hageman :text "Harriet Hageman" .
+    # :Harriet_Hageman a :Person .
+    # :Harriet_Hageman rdfs:label "Harriet M. Hageman", "Harriet Hageman", "Harriet", "Hageman" .
+    # :Harriet_Hageman rdfs:comment "From Wikipedia (wikibase_item: Q110815967): ..." .
+    # :Harriet_Hageman :external_link "https://en.wikipedia.org/wiki/Harriet_Hageman" .
+    # :Harriet_Hageman :external_identifier "Q110815967" .
+    # :Harriet_Hageman :gender "female" .
+    # :Hagemans a :Person, :Collection ; rdfs:label "Hagemans" ; :role "family" .
+    # :Sentence_c07b43e6-258e :mentions :Harriet_Hageman .
+    # :Sentence_c07b43e6-258e :mentions :Liz_Cheney .
+    # :Sentence_c07b43e6-258e :summary "Harriet Hageman wins with 66.3% of the vote." .
+    # :Sentence_c07b43e6-258e :sentiment "positive" .
+    # :Sentence_c07b43e6-258e :grade_level 8 .
+    # :Sentence_c07b43e6-258e :rhetorical_device "logos" .
+    # :Sentence_c07b43e6-258e :rhetorical_device_logos "Use of specific percentages and the phrase \'with 95% of
+    #     all votes counted\' provides statistical evidence to support the statement about the election results." .
+    # :Sentence_c07b43e6-258e :has_semantic :Event_84359249-3304 .
+    # :Event_84359249-3304 a :Affiliation ; :text "was endorsed" .
+    # :Event_84359249-3304 :affiliated_with :Harriet_Hageman .
+    # :Noun_d7614d85-c6bd a :Affiliation ; :text "president" ; rdfs:label "by the former president" .
+    # :Event_84359249-3304 :has_active_entity :Noun_d7614d85-c6bd .
+    # :Sentence_c07b43e6-258e :has_semantic :Event_72886b48-d7a2 .
+    # :Event_72886b48-d7a2 a :Affiliation ; :text "was endorsed" .
+    # :Event_72886b48-d7a2 :affiliated_with :Harriet_Hageman .
+    # :Event_72886b48-d7a2 :has_active_entity :Noun_d7614d85-c6bd .
+    # :Sentence_c07b43e6-258e :has_semantic :Event_056c2c22-d0bf .
+    # :Event_056c2c22-d0bf a :Win ; :text "won 66.3% of the vote" .
+    # :Event_056c2c22-d0bf :has_active_entity :Harriet_Hageman .
+    # :Noun_ff70f18f-520e a :Measurement ; :text "66.3% of the vote" ; rdfs:label "66.3% of the vote" .
+    # :Event_056c2c22-d0bf :has_quantification :Noun_ff70f18f-520e .
+    # :Noun_74a433d0-2a87 a :Person ; :text "Ms. Cheney" ; rdfs:label "to Ms. Cheney’s 28.9%" .
+    # :Event_056c2c22-d0bf :has_affected_entity :Noun_74a433d0-2a87 .
+    # :Sentence_c07b43e6-258e :has_semantic :Event_6e9b19bb-f30a .
+    # :Event_6e9b19bb-f30a a :Measurement ; :text "with 95% of all votes counted" .
+    # :Noun_1c387f1f-8388 a :Measurement ; :text "votes" ; rdfs:label "95% of all votes" .
+    # :Event_6e9b19bb-f30a :has_quantification :Noun_1c387f1f-8388 .
+    # :Sentence_096f8d53-2e03 a :Sentence ; :offset 3 .
+    # :Sentence_096f8d53-2e03 :text "[Quotation0] Ms. Cheney said in her concession speech." .
+    # :Sentence_096f8d53-2e03 :mentions :Liz_Cheney .
+    # :Sentence_096f8d53-2e03 :has_component :Quotation0 .
+    # :Sentence_096f8d53-2e03 :summary "Ms. Cheney delivers concession speech." .
+    # :Sentence_096f8d53-2e03 :sentiment "neutral" .
+    # :Sentence_096f8d53-2e03 :grade_level 8 .
+    # :Sentence_096f8d53-2e03 :has_semantic :Event_646ad621-eea7 .
+    # :Event_646ad621-eea7 a :CommunicationAndSpeechAct ; :text "said" .
+    # :Event_646ad621-eea7 :has_active_entity :Liz_Cheney .
+    # :Noun_ec32ece2-fb73 a :CommunicationAndSpeechAct ; :text "concession speech" ;
+    #     rdfs:label "in her concession speech" .
+    # :Event_646ad621-eea7 :has_location :Noun_ec32ece2-fb73 .
+    # :Sentence_83dcfefa-1119 a :Sentence ; :offset 4 .
+    # :Sentence_83dcfefa-1119 :text "She also claimed that Trump is promoting an insidious lie about the
+    #     recent FBI raid of his Mar-a-Lago residence." .
+    # :FBI :text "FBI" .
+    # :FBI a :OrganizationalEntity .
+    # :FBI rdfs:label "FBI", "F.B.I.", "Federal Bureau of Investigation" .
+    # :FBI rdfs:comment "From Wikipedia (wikibase_item: Q8333): ..." .
+    # :FBI :external_link "https://en.wikipedia.org/wiki/Federal_Bureau_of_Investigation" .
+    # :FBI :external_identifier "Q8333" .
+    # :Mar_a_Lago :text "Mar-a-Lago" .
+    # :Mar_a_Lago a :PhysicalLocation .
+    # :Mar_a_Lago rdfs:label "Mar-a-Lago", "Mar-A-Lago Building" .
+    # :Mar_a_Lago rdfs:comment "From Wikipedia (wikibase_item: Q1262898): ..." .
+    # :Mar_a_Lago :external_link "https://en.wikipedia.org/wiki/Mar-a-Lago" .
+    # :Mar_a_Lago :external_identifier "Q1262898" .
+    # :Mar_a_Lago :country_name "United States" .
+    # geo:6252001 :has_component :Mar_a_Lago .
+    # :Mar_a_Lago a :Location, :AnthropogenicFeature .
+    # :Mar_a_Lago rdfs:label "Mar-a-Lago", "Mar-A-Lago Building" .
+    # :Sentence_83dcfefa-1119 :mentions :Donald_Trump .
+    # :Sentence_83dcfefa-1119 :mentions :FBI .
+    # :Sentence_83dcfefa-1119 :mentions :Mar_a_Lago .
+    # :Sentence_83dcfefa-1119 :summary "Claims Trump spreads false narrative about FBI raid." .
+    # :Sentence_83dcfefa-1119 :sentiment "negative" .
+    # :Sentence_83dcfefa-1119 :grade_level 8 .
+    # :Sentence_83dcfefa-1119 :rhetorical_device "hyperbole" .
+    # :Sentence_83dcfefa-1119 :rhetorical_device_hyperbole "The use of the word \'insidious\' to describe the
+    #     lie suggests an exaggerated sense of evil or treachery, which is characteristic of hyperbole." .
+    # :Sentence_83dcfefa-1119 :rhetorical_device "loaded language" .
+    # :Sentence_83dcfefa-1119 :rhetorical_device_loaded_language "The term \'insidious\' is a loaded word that carries
+    #     strong negative connotations, designed to invoke emotions and judgments about the nature of the lie." .
+    # :Sentence_83dcfefa-1119 :has_semantic :Event_7bc237d0-f530 .
+    # :Event_7bc237d0-f530 a :CommunicationAndSpeechAct ; :text "claimed" .
+    # :Event_7bc237d0-f530 :has_active_entity :Liz_Cheney .
+    # :Event_7bc237d0-f530 :has_topic [ :text "that Trump is promoting an insidious lie about the recent FBI raid of
+    #     Trump\'s Mar-a-Lago residence" ; a :Clause ] .
+    # :Sentence_83dcfefa-1119 :has_semantic :Event_47407316-1471 .
+    # :Event_47407316-1471 a :DeceptionAndDishonesty ; :text "is promoting" .
+    # :Event_47407316-1471 :has_active_entity :Donald_Trump .
+    # :Noun_52669a11-6c6d a :CommunicationAndSpeechAct ; :text "lie" ; rdfs:label "an insidious lie" .
+    # :Event_47407316-1471 :has_topic :Noun_52669a11-6c6d .
+    # :Event_47407316-1471 :has_location :Mar_a_Lago .
+    # :Quotation_d77956d1-d9fe a :Quote ; :text "No House seat, no office in this land is more important than the
+    #     principles we swore to protect," .
+    # :Quotation_d77956d1-d9fe :mentions :House_of_Representatives .
+    # :Quotation_d77956d1-d9fe :attributed_to :Liz_Cheney .
+    # :Quotation_d77956d1-d9fe :summary "No position surpasses the importance of sworn principles." .
+    # :Quotation_d77956d1-d9fe :sentiment "positive" .
+    # :Quotation_d77956d1-d9fe :grade_level 8 .
+    # :Quotation_d77956d1-d9fe :rhetorical_device "exceptionalism" .
+    # :Quotation_d77956d1-d9fe :rhetorical_device_exceptionalism "The phrase \'no House seat, no office in this land
+    #     is more important than the principles we swore to protect\' suggests that the principles mentioned are unique
+    #     and of extraordinary importance, which is an example of exceptionalism." .
+    # :Quotation_d77956d1-d9fe :rhetorical_device "pathos" .
+    # :Quotation_d77956d1-d9fe :rhetorical_device_pathos "The emphasis on the importance of principles over any
+    #     office or House seat appeals to the emotions of duty and integrity, aligning with pathos."
 
 
 def test_sentences2():

@@ -28,7 +28,8 @@ def _add_wikidata_triples(entity_iri: str, description: str, wiki_url: str, wiki
     if wiki_url:
         ttl_list.append(f'{entity_iri} :external_link "{wiki_url}" .')
     if wiki_id:
-        predicate = ':external_identifier {:identifier_source "Wikidata"}'
+        # TODO: Pending pystardog fix; predicate = ':external_identifier {:identifier_source "Wikidata"}'
+        predicate = ':external_identifier'    # For now, the only identifier using this predicate is Wikidata
         ttl_list.append(f'{entity_iri} {predicate} "{wiki_id}" .')
 
 

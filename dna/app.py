@@ -11,7 +11,7 @@ from dna.database import add_remove_data, clear_data, construct_graph, query_dat
 from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
     query_narratives, query_repos, query_repo_graphs, update_narrative
 from dna.sentence_element_classes import Metadata
-from dna.query_news import get_article_text, get_matching_articles
+# from dna.query_news import get_article_text, get_matching_articles
 from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',

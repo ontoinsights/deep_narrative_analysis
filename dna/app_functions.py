@@ -174,13 +174,17 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[goal - 1]}" .')
     for device_detail in goal_dict['rhetorical_devices']:
         device_numb = int(device_detail['device_number'])
-        predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
-        turtle.append(f':Narrative_{narr_id} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
-    for key in goal_dict:
-        if 'interpretation' in key:
-            interpretation_strs = key.split('_interpretation')
-            edge = '{:view "' + interpretation_strs[0] + '"}'
-            turtle.append(f':Narrative_{narr_id} :interpretation {edge} "{goal_dict[key]}" .')
+        # TODO: Pending pystardog fix; predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"}'
+        predicate = f':rhetorical_device_{rhetorical_devices[device_numb - 1].replace(" ", "_")}'
+        turtle.append(f':Narrative_{narr_id} :rhetorical_device "{rhetorical_devices[device_numb - 1]}" .')
+        evidence = device_detail['evidence']
+        turtle.append(f':Narrative_{narr_id} {predicate} "{evidence}" .')
+    for interpreted_text in goal_dict['interpreted_text']:
+        perspective = interpreted_text['perspective']
+        interpretation = interpreted_text['interpretation']
+        # TODO: Pending pystardog fix; edge = f':interpretation {:view "' + {perspective} + '"}'
+        predicate = f':interpretation_{perspective}'
+        turtle.append(f':Narrative_{narr_id} {predicate} "{interpretation}" .')
     return True, turtle, created_at, numb_triples
 
 

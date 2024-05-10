@@ -91,14 +91,20 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
         # Create the Turtle for the verb phrase and its semantics
         event_iri = event.iri
         if event.future:
-            curr_turtle.append(f'{sentence_iri} :has_semantic {future_true} {event_iri} .')
+            # TODO: Pending pystardog fix;
+            #       curr_turtle.append(f'{sentence_iri} :has_semantic {future_true} {event_iri} .')
+            curr_turtle.append(f'{sentence_iri} :has_semantic {event_iri} .')
+            curr_turtle.append(f'{sentence_iri} :future true .')
         else:
             curr_turtle.append(f'{sentence_iri} :has_semantic {event_iri} .')
         if event.class_names:
             curr_turtle.append(f'{event_iri} a {", ".join(event.class_names)} ; :text {Literal(full_phrase).n3()} .')
         if event.negated_class_names:
-            curr_turtle.append(f'{event_iri} a {negated_true} {", ".join(event.negated_class_names)} ; '
-                               f':text {Literal(full_phrase).n3()} .')
+            # TODO: Pending pystardog fix;
+            #       curr_turtle.append(f'{event_iri} a {negated_true} {", ".join(event.negated_class_names)} ; '
+            #                          f':text {Literal(full_phrase).n3()} .')
+            for negated_name in event.negated_class_names:
+                curr_turtle.append(f'{event_iri} a {negated_name} ; :negated true ; :text {Literal(full_phrase).n3()} .')
         # Deal with the associated nouns and clauses
         for associated in associateds:
             # TODO: Deal with multiple nouns in subjects and objects (conjunction or disjunction) and negations
@@ -165,10 +171,9 @@ def _update_turtle(assoc: Associated, event: Event, sentence_nouns_dict: dict, c
 
     :param assoc: Instance of an Associated Class for the event/verb
     :param event: Instance of an Event Class
-    :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
-             The dictionary keys are the text for the noun, and its values are a tuple consisting
-             of the spaCy entity type and the noun's IRI. An IRI value may be associated with
-             more than 1 text.
+    :param sentence_nouns_dict: A dictionary holding the nouns/named entities encountered in the sentence;
+             The dictionary keys are the text for the noun, and its values are a tuple consisting of the
+             spaCy entity type and the noun's IRI. An IRI value may be associated with more than 1 text.
     :param curr_turtle: Array holding the assembled Turtle statements for the current sentence
     :return: N/A (curr_turtle is updated)
     """
@@ -209,7 +214,7 @@ def _update_turtle(assoc: Associated, event: Event, sentence_nouns_dict: dict, c
             for ent in nlp(assoc.trigger_text).ents:
                 # The entity should already have been processed in the sentence
                 # TODO: What if there are 2+ proper nouns?
-                entity_type, noun_iri = check_if_noun_is_known(ent.text, empty_string, nouns_dict)
+                entity_type, noun_iri = check_if_noun_is_known(ent.text, empty_string, sentence_nouns_dict)
                 reference_iri = noun_iri if noun_iri else reference_iri
         if semantic_role == 'agent':
             curr_turtle.append(f'{event_iri} :has_active_entity {reference_iri} .')
@@ -279,8 +284,13 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
                 if type(device_detail['device_number']) is int or device_detail['device_number'].isdigit():
                     device_numb = int(device_detail['device_number'])
                     if 0 < device_numb < len(rhetorical_devices) + 1:
-                        predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"} '
-                        ttl_list.append(f'{sentence_iri} {predicate} "{rhetorical_devices[device_numb - 1]}" .')
+                        device_numb = int(device_detail['device_number'])
+                        # TODO: Pending pystardog fix;
+                        #       predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"}'
+                        predicate = f':rhetorical_device_{rhetorical_devices[device_numb - 1].replace(" ", "_")}'
+                        ttl_list.append(f'{sentence_iri} :rhetorical_device "{rhetorical_devices[device_numb - 1]}" .')
+                        evidence = device_detail['evidence']
+                        ttl_list.append(f'{sentence_iri} {predicate} "{evidence}" .')
                     else:
                         logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sentence_text}')
                         continue
