@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: May 4 2024
+# Last modified: May 13 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,6 +23,7 @@
 # Changes:
 #  Added number_sentences, number_ingested and new rhetorical devices
 #  Added Clause, Correction
+#  Added interpretation, ranking and segment_level
 ########################################################################
 
 
@@ -110,6 +111,12 @@
   rdfs:label "offset"@en ;
   rdfs:comment "Defines the (incremental) Sentence number extracted from a Narrative."@en ;
   rdfs:domain :Sentence ;
+  rdfs:range xsd:integer .
+
+:ranking a owl:DatatypeProperty ;
+  rdfs:label "ranking"@en ;
+  rdfs:comment "Defines how positively/negatively a Narrative might be viewed by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates a very negative view and 5 indicates a very positive view."@en ;
+  rdfs:domain :Narrative ;
   rdfs:range xsd:integer .
 
 :rhetorical_device a owl:DatatypeProperty ;

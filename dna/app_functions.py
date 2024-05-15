@@ -48,7 +48,7 @@ def _entity_exists(repo: str, graph: str = empty_string) -> bool:
 
     :param repo: The repository nae
     :param graph: String identifying the narrative/narrative graph
-    :return: True if the database or graph exists for the specified server, False otherwise
+    :return: True if the database or graph exists, False otherwise
     """
     if graph:
         bindings = query_database('select', query_narratives.replace('?named', f':{repo}_default')
@@ -141,7 +141,7 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
 def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
                      number_sentences: int, number_ingested: int) -> (bool, list, str, int):
     """
-    Add the meta-data triples for a narrative to the specified database of the server.
+    Add the meta-data triples for a narrative to the specified database.
 
     :param repo: The repository name
     :param narr_id: String identifying the narrative/narrative graph
@@ -167,24 +167,29 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
                    f':number_sentences "{number_sentences}" ; :number_ingested "{number_ingested}" ; '
                    f':source "{metadata.source}" ; dc:title "{metadata.title}" ; :external_link "{metadata.url}" .',
                    f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
-    goal_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
-    summary = goal_dict['summary']
+    summary_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
+    summary = summary_dict['summary']
     turtle.append(f':Narrative_{narr_id} :summary "{summary}" .')
-    for goal in goal_dict['goal_numbers']:
+    for goal in summary_dict['goal_numbers']:
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[goal - 1]}" .')
-    for device_detail in goal_dict['rhetorical_devices']:
+    for device_detail in summary_dict['rhetorical_devices']:
         device_numb = int(device_detail['device_number'])
         # TODO: Pending pystardog fix; predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"}'
         predicate = f':rhetorical_device_{rhetorical_devices[device_numb - 1].replace(" ", "_")}'
         turtle.append(f':Narrative_{narr_id} :rhetorical_device "{rhetorical_devices[device_numb - 1]}" .')
         evidence = device_detail['evidence']
         turtle.append(f':Narrative_{narr_id} {predicate} "{evidence}" .')
-    for interpreted_text in goal_dict['interpreted_text']:
+    for interpreted_text in summary_dict['interpreted_text']:
         perspective = interpreted_text['perspective']
         interpretation = interpreted_text['interpretation']
-        # TODO: Pending pystardog fix; edge = f':interpretation {:view "' + {perspective} + '"}'
+        # TODO: Pending pystardog fix; edge = f':interpretation {:segment_label "' + {perspective} + '"}'
         predicate = f':interpretation_{perspective}'
         turtle.append(f':Narrative_{narr_id} {predicate} "{interpretation}" .')
+    for ranking in summary_dict['ranking_by_perspective']:
+        perspective = ranking['perspective']
+        # TODO: Pending pystardog fix; edge = f':ranking {:segment_label "' + {perspective} + '"}'
+        predicate = f':ranking_{perspective}'
+        turtle.append(f':Narrative_{narr_id} {predicate} {ranking["ranking"]} .')
     return True, turtle, created_at, numb_triples
 
 

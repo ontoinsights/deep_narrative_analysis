@@ -73,7 +73,6 @@ paths:
         Get a list of all repositories
       description: >-
         Return the names and creation dates of all the DNA repositories 
-        of the specified database server
       operationId: getRepositories
       responses:
         '200':
@@ -321,7 +320,6 @@ paths:
       description: >-
         Get the information graph for the narrative or article with 
         the specified id in the repository 
-        server
       operationId: getGraph
       parameters:
         - $ref: '#/components/parameters/repository'
@@ -502,9 +500,6 @@ components:
     InfoGraphDetails:
       type: object
       properties:
-        server:
-          type: string
-          example: http://example.com
         repository:
           type: string
           example: dna

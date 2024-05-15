@@ -1,5 +1,7 @@
 import pytest
-from dna.query_openai import access_api, narrative_goals, narr_prompt
+
+from dna.app_functions import get_metadata_ttl
+from dna.query_openai import access_api, narrative_goals, narrative_summary_prompt
 
 # From NYT Editorial, https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html
 narr_text = \
@@ -19,8 +21,9 @@ narr_text = \
 
 
 def test_narrative_results():
-    narr_dict = access_api(narr_prompt.replace("{narr_text}", narr_text))
+    narr_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr_text))
     goals = narr_dict['goal_numbers']
+    print(narr_dict)
     goal_texts = []
     for goal in goals:
         goal_texts.append(narrative_goals[goal - 1])
@@ -47,17 +50,53 @@ def test_narrative_results():
     #      {'device_number': 22, 'evidence': 'The narrative appeals to emotions by discussing the existential
     #          threat to Israel and the impact of ongoing conflict on civilians.'}]    # pathos
     #   'interpreted_text': [
-    #      {'perspective': 'conservative', 'interpretation': "Conservatives might view the narrative as a
-    #          validation of security concerns regarding Israel and the threat posed by Hamas and Hezbollah.
-    #          They may agree with the author's assessment that dismantling Hamas is necessary for peace."},
-    #      {'perspective': 'liberal', 'interpretation': "Liberals might be critical of the narrative's hardline
-    #          stance against Hamas and may advocate for a more nuanced approach to resolving the conflict that
-    #          includes addressing the humanitarian situation in Gaza."},
-    #      {'perspective': 'neutral', 'interpretation': "A neutral observer might consider the narrative as one
-    #          perspective on the complex Israeli-Palestinian conflict, recognizing the author's expertise
-    #          while also understanding that the situation has multiple dimensions and viewpoints."}],
-    #    'ranking_by_perspective': [
+    #      {'perspective': 'conservative', 'interpretation': "Conservatives might view the narrative favorably
+    #          as it emphasizes security concerns and the need for decisive action against Hamas, aligning with
+    #          a strong national defense ideology."},
+    #      {'perspective': 'liberal', 'interpretation': "Liberals might be critical of the narrative for its hardline
+    #          stance against Hamas without discussing potential diplomatic solutions or the humanitarian impact
+    #          of military actions."},
+    #      {'perspective': 'neutral', 'interpretation': "A neutral observer might see the narrative as a pragmatic
+    #          examination of the challenges in achieving peace between Israel and the Palestinians, recognizing the
+    #          complexities of the situation."}],
+    #    'relevance_by_perspective': [
     #      {'perspective': 'conservative', 'ranking': 4},
     #      {'perspective': 'liberal', 'ranking': 2},
     #      {'perspective': 'neutral', 'ranking': 3}]
     # }
+
+
+def test_narrative_turtle():
+    success, ttl_str, created, number = get_metadata_ttl('foo', '123', narr_text, [], 10, 10)
+    assert ':narrative_goal "advocate' in ttl_str
+    assert ':rhetorical_device "ethos' in ttl_str
+    assert ':rhetorical_device_ethos' in ttl_str    # Holding the evidence for assigning the 'ethos' device
+    assert ':interpretation_conservative' in ttl_str
+    assert ':ranking_conservative' in ttl_str
+    # Output Turtle:
+    # :Narrative_123 :summary "The narrative is from a U.S. peacemaking policy and conflict resolution professional who
+    #     has worked on various international conflicts. The focus is on the Israeli-Palestinian conflict,
+    #     specifically the role of Hamas in Gaza. The author argues that peace is unattainable as long as
+    #     Hamas, which is backed by Iran, remains in power and poses a threat to Israel. The narrative
+    #     suggests that for Israelis, the existence of their state is at risk, and that the ultimate goal
+    #     of Hamas and Hezbollah is to make Israel unlivable." .
+    # :Narrative_123 :narrative_goal "advocate" .
+    # :Narrative_123 :narrative_goal "analyze" .
+    # :Narrative_123 :rhetorical_device "ethos" .
+    # :Narrative_123 :rhetorical_device_ethos "The author establishes authority by discussing their 35 years
+    #     of experience in U.S. peacemaking and conflict resolution." .
+    # :Narrative_123 :rhetorical_device "pathos" .
+    # :Narrative_123 :rhetorical_device_pathos "The narrative appeals to emotions by discussing the existential
+    #     threat to Israel and the impact of ongoing conflict on civilians." .
+    # :Narrative_123 :interpretation_conservative "Conservatives might view the narrative favorably as it emphasizes
+    #     security concerns and the need for decisive action against Hamas, aligning with a strong national
+    #     defense ideology." .
+    # :Narrative_123 :interpretation_liberal "Liberals might be critical of the narrative for its hardline stance
+    #     against Hamas without discussing potential diplomatic solutions or the humanitarian impact of
+    #     military actions." .
+    # :Narrative_123 :interpretation_neutral "A neutral observer might see the narrative as a pragmatic examination
+    #     of the challenges in achieving peace between Israel and the Palestinians, recognizing the complexities \
+    #     of the situation." .
+    # :Narrative_123 :ranking_conservative 4 .
+    # :Narrative_123 :ranking_liberal 2 .
+    # :Narrative_123 :ranking_neutral 3 .

@@ -928,6 +928,14 @@
                                     rdfs:label "prototypical (boolean)"@en .
 
 
+###  urn:ontoinsights:dna:ranking
+<urn:ontoinsights:dna:ranking> rdf:type owl:DatatypeProperty ;
+                               rdfs:domain <urn:ontoinsights:dna:Narrative> ;
+                               rdfs:range xsd:integer ;
+                               rdfs:comment "Defines how positively/negatively a Narrative might be viewed by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates a very negative view and 5 indicates a very positive view."@en ;
+                               rdfs:label "ranking"@en .
+
+
 ###  urn:ontoinsights:dna:recurrence_unit
 <urn:ontoinsights:dna:recurrence_unit> rdf:type owl:DatatypeProperty ,
                                                 owl:FunctionalProperty ;

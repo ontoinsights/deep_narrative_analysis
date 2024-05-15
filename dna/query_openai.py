@@ -284,8 +284,9 @@ narrative_summary_prompt = \
     'Indicate the numbers of the 2 most likely narrative goals. Indicate the numbers of the rhetorical' \
     'devices used, and explain why those devices were returned. Also, summarize the narrative, and explain ' + \
     f'how it would be interpreted from each of the following perspectives: {interpretation_views}. Rank the ' \
-    f'text from 1-5 for each perspective. Return the response as a JSON object with keys and values as ' \
-    f'defined by {narrative_summary_result}.'
+    f'text from 1-5 as to how positively it would be received for each perspective. The rank of 1 is very ' \
+    f'negatively, and the rank of 5 is very positively. Return the response as a JSON object with keys and ' \
+    f'values as defined by {narrative_summary_result}.'
 
 noun_prompt = \
     f'{chatgpt} You are a linguist and NLP expert. Here is a sentence (ending with the string "**" which should ' + \
