@@ -126,7 +126,7 @@ def parse_narrative(narr_text: str) -> (list, list, list):
         # Determine if special punctuation is present (question and exclamation marks for now)
         # TODO: Other punctuation?
         punctuations = _get_punctuations(sentence_text)
-        # Short sentences are mainly for effect and cause problems in the parse - capture but ignore further processing
+        # Short sentences are mainly for reader effect and result in parsing problems - capture but ignore processing
         if len(sentence_text) < 3 or not any(c.isalnum() for c in sentence_text):
             # No NER or verb processing
             sentence_instance_list.append(Sentence(sentence_text, sentence_offset, [], punctuations, []))

@@ -12,7 +12,7 @@ import xml.etree.ElementTree as etree
 from dna.query_openai import access_api, wikipedia_prompt
 from dna.utilities_and_language_specific import concept_map, empty_string, language_tag, space, underscore
 
-country_qualifier = 'United_States'
+country_qualifier = 'United_States'   # TODO: Move to environment variable
 
 geonamesUser = os.environ.get('GEONAMES_ID')
 
@@ -67,7 +67,6 @@ def _get_geonames_alt_names(root: etree.Element) -> (list, str):
              or an empty array (if not defined), and a string holding the Wikipedia link for
              additional details
     """
-    # TODO: Language specific results
     names = set()
     link = empty_string
     elems = root.findall('./geoname/alternateName[@lang]')

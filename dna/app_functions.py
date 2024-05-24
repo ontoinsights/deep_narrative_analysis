@@ -85,7 +85,7 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
                                f'STARDOG_ENDPOINT'}, 404
     elif check_param == sentences:
         if sentences not in args_dict:
-            return {sentences: 100}, 200
+            return {sentences: 10}, 200
         else:
             if not args_dict[sentences].isdigit() or int(args_dict[sentences]) < 2:
                 return {error_str: f'Number of sentences to ingest must be an integer, greater than 1.'}, 400
@@ -228,7 +228,7 @@ def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> (dict, st
     logging.info(f'Ingesting {metadata.title} to {repo}')
     sentence_instance_list, quotation_instance_list, quoted_strings_list = parse_narrative(narr)
     success, actual_sentences, graph_ttl = create_graph(sentence_instance_list, quotation_instance_list,
-                                                        metadata.number_to_ingest)
+                                                        metadata.number_to_ingest, repo)
     if not success:
         return dict(), f'Error creating the graph for {metadata.title}', 500
     logging.info('Loading knowledge graph')

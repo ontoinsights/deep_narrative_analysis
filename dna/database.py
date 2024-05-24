@@ -8,7 +8,7 @@
 from datetime import datetime
 import logging
 import os
-from rdflib import Graph
+from rdflib import Graph, Namespace
 import stardog
 from stardog import Connection
 
@@ -16,6 +16,10 @@ from dna.utilities_and_language_specific import dna_db, dna_prefix, empty_string
 
 rdf_graph = Graph()
 text_turtle = 'text/turtle'
+DNA = Namespace('urn:ontoinsights:dna:')
+OWL = Namespace('http://www.w3.org/2002/07/owl')
+RDF = Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#')
+RDFS = Namespace('http://www.w3.org/2000/01/rdf-schema#')
 
 # Get environment variables
 sd_conn_details = {'endpoint': os.environ.get('STARDOG_ENDPOINT'),
@@ -121,11 +125,19 @@ def construct_graph(construct: str, repo: str) -> (bool, list):
         const_conn = stardog.Connection(dna_db, **sd_conn_details)
         construct_results = const_conn.graph(construct, content_type='text/turtle')
         turtle_details = rdf_graph.parse(format='text/turtle', data=construct_results)
-        final_turtle = []
+        turtle_details.bind('dna', DNA)
+        turtle_details.bind('owl', OWL)
+        turtle_details.bind('rdf', RDF)
+        turtle_details.bind('rdfs', RDFS)
+        turtle_stmts = []
         for stmt in turtle_details:
             subj, pred, obj = stmt
-            final_turtle.append(f'{subj.n3()} {pred.n3()} {obj.n3()} .\n')
-        return True, final_turtle
+            turtle_stmts.append(f'{subj.n3(turtle_details.namespace_manager)} '
+                                f'{pred.n3(turtle_details.namespace_manager)} '
+                                f'{obj.n3(turtle_details.namespace_manager)} .\n')
+        turtle_stmts.sort()
+        final_turtle = ['@prefix : <urn:ontoinsights:dna:> .\n', '\n']
+        return True, final_turtle.extend(turtle_stmts)
     except Exception as const_err:
         curr_error = f'Narrative graph ({narr_id}) construct for repository ({repo}) exception: {str(const_err)}'
         logging.error(curr_error)

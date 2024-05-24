@@ -334,8 +334,10 @@ verbs_and_associateds_prompt = \
     'etc. If the verb or associated entities are considered idioms, return the complete idiom as the verb or ' \
     'associated clause. Indicate the semantic roles of each associated subject, object, etc. There may be more ' + \
     f'than one role. Only return these specific semantic roles: {semantic_role_text}. Make sure to consider whether ' \
-    f'the sentence is in the active or passive voice when assigning the roles. Return the information as a JSON ' \
-    f'object with keys and values defined by {verbs_and_associateds_result}.'
+    f'the sentence is in the active or passive voice when assigning the roles. Do not assign a role of "content" if ' \
+    f'the associated subject, object, etc. does not include a verb. If there is no verb, try to assign a more ' \
+    f'specific semantic role. Return the information as a JSON object with keys and values defined by ' \
+    f'{verbs_and_associateds_result}.'
 
 # TODO: Should more categories be reported? 2 are reported now
 semantics_prompt = \

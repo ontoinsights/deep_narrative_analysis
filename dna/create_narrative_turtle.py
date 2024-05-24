@@ -9,25 +9,65 @@ import re
 from rdflib import Literal
 from typing import List
 
+from dna.database import query_database
+from dna.database_queries import query_corrections
 from dna.process_entities import get_name_permutations
 from dna.process_sentences import get_sentence_details
 from dna.query_openai import access_api, coref_prompt
 from dna.sentence_classes import Sentence, Quotation, Punctuation
-from dna.utilities_and_language_specific import empty_string, personal_pronouns, space, ttl_prefixes, underscore
+from dna.utilities_and_language_specific import empty_string, ner_dict, personal_pronouns, space, \
+    ttl_prefixes, underscore
 
 
-def _temp_preload() -> dict:
-    temp_dict = dict()
-    for text in ("House of Representatives", "House", "U.S. House of Representatives", "HOR",
-                 "House of Representatives of the United States", "house.gov", "U.S. House",
-                 "United States Congress House", "US HOR", "US House of Representatives", "USHOR",
-                 "United States House of Representatives"):
-        temp_dict[text] = ('ORG', ':House_of_Representatives')
-    return temp_dict
+def _nouns_preload(repo: str) -> dict:
+    """
+    Preload the nouns_dictionary with any named entities that are 'Corrections' (created manually or
+    having been encountered in parsing previous narratives into the repository).
+
+    :param repo: String holding the repository name for the narrative graph
+    :return: A dictionary holding the details of any named entities that could be encountered in a
+             narrative - For reuse of the IRI due to co-reference/multiple reference; Keys are the possible
+             texts for the entity and their value is a tuple that is the spaCy NER type and its IRI
+    """
+    nouns_dict = dict()
+    # Manually created corrections are stored in the default db graph
+    corr_bindings = query_database('select', query_corrections, empty_string)
+    _update_nouns(corr_bindings, nouns_dict)
+    # Corrections recorded by previous parses in the repository's default graph
+    corr_bindings = query_database('select', query_corrections, repo)
+    _update_nouns(corr_bindings, nouns_dict)
+    return nouns_dict
+
+
+def _update_nouns(bindings: list, nouns_dictionary: dict):
+    """
+    Iterate through the query bindings and add the results to the nouns_dictionary.
+
+    :param bindings: An array of query result bindings
+    :param nouns_dictionary: A dictionary holding the details of any named entities that could be
+             encountered in a narrative - For reuse of the IRI due to co-reference/multiple reference;
+             Keys are the possible texts for the entity and their value is a tuple that is the spaCy
+             NER type and its IRI
+    :return: None (nouns_dictionary is updated)
+    """
+    for binding_set in bindings:
+        entity_iri = f":{binding_set['s']['value'].split(':')[-1]}"
+        entity_type = f"{binding_set['type']['value'].split(':')[-1]}"
+        if entity_type == ':Correction':
+            continue
+        entity_ner = empty_string
+        for key, value in ner_dict.items():
+            if value == f':{entity_type}':
+                entity_ner = key
+                break
+        if not entity_ner:
+            continue
+        nouns_dictionary[binding_set['label']['value']] = (entity_ner, entity_iri)
+        return
 
 
 def create_graph(sentence_instance_list: list, quotation_instance_list: list,
-                 number_sentences: int = 10) -> (bool, list):
+                 number_sentences: int, repo: str) -> (bool, list):
     """
     Using the instances of the Sentence Class defining each sentence in the narrative/article,
     create the Turtle rendering of the details.
@@ -36,6 +76,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     :param quotation_instance_list: An array of Quotation Class instances extracted from the original text
     :param number_sentences: An integer indicating the number of sentences to ingest (a number
                              greater than 1; by default up to 10 sentences are ingested)
+    :param repo: String holding the repository name for the narrative graph
     :return: A tuple consisting of a boolean indicating success (if true) or failure, an integer
              indicating the number of sentences processed, and a list of the Turtle statements
              encoding the narrative (if successful)
@@ -44,9 +85,8 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     graph_ttl_list = ttl_prefixes[:]
     # A dictionary holding the named entities encountered in the text - For reuse of the IRIs
     #    due to co-reference/multiple reference
-    # Keys = the texts and Values are a tuple of the entity text and IRI
-    # TODO: Preload :Corrections from the ontology into nouns_dictionary AND the graph Turtle
-    nouns_dictionary = _temp_preload()
+    # Keys = the texts and Values = entity's spaCy NER type and its IRI
+    nouns_dictionary = _nouns_preload(repo)
     index = 0
     for index in range(0, len(sentence_instance_list)):
         if (index + 1) > number_sentences:    # Stop at the requested number of sentences (to be ingested)
@@ -86,7 +126,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         # Get all the sentence details using OpenAI prompting
         try:
             get_sentence_details(sentence_instance_list[index], updated_text, sentence_ttl_list,
-                                 False, nouns_dictionary)
+                                 False, nouns_dictionary, quotation_instance_list, repo)
             graph_ttl_list.extend(sentence_ttl_list)
         except Exception as e:   # Triples not added for sentence
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {sentence_text}')
@@ -98,7 +138,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         quote_text = quotation.text
         quote_ttl_list = [f'{quote_iri} a :Quote ; :text {Literal(quote_text).n3()} .']
         try:
-            get_sentence_details(quotation, quote_text, quote_ttl_list, True, nouns_dictionary)
+            get_sentence_details(quotation, quote_text, quote_ttl_list, True, nouns_dictionary, [], repo)
             graph_ttl_list.extend(quote_ttl_list)
         except Exception as e:    # Triples not added for quote
             logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quote_text}')

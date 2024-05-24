@@ -6,7 +6,7 @@ import uuid
 from rdflib import Literal
 
 from dna.query_sources import get_geonames_location, get_wikipedia_description
-from dna.utilities_and_language_specific import concept_map, empty_string, explicit_plural, names_to_geo_dict, ner_dict
+from dna.utilities_and_language_specific import concept_map, empty_string, explicit_plural, names_to_geo_dict
 
 
 def _add_wikidata_triples(entity_iri: str, description: str, wiki_url: str, wiki_id: str, ttl_list: list):
@@ -94,7 +94,7 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
                             wiki_url: str = empty_string, wikidata_id: str = empty_string,
                             start_time_iri: str = empty_string, end_time_iri: str = empty_string) -> list:
     """
-    Return the Turtle for a 'default' named entity (not addressed by the other functions).
+    Return the Turtle for a named entity not addressed by the other functions.
 
     :param ent_iri: The IRI created for the entity
     :param alt_names: An array of strings which represent alternate names for the entity
@@ -110,6 +110,8 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
     :param end_time_iri: The IRI created for the ending time of the event; Otherwise, an empty string
     :return: An array of Turtle declarations for the entity
     """
+    if 'owl:Thing' in class_map:
+        return []
     labels = '", "'.join(alt_names)
     entity_ttl = [f'{ent_iri} a {class_map} .',
                   f'{ent_iri} rdfs:label "{labels}" .']
@@ -138,8 +140,6 @@ def create_norp_ttl(norp_iri: str, norp_type: str, labels: list, description: st
                         Otherwise, an empty string
     :return: An array defining the Turtle declarations for the NORP entity
     """
-    labels_str = '", "'.join(labels)
-    norp_ttl = [f'{norp_iri} rdfs:label "{labels_str}" .']
     norp_aspect = empty_string
     if description:
         wiki_lower = description.lower()
@@ -147,10 +147,12 @@ def create_norp_ttl(norp_iri: str, norp_type: str, labels: list, description: st
             if concept in wiki_lower:
                 norp_aspect = concept_map[concept]
                 break
-    if norp_aspect:
-        type_str = f'{norp_aspect}, :Collection' if 'PLURAL' in norp_type else norp_aspect
-    else:
-        type_str = ':Collection' if 'PLURAL' in norp_type else 'owl:Thing'
+    type_str = norp_aspect if norp_aspect else 'owl:Thing'
+    if type_str == 'owl:Thing':
+        return []
+    type_str = f'{type_str}, :Collection' if 'PLURAL' else type_str
+    labels_str = '", "'.join(labels)
+    norp_ttl = [f'{norp_iri} rdfs:label "{labels_str}" .']
     norp_ttl.append(f'{norp_iri} a {type_str} .')
     _add_wikidata_triples(norp_iri, description, wiki_url, wikidata_id, norp_ttl)
     return norp_ttl

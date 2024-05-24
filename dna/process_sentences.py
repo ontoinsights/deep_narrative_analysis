@@ -6,6 +6,7 @@ import uuid
 from rdflib import Literal
 from typing import Union
 
+from dna.database import add_remove_data
 from dna.nlp import nlp
 from dna.sentence_element_classes import Associated, Event
 from dna.process_entities import agent_classes, check_if_noun_is_known, process_ner_entities
@@ -13,7 +14,7 @@ from dna.query_openai import access_api, categories, noun_categories, rhetorical
     noun_category_prompt, sentence_summary_prompt, sentence_devices_prompt, verbs_and_associateds_prompt, \
     semantics_prompt
 from dna.sentence_classes import Sentence, Quotation, Entity
-from dna.utilities_and_language_specific import empty_string, ner_dict
+from dna.utilities_and_language_specific import empty_string, ner_dict, ttl_prefixes
 
 future_true = '{:future true}'
 negated_true = '{:negated true}'
@@ -104,7 +105,8 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
             #       curr_turtle.append(f'{event_iri} a {negated_true} {", ".join(event.negated_class_names)} ; '
             #                          f':text {Literal(full_phrase).n3()} .')
             for negated_name in event.negated_class_names:
-                curr_turtle.append(f'{event_iri} a {negated_name} ; :negated true ; :text {Literal(full_phrase).n3()} .')
+                curr_turtle.append(f'{event_iri} a {negated_name} ; :negated true ; '
+                                   f':text {Literal(full_phrase).n3()} .')
         # Deal with the associated nouns and clauses
         for associated in associateds:
             # TODO: Deal with multiple nouns in subjects and objects (conjunction or disjunction) and negations
@@ -114,7 +116,11 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
                 sem_role_lower = semantic_role.lower()
                 if sem_role_lower == 'content' and \
                         31 not in verb_semantic_dict['topics']:  # Not a simple env/condition verb
-                    curr_turtle.append(f'{event_iri} :has_topic [ :text {Literal(assoc_text).n3()} ; a :Clause ] .')
+                    if '[Quotation' in assoc_text:
+                        for quote_topic in re.findall(r'Quotation[0-9]+', assoc_text):
+                            curr_turtle.append(f'{event_iri} :has_topic :{quote_topic} .')
+                    else:
+                        curr_turtle.append(f'{event_iri} :has_topic [ :text {Literal(assoc_text).n3()} ; a :Clause ] .')
                     continue
                 elif sem_role_lower == 'time':
                     # TODO: Time as NER
@@ -153,9 +159,9 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
                                 noun_text += ', :Collection'
                         else:
                             noun_event_dict = access_api(noun_category_prompt.replace('{sent_text}', updated_text)
-                                                        .replace('{noun_text}', assoc_text))
+                                                         .replace('{noun_text}', assoc_text))
                             if 'category_number' in noun_event_dict and (0 < noun_event_dict['category_number']
-                                                                        < len(categories)):
+                                                                         < len(categories)):
                                 noun_class_name = categories[noun_event_dict['category_number'] - 1]
                     # Create an instance of the Associated class to hold the details
                     assoc = Associated(noun_text, assoc_text, noun_class_name, sem_role_lower, noun_dict['singular'],
@@ -232,7 +238,7 @@ def _update_turtle(assoc: Associated, event: Event, sentence_nouns_dict: dict, c
 
 
 def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], updated_text: str, ttl_list: list,
-                         for_quote: bool, nouns_dict: dict):
+                         for_quote: bool, nouns_dict: dict, quotation_list: list, repo: str):
     """
     Retrieve sentence (or quotation) details using the OpenAI API and create the sentence
     (or quotation) level Turtle.
@@ -246,14 +252,35 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
+    :param quotation_list: An array of Quotation instances in case any are referenced in the sentence
+    :param repo: String holding the repository name for the narrative graph
     :return: N/A (ttl_list is updated with the details from OpenAI)
     """
     sentence_iri = sentence_or_quotation.iri
     sentence_text = sentence_or_quotation.text
-    # Handle named entities
-    if sentence_or_quotation.entities:
-        entity_iris, entity_ttl = process_ner_entities(sentence_text, sentence_or_quotation.entities, nouns_dict)
-        ttl_list.extend(entity_ttl)
+    # Get named entities for a sentence, including its quotations
+    named_entities = []
+    if '[Quotation' in sentence_text:
+        quote_indices = []
+        for quotation in re.findall(r'Quotation[0-9]+', sentence_text):
+            ttl_list.append(f'{sentence_iri} :has_component :{quotation} .')
+            quote_indices.append(quotation.split('Quotation')[1])
+        if quote_indices:
+            for i in range(0, len(quote_indices)):
+                named_entities.extend(quotation_list[int(quote_indices[i])].entities)
+    if sentence_or_quotation.entities and not for_quote:    # Already processed entities for a quotation
+        named_entities.extend(sentence_or_quotation.entities)
+    if named_entities:
+        entity_iris, entities_ttl = process_ner_entities(sentence_text, named_entities, nouns_dict)
+        if entities_ttl:
+            ttl_list.extend(entities_ttl)
+            logging.info('Loading NER Turtle')
+            ner_ttl = ttl_prefixes[:]
+            ner_ttl.extend(entities_ttl)
+            # Add new entities to the repo's default graph
+            msg = add_remove_data('add', ' '.join(ner_ttl), repo)
+            if msg:
+                logging.info('Error adding new entity: ', ner_ttl)
         for entity_iri in entity_iris:
             ttl_list.append(f'{sentence_iri} :mentions {entity_iri} .')
     # Capture a quotation's attribution
@@ -261,12 +288,8 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
         attrib_type, attrib_iri = check_if_noun_is_known(sentence_or_quotation.attribution, 'PERSON', nouns_dict)
         if attrib_iri:
             ttl_list.append(f'{sentence_iri} :attributed_to {attrib_iri} .')
-    elif not for_quote:     # Not a quotation but one may be referenced in sentence
-        for quote_text in re.findall(r'Quotation[0-9]+', sentence_text):
-            ttl_list.append(f'{sentence_iri} :has_component :{quote_text} .')
     # Processing the summary prompt for details such as sentiment, summary and grade level
     sent_dict = access_api(sentence_summary_prompt.replace("{sent_text}", sentence_text))
-    summary = empty_string
     if sent_dict:   # Might not get reply from OpenAI
         if sent_dict['summary'] not in ('error', 'string'):
             summary = sent_dict['summary']

@@ -110,24 +110,22 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
     labels = []
     base_type = noun_type.replace('PLURAL', empty_string).replace('SING', empty_string).\
         replace('FEMALE', empty_string).replace('MALE', empty_string)
-    class_map = ner_dict[base_type]
-    if 'PLURAL' in noun_type and ':Collection' not in class_map:
-        class_map += ', :Collection'
+    class_map = f'{ner_dict[base_type]}, :Correction'     # Identifying as possible Correction for co-ref resolution
+    class_map = f'{class_map}, :Collection' if 'PLURAL' in noun_type and ':Collection' not in class_map else class_map
     if base_type == 'DATE':
         # TODO: Resolve how dates are managed
         # noun_iri = _create_time_iri(empty_string, noun_text, True)
         return empty_string, empty_string, []
     else:
-        noun_iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, f':{noun_text}').replace('__', '_')
+        noun_iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, noun_text.strip()).replace('__', underscore)
+    noun_iri = f':{noun_iri[1:]}' if noun_iri.startswith(underscore) else f':{noun_iri}'
+    noun_iri = noun_iri[:-2] if noun_iri.endswith(underscore) else noun_iri
     noun_ttl = [f'{noun_iri} :text {Literal(noun_text).n3()} .']
     # Process by location, agent, and event/other NER types
-    org_as_loc = False
-    if base_type in ('GPE', 'LOC', 'FAC', 'ORG'):     # spaCy incorrectly reports some locations as ORG
+    if base_type in ('GPE', 'LOC', 'FAC'):       # TODO: spaCy incorrectly reports some locations as ORG
         geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type)
-        if geo_ttl:
-            noun_ttl.extend(geo_ttl)
-            org_as_loc = True if base_type == 'ORG' else False
-    if base_type in ('PERSON', 'NORP', 'ORG') and not org_as_loc:
+        noun_ttl.extend(geo_ttl)
+    if base_type in ('PERSON', 'NORP', 'ORG'):   # TODO: spaCy does not identify some companies as ORGs
         wiki_details, wiki_url, wikidata_id, labels = \
             get_wikipedia_description(noun_text, class_map)
         if not labels:
@@ -169,8 +167,8 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         if noun_text not in labels:
             labels.append(noun_text)
         noun_ttl.extend(create_named_entity_ttl(noun_iri, labels, class_map, empty_string))
-    for label in labels:
-        if label not in nouns_dict:
+    if len(noun_ttl) > 1:    # More than just the noun text is in the Turtle
+        for label in labels:
             nouns_dict[label] = (noun_type, noun_iri)
     return noun_type, noun_iri, noun_ttl
 
@@ -192,7 +190,8 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
     if noun_text in names_to_geo_dict:                           # Location is a country name
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
     for noun_key in nouns_dict:                                  # Key is text
-        if noun_key == noun_text or ('PERSON' in noun_type and noun_key in noun_text):      # Strings match
+        # Strings match or a subset of an identified noun is in the noun text
+        if noun_key == noun_text or (noun_type in ner_dict.keys() and len(noun_key) > 4 and noun_key in noun_text):
             return nouns_dict[noun_key]
     return noun_type, empty_string
 

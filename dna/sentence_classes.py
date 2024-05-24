@@ -35,7 +35,7 @@ class Quotation(Sentence):
     def __init__(self, text: str, offset: int, entities: list, punctuations: list, verbs: list, attribution: str):
         super(Quotation, self).__init__(text, offset, entities, punctuations, verbs)
         self.attribution = attribution
-        self.iri = f':Quotation_{str(uuid.uuid4())[:13]}'
+        self.iri = f':Quotation{str(offset)}'
 
 
 class Entity:

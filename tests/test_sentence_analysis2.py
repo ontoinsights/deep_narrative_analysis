@@ -16,6 +16,9 @@ text_multiple_xcomp = 'John liked to ski and to swim.'
 text_location_hierarchy = "Switzerland's mountains are magnificent."
 text_weather = "Hurricane Otis severely damaged Acapulco."
 text_coref = 'Anna saw Heidi cut the roses, but she did not recognize that it was Heidi who cut the roses.'
+text_quotation = 'Jane said, "I want to work for NVIDIA."'
+
+repo = 'foo'
 
 # Note that it is unlikely that all tests will complete successfully since event semantics can be
 # interpreted/reported in multiple ways
@@ -24,7 +27,7 @@ text_coref = 'Anna saw Heidi cut the roses, but she did not recognize that it wa
 
 def test_multiple_verbs():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_verbs)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'ad hominem' in ttl_str or 'juxtaposition' in ttl_str
     assert ':has_active_entity :Sue' in ttl_str
@@ -63,7 +66,7 @@ def test_multiple_verbs():
 
 def test_aux_pobj():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_aux_pobj)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a :RemovalAndRestriction ; :text "got rid of' in ttl_str
     assert ':has_active_entity :John' in ttl_str
@@ -92,7 +95,7 @@ def test_aux_pobj():
 
 def test_idiom_amod():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_idiom_amod)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'metaphor' in ttl_str
     assert ':Avoidance' in ttl_str and ':text "turned a blind eye' in ttl_str
@@ -125,7 +128,7 @@ def test_idiom_amod():
 
 def test_advmod():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_advmod)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a :ReturnRecoveryAndRelease ; :text "put back together' in ttl_str or \
            ' a :ProductionManufactureAndCreation ; :text "put back together' in ttl_str
@@ -152,7 +155,7 @@ def test_advmod():
 
 def test_complex_verb():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_complex_verb)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a :End ; :text "went out of business' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
@@ -173,7 +176,7 @@ def test_complex_verb():
 
 def test_neg_acomp_xcomp():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_neg_acomp_xcomp)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a {:negated true} :ReadinessAndAbility ; :text "is not able' in ttl_str
     assert 'a {:negated true} :EmotionalResponse ; :text "stomach' in ttl_str    # negative emotion
@@ -208,7 +211,7 @@ def test_neg_acomp_xcomp():
 
 def test_non_person_subject():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_non_person_subject)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert '{:negated true} :EmotionalResponse ; :text "were dashed' in ttl_str
     assert ':has_topic :John' in ttl_str or ':has_topic :Noun' in ttl_str
@@ -235,7 +238,7 @@ def test_non_person_subject():
 
 def test_first_person():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_first_person)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert ':sentiment "negative' in ttl_str
     assert '{:negated true} :ReadinessAndAbility ; :text "was not ready' in ttl_str
@@ -261,7 +264,7 @@ def test_first_person():
 
 def test_pobj_semantics():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_pobj_semantics)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a :Avoidance ; :text "escaped' in ttl_str
     assert '{:negated true} :ArrestAndImprisonment ; :text "escaped' in ttl_str
@@ -289,7 +292,7 @@ def test_pobj_semantics():
 
 def test_multiple_subjects():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_subjects)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert ':DisagreementAndDispute' in ttl_str
     assert 'a :Person, :Collection ; :text "Jane and John' in ttl_str
@@ -321,7 +324,7 @@ def test_multiple_subjects():
 
 def test_multiple_xcomp():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_xcomp)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert (':BodilyAct' in ttl_str or ':ArtAndEntertainmentEvent' in ttl_str) and ':EmotionalResponse' in ttl_str
     assert ':has_active_entity :John' in ttl_str
@@ -349,7 +352,7 @@ def test_multiple_xcomp():
 
 def test_location_hierarchy():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_location_hierarchy)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert ':mentions geo:2658434' in ttl_str     # Switzerland
     assert 'imagery' in ttl_str or 'exceptionalism' in ttl_str
@@ -371,7 +374,7 @@ def test_location_hierarchy():
 
 def test_weather():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_weather)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert ':mentions :Hurricane_Otis' in ttl_str and ':mentions :Acapulco' in ttl_str
     assert ':has_active_entity :Hurricane_Otis' in ttl_str
@@ -416,7 +419,7 @@ def test_weather():
 
 def test_coref():
     sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_coref)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
     ttl_str = str(graph_ttl)
     assert 'a :Change ; :text "cut' in ttl_str or 'a :Separation ; :text "cut' in ttl_str or \
            'a :AgricultureApicultureAndAquacultureEvent ; :text "cut' in ttl_str
@@ -465,3 +468,47 @@ def test_coref():
     # :Event_d342e8a1-dbff a :AgricultureApicultureAndAquacultureEvent ; :text "cut the roses" .
     # :Event_d342e8a1-dbff :has_active_entity :Heidi .
     # :Event_d342e8a1-dbff :has_topic :Noun_3ba541e5-0d24 .
+
+
+def test_quotation():
+    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_quotation)
+    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
+    ttl_str = str(graph_ttl)
+    print(ttl_str)
+    assert 'a :Change ; :text "cut' in ttl_str or 'a :Separation ; :text "cut' in ttl_str or \
+           'a :AgricultureApicultureAndAquacultureEvent ; :text "cut' in ttl_str
+    assert 'a :Cognition ; :text "saw' in ttl_str or 'a :SensoryPerception ; :text "saw' in ttl_str
+    assert ':has_active_entity :Heidi' in ttl_str    # cutting
+    assert 'a {:negated true} :Cognition ; :text "did not recognize' in ttl_str
+    assert ':has_active_entity :Anna' in ttl_str     # seeing
+    assert ':has_topic [ :text' in ttl_str
+    # Output Turtle:
+    # :Sentence_49559f87-0517 a :Sentence ; :offset 1 .
+    # :Sentence_49559f87-0517 :text "Jane said, [Quotation0]" .
+    # :Sentence_49559f87-0517 :has_component :Quotation0 .
+    # :NVIDIA :text "NVIDIA" .
+    # :NVIDIA a :OrganizationalEntity, :Correction .
+    # :NVIDIA rdfs:label "Nvidia Corp.", "Nvidia Corporation", "Nvidia", "NVIDIA" .
+    # :NVIDIA rdfs:comment "From Wikipedia (wikibase_item: Q182477): \'Nvidia Corporation is an American multinational
+    #     corporation and technology company headquartered in Santa Clara, California, and incorporated in Delaware.
+    #     It is a software and fabless company which designs and supplies graphics processing units (GPUs), ...\'" .
+    # :NVIDIA :external_link "https://en.wikipedia.org/wiki/Nvidia" .
+    # :NVIDIA :external_identifier "Q182477" .
+    # :Jane :text "Jane" .
+    # :Jane a :Person, :Correction .
+    # :Jane rdfs:label "Jane" .
+    # :Jane :gender "female" .
+    # :Sentence_49559f87-0517 :mentions :NVIDIA .
+    # :Sentence_49559f87-0517 :mentions :Jane .
+    # :Sentence_49559f87-0517 :summary "Jane communicates content of Quotation0." .
+    # :Sentence_49559f87-0517 :sentiment "neutral" .
+    # :Sentence_49559f87-0517 :grade_level 4 .
+    # :Sentence_49559f87-0517 :has_semantic :Event_b4ac0364-01db .
+    # :Event_b4ac0364-01db a :CommunicationAndSpeechAct ; :text "said" .
+    # :Event_b4ac0364-01db :has_active_entity :Jane .
+    # :Event_b4ac0364-01db :has_topic :Quotation0 .
+    # :Quotation1 a :Quote ; :text "I want to work for NVIDIA." .
+    # :Quotation1 :attributed_to :Jane .
+    # :Quotation1 :summary "Desire to work for NVIDIA expressed." .
+    # :Quotation1 :sentiment "positive" .
+    # :Quotation1 :grade_level 5 .
