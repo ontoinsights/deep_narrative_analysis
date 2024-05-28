@@ -137,7 +137,8 @@ def construct_graph(construct: str, repo: str) -> (bool, list):
                                 f'{obj.n3(turtle_details.namespace_manager)} .\n')
         turtle_stmts.sort()
         final_turtle = ['@prefix : <urn:ontoinsights:dna:> .\n', '\n']
-        return True, final_turtle.extend(turtle_stmts)
+        final_turtle.extend(turtle_stmts)
+        return True, final_turtle
     except Exception as const_err:
         curr_error = f'Narrative graph ({narr_id}) construct for repository ({repo}) exception: {str(const_err)}'
         logging.error(curr_error)
