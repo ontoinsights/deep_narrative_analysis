@@ -15,7 +15,11 @@ delete_narrative = 'prefix : <urn:ontoinsights:dna:> WITH ?named ' \
                    'DELETE {:narr_id ?graph_p ?graph_o . :Narrative_narr_id ?narr_p ?narr_o} ' \
                    'WHERE {:narr_id ?graph_p ?graph_o . :Narrative_narr_id ?narr_p ?narr_o}'
 
-query_corrections = 'prefix : <urn:ontoinsights:dna:> SELECT * WHERE {?s a :Correction; a ?type; rdfs:label ?label}'
+query_corrections = \
+    'prefix : <urn:ontoinsights:dna:> SELECT * WHERE { GRAPH ?named {?s a :Correction; a ?type; rdfs:label ?label}}'
+
+query_manual_corrections = \
+    'prefix : <urn:ontoinsights:dna:> SELECT * WHERE {?s a :Correction; a ?type; rdfs:label ?label}'
 
 query_narratives = \
     'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> SELECT * WHERE { GRAPH ?named { ' \

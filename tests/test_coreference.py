@@ -1,3 +1,5 @@
+from dna.create_narrative_turtle import nouns_preload
+from dna.process_entities import check_if_noun_is_known
 from dna.query_openai import access_api, coref_prompt
 
 sent1 = 'U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in Wyoming, ' \
@@ -8,6 +10,8 @@ sent3 = 'Harriet Hageman won the primary.'
 sent4 = 'She did not lose.'
 sent5 = 'Anna saw Heidi cut the roses, but she did not recognize that it was Heidi who cut the roses.'
 sent6 = 'Anna saw that Heidi was cutting the roses but she did not recognize that it was Heidi who cut the roses.'
+sent_corrections = 'Abortion-rights supporters across the country want the question on the ballot following the ' \
+                   'overturning of Roe v. Wade.'
 
 
 def test_sent1():
@@ -39,3 +43,10 @@ def test_sent6():
     coref_dict = access_api(coref_prompt.replace('{sentences}', '').replace("{sent_text}", sent6))
     updated_text = coref_dict['updated_text']
     assert 'Anna did not recognize' in updated_text
+
+
+def test_corrections():
+    nouns_dict = nouns_preload('foo')
+    noun_type, noun_iri = check_if_noun_is_known('Roe v. Wade', 'LAW', nouns_dict)
+    assert noun_type == 'LAW'
+    assert noun_iri == ':Roe_v_Wade'

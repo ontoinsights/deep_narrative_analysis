@@ -176,13 +176,12 @@ def create_delete_database(op_type: str, database: str) -> str:
         return curr_error
 
 
-def query_database(query_type: str, query: str, repo: str) -> list:
+def query_database(query_type: str, query: str) -> list:
     """
     Process a SELECT or UPDATE query
 
     :param query_type: A string = 'select' or 'update'
     :param query: The text of a SPARQL query
-    :param repo: The repository name, which may be empty when querying for all repositories
     :return: The bindings array from the query results
     """
     if query_type != 'select' and query_type != 'update':
@@ -202,6 +201,6 @@ def query_database(query_type: str, query: str, repo: str) -> list:
             query_conn.update(query)
             return ['successful']
     except Exception as query_err:
-        curr_error = f'Query exception for {query} in repository {repo}: {str(query_err)}'
+        curr_error = f'Query exception for {query}: {str(query_err)}'
         logging.error(curr_error)
         return [curr_error]

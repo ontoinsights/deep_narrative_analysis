@@ -74,9 +74,9 @@ def repositories():
         repo = dict(values)[repository]
         logging.info(f'Deleting repository, {repo}')
         # Delete metadata for the repository in dna db's default graph
-        query_database('update', delete_repo_metadata.replace('?repo', f':{repo}'), empty_string)
+        query_database('update', delete_repo_metadata.replace('?repo', f':{repo}'))
         # Delete all the named graphs for the repository
-        graph_bindings = query_database('select', query_repo_graphs.replace('?repo', repo), empty_string)
+        graph_bindings = query_database('select', query_repo_graphs.replace('?repo', repo))
         if graph_bindings and 'exception' in graph_bindings[0]:
             return jsonify({error_str: graph_bindings[0]}), 500
         for binding in graph_bindings:
@@ -85,7 +85,7 @@ def repositories():
         return jsonify({'deleted': repo}), 200
     elif request.method == 'GET':
         logging.info(f'Repository list')
-        repo_bindings = query_database('select', query_repos, empty_string)
+        repo_bindings = query_database('select', query_repos)
         if repo_bindings and 'exception' in repo_bindings[0]:
             return jsonify({error_str: repo_bindings[0]}), 500
         repo_list = []
@@ -136,7 +136,7 @@ def narratives():
         logging.info(f'Deleting narrative, {narr_id}, in {repo}')
         # Delete the metadata for the narrative in the dna db repository_default graph
         query_database('update', delete_narrative.replace('?named', f':{repo}_default')
-                       .replace('narr_id', narr_id), repo)
+                       .replace('narr_id', narr_id))
         # Delete the narrative graph
         clear_data(repo, narr_id)
         return jsonify({'repository': repo, 'deleted': narr_id}), 200
@@ -148,7 +148,7 @@ def narratives():
         repo = dict(values)[repository]
         logging.info(f'Narrative list for {repo}')
         query_text = query_narratives.replace('?named', f':{repo}_default')
-        narrative_bindings = query_database('select', query_text, repo)
+        narrative_bindings = query_database('select', query_text)
         if narrative_bindings and 'exception' in narrative_bindings[0]:
             return jsonify({error_str: narrative_bindings[0]}), 500
         narr_list = []
@@ -176,7 +176,7 @@ def graphs():
             # Get narrative metadata
             metadata_dict = parse_narrative_query_binding(
                 query_database('select', query_narratives.replace('?named', f':{repo}_default')
-                               .replace('?graph', f':{narr_id}'), repo)[0])
+                               .replace('?graph', f':{narr_id}'))[0])
             return jsonify({repository: repo, 'narrativeDetails': metadata_dict, 'triples': turtle}), 200
         return jsonify({error_str: f'Error getting narrative knowledge graph {narr_id}: {turtle[0]}'}), 500
     elif request.method == 'PUT':
@@ -210,9 +210,9 @@ def graphs():
             if not msg:     # Successfully added data to the narr_id narrative graph
                 # Update the narrative metadata (delete/insert original and new KG created and number of triples)
                 query_database('update', update_narrative.replace('?g', f':{repo}_default')
-                               .replace('?s', f':{narr_id}'), repo)
+                               .replace('?s', f':{narr_id}'))
                 modified_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-                numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'), repo)
+                numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'))
                 numb_triples = 0
                 if len(numb_triples_results) > 0:
                     numb_triples = numb_triples_results[0]['cnt']['value']

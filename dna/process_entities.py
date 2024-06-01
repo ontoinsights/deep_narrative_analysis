@@ -3,6 +3,7 @@
 
 import re
 from rdflib import Literal
+from unidecode import unidecode
 
 from dna.create_entities_turtle import create_agent_ttl, create_location_ttl, create_named_entity_ttl, create_norp_ttl
 from dna.query_openai import access_api, categories, noun_category_prompt, wikipedia_prompt
@@ -189,9 +190,13 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
     """
     if noun_text in names_to_geo_dict:                           # Location is a country name
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
-    for noun_key in nouns_dict:                                  # Key is text
-        # Strings match or a subset of an identified noun is in the noun text
-        if noun_key == noun_text or (noun_type in ner_dict.keys() and len(noun_key) > 4 and noun_key in noun_text):
+    for noun_key in nouns_dict.keys():                           # Key is text; exact match of text
+        # Strings match
+        if noun_key == noun_text:
+            return nouns_dict[noun_key]
+    for noun_key in nouns_dict.keys():
+        # Sub-strings match
+        if (not noun_type or noun_type in ner_dict.keys()) and noun_key in noun_text:
             return nouns_dict[noun_key]
     return noun_type, empty_string
 
@@ -262,11 +267,13 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
     entities_ttl = []
     entity_iris = []
     for new_entity in new_entities:
-        entity_text = new_entity.text
+        # Remove '.' to easily disambiguate (e.g.) US Supreme Court and U.S. Supreme Court
+        entity_text = unidecode(new_entity.text.replace('.', empty_string))
         # Remove articles
         for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The '):
             if entity_text.startswith(article):
                 entity_text = entity_text[len(article):]
+                break
         if len(entity_text) < 2:
             continue
         # Remove "apostrophe" or "apostrophe s" at the end of the entity text (spaCy includes possessive)

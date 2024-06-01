@@ -52,9 +52,9 @@ def _entity_exists(repo: str, graph: str = empty_string) -> bool:
     """
     if graph:
         bindings = query_database('select', query_narratives.replace('?named', f':{repo}_default')
-                                  .replace('?graph', f':{graph}'), repo)
+                                  .replace('?graph', f':{graph}'))
     else:
-        bindings = query_database('select', query_repos.replace('?repo', f':{repo}'), empty_string)
+        bindings = query_database('select', query_repos.replace('?repo', f':{repo}'))
     if bindings:
         return True
     return False
@@ -155,7 +155,7 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
              of triples in the narrative graph
     """
     created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
-    numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'), repo)
+    numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'))
     if len(numb_triples_results) > 0:
         numb_triples = numb_triples_results[0]['cnt']['value']
     else:

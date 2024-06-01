@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 8 May 2024
+Updated 31 May 2024
 
 ## License
 Creative Commons 
@@ -91,7 +91,7 @@ This is an area which should be further researched.
   * All of the prompts are defined in the query_openai.py file in the _dna_ directory. The prompts are used at various points in the code base. They are invoked by calling the access_api function, defined at the end of the file.
 
 * __Question__: What responses are generated from OpenAI and how are they processed?
-  * All of the responses from OpenAI _should_ be JSON compliant, although string text is sometimes returned. The access_api exception handling tries to address this situation, although more work is needed. The JSON results are defined in the query_api.py file and are returned as a Python dictionary by the access_api function. The Python dictionaries are subsequently converted to RDF. To examine the result processing, search for the 'access_api' function calls in the DNA codebase. (The majority of processing occurs in the process_sentences.py file.)
+  * All of the responses from OpenAI are JSON compliant. The JSON results are defined in the query_api.py file and are returned as a Python dictionary by the access_api function. The Python dictionaries are further processed to define classes and ultimately the resulting RDF. To examine the result processing, search for the 'access_api' function calls in the DNA codebase. (The majority of processing occurs in the process_sentences.py file.)
 
 * __Question__: What RDF is generated from processing the OpenAI responses?
-  * To review RDF output, please see the test_sentence_analysis.py file in the _tests_ directory. A set of sample sentences are there with their corresponding RDF. (Assert statements make up the tests, but the complete RDF output is posted as '# comments' following the test details.) Also, the test_narrative_analysis.py file can be reviewed to understand the RDF results for a news article. Note that the tests and their results are still being updated.
+  * To review RDF output, please see the test_sentence_analysis1/2.py files in the _tests_ directory. Sets of sample sentences are defined with their corresponding RDF. (Assert statements make up the tests, but the complete RDF output is posted as '# comments' following the test details.) Also, the test_narrative_analysis.py file can be reviewed to understand the RDF results for a news article. Note that the tests and their results are constantly being updated.
