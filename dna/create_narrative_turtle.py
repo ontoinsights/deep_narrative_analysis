@@ -54,7 +54,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
 
     :param sentence_instance_list: An array of Sentence Class instances extracted from a narrative
     :param quotation_instance_list: An array of Quotation Class instances extracted from the original text
-    :param number_sentences: An integer indicating the number of sentences to ingest (a number
+    :param number_sentences: An integer indicating the number of sentences to fully ingest (a number
                              greater than 1; by default up to 10 sentences are ingested)
     :param repo: String holding the repository name for the narrative graph
     :return: A tuple consisting of a boolean indicating success (if true) or failure, an integer
@@ -67,7 +67,6 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     #    due to co-reference/multiple reference
     # Keys = the texts and Values = entity's spaCy NER type and its IRI
     nouns_dictionary = nouns_preload(repo)
-    index = 0
     for index in range(0, len(sentence_instance_list)):
         sentence_iri = sentence_instance_list[index].iri
         sentence_text = sentence_instance_list[index].text
@@ -81,7 +80,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
                 sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
         updated_text = sentence_text
         sentence_type = 'mentions'
-        if not (index + 1 > number_sentences):    # Detailed processing only up to the requested number of sentences
+        if not (index + 1 > number_sentences):    # Full processing only up to the requested number of sentences
             sentence_type = 'complete'
             # Get a version of the sentence with co-references resolved, if needed
             if any([(sentence_text.startswith(f'{pers_pronoun} '.title()) or f' {pers_pronoun} ' in sentence_text or
@@ -121,7 +120,8 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         except Exception as e:    # Triples not added for quote
             logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quote_text}')
             continue
-    return True, index, graph_ttl_list
+    return True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list), \
+        graph_ttl_list
 
 
 def nouns_preload(repo: str) -> dict:

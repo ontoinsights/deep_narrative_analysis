@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: May 13 2024
+# Last modified: June 1 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,7 +21,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Added number_sentences, number_ingested and new rhetorical devices
+#  Added/clarified number_sentences, number_ingested and rhetorical devices
 #  Added Clause, Correction
 #  Added interpretation, ranking and segment_level
 ########################################################################
@@ -89,7 +89,7 @@
 :number_ingested a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :count ;
   rdfs:label "number of sentences ingested"@en ;
-  rdfs:comment "A count of the number of sentences from an InformationSource that were ingested."@en ;
+  rdfs:comment "A count of the number of sentences from an InformationSource that were fully ingested (with complete event detail processing)."@en ;
   rdfs:domain :InformationSource ;
   rdfs:range xsd:integer .
 

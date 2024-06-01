@@ -164,7 +164,7 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
     turtle.extend([f':{narr_id} a :InformationGraph ; dc:created "{created_at}"^^xsd:dateTime ; ',
                    f':number_triples {numb_triples} ; :encodes :Narrative_{narr_id} .',
                    f':Narrative_{narr_id} a :Narrative ; dc:created "{metadata.published}"^^xsd:dateTime ; ',
-                   f':number_sentences "{number_sentences}" ; :number_ingested "{number_ingested}" ; '
+                   f':number_sentences {number_sentences} ; :number_ingested {number_ingested} ; '
                    f':source "{metadata.source}" ; dc:title "{metadata.title}" ; :external_link "{metadata.url}" .',
                    f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
     summary_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
