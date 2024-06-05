@@ -45,7 +45,7 @@ def test_clauses1():
     assert ':has_active_entity :John' in ttl_str
     assert 'a :MusicalInstrument ; :text "guitar' in ttl_str
     # Output Turtle:
-    # ::Sentence_6d13d6dc-dfcd a :Sentence ; :offset 1 .
+    # :Sentence_6d13d6dc-dfcd a :Sentence ; :offset 1 .
     # :Sentence_6d13d6dc-dfcd :text "While Mary exercised, John practiced guitar." .
     # :Mary :text "Mary" .
     # :Mary a :Person, :Correction .
