@@ -77,23 +77,21 @@ class Associated:
     """
     Class holding noun phrase and clause details related to a verb in a sentence
     """
-    trigger_text: str = empty_string     # Specific text of the noun or clausal phrase related to the sem role
-    full_text: str = empty_string        # Full text of the associated entity
+    text: str = empty_string             # Text of the associated entity
     class_name: str = empty_string       # Array of DNA class names that reflect the text
     semantic_role: str = empty_string    # Semantic role of the trigger_text
     negated: bool = False
     iri: str = empty_string              # IRI for the instance
 
-    def __init__(self, trigger_text: str, full_text: str, class_name: str, semantic_role: str, singular: bool,
+    def __init__(self, text: str, class_name: str, semantic_role: str, singular: bool,
                  negated: bool, iri: str):
-        self.trigger_text = trigger_text
-        self.full_text = full_text
+        self.text = text
         # TODO: Handle OpenAI singular/plural determination errors for complex text phrases
         #  if (not singular or text in plural_pronouns) and ':Collection' not in class_name:
         #     class_name += ', :Collection'
         self.class_name = class_name
         self.semantic_role = semantic_role
-        self.negated = True if negated else False
+        self.negated = negated
         self.iri = iri
 
 

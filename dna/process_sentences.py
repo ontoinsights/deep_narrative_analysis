@@ -9,34 +9,37 @@ from typing import Union
 from unidecode import unidecode
 
 from dna.database import add_remove_data
-from dna.nlp import nlp
+from dna.nlp import nlp, get_head_word
 from dna.sentence_element_classes import Associated, Event
 from dna.process_entities import agent_classes, check_if_noun_is_known, process_ner_entities
-from dna.query_openai import access_api, categories, noun_categories, rhetorical_devices, noun_prompt,\
+from dna.query_openai import access_api, categories, coref_prompt, noun_categories, rhetorical_devices, noun_prompt,\
     noun_category_prompt, sentence_summary_prompt, sentence_devices_prompt, verbs_and_associateds_prompt, \
     semantics_prompt
 from dna.sentence_classes import Sentence, Quotation, Entity
-from dna.utilities_and_language_specific import empty_string, ner_dict, ttl_prefixes
+from dna.utilities_and_language_specific import empty_string, ner_dict, processed_prepositions, ttl_prefixes
 
 future_true = '{:future true}'
 negated_true = '{:negated true}'
 
-semantic_roles = ("agent", "patient", "theme", "experiencer", "instrument", "cause", "content", "beneficiary",
-                  "location", "time", "goal", "source", "recipient", "measure")
+semantic_roles = ("agent", "patient", "co-patient", "theme", "experiencer", "instrument", "cause", "content",
+                  "beneficiary", "location", "time", "goal", "source", "state", "recipient", "measure")
 
 semantic_role_mapping = {"agent": ":has_active_entity",
                          "beneficiary": ":has_affected_entity",
                          "cause": ":has_cause",
                          "content": ":has_aspect",
+                         "co-patient": ":has_affected_entity",
                          "experiencer": ":has_active_entity",
-                         "goal": ":has_destination",   # only for locations; goal of person -> has_affected_entity
+                         "goal": ":has_destination",        # only for locations; goal of person -> has_affected_entity
                          "instrument": ":has_instrument",
                          "location": ":has_location",
                          "measure": ":has_quantification",
                          "patient": ":has_affected_entity",
                          "recipient": ":has_affected_entity",
                          "source": ":has_origin",
-                         "theme": ":has_topic",    # affected_entity if an Agent
+                         "state": ":has_quantification",    # TODO: Assess value/correctness
+                         "subject": ":has_theme",
+                         "theme": ":has_topic",             # affected_entity if an Agent
                          "time": ":has_time"}
 
 env_and_condition = ':EnvironmentAndCondition'
@@ -44,10 +47,13 @@ knowledge = ':KnowledgeAndSkill'
 
 
 def _get_associated_predicate(semantic_role: str, class_name: str):
-    if semantic_role == 'patient' and class_name not in agent_classes:
+    if semantic_role in ('patient', 'co-patient') and class_name not in agent_classes:
         return ':has_topic'
-    elif semantic_role == 'goal' and class_name in agent_classes:
-        return ':has_affected_entity'
+    elif semantic_role == 'goal':
+        if class_name in agent_classes:
+            return ':has_affected_entity'
+        elif ':Location' not in class_name:
+            return ':has_topic'
     elif semantic_role in semantic_roles:
         return semantic_role_mapping[semantic_role]
     return empty_string
@@ -60,8 +66,7 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
     for the sentence is passed in and is updated.
 
     :param sentence_or_quotation: An instance of either the Sentence or Quotation Class
-    :param updated_text: String holding the sentence text if anaphora (co-references) are de-referenced
-             or holding a summary of a quote; Otherwise is the original sentence_text
+    :param updated_text: String holding the summary of a sentence or the original sentence text
     :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
@@ -71,8 +76,9 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
     """
     sentence_iri = sentence_or_quotation.iri
     # Get the complete verb text and associated nouns and clauses
-    verb_dict = access_api(verbs_and_associateds_prompt.replace('{sent_text}', updated_text)
-                           .replace('{verb_texts}', '", "'.join(sentence_or_quotation.verbs)))
+    verb_dict = access_api(
+        verbs_and_associateds_prompt.replace('{sent_text}', updated_text.replace('[', '').replace(']', '')))
+    #                      .replace('{verb_texts}', '", "'.join(sentence_or_quotation.verbs)))
     verb_phrases = list(set([verb['full_verb_phrase'] for verb in verb_dict['verbs']]))
     # Get the semantic topics for the verbs
     semantics_dict = access_api(semantics_prompt.replace('{sent_text}', updated_text)
@@ -93,37 +99,34 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
         # Create the Turtle for the verb phrase and its semantics
         event_iri = event.iri
         if event.future:
-            # TODO: Pending pystardog fix;
-            #       curr_turtle.append(f'{sentence_iri} :has_semantic {future_true} {event_iri} .')
             curr_turtle.append(f'{sentence_iri} :has_semantic {event_iri} .')
             curr_turtle.append(f'{sentence_iri} :future true .')
         else:
             curr_turtle.append(f'{sentence_iri} :has_semantic {event_iri} .')
         if event.class_names:
+            # TODO: Other invalid combinations?
+            if ':ArrestAndImprisonment' in event.class_names and ':AggressiveCriminalOrHostileAct' in event.class_names:
+                event.class_names.remove(':AggressiveCriminalOrHostileAct')
             curr_turtle.append(f'{event_iri} a {", ".join(event.class_names)} ; :text {Literal(full_phrase).n3()} .')
         if event.negated_class_names:
-            # TODO: Pending pystardog fix;
-            #       curr_turtle.append(f'{event_iri} a {negated_true} {", ".join(event.negated_class_names)} ; '
-            #                          f':text {Literal(full_phrase).n3()} .')
             for negated_name in event.negated_class_names:
                 curr_turtle.append(f'{event_iri} a {negated_name} ; :negated true ; '
                                    f':text {Literal(full_phrase).n3()} .')
         # Deal with the associated nouns and clauses
         for associated in associateds:
-            # TODO: Deal with multiple nouns in subjects and objects (conjunction or disjunction) and negations
             assoc_text = associated['text']
-            # Determine noun/clause semantics and trigger text
+            # Determine noun/clause semantics
             for semantic_role in associated['semantic_roles']:
                 sem_role_lower = semantic_role.lower()
+                if 'Quotation' in assoc_text:
+                    for quote_topic in re.findall(r'Quotation[0-9]+', assoc_text):
+                        curr_turtle.append(f'{event_iri} :has_topic :{quote_topic} .')
+                    continue
                 if sem_role_lower == 'content' and \
                         31 not in verb_semantic_dict['topics']:  # Not a simple env/condition verb
-                    if '[Quotation' in assoc_text:
-                        for quote_topic in re.findall(r'Quotation[0-9]+', assoc_text):
-                            curr_turtle.append(f'{event_iri} :has_topic :{quote_topic} .')
-                    else:
-                        curr_turtle.append(f'{event_iri} :has_topic [ :text {Literal(assoc_text).n3()} ; a :Clause ] .')
+                    curr_turtle.append(f'{event_iri} :has_topic [ :text {Literal(assoc_text).n3()} ; a :Clause ] .')
                     continue
-                elif sem_role_lower == 'time':
+                if sem_role_lower == 'time':
                     # TODO: Time as NER
                     # check_text = unidecode(assoc_text.replace('.', empty_string))
                     # entity_type, noun_iri = check_if_noun_is_known(check_text, 'TIME', nouns_dict)
@@ -132,43 +135,63 @@ def _sentence_semantics_processing(sentence_or_quotation: Union[Sentence, Quotat
                     # else:
                     curr_turtle.append(f'{event_iri} :has_time [ :text {Literal(assoc_text).n3()} ; a :Time ] .')
                     continue
-                noun_dict = access_api(noun_prompt.replace('{sent_text}', updated_text)
-                                       .replace('{noun_text}', assoc_text).replace('{semantic_role}', sem_role_lower))
-                # Just using the shorter of the text or the trigger words, the noun might be found
-                # TODO: Deal with other nouns than just the trigger text
-                noun_text = unidecode(
-                    (noun_dict['selected_text'] if len(noun_dict['selected_text']) <= len(assoc_text) else assoc_text)
-                    .replace('.', empty_string))
-                entity_type, noun_iri = check_if_noun_is_known(noun_text, empty_string, nouns_dict)
-                if noun_iri:    # Already have the noun and its semantics captured; Set up for further processing
+                # Deal with a preposition as the first word of the associated text
+                if assoc_text.lower().split()[0] in processed_prepositions:
+                    prep_text = ' '.join(assoc_text.split()[1:])
+                else:
+                    prep_text = assoc_text
+                if ' and ' in prep_text or ' or ' in prep_text:
+                    # TODO: Deal with multiple nouns in subjects and objects (conjunction or disjunction) and negations
+                    head_text = prep_text    # TODO: Improve get_head_word to address this
+                else:
+                    head_text = get_head_word(prep_text)
+                entity_type, noun_iri = check_if_noun_is_known(unidecode(head_text.replace('.', empty_string)),
+                                                               empty_string, nouns_dict)
+                if noun_iri:    # Already have the noun and its semantics captured; Set up for semantic role processing
                     noun_class_name = 'owl:Thing'
                     for ner_key in ner_dict.keys():
                         if ner_key in entity_type:
-                            noun_class_name = ner_dict[ner_key]     # Should always be able to override owl:Thing
+                            noun_class_name = ner_dict[ner_key]     # Should be able to override owl:Thing
                             break
-                    assoc = Associated(noun_text, assoc_text, noun_class_name, sem_role_lower,
-                                       True if 'PLURAL' not in entity_type else False, noun_dict['negated'], noun_iri)
+                    # TODO: Add correct details for singular/plural and negated
+                    assoc = Associated(assoc_text, noun_class_name, sem_role_lower, True, False, noun_iri)
+                elif head_text in ("I", "we", "we"):    # OpenAI does not identify I/we as people
+                    noun_class_name = ':Person'
+                    singular = True
+                    if head_text.lower() == 'we':
+                        singular = False
+                        noun_class_name += ', :Collection'
+                    # TODO: Add correct details for negated
+                    new_iri = f':Noun_{str(uuid.uuid4())[:13]}'
+                    # TODO: Assumes that every 'I' is the same person; Is this valid?
+                    nouns_dict[head_text] = empty_string, new_iri
+                    curr_turtle.append(f'{new_iri} a {noun_class_name} ; :text {Literal(head_text).n3()} ; '
+                                       f'rdfs:label {Literal(head_text).n3()} .')
+                    assoc = Associated(assoc_text, noun_class_name, sem_role_lower, singular, False, new_iri)
                 else:
+                    noun_dict = access_api(noun_prompt.replace('{sent_text}', updated_text)
+                                           .replace('{noun_text}', head_text))
                     noun_type = noun_dict['type']
                     noun_class_name = 'owl:Thing'
                     if 0 < noun_type < len(noun_categories) + 1:
                         noun_class_name = noun_categories[noun_type - 1]
                     else:
                         logging.error(f'Invalid noun type ({noun["type"]}) for {assoc_text}')
-                    if noun_class_name == 'owl:Thing':  # Check if the noun is "I", "we" or an event or state
-                        if noun_text in ("I", "we", "we"):    # OpenAI does not identify I/we as people
-                            noun_class_name = ':Person'
-                            if noun_text.lower() == 'we':
-                                noun_class_name += ', :Collection'
-                        else:
-                            noun_event_dict = access_api(noun_category_prompt.replace('{sent_text}', updated_text)
-                                                         .replace('{noun_text}', assoc_text))
-                            if 'category_number' in noun_event_dict and (0 < noun_event_dict['category_number']
-                                                                         < len(categories)):
-                                noun_class_name = categories[noun_event_dict['category_number'] - 1]
+                    if noun_class_name == 'owl:Thing':  # Check if the noun is an event or state
+                        noun_event_dict = access_api(noun_category_prompt.replace('{sent_text}', updated_text)
+                                                     .replace('{noun_text}', head_text))
+                        if 'category_number' in noun_event_dict and \
+                                (0 < noun_event_dict['category_number'] < len(categories)):
+                            noun_class_name = categories[noun_event_dict['category_number'] - 1]
+                    # Add to the nouns_dictionary
+                    new_iri = f':Noun_{str(uuid.uuid4())[:13]}'
+                    nouns_dict[head_text.replace('.', empty_string)] = empty_string, new_iri
+                    nouns_dict[assoc_text] = empty_string, new_iri
+                    curr_turtle.append(f'{new_iri} a {noun_class_name} ; :text {Literal(assoc_text).n3()} ; '
+                                       f'rdfs:label {Literal(assoc_text).n3()} .')
                     # Create an instance of the Associated class to hold the details
-                    assoc = Associated(noun_text, assoc_text, noun_class_name, sem_role_lower, noun_dict['singular'],
-                                       noun_dict['negated'], empty_string)
+                    assoc = Associated(assoc_text, noun_class_name, sem_role_lower, noun_dict['singular'],
+                                       noun_dict['negated'], new_iri)
                 _update_turtle(assoc, event, nouns_dict, curr_turtle)
     return
 
@@ -189,14 +212,7 @@ def _update_turtle(assoc: Associated, event: Event, nouns_dict: dict, curr_turtl
     class_name = assoc.class_name
     event_iri = event.iri
     semantic_role = assoc.semantic_role.lower()
-    # TODO: How is negated handled for a noun? Edge property?
-    if not assoc.iri:
-        reference_iri = f':Noun_{str(uuid.uuid4())[:13]}'
-        curr_turtle.append(f'{reference_iri} a {class_name} ; :text {Literal(assoc.trigger_text).n3()} ; '
-                           f'rdfs:label {Literal(assoc.full_text).n3()} .')
-        nouns_dict[assoc.trigger_text] = empty_string, reference_iri
-    else:
-        reference_iri = assoc.iri
+    reference_iri = assoc.iri
     # TODO: Other mapping rules?
     # TODO: Match text with "content" role to another event?
     event_classes = list(event.class_names)
@@ -207,12 +223,15 @@ def _update_turtle(assoc: Associated, event: Event, nouns_dict: dict, curr_turtl
         if ':LineOfBusiness' in class_name or ':EthnicGroup' in class_name or \
                 ':PoliticalGroup' in class_name or ':ReligiousGroup' in class_name:
             curr_turtle.append(f'{event_iri} :has_aspect {reference_iri} .')
-        elif semantic_role.lower() in ('agent', 'experiencer') or class_name in agent_classes:
+        elif semantic_role.lower() in ('agent', 'experiencer') and knowledge in event_classes:
+            curr_turtle.append(f'{event_iri} :has_active_entity {reference_iri} .')
+        elif (semantic_role.lower() in ('agent', 'experiencer') and knowledge not in event_classes) or \
+                class_name in agent_classes:
             curr_turtle.append(f'{event_iri} :has_described_entity {reference_iri} .')
         else:
             predicate = _get_associated_predicate(semantic_role, class_name)
             if not predicate:
-                logging.error(f'Unknown semantic role: {semantic_role} in text: {assoc.trigger_text}')
+                logging.error(f'Unknown semantic role: {semantic_role} in text: {assoc.text}')
             else:
                 curr_turtle.append(f'{event_iri} {predicate} {reference_iri} .')
     # elif ':LineOfBusiness' in class_name:
@@ -220,7 +239,7 @@ def _update_turtle(assoc: Associated, event: Event, nouns_dict: dict, curr_turtl
     elif ':Affiliation' in event_classes:
         if reference_iri != assoc.iri and class_name in agent_classes:
             # Is a specific proper noun referenced in the text?
-            for ent in nlp(assoc.trigger_text).ents:
+            for ent in nlp(assoc.text).ents:
                 # The entity should already have been processed in the sentence
                 # TODO: What if there are 2+ proper nouns?
                 check_text = unidecode(ent.text.replace('.', empty_string))
@@ -235,7 +254,7 @@ def _update_turtle(assoc: Associated, event: Event, nouns_dict: dict, curr_turtl
     else:
         predicate = _get_associated_predicate(semantic_role, class_name)
         if not predicate:
-            logging.error(f'Unknown semantic role: {semantic_role} in text: {assoc.trigger_text}')
+            logging.error(f'Unknown semantic role: {semantic_role} in text: {assoc.text}')
         else:
             curr_turtle.append(f'{event_iri} {predicate} {reference_iri} .')
     return
@@ -248,8 +267,8 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
     (or quotation) level Turtle.
 
     :param sentence_or_quotation: An instance of either the Sentence or Quotation Class
-    :param updated_text: String holding the sentence/quotation text if anaphora (co-references) are de-referenced;
-                         Otherwise is the original sent_text
+    :param updated_text: String holding the sentence/quotation text if anaphora (co-references) are
+                         de-referenced; Otherwise is the original sentence/quotation text
     :param ttl_list: The current Turtle definition where the new declarations will be stored
     :param sentence_type: String indicating that the processing is for a complete sentence ('complete'),
                           to record mentions ('mentions') or for a quotation ('quote')
@@ -264,24 +283,36 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
     sentence_iri = sentence_or_quotation.iri
     sentence_text = sentence_or_quotation.text
     # Get named entities for a sentence, including its quotations
-    named_entities = []
-    if '[Quotation' in sentence_text:
+    entity_iris = []
+    entity_ttls = []
+    named = False
+    if '[Quotation' in sentence_text:   # Processing Quotation NEs
         quote_indices = []
         for quotation in re.findall(r'Quotation[0-9]+', sentence_text):
             ttl_list.append(f'{sentence_iri} :has_component :{quotation} .')
             quote_indices.append(quotation.split('Quotation')[1])
         if quote_indices:
             for i in range(0, len(quote_indices)):
-                named_entities.extend(quotation_list[int(quote_indices[i])].entities)
+                if quotation_list[int(quote_indices[i])].entities:
+                    named = True
+                    new_iris, new_ttl = \
+                        process_ner_entities(quotation_list[int(quote_indices[i])].text,
+                                             quotation_list[int(quote_indices[i])].entities, nouns_dict)
+                    entity_iris.extend(new_iris)
+                    entity_ttls.extend(new_ttl)
     if sentence_or_quotation.entities and sentence_type != 'quote':    # Already processed entities for a quotation
-        named_entities.extend(sentence_or_quotation.entities)
-    if named_entities:
-        entity_iris, entities_ttl = process_ner_entities(sentence_text, named_entities, nouns_dict)
-        if entities_ttl:
-            ttl_list.extend(entities_ttl)
+        if sentence_or_quotation.entities:   # Processing Sentence NEs
+            named = True
+            new_iris, new_ttl = \
+                process_ner_entities(sentence_text, sentence_or_quotation.entities, nouns_dict)
+            entity_iris.extend(new_iris)
+            entity_ttls.extend(new_ttl)
+    if named:
+        if entity_ttls:
+            ttl_list.extend(entity_ttls)
             logging.info('Loading NER Turtle')
             ner_ttl = ttl_prefixes[:]
-            ner_ttl.extend(entities_ttl)
+            ner_ttl.extend(entity_ttls)
             # Add new entities to the repo's default graph
             msg = add_remove_data('add', ' '.join(ner_ttl), repo)
             if msg:
@@ -290,17 +321,30 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
             ttl_list.append(f'{sentence_iri} :mentions {entity_iri} .')
     # Capture a quotation's attribution
     if sentence_type == 'quote' and sentence_or_quotation.attribution:
-        attrib_type, attrib_iri = \
-            check_if_noun_is_known(unidecode(sentence_or_quotation.attribution.replace('.', empty_string)),
-                                   'PERSON', nouns_dict)
+        attrib_text = sentence_or_quotation.attribution
+        for ent in nlp(sentence_or_quotation.attribution).ents:
+            if ent.label_ == 'PERSON':
+                attrib_text = ent.text
+                break
+        attrib_type, attrib_iri = check_if_noun_is_known(unidecode(attrib_text.replace('.', empty_string)),
+                                                         'PERSON', nouns_dict)
         if attrib_iri:
             ttl_list.append(f'{sentence_iri} :attributed_to {attrib_iri} .')
     # Processing the summary prompt for details such as sentiment, summary and grade level
-    sent_dict = access_api(sentence_summary_prompt.replace("{sent_text}", sentence_text))
+    sent_dict = access_api(sentence_summary_prompt.replace("{sent_text}", updated_text))
     if sent_dict:   # Might not get reply from OpenAI
         if sent_dict['summary'] not in ('error', 'string'):
             summary = sent_dict['summary']
             ttl_list.append(f'{sentence_iri} :summary "{summary}" .')
+            if len(updated_text.split()) > 10:
+                coref_dict = access_api(coref_prompt.replace('{sentences}', empty_string)
+                                        .replace("{sent_text}", summary))
+                if coref_dict['updated_text'] not in ('error', 'string'):
+                    eval_text = coref_dict['updated_text']
+                else:
+                    eval_text = summary
+            else:
+                eval_text = updated_text
         if sent_dict['sentiment'] in ('positive', 'negative', 'neutral'):
             sentiment = sent_dict['sentiment']
             ttl_list.append(f'{sentence_iri} :sentiment "{sentiment}" .')
@@ -326,5 +370,5 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], upda
                         continue
     # Processing the events and states, and related nouns
     if sentence_type == 'complete':
-        _sentence_semantics_processing(sentence_or_quotation, updated_text, nouns_dict, ttl_list)
+        _sentence_semantics_processing(sentence_or_quotation, eval_text, nouns_dict, ttl_list)
     return

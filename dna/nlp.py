@@ -103,6 +103,28 @@ def _update_token_separation(sentence_text: str) -> str:
     return re.sub(r'([a-zA-Z])- ([a-zA-Z])', r'\1-\2', updated_text)
 
 
+def get_head_word(text: str) -> str:
+    """
+    Creates a spacy Doc from the input text and returns the text of the 'head'/root noun/verb.
+    If the root is a noun and a proper name, this function assembles the full name.
+
+    :param text: The text to parse
+    :return: The text of the head/root; If the root is a noun and a proper name, this function
+             assembles the full name and returns that as the text
+    """
+    doc = nlp(text)
+    for token in doc:
+        if token.dep_ == 'ROOT':
+            if token.pos_ == 'PROPN':
+                complete_names = [ch.text for ch in token.children if ch.dep_ == 'compound']
+                complete_name = f'{space.join(complete_names)} {token.text}'.strip()
+                if token.text != complete_name:
+                    return complete_name
+            return token.text
+    # TODO: If the head word is connected via a conjunction to another noun/verb, then that text should added
+    return empty_string
+
+
 def parse_narrative(narr_text: str) -> (list, list, list):
     """
     Creates a spacy Doc from the narrative text, splitting it into sentences and separating out
@@ -183,12 +205,12 @@ def resolve_quotations(narr: str) -> (str, list, list):
         if verb_and_subj:                # Have a subject+verb
             # Remove quote from narrative and replace with 'Quotation#'
             updated_narr = updated_narr.replace(quoted_string, f'[Quotation{index}]').strip()
-            index += 1
             quotation_instance_list.append(
                 Quotation(quoted_string, index, _get_sentence_entities(
                     nlp(quoted_string.replace('[', empty_string).replace(']', empty_string))),
                           _get_punctuations(quoted_string), [wd.text for wd in quote_verbs],
                           _get_quotation_attribution(narr, quoted_string)))
+            index += 1
             # In the above, note that spacy may have issues with finding named entities if the names are
             #      enclosed by brackets
         # Always add the quote to the full list

@@ -72,8 +72,8 @@ def _get_geonames_alt_names(root: etree.Element) -> (list, str):
     elems = root.findall('./geoname/alternateName[@lang]')
     for elem in elems:
         lang = elem.get('lang')
-        access = True if ('isPreferredName' in elem.attrib or 'isShortName' in elem.attrib) else False
-        if lang == 'en' or lang == 'abbr' or access:
+        # access = True if ('isPreferredName' in elem.attrib or 'isShortName' in elem.attrib) else False
+        if lang == 'en':
             names.add(elem.text)
         if lang == 'link' and 'en.wikipedia' in elem.text:
             link = elem.text
@@ -138,7 +138,6 @@ def _get_wikidata_labels(wikidata_id: str) -> list:
         results = response['results']['bindings']
         for result in results:
             label = result['label']['value'].replace('"', "'")
-            # TODO: Should this be validated as an RDF Literal?
             labels.append(label)
     return labels
 
@@ -279,7 +278,7 @@ def get_geonames_location(loc_text: str) -> (str, str, int, list, str):
     feature = _get_xml_value('./geoname/fcl', root)
     fcode = _get_xml_value('./geoname/fcode', root)
     ascii_name = _get_xml_value('./geoname/asciiName', root)
-    alt_names, wiki_link = _get_geonames_alt_names(root)     # TODO: Language specific results
+    alt_names, wiki_link = _get_geonames_alt_names(root)
     if not country and not feature:
         return empty_string, empty_string, 0, [], empty_string
     # Process the alternate names

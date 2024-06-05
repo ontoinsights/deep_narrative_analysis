@@ -17,8 +17,9 @@ client = OpenAI()
 any_boolean = 'true/false'
 same_opposite = 'same/opposite'
 interpretation_views = 'conservative, liberal or neutral'
-semantic_role_text = 'agent, patient, theme, experiencer, instrument, cause, content, beneficiary, ' \
-                     'location, time, goal, source, recipient, measure'
+pronoun_text = 'I, we, us, they, them, he, she, it, myself, ourselves, themselves, herself, himself and itself'
+semantic_role_text = 'agent, patient, co-patient, theme, experiencer, instrument, cause, beneficiary, ' \
+                     'location, time, goal, source, state, recipient, measure'
 sentiment = 'positive, negative or neutral'
 tense = 'past, present or future'
 
@@ -49,11 +50,10 @@ semantics_result = '{"verbs": [{' \
                    '"tense": "string", ' \
                    '"topics": ["topic_number": "int", "topic_negated": "boolean"]]}'
 
-noun_result = '{"noun_phrase": "string", ' \
-               '"selected_text": "string", ' \
+noun_result = '{"noun_text": "string", ' \
                '"singular": "boolean", ' \
                '"type": "int",' \
-               '"negated": "boolean"}]}'
+               '"negated": "boolean"}'
 
 noun_category_result = '{"category_number": "int"}'
 
@@ -73,8 +73,9 @@ categories = [':AchievementAndAccomplishment', ':AcquisitionPossessionAndTransfe
               ':MovementTravelAndTransportation', ':OpenMindednessAndTolerance', ':PoliticalEvent', ':Process',
               ':ProductionManufactureAndCreation', ':Punishment', ':ReadinessAndAbility', ':ReligionRelated',
               ':RemovalAndRestriction', ':ReturnRecoveryAndRelease', ':RewardAndCompensation', ':RiskTaking',
-              ':Searching', ':SensoryPerception', ':Separation', ':SpaceEvent', ':StartAndBeginning', ':Substitution',
-              ':TechnologyRelated', ':UtilizationAndConsumption', ':Win', ':Loss', ':Causation', ':EventAndState']
+              ':Searching', ':SensoryPerception', ':Separation', ':SpaceEvent', ':StartAndBeginning',
+              ':Substitution', ':TechnologyRelated', ':UtilizationAndConsumption', ':Win', ':Loss',
+              ':AidAndAssistance', ':Causation', ':EventAndState']
 categories_text = 'The semantic topic categories are: ' \
     '1. achieving or accomplishing something' \
     '2. acquisition such as by purchase or sale, finding or stealing something, seizure, transfer of possession ' \
@@ -157,8 +158,9 @@ categories_text = 'The semantic topic categories are: ' \
     '62. utilization and consumption ' \
     '63. win and victory ' \
     '64. loss and defeat ' \
-    '65. causation, cause and effect ' \
-    '66. other'
+    '65. aid, assistance and cooperative effort ' \
+    '66. causation, cause and effect ' \
+    '67. other'
 
 narrative_goals = ['advocate', 'analyze', 'describe-set', 'describe-current', 'entertain',
                    'establish-authority', 'inspire', 'life-story']
@@ -172,58 +174,64 @@ narrative_goals_text = 'The narrative goal categories are: ' \
     '7. Inspire and motivate through uplifting stories, news, etc. ' \
     '8. Relate a personal narrative or life story ' \
 
-noun_categories = [':Animal', ':Ceremony', ':Change', ':CommunicationAndSpeechAct', ':ComponentPart',
-                   ':Culture', ':ElectricityAndPower', ':End', ':EthnicGroup', ':FreedomAndSupportForHumanRights',
-                   ':GovernmentalEntity', ':HealthAndDiseaseRelated', ':InformationSource', ':LaborRelated',
-                   ':LawAndPolicy', ':LineOfBusiness', ':Location', ':MachineAndTool', ':Measurement',
-                   ':MusicalInstrument', ':OrganizationalEntity', ':Person', ':Person, :Collection',
-                   ':PharmaceuticalAndMedicinal', ':Plant', ':PoliticalGroup', ':Product', ':ReligiousGroup',
+noun_categories = [':AgricultureApicultureAndAquacultureEvent', ':Animal', ':ArtAndEntertainmentEvent',
+                   ':Ceremony', ':Change', ':CommunicationAndSpeechAct', ':ComponentPart',
+                   ':Culture', ':DeceptionAndDishonesty', ':ElectricityAndPower', ':End',
+                   ':EthnicGroup', ':FreedomAndSupportForHumanRights', ':GovernmentalEntity',
+                   ':HealthAndDiseaseRelated', ':InformationSource', ':LaborRelated', ':LawAndPolicy',
+                   ':LineOfBusiness', ':Location', ':MachineAndTool', ':Measurement', ':MusicalInstrument',
+                   ':OrganizationalEntity', ':Person', ':Person, :Collection', ':PharmaceuticalAndMedicinal',
+                   ':Plant', ':PoliticalEvent', ':PoliticalGroup', ':Product', ':ReligiousGroup',
                    ':ScienceAndTechnology', ':StartAndBeginning', ':SubstanceAndRawMaterial', ':TroubleAndProblem',
                    ':WeaponAndAmmunition', ':War', ':WasteAndResidue', ':Resource', 'owl:Thing']
 # TODO: Should all event categories be included?
 noun_categories_text = 'The noun types are: ' \
-    '1. animal ' \
-    '2. ceremony ' \
-    '3. change, whether positively or negatively ' \
-    '4. verbal or written communication including speeches ' \
-    '5. part of a living thing such as a the leg of a person or animal or leaf of a plant ' \
-    '6. related to the customs, practices, values, principles and traditions of a particular society ' \
-    '7. electricity and power-related ' \
-    '8. finish or end ' \
-    '9. related to ethnicity and ethnic groups ' \
-    '10. fundamental rights such as life, liberty, freedom of speech, etc. ' \
-    '11. a governmental body, organization, sub-organization, government-funded law-enforcement or military group, ' \
-    'etc., but NOT a specific person or role/position ' \
-    '12. disease, illness and their symptoms ' \
-    '13. any entity that holds text, data/numbers, video, visual or audible content, etc. including documents, ' \
+    '1. an activity related to agriculture, apiculture, viniculture or aquaculture ' \
+    '2. animal ' \
+    '3. an activity involving art, entertainment and/or sports ' \
+    '4. ceremony ' \
+    '5. change, whether positively or negatively ' \
+    '6. verbal or written communication including speeches ' \
+    '7. part of a living thing such as a the leg of a person or animal or leaf of a plant ' \
+    '8. a custom, practice or tradition of a particular society ' \
+    '9. deception, dishonesty, cheating, etc. ' \
+    '10. electricity and power-related ' \
+    '11. finish or end ' \
+    '12. related to ethnicity and ethnic groups ' \
+    '13. fundamental rights such as life, liberty, freedom of speech, etc. ' \
+    '14. a governmental body, organization, sub-organization, government-funded law-enforcement or military group, ' \
+    'etc., but NOT a specific person, role/position or political event ' \
+    '15. disease, illness and their symptoms ' \
+    '16. any entity that holds text, data/numbers, video, visual or audible content, etc. including documents, ' \
     'books, news articles, databases, spreadsheets, computer files or web pages ' \
-    '14. related to labor such as employment/unemployment, the labor market, labor relations, retirement and unions ' \
+    '17. related to labor such as employment/unemployment, the labor market, labor relations, retirement and unions ' \
     '(if a union, also report noun type 20)' \
-    '15. a specific law, policy, legislation and legal decision (NOT including any legal occupations) ' \
-    '16. occupation or business ' \
-    '17. place or location including buildings, roads, bodies of water, etc. ' \
-    '18. machine, tool or instrument ' \
-    '19. quantity, assessment or measurement including demographics ' \
-    '20. musical instrument ' \
-    '21. any non-governmental organization, sub-organization, club, social group, etc. ' \
-    '22. person ' \
-    '23. group of people such as a family or people at a party or in the park that are NOT named governmental, ' \
+    '18. a specific law, policy, legislation and legal decision (NOT including any legal occupations) ' \
+    '19. occupation or business ' \
+    '20. place or location including buildings, roads, bodies of water, etc. ' \
+    '21. machine, tool or instrument ' \
+    '22. quantity, assessment or measurement including demographics ' \
+    '23. musical instrument ' \
+    '24. any non-governmental organization, sub-organization, club, social group, etc. ' \
+    '25. person ' \
+    '26. group of people such as a family or people at a party or in the park that are NOT named governmental, ' \
     'business, social or organizational entities ' \
-    '24. pharmaceutical or medicinal entity ' \
-    '25. plant ' \
-    '26. political group ' \
-    '27. product or service which is bought, sold or traded ' \
-    '28. related to religion, religious groups or religious practices ' \
-    '29. any of the sciences such as biomedical science, computer science, mathematics, natural science, ' \
+    '27. pharmaceutical or medicinal entity ' \
+    '28. plant ' \
+    '29. political event such as an election or political campaign ' \
+    '30. set of persons with a common political ideology ' \
+    '31. product or service which is bought, sold or traded ' \
+    '32. related to religion, religious groups or religious practices ' \
+    '33. any of the sciences such as biomedical science, computer science, mathematics, natural science, ' \
     'social science, standards, engineering, etc. ' \
-    '30. beginning or start ' \
-    '31. any chemical substance, raw material or natural material ' \
-    '32. a situation which is undesirable and potentially harmful, a trouble or problem ' \
-    '33. weapon or ammunition ' \
-    '34. armed conflict, war, insurgency or armed clash ' \
-    '35. waste or residue ' \
-    '36. a non-living, man-made thing or part thereof' \
-    '37. other'
+    '34. beginning or start ' \
+    '35. any chemical substance, raw material or natural material ' \
+    '36. a situation which is undesirable and potentially harmful, a trouble or problem ' \
+    '37. weapon or ammunition ' \
+    '38. armed conflict, war, insurgency or armed clash ' \
+    '39. waste or residue ' \
+    '40. a non-living, man-made thing or part thereof' \
+    '41. other'
 
 rhetorical_devices = ['ad baculum', 'ad hominem', 'ad populum', 'allusion', 'antanagoge', 'aphorism',
                       'ethos', 'exceptionalism', 'expletive', 'hyperbole', 'imagery', 'invective', 'irony',
@@ -270,8 +278,8 @@ chatgpt = 'Perform as ChatGPT, a large language model trained by OpenAI, based o
 coref_prompt = \
     f'{chatgpt} You are a linguist and NLP expert, analyzing text. Here are 0-2 preceding ' + \
     'sentences (ending with the string "**" which should be ignored): {sentences} ** Here is the next sentence ' \
-    '(also ending with the string "**" which is ignored): {sent_text} ** Resolve ALL personal and possessive ' \
-    'pronouns found in the previous sentence. Update each of the personal pronouns with their specific noun ' + \
+    '(also ending with the string "**" which is ignored): {sent_text} ** In the "next" sentence, resolve any of ' + \
+    f'these pronouns, {pronoun_text}, found in the sentence. Update each of the pronouns with their specific noun ' \
     f'references. Return the updated sentence using the JSON format, {coref_result}.'
 
 # Narrative-level prompting
@@ -290,21 +298,17 @@ narrative_summary_prompt = \
 
 noun_prompt = \
     f'{chatgpt} You are a linguist and NLP expert. Here is a sentence (ending with the string "**" which should ' + \
-    'be ignored): {sent_text} ** Here is a noun or noun phrase from that sentence, "{noun_text}", and its ' \
-    'semantic role, {semantic_role}. Select a subset of the noun phrase text that corresponds to the semantic role. ' \
-    'If the noun phrase is a single word, set the selected text to that word. Otherwise, prefer the selection ' + \
-    f'of text that is a full proper noun. Return all the components of a proper noun (e.g., the first, middle and ' \
-    f'last names of a person), but please remove adjectives, possessives, honorifics, titles, etc. from it. ' \
-    f'For the selected text, indicate whether it is singular ({any_boolean}), whether it is negated ({any_boolean}) ' \
-    f'and its noun type. {noun_categories_text} Return the selected text, and the number of the noun type that ' \
-    f'corresponds to its meaning and its semantic role. If no noun types are appropriate, return the number 37 ' \
-    f'("other"). Return the response as a JSON object with keys and values as defined by {noun_result}.'
+    'be ignored): {sent_text} ** Here is a noun that is found in the sentence, "{noun_text}". ' + \
+    f'For the noun, indicate whether it is singular ({any_boolean}) or negated ({any_boolean}), and its noun type. ' \
+    f'{noun_categories_text} Return the noun, and the number of the noun type that best corresponds to its meaning. ' \
+    f'If no noun types are appropriate, return the number 41 ("other"). Return the response as a JSON ' \
+    f'object with keys and values as defined by {noun_result}.'
 
 noun_category_prompt = \
     f'{chatgpt} You are a linguist and NLP expert. Here is a sentence (ending with the string "**" which should ' + \
-    'be ignored): {sent_text} ** Here is a noun from that sentence, "{noun_text}". For the noun, ' + \
+    'be ignored): {sent_text} ** Here is a noun that is found in the sentence, "{noun_text}". For the noun, ' + \
     f'return the number of the semantic topic category that best corresponds to its meaning. {categories_text} ' \
-    f'If none of the categories are appropriate, return the number 66 ("other"). Return the response as a JSON ' \
+    f'If none of the categories are appropriate, return the number 67 ("other"). Return the response as a JSON ' \
     f'object with keys and values as defined by {noun_category_result}.'
 
 # Sentence-level prompting
@@ -312,8 +316,8 @@ sentence_summary_prompt = \
     f'{chatgpt} You are a linguist and NLP expert, analyzing the text from narratives and news articles. ' + \
     'Here is the text of a sentence from an article that should be analyzed. The text ends with the string ' \
     '"**" which should be ignored. {sent_text} ** For the sentence, indicate its sentiment ' + \
-    f'({sentiment}) and summarize it in a sentence of 10 words or less. Do not use personal or possessive pronouns ' \
-    f'in the summary sentence, but references to nouns and proper nouns. Indicate the grade level that is ' \
+    f'({sentiment}) and summarize it in a sentence of 10 words or less. Do not use any pronouns ' \
+    f'in the summary sentence but instead use specific nouns and proper nouns. Indicate the grade level that is ' \
     f'expected of a reader to understand the sentence semantics. Return the response as a JSON object ' \
     f'with keys and values as defined by {sentence_summary_result}.'
 
@@ -328,16 +332,13 @@ sentence_devices_prompt = \
 
 verbs_and_associateds_prompt = \
     f'{chatgpt} You are a linguist and NLP expert. Here is a sentence (ending with the string "**" which should ' + \
-    'be ignored): {sent_text} ** Here are the root and clausal verbs in the sentence: "{verb_texts}". For ' \
-    'each verb, find it in the sentence and return its text, as well as the full verb phrase with modals, adverbial ' \
-    'modifiers, negation, etc. Also return the full text of all associated subjects, objects, prepositional clauses, ' \
-    'etc. If the verb or associated entities are considered idioms, return the complete idiom as the verb or ' \
-    'associated clause. Indicate the semantic roles of each associated subject, object, etc. There may be more ' + \
-    f'than one role. Only return these specific semantic roles: {semantic_role_text}. Make sure to consider whether ' \
-    f'the sentence is in the active or passive voice when assigning the roles. Do not assign a role of "content" if ' \
-    f'the associated subject, object, etc. does not include a verb. If there is no verb, try to assign a more ' \
-    f'specific semantic role. Return the information as a JSON object with keys and values defined by ' \
-    f'{verbs_and_associateds_result}.'
+    'be ignored): {sent_text} ** Determine the root and any clausal verbs in the sentence. For each verb, ' \
+    'return its text, as well as the full verb phrase with modals, adverbial modifiers, negation, etc. ' \
+    'Also return the text of all associated subjects, objects, prepositional clauses, etc. ' \
+    'Indicate the semantic roles of each associated subject, object, etc. There may be more ' + \
+    f'than one role. Only return values from these specific semantic roles: {semantic_role_text}. Make sure to ' \
+    f'consider whether the sentence is in the active or passive voice when assigning the roles. Return the ' \
+    f'information as a JSON object with keys and values defined by {verbs_and_associateds_result}.'
 
 # TODO: Should more categories be reported? 2 are reported now
 semantics_prompt = \
@@ -350,7 +351,7 @@ semantics_prompt = \
     f'whether the topic is negated ({any_boolean}) in the sentence. If a verb phrase is only based on the ' \
     f'root lemma "be" (such as "<noun> was/is/will be <something>"), then the semantic topic should be ' \
     f'reported using the number 31 (a description). If none of the topics are applicable, return the number ' \
-    f'66 ("other"). Return the response as a JSON object with keys and values as defined by {semantics_result}.'
+    f'67 ("other"). Return the response as a JSON object with keys and values as defined by {semantics_result}.'
 
 # Quotation prompt
 attribution_prompt = \

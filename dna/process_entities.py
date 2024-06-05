@@ -18,6 +18,12 @@ agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':Gov
                  ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
                  ':Plant', ':Plant, :Collection')
 
+location_classes = (':Location', ':PhysicalLocation', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
+                 ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
+                 ':EthnicGroup, :Collection', ':PoliticalGroup', ':PoliticalGroup, :Collection',
+                 ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
+                 ':Plant', ':Plant, :Collection')
+
 honorifics = ('Mr. ', 'Mrs. ', 'Ms. ', 'Doctor ', 'Dr. ', 'Messrs. ', 'Miss ', 'Mx. ', 'Sir ',
               'Dame ', 'Lady ', 'Esq. ', 'Professor ', 'Fr. ', 'Sr. ')
 
@@ -69,28 +75,34 @@ def _create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -
            + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
 
-def _get_family_names(agent_text: str, alt_names: list) -> list:
+def _get_last_name(agent_text: str) -> (str, str):
     """
-    Create the possible permutations of a person's name.
+    Get the last names for a person's name text. If there are multiple last names (e.g.,
+    Mary Gardner Smith), then return both "Smith" and "Gardner Smith".
 
     :param agent_text: Text specifying the person's name
-    :param alt_names: An array of possible alternative names for the person
-    :return: An array of possible family names (if the agent_name includes a space) and
-             the alt_names array is likely updated
+    :return: A tuple of two string holding a person's last names
     """
-    no_paren_agent_text = agent_text.replace('(', empty_string).replace(')', empty_string)
-    split_names = no_paren_agent_text.split()
-    family_names = []
-    if len(split_names) > 1:
-        for i in range(1, len(split_names)):      # TODO: Need to distinguish middle names vs last names?
-            if split_names[i].endswith('s'):
-                family_names.append(f'{split_names[i]}es')
-            else:
-                family_names.append(f'{split_names[i]}s')
-    add_unique_to_array(split_names, alt_names)
-    add_unique_to_array(get_name_permutations(no_paren_agent_text), alt_names)
-    add_unique_to_array([agent_text, no_paren_agent_text], alt_names)
-    return family_names
+    split_names = agent_text.split()
+    if len(split_names) == 1:
+        return empty_string, empty_string
+    if len(split_names) == 2:
+        return split_names[1], empty_string
+    return split_names[-1], " ".join(split_names)[-2:]    # TODO: Is this acceptable if a middle name is given?
+
+
+def _get_name_permutations(name: str) -> list:
+    """
+    Get the combinations of first and maiden/last names.
+
+    :param name: A string holding a Person's full name
+    :return: A list of strings combining the first and second, first and third, ... names
+    """
+    poss_names = []
+    names = name.split()
+    for i in range(1, len(names)):
+        poss_names.append(f'{names[0]} {names[i]}')
+    return poss_names
 
 
 def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str, list):
@@ -134,20 +146,16 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         if noun_text not in labels:
             labels.append(noun_text)
         if 'NORP' not in noun_type:
-            family_names = []
             if 'PERSON' in noun_type:
                 noun_type = check_name_gender(noun_text)
-                family_names = _get_family_names(noun_text, labels)
+                last_name, last_name2 = _get_last_name(noun_text)
+                if last_name and last_name not in nouns_dict and last_name not in labels:
+                    labels.append(last_name)
             noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, wiki_details,
-                                             wiki_url, wikidata_id))      # Put more specific name first
-            for fam_name in family_names:
-                if fam_name not in nouns_dict:
-                    nouns_dict[fam_name] = ('PLURALPERSON', f':{fam_name}')
-                    noun_ttl.append(f':{fam_name} a :Person, :Collection ; '
-                                    f'rdfs:label "{fam_name}" ; :role "family" .')
+                                             wiki_url, wikidata_id))
         else:   # NORP
             noun_ttl.extend(
-                create_norp_ttl(noun_iri, noun_type, labels, wiki_details, wiki_url, wikidata_id))
+                create_norp_ttl(noun_iri, labels, class_map, wiki_details, wiki_url, wikidata_id))
     elif base_type == 'EVENT':
         semantic_dict = access_api(noun_category_prompt.replace('{sent_text}', sentence_text)
                                    .replace('{noun_text}', noun_text))
@@ -190,29 +198,10 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
     """
     if noun_text in names_to_geo_dict:                           # Location is a country name
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
-    for noun_key in nouns_dict.keys():                           # Key is text; exact match of text
-        # Strings match
-        if noun_key == noun_text:
-            return nouns_dict[noun_key]
-    for noun_key in nouns_dict.keys():
-        # Sub-strings match
-        if (not noun_type or noun_type in ner_dict.keys()) and noun_key in noun_text:
-            return nouns_dict[noun_key]
+    if noun_text in nouns_dict:                                  # Key is text; exact match of text
+        return nouns_dict[noun_text]
+    # TODO: Add synonym check?
     return noun_type, empty_string
-
-
-def get_name_permutations(name: str) -> list:
-    """
-    Get the combinations of first and maiden/last names.
-
-    :param name: A string holding a Person's full name
-    :return: A list of strings combining the first and second, first and third, ... names
-    """
-    poss_names = []
-    names = name.split()
-    for i in range(1, len(names)):
-        poss_names.append(f'{names[0]} {names[i]}')
-    return poss_names
 
 
 def get_ner_base_type(ner_text: str) -> str:

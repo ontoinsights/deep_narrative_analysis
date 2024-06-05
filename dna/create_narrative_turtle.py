@@ -11,7 +11,6 @@ from typing import List
 
 from dna.database import query_database
 from dna.database_queries import query_corrections, query_manual_corrections
-from dna.process_entities import get_name_permutations
 from dna.process_sentences import get_sentence_details
 from dna.query_openai import access_api, coref_prompt
 from dna.sentence_classes import Sentence, Quotation, Punctuation
@@ -78,10 +77,10 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
                 sentence_ttl_list.append(f'{sentence_iri} a :Inquiry .')
             elif punctuation == Punctuation.EXCLAMATION:
                 sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
-        updated_text = sentence_text
         sentence_type = 'mentions'
         if not (index + 1 > number_sentences):    # Full processing only up to the requested number of sentences
             sentence_type = 'complete'
+            updated_text = sentence_text
             # Get a version of the sentence with co-references resolved, if needed
             if any([(sentence_text.startswith(f'{pers_pronoun} '.title()) or f' {pers_pronoun} ' in sentence_text or
                      f'{pers_pronoun}.' in sentence_text) for pers_pronoun in personal_pronouns]):
@@ -102,8 +101,8 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
                     continue
         # Get the sentence details using OpenAI prompting
         try:
-            get_sentence_details(sentence_instance_list[index], updated_text, sentence_ttl_list,
-                                 sentence_type, nouns_dictionary, quotation_instance_list, repo)
+            get_sentence_details(sentence_instance_list[index], updated_text, sentence_ttl_list, sentence_type,
+                                 nouns_dictionary, quotation_instance_list, repo)
             graph_ttl_list.extend(sentence_ttl_list)
         except Exception as e:   # Triples not added for sentence
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {sentence_text}')
@@ -112,13 +111,12 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     # Quotation analysis is not limited by the number of sentences to ingest
     for quotation in quotation_instance_list:
         quote_iri = quotation.iri
-        quote_text = quotation.text
-        quote_ttl_list = [f'{quote_iri} a :Quote ; :text {Literal(quote_text).n3()} .']
+        quote_ttl_list = [f'{quote_iri} a :Quote ; :text {Literal(quotation.text).n3()} .']
         try:
-            get_sentence_details(quotation, quote_text, quote_ttl_list, 'quote', nouns_dictionary, [], repo)
+            get_sentence_details(quotation, quotation.text, quote_ttl_list, 'quote', nouns_dictionary, [], repo)
             graph_ttl_list.extend(quote_ttl_list)
         except Exception as e:    # Triples not added for quote
-            logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quote_text}')
+            logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quotation.text}')
             continue
     return True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list), \
         graph_ttl_list
