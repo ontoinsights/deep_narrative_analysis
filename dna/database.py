@@ -12,9 +12,8 @@ from rdflib import Graph, Namespace
 import stardog
 from stardog import Connection
 
-from dna.utilities_and_language_specific import dna_db, dna_prefix, empty_string, owl_thing
+from dna.utilities_and_language_specific import dna_db, dna_prefix, empty_string, owl_thing, ttl_prefixes
 
-rdf_graph = Graph()
 text_turtle = 'text/turtle'
 DNA = Namespace('urn:ontoinsights:dna:')
 OWL = Namespace('http://www.w3.org/2002/07/owl')
@@ -112,15 +111,15 @@ def clear_data(repo: str, graph: str = empty_string) -> str:
         logging.error(curr_error)
 
 
-def construct_graph(construct: str, repo: str) -> (bool, list):
+def construct_graph(construct: str) -> (bool, list):
     """
     Process a CONSTRUCT query
 
     :param construct: The text of the CONSTRUCT query
-    :param repo: The repository to be queried
     :return: A tuple holding a boolean indicating success (if true) or failure and an array
               with the Turtle results of the CONSTRUCT query or an error message
     """
+    rdf_graph = Graph()
     try:
         const_conn = stardog.Connection(dna_db, **sd_conn_details)
         construct_results = const_conn.graph(construct, content_type='text/turtle')
@@ -136,11 +135,15 @@ def construct_graph(construct: str, repo: str) -> (bool, list):
                                 f'{pred.n3(turtle_details.namespace_manager)} '
                                 f'{obj.n3(turtle_details.namespace_manager)} .\n')
         turtle_stmts.sort()
-        final_turtle = ['@prefix : <urn:ontoinsights:dna:> .\n', '\n']
+        final_turtle = ['@prefix dna: <urn:ontoinsights:dna:> .\n',
+                        '@prefix owl: <http://www.w3.org/2002/07/owl#> .\n',
+                        '@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .\n',
+                        '@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .\n',
+                        '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .\n', '\n']
         final_turtle.extend(turtle_stmts)
         return True, final_turtle
     except Exception as const_err:
-        curr_error = f'Narrative graph ({narr_id}) construct for repository ({repo}) exception: {str(const_err)}'
+        curr_error = f'Narrative graph ({narr_id}) construct exception: {str(const_err)}'
         logging.error(curr_error)
         return False, [str(const_err)]
 

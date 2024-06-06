@@ -171,7 +171,7 @@ def graphs():
         logging.info(f'Get KG for narrative {narr_id} for {repo}')
         # Get the triples from dna db's graph, :repo_narrId
         # TODO: Error in construct with edge properties in pystardog; Currently edge properties removed
-        success, turtle = construct_graph(construct_kg.replace('?named', f':{repo}_{narr_id}'), repo)
+        success, turtle = construct_graph(construct_kg.replace('?named', f':{repo}_{narr_id}'))
         if success:
             # Get narrative metadata
             metadata_dict = parse_narrative_query_binding(
