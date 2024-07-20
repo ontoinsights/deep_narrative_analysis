@@ -12,7 +12,7 @@
 # of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 29 2024
+# Last Modified: July 19 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -41,7 +41,8 @@
 #  Expanded ReligiousCeremony to a more general ReligiousEvent
 #  Moved (from misc-event-subclasses.ttl), clarified and renamed 
 #    CaptureAndSeizure and CaptivityAndDetention (from environment-
-#    subclasses.ttl) to become ArrestAndImprisonment
+#    subclasses.ttl) to become ArrestAndImprisonment (also added
+#    LawEnforcement as a superclass)
 #  Combined Storage into DistributionSupplyAndStorage
 ########################################################################
 
@@ -85,9 +86,9 @@
   :wordnet_verb_synset "01466592" .
 
 :ArrestAndImprisonment a owl:Class ;
-  rdfs:subClassOf :RemovalAndRestriction ;
-  rdfs:label "Arrest and Incarceration"@en ;
-  rdfs:comment "An act involving the taking and/or detention of a Person by authority of the law. However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
+  rdfs:subClassOf :RemovalAndRestriction, :LawEnforcement ;
+  rdfs:label "Arrest and Imprisonment"@en ;
+  rdfs:comment "An act involving the taking and/or detention of a Person (typically by authority of the law). However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
   :wordnet_noun_synset "00089545", "01149281", "14020535", "01149089" ;
   :wordnet_verb_synset "01217701", "02500005", "02500687", "02502345" .
 
@@ -373,6 +374,11 @@
   rdfs:label "Issuing and Publishing"@en ;
   rdfs:comment "An act of issuing/releasing an InformationSource such as a book, article, newspaper, etc., a work of art or music, ..., or making an announcement/releasing a public statement."@en ;
   :wordnet_verb_synset "00956640" .
+
+:LawEnforcement a owl:Class ;
+  rdfs:subClassOf :Enforcement ;
+  rdfs:label "Law Enforcement"@en ;
+  rdfs:comment "Enforcement of a law, obligation or court ruling by police or a law enforcement agency."@en .
 
 :LegalEvent a owl:Class ;
   rdfs:subClassOf :EventAndState ;

@@ -9,7 +9,7 @@
 # File defining general concepts used throughout the DNA ontologies
 # 
 # Created: February 9 2020
-# Last modified: April 24 2024
+# Last modified: July 19 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,7 +24,7 @@
 #  Removed invalid "subclassOf" predicate 
 #  Added external_identifier
 #  Changed negation to negated
-#  Updated has_goal to have a range of anything
+#  Renamed :causes to :has_cause and added :has_precondition
 ########################################################################
 
 
@@ -224,12 +224,6 @@
   rdfs:label "adjoins"@en ;
   rdfs:comment "Indicates that the boundaries of an entity touch/join with another/share a border or boundary."@en .
 
-:causes a owl:ObjectProperty ;
-  rdfs:label "causes"@en ;
-  rdfs:comment "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object."@en ;
-  rdfs:domain :EventAndState ;
-  rdfs:range :EventAndState .
-
 :coincides a owl:ObjectProperty ;
   rdfs:label "coincides"@en ;
   rdfs:comment "Indicates that the specified entity exists at the same time/occurs within the same timeframe as the referenced entity."@en .
@@ -260,6 +254,11 @@
   rdfs:subPropertyOf :has_time ;
   rdfs:range :Time ;
   rdfs:comment "References a Time that is the start of the existence/time frame of some entity, or that is the beginning of an Interval or Duration."@en .
+  
+:has_cause a owl:ObjectProperty ;
+  rdfs:label "has cause"@en ;
+  rdfs:comment "Relationship between an EventAndState and another individual indicating that the referenced individual is the cause of (makes happen) the EventAndState."@en ;
+  rdfs:domain :EventAndState .
 
 :has_component a owl:ObjectProperty ;
   rdfs:label "has component"@en ;
@@ -282,6 +281,7 @@
   rdfs:label "has goal"@en ;
   rdfs:domain [ a owl:Class ;
                 owl:unionOf ( :EventAndState :Agent ) ] ;
+  rdfs:range :EventAndState ;
   rdfs:comment "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc."@en .
 
 :has_last a owl:ObjectProperty ;
@@ -304,6 +304,12 @@
 :has_next a owl:ObjectProperty ;
   rdfs:label "has next"@en ;
   rdfs:comment "Defines an entity that follows the subject/referencing entity in time, or that is an evolution of the entity. :has_next is rather generically defined, but is most likely used in process modeling and related to EventAndState."@en .
+
+:has_precondition a owl:ObjectProperty ;
+  rdfs:label "has precondition"@en ;
+  rdfs:comment "Relationship between two EventAndState entities indicating that the referenced entity must be true (must have occurred) in order for the subject event/state to exist or happen."@en ;
+  rdfs:domain :EventAndState ;
+  rdfs:range :EventAndState .
 
 :has_time a owl:ObjectProperty ;
   rdfs:label "has time"@en ;

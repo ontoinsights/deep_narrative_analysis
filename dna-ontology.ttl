@@ -64,14 +64,6 @@
                                      rdfs:label "attributed to"@en .
 
 
-###  urn:ontoinsights:dna:causes
-<urn:ontoinsights:dna:causes> rdf:type owl:ObjectProperty ;
-                              rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                              rdfs:range <urn:ontoinsights:dna:EventAndState> ;
-                              rdfs:comment "Relationship between two EventAndState individuals indicating that the subject is assumed to 'cause' (make happen or result in) the object."@en ;
-                              rdfs:label "causes"@en .
-
-
 ###  urn:ontoinsights:dna:cites
 <urn:ontoinsights:dna:cites> rdf:type owl:ObjectProperty ;
                              rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
@@ -148,6 +140,13 @@
                                                rdfs:label "has bounding coordinate"@en .
 
 
+###  urn:ontoinsights:dna:has_cause
+<urn:ontoinsights:dna:has_cause> rdf:type owl:ObjectProperty ;
+                                 rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                 rdfs:comment "Relationship between an EventAndState and another individual indicating that the referenced individual is the cause of (makes happen) the EventAndState."@en ;
+                                 rdfs:label "has cause"@en .
+
+
 ###  urn:ontoinsights:dna:has_citizenship
 <urn:ontoinsights:dna:has_citizenship> rdf:type owl:ObjectProperty ;
                                        rdfs:domain <urn:ontoinsights:dna:Person> ;
@@ -209,6 +208,7 @@
                                                             <urn:ontoinsights:dna:EventAndState>
                                                           )
                                             ] ;
+                                rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                 rdfs:comment "References the desired end state (such as reduced pollution levels) or event (such as the release of a new document) - i.e., the 'goal' - of an occurrence, process, meeting, agent, etc."@en ;
                                 rdfs:label "has goal"@en .
 
@@ -265,6 +265,14 @@
                                   rdfs:range <urn:ontoinsights:dna:Location> ;
                                   rdfs:comment "References the original location when an EventAndState involves movement of persons, goods, information, etc."@en ;
                                   rdfs:label "has origin"@en .
+
+
+###  urn:ontoinsights:dna:has_precondition
+<urn:ontoinsights:dna:has_precondition> rdf:type owl:ObjectProperty ;
+                                        rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                        rdfs:range <urn:ontoinsights:dna:EventAndState> ;
+                                        rdfs:comment "Relationship between two EventAndState entities indicating that the referenced entity must be true (must have occurred) in order for the subject event/state to exist or happen."@en ;
+                                        rdfs:label "has precondition"@en .
 
 
 ###  urn:ontoinsights:dna:has_provider
@@ -599,12 +607,16 @@
 
 ###  urn:ontoinsights:dna:external_identifier
 <urn:ontoinsights:dna:external_identifier> rdf:type owl:DatatypeProperty ;
-                                           rdfs:range xsd:string .
+                                           rdfs:range xsd:string ;
+                                           rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en ;
+                                           rdfs:label "external identifier"@en .
 
 
 ###  urn:ontoinsights:dna:external_link
 <urn:ontoinsights:dna:external_link> rdf:type owl:DatatypeProperty ;
-                                     rdfs:range xsd:string .
+                                     rdfs:range xsd:string ;
+                                     rdfs:comment "Text specifying a URL/URI where more information about the referencing entity can be found."@en ;
+                                     rdfs:label "external link"@en .
 
 
 ###  urn:ontoinsights:dna:future
@@ -824,7 +836,7 @@
                                        rdf:type owl:FunctionalProperty ;
                                        rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
                                        rdfs:range xsd:integer ;
-                                       rdfs:comment "A count of the number of sentences from an InformationSource that were ingested."@en ;
+                                       rdfs:comment "A count of the number of sentences from an InformationSource that were fully ingested (with complete event detail processing)."@en ;
                                        rdfs:label "number of sentences ingested"@en .
 
 
@@ -1601,9 +1613,10 @@
 
 ###  urn:ontoinsights:dna:ArrestAndImprisonment
 <urn:ontoinsights:dna:ArrestAndImprisonment> rdf:type owl:Class ;
-                                             rdfs:subClassOf <urn:ontoinsights:dna:RemovalAndRestriction> ;
-                                             rdfs:comment "An act involving the taking and/or detention of a Person by authority of the law. However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
-                                             rdfs:label "Arrest and Incarceration"@en ;
+                                             rdfs:subClassOf <urn:ontoinsights:dna:LawEnforcement> ,
+                                                             <urn:ontoinsights:dna:RemovalAndRestriction> ;
+                                             rdfs:comment "An act involving the taking and/or detention of a Person (typically by authority of the law). However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."@en ;
+                                             rdfs:label "Arrest and Imprisonment"@en ;
                                              <urn:ontoinsights:dna:wordnet_noun_synset> "00089545" ,
                                                                                         "01149089" ,
                                                                                         "01149281" ,
@@ -3566,6 +3579,13 @@
                                                                                "02432763" .
 
 
+###  urn:ontoinsights:dna:LawEnforcement
+<urn:ontoinsights:dna:LawEnforcement> rdf:type owl:Class ;
+                                      rdfs:subClassOf <urn:ontoinsights:dna:Enforcement> ;
+                                      rdfs:comment "Enforcement of a law, obligation or court ruling by police or a law enforcement agency."@en ;
+                                      rdfs:label "Law Enforcement"@en .
+
+
 ###  urn:ontoinsights:dna:LegalAndJudicialBusiness
 <urn:ontoinsights:dna:LegalAndJudicialBusiness> rdf:type owl:Class ;
                                                 rdfs:subClassOf <urn:ontoinsights:dna:LineOfBusiness> ;
@@ -4467,6 +4487,16 @@
                                                                                            "01191258" .
 
 
+###  urn:ontoinsights:dna:Residence
+<urn:ontoinsights:dna:Residence> rdf:type owl:Class ;
+                                 rdfs:subClassOf <urn:ontoinsights:dna:LivingCondition> ,
+                                                 <urn:ontoinsights:dna:Location> ;
+                                 rdfs:comment "Information related to the place where someone or something lives/resides."@en ;
+                                 rdfs:label "Residence"@en ;
+                                 <urn:ontoinsights:dna:wordnet_noun_synset> "01055844" ;
+                                 <urn:ontoinsights:dna:wordnet_verb_synset> "02654741" .
+
+
 ###  urn:ontoinsights:dna:Resistance
 <urn:ontoinsights:dna:Resistance> rdf:type owl:Class ;
                                   rdfs:subClassOf <urn:ontoinsights:dna:AggressiveCriminalOrHostileAct> ,
@@ -5218,27 +5248,6 @@
                                                                           <urn:ontoinsights:geonames:798549> ;
                                      <urn:ontoinsights:dna:synonym> "EU"@en ,
                                                                     "European Union"@en .
-
-
-###  urn:ontoinsights:dna:House_of_Representatives
-<urn:ontoinsights:dna:House_of_Representatives> rdf:type owl:NamedIndividual ,
-                                                         <urn:ontoinsights:dna:Correction> ,
-                                                         <urn:ontoinsights:dna:GovernmentalEntity> ;
-                                                rdfs:comment "From Wikipedia (wikibase_item: Q11701): The United States House of Representatives is the lower chamber of the United States Congress, with the Senate being the upper chamber. Together, they comprise the national bicameral legislature of the United States. The House is charged with the passage of federal legislation, known as bills; those that are also passed by the Senate are sent to the president for signature or veto. The House's exclusive powers include initiating all revenue bills, impeaching federal officers, and electing the president if no candidate receives a majority of votes in the Electoral College."@en ;
-                                                rdfs:label "HOR"@en ,
-                                                           "House"@en ,
-                                                           "House of Representatives"@en ,
-                                                           "House of Representatives of the United States"@en ,
-                                                           "U.S. House"@en ,
-                                                           "U.S. House of Representatives"@en ,
-                                                           "US HOR"@en ,
-                                                           "US House of Representatives"@en ,
-                                                           "USHOR"@en ,
-                                                           "United States Congress House"@en ,
-                                                           "United States House of Representatives"@en ,
-                                                           "house.gov"@en ;
-                                                <urn:ontoinsights:dna:external_identifier> "Q11701" ;
-                                                <urn:ontoinsights:dna:external_link> "https://en.wikipedia.org/wiki/United_States_House_of_Representatives" .
 
 
 ###  urn:ontoinsights:geonames:CurrencyAED
@@ -9793,14 +9802,6 @@
 
 <urn:ontoinsights:dna:adjoins> rdfs:label "adjoins"@en ;
                                rdfs:comment "Indicates that the boundaries of an entity touch/join with another/share a border or boundary."@en .
-
-
-<urn:ontoinsights:dna:external_identifier> rdfs:label "external identifier"@en ;
-                                           rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en .
-
-
-<urn:ontoinsights:dna:external_link> rdfs:comment "Text specifying a URL/URI where more information about the referencing entity can be found."@en ;
-                                     rdfs:label "external link"@en .
 
 
 <urn:ontoinsights:dna:has_component> rdfs:label "has component"@en ;

@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 2 2024
+# Last Modified: July 10 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -30,7 +30,7 @@
 #  Removed CaptivityAndDetention as its semantics are similar to 
 #    ArrestAndImprisonment
 #  Clarified semantics by adding "Access" to several class names
-#  Added Culture and LaborRelated
+#  Added Culture, LaborRelated and Residence
 ########################################################################
 
 
@@ -207,6 +207,13 @@
   rdfs:comment "A condition describing a reliance/need between two entities. The entity (a Resource or an Agent) with the dependence is defined using the :has_resource or :has_holder properties, while the thing or Agent that is depended upon/required is specified using the :has_topic predicate."@en ;
   :wordnet_noun_synset "05901034", "05901258", "09390100", "14024833" ;
   :wordnet_verb_synset "00408253", "01191258" . 
+
+:Residence a owl:Class ;
+  rdfs:subClassOf :LivingCondition, :Location ;
+  rdfs:label "Residence"@en ;
+  rdfs:comment "Information related to the place where someone or something lives/resides."@en ;
+  :wordnet_noun_synset "01055844" ;
+  :wordnet_verb_synset "02654741" . 
 
 :Safety a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
