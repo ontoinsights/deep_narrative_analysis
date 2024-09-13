@@ -30,18 +30,21 @@ def test_ingest(client):
          "url": "https://www.fox.com/news/2024/3/25/xyz",
          "text": article})
     resp = client.post('/dna/v1/repositories/narratives', content_type='application/json',
-                       query_string={'repository': 'foo', 'sentences': 10}, data=req_data)
+                       query_string={'repository': 'foo', 'sentences': 5}, data=req_data)
     assert resp.status_code == 201
     json_data = resp.get_json()
     assert 'narrativeDetails' in json_data
     narr_details = json_data['narrativeDetails']
-    assert narr_details['published'] == '2024-03-25T00:00:00'
-    assert narr_details['source'] == 'Fox News'
-    assert narr_details['title'] == 'Ceasefire Fox'
-    assert narr_details['url'] == 'https://www.fox.com/news/2024/3/25/xyz'
-    assert narr_details['numberIngested'] == 10
+    assert 'narrativeId' in narr_details
+    assert 'processed' in narr_details
+    assert narr_details['numberIngested'] == 5
     assert narr_details['numberOfSentences'] > 10
-    assert narr_details['numberOfTriples'] > 200
+    assert narr_details['numberOfTriples'] > 100
+    narr_meta = narr_details['narrativeMetadata']
+    assert narr_meta['published'] == '2024-03-25T00:00:00'
+    assert narr_meta['source'] == 'Fox News'
+    assert narr_meta['title'] == 'Ceasefire Fox'
+    assert narr_meta['url'] == 'https://www.fox.com/news/2024/3/25/xyz'
 
 
 def test_repositories_cleanup(client):

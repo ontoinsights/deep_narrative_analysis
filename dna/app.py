@@ -6,11 +6,10 @@ import json
 import logging
 
 from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative, \
-    detail, error_str, narrative_id, repository, sentences
+    detail, error_str, narrative_id, repository, sentences, Metadata, MetadataResults, NarrativeResults
 from dna.database import add_remove_data, clear_data, construct_graph, query_database
 from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
     query_narratives, query_repos, query_repo_graphs, update_narrative
-from dna.sentence_element_classes import Metadata
 # from dna.query_news import get_article_text, get_matching_articles
 from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph
 
@@ -21,7 +20,7 @@ not_defined: str = 'not defined'
 
 # Main
 app = Flask(__name__)
-# Future: Deal with concurrency, caching, etc. for production; Move to Nginx and WSGI protocol
+# TODO: (Future) Deal with concurrency, caching, etc. for production; Move to Nginx and WSGI protocol
 
 
 @app.route('/dna/v1')
@@ -106,7 +105,7 @@ def narratives():
         repo = dict(values)[repository]
         # Get number of sentences to ingest
         values, scode = check_query_parameter(sentences, False, request)
-        number_sentences = dict(values)[sentences]
+        number_sentences = int(dict(values)[sentences])
         # Process the request body
         if not request.data:
             return jsonify(
@@ -122,10 +121,10 @@ def narratives():
         metadata = Metadata(narr_data['title'], narr_data['published'] if 'published' in narr_data else not_defined,
                             narr_data['source'], narr_data['url'] if 'url' in narr_data else not_defined,
                             number_sentences)
-        resp_dict, resp_str, status_code = process_new_narrative(metadata, narr_data['text'], repo)
-        if status_code != 201:
-            return jsonify({error_str: resp_str}), status_code
-        return jsonify(resp_dict), 201
+        narrative_results = process_new_narrative(metadata, narr_data['text'], repo)
+        if narrative_results.http_status != 201:
+            return jsonify({error_str: narrative_results.error_msg}), narrative_results.http_status
+        return jsonify(narrative_results.resp_dict), 201
     elif request.method == 'DELETE':
         # Get repository name and narrative id query parameters
         values, scode = check_query_parameter(narrative_id, True, request)
@@ -215,7 +214,7 @@ def graphs():
                 numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'))
                 numb_triples = 0
                 if len(numb_triples_results) > 0:
-                    numb_triples = numb_triples_results[0]['cnt']['value']
+                    numb_triples = int(numb_triples_results[0]['cnt']['value'])
                 new_meta_ttl = [
                     f'@prefix : <{dna_prefix}> . @prefix dc: <http://purl.org/dc/terms/> .',
                     f':{narr_id} dc:modified "{modified_at}"^^xsd:dateTime ; :number_triples {numb_triples} .']

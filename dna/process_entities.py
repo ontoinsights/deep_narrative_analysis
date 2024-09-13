@@ -6,11 +6,11 @@ from rdflib import Literal
 from unidecode import unidecode
 
 from dna.create_entities_turtle import create_agent_ttl, create_location_ttl, create_named_entity_ttl, create_norp_ttl
-from dna.query_openai import access_api, categories, noun_category_prompt, wikipedia_prompt
+from dna.query_openai import access_api, event_categories, noun_events_prompt
 from dna.query_sources import get_event_details_from_wikidata, get_wikipedia_description
 from dna.sentence_classes import Entity
-from dna.utilities_and_language_specific import add_unique_to_array, check_name_gender, days, empty_string, months, \
-    names_to_geo_dict, ner_dict, ner_types, underscore
+from dna.utilities_and_language_specific import (check_name_gender, days, empty_string, months, names_to_geo_dict,
+                                                 ner_dict, ner_types, underscore)
 
 agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
                  ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
@@ -19,30 +19,16 @@ agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':Gov
                  ':Plant', ':Plant, :Collection')
 
 location_classes = (':Location', ':PhysicalLocation', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
-                 ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
-                 ':EthnicGroup, :Collection', ':PoliticalGroup', ':PoliticalGroup, :Collection',
-                 ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
-                 ':Plant', ':Plant, :Collection')
+                    ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
+                    ':EthnicGroup, :Collection', ':PoliticalGroup', ':PoliticalGroup, :Collection',
+                    ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
+                    ':Plant', ':Plant, :Collection')
 
-honorifics = ('Mr. ', 'Mrs. ', 'Ms. ', 'Doctor ', 'Dr. ', 'Messrs. ', 'Miss ', 'Mx. ', 'Sir ',
-              'Dame ', 'Lady ', 'Esq. ', 'Professor ', 'Fr. ', 'Sr. ')
-
-# TODO: Non-US dates
+# TODO: (Future) Non-US dates
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
 day_pattern1 = re.compile('[0-9] | [0-9],|[0-2][0-9] |[0-2][0-9],|3[0-1] |3[0-1],')
 day_pattern2 = re.compile('|'.join(days))
-
-ner_translation = {'PERSON': 'person',
-                   'NORP': 'nationality, religion or political group/ideology',
-                   'ORG': 'organization',
-                   'GPE': 'geopolitical entity',
-                   'LOC': 'location',
-                   'FAC': 'facility',
-                   'EVENT': 'event or condition',
-                   'LAW': 'law or policy',
-                   'PRODUCT': 'product',
-                   'WORK_OF_ART': 'work of art'}
 
 
 def _create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -> str:
@@ -88,9 +74,10 @@ def _get_last_name(agent_text: str) -> (str, str):
         return empty_string, empty_string
     if len(split_names) == 2:
         return split_names[1], empty_string
-    return split_names[-1], " ".join(split_names)[-2:]    # TODO: Is this acceptable if a middle name is given?
+    return split_names[-1], " ".join(split_names)[-2:]    # TODO: (Future) Is this acceptable if a middle name is given?
 
 
+# Future
 def _get_name_permutations(name: str) -> list:
     """
     Get the combinations of first and maiden/last names.
@@ -135,15 +122,17 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
     noun_iri = noun_iri[:-2] if noun_iri.endswith(underscore) else noun_iri
     noun_ttl = [f'{noun_iri} :text {Literal(noun_text).n3()} .']
     # Process by location, agent, and event/other NER types
-    if base_type in ('GPE', 'LOC', 'FAC'):       # TODO: spaCy incorrectly reports some locations as ORG
+    if base_type in ('GPE', 'LOC', 'FAC', 'ORG'):    # spaCy incorrectly reports some locations as ORG
         geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type)
-        noun_ttl.extend(geo_ttl)
+        if geo_ttl:
+            noun_ttl.extend(geo_ttl)
+            base_type = 'LOC' if base_type == 'ORG' else base_type    # Found a location; Update the base_type
+            class_map = class_map.replace('OrganizationalEntity', 'Location')    # And class_map
     if base_type in ('PERSON', 'NORP', 'ORG'):   # TODO: spaCy does not identify some companies as ORGs
-        wiki_details, wiki_url, wikidata_id, labels = \
-            get_wikipedia_description(noun_text, class_map)
-        if not labels:
-            wiki_details = wiki_url = wikidata_id = empty_string
-        if noun_text not in labels:
+        description_details = get_wikipedia_description(noun_text, class_map)
+        if description_details.labels:
+            labels.extend(description_details.labels)
+        if noun_text not in description_details.labels:
             labels.append(noun_text)
         if 'NORP' not in noun_type:
             if 'PERSON' in noun_type:
@@ -151,27 +140,27 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
                 last_name, last_name2 = _get_last_name(noun_text)
                 if last_name and last_name not in nouns_dict and last_name not in labels:
                     labels.append(last_name)
-            noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, wiki_details,
-                                             wiki_url, wikidata_id))
+            noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, description_details.wiki_desc,
+                                             description_details.wiki_url, description_details.wikidata_id))
         else:   # NORP
             noun_ttl.extend(
-                create_norp_ttl(noun_iri, labels, class_map, wiki_details, wiki_url, wikidata_id))
+                create_norp_ttl(noun_iri, labels, class_map, description_details.wiki_desc,
+                                description_details.wiki_url, description_details.wikidata_id))
     elif base_type == 'EVENT':
-        semantic_dict = access_api(noun_category_prompt.replace('{sent_text}', sentence_text)
-                                   .replace('{noun_text}', noun_text))
-        if 'category_number' in semantic_dict and (0 < semantic_dict['category_number']
-                                                     < len(categories)):
-            class_map = categories[semantic_dict['category_number'] - 1]
+        semantic_dict = access_api(noun_events_prompt.replace('{sent_text}', sentence_text)
+                                   .replace('{noun_texts}', noun_text))
+        if 'category_number' in semantic_dict and 0 < int(semantic_dict['category_number']) < len(event_categories):
+            class_map = event_categories[int(semantic_dict['category_number']) - 1]
         else:
             class_map = ':EventAndState'
-        wiki_details, wiki_url, wikidata_id, start_time, end_time, labels = \
-            get_event_details_from_wikidata(noun_text)
+        event_details = get_event_details_from_wikidata(noun_text)
         if noun_text not in labels:
             labels.append(noun_text)
-        start_time_iri = empty_string if not start_time else _create_time_iri(empty_string, start_time, False)
-        end_time_iri = empty_string if not end_time else _create_time_iri(empty_string, end_time, False)
-        noun_ttl.extend(create_named_entity_ttl(noun_iri, labels, class_map, wiki_details,
-                                                wiki_url, wikidata_id, start_time_iri, end_time_iri))
+        start_time_iri = empty_string if not event_details.start_time else f':PiT_{start_time}'
+        end_time_iri = empty_string if not event_details.end_time else f':PiT_{end_time}'
+        noun_ttl.extend(create_named_entity_ttl(noun_iri, event_details.labels, class_map, event_details.wiki_desc,
+                                                event_details.wiki_url, event_details.wikidata_id, start_time_iri,
+                                                end_time_iri))
     else:
         if noun_text not in labels:
             labels.append(noun_text)
@@ -200,23 +189,12 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
     if noun_text in nouns_dict:                                  # Key is text; exact match of text
         return nouns_dict[noun_text]
-    # TODO: Add synonym check?
+    if noun_text.islower() and len(noun_text) > 5:               # Check match of substring if not a proper noun
+        for noun in nouns_dict:
+            if noun_text in noun:
+                return nouns_dict[noun]
+    # TODO: (Future) Improve with synonym check
     return noun_type, empty_string
-
-
-def get_ner_base_type(ner_text: str) -> str:
-    """
-    Iterate through the NER types to get the base type in the string, ner_text.
-
-    :param ner_text: String holding the full NER categorization
-    :return: String holding the NER base type (PERSON, LOC, GPE, ...)
-    """
-    ner_base = empty_string
-    for ner_type in ner_types:
-        if ner_type in ner_text:
-            ner_base = ner_type
-            break
-    return ner_base
 
 
 def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -> (list, list):
@@ -274,7 +252,7 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
         if not entity_iri:
             # Need to define the Turtle for a new entity
             entity_type, entity_iri, new_ttl = \
-                _get_noun_ttl(sentence_text, entity_text, new_entity.ner_type, nouns_dict)
+                 _get_noun_ttl(sentence_text, entity_text, new_entity.ner_type, nouns_dict)
             if new_ttl:
                 entities_ttl.extend(new_ttl)
         if entity_iri:

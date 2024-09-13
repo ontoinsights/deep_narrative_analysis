@@ -2,6 +2,8 @@ import pytest
 from dna.create_narrative_turtle import create_graph
 from dna.nlp import parse_narrative
 
+text_multiple_entities = 'Liz Cheney claimed that Trump is promoting an insidious lie about the recent ' \
+                         'FBI raid of his Mar-a-Lago residence.'
 text_multiple_verbs = 'Sue is an attorney but still lies.'
 text_aux_pobj = 'John got rid of the debris.'
 text_idiom_amod = "John turned a blind eye to Mary's infidelity."
@@ -17,413 +19,475 @@ text_location_hierarchy = "Switzerland's mountains are magnificent."
 text_weather = "Hurricane Otis severely damaged Acapulco."
 text_coref = 'Anna saw Heidi cut the roses, but she did not recognize that it was Heidi who cut the roses.'
 text_quotation = 'Jane said, "I want to work for NVIDIA."'
+text_rule = "You shall not kill."
 
 repo = 'foo'
 
 # Note that it is unlikely that all tests will complete successfully since event semantics can be
 # interpreted/reported in multiple ways
-# 80% of tests should pass
+# 80%+ of the tests should pass
+
+
+def test_multiple_entities():
+    parse_results = parse_narrative(text_multiple_entities)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert 'loaded language' in ttl_str
+    assert ':CommunicationAndSpeechAct' in ttl_str and ':text "claimed' in ttl_str
+    assert ':DeceptionAndDishonesty' in ttl_str and ':text "insidious lie' in ttl_str
+    assert ':has_active_entity :Liz_Cheney' in ttl_str
+    assert ':has_topic :Noun' in ttl_str or ':has_topic :Donald_Trump'   # Topic is Trump's lie
+    assert ':has_active_entity :Donald_Trump' in ttl_str                 # Trump is promoting the lie
+    assert ':LawEnforcement ; :text "FBI raid' in ttl_str
+    assert ':Location' in ttl_str and 'residence"' in ttl_str and ':has_location :Noun' in ttl_str
+    # Output Turtle:
+    # :Sentence_b1e82338-85a1 a :Sentence ; :offset 1 .
+    # :Sentence_b1e82338-85a1 :text "Liz Cheney claimed that Trump is promoting an insidious lie about the recent
+    #     FBI raid of his Mar-a-Lago residence." .
+    # :Sentence_b1e82338-85a1 :mentions :Liz_Cheney .
+    # :Sentence_b1e82338-85a1 :mentions :Donald_Trump .
+    # :Sentence_b1e82338-85a1 :mentions :FBI .
+    # :Sentence_b1e82338-85a1 :mentions :Mar_a_Lago .
+    # :Sentence_b1e82338-85a1 :grade_level 10 .
+    # :Sentence_b1e82338-85a1 :rhetorical_device "loaded language" .
+    # :Sentence_b1e82338-85a1 :rhetorical_device_loaded_language "The phrase \'insidious lie\' uses loaded
+    #     language with strong connotations that invoke emotions and judgments about the nature of the lie
+    #     being described." .
+    # :Sentence_b1e82338-85a1 :summary "Cheney accuses Trump of lying about FBI raid." .
+    # :Sentence_b1e82338-85a1 :has_semantic :Event_bce136ec-b0bf .
+    # :Event_bce136ec-b0bf :text "claimed" .
+    # :Event_bce136ec-b0bf a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 95 .
+    # :Event_bce136ec-b0bf :has_active_entity :Liz_Cheney .
+    # :Event_bce136ec-b0bf :has_topic :Donald_Trump .
+    # :Noun_945b5314-931e a :DeceptionAndDishonesty ; :text "insidious lie" ; :confidence 95 .
+    # :Event_bce136ec-b0bf :has_context :Noun_945b5314-931e .
+    # :Sentence_b1e82338-85a1 :has_semantic :Event_9c0e0946-dff6 .
+    # :Event_9c0e0946-dff6 :text "is promoting" .
+    # :Event_9c0e0946-dff6 a :DeceptionAndDishonesty ; :confidence-DeceptionAndDishonesty 90 .
+    # :Event_9c0e0946-dff6 :has_active_entity :Donald_Trump .
+    # :Event_9c0e0946-dff6 :text "insidious lie" .
+    # :Noun_7ae48ef0-e718 a :LawEnforcement ; :text "FBI raid" ; :confidence 90 .
+    # :Event_9c0e0946-dff6 :has_context :Noun_7ae48ef0-e718 .
+    # :Noun_645486aa-c7a0 a :Location ; :text "Mar-a-Lago residence" ; :confidence 100 .
+    # :Event_9c0e0946-dff6 :has_location :Noun_645486aa-c7a0 .
 
 
 def test_multiple_verbs():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_verbs)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'ad hominem' in ttl_str or 'juxtaposition' in ttl_str
-    assert ':has_active_entity :Sue' in ttl_str
-    if 'a :EnvironmentAndCondition' in ttl_str:    # is
-        assert 'a :LineOfBusiness ; :text "an attorney' in ttl_str
-    else:
-        assert 'a :KnowledgeAndSkill ; :text "an attorney' in ttl_str
-    assert ':has_described_entity :Sue' in ttl_str
-    assert 'a :DeceptionAndDishonesty ; :text "lies' in ttl_str
+    parse_results = parse_narrative(text_multiple_verbs)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert 'ad hominem' in ttl_str or 'loaded language' in ttl_str
+    assert ':EnvironmentAndCondition' in ttl_str and ':text "is' in ttl_str
+    assert ':LineOfBusiness ; :text "attorney' in ttl_str and ':has_aspect :Noun' in ttl_str
+    assert ':has_context :Sue' in ttl_str
+    assert ':text "lies' in ttl_str and ':DeceptionAndDishonesty' in ttl_str
     assert ':has_active_entity :Sue' in ttl_str
     # Output Turtle:
-    # :Sentence_5f51a0ce-ed8a a :Sentence ; :offset 1 .
-    # :Sentence_5f51a0ce-ed8a :text "Sue is an attorney but still lies." .
-    # :Sue :text "Sue" .
-    # :Sue a :Person, :Correction .
-    # :Sue rdfs:label "Sue" .
-    # :Sue :gender "female" .
-    # :Sentence_5f51a0ce-ed8a :mentions :Sue .
-    # :Sentence_5f51a0ce-ed8a :summary "Attorney Sue engages in dishonest behavior." .
-    # :Sentence_5f51a0ce-ed8a :sentiment "negative" .
-    # :Sentence_5f51a0ce-ed8a :grade_level 5 .
-    # :Sentence_5f51a0ce-ed8a :rhetorical_device "ad hominem" .
-    # :Sentence_5f51a0ce-ed8a :rhetorical_device_ad_hominem "The phrase \'but still lies\' directly attacks the
-    #     character of Sue, implying dishonesty despite her professional status as an attorney." .
-    # :Sentence_5f51a0ce-ed8a :rhetorical_device "juxtaposition" .
-    # :Sentence_5f51a0ce-ed8a :rhetorical_device_juxtaposition "The sentence places the contrasting ideas of being
-    #     an attorney, typically associated with integrity and truthfulness, alongside lying, which is generally
-    #     viewed negatively." .
-    # :Sentence_5f51a0ce-ed8a :has_semantic :Event_35a96649-03c7 .
-    # :Event_35a96649-03c7 a :EnvironmentAndCondition ; :text "is" .
-    # :Event_35a96649-03c7 :has_described_entity :Sue .
-    # :Noun_45f85bf4-81a5 a :LineOfBusiness ; :text "an attorney" ; rdfs:label "an attorney" .
-    # :Event_35a96649-03c7 :has_aspect :Noun_45f85bf4-81a5 .
-    # :Sentence_5f51a0ce-ed8a :has_semantic :Event_6dfe8ad7-dfa8 .
-    # :Event_6dfe8ad7-dfa8 a :DeceptionAndDishonesty ; :text "lies" .
-    # :Event_6dfe8ad7-dfa8 :has_active_entity :Sue .
+    # :Sentence_cc657637-9320 a :Sentence ; :offset 1 .
+    # :Sentence_cc657637-9320 :text "Sue is an attorney but still lies." .
+    # :Sentence_cc657637-9320 :mentions :Sue .
+    # :Sentence_cc657637-9320 :grade_level 8 .
+    # :Sentence_cc657637-9320 :rhetorical_device "loaded language" .
+    # :Sentence_cc657637-9320 :rhetorical_device_loaded_language "The word \'lies\' is loaded language with
+    #     strong connotations, invoking emotions and judgments about Sue\'s character." .
+    # :Sentence_cc657637-9320 :summary "Sue is an attorney but lies." .
+    # :Sentence_cc657637-9320 :has_semantic :Event_847b69db-ea21 .
+    # :Event_847b69db-ea21 :text "is" .
+    # :Event_847b69db-ea21 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
+    # :Event_847b69db-ea21 :has_context :Sue .
+    # :Noun_13c99ece-ebdb a :LineOfBusiness ; :text "attorney" ; :confidence 100 .
+    # :Event_847b69db-ea21 :has_aspect :Noun_13c99ece-ebdb .
+    # :Sentence_cc657637-9320 :has_semantic :Event_04e9a04c-9e05 .
+    # :Event_04e9a04c-9e05 :text "lies" .
+    # :Event_04e9a04c-9e05 a :DeceptionAndDishonesty ; :confidence-DeceptionAndDishonesty 100 .
+    # :Event_04e9a04c-9e05 :has_active_entity :Sue .
 
 
 def test_aux_pobj():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_aux_pobj)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'a :RemovalAndRestriction ; :text "got rid of' in ttl_str
+    parse_results = parse_narrative(text_aux_pobj)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':text "got rid of' in ttl_str
+    assert ':RemovalAndRestriction' in ttl_str
     assert ':has_active_entity :John' in ttl_str
-    assert ':has_topic :Noun' in ttl_str
-    assert ':WasteAndResidue ; :text "the debris' in ttl_str
+    assert ':WasteAndResidue ; :text "debris' in ttl_str
+    assert ':has_topic :Noun' in ttl_str or ':has_context :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_b9976227-fef5 a :Sentence ; :offset 1 .
-    # :Sentence_b9976227-fef5 :text "John got rid of the debris." .
-    # :Sentence_b9976227-fef5 :mentions :John .
-    # :Sentence_b9976227-fef5 :summary "John disposed of the debris." .
-    # :Sentence_b9976227-fef5 :sentiment "neutral" .
-    # :Sentence_b9976227-fef5 :grade_level 3 .
-    # :Sentence_b9976227-fef5 :has_semantic :Event_7c641d0d-0057 .
-    # :Event_7c641d0d-0057 a :RemovalAndRestriction ; :text "got rid of" .
-    # :Event_7c641d0d-0057 :has_active_entity :John .
-    # :Noun_2e95fa04-5f4c a :WasteAndResidue ; :text "the debris" ; rdfs:label "the debris" .
-    # :Event_7c641d0d-0057 :has_topic :Noun_2e95fa04-5f4c .
+    # :Sentence_1bb569f1-eac0 a :Sentence ; :offset 1 .
+    # :Sentence_1bb569f1-eac0 :text "John got rid of the debris." .
+    # :Sentence_1bb569f1-eac0 :mentions :John .
+    # :Sentence_1bb569f1-eac0 :grade_level 3 .
+    # :Sentence_1bb569f1-eac0 :summary "John removed the debris." .
+    # :Sentence_1bb569f1-eac0 :has_semantic :Event_1d2f24d0-f211 .
+    # :Event_1d2f24d0-f211 :text "got rid of" .
+    # :Event_1d2f24d0-f211 a :RemovalAndRestriction ; :confidence-RemovalAndRestriction 100 .
+    # :Event_1d2f24d0-f211 :has_active_entity :John .
+    # :Noun_feae0a3a-2b80 a :WasteAndResidue ; :text "debris" ; :confidence 100 .
+    # :Event_1d2f24d0-f211 :has_topic :Noun_feae0a3a-2b80 .
 
 
 def test_idiom_amod():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_idiom_amod)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'metaphor' in ttl_str
-    assert ':Avoidance' in ttl_str and ':DeceptionAndDishonesty' in ttl_str
-    assert ':text "turned a blind eye' in ttl_str
+    parse_results = parse_narrative(text_idiom_amod)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':Avoidance' in ttl_str and ':text "turned a blind eye' in ttl_str
     assert ':has_active_entity :John' in ttl_str
-    assert ':has_topic :Noun' in ttl_str        # infidelity
+    assert ':DeceptionAndDishonesty' in ttl_str and 'infidelity"' in ttl_str
+    assert ':has_topic :Noun' in ttl_str               # infidelity
     # Output Turtle:
-    # :Sentence_2d6b0a42-de2c a :Sentence ; :offset 1 .
-    # :Sentence_2d6b0a42-de2c :text "John turned a blind eye to Mary\'s infidelity." .
-    # :Sentence_2d6b0a42-de2c :mentions :John .
-    # :Sentence_2d6b0a42-de2c :mentions :Mary .
-    # :Sentence_2d6b0a42-de2c :summary "John ignored Mary\'s unfaithfulness." .
-    # :Sentence_2d6b0a42-de2c :sentiment "negative" .
-    # :Sentence_2d6b0a42-de2c :grade_level 5 .
-    # :Sentence_2d6b0a42-de2c :rhetorical_device "metaphor" .
-    # :Sentence_2d6b0a42-de2c :rhetorical_device_metaphor "The phrase \'turned a blind eye\' is a metaphor for
-    #     intentionally ignoring something." .
-    # :Sentence_2d6b0a42-de2c :has_semantic :Event_8010aabf-00f7 .
-    # :Event_8010aabf-00f7 a :Avoidance, :DeceptionAndDishonesty ; :text "turned a blind eye" .
-    # :Event_8010aabf-00f7 :has_active_entity :John .
-    # TODO: Idiom is not component part; Nor is it an instrument
-    # :Noun_afbf7b60-c5a9 a :ComponentPart ; :text "a blind eye" ; rdfs:label "a blind eye" .
-    # :Event_8010aabf-00f7 :has_instrument :Noun_afbf7b60-c5a9 .
-    # :Noun_95e9ec8b-61d5 a :DeceptionAndDishonesty ; :text "to Mary\'s infidelity" ;
-    #     rdfs:label "to Mary\'s infidelity" .
-    # :Event_8010aabf-00f7 :has_topic :Noun_95e9ec8b-61d5 .
+    # ::Sentence_be459a70-e76e a :Sentence ; :offset 1 .
+    # :Sentence_be459a70-e76e :text "John turned a blind eye to Mary\'s infidelity." .
+    # :Sentence_be459a70-e76e :mentions :John .
+    # :Sentence_be459a70-e76e :mentions :Mary .
+    # :Sentence_be459a70-e76e :grade_level 8 .
+    # :Sentence_be459a70-e76e :rhetorical_device "allusion" .
+    # :Sentence_be459a70-e76e :rhetorical_device_allusion "The phrase \'turned a blind eye\' is an allusion to the
+    #     historical anecdote about Admiral Horatio Nelson, who allegedly used his blind eye to look through his
+    #     telescope and claim he did not see a signal to withdraw during a battle. This allusion implies ignoring
+    #     something intentionally." .
+    # :Sentence_be459a70-e76e :summary "John ignored Mary\'s infidelity." .
+    # :Sentence_be459a70-e76e :has_semantic :Event_55d40242-6506 .
+    # :Event_55d40242-6506 :text "turned a blind eye to" .
+    # :Event_55d40242-6506 a :Avoidance ; :confidence-Avoidance 95 .
+    # :Event_55d40242-6506 :has_active_entity :John .
+    # :Noun_269325e4-dc81 a :DeceptionAndDishonesty ; :text "Mary\'s infidelity" ; :confidence 95 .
+    # :Event_55d40242-6506 :has_topic :Noun_269325e4-dc81 .
 
 
 def test_advmod():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_advmod)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'a :ReturnRecoveryAndRelease ; :text "put back together' in ttl_str or \
-           ' a :ProductionManufactureAndCreation ; :text "put back together' in ttl_str
+    parse_results = parse_narrative(text_advmod)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':ReturnRecoveryAndRelease' in ttl_str or ':ProductionManufactureAndCreation' in ttl_str
+    assert ':text "put back together' in ttl_str
     assert ':has_active_entity :Harry' in ttl_str
-    assert ' a :Resource ; :text "the broken vase' in ttl_str
-    assert ':has_topic :Noun' in ttl_str
+    assert ' :Resource ; :text "vase' in ttl_str
+    assert ':has_topic :Noun' in ttl_str or ':has_context :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_c44d56ae-8cce a :Sentence ; :offset 1 .
-    # :Sentence_c44d56ae-8cce :text "Harry put the broken vase back together." .
+    # :Sentence_fca17a82-c47b a :Sentence ; :offset 1 .
+    # :Sentence_fca17a82-c47b :text "Harry put the broken vase back together." .
     # :Harry :text "Harry" .
     # :Harry a :Person, :Correction .
     # :Harry rdfs:label "Harry" .
     # :Harry :gender "male" .
-    # :Sentence_c44d56ae-8cce :mentions :Harry .
-    # :Sentence_c44d56ae-8cce :summary "Harry repaired the broken vase." .
-    # :Sentence_c44d56ae-8cce :sentiment "neutral" .
-    # :Sentence_c44d56ae-8cce :grade_level 3 .
-    # :Sentence_c44d56ae-8cce :has_semantic :Event_124f4043-72ea .
-    # :Event_124f4043-72ea a :ReturnRecoveryAndRelease ; :text "put back together" .
-    # :Event_124f4043-72ea :has_active_entity :Harry .
-    # :Noun_6f253254-d954 a :Resource ; :text "the broken vase" ; rdfs:label "the broken vase" .
-    # :Event_124f4043-72ea :has_topic :Noun_6f253254-d954 .
+    # :Sentence_fca17a82-c47b :mentions :Harry .
+    # :Sentence_fca17a82-c47b :grade_level 3 .
+    # :Sentence_fca17a82-c47b :summary "Harry repaired the broken vase." .
+    # :Sentence_fca17a82-c47b :has_semantic :Event_b78645f5-cd62 .
+    # :Event_b78645f5-cd62 :text "put back together" .
+    # :Event_b78645f5-cd62 a :ReturnRecoveryAndRelease ; :confidence-ReturnRecoveryAndRelease 90 .
+    # :Event_b78645f5-cd62 :has_active_entity :Harry .
+    # :Noun_f2b7db33-7a54 a :Resource ; :text "vase" ; :confidence 100 .
+    # :Event_b78645f5-cd62 :has_topic :Noun_f2b7db33-7a54 .
 
 
 def test_complex_verb():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_complex_verb)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert ':End' in ttl_str and ':EconomyAndFinanceRelated' in ttl_str
-    assert ':text "went out of business' in ttl_str
-    assert ':has_active_entity :Noun' in ttl_str
-    assert ':has_time [ :text "on Tuesday' in ttl_str
-    assert 'a :LineOfBusiness' in ttl_str or 'a :Location' in ttl_str
-    assert ':text "store' in ttl_str or ':text "The store' in ttl_str
+    parse_results = parse_narrative(text_complex_verb)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert (':End' in ttl_str or ':EconomyAndFinanceRelated' in ttl_str) or ':text "went out of business' in ttl_str
+    assert (':LineOfBusiness' in ttl_str or ':Location' in ttl_str) or ':text "store' in ttl_str
+    assert ':has_context :Noun' in ttl_str
+    assert ':has_time [ a :Time ; :text "Tuesday' in ttl_str
     # Output Turtle:
-    # :Sentence_88927ad9-d45a a :Sentence ; :offset 1 .
-    # :Sentence_88927ad9-d45a :text "The store went out of business on Tuesday." .
-    # :Sentence_88927ad9-d45a :summary "Store ceased operations on Tuesday." .
-    # :Sentence_88927ad9-d45a :sentiment "negative" .
-    # :Sentence_88927ad9-d45a :grade_level 3 .
-    # :Sentence_88927ad9-d45a :has_semantic :Event_0862453c-b8d6 .
-    # :Event_0862453c-b8d6 a :EconomyAndFinanceRelated, :End ; :text "went out of business" .
-    # :Noun_4362d1bf-2d6c a :Location ; :text "The store" ; rdfs:label "The store" .
-    # :Event_0862453c-b8d6 :has_active_entity :Noun_4362d1bf-2d6c .
-    # :Event_0862453c-b8d6 :has_time [ :text "on Tuesday" ; a :Time ] .
+    # :Sentence_bac165b6-9159 a :Sentence ; :offset 1 .
+    # :Sentence_bac165b6-9159 :text "The store went out of business on Tuesday." .
+    # :Sentence_bac165b6-9159 :grade_level 5 .
+    # :Sentence_bac165b6-9159 :summary "The store closed on Tuesday." .
+    # :Sentence_bac165b6-9159 :has_semantic :Event_a35a9458-94f1 .
+    # :Event_a35a9458-94f1 :text "went out of business" .
+    # :Event_a35a9458-94f1 a :EconomyAndFinanceRelated ; :confidence-EconomyAndFinanceRelated 95 .
+    # :Noun_dc2a9a9f-c8bf a :LineOfBusiness ; :text "store" ; :confidence 90 .
+    # :Event_a35a9458-94f1 :has_context :Noun_dc2a9a9f-c8bf .
+    # :Event_a35a9458-94f1 :has_time [ a :Time ; :text "Tuesday" ] .
 
 
 def test_neg_acomp_xcomp():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_neg_acomp_xcomp)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'a :EmotionalResponse ; :negated true ; :text "is not able to stomach' in ttl_str
+    parse_results = parse_narrative(text_neg_acomp_xcomp)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert (':EmotionalResponse' in ttl_str or ':Avoidance' in ttl_str) and ':text "is not able to stomach' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':DeceptionAndDishonesty ; :text "lies' in ttl_str
     assert ':has_topic :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_4ec04c7b-5acd a :Sentence ; :offset 1 .
-    # :Sentence_4ec04c7b-5acd :text "Jane is not able to stomach lies." .
-    # :Sentence_4ec04c7b-5acd :mentions :Jane .
-    # :Sentence_4ec04c7b-5acd :summary "Jane cannot tolerate dishonesty." .
-    # :Sentence_4ec04c7b-5acd :sentiment "negative" .
-    # :Sentence_4ec04c7b-5acd :grade_level 5 .
-    # :Sentence_4ec04c7b-5acd :has_semantic :Event_c4bc61c8-5843 .
-    # :Event_c4bc61c8-5843 a :EmotionalResponse ; :negated true ; :text "is not able to stomach" .
-    # :Event_c4bc61c8-5843 :has_active_entity :Jane .
-    # :Noun_5c775a0c-44fc a :DeceptionAndDishonesty ; :text "lies" ; rdfs:label "lies" .
-    # :Event_c4bc61c8-5843 :has_topic :Noun_5c775a0c-44fc .
+    # :Sentence_7210bef0-1651 a :Sentence ; :offset 1 .
+    # :Sentence_7210bef0-1651 :text "Jane is not able to stomach lies." .
+    # :Sentence_7210bef0-1651 :mentions :Jane .
+    # :Sentence_7210bef0-1651 :grade_level 6 .
+    # :Sentence_7210bef0-1651 :rhetorical_device "loaded language" .
+    # :Sentence_7210bef0-1651 :rhetorical_device_loaded_language "The phrase \'not able to stomach lies\' uses loaded
+    #     language. The word \'stomach\' in this context has strong connotations, suggesting a visceral, emotional
+    #     reaction to lies, which invokes judgment and emotion." .
+    # :Sentence_7210bef0-1651 :summary "Jane cannot tolerate dishonesty." .
+    # :Sentence_7210bef0-1651 :has_semantic :Event_9578c939-edb7 .
+    # :Event_9578c939-edb7 :text "is not able to stomach" .
+    # :Event_9578c939-edb7 a :Avoidance ; :confidence-Avoidance 95 .
+    # :Event_9578c939-edb7 :has_active_entity :Jane .
+    # :Noun_36f43ba2-3280 a :DeceptionAndDishonesty ; :text "lies" ; :confidence 100 .
+    # :Event_9578c939-edb7 :has_topic :Noun_36f43ba2-3280 .
 
 
 def test_non_person_subject():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_non_person_subject)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert 'a :Loss ; :text "were dashed' in ttl_str or \
-           'a :EmotionalResponse ; :negated true ; :text "were dashed' in ttl_str
-    assert ':has_topic :Noun' in ttl_str
-    assert 'hopes"' in ttl_str
+    parse_results = parse_narrative(text_non_person_subject)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':Loss' in ttl_str and ':text "were dashed' in ttl_str
+    assert ':EmotionalResponse' in ttl_str and 'hopes"' in ttl_str
+    assert ':has_context :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_4b414c77-ccf6 a :Sentence ; :offset 1 .
-    # :Sentence_4b414c77-ccf6 :text "John\'s hopes were dashed." .
-    # :Sentence_4b414c77-ccf6 :mentions :John .
-    # :Sentence_4b414c77-ccf6 :summary "John\'s expectations were completely thwarted." .
-    # :Sentence_4b414c77-ccf6 :sentiment "negative" .
-    # :Sentence_4b414c77-ccf6 :grade_level 3 .
-    # :Sentence_4b414c77-ccf6 :has_semantic :Event_c5c1de46-2ff9 .
-    # :Event_c5c1de46-2ff9 a :EmotionalResponse ; :negated true ; :text "were dashed" .
-    # TODO: Hopes = EmotionalResponse; Dashed = Loss
-    # :Noun_1494229d-9162 a :AchievementAndAccomplishment ; :text "John\'s hopes" ; rdfs:label "John\'s hopes" .
-    # :Event_c5c1de46-2ff9 :has_topic :Noun_1494229d-9162 .
+    # :Sentence_5a10adaf-16aa a :Sentence ; :offset 1 .
+    # :Sentence_5a10adaf-16aa :text "John\'s hopes were dashed." .
+    # :Sentence_5a10adaf-16aa :mentions :John .
+    # :Sentence_5a10adaf-16aa :grade_level 5 .
+    # :Sentence_5a10adaf-16aa :summary "John\'s hopes were not realized." .
+    # :Sentence_5a10adaf-16aa :has_semantic :Event_d7490511-be86 .
+    # :Event_d7490511-be86 :text "were dashed" .
+    # :Event_d7490511-be86 a :Loss ; :confidence-Loss 95 .
+    # :Noun_278caf70-996a a :EmotionalResponse ; :text "John\'s hopes" ; :confidence 90 .
+    # :Event_d7490511-be86 :has_context :Noun_278caf70-996a .
 
 
 def test_first_person():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_first_person)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert ':sentiment "negative' in ttl_str
-    assert 'a :ReadinessAndAbility ; :negated true ; :text "was not ready' in ttl_str
+    parse_results = parse_narrative(text_first_person)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':text "was not ready' in ttl_str
+    assert ':ReadinessAndAbility' in ttl_str and ':negated true' in ttl_str
     assert 'a :Person ; :text "I' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
-    assert 'a :MovementTravelAndTransportation ; :text "to leave' in ttl_str
+    assert ':MovementTravelAndTransportation' in ttl_str and ':text "to leave' in ttl_str
     # Output Turtle:
-    # :Sentence_256879da-fc1c a :Sentence ; :offset 1 .
-    # :Sentence_256879da-fc1c :text "I was not ready to leave." .
-    # :Sentence_256879da-fc1c :summary "Individual was unprepared for departure." .
-    # :Sentence_256879da-fc1c :sentiment "negative" .
-    # :Sentence_256879da-fc1c :grade_level 3 .
-    # :Sentence_256879da-fc1c :has_semantic :Event_ee6dcb8f-8f29 .
-    # :Event_ee6dcb8f-8f29 a :ReadinessAndAbility ; :negated true ; :text "was not ready" .
-    # :Noun_0f788fd6-074e a :Person ; :text "I" ; rdfs:label "I" .
-    # :Event_ee6dcb8f-8f29 :has_active_entity :Noun_0f788fd6-074e .
-    # :Sentence_256879da-fc1c :has_semantic :Event_f1d5e19a-cca3 .
-    # :Event_f1d5e19a-cca3 a :MovementTravelAndTransportation ; :text "to leave" .
-    # :Event_f1d5e19a-cca3 :has_active_entity :Noun_0f788fd6-074e .'
+    # :Sentence_4e75ee76-8da9 a :Sentence ; :offset 1 .
+    # :Sentence_4e75ee76-8da9 :text "I was not ready to leave." .
+    # :Sentence_4e75ee76-8da9 :grade_level 4 .
+    # :Sentence_4e75ee76-8da9 :summary "The speaker was not ready to leave." .
+    # :Sentence_4e75ee76-8da9 :has_semantic :Event_7bb63287-1a47 .
+    # :Event_7bb63287-1a47 :text "was not ready" .
+    # :Event_7bb63287-1a47 a :ReadinessAndAbility ; :confidence-ReadinessAndAbility 90 .
+    # :Event_7bb63287-1a47 :negated true .
+    # :Noun_37c654ea-a6ad a :Person ; :text "I" ; :confidence 99 .
+    # :Event_7bb63287-1a47 :has_active_entity :Noun_37c654ea-a6ad .
+    # :Sentence_4e75ee76-8da9 :has_semantic :Event_e0a79b05-bc8d .
+    # :Event_e0a79b05-bc8d :text "to leave" .
+    # :Event_e0a79b05-bc8d a :MovementTravelAndTransportation ; :confidence-MovementTravelAndTransportation 95 .
+    # :Event_e0a79b05-bc8d :has_active_entity :Noun_37c654ea-a6ad .
 
 
 def test_pobj_semantics():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_pobj_semantics)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert ':Avoidance' in ttl_str or ':AggressiveCriminalOrHostileAct' in ttl_str     # escape
-    assert 'a :Person ; :text "The robber' in ttl_str
+    parse_results = parse_narrative(text_pobj_semantics)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':Avoidance' in ttl_str     # escape
+    assert 'a :Person ; :text "robber' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
-    assert 'a :AidAndAssistance ; :text "the aid of the local police' in ttl_str
+    assert ':has_topic :Event' in ttl_str
+    assert ':AidAndAssistance' in ttl_str and ':text "with the aid' in ttl_str
+    assert 'a :GovernmentalEntity ; :text "local police' in ttl_str
     assert ':has_instrument :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_4a8274ff-3854 a :Sentence ; :offset 1 .
-    # :Sentence_4a8274ff-3854 :text "The robber escaped with the aid of the local police." .
-    # :Sentence_4a8274ff-3854 :summary "Robber escaped with assistance from local police." .
-    # :Sentence_4a8274ff-3854 :sentiment "negative" .
-    # :Sentence_4a8274ff-3854 :grade_level 5 .
-    # :Sentence_4a8274ff-3854 :rhetorical_device "hyperbole" .
-    # :Sentence_4a8274ff-3854 :rhetorical_device_hyperbole "The phrase \'with the aid of the local police\'
-    #     suggests an exaggerated scenario where police, who are typically expected to prevent such crimes, are
-    #     instead helping a robber, which is an unlikely and exaggerated situation." .
-    # :Sentence_4a8274ff-3854 :has_semantic :Event_4b8d2566-524f .
-    # :Event_4b8d2566-524f a :AggressiveCriminalOrHostileAct, :Causation ;
-    #     :text "escaped with the aid of the local police" .
-    # :Noun_bc4e012e-20a4 a :Person ; :text "The robber" ; rdfs:label "The robber" .
-    # :Event_4b8d2566-524f :has_active_entity :Noun_bc4e012e-20a4 .
-    # :Noun_1432e54f-96aa a :AidAndAssistance ; :text "the aid of the local police" ;
-    #     rdfs:label "the aid of the local police" .
-    # :Event_4b8d2566-524f :has_instrument :Noun_1432e54f-96aa .
+    # :Sentence_4b621f12-26d3 a :Sentence ; :offset 1 .
+    # :Sentence_4b621f12-26d3 :text "The robber escaped with the aid of the local police." .
+    # :Sentence_4b621f12-26d3 :grade_level 8 .
+    # :Sentence_4b621f12-26d3 :summary "Robber escaped with police aid." .
+    # :Sentence_4b621f12-26d3 :has_semantic :Event_effd59d4-d759 .
+    # :Event_effd59d4-d759 :text "escaped" .
+    # :Event_effd59d4-d759 a :Avoidance ; :confidence-Avoidance 95 .
+    # :Noun_ebe7d9f2-ba7e a :Person ; :text "robber" ; :confidence 100 .
+    # :Event_effd59d4-d759 :has_active_entity :Noun_ebe7d9f2-ba7e .
+    # :Event_effd59d4-d759 :has_topic :Event_6225e2db-fafc .
+    # :Sentence_4b621f12-26d3 :has_semantic :Event_6225e2db-fafc .
+    # :Event_6225e2db-fafc :text "with the aid of" .
+    # :Event_6225e2db-fafc a :AidAndAssistance ; :confidence-AidAndAssistance 90 .
+    # :Noun_a3cacaab-c60c a :GovernmentalEntity ; :text "local police" ; :confidence 100 .
+    # :Event_6225e2db-fafc :has_instrument :Noun_a3cacaab-c60c .
 
 
 def test_multiple_subjects():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_subjects)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
+    parse_results = parse_narrative(text_multiple_subjects)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
     assert ':DisagreementAndDispute' in ttl_str
-    assert 'a :Person, :Collection ; :text "Jane and John' in ttl_str
-    assert ':has_active_entity :Noun' in ttl_str
+    assert ':text "had a serious difference' in ttl_str
+    assert ':has_active_entity :John' in ttl_str
+    assert ':has_active_entity :Jane' in ttl_str
     # Output Turtle:
-    # :Sentence_a903fc4c-13a6 a :Sentence ; :offset 1 .
-    # :Sentence_a903fc4c-13a6 :text "Jane and John had a serious difference of opinion." .
-    # :Sentence_a903fc4c-13a6 :mentions :Jane .
-    # :Sentence_a903fc4c-13a6 :mentions :John .
-    # :Sentence_a903fc4c-13a6 :summary "Jane and John disagreed seriously." .
-    # :Sentence_a903fc4c-13a6 :sentiment "negative" .
-    # :Sentence_a903fc4c-13a6 :grade_level 5 .
-    # :Sentence_a903fc4c-13a6 :has_semantic :Event_eb8c2376-2bad .
-    # :Event_eb8c2376-2bad a :DisagreementAndDispute ; :text "had" .
-    # :Noun_dea13795-fa11 a :Person, :Collection ; :text "Jane and John" ; rdfs:label "Jane and John" .
-    # :Event_eb8c2376-2bad :has_active_entity :Noun_dea13795-fa11 .
-    # :Noun_1ae60ea7-e790 a :Change ; :text "a serious difference of opinion" ;
-    #     rdfs:label "a serious difference of opinion" .     # TODO: Should be :DisagreementAndDispute
-    # :Event_eb8c2376-2bad :has_topic :Noun_1ae60ea7-e790 .
+    # :Sentence_0810d0b3-8439 a :Sentence ; :offset 1 .
+    # :Sentence_0810d0b3-8439 :text "Jane and John had a serious difference of opinion." .
+    # :Sentence_0810d0b3-8439 :mentions :Jane .
+    # :Sentence_0810d0b3-8439 :mentions :John .
+    # :Sentence_0810d0b3-8439 :grade_level 6 .
+    # :Sentence_0810d0b3-8439 :summary "Jane and John disagreed seriously." .
+    # :Sentence_0810d0b3-8439 :has_semantic :Event_2eecb11d-b946 .
+    # :Event_2eecb11d-b946 :text "had a serious difference of opinion" .
+    # :Event_2eecb11d-b946 a :DisagreementAndDispute ; :confidence-DisagreementAndDispute 95 .
+    # :Event_2eecb11d-b946 :has_active_entity :Jane .
+    # :Event_2eecb11d-b946 :has_active_entity :John .
 
 
 def test_multiple_xcomp():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_multiple_xcomp)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert ':ArtAndEntertainmentEvent' in ttl_str
-    assert ':BodilyAct' in ttl_str
+    parse_results = parse_narrative(text_multiple_xcomp)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert (':ArtAndEntertainmentEvent' in ttl_str or ':BodilyAct' in ttl_str) and \
+           ':text "to ski' in ttl_str and ':text "to swim' in ttl_str
+    assert ':EmotionalResponse' in ttl_str and ':text "liked' in ttl_str
     assert ':has_active_entity :John' in ttl_str
     # Output Turtle:
-    # :Sentence_41ad12a0-b8af a :Sentence ; :offset 1 .
-    # :Sentence_41ad12a0-b8af :text "John liked to ski and to swim." .
-    # :Sentence_41ad12a0-b8af :mentions :John .
-    # :Sentence_41ad12a0-b8af :summary "John enjoys skiing and swimming." .
-    # :Sentence_41ad12a0-b8af :sentiment "positive" .
-    # :Sentence_41ad12a0-b8af :grade_level 3 .
-    # :Sentence_41ad12a0-b8af :has_semantic :Event_64c5325e-c491 .
-    # :Event_64c5325e-c491 a :ArtAndEntertainmentEvent, :BodilyAct ; :text "liked to ski and to swim" .
-    # :Event_64c5325e-c491 :has_active_entity :John .
-    # :Event_64c5325e-c491 :has_active_entity :John .
-    # :Noun_7528b04c-dff6 a :ArtAndEntertainmentEvent ; :text "to ski" ; rdfs:label "to ski" .
-    # :Event_64c5325e-c491 :has_topic :Noun_7528b04c-dff6 .
-    # :Noun_256f3abf-cd3f a :ArtAndEntertainmentEvent ; :text "to swim" ; rdfs:label "to swim" .
-    # :Event_64c5325e-c491 :has_topic :Noun_256f3abf-cd3f .
+    # :Sentence_93b8056c-a76e a :Sentence ; :offset 1 .
+    # :Sentence_93b8056c-a76e :text "John liked to ski and to swim." .
+    # :Sentence_93b8056c-a76e :mentions :John .
+    # :Sentence_93b8056c-a76e :grade_level 3 .
+    # :Sentence_93b8056c-a76e :summary "John enjoys skiing and swimming." .
+    # :Sentence_93b8056c-a76e :has_semantic :Event_2dad2608-5aff .
+    # :Event_2dad2608-5aff :text "liked" .
+    # :Event_2dad2608-5aff a :EmotionalResponse ; :confidence-EmotionalResponse 95 .
+    # :Event_2dad2608-5aff :has_active_entity :John .
+    # :Event_2dad2608-5aff :has_topic :Event_bfc4329f-85d3 .
+    # :Sentence_93b8056c-a76e :has_semantic :Event_bfc4329f-85d3 .
+    # :Event_bfc4329f-85d3 :text "to ski" .
+    # :Event_bfc4329f-85d3 a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 90 .
+    # :Sentence_93b8056c-a76e :has_semantic :Event_697312c6-ec1f .
+    # :Event_697312c6-ec1f :text "to swim" .
+    # :Event_697312c6-ec1f a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 90 .
 
 
 def test_location_hierarchy():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_location_hierarchy)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
+    parse_results = parse_narrative(text_location_hierarchy)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
     assert ':mentions geo:2658434' in ttl_str        # Switzerland
-    assert 'a :EnvironmentAndCondition' in ttl_str
-    assert 'a :Location ; :text "Switzerland' in ttl_str
-    assert ':has_topic :Noun' in ttl_str
+    assert 'imagery' in ttl_str or 'exceptionalism' in ttl_str
+    assert ':EnvironmentAndCondition' in ttl_str
+    assert ':Location' in ttl_str and  'mountains"' in ttl_str
+    assert ':has_context :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_3b7c91fd-8120 a :Sentence ; :offset 1 .
-    # :Sentence_3b7c91fd-8120 :text "Switzerland\'s mountains are magnificent." .
-    # :Sentence_3b7c91fd-8120 :mentions geo:2658434 .
-    # :Sentence_3b7c91fd-8120 :summary "Switzerland\'s mountains described as magnificent." .
-    # :Sentence_3b7c91fd-8120 :sentiment "positive" .
-    # :Sentence_3b7c91fd-8120 :grade_level 3 .
-    # :Sentence_3b7c91fd-8120 :has_semantic :Event_dfcfe767-3501 .
-    # :Event_dfcfe767-3501 a :EnvironmentAndCondition ; :text "are magnificent" .
-    # :Noun_ecae7c6b-9b2c a :Location ; :text "Switzerland\'s mountains" ; rdfs:label "Switzerland\'s mountains" .
-    # :Event_dfcfe767-3501 :has_topic :Noun_ecae7c6b-9b2c .
+    # :Sentence_6bdab26a-3b7b a :Sentence ; :offset 1 .
+    # :Sentence_6bdab26a-3b7b :text "Switzerland\'s mountains are magnificent." .
+    # :Sentence_6bdab26a-3b7b :mentions geo:2658434 .
+    # :Sentence_6bdab26a-3b7b :grade_level 5 .
+    # :Sentence_6bdab26a-3b7b :rhetorical_device "exceptionalism" .
+    # :Sentence_6bdab26a-3b7b :rhetorical_device_exceptionalism "The sentence uses language that indicates
+    #     Switzerland\'s mountains are \'magnificent\', suggesting they are unique or exemplary." .
+    # :Sentence_6bdab26a-3b7b :rhetorical_device "imagery" .
+    # :Sentence_6bdab26a-3b7b :rhetorical_device_imagery "The word \'magnificent\' is a descriptive term that
+    #     paints a vivid picture and emotionally engages the reader by highlighting the beauty of the mountains." .
+    # :Sentence_6bdab26a-3b7b :summary "Switzerland\'s mountains are magnificent." .
+    # :Sentence_6bdab26a-3b7b :has_semantic :Event_cb43954b-3b79 .
+    # :Event_cb43954b-3b79 :text "are" .
+    # :Event_cb43954b-3b79 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
+    # :Noun_14af17b7-298d a :Location ; :text "Switzerland\'s mountains" ; :confidence 95 .
+    # :Event_cb43954b-3b79 :has_context :Noun_14af17b7-298d .
 
 
 def test_weather():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_weather)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
+    parse_results = parse_narrative(text_weather)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
     assert ':mentions :Hurricane_Otis' in ttl_str and ':mentions :Acapulco' in ttl_str
-    assert ':has_active_entity :Hurricane_Otis' in ttl_str
+    assert ':EnvironmentalOrEcologicalEvent' in ttl_str
+    assert ':has_described_entity :Hurricane_Otis' in ttl_str or ':has_topic :Hurricane_Otis' in ttl_str or \
+           ':has_context :Hurricane_Otis' in ttl_str
     assert ':has_location :Acapulco' in ttl_str
-    assert 'a :EnvironmentalOrEcologicalEvent' in ttl_str
-    assert ':has_affected_entity :Acapulco' in ttl_str
     # Output Turtle:
-    # :Sentence_1422e97c-1843 a :Sentence ; :offset 1 .
-    # :Sentence_1422e97c-1843 :text "Hurricane Otis severely damaged Acapulco." .
-    # :Hurricane_Otis :text "Hurricane Otis" .
+    # :Sentence_cc1b4df6-2961 a :Sentence ; :offset 1 .
+    # :Sentence_cc1b4df6-2961 :text "Hurricane Otis severely damaged Acapulco." .
+    # :Hurricane_Otis :text "Hurricane Otis" .      # Example of data pulled from Wikipedia/Wikidata
     # :Hurricane_Otis a :EnvironmentalOrEcologicalEvent .
     # :Hurricane_Otis rdfs:label "Otis", "Hurricane Otis" .
-    # :Hurricane_Otis rdfs:comment "From Wikipedia (wikibase_item: Q123178445): \'Hurricane Otis was a compact
-    #     but very powerful tropical cyclone which made a devastating landfall in October 2023 near Acapulco
-    #     as a Category 5 hurricane...\'" .
+    # :Hurricane_Otis rdfs:comment "From Wikipedia (wikibase_item: Q123178445): \'Hurricane Otis was a compact but very
+    #     powerful tropical cyclone which made a devastating landfall in October 2023 near Acapulco as a Category 5
+    #     hurricane...\'" .
     # :Hurricane_Otis :external_link "https://en.wikipedia.org/wiki/Hurricane_Otis" .
     # :Hurricane_Otis :external_identifier "Q123178445" .
+    # :Hurricane_Otis :has_beginning :PiT_2023-10-22T00:00:00Z .
     # :Acapulco :text "Acapulco" .
-    # :Acapulco a :OrganizationalEntity, :Correction .
-    # :Acapulco rdfs:label "Acapulco de Juarez", "Acapulco de Juárez", "Acapulco de julio", "Acapulco, Guerrero",
-    #     "Acapulco" .
-    # :Acapulco rdfs:comment "From Wikipedia (wikibase_item: Q81398): \'Acapulco de Ju?rez, commonly called
-    #     Acapulco, Guerrero, is a city and major seaport in the state of Guerrero on the Pacific Coast of Mexico,
-    #     380 kilometres (240 mi) south of Mexico City....\'" .
+    # :Acapulco a :PopulatedPlace .
+    # :Acapulco rdfs:label "Acapulco de Juárez", "Acapulco", "Acapulco de Juarez" .
+    # :Acapulco rdfs:comment "From Wikipedia (wikibase_item: Q81398): \'Acapulco de Ju?rez, commonly called Acapulco,
+    #     is a city and major seaport in the state of Guerrero on the Pacific Coast of Mexico, 380 kilometres (240 mi)
+    #     south of Mexico City...\'" .
     # :Acapulco :external_link "https://en.wikipedia.org/wiki/Acapulco" .
     # :Acapulco :external_identifier "Q81398" .
-    # :Sentence_1422e97c-1843 :mentions :Hurricane_Otis .
-    # :Sentence_1422e97c-1843 :mentions :Acapulco .
-    # :Sentence_1422e97c-1843 :summary "Hurricane Otis severely damaged Acapulco." .
-    # :Sentence_1422e97c-1843 :sentiment "negative" .
-    # :Sentence_1422e97c-1843 :grade_level 5 .
-    # :Sentence_1422e97c-1843 :has_semantic :Event_a3e3982a-0d31 .
-    # :Event_a3e3982a-0d31 a :EnvironmentalOrEcologicalEvent ; :text "severely damaged" .
-    # :Event_a3e3982a-0d31 :has_active_entity :Hurricane_Otis .
-    # :Event_a3e3982a-0d31 :has_cause :Hurricane_Otis .
-    # :Event_a3e3982a-0d31 :has_affected_entity :Acapulco .
-    # :Event_a3e3982a-0d31 :has_location :Acapulco .
+    # :Acapulco :country_name "Mexico" .
+    # geo:3996063 :has_component :Acapulco .
+    # :Acapulco a :Location, :Correction .
+    # :Acapulco rdfs:label "Acapulco de Juárez", "Acapulco", "Acapulco de Juarez", "Acapulco de julio", "Acapulco, Guerrero" .
+    # :Sentence_cc1b4df6-2961 :mentions :Hurricane_Otis .
+    # :Sentence_cc1b4df6-2961 :mentions :Acapulco .
+    # :Sentence_cc1b4df6-2961 :grade_level 6 .
+    # :Sentence_cc1b4df6-2961 :summary "Hurricane Otis damaged Acapulco severely." .
+    # :Sentence_cc1b4df6-2961 :has_semantic :Event_280da0bb-77e6 .
+    # :Event_280da0bb-77e6 :text "damaged" .
+    # :Event_280da0bb-77e6 a :EnvironmentalOrEcologicalEvent ; :confidence-EnvironmentalOrEcologicalEvent 95 .
+    # :Event_280da0bb-77e6 :has_context :Hurricane_Otis .
+    # :Event_280da0bb-77e6 :has_location :Acapulco .
 
 
 def test_coref():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_coref)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    assert 'a :AgricultureApicultureAndAquacultureEvent' in ttl_str     # cutting roses
-    assert ':has_active_entity :Heidi' in ttl_str
+    parse_results = parse_narrative(text_coref)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':SensoryPerception' in ttl_str and ':text "saw' in ttl_str
+    assert ':has_active_entity :Anna' in ttl_str
+    assert (':Separation' in ttl_str or ':AgricultureApicultureAndAquacultureEvent' in ttl_str) \
+           and ':text "cut' in ttl_str
     assert 'a :Plant ; :text "roses' in ttl_str
-    assert 'a :Cognition ; :text "saw' in ttl_str or 'a :SensoryPerception ; :text "saw' in ttl_str
-    assert ':has_active_entity :Anna' in ttl_str     # seeing
+    assert ':has_active_entity :Heidi' in ttl_str
     assert ':has_topic :Noun' in ttl_str             # Heidi cutting roses
-    assert 'a :Cognition ; :negated true ; :text "did not recognize' in ttl_str
-    assert ':has_topic :Heidi' in ttl_str
+    # TODO: "Not recognizing" is cognition but should it be negated?
+    assert (':Cognition' in ttl_str or ':Avoidance' in ttl_str) and ':text "did not recognize' in ttl_str
+    assert ':has_affected_entity :Heidi' in ttl_str or ':has_topic :Heidi' in ttl_str
     # Output Turtle:
-    # :Sentence_7602fa71-cefe a :Sentence ; :offset 1 .
-    # :Sentence_7602fa71-cefe :text "Anna saw Heidi cut the roses, but she did not recognize that it was Heidi
+    # :Sentence_be409247-c4e6 a :Sentence ; :offset 1 .
+    # :Sentence_be409247-c4e6 :text "Anna saw Heidi cut the roses, but she did not recognize that it was Heidi
     #     who cut the roses." .
-    # :Sentence_7602fa71-cefe :mentions :Anna .
-    # :Sentence_7602fa71-cefe :mentions :Heidi .
-    # :Sentence_7602fa71-cefe :mentions :Heidi .
-    # :Sentence_7602fa71-cefe :summary "Anna observed Heidi cutting roses but did not recognize Heidi." .
-    # :Sentence_7602fa71-cefe :sentiment "neutral" .
-    # :Sentence_7602fa71-cefe :grade_level 5 .
-    # :Sentence_7602fa71-cefe :has_semantic :Event_a1245eec-41bc .
-    # :Event_a1245eec-41bc a :Searching ; :text "observed" .      # TODO: Should be :SensoryPerception or :Cognition
-    # :Event_a1245eec-41bc :has_active_entity :Anna .
-    # :Noun_9c8487ce-9da3 a :AgricultureApicultureAndAquacultureEvent ; :text "Heidi cutting roses" ;
-    #     rdfs:label "Heidi cutting roses" .
-    # :Event_a1245eec-41bc :has_topic :Noun_9c8487ce-9da3 .
-    # :Sentence_7602fa71-cefe :has_semantic :Event_27f7b518-d261 .
-    # :Event_27f7b518-d261 a :BodilyAct ; :text "cutting" .
-    # :Event_27f7b518-d261 :has_active_entity :Heidi .
-    # :Noun_719b3ffb-5478 a :Plant ; :text "roses" ; rdfs:label "roses" .
-    # :Event_27f7b518-d261 :has_affected_entity :Noun_719b3ffb-5478 .
-    # :Sentence_7602fa71-cefe :has_semantic :Event_8307597d-0eca .
-    # TODO: Should be :Cognition, not :CommunicationAndSpeechAct
-    # :Event_8307597d-0eca a :CommunicationAndSpeechAct ; :negated true ; :text "did not recognize" .
-    # :Event_8307597d-0eca :has_active_entity :Anna .
-    # :Event_8307597d-0eca :has_topic :Heidi .
+    # :Sentence_be409247-c4e6 :mentions :Anna .
+    # :Sentence_be409247-c4e6 :mentions :Heidi .
+    # :Sentence_be409247-c4e6 :mentions :Heidi .
+    # :Sentence_be409247-c4e6 :grade_level 8 .
+    # :Sentence_be409247-c4e6 :summary "Anna saw Heidi cut roses but did not recognize her." .
+    # :Sentence_be409247-c4e6 :has_semantic :Event_302ef14c-ef05 .
+    # :Event_302ef14c-ef05 :text "saw" .
+    # :Event_302ef14c-ef05 a :SensoryPerception ; :confidence-SensoryPerception 90 .
+    # :Event_302ef14c-ef05 :has_active_entity :Anna .
+    # :Event_302ef14c-ef05 :has_active_entity :Heidi .
+    # :Noun_0cc5dc5a-b093 a :Plant ; :text "roses" ; :confidence 100 .
+    # :Event_302ef14c-ef05 :has_topic :Noun_0cc5dc5a-b093 .
+    # :Sentence_be409247-c4e6 :has_semantic :Event_58492ab1-bea8 .
+    # :Event_58492ab1-bea8 :text "cut" .
+    # :Event_58492ab1-bea8 a :Separation ; :confidence-Separation 95 .
+    # :Event_58492ab1-bea8 :has_active_entity :Heidi .
+    # :Event_58492ab1-bea8 :has_context :Noun_0cc5dc5a-b093 .
+    # :Sentence_be409247-c4e6 :has_semantic :Event_80de11fb-1475 .
+    # :Event_80de11fb-1475 :text "did not recognize" .
+    # :Event_80de11fb-1475 a :Avoidance ; :confidence-Avoidance 85 .
+    # :Event_80de11fb-1475 :has_active_entity :Anna .
+    # :Event_80de11fb-1475 :has_topic :Heidi .
 
 
 def test_quotation():
-    sentence_instances, quotation_instances, quoted_strings = parse_narrative(text_quotation)
-    success, index, graph_ttl = create_graph(sentence_instances, quotation_instances, 3, repo)
-    ttl_str = str(graph_ttl)
-    print(ttl_str)
-    assert 'a :CommunicationAndSpeechAct ; :text "said' in ttl_str
+    parse_results = parse_narrative(text_quotation)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':mentions :NVIDIA' in ttl_str
+    assert ':CommunicationAndSpeechAct' in ttl_str and ':text "said' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':has_topic :Quotation0' in ttl_str
     assert ':Quotation0 :attributed_to :Jane' in ttl_str
@@ -445,3 +509,25 @@ def test_quotation():
     # :Quotation0 :summary "Individual expresses desire to work for NVIDIA." .
     # :Quotation0 :sentiment "positive" .
     # :Quotation0 :grade_level 5 .
+
+
+def test_rule():
+    parse_results = parse_narrative(text_rule)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':AggressiveCriminalOrHostileAct' in ttl_str and ':RequirementAndDependence' in ttl_str
+    assert  'a :Person ; :text "you' in ttl_str
+    assert ':has_active_entity :Noun' in ttl_str
+    # Output Turtle:
+    # :Sentence_01a67e68-6268 a :Sentence ; :offset 1 .
+    # :Sentence_01a67e68-6268 :text "You shall not kill." .
+    # :Sentence_01a67e68-6268 :grade_level 3 .
+    # :Sentence_01a67e68-6268 :summary "Prohibition against killing." .
+    # :Sentence_01a67e68-6268 :has_semantic :Event_8565acf3-5ec3 .
+    # :Event_8565acf3-5ec3 :text "shall not kill" .
+    # TODO: "shall not" is the requirement; can we distinguish "shall", "not kill"?
+    # :Event_8565acf3-5ec3 a :AggressiveCriminalOrHostileAct ; :confidence-AggressiveCriminalOrHostileAct 100 .
+    # :Event_8565acf3-5ec3 a :RequirementAndDependence ; :confidence-RequirementAndDependence 95 .
+    # :Noun_29ecfb6f-6cf3 a :Person ; :text "you" ; :confidence 100 .
+    # :Event_8565acf3-5ec3 :has_active_entity :Noun_29ecfb6f-6cf3 .

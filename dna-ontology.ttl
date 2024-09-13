@@ -118,8 +118,11 @@
 
 ###  urn:ontoinsights:dna:has_aspect
 <urn:ontoinsights:dna:has_aspect> rdf:type owl:ObjectProperty ;
-                                  rdfs:comment "Defines a characteristic of the entity and/or further clarifies it."@en ;
-                                  rdfs:label "has_aspect"@en .
+                                  rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                  rdfs:comment "Defines a characteristic of the entity and/or further clarifies it."@en ,
+                                               "References the condition or an attribute of an entity, especially for an EnvironmentAndCondition event."@en ;
+                                  rdfs:label "has aspect"@en ,
+                                             "has_aspect"@en .
 
 
 ###  urn:ontoinsights:dna:has_beginning
@@ -159,19 +162,19 @@
 <urn:ontoinsights:dna:has_component> rdf:type owl:ObjectProperty .
 
 
+###  urn:ontoinsights:dna:has_context
+<urn:ontoinsights:dna:has_context> rdf:type owl:ObjectProperty ;
+                                   rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
+                                   rdfs:comment "References an entity which aids in the understanding of, and provides information on the circumstances or setting of an event or state."@en ;
+                                   rdfs:label "has context"@en ;
+                                   <urn:ontoinsights:dna:example> "For example, the general situation regarding the number of employed/unemployed individuals in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment/Unemployment individual (subclass of EnvironmentAndCondition) using the property, :has_context. As examples ... if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_context property. And, if a farmer has a large fruit crop, that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_context property referencing the farmer (or his/her farm as a business/Organization) and the :has_topic property referencing the fruit (a sub-class of Resource -> FoodAndDrink)."@en .
+
+
 ###  urn:ontoinsights:dna:has_currency
 <urn:ontoinsights:dna:has_currency> rdf:type owl:ObjectProperty ,
                                              owl:FunctionalProperty ;
                                     rdfs:domain <urn:ontoinsights:dna:Country> ;
                                     rdfs:range <urn:ontoinsights:dna:Currency> .
-
-
-###  urn:ontoinsights:dna:has_described_entity
-<urn:ontoinsights:dna:has_described_entity> rdf:type owl:ObjectProperty ;
-                                            rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                            rdfs:comment "References an entity who experiences some EventAndState."@en ;
-                                            rdfs:label "has described entity"@en ;
-                                            <urn:ontoinsights:dna:example> "For example, the general situation regarding the number of employed/unemployed individuals in a GeopoliticalEntity (such as a Country) would associate the Country to an Employment/Unemployment individual (subclasses of Environment) using the property, :has_described_entity"@en .
 
 
 ###  urn:ontoinsights:dna:has_destination
@@ -260,7 +263,8 @@
 
 ###  urn:ontoinsights:dna:has_origin
 <urn:ontoinsights:dna:has_origin> rdf:type owl:ObjectProperty ;
-                                  rdfs:subPropertyOf <urn:ontoinsights:dna:has_location> ;
+                                  rdfs:subPropertyOf <urn:ontoinsights:dna:has_location> ,
+                                                     <urn:ontoinsights:dna:has_source> ;
                                   rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
                                   rdfs:range <urn:ontoinsights:dna:Location> ;
                                   rdfs:comment "References the original location when an EventAndState involves movement of persons, goods, information, etc."@en ;
@@ -273,14 +277,6 @@
                                         rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                         rdfs:comment "Relationship between two EventAndState entities indicating that the referenced entity must be true (must have occurred) in order for the subject event/state to exist or happen."@en ;
                                         rdfs:label "has precondition"@en .
-
-
-###  urn:ontoinsights:dna:has_provider
-<urn:ontoinsights:dna:has_provider> rdf:type owl:ObjectProperty ;
-                                    rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                    rdfs:range <urn:ontoinsights:dna:Agent> ;
-                                    rdfs:comment "References the Agent that provides goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en ;
-                                    rdfs:label "has providing agent"@en .
 
 
 ###  urn:ontoinsights:dna:has_quantification
@@ -320,7 +316,7 @@
 ###  urn:ontoinsights:dna:has_source
 <urn:ontoinsights:dna:has_source> rdf:type owl:ObjectProperty ;
                                   rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                  rdfs:comment "References an entity in the semantic role of 'source'. That is the original location of something, the entity from which a sensation (such as smell) originates, or the owner of something when involved in a transfer."@en ;
+                                  rdfs:comment "References an entity in the semantic role of 'source'. That is the original location of something (which is refined as :has_origin), the entity from which a sensation or thought originates, the owner of something involved in a transfer, etc."@en ;
                                   rdfs:label "has source"@en .
 
 
@@ -336,7 +332,7 @@
                                  rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
                                  rdfs:comment "References the subject/topic of an EventAndState."@en ;
                                  rdfs:label "has topic"@en ;
-                                 <urn:ontoinsights:dna:example> "For example, if there is an investigation of a crime, then the crime would be some subclass of EventAndState (such as an AttackDamageAndAssault instance), and the Investigation event would reference that earlier attack/assualt using the :has_topic property. As another example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_described_entity property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property."@en .
+                                 <urn:ontoinsights:dna:example> "For example, if a farmer has a large fruit crop that situation would be described using an instance of an :AgricultureApicultureAndAquacultureEvent with the :has_context property referencing the farmer (or his/her farm as a business/Organization) and the fruit (a sub-class of Resource -> FoodAndDrink) defined using the :has_topic property."@en .
 
 
 ###  urn:ontoinsights:dna:has_unit
@@ -1112,7 +1108,7 @@
 ###  urn:ontoinsights:dna:sentiment
 <urn:ontoinsights:dna:sentiment> rdf:type owl:DatatypeProperty ,
                                           owl:FunctionalProperty ;
-                                 rdfs:domain <urn:ontoinsights:dna:Sentence> ;
+                                 rdfs:domain <urn:ontoinsights:dna:Narrative> ;
                                  rdfs:range [ rdf:type rdfs:Datatype ;
                                               owl:oneOf [ rdf:type rdf:List ;
                                                           rdf:first "negative" ;
@@ -1125,8 +1121,17 @@
                                                                    ]
                                                         ]
                                             ] ;
-                                 rdfs:comment "String restricted to a set of values that indicate whether a Sentence conveys a 'positive', 'negative' or 'neutral' sentiment."@en ;
+                                 rdfs:comment "String restricted to a set of values that indicate whether a Narrative conveys a 'positive', 'negative' or 'neutral' sentiment."@en ;
                                  rdfs:label "sentiment"@en .
+
+
+###  urn:ontoinsights:dna:sentiment_explanation
+<urn:ontoinsights:dna:sentiment_explanation> rdf:type owl:DatatypeProperty ,
+                                                      owl:FunctionalProperty ;
+                                             rdfs:domain <urn:ontoinsights:dna:Narrative> ;
+                                             rdfs:range xsd:string ;
+                                             rdfs:comment "String explaining why a sentiment of 'positive', 'negative' or 'neutral' was assigned to a Narrative."@en ;
+                                             rdfs:label "sentiment explanation"@en .
 
 
 ###  urn:ontoinsights:dna:separation_interval

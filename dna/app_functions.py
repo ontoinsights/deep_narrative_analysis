@@ -3,6 +3,8 @@
 
 import json
 import logging
+from dataclasses import dataclass
+
 from rdflib import Literal
 import uuid
 from datetime import datetime
@@ -11,9 +13,8 @@ from flask import Request, Response, jsonify
 from dna.create_narrative_turtle import create_graph
 from dna.database import add_remove_data, check_server_status, query_database
 from dna.database_queries import count_triples, query_narratives, query_repos
-from dna.sentence_element_classes import Metadata
 from dna.nlp import parse_narrative
-from dna.query_openai import access_api, narrative_goals, narrative_summary_prompt, rhetorical_devices
+from dna.query_openai import access_api, narrative_goals, narrative_summary_prompt
 from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph, ttl_prefixes
 
 detail: str = 'detail'
@@ -22,7 +23,39 @@ narrative_id: str = 'narrativeId'
 repository: str = 'repository'
 sentences: str = 'sentences'
 
+@dataclass
+class Metadata:
+    """
+    Dataclass holding metadata details for a narrative/article
+    """
+    title: str                    # Narrative/article title
+    published: str                # Date/time published
+    source: str                   # Source (such as 'CNN', free-form)
+    url: str                      # Online location
+    number_to_ingest: int         # Number of sentences to ingest
 
+@dataclass
+class MetadataResults:
+    """
+    Dataclass holding the results of the get_metadata_ttl function
+    """
+    success: bool               # Success boolean
+    turtle: list                # List of Turtle statements defining the metadata
+    created: str                # String indicated the date/time that the metadata RDF was created
+    number_triples: int         # Count of the number of triples in the narrative graph
+
+
+@dataclass
+class NarrativeResults:
+    """
+    Dataclass holding the results of the process_new_narrative function
+    """
+    resp_dict: dict           # Dictionary with the details for the narrative (for return in the REST response)
+    error_msg: str            # Error message if an error occurred or an empty string
+    http_status: int          # The HTTP status code (for return in the REST response)
+
+
+# Future
 def _check_from_to_date(date_value: str) -> bool:
     """
     Check that the date query parameters ('from' and 'to') are defined and have the format,
@@ -139,7 +172,7 @@ def check_query_parameter(check_param: str, should_exist: bool, req: Request) ->
 
 
 def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
-                     number_sentences: int, number_ingested: int) -> (bool, list, str, int):
+                     number_sentences: int, number_ingested: int) -> MetadataResults:
     """
     Add the meta-data triples for a narrative to the specified database.
 
@@ -150,47 +183,42 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
                      title, date published, source/publisher, url and number of sentences to ingest
     :param number_sentences: Integer holding the number of sentences in the narrative/article
     :param number_ingested: Integer holding the actual number of sentences ingested (<= number requested)
-    :return: A tuple holding a success boolean (T/F), a list of Turtle statements defining
-             the metadata, a string indicated the date/time created and a count of the number
-             of triples in the narrative graph
+    :return: The MetadataResults dataclass
     """
     created_at = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
     numb_triples_results = query_database('select', count_triples.replace('?g', f':{repo}_{narr_id}'))
     if len(numb_triples_results) > 0:
-        numb_triples = numb_triples_results[0]['cnt']['value']
+        numb_triples = int(numb_triples_results[0]['cnt']['value'])
     else:
-        return False, [], empty_string, 0
+        return MetadataResults(False, [], empty_string, 0)
     turtle = ttl_prefixes[:]
     turtle.extend([f':{narr_id} a :InformationGraph ; dc:created "{created_at}"^^xsd:dateTime ; ',
                    f':number_triples {numb_triples} ; :encodes :Narrative_{narr_id} .',
                    f':Narrative_{narr_id} a :Narrative ; dc:created "{metadata.published}"^^xsd:dateTime ; ',
                    f':number_sentences {number_sentences} ; :number_ingested {number_ingested} ; '
-                   f':source "{metadata.source}" ; dc:title "{metadata.title}" ; :external_link "{metadata.url}" .',
+                   f':source "{metadata.source}" ; dc:title {Literal(metadata.title).n3()} ; '
+                   f':external_link "{metadata.url}" .',
                    f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
     summary_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
-    summary = summary_dict['summary']
-    turtle.append(f':Narrative_{narr_id} :summary "{summary}" .')
+    turtle.append(f':Narrative_{narr_id} :summary {Literal(summary_dict["summary"]).n3()} .')
     for goal in summary_dict['goal_numbers']:
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[goal - 1]}" .')
-    for device_detail in summary_dict['rhetorical_devices']:
-        device_numb = int(device_detail['device_number'])
-        # TODO: Pending pystardog fix; predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"}'
-        predicate = f':rhetorical_device_{rhetorical_devices[device_numb - 1].replace(" ", "_")}'
-        turtle.append(f':Narrative_{narr_id} :rhetorical_device "{rhetorical_devices[device_numb - 1]}" .')
-        evidence = device_detail['evidence']
-        turtle.append(f':Narrative_{narr_id} {predicate} "{evidence}" .')
     for interpreted_text in summary_dict['interpreted_text']:
         perspective = interpreted_text['perspective']
-        interpretation = interpreted_text['interpretation']
         # TODO: Pending pystardog fix; edge = f':interpretation {:segment_label "' + {perspective} + '"}'
         predicate = f':interpretation_{perspective}'
-        turtle.append(f':Narrative_{narr_id} {predicate} "{interpretation}" .')
+        turtle.append(f':Narrative_{narr_id} {predicate} {Literal(interpreted_text["interpretation"]).n3()} .')
     for ranking in summary_dict['ranking_by_perspective']:
         perspective = ranking['perspective']
         # TODO: Pending pystardog fix; edge = f':ranking {:segment_label "' + {perspective} + '"}'
         predicate = f':ranking_{perspective}'
         turtle.append(f':Narrative_{narr_id} {predicate} {ranking["ranking"]} .')
-    return True, turtle, created_at, numb_triples
+    if 'sentiment' in summary_dict:
+        sentiment = summary_dict['sentiment']
+        turtle.append(f':Narrative_{narr_id} :sentiment "{sentiment}" .')
+        turtle.append(f':Narrative_{narr_id} :sentiment_explanation '
+                      f'{Literal(summary_dict["sentiment_explanation"]).n3()} .')
+    return MetadataResults(True, turtle, created_at, numb_triples)
 
 
 def parse_narrative_query_binding(binding_set: dict) -> dict:
@@ -202,16 +230,16 @@ def parse_narrative_query_binding(binding_set: dict) -> dict:
     """
     return {narrative_id: binding_set['narrative']['value'].split(':Narrative_')[-1],
             'processed': binding_set['created']['value'],
-            'numberOfTriples': binding_set['numbTriples']['value'],
-            'numberOfSentences': binding_set['sents']['value'],
-            'numberIngested': binding_set['ingested']['value'],
+            'numberOfTriples': int(binding_set['numbTriples']['value']),
+            'numberOfSentences': int(binding_set['sents']['value']),
+            'numberIngested': int(binding_set['ingested']['value']),
             'narrativeMetadata': {'title': binding_set['title']['value'],
                                   'published': binding_set['published']['value'],
                                   'source': binding_set['source']['value'],
                                   'url': binding_set['url']['value']}}
 
 
-def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> (dict, str, int):
+def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> NarrativeResults:
     """
     Performs the sentence and quotation extractions and analysis, adding a narrative to
     the database with the specified name and address.
@@ -220,39 +248,38 @@ def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> (dict, st
                      title, date published, source/publisher, url and number of sentences to ingest
     :param narr: String holding the narrative text
     :param repo: String holding the repository name for the narrative graph
-    :return: A tuple consisting of a dictionary with the details for the narrative added to the
-             database (for return in the REST response), an error message if an error occurred or
-             an empty string, and an integer holding the HTTP status code
+    :return: The NarrativeResults dataclass
     """
     graph_uuid = str(uuid.uuid4())[:8]   # IRI of the named graph for the narrative, and the narrative itself
     logging.info(f'Ingesting {metadata.title} to {repo}')
-    sentence_instance_list, quotation_instance_list, quoted_strings_list = parse_narrative(narr)
-    success, actual_sentences, graph_ttl = create_graph(sentence_instance_list, quotation_instance_list,
-                                                        metadata.number_to_ingest, repo)
-    if not success:
-        return dict(), f'Error creating the graph for {metadata.title}', 500
+    parse_results = parse_narrative(narr)
+    graph_results = \
+        create_graph(parse_results.sentence_classes, parse_results.quotation_classes, parse_results.partial_quotes,
+                     metadata.number_to_ingest, repo)
+    if not graph_results.success:
+        return NarrativeResults(dict(), f'Error creating the graph for {metadata.title}', 500)
     logging.info('Loading knowledge graph')
-    msg = add_remove_data('add', ' '.join(graph_ttl), repo, graph_uuid)   # Add to dna db's repo_graphUUID graph
+    msg = add_remove_data('add', ' '.join(graph_results.turtle), repo, graph_uuid)   # Add to dna's repo_graphUUID graph
     if msg:
-        logging.info(graph_ttl)
-        return dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500
-    # Process the metadata and add all quote strings to the meta-db
+        logging.error(f'Error loading the narrative graph, {graph_results.turtle}')
+        return NarrativeResults(dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500)
+    # Process the metadata
     logging.info("Loading metadata")
-    success, meta_ttl, created, numb_triples = get_metadata_ttl(repo, graph_uuid, narr, metadata,
-                                                                len(sentence_instance_list), actual_sentences)
-    if not success:
-        return dict(), f'Error creating the metadata for {metadata.title}', 500
-    for quoted_string in quoted_strings_list:
-        meta_ttl.append(f':{graph_uuid} :text_quote {Literal(quoted_string).n3()} .')
-    msg = add_remove_data('add', ' '.join(meta_ttl), repo)   # Add to dna db's repo graph
+    metadata_results = get_metadata_ttl(repo, graph_uuid, narr, metadata,
+                                        len(parse_results.sentence_classes), graph_results.number_sentences)
+    if not metadata_results.success:
+        return NarrativeResults(dict(), f'Error creating the metadata for {metadata.title}', 500)
+    msg = add_remove_data('add', ' '.join(metadata_results.turtle), repo)   # Add to dna db's repo graph
     if msg:
         logging.info(meta_ttl)
-        return dict(), f'Error adding metadata for {metadata.title}: {msg}', 500
+        return NarrativeResults(dict(), f'Error adding metadata for {metadata.title}: {msg}', 500)
     # All is successful
     resp_dict = {repository: repo,
                  'narrativeDetails': {
-                     narrative_id: graph_uuid, 'processed': created, 'numberOfTriples': numb_triples,
-                     'numberOfSentences': len(sentence_instance_list), 'numberIngested': actual_sentences,
+                     narrative_id: graph_uuid, 'processed': metadata_results.created,
+                     'numberOfTriples': metadata_results.number_triples,
+                     'numberOfSentences': len(parse_results.sentence_classes),
+                     'numberIngested': graph_results.number_sentences,
                      'narrativeMetadata': {'title': metadata.title, 'published': metadata.published,
                                            'source': metadata.source, 'url': metadata.url}}}
-    return resp_dict, empty_string, 201
+    return NarrativeResults(resp_dict, empty_string, 201)

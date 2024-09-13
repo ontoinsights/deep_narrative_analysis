@@ -148,11 +148,11 @@ def construct_graph(construct: str) -> (bool, list):
         return False, [str(const_err)]
 
 
-# Future: Multiple separate database repositories are not currently supported
+# TODO: (Future) On paid service can have multiple separate database repositories
 def create_delete_database(op_type: str, database: str) -> str:
     """
     Create or delete a database. In order to use Stardog Cloud's Free tier, all
-    repositories/databases are collapsed to 1.    Future: Allow for separate repositories.
+    repositories/databases are collapsed to 1.
 
     :param op_type: A string = 'create' or 'delete'
     :param database: The database name

@@ -2,12 +2,12 @@
 # Also includes small, utility methods used across different DNA modules
 
 # import base64
-import os
+from pathlib import Path
 import pickle
 
-base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-dna_dir = os.path.join(base_dir, 'dna')
-resources_dir = os.path.join(dna_dir, 'resources/')
+base_dir = Path(__file__).resolve().parent.parent
+dna_dir = base_dir / 'dna'
+resources_dir = dna_dir / 'resources'
 
 language_tag = '@en'
 
@@ -32,15 +32,15 @@ concept_map = {'politic': ':PoliticalIdeology',
                'ethno': ':Ethnicity',
                'nationality': 'Ethnicity'}
 
-# Future: Move texts to separate file for maintenance/extension by users
+modals = ("can ", "could ", "have to ", "may ", "might ", "must ", "ought to ", "shall ", "should ", "would ")
+
+# TODO: (Future) Move texts to separate file for maintenance/extension by users
 # Times
 days = ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
 months = ('January', 'February', 'March', 'April', 'May', 'June', 'July',
           'August', 'September', 'October', 'November', 'December')
 
 # People
-explicit_plural = ('group', 'people')
-
 family_members = {'mother': 'FEMALE', 'father': 'MALE', 'sister': 'FEMALE', 'brother': 'MALE',
                   'aunt': 'FEMALE', 'uncle': 'MALE', 'grandmother': 'FEMALE', 'grandfather': 'MALE',
                   'grandparent': empty_string, 'parent': empty_string, 'sibling': empty_string,
@@ -50,12 +50,14 @@ plural_family_members = ('mothers', 'fathers', 'sisters', 'brothers', 'aunts', '
                          'cousins', 'relatives')
 family_text = ('family', 'families')
 
+honorifics = ('Mr. ', 'Mrs. ', 'Ms. ', 'Doctor ', 'Dr. ', 'Messrs. ', 'Miss ', 'Mx. ', 'Sir ',
+              'Dame ', 'Lady ', 'Esq. ', 'Professor ', 'Fr. ', 'Sr. ', 'Rep. ')
 female_titles = ['Miss', 'Ms', 'Mrs']
 male_titles = ['Mr']
 
 # spaCy NER type mapping
 ner_dict = {'PERSON': ':Person',
-            'NORP': ':Affiliation',
+            'NORP': ':GroupOfAgents',          # TODO: Subclasses such as PoliticalGroup/PoliticalIdeology
             'ORG': ':OrganizationalEntity',    # TODO: Subclasses such as GovernmentalEntity?
             'GPE': ':GeopoliticalEntity',
             'LOC': ':Location',
@@ -75,17 +77,17 @@ ttl_prefixes = ['@prefix : <urn:ontoinsights:dna:> .', '@prefix dna: <urn:ontoin
                 '@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .']
 
 # A dictionary where the keys are country names and the values are the GeoNames country codes
-geocodes_file = os.path.join(f'{dna_dir}/resources', 'countries_mapped_to_geo_codes.pickle')
+geocodes_file = resources_dir / 'countries_mapped_to_geo_codes.pickle'
 with open(geocodes_file, 'rb') as inFile:
     names_to_geo_dict = pickle.load(inFile)
 
 # Reused from https://github.com/explosion/coreferee/blob/master/coreferee/lang/common/data/female_names.dat (MIT lic)
-fnames_file = os.path.join(resources_dir, 'female_names.txt')
+fnames_file = resources_dir / 'female_names.txt'
 with open(fnames_file, 'r') as fnames:
     fnames_content = fnames.read()
 female_names = fnames_content.split('\n')
 # Reused from https://github.com/explosion/coreferee/blob/master/coreferee/lang/common/data/male_names.dat (MIT lic)
-mnames_file = os.path.join(resources_dir, 'male_names.txt')
+mnames_file = resources_dir / 'male_names.txt'
 with open(mnames_file, 'r') as mnames:
     mnames_content = mnames.read()
 male_names = mnames_content.split('\n')
@@ -149,10 +151,7 @@ def check_name_gender(name_str: str) -> str:
     :return: A tuple of 2 strings representing the entity's text and type (with gender if known)
     """
     gender = empty_string
-    if space in name_str:
-        names = name_str.split()
-    else:
-        names = [name_str]
+    names = name_str.split() if space in name_str else [name_str]
     for name in names:
         gender = 'FEMALE' if name in female_names else ('MALE' if name in male_names else empty_string)
         if gender:

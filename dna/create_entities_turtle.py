@@ -6,7 +6,7 @@ import uuid
 from rdflib import Literal
 
 from dna.query_sources import get_geonames_location, get_wikipedia_description
-from dna.utilities_and_language_specific import concept_map, empty_string, explicit_plural, names_to_geo_dict
+from dna.utilities_and_language_specific import concept_map, empty_string, names_to_geo_dict
 
 
 def _add_labels_to_ttl(entity_iri: str, labels: list, ttl_list: list):
@@ -94,21 +94,24 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: s
              alternate names for the Location
     """
     geonames_ttl = []
-    class_type, country, admin_level, alt_names, wiki_link = get_geonames_location(loc_text)
-    if class_type:
-        geonames_ttl.append(f'{loc_iri} a {class_type} .')
-        _add_labels_to_ttl(loc_iri, alt_names, geonames_ttl)
-        wiki_desc, wiki_url, wikidata_id, labels = get_wikipedia_description(loc_text, ':Location', wiki_link)
-        for label in labels:
-            if label not in alt_names:
+    alt_names = []
+    geonames_details = get_geonames_location(loc_text)
+    if geonames_details.location_class:
+        geonames_ttl.append(f'{loc_iri} a {geonames_details.location_class} .')
+        _add_labels_to_ttl(loc_iri, geonames_details.alt_names, geonames_ttl)
+        alt_names.extend(geonames_details.alt_names)
+        description_details = get_wikipedia_description(loc_text, ':Location', geonames_details.wiki_link)
+        for label in description_details.labels:
+            if label not in geonames_details.alt_names:
                 alt_names.append(label)
-        _add_wikidata_triples(loc_iri, wiki_desc, wiki_url, wikidata_id, geonames_ttl)
-        if admin_level > 0:
-            geonames_ttl.append(f'{loc_iri} :admin_level {str(admin_level)} .')
-        if country and country != "None":
-            geonames_ttl.append(f'{loc_iri} :country_name "{country}" .')
-            if country in names_to_geo_dict:
-                geonames_ttl.append(f'geo:{names_to_geo_dict[country]} :has_component {loc_iri} .')
+        _add_wikidata_triples(loc_iri, description_details.wiki_desc, description_details.wiki_url,
+                              description_details.wikidata_id, geonames_ttl)
+        if geonames_details.admin_level > 0:
+            geonames_ttl.append(f'{loc_iri} :admin_level {str(geonames_details.admin_level)} .')
+        if geonames_details.country and geonames_details.country != "None":
+            geonames_ttl.append(f'{loc_iri} :country_name "{geonames_details.country}" .')
+            if geonames_details.country in names_to_geo_dict:
+                geonames_ttl.append(f'geo:{names_to_geo_dict[geonames_details.country]} :has_component {loc_iri} .')
     elif ner_type != 'ORG':
         geonames_ttl.append(f'{loc_iri} a {loc_class} ; :text {Literal(loc_text).n3()} .')
     return geonames_ttl, alt_names
@@ -136,7 +139,6 @@ def create_named_entity_ttl(ent_iri: str, alt_names: list, class_map: str, descr
     """
     if 'owl:Thing' in class_map:
         return []
-    labels = '", "'.join(alt_names)
     entity_ttl = [f'{ent_iri} a {class_map} .']
     _add_labels_to_ttl(ent_iri, alt_names, entity_ttl)
     _add_wikidata_triples(ent_iri, description, wiki_url, wikidata_id, entity_ttl)
@@ -167,7 +169,7 @@ def create_norp_ttl(norp_iri: str, labels: list, norp_class: str, description: s
     type_str = norp_class
     if description:
         wiki_lower = description.lower()
-        for concept in concept_map.keys():
+        for concept in concept_map:
             if concept in wiki_lower:
                 type_str = norp_class.replace(':Affiliation', concept_map[concept])
                 break

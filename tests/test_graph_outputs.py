@@ -15,122 +15,134 @@ repo = 'foo'
 
 
 def test_sentences1():
-    sentence_list, quotation_list, quoted_strings = parse_narrative(sentences1)
-    success, index, graph_ttl = create_graph(sentence_list, quotation_list, 5, repo)
-    ttl_str = str(graph_ttl)
-    assert index == 4       # 4 sentences
-    assert ':Win' in ttl_str
-    assert ':Loss' in ttl_str
-    assert ':has_active_entity :Harriet_Hageman' in ttl_str
+    parse_results = parse_narrative(sentences1)
+    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
+                                 parse_results.partial_quotes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert graph_results.number_sentences == 4       # 4 sentence
+    assert ':Loss' in ttl_str and ':text "conceded' in ttl_str and ':text "defeat' in ttl_str
     assert ':has_active_entity :Liz_Cheney' in ttl_str
+    assert ':PoliticalEvent ; :text "Republican primary' in ttl_str and ':has_context :Noun' in ttl_str
+    assert ':has_location :Wyoming' in ttl_str
+    assert ':End ; :text "outcome' in ttl_str
+    assert ':Assessment ; :text "priority' in ttl_str and ':has_quantification :Noun' in ttl_str
+    assert ':Win' in ttl_str and ':text "won' in ttl_str
+    assert ':has_active_entity :Harriet_Hageman' in ttl_str
+    assert ':Measurement' in ttl_str and (':text "66.3%' in ttl_str or ':text "counted' in ttl_str or
+                                          ':text "vote' in ttl_str)
+    assert ':Affiliation' in ttl_str and (':text "was endorsed' in ttl_str or ':text "endorsed' in ttl_str)
+    assert ':affiliated_with :Harriet_Hageman' in ttl_str
+    assert ':Person ; :text "former ' in ttl_str and ':has_active_entity :Noun' in ttl_str
+    assert ':CommunicationAndSpeechAct' in ttl_str and ':text "said' in ttl_str and ':text "claimed' in ttl_str
+    assert ':DeceptionAndDishonesty' in ttl_str and ':text "insidious lie' in ttl_str and \
+           (':has_topic :Noun' in ttl_str or ':has_context :Noun' in ttl_str)
+    assert ':text "is promoting' in ttl_str
     assert ':has_active_entity :Donald_Trump' in ttl_str
-    assert ':Measurement' in ttl_str and ':has_quantification' in ttl_str    # percentages
-    assert ':CommunicationAndSpeechAct' in ttl_str
-    assert ':DeceptionAndDishonesty' in ttl_str                              # "insidious lie"
-    assert 'pathos' in ttl_str
-    assert 'exceptionalism' in ttl_str or 'hyperbole' in ttl_str
-    assert 'loaded language' in ttl_str
-    # Output with RDF* properties:
-    # :Sentence_d13ce0a5-2095 a :Sentence ; :offset 1 .
-    # :Sentence_d13ce0a5-2095 :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary
-    #     in Wyoming, an outcome that was a priority for former President Donald Trump." .
-    # :Republican :text "Republican" .
-    # :Republican rdfs:label "Republican Party", "Republicans", "GOP", "Grand Old Party", "Republicans",
-    #     "Republican Party (United States)", "United States Republican Party", "US Republican Party", "Republican" .
-    # :Republican a :PoliticalIdeology, :Correction .
-    # :Republican rdfs:comment "From Wikipedia (wikibase_item: Q29468): \'The Republican Party, also known as the
-    #     GOP, is one of the two major contemporary political parties in the United States...\'" .
-    # :Republican :external_link "https://en.wikipedia.org/wiki/Republican_Party_(United_States)" .
-    # :Republican :external_identifier "Q29468" .
-    # :Sentence_d13ce0a5-2095 :mentions geo:6252001 .
-    # :Sentence_d13ce0a5-2095 :mentions :Liz_Cheney .
-    # :Sentence_d13ce0a5-2095 :mentions :Republican .
-    # :Sentence_d13ce0a5-2095 :mentions :Wyoming .
-    # :Sentence_d13ce0a5-2095 :mentions :Donald_Trump .
-    # :Sentence_d13ce0a5-2095 :summary "Liz Cheney loses Wyoming Republican primary." .
-    # :Sentence_d13ce0a5-2095 :sentiment "negative" .
-    # :Sentence_d13ce0a5-2095 :grade_level 8 .
-    # :Sentence_d13ce0a5-2095 :rhetorical_device "kairos" .
-    # :Sentence_d13ce0a5-2095 :rhetorical_device_kairos "The reference to \'Tuesday\' in the sentence invokes a
-    #     specific day, which is used to mark the timing of the event, thereby engaging the reader by placing the
-    #     event in a temporal context." .
-    # :Sentence_d13ce0a5-2095 :has_semantic :Event_615634a3-b095 .
-    # :Event_615634a3-b095 a :Loss ; :text "loses" .
-    # :Event_615634a3-b095 :has_active_entity :Liz_Cheney .
-    # :Noun_3a75311b-05b4 a :PoliticalEvent ; :text "Wyoming Republican primary" ; rdfs:label
-    #     "Wyoming Republican primary" .
-    # :Event_615634a3-b095 :has_topic :Noun_3a75311b-05b4 .
-    # :Sentence_5dc6ceb6-c794 a :Sentence ; :offset 2 .
-    # :Sentence_5dc6ceb6-c794 :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
+    assert ':LawEnforcement' in ttl_str and  (':text "raid' in ttl_str or 'FBI raid' in ttl_str)
+    assert ':has_location :Noun' in ttl_str
+    assert 'logos' in ttl_str                                          # Percentages
+    assert 'pathos' in ttl_str or 'exceptionalism' in ttl_str          # Principles we swore to protect
+    assert 'loaded language' in ttl_str                                # Insidious lie
+    # Output Turtle:
+    # :Sentence_12bd76ab-06fe a :Sentence ; :offset 1 .
+    # :Sentence_12bd76ab-06fe :text "U.S. Rep. Liz Cheney conceded defeat Tuesday in the Republican primary in
+    #     Wyoming, an outcome that was a priority for former President Donald Trump." .
+    # :Sentence_12bd76ab-06fe :mentions geo:6252001 .
+    # :Sentence_12bd76ab-06fe :mentions :Liz_Cheney .
+    # :Sentence_12bd76ab-06fe :mentions :Republican .
+    # :Sentence_12bd76ab-06fe :mentions :Wyoming .
+    # :Sentence_12bd76ab-06fe :mentions :Donald_Trump .
+    # :Sentence_12bd76ab-06fe :grade_level 10 .
+    # :Sentence_f77b6bb7-5e28 a :Sentence ; :offset 2 .
+    # :Sentence_f77b6bb7-5e28 :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
     #     former president, won 66.3% of the vote to Ms. Cheney’s 28.9%, with 95% of all votes counted." .
-    # :Sentence_5dc6ceb6-c794 :mentions :Harriet_Hageman .
-    # :Sentence_5dc6ceb6-c794 :mentions :Liz_Cheney .
-    # :Sentence_5dc6ceb6-c794 :summary "Harriet Hageman wins with 66.3% of the vote." .
-    # :Sentence_5dc6ceb6-c794 :sentiment "neutral" .
-    # :Sentence_5dc6ceb6-c794 :grade_level 8 .
-    # :Sentence_5dc6ceb6-c794 :rhetorical_device "logos" .
-    # :Sentence_5dc6ceb6-c794 :rhetorical_device_logos "Use of specific percentages and the phrase \'with 95% of all
-    #     votes counted\' provides statistical evidence to support the statement about the election results." .
-    # :Sentence_5dc6ceb6-c794 :has_semantic :Event_7d72b265-49cb .
-    # :Event_7d72b265-49cb a :Win ; :text "wins" .
-    # :Event_7d72b265-49cb :has_active_entity :Harriet_Hageman .
-    # :Noun_cb458936-1132 a :Measurement ; :text "66.3% of the vote" ; rdfs:label "66.3% of the vote" .
-    # :Event_7d72b265-49cb :has_quantification :Noun_cb458936-1132 .
-    # :Sentence_c8d9c156-f2bb a :Sentence ; :offset 3 .
-    # :Sentence_c8d9c156-f2bb :text "[Quotation0] Ms. Cheney said in her concession speech." .
-    # :Sentence_c8d9c156-f2bb :has_component :Quotation0 .
-    # :Sentence_c8d9c156-f2bb :mentions :House .
-    # :Sentence_c8d9c156-f2bb :mentions :Liz_Cheney .
-    # :Sentence_c8d9c156-f2bb :summary "Cheney delivers concession speech." .
-    # :Sentence_c8d9c156-f2bb :sentiment "neutral" .
-    # :Sentence_c8d9c156-f2bb :grade_level 8 .
-    # :Sentence_c8d9c156-f2bb :has_semantic :Event_a293a811-db36 .
-    # :Event_a293a811-db36 a :CommunicationAndSpeechAct ; :text "delivers" .
-    # :Event_a293a811-db36 :has_active_entity :Liz_Cheney .
-    # :Event_a293a811-db36 :has_topic [ :text "concession speech" ; a :Clause ] .
-    # :Sentence_0793bc9f-f0e8 a :Sentence ; :offset 4 .
-    # :Sentence_0793bc9f-f0e8 :text "She also claimed that Trump is promoting an insidious lie about the recent
-    #     FBI raid of his Mar-a-Lago residence." .
-    # :Sentence_0793bc9f-f0e8 :mentions :Donald_Trump .
-    # :Sentence_0793bc9f-f0e8 :mentions :FBI .
-    # :Sentence_0793bc9f-f0e8 :mentions :Mar_a_Lago .
-    # :Sentence_0793bc9f-f0e8 :summary "Cheney accuses Trump of spreading falsehoods about FBI raid." .
-    # :Sentence_0793bc9f-f0e8 :sentiment "negative" .
-    # :Sentence_0793bc9f-f0e8 :grade_level 8 .
-    # :Sentence_0793bc9f-f0e8 :rhetorical_device "hyperbole" .
-    # :Sentence_0793bc9f-f0e8 :rhetorical_device_hyperbole "The word \'insidious\' is an exaggerated term that
-    #     intensifies the nature of the lie being promoted." .
-    # :Sentence_0793bc9f-f0e8 :rhetorical_device "loaded language" .
-    # :Sentence_0793bc9f-f0e8 :rhetorical_device_loaded_language "The use of \'insidious\' is a loaded
-    #     language, implying a deceitful, harmful quality to the lie about the FBI raid." .
-    # :Sentence_0793bc9f-f0e8 :has_semantic :Event_3c10cd3a-d80d .
-    # :Event_3c10cd3a-d80d a :CommunicationAndSpeechAct ; :text "accuses" .
-    # :Event_3c10cd3a-d80d :has_active_entity :Liz_Cheney .
-    # :Event_3c10cd3a-d80d :has_affected_entity :Donald_Trump .
-    # :Event_3c10cd3a-d80d :has_topic [ :text "of spreading falsehoods about FBI raid" ; a :Clause ] .
-    # :Sentence_0793bc9f-f0e8 :has_semantic :Event_9d9942e0-6798 .
-    # :Event_9d9942e0-6798 a :DeceptionAndDishonesty ; :text "spreading falsehoods about FBI raid" .
-    # :Event_9d9942e0-6798 :has_active_entity :Donald_Trump .
-    # :Noun_b81e8c7a-c4df a :CommunicationAndSpeechAct ; :text "falsehoods" ; rdfs:label "falsehoods" .
-    # :Event_9d9942e0-6798 :has_topic :Noun_b81e8c7a-c4df .
-    # :Noun_88f3fb29-9ce8 a :Affiliation ; :text "about FBI raid" ; rdfs:label "about FBI raid" .
-    # :Event_9d9942e0-6798 :has_location :Noun_88f3fb29-9ce8 .
-    # :Quotation1 a :Quote ; :text "No House seat, no office in this land is more important than the
-    #     principles we swore to protect," .
-    # :Quotation1 :attributed_to :Liz_Cheney .
-    # :Quotation1 :summary "No position surpasses sworn principles in importance." .
-    # :Quotation1 :sentiment "positive" .
-    # :Quotation1 :grade_level 8 .
-    # :Quotation1 :rhetorical_device "exceptionalism" .
-    # :Quotation1 :rhetorical_device_exceptionalism "The phrase \'no House seat, no office in this land is more
-    #     important than the principles we swore to protect\' uses language that indicates the principles are
-    #     unique, extraordinary, or exemplary compared to any office or House seat." .
-    # :Quotation1 :rhetorical_device "pathos" .
-    # :Quotation1 :rhetorical_device_pathos "The statement appeals to the emotion of duty or honor by emphasizing the
-    #     importance of the principles over any political position." .
-
-
-# def test_sentences2():
-#    sent_dicts, quotations, quotations_dict = parse_narrative(sentences)
-#    success, index, graph_ttl = create_graph(quotations_dict, sent_dicts, 2)
-#    assert index == 2
+    # :Sentence_f77b6bb7-5e28 :mentions :Harriet_Hageman .
+    # :Sentence_f77b6bb7-5e28 :mentions :Liz_Cheney .
+    # :Sentence_f77b6bb7-5e28 :grade_level 10 .
+    # :Sentence_f77b6bb7-5e28 :rhetorical_device "logos" .
+    # :Sentence_f77b6bb7-5e28 :rhetorical_device_logos "The sentence uses statistics and numbers to convey the
+    #     election results, specifically the percentages of votes won by Harriet Hageman and Ms. Cheney, as well as
+    #     the percentage of votes counted." .
+    # :Sentence_6ce57152-27e7 a :Sentence ; :offset 3 .
+    # :Sentence_6ce57152-27e7 :text "“No House seat, no office in this land is more important than the principles we
+    #     swore to protect,” Ms. Cheney said in her concession speech." .
+    # :Sentence_6ce57152-27e7 :has_component :Quotation0 .
+    # :Sentence_6ce57152-27e7 :mentions :House .
+    # :Sentence_6ce57152-27e7 :mentions :Liz_Cheney .
+    # :Sentence_6ce57152-27e7 :grade_level 10 .
+    # :Sentence_6ce57152-27e7 :rhetorical_device "exceptionalism" .
+    # :Sentence_6ce57152-27e7 :rhetorical_device_exceptionalism "The phrase \'No House seat, no office in this land
+    #     is more important\' suggests that the principles are unique and of utmost importance, indicating a sense
+    #     of exceptionalism." .
+    # :Sentence_1e0eefaa-2a25 a :Sentence ; :offset 4 .
+    # :Sentence_1e0eefaa-2a25 :text "She also claimed that Trump is promoting an insidious lie about the recent FBI
+    #     raid of his Mar-a-Lago residence." .
+    # :Sentence_1e0eefaa-2a25 :mentions :Donald_Trump .
+    # :Sentence_1e0eefaa-2a25 :mentions :FBI .
+    # :Sentence_1e0eefaa-2a25 :mentions :Mar_a_Lago .
+    # :Sentence_1e0eefaa-2a25 :grade_level 10 .
+    # :Sentence_1e0eefaa-2a25 :rhetorical_device "loaded language" .
+    # :Sentence_1e0eefaa-2a25 :rhetorical_device_loaded_language "The phrase \'insidious lie\' uses loaded language
+    #     with strong connotations that invoke emotions and judgments about the nature of the lie." .
+    # **** Sentence semantics ****
+    # :Sentence_12bd76ab-06fe :summary "Liz Cheney conceded defeat in Wyoming Republican primary." .
+    # :Sentence_12bd76ab-06fe :has_semantic :Event_3267344e-5c1e .
+    # :Event_3267344e-5c1e :text "conceded" .
+    # :Event_3267344e-5c1e a :Loss ; :confidence-Loss 100 .
+    # :Event_3267344e-5c1e :has_active_entity :Liz_Cheney .
+    # :Event_3267344e-5c1e :text "defeat" .
+    # :Event_3267344e-5c1e :has_time [ a :Time ; :text "Tuesday" ] .
+    # :Noun_c60cee00-4680 a :PoliticalEvent ; :text "Republican primary" ; :confidence 90 .
+    # :Event_3267344e-5c1e :has_context :Noun_c60cee00-4680 .
+    # :Event_3267344e-5c1e :has_location :Wyoming .
+    # :Sentence_12bd76ab-06fe :has_semantic :Event_64fbd340-2f0b .
+    # :Event_64fbd340-2f0b :text "was" .
+    # :Event_64fbd340-2f0b a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
+    # :Noun_abad90fc-08ed a :End ; :text "outcome" ; :confidence 100 .
+    # :Event_64fbd340-2f0b :has_context :Noun_abad90fc-08ed .
+    # :Noun_ef94f581-1e55 a :Assessment ; :text "priority" ; :confidence 100 .
+    # :Event_64fbd340-2f0b :has_quantification :Noun_ef94f581-1e55 .
+    # :Event_64fbd340-2f0b :has_context :Donald_Trump .
+    # :Sentence_f77b6bb7-5e28 :summary "Harriet Hageman won Wyoming primary with Trump\'s endorsement." .
+    # :Sentence_f77b6bb7-5e28 :has_semantic :Event_27a9f563-2658 .
+    # :Event_27a9f563-2658 :text "won" .
+    # :Event_27a9f563-2658 a :Win ; :confidence-Win 100 .
+    # :Event_27a9f563-2658 :has_active_entity :Harriet_Hageman .
+    # :Noun_ff01c9fb-4030 a :Measurement ; :text "66.3% of the vote" ; :confidence 90 .
+    # :Event_27a9f563-2658 :has_quantification :Noun_ff01c9fb-4030 .
+    # :Sentence_f77b6bb7-5e28 :has_semantic :Event_137118b7-13e2 .
+    # :Event_137118b7-13e2 :text "was endorsed" .
+    # :Event_137118b7-13e2 a :Affiliation ; :confidence-Affiliation 100 .
+    # :Event_137118b7-13e2 :affiliated_with :Harriet_Hageman .
+    # :Noun_e83ad3e4-ab3b a :Person ; :text "former President Donald Trump" ; :confidence 100 .
+    # :Event_137118b7-13e2 :has_active_entity :Noun_e83ad3e4-ab3b .
+    # :Sentence_6ce57152-27e7 :summary "Cheney made a concession speech." .
+    # :Sentence_6ce57152-27e7 :has_semantic :Event_83bfcdd8-7c40 .
+    # :Event_83bfcdd8-7c40 :text "said" .
+    # :Event_83bfcdd8-7c40 a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 100 .
+    # :Event_83bfcdd8-7c40 :has_active_entity :Liz_Cheney .
+    # :Noun_18e4076e-01e4 a :InformationSource ; :text "concession speech" ; :confidence 90 .
+    # :Event_83bfcdd8-7c40 :has_context :Noun_18e4076e-01e4 .
+    # :Sentence_1e0eefaa-2a25 :summary "Cheney claimed Trump promotes lie about Mar-a-Lago raid." .
+    # :Sentence_1e0eefaa-2a25 :has_semantic :Event_2c79be45-d419 .
+    # :Event_2c79be45-d419 :text "claimed" .
+    # :Event_2c79be45-d419 a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 100 .
+    # :Event_2c79be45-d419 :has_active_entity :Liz_Cheney .
+    # :Noun_4b469d2d-57c4 a :DeceptionAndDishonesty ; :text "insidious lie" ; :confidence 95 .
+    # :Event_2c79be45-d419 :has_context :Noun_4b469d2d-57c4 .
+    # :Sentence_1e0eefaa-2a25 :has_semantic :Event_16b28f72-7c5e .
+    # :Event_16b28f72-7c5e :text "is promoting" .
+    # :Event_16b28f72-7c5e a :DeceptionAndDishonesty ; :confidence-DeceptionAndDishonesty 100 .
+    # :Event_16b28f72-7c5e :has_active_entity :Donald_Trump .
+    # :Event_16b28f72-7c5e :text "insidious lie" .
+    # :Noun_06a2682d-b7dd a :LawEnforcement ; :text "FBI raid" ; :confidence 90 .
+    # :Event_16b28f72-7c5e :has_context :Noun_06a2682d-b7dd .
+    # :Noun_58615f69-3256 a :Location ; :text "Mar-a-Lago residence" ; :confidence 100 .
+    # :Event_16b28f72-7c5e :has_location :Noun_58615f69-3256 .
+    # :Quotation0 a :Quote ; :text "No House seat, no office in this land is more important than the principles we
+    #     swore to protect," .
+    # :Quotation0 :attributed_to :Liz_Cheney .
+    # :Quotation0 :grade_level 10 .
+    # :Quotation0 :rhetorical_device "exceptionalism" .
+    # :Quotation0 :rhetorical_device_exceptionalism "The phrase \'no office in this land is more important\' suggests
+    #     that the principles are unique and exemplary, indicating exceptionalism." .

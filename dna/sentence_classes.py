@@ -11,18 +11,16 @@ class Sentence:
     Class holding sentence details from the NLP processing
     """
     text: str = empty_string       # Sentence text
+    original_text: str = empty_string      # Original sentence text before processing the Quotations
     offset: int = 1                # Offset of the sentence within the narrative/article (starting with 1)
     entities: list = []            # List of the Entity Class instances from NER processing
-    punctuations: list = []        # List of enumerated values indicating the punctuation in the sentence
-    verbs: list = []               # List of root and clausal verbs (strings) in the sentence
     iri: str = empty_string        # Sentence IRI (in resulting Turtle)
 
-    def __init__(self, text: str, offset: int, entities: list, punctuations: list, verbs: list):
+    def __init__(self, text: str, original: str, offset: int, entities: list):
         self.text = text
+        self.original_text = original
         self.offset = offset
         self.entities = entities
-        self.punctuations = punctuations
-        self.verbs = verbs
         self.iri = f':Sentence_{str(uuid.uuid4())[:13]}'
 
 
@@ -32,8 +30,8 @@ class Quotation(Sentence):
     """
     attribution: str = empty_string      # Speaker attribution
 
-    def __init__(self, text: str, offset: int, entities: list, punctuations: list, verbs: list, attribution: str):
-        super(Quotation, self).__init__(text, offset, entities, punctuations, verbs)
+    def __init__(self, text: str, offset: int, entities: list, attribution: str):
+        super(Quotation, self).__init__(text, text, offset, entities)
         self.attribution = attribution
         self.iri = f':Quotation{str(offset)}'
 
@@ -50,6 +48,6 @@ class Entity:
         self.ner_type = ner_type
 
 
-class Punctuation(Enum):
+class Punctuation(Enum):    # FUTURE
     QUESTION = 1
     EXCLAMATION = 2

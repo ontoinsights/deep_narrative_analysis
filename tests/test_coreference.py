@@ -10,43 +10,34 @@ sent3 = 'Harriet Hageman won the primary.'
 sent4 = 'She did not lose.'
 sent5 = 'Anna saw Heidi cut the roses, but she did not recognize that it was Heidi who cut the roses.'
 sent6 = 'Anna saw that Heidi was cutting the roses but she did not recognize that it was Heidi who cut the roses.'
-sent_corrections = 'Abortion-rights supporters across the country want the question on the ballot following the ' \
-                   'overturning of Roe v. Wade.'
 
 
 def test_sent1():
-    coref_dict = access_api(coref_prompt.replace('{sentences}', '').replace("{sent_text}", sent1))
-    updated_text = coref_dict['updated_text']
-    assert 'Donald Trump urged GOP voters' in updated_text
+    coref_dict = access_api(coref_prompt.replace('{sentences}', sent1))
+    updated_text = coref_dict['updated_sentences']
+    assert 'Donald Trump urged GOP voters' in updated_text[0]
 
 
 def test_sent1_sent2():
-    coref_dict = access_api(coref_prompt.replace('{sentences}', sent1).replace("{sent_text}", sent2))
-    updated_text = coref_dict['updated_text']
-    assert 'Liz Cheney then compared Liz Cheney' in updated_text
+    coref_dict = access_api(coref_prompt.replace('{sentences}', f'{sent1} {sent2}'))
+    updated_text = coref_dict['updated_sentences']
+    print(updated_text)
+    assert 'Liz Cheney then compared Liz Cheney' in updated_text[1]
 
 
-def test_sent2_sent3_sent4():
-    coref_dict = access_api(coref_prompt.replace('{sentences}', f'{sent2} {sent3}')
-                            .replace("{sent_text}", sent4))
-    updated_text = coref_dict['updated_text']
-    assert 'Harriet Hageman did not lose' in updated_text
+def test_sent1_to_sent4():
+    coref_dict = access_api(coref_prompt.replace('{sentences}', f'{sent1} {sent2} {sent3} {sent4}'))
+    updated_text = coref_dict['updated_sentences']
+    assert 'Harriet Hageman did not lose' in updated_text[3]
 
 
 def test_sent5():
-    coref_dict = access_api(coref_prompt.replace('{sentences}', '').replace("{sent_text}", sent5))
-    updated_text = coref_dict['updated_text']
-    assert 'Anna did not recognize' in updated_text
+    coref_dict = access_api(coref_prompt.replace('{sentences}', sent5))
+    updated_text = coref_dict['updated_sentences']
+    assert 'Anna did not recognize' in updated_text[0]
 
 
 def test_sent6():
-    coref_dict = access_api(coref_prompt.replace('{sentences}', '').replace("{sent_text}", sent6))
-    updated_text = coref_dict['updated_text']
-    assert 'Anna did not recognize' in updated_text
-
-
-def test_corrections():
-    nouns_dict = nouns_preload('foo')
-    noun_type, noun_iri = check_if_noun_is_known('Roe v. Wade', 'LAW', nouns_dict)
-    assert noun_type == 'LAW'
-    assert noun_iri == ':Roe_v_Wade'
+    coref_dict = access_api(coref_prompt.replace('{sentences}', sent6))
+    updated_text = coref_dict['updated_sentences']
+    assert 'Anna did not recognize' in updated_text[0]

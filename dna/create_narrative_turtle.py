@@ -3,19 +3,30 @@
 #    and the text is analyzed using OpenAI
 
 import logging
+from dataclasses import dataclass
+
 import openai
 import os
 import re
+import traceback
 from rdflib import Literal
 from typing import List
 
 from dna.database import query_database
 from dna.database_queries import query_corrections, query_manual_corrections
-from dna.process_sentences import get_sentence_details
-from dna.query_openai import access_api, coref_prompt
+from dna.process_sentences import get_sentence_details, sentence_semantics_processing
 from dna.sentence_classes import Sentence, Quotation, Punctuation
-from dna.utilities_and_language_specific import empty_string, ner_dict, personal_pronouns, space, \
-    ttl_prefixes, underscore
+from dna.utilities_and_language_specific import (empty_string, ner_dict, personal_pronouns, space,
+                                                 ttl_prefixes, underscore)
+
+@dataclass
+class GraphResults:
+    """
+    Dataclass holding the results of the create_graph function
+    """
+    success: bool              # Success boolean
+    number_sentences: int      # Integer indicating the number of sentences processed
+    turtle: list               # List of the Turtle statements encoding the narrative (if successful)
 
 
 def _update_nouns(bindings: list, nouns_dictionary: dict):
@@ -36,7 +47,13 @@ def _update_nouns(bindings: list, nouns_dictionary: dict):
             continue
         entity_ner = empty_string
         for key, value in ner_dict.items():
-            if value == f':{entity_type}':     # TODO: Include the class hierarchy in eval (eg, GovEntity -> OrgEntity)
+            if key == 'NORP':
+                for class_type in (':Ethnicity', ':ReligiousGroup', ':PoliticalGroup',
+                                   ':PoliticalIdeology', ':ReligiousBelief', ':GroupOfAgents'):
+                    if class_type == f':{entity_type}':
+                        entity_ner = class_type
+                        break
+            elif value == f':{entity_type}':   # TODO: (Future) Address class hierarchies such as GovEntity->OrgEntity
                 entity_ner = key
                 break
         if not entity_ner:
@@ -45,20 +62,19 @@ def _update_nouns(bindings: list, nouns_dictionary: dict):
     return
 
 
-def create_graph(sentence_instance_list: list, quotation_instance_list: list,
-                 number_sentences: int, repo: str) -> (bool, list):
+def create_graph(sentence_instance_list: list, quotation_instance_list: list, partial_quotes_list: list,
+                 number_sentences: int, repo: str) -> GraphResults:
     """
-    Using the instances of the Sentence Class defining each sentence in the narrative/article,
-    create the Turtle rendering of the details.
+    Based on the sentences and quotations, create the Turtle rendering of the details.
 
     :param sentence_instance_list: An array of Sentence Class instances extracted from a narrative
     :param quotation_instance_list: An array of Quotation Class instances extracted from the original text
+    :param partial_quotes_list: An array of strings that specify the quotation text when only a few words
+            are mentioned. The format of the strings in the array is "Partial#: quote_text".
     :param number_sentences: An integer indicating the number of sentences to fully ingest (a number
-                             greater than 1; by default up to 10 sentences are ingested)
+            greater than 1; by default up to 10 sentences are ingested)
     :param repo: String holding the repository name for the narrative graph
-    :return: A tuple consisting of a boolean indicating success (if true) or failure, an integer
-             indicating the number of sentences processed, and a list of the Turtle statements
-             encoding the narrative (if successful)
+    :return: Instance of the GraphResults dataclass
     """
     logging.info(f'Creating narrative Turtle')
     graph_ttl_list = ttl_prefixes[:]
@@ -66,60 +82,56 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     #    due to co-reference/multiple reference
     # Keys = the texts and Values = entity's spaCy NER type and its IRI
     nouns_dictionary = nouns_preload(repo)
-    for index in range(0, len(sentence_instance_list)):
-        sentence_iri = sentence_instance_list[index].iri
-        sentence_text = sentence_instance_list[index].text
-        sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sentence_instance_list[index].offset} .',
-                             f'{sentence_iri} :text {Literal(sentence_text).n3()} .']
-        # Capture whether the sentence is a question or exclamation; Future: Handle ! and ?
-        for punctuation in sentence_instance_list[index].punctuations:
-            if punctuation == Punctuation.QUESTION:
-                sentence_ttl_list.append(f'{sentence_iri} a :Inquiry .')
-            elif punctuation == Punctuation.EXCLAMATION:
-                sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
-        sentence_type = 'mentions'
-        if not (index + 1 > number_sentences):    # Full processing only up to the requested number of sentences
-            sentence_type = 'complete'
-            updated_text = sentence_text
-            # Get a version of the sentence with co-references resolved, if needed
-            if any([(sentence_text.startswith(f'{pers_pronoun} '.title()) or f' {pers_pronoun} ' in sentence_text or
-                     f'{pers_pronoun}.' in sentence_text) for pers_pronoun in personal_pronouns]):
-                # TODO: Can this be improved? 2 previous sentences, but too much previous text distorts de-referencing
-                preceding_sentences = empty_string
-                if index == 1:
-                    preceding_sentences = sentence_instance_list[0].text
-                elif index > 1:
-                    preceding_sentences = sentence_instance_list[index - 2].text + space + \
-                                          sentence_instance_list[index - 1].text
-                try:
-                    coref_dict = access_api(coref_prompt.replace('{sentences}', preceding_sentences)
-                                            .replace("{sent_text}", sentence_text))
-                    if coref_dict['updated_text'] not in ('error', 'string'):
-                        updated_text = coref_dict['updated_text']
-                except Exception:
-                    logging.error(f'Exception in getting coreference details for the text, {sentence_text}')
-                    continue
-        # Get the sentence details using OpenAI prompting
+    sentences = {}      # Will hold sentence text up to the total number of sentences to be analyzed
+    for index, sentence_instance in enumerate(sentence_instance_list):
+        sentence_iri = sentence_instance.iri
+        # Remove double quotes since there are problems with the rdflib Literal rendering
+        original_text = sentence_instance.original_text.replace('"', "'")
+        sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sentence_instance.offset} .',
+                             f'{sentence_iri} :text {Literal(original_text).n3()} .']
+        # TODO: (Future) Should DNA Capture whether the sentence is a question or exclamation?
+        # for punctuation in sentence_instance_list[index].punctuations:
+        #     if punctuation == Punctuation.QUESTION:
+        #         sentence_ttl_list.append(f'{sentence_iri} a :Inquiry .')
+        #     elif punctuation == Punctuation.EXCLAMATION:
+        #         sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
         try:
-            get_sentence_details(sentence_instance_list[index], updated_text, sentence_ttl_list, sentence_type,
-                                 nouns_dictionary, quotation_instance_list, repo)
+            get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary,
+                                 quotation_instance_list, repo)
             graph_ttl_list.extend(sentence_ttl_list)
-        except Exception as e:   # Triples not added for sentence
-            logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {sentence_text}')
+        except Exception as e:
+            logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {original_text}')
+            print(traceback.format_exc())
             continue
-    # Add the quotation sentence details to the Turtle
-    # Quotation analysis is not limited by the number of sentences to ingest
+        if index + 1 < number_sentences:    # Full processing only up to the requested number of sentences
+            # Processing the events and states, and related nouns
+            sentences[sentence_iri] = sentence_instance.text
+    if sentences:
+        try:
+            semantics_ttl = sentence_semantics_processing(sentences, nouns_dictionary)
+            graph_ttl_list.extend(semantics_ttl)
+        except Exception as e:
+            logging.error(f'Exception ({str(e)}) in getting sentence semantics for the text')
+            print(traceback.format_exc())
+    # Add the quotation details to the Turtle
     for quotation in quotation_instance_list:
         quote_iri = quotation.iri
         quote_ttl_list = [f'{quote_iri} a :Quote ; :text {Literal(quotation.text).n3()} .']
         try:
-            get_sentence_details(quotation, quotation.text, quote_ttl_list, 'quote', nouns_dictionary, [], repo)
+            get_sentence_details(quotation, quote_ttl_list, 'quote', nouns_dictionary, [], repo)
             graph_ttl_list.extend(quote_ttl_list)
         except Exception as e:    # Triples not added for quote
             logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quotation.text}')
+            print(traceback.format_exc())
             continue
-    return True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list), \
-        graph_ttl_list
+    # Add partial quote details for short text
+    for partial in partial_quotes_list:
+        partial_iri = partial.split(':', 1)[0]
+        partial_text = partial.split(': ', 1)[1].strip()
+        graph_ttl_list.append(f'{partial_iri} a :Quote ; :text {Literal(partial_text).n3()} .')
+    return GraphResults(
+        True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list),
+        graph_ttl_list)
 
 
 def nouns_preload(repo: str) -> dict:

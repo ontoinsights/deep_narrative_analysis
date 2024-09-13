@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: June 1 2024
+# Last modified: September 6 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,7 +23,7 @@
 # Changes:
 #  Added/clarified number_sentences, number_ingested and rhetorical devices
 #  Added Clause, Correction
-#  Added interpretation, ranking and segment_level
+#  Added interpretation, ranking, segment_level and sentiment_explanation
 ########################################################################
 
 
@@ -144,11 +144,17 @@
 
 :sentiment a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "sentiment"@en ;
-  rdfs:domain :Sentence ;
+  rdfs:domain :Narrative ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:oneOf  ( "negative" "neutral" "positive" ) ] ;
-  rdfs:comment "String restricted to a set of values that indicate whether a Sentence conveys a 'positive', 'negative' or 'neutral' sentiment."@en .
+  rdfs:comment "String restricted to a set of values that indicate whether a Narrative conveys a 'positive', 'negative' or 'neutral' sentiment."@en .
+
+:sentiment_explanation a owl:DatatypeProperty, owl:FunctionalProperty ;
+  rdfs:label "sentiment explanation"@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range xsd:string ;
+  rdfs:comment "String explaining why a sentiment of 'positive', 'negative' or 'neutral' was assigned to a Narrative."@en .
   
 :source a owl:DatatypeProperty ;
   rdfs:label "source"@en ;
