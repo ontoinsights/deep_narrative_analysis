@@ -11,18 +11,15 @@ class Sentence:
     Class holding sentence details from the NLP processing
     """
     text: str = empty_string       # Sentence text
-    original_text: str = empty_string      # Original sentence text before processing the Quotations
     offset: int = 1                # Offset of the sentence within the narrative/article (starting with 1)
     entities: list = []            # List of the Entity Class instances from NER processing
     iri: str = empty_string        # Sentence IRI (in resulting Turtle)
 
-    def __init__(self, text: str, original: str, offset: int, entities: list):
+    def __init__(self, text: str, offset: int, entities: list):
         self.text = text
-        self.original_text = original
         self.offset = offset
         self.entities = entities
         self.iri = f':Sentence_{str(uuid.uuid4())[:13]}'
-
 
 class Quotation(Sentence):
     """
@@ -31,9 +28,9 @@ class Quotation(Sentence):
     attribution: str = empty_string      # Speaker attribution
 
     def __init__(self, text: str, offset: int, entities: list, attribution: str):
-        super(Quotation, self).__init__(text, text, offset, entities)
+        super(Quotation, self).__init__(text, 0, [])
         self.attribution = attribution
-        self.iri = f':Quotation{str(offset)}'
+        self.iri = f':Quotation_{str(uuid.uuid4())[:13]}'
 
 
 class Entity:

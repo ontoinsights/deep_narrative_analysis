@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Deep Narrative Analysis RESTful APIs v1.2
+  title: Deep Narrative Analysis RESTful APIs v1.3
   description: |-
     Defines the interface for ingesting, retrieving, editing and deleting 
     narratives and news articles using the Deep Narrative Analysis (DNA) 
@@ -22,7 +22,23 @@ info:
     - OR -
     - Use an existing repository (existing repositories are listed by 
       GETting /dna/v1/repositories)
-    - THEN - 
+    - THEN (optionally) - 
+    - Add background details (people, places, businesses, 
+      ...) by POSTing to 
+      /dna/v1/repositories/background?repository=repo_name their 
+      entity types
+      - Adding background information improves processing time
+        and assures better named entity resolution
+      - Note that it is not necessary to input country names as
+        background, since these details are already captured
+    - It is also possible to review the background entities by
+      GETting /dna/v1/repositories/background?repository=repo_name 
+    - OR -
+    - If an entity is incorrectly entered/typed, remove it by
+      DELETEing the entry using
+      /dna/v1/repositories/background?repository=repo_name&
+      name=noun_name
+    - THEN -
     - Ingest a narrative or news article by POSTing its metadata 
       and text to 
       /dna/v1/repositories/narrative-texts?repository=repo_name 
@@ -30,8 +46,8 @@ info:
       (the response body will contain the narrative's id as stored in
       the repository)
       - Only English text articles are currently processed
-      - Automated ingest is possible but many sites require subscriptions
-        which are not currently supported 
+      - Automated ingest will be supported in the future but many 
+        sites require subscriptions which must be resolved 
     - OR - 
     - Determine which (already ingested) articles or narratives 
       are of interest by GETting 
@@ -65,7 +81,7 @@ info:
   license:
     name: Creative Commons Attribution 4.0 International Public License
     url: https://creativecommons.org/licenses/by/4.0/legalcode
-  version: '1.2'
+  version: '1.3'
 paths:
   /dna/v1/repositories:
     get:
@@ -174,6 +190,163 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalError'  
+  /dna/v1/repositories/background:
+    get:
+      summary: >-
+        Get a list of all proper nouns saved as 'background' 
+        information in the specified repository
+      description: >-
+        Return the names and Wikidata Q-Ids for all proper
+        nouns, provided as 'background', to the specified 
+        repository
+      parameters:
+        - $ref: '#/components/parameters/repository'
+      operationId: getNames
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    example: foo
+                  backgroundNames:
+                    $ref: '#/components/schemas/NameList'
+        '400':
+          description: Background list - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest' 
+        '404':
+          description: Background list - Repository not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found at http://example.com
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    post:
+      summary: >-
+        Input one or more proper nouns and their types
+        (people, places, organizations, ...)  as background 
+        details to the specified repository
+      description: >-
+        Process the names and entity types in the request 
+        body, adding details such as alternate names 
+        and descriptive information from Wikidata or GeoNames, to 
+        the specified repository; Return information indicates
+        the proper nouns that have been added as background and
+        any nouns that were skipped due to errors
+      parameters:
+        - $ref: '#/components/parameters/repository'
+      operationId: inputNames
+      requestBody:
+        description: Input entity names
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  backgroundNames:
+                    $ref: '#/components/schemas/NameList'
+        required: true
+      responses:
+        '201':
+          description: Background information added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    example: foo
+                  processedNames:
+                    $ref: '#/components/schemas/NameList'
+                  skippedNames:
+                    $ref: '#/components/schemas/NameList'
+        '400':
+          description: Background input - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Background input - Repository not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Repository with the name, foo, was not found at http://example.com
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError'  
+    delete:
+      summary: Delete a background entity
+      description: >-
+        Delete the specified proper noun from 'background'
+        information in the repository
+      parameters:
+        - $ref: '#/components/parameters/repository'
+        - $ref: '#/components/parameters/nounName'
+      operationId: deleteName
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  repository:
+                    type: string
+                    example: dna
+                  deleted:
+                    type: string
+                    example: Douglas Adams
+        '400':
+          description: Background delete - Missing or invalid content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'  
+        '404':
+          description: Background delete - Repository or entity IRI not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: >-
+                      The name, Douglas Adams, was not found in the
+                      background information of the repository, foo, 
+                      at http://example.com
+        '500':
+          description: Internal processing error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalError' 
   /dna/v1/repositories/narratives:
     get:
       summary: >-
@@ -431,6 +604,14 @@ components:
         type: string
         format: uuid
         example: 73cf1b89
+    nounName:
+      name: name
+      in: query
+      description: String specifying the entity name
+      required: true
+      schema:
+        type: string
+        example: Douglas Adams
     sentences:
       name: sentences
       in: query
@@ -509,6 +690,31 @@ components:
           type: array
           items:
             type: string
+    NameList:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: >-
+              The entity's proper noun/name
+            example: Douglas Adams
+          type:
+            type: string
+            description: >-
+              An enumerated value indicating if the name describes a
+              "organization" (including businesses), "law", "person", 
+              "place" or "thing"
+            enum: [law, organization, person, place, thing]
+            example: person
+          isCollection:
+            type: boolean
+            default: false
+            description: >-
+              Boolean indicating whether the noun describes a 
+              collection/group of businesses, laws, persons, ...
+            example: false
     NarrativeDetails:
       type: object
       properties:

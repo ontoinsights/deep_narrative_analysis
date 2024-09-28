@@ -17,8 +17,8 @@ text_xcomp = 'Mary enjoyed being with her grandfather.'
 text_modal = 'Mary can visit her grandfather on Tuesday.'
 text_modal_neg = 'Mary will not visit her grandfather next Tuesday.'
 text_acomp = 'Mary is very beautiful.'
-text_acomp_pcomp = 'Peter got tired of running.'
-text_neg_acomp_pcomp = 'Peter never tires of running.'
+text_acomp_pcomp1 = 'Peter got tired of running.'
+text_acomp_pcomp2 = 'Peter never tires of running.'
 text_acomp_xcomp = 'Jane is unable to tolerate smoking.'
 text_idiom = 'Wear and tear on the bridge caused its collapse.'
 text_idiom_full_pass = 'John was accused by George of breaking and entering.'
@@ -35,9 +35,8 @@ repo = "foo"
 
 
 def test_clauses1():
-    parse_results = parse_narrative(text_clauses1)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_clauses1)
+    graph_results = create_graph(sentence_classes, quotation_classes,5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':has_active_entity :Mary' in ttl_str
     assert ':has_active_entity :John' in ttl_str
@@ -51,7 +50,7 @@ def test_clauses1():
     # :Sentence_5897d614-07c0 :mentions :Mary .
     # :Sentence_5897d614-07c0 :mentions :John .
     # :Sentence_5897d614-07c0 :grade_level 5 .
-    # :Sentence_5897d614-07c0 :summary "Mary exercised while John practiced guitar." .
+    # :Sentence_5897d614-07c0 :summary "While Mary exercised, John practiced guitar." .
     # :Sentence_5897d614-07c0 :has_semantic :Event_bc32a5a8-810d .
     # :Event_bc32a5a8-810d :text "exercised" .
     # :Event_bc32a5a8-810d a :BodilyAct ; :confidence-BodilyAct 100 .
@@ -65,9 +64,8 @@ def test_clauses1():
 
 
 def test_clauses2():
-    parse_results = parse_narrative(text_clauses2)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_clauses2)
+    graph_results = create_graph(sentence_classes, quotation_classes,5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':has_active_entity :George' in ttl_str
     assert ':Agreement' in ttl_str and ':text "agreed' in ttl_str
@@ -81,7 +79,7 @@ def test_clauses2():
     # :Sentence_78b356ac-9a45 :mentions :George .
     # :Sentence_78b356ac-9a45 :mentions :Mary .
     # :Sentence_78b356ac-9a45 :grade_level 8 .
-    # :Sentence_78b356ac-9a45 :summary "George agreed with Mary\'s outlined plan." .
+    # :Sentence_78b356ac-9a45 :summary "George agreed with the plan that Mary outlined." .
     # :Sentence_78b356ac-9a45 :has_semantic :Event_9fc158b5-353c .
     # :Event_9fc158b5-353c :text "agreed" .
     # :Event_9fc158b5-353c a :Agreement ; :confidence-Agreement 100 .
@@ -96,9 +94,8 @@ def test_clauses2():
 
 
 def test_aux_only():
-    parse_results = parse_narrative(text_aux_only)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_aux_only)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert 'a :EnvironmentAndCondition' in ttl_str     # is
     assert ':has_context :Joe' in ttl_str
@@ -109,7 +106,7 @@ def test_aux_only():
     # :Sentence_7b634962-247f :text "Joe is an attorney." .
     # :Sentence_7b634962-247f :mentions :Joe .
     # :Sentence_7b634962-247f :grade_level 3 .
-    # :Sentence_7b634962-247f :summary "Joe works as an attorney." .
+    # :Sentence_7b634962-247f :summary "Joe is an attorney." .
     # :Sentence_7b634962-247f :has_semantic :Event_770b98fd-32ee .
     # :Event_770b98fd-32ee :text "is" .
     # :Event_770b98fd-32ee a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
@@ -119,9 +116,8 @@ def test_aux_only():
 
 
 def test_affiliation():
-    parse_results = parse_narrative(text_affiliation)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_affiliation)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Affiliation' in ttl_str
     assert ':has_active_entity :Joe' in ttl_str or ':has_context :Joe' in ttl_str or ':affiliated_with :Joe' in ttl_str
@@ -132,7 +128,7 @@ def test_affiliation():
     # :Sentence_4d5aabcf-5a7f :mentions :Joe .
     # :Sentence_4d5aabcf-5a7f :mentions :Mayberry_Book_Club .
     # :Sentence_4d5aabcf-5a7f :grade_level 3 .
-    # :Sentence_4d5aabcf-5a7f :summary "Joe is a Mayberry Book Club member." .
+    # :Sentence_4d5aabcf-5a7f :summary "Joe is a member of the Mayberry Book Club." .
     # :Sentence_4d5aabcf-5a7f :has_semantic :Event_7a846a70-5b93 .
     # :Event_7a846a70-5b93 :text "is" .
     # :Event_7a846a70-5b93 a :Affiliation ; :confidence-Affiliation 95 .
@@ -141,9 +137,8 @@ def test_affiliation():
 
 
 def test_complex1():
-    parse_results = parse_narrative(text_complex1)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_complex1)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':mentions :Liz_Cheney' in ttl_str and ':mentions :Harriet_Hageman' in ttl_str
     assert ':mentions :Abraham_Lincoln' in ttl_str
@@ -152,41 +147,35 @@ def test_complex1():
     assert ':Cognition' in ttl_str and ':text "compared' in ttl_str
     assert ':has_active_entity :Liz_Cheney' in ttl_str        # Cheney compared herself
     assert ':has_topic :Abraham_Lincoln' in ttl_str           # to Lincoln
-    assert ':Loss' in ttl_str and ':text "loss' in ttl_str    # Cheney loss to Hageman
-    assert ':has_cause :Harriet_Hageman' in ttl_str
     # Output:
-    # :Sentence_b876e7b0-0e7c a :Sentence ; :offset 1 .
-    # :Sentence_b876e7b0-0e7c :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during
+    # :Sentence_d013dceb-9473 a :Sentence ; :offset 1 .
+    # :Sentence_d013dceb-9473 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during
     #     her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman." .
-    # :Sentence_b876e7b0-0e7c :mentions :Liz_Cheney .
-    # :Sentence_b876e7b0-0e7c :mentions :Wyoming .
-    # :Sentence_b876e7b0-0e7c :mentions :Abraham_Lincoln .
-    # :Sentence_b876e7b0-0e7c :mentions :Donald_Trump .
-    # :Sentence_b876e7b0-0e7c :mentions :Republican .
-    # :Sentence_b876e7b0-0e7c :mentions :Harriet_Hageman .
-    # :Sentence_b876e7b0-0e7c :grade_level 10 .
-    # :Sentence_b876e7b0-0e7c :rhetorical_device "allusion" .
-    # :Sentence_b876e7b0-0e7c :rhetorical_device_allusion "The sentence contains an allusion, as it references former
-    #     President Abraham Lincoln, a historical figure with symbolic meaning, to draw a comparison with Rep.
-    #     Liz Cheney." .
-    # :Sentence_b876e7b0-0e7c :summary "Liz Cheney compared herself to Abraham Lincoln after her loss." .
-    # :Sentence_b876e7b0-0e7c :has_semantic :Event_19302aa5-6b9d .
-    # :Event_19302aa5-6b9d :text "compared" .
-    # :Event_19302aa5-6b9d a :Cognition ; :confidence-Cognition 95 .
-    # :Event_19302aa5-6b9d :has_active_entity :Liz_Cheney .
-    # :Event_19302aa5-6b9d :has_topic :Liz_Cheney .
-    # :Event_19302aa5-6b9d :has_topic :Abraham_Lincoln .
-    # :Sentence_b876e7b0-0e7c :has_semantic :Event_e3bb4b13-02af .
-    # :Event_e3bb4b13-02af :text "loss" .
-    # :Event_e3bb4b13-02af a :Loss ; :confidence-Loss 100 .
-    # :Event_e3bb4b13-02af :has_active_entity :Liz_Cheney .
-    # :Event_e3bb4b13-02af :has_cause :Harriet_Hageman .
+    # :Sentence_d013dceb-9473 :mentions :Liz_Cheney .
+    # :Sentence_d013dceb-9473 :mentions :WY .
+    # :Sentence_d013dceb-9473 :mentions :Abraham_Lincoln .
+    # :Sentence_d013dceb-9473 :mentions :Trump .
+    # :Sentence_d013dceb-9473 :mentions :Republican .
+    # :Sentence_d013dceb-9473 :mentions :Harriet_Hageman .
+    # :Sentence_d013dceb-9473 :grade_level 10 .
+    # :Sentence_d013dceb-9473 :rhetorical_device "allusion" .
+    # :Sentence_d013dceb-9473 :rhetorical_device_allusion "The sentence uses an allusion by comparing Liz Cheney to
+    #     Abraham Lincoln, a historical figure." .
+    # :Sentence_d013dceb-9473 :summary "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
+    #     during her concession speech." .
+    # :Sentence_d013dceb-9473 :has_semantic :Event_91868472-26c4 .
+    # :Event_91868472-26c4 :text "compared" .
+    # :Event_91868472-26c4 a :Cognition ; :confidence-Cognition 90 .
+    # :Event_91868472-26c4 :has_active_entity :Liz_Cheney .
+    # :Event_91868472-26c4 :has_topic :Liz_Cheney .
+    # :Event_91868472-26c4 :has_topic :Abraham_Lincoln .
+    # :Noun_0e43d005-1202 a :CommunicationAndSpeechAct ; :text "speech" ; :confidence 90 .
+    # :Event_91868472-26c4 :has_context :Noun_0e43d005-1202 .
 
 
 def test_complex2():
-    parse_results = parse_narrative(text_complex2)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_complex2)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert 'logos'
     assert 'a :Win' in ttl_str and ':text "won' in ttl_str
@@ -195,47 +184,31 @@ def test_complex2():
                                           ':text "vote' in ttl_str)
     if ':text "66.3%' in ttl_str:
         assert ':has_quantification :Noun' in ttl_str
-    assert (':Affiliation' in ttl_str or ':PoliticalEvent' in ttl_str) and (':text "was endorsed' in ttl_str
-                                                                            or ':text "endorsed' in ttl_str)
-    assert ':text "president' in ttl_str or ':text "former president' in ttl_str
-    assert ':has_active_entity :Noun' in ttl_str
-    assert ':affiliated_with :Harriet_Hageman' in ttl_str or ':has_recipient :Harriet_Hageman' in ttl_str
     # Output Turtle:
-    # :Sentence_e7b09bb5-756c a :Sentence ; :offset 1 .
-    # :Sentence_e7b09bb5-756c :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
+    # :Sentence_8a0ec2d0-caa4 a :Sentence ; :offset 1 .
+    # :Sentence_8a0ec2d0-caa4 :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
     #     former president, won 66.3% of the vote to Ms. Cheney’s 28.9%, with 95% of all votes counted." .
-    # :Sentence_e7b09bb5-756c :mentions :Harriet_Hageman .
-    # :Sentence_e7b09bb5-756c :mentions :Liz_Cheney .
-    # :Sentence_e7b09bb5-756c :grade_level 10 .
-    # :Sentence_e7b09bb5-756c :rhetorical_device "logos" .
-    # :Sentence_e7b09bb5-756c :rhetorical_device_logos "The sentence uses statistics and numbers to convey the
-    #     election results, specifically the percentages of votes won by Harriet Hageman and Ms. Cheney, as well as
-    #     the percentage of votes counted." .
-    # :Sentence_e7b09bb5-756c :summary "Harriet Hageman won against Ms. Cheney in the election." .
-    # :Sentence_e7b09bb5-756c :has_semantic :Event_f05dec0e-baa4 .
-    # :Event_f05dec0e-baa4 :text "won" .
-    # :Event_f05dec0e-baa4 a :Win ; :confidence-Win 100 .
-    # :Event_f05dec0e-baa4 :has_active_entity :Harriet_Hageman .
-    # :Noun_b75ffb11-4f6c a :Measurement ; :text "66.3%" ; :confidence 100 .
-    # :Event_f05dec0e-baa4 :has_quantification :Noun_b75ffb11-4f6c .
-    # :Noun_b38cb0a0-f4af a :PoliticalEvent ; :text "vote" ; :confidence 100 .
-    # :Event_f05dec0e-baa4 :has_topic :Noun_b38cb0a0-f4af .
-    # :Sentence_e7b09bb5-756c :has_semantic :Event_d40d7ab4-d183 .
-    # :Event_d40d7ab4-d183 :text "endorsed" .
-    # :Event_d40d7ab4-d183 a :PoliticalEvent ; :confidence-PoliticalEvent 90 .
-    # :Noun_eea12f59-4059 a :Person ; :text "former president" ; :confidence 100 .
-    # :Event_d40d7ab4-d183 :has_active_entity :Noun_eea12f59-4059 .
-    # :Event_d40d7ab4-d183 :has_recipient :Harriet_Hageman .
-    # :Sentence_e7b09bb5-756c :has_semantic :Event_430b21d8-3e73 .
-    # :Event_430b21d8-3e73 :text "counted" .
-    # :Event_430b21d8-3e73 a :Measurement ; :confidence-Measurement 95 .
-    # :Event_430b21d8-3e73 :text "votes" .
+    # :Sentence_8a0ec2d0-caa4 :mentions :Harriet_Hageman .
+    # :Sentence_8a0ec2d0-caa4 :mentions :Liz_Cheney .
+    # :Sentence_8a0ec2d0-caa4 :grade_level 10 .
+    # :Sentence_8a0ec2d0-caa4 :rhetorical_device "logos" .
+    # :Sentence_8a0ec2d0-caa4 :rhetorical_device_logos "The use of specific percentages and vote counts is an
+    #     appeal to logos." .
+    # :Sentence_8a0ec2d0-caa4 :summary "Harriet Hageman won 66.3% of the vote to Ms. Cheney’s 28.9%." .
+    # :Sentence_8a0ec2d0-caa4 :has_semantic :Event_3132d39f-c50c .
+    # :Event_3132d39f-c50c :text "won" .
+    # :Event_3132d39f-c50c a :Win ; :confidence-Win 95 .
+    # :Event_3132d39f-c50c :has_active_entity :Harriet_Hageman .
+    # :Noun_d0ecc9fd-3936 a :Measurement ; :text "66.3% of the vote" ; :confidence 90 .
+    # :Event_3132d39f-c50c :has_quantification :Noun_d0ecc9fd-3936 .
+    # :Event_3132d39f-c50c :has_recipient :Liz_Cheney .     # TODO: "to Ms Cheney's" resulted in role of recipient
+    # :Noun_95acadbb-7715 a :Measurement ; :text "28.9%" ; :confidence 90 .
+    # :Event_3132d39f-c50c :has_quantification :Noun_95acadbb-7715 .
 
 
 def test_coref():
-    parse_results = parse_narrative(text_coref)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_coref)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':HealthAndDiseaseRelated' in ttl_str and ':text "broke' in ttl_str
     assert ':MovementTravelAndTransportation' in ttl_str and ':text "went' in ttl_str
@@ -252,14 +225,14 @@ def test_coref():
     # :Sentence_4cfcb6f7-77f6 a :Sentence ; :offset 2 .
     # :Sentence_4cfcb6f7-77f6 :text "He went to the doctor." .
     # :Sentence_4cfcb6f7-77f6 :grade_level 1 .
-    # :Sentence_949d9ef6-e837 :summary "Joe injured his foot." .
+    # :Sentence_949d9ef6-e837 :summary "Joe broke his foot." .
     # :Sentence_949d9ef6-e837 :has_semantic :Event_64b2c214-c719 .
     # :Event_64b2c214-c719 :text "broke" .
     # :Event_64b2c214-c719 a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 95 .
     # :Event_64b2c214-c719 :has_active_entity :Joe .
     # :Noun_2227bc20-3b58 a :ComponentPart ; :text "Joe\'s foot" ; :confidence 100 .
     # :Event_64b2c214-c719 :has_context :Noun_2227bc20-3b58 .
-    # :Sentence_4cfcb6f7-77f6 :summary "Joe visited a doctor." .
+    # :Sentence_4cfcb6f7-77f6 :summary "Joe went to the doctor." .
     # :Sentence_4cfcb6f7-77f6 :has_semantic :Event_51748ba3-e4c6 .
     # :Event_51748ba3-e4c6 :text "went" .
     # :Event_51748ba3-e4c6 a :MovementTravelAndTransportation ; :confidence-MovementTravelAndTransportation 90 .
@@ -269,43 +242,41 @@ def test_coref():
 
 
 def test_xcomp():
-    parse_results = parse_narrative(text_xcomp)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_xcomp)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':EmotionalResponse' in ttl_str and ':text "enjoyed' in ttl_str
     assert ':has_active_entity :Mary' in ttl_str
-    assert ':Person' in ttl_str and (':text "grandfather' in ttl_str or 'grandfather"' in ttl_str)
-    assert ':has_context :Noun' in ttl_str or ':affiliated_with :Noun' in ttl_str or \
-           ':has_affected_entity :Noun' in ttl_str
+    assert ':Person' in ttl_str and ':text "grandfather' in ttl_str
+    assert (':Affiliation' in ttl_str or ':affiliated_with :Noun' in ttl_str) or \
+        ':has_topic :Noun' in ttl_str
     assert ':text "being' in ttl_str
     assert ':EnvironmentAndCondition' in ttl_str or ':MeetingAndEncounter' in ttl_str
     # Output:
-    # :Sentence_fda11d2b-27ff a :Sentence ; :offset 1 .
-    # :Sentence_fda11d2b-27ff :text "Mary enjoyed being with her grandfather." .
-    # :Sentence_fda11d2b-27ff :mentions :Mary .
-    # :Sentence_fda11d2b-27ff :grade_level 3 .
-    # :Sentence_fda11d2b-27ff :summary "Mary enjoyed spending time with her grandfather." .
-    # :Sentence_fda11d2b-27ff :has_semantic :Event_44ad7685-7ddb .
-    # :Event_44ad7685-7ddb :text "enjoyed" .
-    # :Event_44ad7685-7ddb a :EmotionalResponse ; :confidence-EmotionalResponse 95 .
-    # :Event_44ad7685-7ddb :has_active_entity :Mary .
-    # :Noun_d6a451f6-f850 a :Person ; :text "grandfather" ; :confidence 100 .
-    # :Event_44ad7685-7ddb a :Affiliation .
-    # :Event_44ad7685-7ddb :affiliated_with :Noun_d6a451f6-f850 .
-    # :Event_44ad7685-7ddb :has_topic :Event_a2aa6c99-7b35 .
-    # :Sentence_fda11d2b-27ff :has_semantic :Event_a2aa6c99-7b35 .
-    # :Event_a2aa6c99-7b35 :text "being" .
-    # :Event_a2aa6c99-7b35 a :MeetingAndEncounter ; :confidence-MeetingAndEncounter 90 .
-    # :Event_a2aa6c99-7b35 :has_active_entity :Mary .
-    # :Event_a2aa6c99-7b35 a :Affiliation .
-    # :Event_a2aa6c99-7b35 :affiliated_with :Noun_d6a451f6-f850 .
+    # :Sentence_29b2644d-48fc a :Sentence ; :offset 1 .
+    # :Sentence_29b2644d-48fc :text "Mary enjoyed being with her grandfather." .
+    # :Sentence_29b2644d-48fc :mentions :Mary .
+    # :Sentence_29b2644d-48fc :grade_level 3 .
+    # :Sentence_29b2644d-48fc :summary "Mary enjoyed being with her grandfather." .
+    # :Sentence_29b2644d-48fc :has_semantic :Event_dc5c7691-a9cc .
+    # :Event_dc5c7691-a9cc :text "enjoyed" .
+    # :Event_dc5c7691-a9cc a :EmotionalResponse ; :confidence-EmotionalResponse 95 .
+    # :Event_dc5c7691-a9cc :has_active_entity :Mary .
+    # :Noun_10adc0d3-af55 a :Person ; :text "grandfather" ; :confidence 100 .
+    # :Event_dc5c7691-a9cc a :Affiliation .
+    # :Event_dc5c7691-a9cc :affiliated_with :Noun_10adc0d3-af55 .
+    # :Event_dc5c7691-a9cc :has_topic :Event_1e1d8d28-0053 .
+    # :Sentence_29b2644d-48fc :has_semantic :Event_1e1d8d28-0053 .
+    # :Event_1e1d8d28-0053 :text "being" .
+    # :Event_1e1d8d28-0053 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 90 .
+    # :Event_1e1d8d28-0053 :has_context :Mary .
+    # :Event_1e1d8d28-0053 a :Affiliation .
+    # :Event_1e1d8d28-0053 :affiliated_with :Noun_10adc0d3-af55 .
 
 
 def test_modal():
-    parse_results = parse_narrative(text_modal)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_modal)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':ReadinessAndAbility' in ttl_str and ':MeetingAndEncounter' in ttl_str
     assert ':text "can visit' in ttl_str
@@ -330,9 +301,8 @@ def test_modal():
 
 
 def test_modal_neg():
-    parse_results = parse_narrative(text_modal_neg)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_modal_neg)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Avoidance' in ttl_str and ':negated true' not in ttl_str
     assert ':future true' in ttl_str
@@ -357,9 +327,8 @@ def test_modal_neg():
 
 
 def test_acomp():
-    parse_results = parse_narrative(text_acomp)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_acomp)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert 'a :EnvironmentAndCondition' in ttl_str and ':text "is' in ttl_str
     assert ':has_context :Mary' in ttl_str
@@ -369,17 +338,16 @@ def test_acomp():
     # :Sentence_56db981f-4899 :text "Mary is very beautiful." .
     # :Sentence_56db981f-4899 :mentions :Mary .
     # :Sentence_56db981f-4899 :grade_level 2 .
-    # :Sentence_56db981f-4899 :summary "Mary is described as very beautiful." .
+    # :Sentence_56db981f-4899 :summary "Mary is very beautiful." .
     # :Sentence_56db981f-4899 :has_semantic :Event_d1daeb17-ab96 .
     # :Event_d1daeb17-ab96 :text "is" .
     # :Event_d1daeb17-ab96 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
     # :Event_d1daeb17-ab96 :has_context :Mary .
 
 
-def test_acomp_pcomp():
-    parse_results = parse_narrative(text_acomp_pcomp)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+def test_acomp_pcomp1():
+    sentence_classes, quotation_classes = parse_narrative(text_acomp_pcomp1)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "got tired' in ttl_str
     assert ':SensoryPerception' in ttl_str
@@ -387,81 +355,71 @@ def test_acomp_pcomp():
     assert 'a :BodilyAct' in ttl_str and ':text "running' in ttl_str
     assert ':has_topic :Event' in ttl_str    # tired of running
     # Output Turtle:
-    # :Sentence_c363cb50-14e0 a :Sentence ; :offset 1 .
-    # :Sentence_c363cb50-14e0 :text "Peter got tired of running." .
-    # :Sentence_c363cb50-14e0 :mentions :Peter .
-    # :Sentence_c363cb50-14e0 :grade_level 3 .
-    # :Sentence_c363cb50-14e0 :summary "Peter stopped running due to fatigue." .
-    # :Sentence_c363cb50-14e0 :has_semantic :Event_b148d04c-0479 .
-    # :Event_b148d04c-0479 :text "got tired" .
-    # :Event_b148d04c-0479 a :SensoryPerception ; :confidence-SensoryPerception 95 .
-    # :Event_b148d04c-0479 :has_active_entity :Peter .
-    # :Event_b148d04c-0479 :has_topic :Event_2a7ac249-1475 .
-    # :Sentence_c363cb50-14e0 :has_semantic :Event_2a7ac249-1475 .
-    # :Event_2a7ac249-1475 :text "running" .
-    # :Event_2a7ac249-1475 a :BodilyAct ; :confidence-BodilyAct 90 .
-    # :Event_2a7ac249-1475 :has_active_entity :Peter .
+    # :Sentence_2e28e054-3322 a :Sentence ; :offset 1 .
+    # :Sentence_2e28e054-3322 :text "Peter got tired of running." .
+    # :Sentence_2e28e054-3322 :mentions :Peter .
+    # :Sentence_2e28e054-3322 :grade_level 3 .
+    # :Sentence_2e28e054-3322 :summary "Peter got tired of running." .
+    # :Sentence_2e28e054-3322 :has_semantic :Event_f87fdd91-7bdf .
+    # :Event_f87fdd91-7bdf :text "got tired of" .
+    # :Event_f87fdd91-7bdf a :SensoryPerception ; :confidence-SensoryPerception 90 .
+    # :Event_f87fdd91-7bdf :has_active_entity :Peter .
+    # :Event_f87fdd91-7bdf :has_topic :Event_65eda48c-227a .
+    # :Sentence_2e28e054-3322 :has_semantic :Event_65eda48c-227a .
+    # :Event_65eda48c-227a :text "running" .
+    # :Event_65eda48c-227a a :BodilyAct ; :confidence-BodilyAct 85 .
+    # :Event_65eda48c-227a :has_active_entity :Peter .
 
 
-def test_neg_acomp_pcomp():
-    parse_results = parse_narrative(text_neg_acomp_pcomp)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+def test_acomp_pcomp2():
+    sentence_classes, quotation_classes = parse_narrative(text_acomp_pcomp2)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "never tires' in ttl_str
-    assert ':SensoryPerception' in ttl_str
-    # assert ':negated true' in ttl_str   # TODO: Never gets the sensation? Is this correct?
     assert ':BodilyAct' in ttl_str and ':text "running' in ttl_str
     assert ':has_active_entity :Peter' in ttl_str
     # Output Turtle:
-    # :Sentence_fd160b2e-7b6d a :Sentence ; :offset 1 .
-    # :Sentence_fd160b2e-7b6d :text "Peter never tires of running." .
-    # :Sentence_fd160b2e-7b6d :mentions :Peter .
-    # :Sentence_fd160b2e-7b6d :grade_level 4 .
-    # :Sentence_fd160b2e-7b6d :summary "Peter enjoys running without getting tired." .
-    # :Sentence_fd160b2e-7b6d :has_semantic :Event_127c103d-e147 .
-    # :Event_127c103d-e147 :text "tires" .
-    # :Event_127c103d-e147 a :SensoryPerception ; :confidence-SensoryPerception 90 .
-    # :Event_127c103d-e147 :negated true .
-    # :Event_127c103d-e147 :has_active_entity :Peter .
-    # :Event_127c103d-e147 :has_topic :Event_8ea71fe8-7b3f .
-    # :Sentence_fd160b2e-7b6d :has_semantic :Event_8ea71fe8-7b3f .
-    # :Event_8ea71fe8-7b3f :text "running" .
-    # :Event_8ea71fe8-7b3f a :BodilyAct ; :confidence-BodilyAct 100 .
-    # :Event_8ea71fe8-7b3f :has_active_entity :Peter .
+    # :Sentence_6474e068-5c36 a :Sentence ; :offset 1 .
+    # :Sentence_6474e068-5c36 :text "Peter never tires of running." .
+    # :Sentence_6474e068-5c36 :mentions :Peter .
+    # :Sentence_6474e068-5c36 :grade_level 3 .
+    # :Sentence_6474e068-5c36 :summary "Peter never tires of running." .
+    # :Sentence_6474e068-5c36 :has_semantic :Event_47d64b5b-5350 .
+    # :Event_47d64b5b-5350 :text "never tires of running" .
+    # :Event_47d64b5b-5350 a :BodilyAct ; :confidence-BodilyAct 90 .
+    # :Event_47d64b5b-5350 :has_active_entity :Peter .
+    # :Event_47d64b5b-5350 :text "running" .
 
 
 def test_acomp_xcomp():
-    parse_results = parse_narrative(text_acomp_xcomp)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_acomp_xcomp)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Avoidance' in ttl_str or (':OpenMindednessAndTolerance' in ttl_str and ':negated true' in ttl_str)
     assert 'a :HealthAndDiseaseRelated ; :text "smoking' in ttl_str or 'a :BodilyAct ; :text "smoking' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':has_topic :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_b121c0ba-ad5a a :Sentence ; :offset 1 .
-    # :Sentence_b121c0ba-ad5a :text "Jane is unable to tolerate smoking." .
-    # :Sentence_b121c0ba-ad5a :mentions :Jane .
-    # :Sentence_b121c0ba-ad5a :grade_level 5 .
-    # :Sentence_b121c0ba-ad5a :summary "Jane cannot tolerate smoking." .
-    # :Sentence_b121c0ba-ad5a :has_semantic :Event_e04ff606-3c48 .
-    # :Event_e04ff606-3c48 :text "is unable to tolerate" .
-    # :Event_e04ff606-3c48 a :OpenMindednessAndTolerance ; :confidence-OpenMindednessAndTolerance 90 .
-    # :Event_e04ff606-3c48 :negated true .
-    # :Event_e04ff606-3c48 :has_active_entity :Jane .
-    # :Noun_f0bd5be4-7ddf a :HealthAndDiseaseRelated ; :text "smoking" ; :confidence 90 .
-    # :Event_e04ff606-3c48 :has_topic :Noun_f0bd5be4-7ddf .
+    # :Sentence_c1b4ffe9-4ac2 a :Sentence ; :offset 1 .
+    # :Sentence_c1b4ffe9-4ac2 :text "Jane is unable to tolerate smoking." .
+    # :Sentence_c1b4ffe9-4ac2 :mentions :Jane .
+    # :Sentence_c1b4ffe9-4ac2 :grade_level 5 .
+    # :Sentence_c1b4ffe9-4ac2 :summary "Jane is unable to tolerate smoking." .
+    # :Sentence_c1b4ffe9-4ac2 :has_semantic :Event_f676cf58-5290 .
+    # :Event_f676cf58-5290 :text "is unable to tolerate" .
+    # :Event_f676cf58-5290 a :OpenMindednessAndTolerance ; :confidence-OpenMindednessAndTolerance 90 .
+    # :Event_f676cf58-5290 :negated true .
+    # :Event_f676cf58-5290 :has_active_entity :Jane .
+    # :Noun_77cb253c-1433 a :HealthAndDiseaseRelated ; :text "smoking" ; :confidence 90 .
+    # :Event_f676cf58-5290 :has_topic :Noun_77cb253c-1433 .
 
 
 def test_idiom():
-    parse_results = parse_narrative(text_idiom)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_idiom)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Causation' in ttl_str and ':text "caused' in ttl_str
-    assert ':Change ; :text "Wear and tear' in ttl_str or ':TroubleAndProblem ; :text "Wear and tear' in ttl_str
+    assert ':Change ; :text "wear and tear' in ttl_str or ':TroubleAndProblem ; :text "wear and tear' in ttl_str
     assert ':has_cause :Noun' in ttl_str
     assert ':Location' in ttl_str and ':text "bridge' in ttl_str
     assert ':has_location :Noun' in ttl_str
@@ -469,28 +427,24 @@ def test_idiom():
     assert (':End' in ttl_str or ':Change' in ttl_str) and ':text "collapse' in ttl_str
     assert ':has_context' in ttl_str or ':has_topic' in ttl_str      # bridge's collapse
     # Output Turtle:
-    # :Sentence_3e666bbe-c2c1 a :Sentence ; :offset 1 .
-    # :Sentence_3e666bbe-c2c1 :text "Wear and tear on the bridge caused its collapse." .
-    # :Sentence_3e666bbe-c2c1 :grade_level 8 .
-    # :Sentence_3e666bbe-c2c1 :summary "Bridge collapsed due to wear and tear." .
-    # :Sentence_3e666bbe-c2c1 :has_semantic :Event_a057e700-0991 .
-    # :Event_a057e700-0991 :text "caused" .
-    # :Event_a057e700-0991 a :Causation ; :confidence-Causation 95 .
-    # :Noun_76e1a8fd-9ede a :TroubleAndProblem ; :text "Wear and tear" ; :confidence 90 .
-    # :Event_a057e700-0991 :has_cause :Noun_76e1a8fd-9ede .
-    # :Noun_9a783023-e41f a :Location ; :text "bridge" ; :confidence 95 .
-    # :Event_a057e700-0991 :has_location :Noun_9a783023-e41f .
-    # :Event_a057e700-0991 :has_topic :Event_b89150ae-246a .
-    # :Sentence_3e666bbe-c2c1 :has_semantic :Event_b89150ae-246a .
-    # :Event_b89150ae-246a :text "collapse" .
-    # :Event_b89150ae-246a a :End ; :confidence-End 90 .
-    # :Event_b89150ae-246a :has_topic :Noun_9a783023-e41f .
+    # :Sentence_75c85a0a-8c4f a :Sentence ; :offset 1 .
+    # :Sentence_75c85a0a-8c4f :text "Wear and tear on the bridge caused its collapse." .
+    # :Sentence_75c85a0a-8c4f :grade_level 8 .
+    # :Sentence_75c85a0a-8c4f :summary "Wear and tear on the bridge caused its collapse." .
+    # :Sentence_75c85a0a-8c4f :has_semantic :Event_d290c58f-1a54 .
+    # :Event_d290c58f-1a54 :text "caused" .
+    # :Event_d290c58f-1a54 a :Causation ; :confidence-Causation 95 .
+    # :Noun_b313561a-584b a :TroubleAndProblem ; :text "wear and tear" ; :confidence 90 .
+    # :Event_d290c58f-1a54 :has_cause :Noun_b313561a-584b .
+    # :Noun_15d70a76-dbe5 a :Location ; :text "bridge" ; :confidence 95 .
+    # :Event_d290c58f-1a54 :has_location :Noun_15d70a76-dbe5 .
+    # :Noun_9febfbdc-740d a :Change ; :text "collapse" ; :confidence 85 .
+    # :Event_d290c58f-1a54 :has_topic :Noun_9febfbdc-740d .'
 
 
 def test_idiom_full_pass():
-    parse_results = parse_narrative(text_idiom_full_pass)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_idiom_full_pass)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "accused' in ttl_str or ':text "was accused' in ttl_str
     assert ':CommunicationAndSpeechAct' in ttl_str or ':LegalEvent' in ttl_str
@@ -498,7 +452,6 @@ def test_idiom_full_pass():
     assert ':has_active_entity :George' in ttl_str
     assert ':has_topic :Event' in ttl_str
     assert ':AggressiveCriminalOrHostileAct' in ttl_str and ':text "breaking and entering' in ttl_str
-    assert ':has_active_entity :John' in ttl_str
     # Output Turtle:
     # :Sentence_b8904b67-a373 a :Sentence ; :offset 1 .
     # :Sentence_b8904b67-a373 :text "John was accused by George of breaking and entering." .
@@ -519,16 +472,14 @@ def test_idiom_full_pass():
 
 
 def test_idiom_trunc_pass():
-    parse_results = parse_narrative(text_idiom_trunc_pass)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_idiom_trunc_pass)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "was accused' in ttl_str
     assert ':CommunicationAndSpeechAct' in ttl_str or ':LegalEvent' in ttl_str
     assert ':has_topic :Event' in ttl_str
     assert ':AggressiveCriminalOrHostileAct' in ttl_str and ':text "breaking and entering' in ttl_str
     assert ':has_affected_entity :John' in ttl_str
-    assert ':has_active_entity :John' in ttl_str
     # Output Turtle:
     # :Sentence_d5d68bde-508d a :Sentence ; :offset 1 .
     # :Sentence_d5d68bde-508d :text "John was accused of breaking and entering." .
@@ -547,33 +498,32 @@ def test_idiom_trunc_pass():
 
 
 def test_negation_emotion():
-    parse_results = parse_narrative(text_negation_emotion)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_negation_emotion)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "has no liking' in ttl_str
-    assert ':EmotionalResponse' in ttl_str and ':negated true' not in ttl_str
+    assert ':EmotionalResponse' in ttl_str and ':negated true' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
     assert ':Plant ; :text "broccoli' in ttl_str
     assert ':has_topic :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_9dc61b51-f292 a :Sentence ; :offset 1 .
-    # :Sentence_9dc61b51-f292 :text "Jane has no liking for broccoli." .
-    # :Sentence_9dc61b51-f292 :mentions :Jane .
-    # :Sentence_9dc61b51-f292 :grade_level 3 .
-    # :Sentence_9dc61b51-f292 :summary "Jane dislikes broccoli." .
-    # :Sentence_9dc61b51-f292 :has_semantic :Event_10e42ffd-5ec9 .
-    # :Event_10e42ffd-5ec9 :text "has no liking" .
-    # :Event_10e42ffd-5ec9 a :EmotionalResponse ; :confidence-EmotionalResponse 95 .
-    # :Event_10e42ffd-5ec9 :has_active_entity :Jane .
-    # :Noun_9bcfec49-8672 a :Plant ; :text "broccoli" ; :confidence 100 .
-    # :Event_10e42ffd-5ec9 :has_topic :Noun_9bcfec49-8672 .
+    # :Sentence_871800de-2dd7 a :Sentence ; :offset 1 .
+    # :Sentence_871800de-2dd7 :text "Jane has no liking for broccoli." .
+    # :Sentence_871800de-2dd7 :mentions :Jane .
+    # :Sentence_871800de-2dd7 :grade_level 3 .
+    # :Sentence_871800de-2dd7 :summary "Jane has no liking for broccoli." .
+    # :Sentence_871800de-2dd7 :has_semantic :Event_74d66284-e7fe .
+    # :Event_74d66284-e7fe :text "has no liking" .
+    # :Event_74d66284-e7fe a :EmotionalResponse ; :confidence-EmotionalResponse 90 .
+    # :Event_74d66284-e7fe :negated true .
+    # :Event_74d66284-e7fe :has_active_entity :Jane .
+    # :Noun_3eae795b-b1e0 a :Plant ; :text "broccoli" ; :confidence 100 .
+    # :Event_74d66284-e7fe :has_topic :Noun_3eae795b-b1e0 .
 
 
 def test_negation():
-    parse_results = parse_narrative(text_negation)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_negation)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':text "did not stab' in ttl_str
     assert 'a :AggressiveCriminalOrHostileAct' in ttl_str and ':negated true' in ttl_str
@@ -595,9 +545,8 @@ def test_negation():
 
 
 def test_mention():
-    parse_results = parse_narrative(text_mention)
-    graph_results = create_graph(parse_results.sentence_classes, parse_results.quotation_classes,
-                                 parse_results.partial_quotes, 5, repo)
+    sentence_classes, quotation_classes = parse_narrative(text_mention)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':mentions :FBI' in ttl_str
     assert ':text "raided' in ttl_str

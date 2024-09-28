@@ -7,13 +7,23 @@ construct_kg = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/
 
 count_triples = 'prefix : <urn:ontoinsights:dna:> SELECT (COUNT(*) as ?cnt) WHERE { GRAPH ?g {?s ?p ?o} }'
 
-delete_repo_metadata = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> ' \
-                       'DELETE {?repo a :Database ; dc:created ?created} ' \
-                       'WHERE {?repo a :Database ; dc:created ?created}'
+delete_entity = 'prefix : <urn:ontoinsights:dna:> WITH ?named ' \
+                'DELETE {?s ?p ?o} WHERE {?s a :Background ; :text "?text_name" ; ?p ?o}'
 
 delete_narrative = 'prefix : <urn:ontoinsights:dna:> WITH ?named ' \
                    'DELETE {:narr_id ?graph_p ?graph_o . :Narrative_narr_id ?narr_p ?narr_o} ' \
                    'WHERE {:narr_id ?graph_p ?graph_o . :Narrative_narr_id ?narr_p ?narr_o}'
+
+delete_repo_metadata = 'prefix : <urn:ontoinsights:dna:> prefix dc: <http://purl.org/dc/terms/> ' \
+                       'DELETE {?repo a :Database ; dc:created ?created} ' \
+                       'WHERE {?repo a :Database ; dc:created ?created}'
+
+query_background = 'prefix : <urn:ontoinsights:dna:> SELECT ?name ?type ?plural WHERE { GRAPH ?named { ' \
+                   '?s a :Background; :text ?name . OPTIONAL {?s a :Collection. BIND(true as ?plural)} ' \
+                   '{{?s a :Person . BIND("person" as ?type)} UNION {?s a :Resource . BIND("thing" as ?type)} ' \
+                   'UNION {?s a :OrganizationalEntity . BIND("organization" as ?type)} UNION ' \
+                   '{{{?s a :GeoPoliticalEntity} UNION {?s a :Location}}. BIND("place" as ?type)} UNION ' \
+                   '{?s a :LawAndPolicy . BIND("law" as ?type)}} }}'
 
 query_corrections = \
     'prefix : <urn:ontoinsights:dna:> SELECT * WHERE { GRAPH ?named {?s a :Correction; a ?type ; rdfs:label ?label}}'

@@ -5,17 +5,19 @@ from flask import Flask, Request, Response, jsonify, request
 import json
 import logging
 
-from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_new_narrative, \
-    detail, error_str, narrative_id, repository, sentences, Metadata, MetadataResults, NarrativeResults
+from dna.app_functions import check_query_parameter, parse_narrative_query_binding, process_background, \
+    process_new_narrative, background_str, detail, error_str, narrative_id, repository, sentences, \
+    Metadata, MetadataResults, BackgroundAndNarrativeResults
 from dna.database import add_remove_data, clear_data, construct_graph, query_database
-from dna.database_queries import construct_kg, count_triples, delete_narrative, delete_repo_metadata, \
-    query_narratives, query_repos, query_repo_graphs, update_narrative
+from dna.database_queries import construct_kg, count_triples, delete_entity, delete_narrative, \
+    delete_repo_metadata, query_background, query_narratives, query_repos, query_repo_graphs, update_narrative
 # from dna.query_news import get_article_text, get_matching_articles
 from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph
 
 logging.basicConfig(level=logging.INFO, filename='dna.log',
                     format='%(funcName)s - %(levelname)s - %(asctime)s - %(message)s')
 
+background_names: str = "backgroundNames"
 not_defined: str = 'not defined'
 
 # Main
@@ -95,6 +97,69 @@ def repositories():
     return jsonify({error_str: '/repositories API only supports GET, POST and DELETE requests'}), 405
 
 
+@app.route('/dna/v1/repositories/background', methods=['GET', 'POST', 'DELETE'])
+def background():
+    if request.method == 'POST':
+        # Get repository name query parameter
+        values, scode = check_query_parameter(repository, True, request)
+        if scode in (400, 404, 409):
+            return jsonify(dict(values)), scode
+        repo = dict(values)[repository]
+        # Process the request body
+        if not request.data:
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'A request body MUST be defined when issuing a /background POST.'}), 400
+        background_data = json.loads(request.data)
+        if 'backgroundNames' not in background_data:
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'The "backgroundNames" array MUST be specified in the request body '
+                         'of a /background POST.'}), 400
+        if not background_data[background_names]:
+            return jsonify(
+                {error_str: 'missing',
+                 detail: 'At least one name MUST be specified in the "backgroundNames" property '
+                         'in the request body of a /background POST.'}), 400
+        logging.info(f'Posting background {background_data}')
+        background_results = process_background(background_data[background_names], repo)
+        if background_results.http_status != 201:
+            return jsonify({error_str: background_results.error_msg}), background_results.http_status
+        return jsonify(background_results.resp_dict), 201
+    elif request.method == 'DELETE':
+        # Get entity name and repository query parameters
+        values, scode = check_query_parameter(background_str, True, request)
+        if scode in (400, 404, 409):
+            return jsonify(dict(values)), scode
+        repo = dict(values)[repository]
+        entity_name = dict(values)['name']
+        logging.info(f'Deleting background entity, {entity_name}, in {repo}')
+        # Delete the entity data in the dna db repository_default graph
+        query_database('update', delete_entity.replace('?named', f':{repo}_default')
+                       .replace('?text_name', entity_name))
+        return jsonify({'repository': repo, 'deleted': entity_name}), 200
+    elif request.method == 'GET':
+        logging.info(f'Background list for {repository}')
+        # Get repository name query parameter
+        values, scode = check_query_parameter(repository, True, request)
+        if scode in (400, 404, 409):
+            return jsonify(dict(values)), scode
+        repo = dict(values)[repository]
+        query_text = query_background.replace('?named', f':{repo}_default')
+        background_bindings = query_database('select', query_text)
+        if background_bindings and 'exception' in background_bindings[0]:    # In the text
+            return jsonify({error_str: background_bindings[0]}), 500
+        background_list = []
+        for binding in background_bindings:
+            entity = {'name': binding['name'],
+                      'type': binding['type']}
+            if 'plural' in binding:
+                entity['isCollection'] = 'true'
+            background_list.append(entity)
+        return jsonify({repository: repo, background_names: background_list}), 200
+    return jsonify({error_str: '/repositories/background API only supports GET, POST and DELETE requests'}), 405
+
+
 @app.route('/dna/v1/repositories/narratives', methods=['GET', 'POST', 'DELETE'])
 def narratives():
     if request.method == 'POST':
@@ -117,7 +182,7 @@ def narratives():
                 {error_str: 'missing',
                  detail: 'A "title", "source" and "text" MUST be specified in the request body '
                          'of a /narratives POST.'}), 400
-        logging.info(f'narr_data {type(narr_data)} {narr_data}')
+        logging.info(f'Posting narrative {type(narr_data)} {narr_data}')
         metadata = Metadata(narr_data['title'], narr_data['published'] if 'published' in narr_data else not_defined,
                             narr_data['source'], narr_data['url'] if 'url' in narr_data else not_defined,
                             number_sentences)
@@ -151,9 +216,8 @@ def narratives():
         if narrative_bindings and 'exception' in narrative_bindings[0]:
             return jsonify({error_str: narrative_bindings[0]}), 500
         narr_list = []
-        if len(narrative_bindings) > 0:
-            for binding in narrative_bindings:
-                narr_list.append(parse_narrative_query_binding(binding))
+        for binding in narrative_bindings:
+            narr_list.append(parse_narrative_query_binding(binding))
         return jsonify({repository: repo, 'narratives': narr_list}), 200
     return jsonify({error_str: '/repositories/narratives API only supports GET, POST and DELETE requests'}), 405
 

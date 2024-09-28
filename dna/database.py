@@ -35,7 +35,7 @@ def add_remove_data(op_type: str, triples: str, repo: str, graph: str = empty_st
     :param op_type: A string = 'add' or 'remove'
     :param triples: A string with the triples to be inserted/removed
     :param repo: The repository name
-    :param graph: An optional ID indicating that triples for a specific narrative are added to the repository
+    :param graph: An optional ID indicating that triples for a specific narrative/article are added
     :return: An empty string if successful, or the error details if not
     """
     if op_type != 'add' and op_type != 'remove':

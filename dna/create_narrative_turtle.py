@@ -15,7 +15,7 @@ from typing import List
 from dna.database import query_database
 from dna.database_queries import query_corrections, query_manual_corrections
 from dna.process_sentences import get_sentence_details, sentence_semantics_processing
-from dna.sentence_classes import Sentence, Quotation, Punctuation
+from dna.sentence_classes import Sentence, Punctuation
 from dna.utilities_and_language_specific import (empty_string, ner_dict, personal_pronouns, space,
                                                  ttl_prefixes, underscore)
 
@@ -62,15 +62,13 @@ def _update_nouns(bindings: list, nouns_dictionary: dict):
     return
 
 
-def create_graph(sentence_instance_list: list, quotation_instance_list: list, partial_quotes_list: list,
+def create_graph(sentence_instance_list: list, quotation_instance_list: list,
                  number_sentences: int, repo: str) -> GraphResults:
     """
     Based on the sentences and quotations, create the Turtle rendering of the details.
 
     :param sentence_instance_list: An array of Sentence Class instances extracted from a narrative
-    :param quotation_instance_list: An array of Quotation Class instances extracted from the original text
-    :param partial_quotes_list: An array of strings that specify the quotation text when only a few words
-            are mentioned. The format of the strings in the array is "Partial#: quote_text".
+    :param quotation_instance_list: An array of Quotation Class instances extracted from a narrative
     :param number_sentences: An integer indicating the number of sentences to fully ingest (a number
             greater than 1; by default up to 10 sentences are ingested)
     :param repo: String holding the repository name for the narrative graph
@@ -82,11 +80,10 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list, pa
     #    due to co-reference/multiple reference
     # Keys = the texts and Values = entity's spaCy NER type and its IRI
     nouns_dictionary = nouns_preload(repo)
-    sentences = {}      # Will hold sentence text up to the total number of sentences to be analyzed
+    sentences = dict()      # Will hold sentence text up to the total number of sentences to be analyzed
     for index, sentence_instance in enumerate(sentence_instance_list):
         sentence_iri = sentence_instance.iri
-        # Remove double quotes since there are problems with the rdflib Literal rendering
-        original_text = sentence_instance.original_text.replace('"', "'")
+        original_text = sentence_instance.text
         sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sentence_instance.offset} .',
                              f'{sentence_iri} :text {Literal(original_text).n3()} .']
         # TODO: (Future) Should DNA Capture whether the sentence is a question or exclamation?
@@ -96,8 +93,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list, pa
         #     elif punctuation == Punctuation.EXCLAMATION:
         #         sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
         try:
-            get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary,
-                                 quotation_instance_list, repo)
+            summary = get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary, repo)
             graph_ttl_list.extend(sentence_ttl_list)
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {original_text}')
@@ -105,7 +101,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list, pa
             continue
         if index + 1 < number_sentences:    # Full processing only up to the requested number of sentences
             # Processing the events and states, and related nouns
-            sentences[sentence_iri] = sentence_instance.text
+            sentences[sentence_iri] = summary
     if sentences:
         try:
             semantics_ttl = sentence_semantics_processing(sentences, nouns_dictionary)
@@ -114,21 +110,15 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list, pa
             logging.error(f'Exception ({str(e)}) in getting sentence semantics for the text')
             print(traceback.format_exc())
     # Add the quotation details to the Turtle
-    for quotation in quotation_instance_list:
-        quote_iri = quotation.iri
-        quote_ttl_list = [f'{quote_iri} a :Quote ; :text {Literal(quotation.text).n3()} .']
+    for quote in quotation_instance_list:
+        quote_ttl_list = [f'{quote.iri} a :Quote ; :text {Literal(quote.text).n3()} .']
         try:
-            get_sentence_details(quotation, quote_ttl_list, 'quote', nouns_dictionary, [], repo)
+            get_sentence_details(quote, quote_ttl_list, 'quote', nouns_dictionary, repo)
             graph_ttl_list.extend(quote_ttl_list)
         except Exception as e:    # Triples not added for quote
             logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quotation.text}')
             print(traceback.format_exc())
             continue
-    # Add partial quote details for short text
-    for partial in partial_quotes_list:
-        partial_iri = partial.split(':', 1)[0]
-        partial_text = partial.split(': ', 1)[1].strip()
-        graph_ttl_list.append(f'{partial_iri} a :Quote ; :text {Literal(partial_text).n3()} .')
     return GraphResults(
         True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list),
         graph_ttl_list)

@@ -152,7 +152,7 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     orig_root = etree.fromstring(response.content)
     toponym_name = _get_xml_value('./geoname/toponymName', orig_root)
     ascii_name = _get_xml_value('./geoname/asciiName', orig_root)
-    if toponym_name.lower() == loc_str.lower():
+    if toponym_name.lower() == loc_str.lower() or loc_str.lower().startswith(toponym_name.lower()):
         return orig_root
     # Try again, forcing a match of fcode = ADM1 - for ex, New York returns New York City, not the state
     if 'fcode=' not in request:
@@ -291,7 +291,6 @@ def get_event_details_from_wikidata(event_text: str) -> EventDetails:
     :param event_text: Text defining the event
     :return: An instance of the EventDetails dataclass
     """
-    logging.info(f'Getting Wikidata event details for {event_text}')
     start_time = empty_string
     end_time = empty_string
     description_details = get_wikipedia_description(event_text, ':Event')
@@ -310,7 +309,6 @@ def get_geonames_location(loc_text: str) -> GeoNamesDetails:
     :param loc_text: Location text
     :return: An instance of the GeoNamesDetails dataclass
     """
-    logging.info(f'Getting geonames details for {loc_text}')
     # TODO: Add sleep to meet geonames timing requirements
     name_startswith = False
     if ',' in loc_text:   # Different query parameters are defined based on ',' or space in the location text
@@ -380,7 +378,6 @@ def get_wikipedia_description(noun: str, noun_class: str, explicit_link: str = e
                           entry for the noun
     :return: An instance of the DescriptionDetails dataclass
     """
-    logging.info(f'Getting wikipedia details for {noun}')
     wikipedia_dict = _get_wikipedia_description(noun.replace(space, '_'), noun_class, explicit_link)
     if not wikipedia_dict:
         return DescriptionDetails(empty_string, empty_string, empty_string, [])

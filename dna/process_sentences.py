@@ -212,7 +212,7 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
 
 
 def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_list: list, sentence_type: str,
-                         nouns_dict: dict, quotation_list: list, repo: str):
+                         nouns_dict: dict, repo: str) -> list:
     """
     Retrieve sentence or quotation details (such as the summary or rhetorical devices)
     using the OpenAI API and create the Turtle representation of this information. Return the
@@ -226,50 +226,28 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
-    :param quotation_list: An array of Quotation instances in case any are referenced in the sentence
     :param repo: String holding the repository name for the narrative graph
-    :return: N/A (ttl_list is updated with the details from OpenAI)
+    :return: The sentence's summary (and ttl_list is updated with the details from OpenAI)
     """
     sentence_iri = sentence_or_quotation.iri
-    sentence_text = sentence_or_quotation.text    # Quoted strings replaced by [Quotation#] strings
-    original_text = sentence_or_quotation.original_text
+    sentence_text = sentence_or_quotation.text
     # Get named entities for a sentence, including its quotations
     entity_iris = []
     entity_ttls = []
-    named = False
-    if '[Quotation' in sentence_text:   # Processing Quotations in the sentence and their named entities
-        quote_indices = []
-        for quotation in re.findall(r'Quotation[0-9]+', sentence_text):
-            ttl_list.append(f'{sentence_iri} :has_component :{quotation} .')
-            quote_indices.append(quotation.split('Quotation')[1])
-        if quote_indices:
-            for i in range(0, len(quote_indices)):
-                if quotation_list[int(quote_indices[i])].entities:
-                    named = True
-                    new_iris, new_ttl = \
-                        process_ner_entities(quotation_list[int(quote_indices[i])].text,
-                                             quotation_list[int(quote_indices[i])].entities, nouns_dict)
-                    entity_iris.extend(new_iris)
-                    entity_ttls.extend(new_ttl)
-    if sentence_or_quotation.entities and sentence_type != 'quote':    # Already processed entities for a quotation
-        if sentence_or_quotation.entities:   # Processing Sentence NEs
-            named = True
-            new_iris, new_ttl = \
-                process_ner_entities(sentence_text, sentence_or_quotation.entities, nouns_dict)
-            entity_iris.extend(new_iris)
-            entity_ttls.extend(new_ttl)
-    if named:
-        if entity_ttls:
-            ttl_list.extend(entity_ttls)
-            logging.info('Loading NER Turtle')
-            ner_ttl = ttl_prefixes[:]
-            ner_ttl.extend(entity_ttls)
-            # Add new entities to the repo's default graph
-            msg = add_remove_data('add', ' '.join(ner_ttl), repo)
-            if msg:
-                logging.info('Error adding new entity: ', ner_ttl)
-        for entity_iri in entity_iris:
-            ttl_list.append(f'{sentence_iri} :mentions {entity_iri} .')
+    if sentence_or_quotation.entities:
+        new_iris, new_ttl = process_ner_entities(sentence_text, sentence_or_quotation.entities, nouns_dict)
+        entity_iris.extend(new_iris)
+        entity_ttls.extend(new_ttl)
+    if entity_ttls:
+        ttl_list.extend(entity_ttls)
+        ner_ttl = ttl_prefixes[:]
+        ner_ttl.extend(entity_ttls)
+        # Add new entities to the repo's default graph
+        msg = add_remove_data('add', ' '.join(ner_ttl), repo)
+        if msg:
+            logging.error('Error adding new entity: ', ner_ttl)
+    for entity_iri in entity_iris:
+        ttl_list.append(f'{sentence_iri} :mentions {entity_iri} .')
     # Capture a quotation's attribution
     if sentence_type == 'quote' and sentence_or_quotation.attribution:
         attrib_text = sentence_or_quotation.attribution
@@ -281,12 +259,9 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
                                                          'PERSON', nouns_dict)
         if attrib_iri:
             ttl_list.append(f'{sentence_iri} :attributed_to {attrib_iri} .')
-    # Record the partial/short quoted text
-    if '[Partial' in sentence_text:   # Processing short quotes
-        for partial in re.findall(r'Partial[0-9]+', sentence_text):
-            ttl_list.append(f'{sentence_iri} :has_component :{partial} .')
     # Process the sentence-level prompt
-    sent_dict = access_api(sentence_prompt.replace("{sent_text}", original_text))   # Deref
+    summary = empty_string
+    sent_dict = access_api(sentence_prompt.replace("{sent_text}", sentence_text))   # Deref
     if sent_dict:   # Might not get reply from OpenAI
         if type(sent_dict['grade_level']) is int:
             ttl_list.append(f'{sentence_iri} :grade_level {sent_dict["grade_level"]} .')
@@ -303,9 +278,12 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
                         explanation = device_detail['explanation']
                         ttl_list.append(f'{sentence_iri} {predicate} "{explanation}" .')
                     else:
-                        logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {original_text}')
+                        logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sentence_text}')
                         continue
-    return
+        if 'summary' in sent_dict:
+            ttl_list.append(f'{sentence_iri} :summary {Literal(sent_dict["summary"]).n3()} .')
+            summary = sent_dict['summary']
+    return summary
 
 
 def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
@@ -343,15 +321,17 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
         index = int(sentence_event['sentence_number'])
         # Assemble the Turtle for the sentence
         sent_iri = sentence_iris[index - 1]
-        semantics_ttl.append(f'{sent_iri} :summary '
-                             f'{Literal(sentence_events_dict["sentences"][index -1]["summary"]).n3()} .')
         # Assemble the sentence with the verbs in parentheses at the end
         verb_details = dict()    # Dictionary with key = verb text and value = VerbDetails dataclass
         verb_texts = []          # List of the verbs' trigger texts
-        verb_numbers = []        # Array of verbs' DNA class mappings (number + "s" or "o"/same-opposite
+        verb_numbers = []        # Array of verbs' DNA class mappings
         for event_state in sentence_event['verbs']:
+            trigger_text = event_state["trigger_text"]
+            if event_state["category_number"] in verb_numbers and trigger_text.lower().startswith('to ') and \
+                    any([trigger_text in verb_text for verb_text in verb_texts]):
+                continue    # An infinitive that is already included
             verb_texts.append(event_state["trigger_text"])
-            verb_numbers.append(f'{event_state["category_number"]}{event_state["category_same_or_opposite"][0]}')
+            verb_numbers.append(event_state["category_number"])
             verb_details[f'{event_state["trigger_text"]}'] = \
                 VerbDetails(event_state['category_number'], event_state['category_same_or_opposite'],
                             event_state['correctness'], f':Event_{str(uuid.uuid4())[:13]}')
@@ -364,11 +344,19 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
         prev_event = empty_string
         for noun_details in sentence_nouns:
             trigger_text = noun_details['verb_text']
-            if trigger_text not in verb_details:
+            verb_details_key = empty_string
+            if trigger_text in verb_texts:
+                verb_details_key = trigger_text
+            elif len(trigger_text) > 3:
+                for key in verb_details.keys():
+                    if trigger_text in key:      # TODO: Needs further testing
+                        verb_details_key = key
+                        break
+            if not verb_details_key:
                 logging.error(f'OpenAI returned unrequested verb text, {trigger_text}, for the sentence, '
                               f'{updated_sentences[index - 1]}')
                 continue
-            event_iri = verb_details[trigger_text].iri
+            event_iri = verb_details[verb_details_key].iri
             if prev_event:              # Need a topic for the previous event
                 semantics_ttl.append(f'{prev_event} :has_topic {event_iri} .')
             if event_iri in processed_iris:
@@ -377,9 +365,9 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
             else:
                 processed_iris.append(event_iri)
             semantics_ttl.append(f'{sent_iri} :has_semantic {event_iri} .')
-            semantics_ttl.append(f'{event_iri} :text {Literal(trigger_text).n3()} .')
-            category = int(verb_details[trigger_text].category)
-            correctness = int(verb_details[trigger_text].correctness)
+            semantics_ttl.append(f'{event_iri} :text {Literal(verb_details_key).n3()} .')
+            category = int(verb_details[verb_details_key].category)
+            correctness = int(verb_details[verb_details_key].correctness)
             event_class_name = ':EventAndState'
             if 0 < category < len(event_categories) + 1:      # A valid category #
                 if category < 68:                             # Every category except EventAndState/other
@@ -389,7 +377,7 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
                 semantics_ttl.append(
                     f'{event_iri} a {event_class_name} ; :confidence-{event_class_name[1:]} {correctness} .')
                 # TODO: Pending pystardog fix: Change line above to using RDF star property
-                if verb_details[trigger_text].same_opposite == "opposite":
+                if verb_details[verb_details_key].same_opposite == "opposite":
                     semantics_ttl.append(f'{event_iri} :negated true .')
             else:
                 logging.info(f'Invalid event category ({category}) for {trigger_text} for sentence index {index}')

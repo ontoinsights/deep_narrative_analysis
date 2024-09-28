@@ -80,7 +80,7 @@ def _get_last_name(agent_text: str) -> (str, str):
 # Future
 def _get_name_permutations(name: str) -> list:
     """
-    Get the combinations of first and maiden/last names.
+    Get the combinations of first and middle/maiden/last names.
 
     :param name: A string holding a Person's full name
     :return: A list of strings combining the first and second, first and third, ... names
@@ -156,8 +156,8 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         event_details = get_event_details_from_wikidata(noun_text)
         if noun_text not in labels:
             labels.append(noun_text)
-        start_time_iri = empty_string if not event_details.start_time else f':PiT_{start_time}'
-        end_time_iri = empty_string if not event_details.end_time else f':PiT_{end_time}'
+        start_time_iri = empty_string if not event_details.start_time else f':PiT_{event_details.start_time}'
+        end_time_iri = empty_string if not event_details.end_time else f':PiT_{event_details.end_time}'
         noun_ttl.extend(create_named_entity_ttl(noun_iri, event_details.labels, class_map, event_details.wiki_desc,
                                                 event_details.wiki_url, event_details.wikidata_id, start_time_iri,
                                                 end_time_iri))
@@ -207,12 +207,12 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
-    :return: A tuple consisting of two arrays: (1) the IRIs of the agents identified in the sentence,
+    :return: A tuple consisting of two arrays: (1) the IRIs of the entities identified in the sentence,
              and 2) Turtle statements defining them (also the nouns_dict is likely updated)
     """
     new_entities = []
     # Handle location words occurring together - for ex, 'Paris, Texas' - which are returned as 2 separate entities
-    if len(entities) > 1:
+    if sentence_text and len(entities) > 1:
         offset = 0
         while offset < (len(entities) - 1):
             if not ('GPE' in entities[offset].ner_type or 'LOC' in entities[offset].ner_type):
@@ -230,12 +230,15 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
         if offset == (len(entities) - 1):
             new_entities.append(entities[offset])   # Add last entity
     else:
-        new_entities.append(entities[0])
+        new_entities.extend(entities)
     entities_ttl = []
     entity_iris = []
     for new_entity in new_entities:
         # Remove '.' to easily disambiguate (e.g.) US Supreme Court and U.S. Supreme Court
         entity_text = unidecode(new_entity.text.replace('.', empty_string))
+        # Does the entity start with a capital letter (e.g., a proper noun)?
+        if not entity_text[0].isupper():
+            continue
         # Remove articles
         for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The '):
             if entity_text.startswith(article):

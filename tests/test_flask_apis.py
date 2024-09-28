@@ -108,6 +108,48 @@ def test_repositories_get2(client):
     assert 'foo' in dbs
 
 
+def test_background_post(client):
+    name1 = {"name": "Kamala Harris", "type": "person"}
+    name2 = {"name": "Donald Trump", "type": "person"}
+    name3 = {"name": "ABC News", "type": "organization"}
+    name4 = {"name": "ABC moderators", "type": "person", "isCollection": True}
+    req_data = json.dumps({"backgroundNames": [name1, name2, name3, name4]})
+    resp = client.post('/dna/v1/repositories/background', content_type='application/json',
+                       query_string={'repository': 'foo'}, data=req_data)
+    assert resp.status_code == 201
+    processed_data = resp.get_json()['processedNames']
+    skipped_data = resp.get_json()['skippedNames']
+    assert len(processed_data) == 4
+    assert len(skipped_data) == 0
+
+
+def test_background_get1(client):
+    resp = client.get('/dna/v1/repositories/background', query_string={'repository': 'foo'})
+    assert resp.status_code == 200
+    background_data = resp.get_json()['backgroundNames']
+    assert len(background_data) == 4
+    assert background_data[0]['name']['value'] in ('Kamala Harris', 'Donald Trump', 'ABC News', 'ABC moderators')
+
+
+def test_background_delete(client):
+    resp = client.delete('/dna/v1/repositories/background',
+                         query_string={'repository': 'foo', 'name': 'Kamala Harris'})
+    assert resp.status_code == 200
+    json_data = resp.get_json()
+    assert json_data['repository'] == 'foo'
+    assert json_data['deleted'] == 'Kamala Harris'
+
+
+def test_background_get2(client):
+    resp = client.get('/dna/v1/repositories/background', query_string={'repository': 'foo'})
+    assert resp.status_code == 200
+    background_data = resp.get_json()['backgroundNames']
+    assert len(background_data) == 3
+    assert background_data[0]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
+    assert background_data[1]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
+    assert background_data[2]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
+
+
 # dna/v1/repositories/narratives
 def test_narratives_post_ok1(client):
     article_text = "John is a musician. When Mary goes to the grocery store, John practices guitar."

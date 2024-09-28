@@ -29,7 +29,6 @@ coref_result = '{"updated_sentences": ["string"]}'
 
 events_result = '{"sentences": [{' \
                 '"sentence_number": "int", ' \
-                '"summary": "string", ' \
                 '"verbs": [{"trigger_text": "string", ' \
                 '"category_number": "int", "category_same_or_opposite": "string", "correctness": "int"}]}]}'
 
@@ -50,6 +49,7 @@ narrative_summary_result = '{"goal_numbers": ["int"], ' \
                            '"sentiment": "string", "sentiment_explanation": "string"}'
 
 sentence_result = '{"grade_level": "int", ' \
+                  '"summary": "string", ' \
                   '"rhetorical_devices": [{"device_number": "int", "explanation": "string"}]}'
 
 # Ontology details / event and state classes
@@ -297,23 +297,21 @@ coref_prompt = \
 # Event and noun details prompts
 events_prompt = \
     f'{chatgpt} You are an event linguistics researcher interested in events and conditions reported in news ' + \
-    'articles, blogs and personal narratives. Here are a numbered set of sentences from an article. The complete ' \
-    'set of sentence texts end with the string "**", which should ignored. {numbered_sentences_texts} ** ' \
-    'For each sentence, return the number associated with the sentence, the main verb, verbs in ' \
-    'subordinate clauses, and a short summary of the sentence of 12 words or less. If ' \
-    '"[Quotation##]" or "[Partial##]" occurs in the sentence, those strings represent quoted text which ' \
-    'has been removed. Analyze the sentence assuming the "[Quotation##]" and "[Partial##]" strings ' \
-    'do not affect any semantics. For each main or subordinate clause verb, return its ' \
-    'specific trigger word(s) including any modals and negation. If any of the verbs are idioms, legal ' \
-    'terms or legalese, return the complete idiom/legalese/legal terms as the trigger text. ' \
-    'Make sure to expand any verb contractions. Map the verb semantics to one of the following event/state ' + \
-    f'categories: {event_categories_text} When mapping to the category, make sure to examine the verb in the ' + \
-    'context of the sentence and examine ALL the possible categories before selecting the ' \
+    'articles, blogs and personal narratives. Here are a sentences from an article. The complete ' \
+    'set of sentence texts ends with the string "**", which should ignored. {numbered_sentences_texts} ** ' \
+    'For each sentence, return the number associated with the sentence, the main verb and all verbs in ' \
+    'subordinate clauses. For each main or subordinate clause verb, return its specific trigger word(s) including ' \
+    'any modals, negation and open clausal complements ("xcomp"s). Also return the verb text of any ' \
+    'infinitives in the sentence as a subordinate verb. If any of the verbs are idioms, legal terms or ' \
+    'legalese, return the complete idiom/legalese/legal terms as the trigger text. ' \
+    'Make sure to expand any verb contractions. Map the verb semantics to one of the following event' + \
+    f'/state categories: {event_categories_text} When mapping to the category, make sure to examine the verb ' + \
+    'in the context of the sentence and examine ALL the possible categories before selecting the ' \
     'most relevant one. When returning the event/state category, return its number from the list above.' \
     'Also, indicate if the semantic of the event/state category is the "same" as (or is the "opposite" of) the ' \
     'semantic of the full verb (always considering whether the verb is negated). Once complete, assign an estimate ' \
     'from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect. If no categories ' \
-    'are appropriate, return the number 68 ("other"). If the verb is ONLY the lemma, "be" or "become", ' \
+    'are appropriate, return the number 68 ("other"). If the verb is based ONLY on the lemma, "be" or "become", ' \
     'return its semantic as the number 32. ' + \
     f'Return the information as a JSON object with keys and values defined by {events_result}.'
 
@@ -324,8 +322,9 @@ noun_categories_prompt = \
     'from the sentence. For each verb recorded in the parentheses, return its full text and find it in the ' + \
     f'sentence. Determine the nouns associated with the verbs that have a semantic role of {semantic_role_text}. ' + \
     'When determining the semantic role, consider whether the sentence is in the active or passive voice. ' \
-    'Return the trigger word(s) of the nouns, and their semantic roles. Do not return articles (such as "the") in ' \
-    'the trigger words. If any of the nouns are idioms, legal terms or legalese, return the complete idiom/legalese/' \
+    'Return the trigger word(s) of the nouns, and their semantic roles. Do not return articles (such as "the") ' \
+    'possessive nouns or pronouns, or conjunctions/disjunctions in the trigger words. ' \
+    'If any of the nouns are idioms, legal terms or legalese, return the complete idiom/legalese/' \
     'legal term as the trigger text. Note that the trigger text for the name of a person should consist only of the ' \
     'first and last names (if a first name is available) or only the last name. Honorifics (such as "Mr.", "Mrs.", ' \
     '"Ms."), titles, designations and other qualifiers should NOT be returned. Map the semantics of the nouns to ' + \
@@ -378,9 +377,9 @@ sentence_prompt = \
     'Also, here is a numbered list of the types of rhetorical devices that may be used in the sentence. ' + \
     f'{rhetorical_devices_text} Provide the numbers associated with the devices found in the sentence and ' \
     f'explain why they are identified. If there are no rhetorical devices used, return an empty array for ' \
-    f'the "rhetorical_devices" JSON key. Return the response as a JSON object with ' \
-    f'keys and values defined by {sentence_result}.'
-
+    f'the "rhetorical_devices" JSON key. Also return a short summary of the sentence in 15 words or less. ' \
+    'Return the sentence as specified in the article as the summary, if it is 15 words or less. ' + \
+    f'Return the response as a JSON object with keys and values defined by {sentence_result}.'
 
 # Validating Wikipedia result
 wikipedia_prompt = \

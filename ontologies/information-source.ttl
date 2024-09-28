@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: September 6 2024
+# Last modified: September 25 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -22,7 +22,7 @@
 # 
 # Changes:
 #  Added/clarified number_sentences, number_ingested and rhetorical devices
-#  Added Clause, Correction
+#  Added Clause
 #  Added interpretation, ranking, segment_level and sentiment_explanation
 ########################################################################
 
@@ -35,11 +35,6 @@
   rdfs:label "Clause"@en ;
   rdfs:subClassOf :InformationSource ;
   rdfs:comment "A portion of a Sentence with an identifiable subject and verb. Typically, it is referenced as the 'topic' of event, such as a CommunicationAndSpeechAct."@en .
-
-:Correction a owl:Class ;
-  rdfs:label "Correction"@en ;
-  rdfs:subClassOf :InformationSource ;
-  rdfs:comment "A concept added to DNA's background knowledge to improve the semantic analysis."@en .
 
 
 ########################################################################

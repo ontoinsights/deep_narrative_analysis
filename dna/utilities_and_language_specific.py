@@ -148,12 +148,9 @@ def check_name_gender(name_str: str) -> str:
     (if the gender can be determined) or 'SINGPERSON'.
 
     :param name_str: The string representing the noun or proper name
-    :return: A tuple of 2 strings representing the entity's text and type (with gender if known)
+    :return: A string holding the entity's type (with gender if known)
     """
     gender = empty_string
     names = name_str.split() if space in name_str else [name_str]
-    for name in names:
-        gender = 'FEMALE' if name in female_names else ('MALE' if name in male_names else empty_string)
-        if gender:
-            break
+    gender = 'FEMALE' if names[0] in female_names else ('MALE' if names[0] in male_names else empty_string)
     return f'{gender}SINGPERSON' if gender else 'SINGPERSON'

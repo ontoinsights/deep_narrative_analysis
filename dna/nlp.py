@@ -5,6 +5,7 @@
 
 import logging
 import re
+import uuid
 from dataclasses import dataclass
 
 import spacy
@@ -26,27 +27,6 @@ quotation_mark_dict = {"\u0022": "\u0022",     # Holding the corresponding left/
 left_quotation_marks = list(quotation_mark_dict.keys())
 
 modals_without_space = [modal[:-1] for modal in modals]
-
-@dataclass
-class ParseResults:
-    """
-    Dataclass holding the results of the parse_narrative function
-    """
-    sentence_classes: list       # Array of Sentence class instances
-    quotation_classes: list      # Array of Quotation class instances
-    partial_quotes: list         # Array of strings of partial quotations (without subject/verb)
-
-@dataclass
-class QuotationResults:
-    """
-    Dataclass holding the results of the _resolve_quotations function
-    """
-    # Updated narrative text (cleaning the text, removing quotations with a subj+verb, replacing the quote
-    # with the text '[Quotation#]', and removing partial quotes, replacing the quote with the text, '[Partial#])
-    updated_text: str
-    left_quotation: str          # Left quotation mark to delineate quotes
-    quotation_classes: list      # List of Quotation Class instances (removed from the updated_text)
-    quoted_texts: list           # List of quoted texts that do not have a subject/verb
 
 
 def _get_original_text(sent_text: str, quotation_instances: list, partial_quotations: list, left_quote: str) -> str:
@@ -111,37 +91,12 @@ def _get_quotation_attribution(complete_text: str, quotation: str) -> str:
     return empty_string
 
 
-def _remove_tokens(text: str) -> str:
+def _resolve_quotations(narr: str) -> list:
     """
-    Removes quotation marks and some punctuation from a sentence.
+    Capture the quotations in the text.
 
-    :param text: The original text
-    :return: The updated text with the quotes and some punctuation removed
-    """
-    text_doc = nlp(text)
-    updated_text = empty_string
-    for token in text_doc:
-        # Keep certain marks classified as "punctuation"
-        if token.text in ('[', ']', '.', '?', '-', '!', ',') or (token.pos_ == 'PART' and token.dep_ == 'case'):
-            updated_text += token.text
-        elif token.pos_ != 'PUNCT':
-            updated_text += f' {token.text}'
-    # Some cleanup
-    updated_text = re.sub(r'(\[) ', r'\1', updated_text)
-    updated_text = re.sub(r'(\S)(\[Quotation)', r'\1 \2', updated_text)
-    updated_text = re.sub(r'(\S)(\[Partial)', r'\1 \2', updated_text)
-    updated_text = re.sub(r'(Quotation[0-9]+])\.', r'\1', updated_text)
-    updated_text = re.sub(r'(Partial[0-9]+])\.', r'\1', updated_text)
-    return updated_text.replace('  ', space).replace('\n ', space).strip()
-
-
-def _resolve_quotations(narr: str) -> QuotationResults:
-    """
-    Process the quotations in the text - capture them and return a version of the
-    article/narrative with the quotation texts removed.
-
-    :param narr: The original narrative text
-    :return: An instance of the dataclass, QuotationResults
+    :param narr: The narrative text
+    :return: A list of Quotation class instances
     """
     # Determine what format is used to indicate a quotation (", right/left quotes, ...) and extract
     #     all quoted text
@@ -156,40 +111,22 @@ def _resolve_quotations(narr: str) -> QuotationResults:
         # Yes, but may have quotes within quotes
         # Assume that the quotation mark type with the largest count is the method for quoting
         index_max = max(range(len(lengths)), key=lengths.__getitem__)
-        left_quotation = left_quotation_marks[index_max]
         quotes = quotations_list[int(index_max)]   # List of quotations to be processed
-    else:    # No left/right or double quotes
-        return QuotationResults(narr.replace('  ', space).replace('\n ', space).strip(), empty_string,
-                                [], [])
-    # Create array of all quoted strings and another of all quotations that are sentences with subjs/objs
-    # Also, update the narrative to remove quotation marks and all quotations that are sentences with subjs/objs
-    full_quote_index = 0
-    partial_quote_index = 0
-    quotation_instance_list = []        # Array of instances of the Quotation class
-    partial_quote_list = []             # Array of all quoted strings that do not have subject/object
-    updated_narr = narr                 # Remove quotations from sentences since they could cross sentence boundaries
+    else:
+        return []
+    # Create an array of Quotation class instances
+    quotations = []         #
     for quote in quotes:    # Process the individual quotations
         quote_doc = nlp(quote)
         quote_verbs = [wd for wd in list(quote_doc) if wd.pos_ in ('VERB', 'AUX')]  # Root verb may be AUX
         verb_and_subj = False
-        for quote_verb in quote_verbs:   # If any verb has a subject, then remove quoted text
+        for quote_verb in quote_verbs:   # If any verb has a subject, then likely is a full quotation
             if any([wd for wd in quote_verb.children if 'subj' in wd.dep_]):
                 verb_and_subj = True
                 break
         if verb_and_subj:                # Have a subject+verb
-            # Remove quote from narrative and replace with 'Quotation#'
-            updated_narr = updated_narr.replace(quote, f'[Quotation{full_quote_index}]').strip()
-            quotation_instance_list.append(
-                Quotation(quote, full_quote_index,
-                          get_entities(quote.replace('[', empty_string).replace(']', empty_string)),
-                          _get_quotation_attribution(narr, quote)))
-            full_quote_index += 1
-        else:
-            # Add the quote to the partial quotation list
-            updated_narr = updated_narr.replace(quote, f'[Partial{partial_quote_index}]').strip()
-            partial_quote_list.append(f'Partial{partial_quote_index}: {quote}')
-            partial_quote_index += 1
-    return QuotationResults(_remove_tokens(updated_narr), left_quotation, quotation_instance_list, partial_quote_list)
+            quotations.append(Quotation(quote, 0, [], _get_quotation_attribution(narr, quote)))
+    return quotations
 
 
 def _update_token_separation(sentence_text: str) -> str:
@@ -223,7 +160,7 @@ def get_entities(text: str) -> list:
     return entities
 
 
-def parse_narrative(narr_text: str) -> ParseResults:
+def parse_narrative(narr_text: str) -> (list, list):
     """
     Creates a spacy Doc from the narrative text, splitting it into sentences and separating out
     quotations. Each sentence is an instance of the Sentence Class. Each quotation (with a subject and verb) is
@@ -231,25 +168,24 @@ def parse_narrative(narr_text: str) -> ParseResults:
     (typically a few words) are returned.
 
     :param narr_text: The narrative text
-    :return: An instance of the ParseResults dataclass
+    :return: A tuple holding a list of instances of the Sentence class and a list of instances
+             of the Quotation class
     """
-    narrative = narr_text.replace('\n', space).replace("  ", space)
-    quotation_results = _resolve_quotations(narrative)
-    doc = nlp(quotation_results.updated_text)
+    narrative = narr_text.replace('\n', space).replace("  ", space).strip()
+    quotations = _resolve_quotations(narrative)
+    doc = nlp(narrative)
     sentence_instance_list = []
     sentence_offset = 0
     for sentence in doc.sents:
         sentence_offset += 1
         sentence_text = _update_token_separation(sentence.text.strip())
-        original_text = _get_original_text(sentence_text, quotation_results.quotation_classes,
-                                           quotation_results.quoted_texts, quotation_results.left_quotation)
         # Determine if special punctuation is present (question and exclamation marks for now); Other punctuation?
         # punctuations = _get_punctuations(sentence_text)
         # Short sentences are mainly for reader effect and result in parsing problems - capture but ignore processing
         if len(sentence_text) < 3 or not any(c.isalnum() for c in sentence_text):
-            # No NER or verb processing
-            sentence_instance_list.append(Sentence(sentence_text, original_text, sentence_offset, []))
+            # No NER
+            sentence_instance_list.append(Sentence(sentence_text, sentence_offset, []))
             continue
         sentence_instance_list.append(
-            Sentence(sentence_text, original_text, sentence_offset, get_entities(sentence_text)))
-    return ParseResults(sentence_instance_list, quotation_results.quotation_classes, quotation_results.quoted_texts)
+            Sentence(sentence_text, sentence_offset, get_entities(sentence_text)))
+    return sentence_instance_list, quotations
