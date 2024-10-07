@@ -5,7 +5,6 @@ import json
 import logging
 from dataclasses import dataclass
 
-from rdflib import Literal
 import uuid
 from datetime import datetime
 from flask import Request, Response, jsonify
@@ -17,7 +16,7 @@ from dna.nlp import parse_narrative
 from dna.process_entities import process_ner_entities
 from dna.query_openai import access_api, narrative_goals, narrative_summary_prompt
 from dna.sentence_classes import Entity
-from dna.utilities_and_language_specific import dna_prefix, empty_string, meta_graph, ttl_prefixes
+from dna.utilities_and_language_specific import dna_prefix, empty_string, literal, meta_graph, ttl_prefixes
 
 background_str: str = 'background'
 detail: str = 'detail'
@@ -31,7 +30,8 @@ background_type_mapping = {
     "organization": "ORG",
     "person": "PERSON",
     "place": "LOC",
-    "thing": "PRODUCT"
+    "thing": "PRODUCT",
+    "norp": "NORP"
 }
 
 @dataclass
@@ -212,18 +212,18 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
                    f':number_triples {numb_triples} ; :encodes :Narrative_{narr_id} .',
                    f':Narrative_{narr_id} a :Narrative ; dc:created "{metadata.published}"^^xsd:dateTime ; ',
                    f':number_sentences {number_sentences} ; :number_ingested {number_ingested} ; '
-                   f':source "{metadata.source}" ; dc:title {Literal(metadata.title).n3()} ; '
+                   f':source "{metadata.source}" ; dc:title {literal(metadata.title)} ; '
                    f':external_link "{metadata.url}" .',
-                   f':Narrative_{narr_id} :text {Literal(narr).n3()} .'])
+                   f':Narrative_{narr_id} :text {literal(narr)} .'])
     summary_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
-    turtle.append(f':Narrative_{narr_id} :summary {Literal(summary_dict["summary"]).n3()} .')
+    turtle.append(f':Narrative_{narr_id} :summary {literal(summary_dict["summary"])} .')
     for goal in summary_dict['goal_numbers']:
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[int(goal) - 1]}" .')
     for interpreted_text in summary_dict['interpreted_text']:
         perspective = interpreted_text['perspective']
         # TODO: Pending pystardog fix; edge = f':interpretation {:segment_label "' + {perspective} + '"}'
         predicate = f':interpretation_{perspective}'
-        turtle.append(f':Narrative_{narr_id} {predicate} {Literal(interpreted_text["interpretation"]).n3()} .')
+        turtle.append(f':Narrative_{narr_id} {predicate} {literal(interpreted_text["interpretation"])} .')
     for ranking in summary_dict['ranking_by_perspective']:
         perspective = ranking['perspective']
         # TODO: Pending pystardog fix; edge = f':ranking {:segment_label "' + {perspective} + '"}'
@@ -233,7 +233,7 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
         sentiment = summary_dict['sentiment']
         turtle.append(f':Narrative_{narr_id} :sentiment "{sentiment}" .')
         turtle.append(f':Narrative_{narr_id} :sentiment_explanation '
-                      f'{Literal(summary_dict["sentiment_explanation"]).n3()} .')
+                      f'{literal(summary_dict["sentiment_explanation"])} .')
     return MetadataResults(True, turtle, created_at, numb_triples)
 
 
@@ -272,7 +272,7 @@ def process_background(entities: list, repo: str) -> BackgroundAndNarrativeResul
     invalid_names = []
     processed_names = []
     for entity in entities:
-        if entity['type'].lower() in ('law', 'organization', 'person', 'place', 'thing'):
+        if entity['type'].lower() in ('law', 'norp', 'organization', 'person', 'place', 'thing'):
             entity_type = background_type_mapping[entity['type'].lower()]
             entity_type = f'PLURAL{entity_type}' if 'isCollection' in entity and entity['isCollection'] \
                 else entity_type
@@ -318,11 +318,11 @@ def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> Backgroun
     msg = add_remove_data('add', ' '.join(graph_results.turtle), repo, graph_uuid)   # Add to dna's repo_graphUUID graph
     if msg:
         logging.error(f'Error loading the narrative graph, {graph_results.turtle}')
-        return NarratBackgroundAndNarrativeResultsiveResults(dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500)
+        return BackgroundAndNarrativeResults(dict(), f'Error loading the narrative graph {graph_uuid}: {msg}', 500)
     # Process the metadata
     logging.info('Loading metadata')
     metadata_results = get_metadata_ttl(repo, graph_uuid, narr, metadata,
-                                        len(parse_results.sentence_classes), graph_results.number_sentences)
+                                        len(sentence_classes), graph_results.number_processed)
     if not metadata_results.success:
         return BackgroundAndNarrativeResults(dict(), f'Error creating the metadata for {metadata.title}', 500)
     msg = add_remove_data('add', ' '.join(metadata_results.turtle), repo)   # Add to dna db's repo graph
@@ -333,8 +333,8 @@ def process_new_narrative(metadata: Metadata, narr: str, repo: str) -> Backgroun
                  'narrativeDetails': {
                      narrative_id: graph_uuid, 'processed': metadata_results.created,
                      'numberOfTriples': metadata_results.number_triples,
-                     'numberOfSentences': len(parse_results.sentence_classes),
-                     'numberIngested': graph_results.number_sentences,
+                     'numberOfSentences': len(sentence_classes),
+                     'numberIngested': graph_results.number_processed,
                      'narrativeMetadata': {'title': metadata.title, 'published': metadata.published,
                                            'source': metadata.source, 'url': metadata.url}}}
     return BackgroundAndNarrativeResults(resp_dict, empty_string, 201)

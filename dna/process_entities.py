@@ -2,15 +2,14 @@
 #    PRODUCT, TIME, WORK_OF_ART)
 
 import re
-from rdflib import Literal
 from unidecode import unidecode
 
 from dna.create_entities_turtle import create_agent_ttl, create_location_ttl, create_named_entity_ttl, create_norp_ttl
 from dna.query_openai import access_api, event_categories, noun_events_prompt
 from dna.query_sources import get_event_details_from_wikidata, get_wikipedia_description
 from dna.sentence_classes import Entity
-from dna.utilities_and_language_specific import (check_name_gender, days, empty_string, months, names_to_geo_dict,
-                                                 ner_dict, ner_types, underscore)
+from dna.utilities_and_language_specific import check_name_gender, days, empty_string, literal, months, \
+    names_to_geo_dict, ner_dict, ner_types, underscore
 
 agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
                  ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
@@ -120,7 +119,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         noun_iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, noun_text.strip()).replace('__', underscore)
     noun_iri = f':{noun_iri[1:]}' if noun_iri.startswith(underscore) else f':{noun_iri}'
     noun_iri = noun_iri[:-2] if noun_iri.endswith(underscore) else noun_iri
-    noun_ttl = [f'{noun_iri} :text {Literal(noun_text).n3()} .']
+    noun_ttl = [f'{noun_iri} :text {literal(noun_text)} .']
     # Process by location, agent, and event/other NER types
     if base_type in ('GPE', 'LOC', 'FAC', 'ORG'):    # spaCy incorrectly reports some locations as ORG
         geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type)
@@ -239,8 +238,8 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
         # Does the entity start with a capital letter (e.g., a proper noun)?
         if not entity_text[0].isupper():
             continue
-        # Remove articles
-        for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The '):
+        # Remove articles and conjunctions
+        for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The ', ' and', ' or'):
             if entity_text.startswith(article):
                 entity_text = entity_text[len(article):]
                 break

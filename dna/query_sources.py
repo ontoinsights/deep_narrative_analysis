@@ -48,6 +48,7 @@ class DescriptionDetails:
     wiki_url: str         # String holding the URL of the web page from Wikipedia
     wikidata_id: str      # String holding the Wikidata identifier
     labels: list          # Array of labels/alternate names for the entity
+    # TODO: Add gender
 
 @dataclass
 class EventDetails:

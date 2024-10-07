@@ -5,17 +5,16 @@ import logging
 import re
 import uuid
 from dataclasses import dataclass
-from rdflib import Literal
 from typing import Union
 from unidecode import unidecode
 
 from dna.database import add_remove_data
 from dna.nlp import get_entities
 from dna.process_entities import agent_classes, check_if_noun_is_known, process_ner_entities
-from dna.query_openai import (access_api, coref_prompt, event_categories, events_prompt,
-                              noun_categories, noun_categories_prompt, rhetorical_devices, sentence_prompt)
+from dna.query_openai import access_api, coref_prompt, event_categories, events_prompt, \
+    noun_categories, noun_categories_prompt, rhetorical_devices, sentence_prompt
 from dna.sentence_classes import Sentence, Quotation, Entity
-from dna.utilities_and_language_specific import empty_string, honorifics, modals, ner_dict, ttl_prefixes
+from dna.utilities_and_language_specific import empty_string, honorifics, literal, modals, ner_dict, ttl_prefixes
 
 agent_classes_without_plant = [element for element in agent_classes if ':Plant' not in element]
 
@@ -45,10 +44,10 @@ semantic_role_mapping = {"affiliation": ":affiliated_with",
                          "attribute": ":has_aspect",
                          "beneficiary": ":has_affected_entity",
                          "cause": ":has_cause",
-                         "content": ":has_context",
+                         "content": ":has_topic",
                          # "co-agent": ":has_active_entity",
                          # "co-patient": ":has_affected_entity",
-                         "experiencer": ":has_active_entity",
+                         "experiencer": ":has_affected_entity",
                          "goal": ":has_destination",        # only for locations; goal of person -> has_affected_entity
                          "instrument": ":has_instrument",
                          "location": ":has_location",
@@ -69,8 +68,8 @@ class VerbDetails:
     iri: str
 
 
-def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict: dict, event_class: str,
-                         nouns_dict: dict) -> list:
+def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict: dict,
+                         event_class: str, nouns_dict: dict) -> list:
     """
     Get the class details and appropriate relationship/predicate for nouns related to an
     event or state via a variety of semantic roles.
@@ -88,19 +87,15 @@ def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict:
     roles_ttl = []
     for noun_detail in sentence_noun_dict['noun_information']:
         noun_text = noun_detail['trigger_text']
-        if '[Quotation' in noun_text or '[Partial' in noun_text:
-            roles_ttl.append(f'{event_iri} :has_topic :{noun_text[1:-1]} .')
-            continue
         for honorific in honorifics:
             noun_text = noun_text.replace(honorific, '')
         role = noun_detail['semantic_role']
         if role == 'content' and len(noun_text.split()) > 3:
-            roles_ttl.append(f'{event_iri} :has_topic [ a :Clause ; :text {Literal(noun_text).n3()} ] .')
+            roles_ttl.append(f'{event_iri} :has_topic [ a :Clause ; :text {literal(noun_text)} ] .')
             continue
         if role == 'time':     # TODO: Time as NER
-            roles_ttl.append(f'{event_iri} :has_time [ a :Time ; :text {Literal(noun_text).n3()} ] .')
+            roles_ttl.append(f'{event_iri} :has_time [ a :Time ; :text {literal(noun_text)} ] .')
             continue
-        correctness = noun_detail['correctness']
         category = noun_detail['category_number']
         noun_class_name = 'owl:Thing'
         if 0 < category < len(noun_categories) + 1:
@@ -111,11 +106,12 @@ def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict:
             noun_iri = verb_details[noun_text].iri
             noun_ttl = []
         else:
-            noun_iri, noun_ttl = _get_noun_details(noun_text, noun_class_name, correctness, nouns_dict)
+            noun_iri, noun_ttl = _get_noun_details(noun_text, noun_class_name, noun_detail['is_plural'],
+                                                   noun_detail['correctness'], nouns_dict)
         if noun_iri == event_iri:
             continue
         if event_class == noun_class_name and noun_iri.startswith(':Noun'):
-            roles_ttl.append(f'{event_iri} :text {Literal(noun_text).n3()} .')
+            roles_ttl.append(f'{event_iri} :text {literal(noun_text)} .')
             continue
         if noun_ttl:           # Turtle for a new noun
             roles_ttl.extend(noun_ttl)
@@ -123,18 +119,23 @@ def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict:
         predicate = _get_predicate(noun_text, noun_class_name, role, event_class)
         if predicate:
             if predicate == ':affiliated_with' and event_class != ':Affiliation':
-                roles_ttl.append(f'{event_iri} a :Affiliation .')
+                # TODO: Determine which entity is affiliated with another; Define new Affiliation Event and
+                #       associate the nouns
+                continue
             roles_ttl.append(f'{event_iri} {predicate} {noun_iri} .')
     return roles_ttl
 
 
-def _get_noun_details(noun_text: str, noun_class: str, correctness: int, nouns_dict: dict) -> (str, list):
+def _get_noun_details(noun_text: str, noun_class: str, plural: bool, correctness: int, nouns_dict: dict) -> (str, list):
     """
     Determine/define the entities associated with an event/condition. Return their iri,
     and any new Turtle.
 
     :param noun_text: String holding the noun text
     :param noun_class: String holding DNA class name that defines the semantics of the noun
+    :param plural: Boolean indicating that the noun is plural (if true)
+    :param correctness: Integer between 0-100 indicating the confidence in the noun_class categorization
+                        of the noun_text
     :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
@@ -152,12 +153,14 @@ def _get_noun_details(noun_text: str, noun_class: str, correctness: int, nouns_d
         if noun_text.lower in ('we', 'us'):
             noun_class += ', :Collection'
         nouns_dict[noun_text] = ('PERSON', noun_iri)
-        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {Literal(noun_text).n3()} ; :confidence 99 .')
+        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {literal(noun_text)} ; :confidence 99 .')
     else:
         # Add to the nouns_dictionary
         nouns_dict[noun_text.replace('.', empty_string)] = empty_string, noun_iri
         # Add to the turtle
-        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {Literal(noun_text).n3()} ; :confidence {correctness} .')
+        if plural:
+            noun_class += ', :Collection'
+        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {literal(noun_text)} ; :confidence {correctness} .')
     return noun_iri, new_turtle
 
 
@@ -172,8 +175,8 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
     :return: A string holding the predicate associating the entity to the event/state
     """
     sem_role_lower = role.lower()
-    if event_class in measurement:
-       return ':has_quantification' if any(c.isdigit() for c in noun_str) else ':has_context'
+    if event_class in measurement and any(c.isdigit() for c in noun_str):
+       return ':has_quantification'
     if noun_class_name in measurement:
        return ':has_quantification'
     if ':EnvironmentAndCondition' == event_class:
@@ -184,6 +187,9 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
             return ':has_context'
     if ':Affiliation' == event_class:
         return ':has_active_entity' if sem_role_lower == 'agent' else ':affiliated_with'
+    if ':Affiliation' == noun_class_name:
+        # TODO: Determine which entity is affiliated with another; Define new Affiliation Event and associate the nouns
+        return empty_string
     if ':MovementTravelAndTransportation' == event_class and sem_role_lower == 'theme' and \
             noun_class_name in location_business:
         return ':has_destination'
@@ -192,12 +198,10 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
     if sem_role_lower == 'source' and noun_class_name in agent_classes:
         return ':has_source'
     if sem_role_lower == 'recipient' and noun_class_name in location_business:
-        return ':has_recipient'
+        return ':has_destination'
     if sem_role_lower in 'patient' and noun_class_name in location_business:
         return ':has_location'
-    if sem_role_lower in 'patient' and noun_class_name not in agent_classes_without_plant:
-        return ':has_context'
-    if sem_role_lower in ('agent', 'experiencer') and noun_class_name not in agent_classes_without_plant:
+    if sem_role_lower == 'experiencer' and noun_class_name not in agent_classes_without_plant:
         return ':has_context'
     if sem_role_lower == 'goal':
         if noun_class_name in agent_classes_without_plant:
@@ -281,7 +285,7 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
                         logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sentence_text}')
                         continue
         if 'summary' in sent_dict:
-            ttl_list.append(f'{sentence_iri} :summary {Literal(sent_dict["summary"]).n3()} .')
+            ttl_list.append(f'{sentence_iri} :summary {literal(sent_dict["summary"])} .')
             summary = sent_dict['summary']
     return summary
 
@@ -360,12 +364,12 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
             if prev_event:              # Need a topic for the previous event
                 semantics_ttl.append(f'{prev_event} :has_topic {event_iri} .')
             if event_iri in processed_iris:
-                semantics_ttl.append(f'{event_iri} :text {Literal(trigger_text).n3()} .')
+                semantics_ttl.append(f'{event_iri} :text {literal(trigger_text)} .')
                 break
             else:
                 processed_iris.append(event_iri)
             semantics_ttl.append(f'{sent_iri} :has_semantic {event_iri} .')
-            semantics_ttl.append(f'{event_iri} :text {Literal(verb_details_key).n3()} .')
+            semantics_ttl.append(f'{event_iri} :text {literal(verb_details_key)} .')
             category = int(verb_details[verb_details_key].category)
             correctness = int(verb_details[verb_details_key].correctness)
             event_class_name = ':EventAndState'
@@ -395,7 +399,7 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
                         modal_key = 'could-past' if not future else 'could-not-past'
                     semantics_ttl.append(f'{event_iri} a {modal_mapping[modal_key]} ; '
                                          f':confidence-{modal_mapping[modal_key][1:]} 95 .')
-            # Assemble the Turtle for the verbs'/events'/states/ nouns and their semantic roles
+            # Assemble the Turtle for the verbs/events/states' nouns and their semantic roles
             noun_ttl = _deal_with_sem_roles(event_iri, verb_details, noun_details, event_class_name, nouns_dict)
             semantics_ttl.extend(noun_ttl)
             ttl_txt = str(noun_ttl)

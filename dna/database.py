@@ -44,6 +44,8 @@ def add_remove_data(op_type: str, triples: str, repo: str, graph: str = empty_st
         ar_conn: Connection = stardog.Connection(dna_db, **sd_conn_details)
         ar_conn.begin()
         if op_type == 'add':
+            # Remove unnecessary escaping for single quotes
+            triplex = triples.encode('utf-8')
             # Add to the database
             if not repo:
                 ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))
@@ -195,7 +197,9 @@ def query_database(query_type: str, query: str) -> list:
         if query_type == 'select':
             # Select query, which will return results, if successful
             query_results = query_conn.select(query, content_type='application/sparql-results+json')
+            # noinspection PyTypeChecker
             if 'results' in query_results and 'bindings' in query_results['results']:
+                # noinspection PyTypeChecker
                 return query_results['results']['bindings']
             else:
                 return []

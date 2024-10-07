@@ -9,15 +9,14 @@ import openai
 import os
 import re
 import traceback
-from rdflib import Literal
 from typing import List
 
 from dna.database import query_database
 from dna.database_queries import query_corrections, query_manual_corrections
 from dna.process_sentences import get_sentence_details, sentence_semantics_processing
 from dna.sentence_classes import Sentence, Punctuation
-from dna.utilities_and_language_specific import (empty_string, ner_dict, personal_pronouns, space,
-                                                 ttl_prefixes, underscore)
+from dna.utilities_and_language_specific import empty_string, literal, ner_dict, personal_pronouns, space, \
+        ttl_prefixes, underscore
 
 @dataclass
 class GraphResults:
@@ -25,7 +24,7 @@ class GraphResults:
     Dataclass holding the results of the create_graph function
     """
     success: bool              # Success boolean
-    number_sentences: int      # Integer indicating the number of sentences processed
+    number_processed: int      # Integer indicating the number of sentences processed
     turtle: list               # List of the Turtle statements encoding the narrative (if successful)
 
 
@@ -85,7 +84,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         sentence_iri = sentence_instance.iri
         original_text = sentence_instance.text
         sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sentence_instance.offset} .',
-                             f'{sentence_iri} :text {Literal(original_text).n3()} .']
+                             f'{sentence_iri} :text {literal(original_text)} .']
         # TODO: (Future) Should DNA Capture whether the sentence is a question or exclamation?
         # for punctuation in sentence_instance_list[index].punctuations:
         #     if punctuation == Punctuation.QUESTION:
@@ -109,9 +108,10 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence semantics for the text')
             print(traceback.format_exc())
+    logging.info(f'Turtle {graph_ttl_list}')
     # Add the quotation details to the Turtle
     for quote in quotation_instance_list:
-        quote_ttl_list = [f'{quote.iri} a :Quote ; :text {Literal(quote.text).n3()} .']
+        quote_ttl_list = [f'{quote.iri} a :Quote ; :text {literal(quote.text)} .']
         try:
             get_sentence_details(quote, quote_ttl_list, 'quote', nouns_dictionary, repo)
             graph_ttl_list.extend(quote_ttl_list)

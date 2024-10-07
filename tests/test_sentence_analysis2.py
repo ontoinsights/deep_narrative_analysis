@@ -318,10 +318,12 @@ def test_multiple_xcomp():
     # :Sentence_56d338d7-47dd :has_semantic :Event_62d28444-ce84 .
     # :Event_62d28444-ce84 :text "to ski" .
     # :Event_62d28444-ce84 a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 85 .
+    # :Event_62d28444-ce84 :has_active_entity :John .
     # :Sentence_56d338d7-47dd :has_semantic :Event_709834b7-d38a .
     # :Event_709834b7-d38a :text "to swim" .
     # :Event_709834b7-d38a a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 85 .
-    # TODO: "to swim" event is also a topic
+    # :Event_709834b7-d38a :has_active_entity :John .
+    # TODO: "to swim" event is also a topic of "liked"
 
 
 def test_location_hierarchy():
@@ -470,3 +472,45 @@ def test_rule():
     # :Event_92d5c2b7-e38a a :RequirementAndDependence ; :confidence-RequirementAndDependence 95 .
     # :Noun_965fe865-6331 a :Person ; :text "you" ; :confidence 100 .
     # :Event_92d5c2b7-e38a :has_active_entity :Noun_965fe865-6331 .
+
+
+def test_causation():
+    sentence_classes, quotation_classes = parse_narrative(text_causation)
+    graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
+    ttl_str = str(graph_results.turtle)
+    assert ':HealthAndDiseaseRelated' in ttl_str and ':text "twisted' in ttl_str
+    assert ':has_active_entity :Holly' in ttl_str
+    assert ':ComponentPart ; :text "ankle' in ttl_str
+    assert ':has_affected_entity :Noun' in ttl_str    # twisted ankle
+    assert ':ArtAndEntertainmentEvent' in ttl_str and ':text "running' in ttl_str
+    assert ':AggressiveCriminalOrHostileAct' in ttl_str and ':text "had pushed' in ttl_str
+    assert ':has_active_entity :David' in ttl_str
+    assert ':has_affected_entity :Holly' in ttl_str
+    # Output Turtle:
+    # :Sentence_00857acb-73de a :Sentence ; :offset 1 .
+    # :Sentence_00857acb-73de :text "Yesterday Holly was running a marathon when she twisted her ankle." .
+    # :Sentence_00857acb-73de :mentions :Holly .
+    # :Sentence_00857acb-73de :grade_level 6 .
+    # :Sentence_00857acb-73de :summary "Holly twisted her ankle while running a marathon." .
+    # :Sentence_8aa42ed1-87b6 a :Sentence ; :offset 2 .
+    # :Sentence_8aa42ed1-87b6 :text "David had pushed her." .
+    # :Sentence_8aa42ed1-87b6 :mentions :David .
+    # :Sentence_8aa42ed1-87b6 :grade_level 3 .
+    # :Sentence_8aa42ed1-87b6 :summary "David had pushed her." .
+    # :Sentence_00857acb-73de :has_semantic :Event_d3ab20ec-ad7d .
+    # :Event_d3ab20ec-ad7d :text "twisted" .
+    # :Event_d3ab20ec-ad7d a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 95 .
+    # :Event_d3ab20ec-ad7d :has_active_entity :Holly .
+    # :Noun_18ba7feb-76c4 a :ComponentPart ; :text "ankle" ; :confidence 100 .
+    # :Event_d3ab20ec-ad7d :has_affected_entity :Noun_18ba7feb-76c4 .
+    # :Sentence_00857acb-73de :has_semantic :Event_44225107-89f0 .
+    # :Event_44225107-89f0 :text "running" .
+    # :Event_44225107-89f0 a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 90 .
+    # :Event_44225107-89f0 :has_active_entity :Holly .
+    # :Event_44225107-89f0 :text "marathon" .
+    # :Sentence_8aa42ed1-87b6 :has_semantic :Event_34b0979f-1db6 .
+    # :Event_34b0979f-1db6 :text "had pushed" .
+    # :Event_34b0979f-1db6 a :AggressiveCriminalOrHostileAct ; :confidence-AggressiveCriminalOrHostileAct 95 .
+    # :Event_34b0979f-1db6 :has_active_entity :David .
+    # :Event_34b0979f-1db6 :has_affected_entity :Holly .
+    # TODO: Causation across sentences

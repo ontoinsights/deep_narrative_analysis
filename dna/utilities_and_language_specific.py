@@ -4,6 +4,7 @@
 # import base64
 from pathlib import Path
 import pickle
+from rdflib import Literal
 
 base_dir = Path(__file__).resolve().parent.parent
 dna_dir = base_dir / 'dna'
@@ -24,6 +25,9 @@ dna_prefix: str = 'urn:ontoinsights:dna:'
 meta_graph: str = 'meta'
 owl_thing: str = 'owl:Thing'
 event_and_state_class: str = ':EventAndState'
+
+# Return the RDF encoded string, replacing double quotes with single quotes
+literal = lambda x : Literal(x.replace('"', "'")).n3()
 
 concept_map = {'politic': ':PoliticalIdeology',
                'ideolog': ':PoliticalIdeology',

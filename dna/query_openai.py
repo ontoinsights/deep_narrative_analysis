@@ -35,7 +35,7 @@ events_result = '{"sentences": [{' \
 noun_categories_result = '{"sentence_nouns": [{' \
                           '"verb_text": "string", ' \
                           '"noun_information": [{' \
-                          '"trigger_text": "string", "semantic_role": "string", ' \
+                          '"trigger_text": "string", "is_plural": "bool", "semantic_role": "string", ' \
                           '"category_number": "int", "category_same_or_opposite": "string", "correctness": "int"}]}]}'
 
 noun_events_result = '{"category_number": "int", ' \
@@ -301,30 +301,32 @@ events_prompt = \
     'set of sentence texts ends with the string "**", which should ignored. {numbered_sentences_texts} ** ' \
     'For each sentence, return the number associated with the sentence, the main verb and all verbs in ' \
     'subordinate clauses. For each main or subordinate clause verb, return its specific trigger word(s) including ' \
-    'any modals, negation and open clausal complements ("xcomp"s). Also return the verb text of any ' \
-    'infinitives in the sentence as a subordinate verb. If any of the verbs are idioms, legal terms or ' \
-    'legalese, return the complete idiom/legalese/legal terms as the trigger text. ' \
-    'Make sure to expand any verb contractions. Map the verb semantics to one of the following event' + \
-    f'/state categories: {event_categories_text} When mapping to the category, make sure to examine the verb ' + \
-    'in the context of the sentence and examine ALL the possible categories before selecting the ' \
-    'most relevant one. When returning the event/state category, return its number from the list above.' \
+    'any modals, negation and open clausal complements ("xcomp"s). Also return the verb text of any infinitives ' \
+    'in the sentence as a subordinate verb. If any of the verbs are idioms, legal terms or legalese, return the ' \
+    'complete idiom/legalese/legal terms as the trigger text. Make sure to expand any verb contractions.' + \
+    f'Map the verb semantics to one of the following event/state categories: {event_categories_text} ' + \
+    'When mapping to the category, make sure to examine the verb in the context of the sentence and examine ALL ' \
+    'the possible categories before selecting the most relevant one. ' \
+    'When returning the event/state category, return its number from the list above.' \
     'Also, indicate if the semantic of the event/state category is the "same" as (or is the "opposite" of) the ' \
     'semantic of the full verb (always considering whether the verb is negated). Once complete, assign an estimate ' \
     'from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect. If no categories ' \
     'are appropriate, return the number 68 ("other"). If the verb is based ONLY on the lemma, "be" or "become", ' \
-    'return its semantic as the number 32. ' + \
-    f'Return the information as a JSON object with keys and values defined by {events_result}.'
+    'return its semantic as the number 32. Return the information as a JSON object with keys and values ' + \
+    f'defined by {events_result}.'
 
 noun_categories_prompt = \
     f'{chatgpt} You are an event linguistics researcher interested in the concepts related to verbs reported in ' + \
     'the sentences of a news article, blog or personal narrative. Here is a sentence (ending with ** which should ' \
     'be ignored): {sentence_text}. In parentheses at the end are the main verb and verbs in subordinate clauses ' \
-    'from the sentence. For each verb recorded in the parentheses, return its full text and find it in the ' + \
-    f'sentence. Determine the nouns associated with the verbs that have a semantic role of {semantic_role_text}. ' + \
+    'from the sentence. For each verb recorded in the parentheses, return its full text, indicate if it is ' \
+    'singular or plural, and find it in the sentence. ' + \
+    f'Determine the nouns associated with the verbs that have a semantic role of {semantic_role_text}. ' + \
     'When determining the semantic role, consider whether the sentence is in the active or passive voice. ' \
     'Return the trigger word(s) of the nouns, and their semantic roles. Do not return articles (such as "the") ' \
-    'possessive nouns or pronouns, or conjunctions/disjunctions in the trigger words. ' \
-    'If any of the nouns are idioms, legal terms or legalese, return the complete idiom/legalese/' \
+    'possessive nouns or pronouns, or conjunctions/disjunctions in the trigger words. For infinitive verbs ' \
+    '(not having subjects of their own), return the subject noun associated with the verb on which the infinitive ' \
+    'depends. If any of the nouns are idioms, legal terms or legalese, return the complete idiom/legalese/' \
     'legal term as the trigger text. Note that the trigger text for the name of a person should consist only of the ' \
     'first and last names (if a first name is available) or only the last name. Honorifics (such as "Mr.", "Mrs.", ' \
     '"Ms."), titles, designations and other qualifiers should NOT be returned. Map the semantics of the nouns to ' + \
@@ -332,16 +334,13 @@ noun_categories_prompt = \
     'To perform the mapping, first determine whether the noun is a person, location, thing, event or ' \
     'condition/state. Then make sure to examine ALL the possible categories before selecting the most relevant one. ' \
     'Generally, the noun semantics should NOT map to the same semantics as the verb or the semantic role of the ' \
-    'noun. For example, for a declaration of "x caused y", x should not be mapped to the ' \
-    'category of "causation" (number 67). Assign a more relevant category. Also, always map a person in any role ' \
+    'noun. For example, for a declaration of "x caused y", x should not be mapped to the category of ' \
+    '"causation" (number 67). Assign a more relevant category. Also, always map a person in any role ' \
     'or relationship as number 82 (person). For example, a "musician" is NOT an art or entertainment event (number ' \
     '8), but is a person (number 82). When returning the category, return its number from the list. ' \
     'If no category is appropriate, return the number 96 ("other"). Indicate if the semantic ' \
     'of the category is the "same" as (or is the "opposite" of) the semantic of the noun. Also, assign an ' \
-    'estimate from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect.' \
-    'If "[Quotation##]" or "[Partial##]" occurs in the sentence, those strings represent quoted text which has ' \
-    'been removed. If "[Quotation##]" or "[Partial##]" is returned as a related noun, return its text as the ' \
-    'root word, and assume that it has the semantic role of "theme". ' + \
+    'estimate from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect.' + \
     f'Return the information as a JSON object with keys and values defined by {noun_categories_result}.'
 
 # Process EVENT entity
@@ -377,9 +376,10 @@ sentence_prompt = \
     'Also, here is a numbered list of the types of rhetorical devices that may be used in the sentence. ' + \
     f'{rhetorical_devices_text} Provide the numbers associated with the devices found in the sentence and ' \
     f'explain why they are identified. If there are no rhetorical devices used, return an empty array for ' \
-    f'the "rhetorical_devices" JSON key. Also return a short summary of the sentence in 15 words or less. ' \
-    'Return the sentence as specified in the article as the summary, if it is 15 words or less. ' + \
-    f'Return the response as a JSON object with keys and values defined by {sentence_result}.'
+    f'the "rhetorical_devices" JSON key. Also return a summary of the sentence in 15 words or less. Return the ' \
+    f'sentence as specified in the article, as the summary, if it is 10 words or less. If providing an updated ' \
+    f'sentence as a summary, avoid using complicated words or figurative language in the text. Return the ' \
+    f'response as a JSON object with keys and values defined by {sentence_result}.'
 
 # Validating Wikipedia result
 wikipedia_prompt = \

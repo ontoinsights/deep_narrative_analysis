@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: September 12 2024
+# Last modified: October 4 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -114,7 +114,7 @@
 :has_affected_entity a owl:ObjectProperty ;
   rdfs:label "has affected entity"@en ;
   rdfs:domain :EventAndState ;
-  rdfs:comment "References an entity who is affected by an EventAndState but does not actively participate in it."@en ;
+  rdfs:comment "References an entity who is affected by an EventAndState, or experiences it, but does not actively participate in it."@en ;
   :example "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_entity property and the attacked Person is identified using the :has_affected_entity property."@en .
 
 :has_aspect a owl:ObjectProperty ;

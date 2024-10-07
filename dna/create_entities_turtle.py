@@ -3,10 +3,9 @@
 
 import re
 import uuid
-from rdflib import Literal
 
 from dna.query_sources import get_geonames_location, get_wikipedia_description
-from dna.utilities_and_language_specific import concept_map, empty_string, names_to_geo_dict
+from dna.utilities_and_language_specific import concept_map, empty_string, literal, names_to_geo_dict
 
 
 def _add_labels_to_ttl(entity_iri: str, labels: list, ttl_list: list):
@@ -113,7 +112,7 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: s
             if geonames_details.country in names_to_geo_dict:
                 geonames_ttl.append(f'geo:{names_to_geo_dict[geonames_details.country]} :has_component {loc_iri} .')
     elif ner_type != 'ORG':
-        geonames_ttl.append(f'{loc_iri} a {loc_class} ; :text {Literal(loc_text).n3()} .')
+        geonames_ttl.append(f'{loc_iri} a {loc_class} ; :text {literal(loc_text)} .')
     return geonames_ttl, alt_names
 
 
