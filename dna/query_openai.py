@@ -9,14 +9,14 @@ from openai import OpenAI
 # from tenacity import *
 
 openai_api_key = os.environ.get('OPENAI_API_KEY')
-model_engine = "gpt-4o-2024-08-06"
+model_engine = "gpt-4o"
 client = OpenAI()
 
 any_boolean = 'true/false'
 interpretation_views = 'conservative, liberal or neutral'
-pronoun_text = 'they, them, he, she, it, myself, ourselves, themselves, herself, himself and itself'
+pronoun_text = 'I, we, they, them, he, she, it, myself, ourselves, themselves, herself, himself or itself'
 semantic_role_text = 'affiliation, agent, patient, theme, content, experiencer, instrument, location, time, goal, ' \
-                     'cause, source, state, subject, recipient, measure, or attribute'
+                     'cause, source, state, subject, purpose, recipient, measure, or attribute'
 sentiment = 'positive, negative or neutral'
 tense = 'past, present or future'
 
@@ -273,122 +273,175 @@ rhetorical_devices_text = 'The rhetorical device categories are: ' \
 #    '24. Repeating words, phrases or sentences for emphasis ' \
 #    '25. Asking rhetorical questions '
 
-chatgpt = 'Perform as ChatGPT, a large language model trained by OpenAI, based on the GPT-4 architecture. In ' \
-          'addition, the user has provided information on how you should respond. The user details are: '
+chatgpt1 = \
+    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, with expertise ' \
+    'in linguistics and natural language processing (NLP). Your objective is to'
+
+chatgpt2 = \
+    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, specializing in ' \
+    'event linguistics research. Your objective is to'
+
+chatgpt3 = \
+    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, specializing in ' \
+    'political and historical events. Your objective is to'
+
+chatgpt4 = \
+    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, with expertise ' \
+    'as a political/historical observer. Your objective is to'
 
 # Quotation prompt
 attribution_prompt = \
-    f'{chatgpt} You are a linguist and NLP expert, analyzing quotations from news articles. Here is the ' + \
-    'text of a news article (ending with the string "**" which should be ignored): {narr_text} ** ' \
-    'Here is a quotation contained in the article (ending with the string "**" which should be ignored): ' \
-    '{quote_text} ** For the quotation, find it in the news article, and indicate the name of the person who ' \
-    'spoke/communicated it. If the speaker is identified using a pronoun, analyze the text to dereference it. ' + \
-    f'Return the response as a JSON object with keys and values as defined by {attribution_result}.'
+    f'<{chatgpt1} identify the speaker of a quotation from a news article.> ' \
+    '<Instructions: 1. Input Formats: a) You are provided with the text of a news article, which ends with the ' \
+    'string "**" (this should be ignored). b) A specific quotation from the article is also provided, ' \
+    'ending with the string "**" (this should also be ignored). ' \
+    '2: Attribution Identification: Your task is to identify the speaker of the quotation by analyzing ' \
+    'the context of the news article. If the speaker is referred to using a pronoun, resolve the pronoun by ' \
+    'examining the surrounding text to determine its referent. ' \
+    '3. Attribution Considerations: a) Ensure you return the name of the person who made the statement, not the ' \
+    'individual or entity to whom it was communicated. b) If a direct name is not given, accurately infer the ' \
+    'speaker based on the article’s context.> ' \
+    '<Inputs: 1. News article: {narr_text} ** 2. Quotation: {quote_text} **> ' + \
+    f'<Output: Return the response as a JSON object in the format: {attribution_result}>'
 
 # Co-reference related prompting
 coref_prompt = \
-    f'{chatgpt} You are a linguist and NLP expert, analyzing text. Here are sentences from an ' + \
-    'article. The complete set of sentence texts end with the string "**", which should ignored. ' \
-    '{sentences} ** Examine each sentence. If the sentence contains one or more of these pronouns, ' + \
-    f'{pronoun_text}, update each pronoun to replace it with its specific noun reference. Double check to ' \
-    f'make sure that ALL of the pronouns are updated. Return each updated sentence (or return the original ' \
-    f'sentence if not updated) in the "updated_sentences" array in the JSON format, {coref_result}.'
+    f'<{chatgpt1} resolve co-references in sentences from a news article by replacing pronouns with their ' + \
+    'appropriate noun references.> ' \
+    '<Instructions: 1. Input Format: You are provided with the text of a news article. ' \
+    'The article ends with the string "**", which should be ignored. ' \
+    f'2. Co-Reference Resolution: For each sentence in the article: a) Identify any occurrence of the pronouns: ' \
+    f'{pronoun_text}. b) Replace each pronoun with the appropriate noun or noun phrase it refers to, based ' \
+    f'on the context of the sentence or the article. ' + \
+    '3. Co-Reference Considerations: a) Ensure that all pronouns in the sentences are updated to their correct ' \
+    'noun references. b) If a sentence contains none of the listed pronouns, return it as-is without modification.> ' \
+    '<Input: {sentences} **> ' + \
+    f'<Output: Return the response as a JSON object in the format: {coref_result} Each updated sentence should ' \
+    f'replace the pronouns with their noun or noun phrase reference. If no changes are required for a sentence, ' \
+    f'return the original sentence.>'
 
 # Event and noun details prompts
 events_prompt = \
-    f'{chatgpt} You are an event linguistics researcher interested in events and conditions reported in news ' + \
-    'articles, blogs and personal narratives. Here are a sentences from an article. The complete ' \
-    'set of sentence texts ends with the string "**", which should ignored. {numbered_sentences_texts} ** ' \
-    'For each sentence, return the number associated with the sentence, the main verb and all verbs in ' \
-    'subordinate clauses. For each main or subordinate clause verb, return its specific trigger word(s) including ' \
-    'any modals, negation and open clausal complements ("xcomp"s). Also return the verb text of any infinitives ' \
-    'in the sentence as a subordinate verb. If any of the verbs are idioms, legal terms or legalese, return the ' \
-    'complete idiom/legalese/legal terms as the trigger text. Make sure to expand any verb contractions.' + \
-    f'Map the verb semantics to one of the following event/state categories: {event_categories_text} ' + \
-    'When mapping to the category, make sure to examine the verb in the context of the sentence and examine ALL ' \
-    'the possible categories before selecting the most relevant one. ' \
-    'When returning the event/state category, return its number from the list above.' \
-    'Also, indicate if the semantic of the event/state category is the "same" as (or is the "opposite" of) the ' \
-    'semantic of the full verb (always considering whether the verb is negated). Once complete, assign an estimate ' \
-    'from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect. If no categories ' \
-    'are appropriate, return the number 68 ("other"). If the verb is based ONLY on the lemma, "be" or "become", ' \
-    'return its semantic as the number 32. Return the information as a JSON object with keys and values ' + \
-    f'defined by {events_result}.'
+    f'<{chatgpt2} analyze events and conditions described in sentences from news articles, blogs, or personal ' + \
+    'narratives.> ' \
+    '<Instructions: 1. Input Formats: a) You are provided with a set of numbered sentences from ' \
+    'the article. After all sentences are provided, the string "**" indicates the end and should be ignored. b) ' \
+    'A numbered list of event/state categories is also provided. ' \
+    '2. Verb Identification: For each sentence: ' \
+    'a) Identify the main verb and any verbs in subordinate clauses. b) Return the trigger word(s) for each verb, ' \
+    'including any modals, negation, and open clausal complements (xcomps). c) If the sentence contains ' \
+    'infinitive verbs, treat them as subordinate verbs. d) For verbs that are idioms, legal terms, ' \
+    'or legalese, return the entire phrase as the trigger text. e) Expand any verb contractions in the trigger text ' \
+    '(e.g., "didn’t" becomes "did not"). ' \
+    '3. Verb Semantic Mapping: For each identified verb: a) Map each verb’s ' \
+    'meaning to one of the numbered event/state categories provided in the input. Carefully consider the context ' \
+    'of the sentence and review all possible categories before selecting the most relevant category. b) Indicate ' \
+    'whether the selected event/state category matches the meaning of the verb ("same") or is the opposite ' \
+    '("opposite"), accounting for negation in the sentence. c) Assign a correctness score (0-100) to each ' \
+    'verb-to-category mapping, where 0 indicates incorrect mapping and 100 indicates high accuracy. ' \
+    'd) If no appropriate category is available, assign category 68 ("other"). e) For verbs based solely ' \
+    'on the lemmas "be" or "become", assign category 32 ("description").> ' \
+    '<Inputs: 1. Numbered sentences {numbered_sentences_texts} ** ' + \
+    f'2. Event/state categories: {event_categories_text}> ' \
+    f'<Output: Return the results as a JSON object using the following structure: {events_result}>'
 
 noun_categories_prompt = \
-    f'{chatgpt} You are an event linguistics researcher interested in the concepts related to verbs reported in ' + \
-    'the sentences of a news article, blog or personal narrative. Here is a sentence (ending with ** which should ' \
-    'be ignored): {sentence_text}. In parentheses at the end are the main verb and verbs in subordinate clauses ' \
-    'from the sentence. For each verb recorded in the parentheses, return its full text, indicate if it is ' \
-    'singular or plural, and find it in the sentence. ' + \
-    f'Determine the nouns associated with the verbs that have a semantic role of {semantic_role_text}. ' + \
-    'When determining the semantic role, consider whether the sentence is in the active or passive voice. ' \
-    'Return the trigger word(s) of the nouns, and their semantic roles. Do not return articles (such as "the") ' \
-    'possessive nouns or pronouns, or conjunctions/disjunctions in the trigger words. For infinitive verbs ' \
-    '(not having subjects of their own), return the subject noun associated with the verb on which the infinitive ' \
-    'depends. If any of the nouns are idioms, legal terms or legalese, return the complete idiom/legalese/' \
-    'legal term as the trigger text. Note that the trigger text for the name of a person should consist only of the ' \
-    'first and last names (if a first name is available) or only the last name. Honorifics (such as "Mr.", "Mrs.", ' \
-    '"Ms."), titles, designations and other qualifiers should NOT be returned. Map the semantics of the nouns to ' + \
-    f'the categories described in the following numbered list: {noun_categories_text} ' + \
-    'To perform the mapping, first determine whether the noun is a person, location, thing, event or ' \
-    'condition/state. Then make sure to examine ALL the possible categories before selecting the most relevant one. ' \
-    'Generally, the noun semantics should NOT map to the same semantics as the verb or the semantic role of the ' \
-    'noun. For example, for a declaration of "x caused y", x should not be mapped to the category of ' \
-    '"causation" (number 67). Assign a more relevant category. Also, always map a person in any role ' \
-    'or relationship as number 82 (person). For example, a "musician" is NOT an art or entertainment event (number ' \
-    '8), but is a person (number 82). When returning the category, return its number from the list. ' \
-    'If no category is appropriate, return the number 96 ("other"). Indicate if the semantic ' \
-    'of the category is the "same" as (or is the "opposite" of) the semantic of the noun. Also, assign an ' \
-    'estimate from 0-100 for the correctness of the mapping, where 0 indicates that it is incorrect.' + \
-    f'Return the information as a JSON object with keys and values defined by {noun_categories_result}.'
+    f'<{chatgpt2} analyze verbs and their associated nouns from a sentence in a news article, blog, or personal ' + \
+    'narrative.> ' \
+    '<Instructions: 1. Input Formats: a) You are given a sentence ending with a list of its verbs of interest ' + \
+    'in parentheses. b) A numbered list of semantic categories is also provided. ' \
+    '2. Verb-Noun Analysis: For each verb of interest, locate the verb in the sentence and identify all nouns ' + \
+    f'associated with it that play one of the following semantic roles: {semantic_role_text}. Use the following ' + \
+    'instructions to determine the noun and its semantic role: a) Consider whether the sentence is in the active ' \
+    'or passive voice when assigning the semantic role. b) If the verb is an infinitive (lacking its own subject), ' \
+    'always return the subject noun associated with the verb on which the infinitive depends, as one of the nouns ' + \
+    f'for the infinitive. c) If the noun is one of the pronouns, {pronoun_text}, resolve it to an explicit entity ' + \
+    'by examining the surrounding text to determine its referent. Return the referent as one of the nouns for the ' \
+    'verb. ' \
+    '3. Noun Detailed Analysis: Return the following information about each noun from the "Verb-Noun Analysis": ' \
+    'a) Indicate whether the noun is singular or plural. b) Map the noun semantics to one of the numbered ' \
+    'categories proved in the inputs, following the considerations in "Noun Semantic Mappings". c) Return the ' \
+    'trigger word(s) of the noun (without articles, possessive nouns, pronouns, or conjunctions) following the ' \
+    'considerations in "Noun Trigger Text Considerations". ' \
+    '4. Noun Semantic Mappings: For each noun category mapping: a) Return the category number from list provided as ' \
+    'an input. b) To choose the correct category, first determine whether the noun represents a person, location, ' \
+    'thing, event, or condition/state. Then, examine all categories before selecting the most appropriate one. ' \
+    'c) Avoid assigning the same semantic category to the noun as the verb or its semantic role in the sentence. ' \
+    'For example, for the sentence, “x caused y,” do not map “x” to the semantic of causation (number 67). ' \
+    'd) Always map nouns referring to people to category 82, regardless of their role. For example, a "musician" ' \
+    'is mapped to the semantic of a person (category 82), not to an "art or entertainment event" (category 8). e) ' \
+    'Indicate whether the selected noun category matches the semantic meaning of the noun ("same") or is the ' \
+    'opposite ("opposite"). Make sure to consider any negation in the sentence. f) Assign a correctness score ' \
+    '(0-100) for the accuracy of the category mapping, where 0 indicates incorrectness. ' \
+    '5. Noun Trigger Text Considerations: a) If the noun is an idiom, legal term, or legalese, return the full ' \
+    'phrase as the trigger. b) If the noun refers to a person, only return their first and last name, or just ' \
+    'the last name (if no first name is provided) as the trigger. Do not return honorifics (e.g., Mr., ' \
+    'Mrs.), titles, or other designations.> ' \
+    '<Inputs: 1. Sentence with verbs in parentheses at the end: {sentence_text} ' + \
+    f'2. Semantic categories: {noun_categories_text}> ' \
+    f'<Output: Return the results as a JSON object using the following structure: {noun_categories_result}>'
 
 # Process EVENT entity
 noun_events_prompt = \
-    f'{chatgpt} You are a linguist and NLP expert. Here is a sentence (ending with the string "**" which should be ' + \
-    'ignored): {sent_text} ** Here are a proper noun found in the sentence, "{noun_texts}", which describes a ' \
-    'specific event in history. Map the noun semantics to one of the following event/state categories. ' + \
-    f'{event_categories_text} ' + \
-    'When mapping to an event category, make sure to examine ALL the possible categories before selecting ' \
-    'the most relevant one. When returning the event category, return its number from the list above. Also, ' \
-    'indicate if the semantic of the event category is the "same" as (or is the "opposite" of) the semantic of the ' \
-    'noun. Once complete, assign an estimate from 0-100 for the correctness of the mapping, where 0 indicates ' \
-    'that it is incorrect. If no categories are appropriate, return the number 68 ("other"). ' + \
-    f'Return the response as a JSON object with keys and values as defined by {noun_events_result}.'
+    f'<{chatgpt3} map a specific event in history, referenced in a news article, to an event/state category.> ' + \
+    '<Instructions: 1. Input Format: a) You are given a sentence ending with the string "**" which should be ' \
+    'ignored. b) A list of proper nouns, found in the sentence and referencing historical/political events, are ' \
+    'also provided. The list of nouns also ends with the string "**" which is also ignored. c) A numbered list ' \
+    'of event/state categories is also provided. ' \
+    '2. Semantic Category Mapping: Map the event semantics to one of the categories provided in the inputs. ' \
+    '3. Semantic Mapping Considerations: a) Make sure to examine ALL the possible categories before selecting ' \
+    'the most relevant one. b) When returning the event category, return its number from the categories list. ' \
+    'c) Indicate if the semantic of the event category is the "same" as (or is the "opposite" of) the semantic of ' \
+    'the event. d) Assign an estimate from 0-100 for the correctness of the mapping, where 0 indicates ' \
+    'that it is incorrect. e) If no categories are appropriate, return the number 68 ("other").> ' \
+    '<Inputs: 1. Sentence text: {sentence_text} ** 2. Event proper nouns: {noun_texts} ** ' + \
+    f'3. Semantic categories: {event_categories_text}> ' \
+    f'<Output: Return the results as a JSON object using the following structure: {noun_events_result}>'
 
 # Narrative-level prompting
 narrative_summary_prompt = \
-    f'{chatgpt} You are a political observer analyzing news articles. Here is the text ' + \
-    'of a narrative or article (ending with the string "**" which should be ignored): {narr_text} **' + \
-    f'Here is a numbered list of the possible goals of the narrative. {narrative_goals_text} ' \
-    f'Indicate the numbers of the 2 most likely narrative goals. Also, summarize the article, and explain ' + \
-    f'how it would be interpreted from each of the following perspectives: {interpretation_views}. Rank the ' \
-    f'text from 1-5 as to how positively it would be received by readers of each perspective. The rank of 1 is ' \
-    f'very negatively, and the rank of 5 is very positively. Lastly, indicate the article sentiment ("positive", ' \
-    f'"negative" or "neutral"), and explain why that sentiment was selected. Return the response as a JSON object ' \
-    f'with keys and values as defined by {narrative_summary_result}.'
+    f'<{chatgpt4} describe and summarize a news article.> ' + \
+    '<Instructions: 1. Input Format: a) You are given the text of an article, ending with the string "**" which ' \
+    'is ignored. b) A numbered list of goals of the article is also provided. ' \
+    '2. Article Analysis: a) Indicate the numbers of the 2 most likely goals of the article. b) Summarize the ' \
+    'article. c) Explain how the article could be interpreted from each of the following perspectives: ' + \
+    f'{interpretation_views}, and rank the text from 1-5 as to how positively it would be received by readers of ' + \
+    'each perspective. Note that the rank of 1 is very negatively, and the rank of 5 is very positively. d) ' \
+    'Indicate the sentiment of the article ("positive", "negative" or "neutral"), and explain why that sentiment ' \
+    'was selected.> ' \
+    '<Inputs: 1. Narrative: {narr_text} ** ' + \
+    f'2. Goals: {narrative_goals_text}> ' \
+    f'<Output: Return the results as a JSON object using the following structure: {narrative_summary_result}>'
 
 # Sentence-level prompting
 sentence_prompt = \
-    f'{chatgpt} You are a linguist and NLP expert, analyzing the text from narratives and news articles. ' + \
-    'Here is the text of a sentence from an article. The text ends with the string "**" which should be ignored. ' \
-    '{sent_text} ** Indicate the grade level that is expected of a reader to understand the sentence semantics. ' \
-    'Also, here is a numbered list of the types of rhetorical devices that may be used in the sentence. ' + \
-    f'{rhetorical_devices_text} Provide the numbers associated with the devices found in the sentence and ' \
-    f'explain why they are identified. If there are no rhetorical devices used, return an empty array for ' \
-    f'the "rhetorical_devices" JSON key. Also return a summary of the sentence in 15 words or less. Return the ' \
-    f'sentence as specified in the article, as the summary, if it is 10 words or less. If providing an updated ' \
-    f'sentence as a summary, avoid using complicated words or figurative language in the text. Return the ' \
-    f'response as a JSON object with keys and values defined by {sentence_result}.'
+    f'<{chatgpt1} analyze a sentence from a narrative or news article.> ' + \
+    '<Instructions: 1. Input Format: a) You are given the text of a sentence from an article, where ' \
+    'the sentence ends with the string "**" which is ignored. b) A numbered list of rhetorical devices that ' \
+    'may be used in the sentence, is also provided. ' \
+    '2. Sentence Analysis: a) Indicate the grade level that is expected of a reader to understand the ' \
+    'sentence semantics. b) Provide the numbers of the various rhetorical devices used in the sentence, and ' \
+    'explain why they are identified. If there are no rhetorical devices used, return an empty array for ' \
+    'the "rhetorical_devices" JSON key, specified in the Output. c) Create a summary of the sentence using 15 ' \
+    'words or less, ONLY if the input sentence has more than 10 words. If the input sentence is 10 words or ' \
+    'less, do not return a summary. When creating a summary, do not use figurative language or idioms, and ' \
+    'resolve all co-references.> ' \
+    '<Inputs: 1. Sentence text: {sent_text} ** ' + \
+    f'2. Rhetorical devices: {rhetorical_devices_text}> ' \
+    f'<Output: Return the results as a JSON object using the following structure: {sentence_result}>'
 
 # Validating Wikipedia result
 wikipedia_prompt = \
-    f'{chatgpt} You are a student researching a proper noun and are given its text and information ' + \
-    'that the noun is a type of "{text_type}". You retrieved a possible definition for the ' \
-    'noun from Wikipedia. That definition is given by the following text, ending with the string "**" ' \
-    'which should be ignored. {wiki_def} **. Evaluate if the definition is ' \
-    'consistent with the noun type, and return the response as a JSON object with keys and ' + \
-    f'values as defined by {consistency_result}.'
+    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, with expertise ' \
+    'in research. Your objective is to determine if a noun described by the Input text is correctly categorized ' \
+    'as a type of  "{text_type}".> ' \
+    'Instructions: 1. Input Format: You will receive a description of a noun, followed by the string "**", ' \
+    'which should be ignored. ' \
+    '2. Text Analysis: Analyze the provided description to determine if the described entity qualifies as ' \
+    'a type of "{text_type}".> ' \
+    '<Input: {wiki_def} **> ' + \
+    f'<Output: Return the results as a JSON object using the following structure: {consistency_result} Note ' + \
+    'that "consistent" should be true if the noun is categorized correctly as a "{text_type}" and false otherwise.>'
 
 
 # @retry(stop=stop_after_delay(20) | stop_after_attempt(2), wait=(wait_fixed(3) + wait_random(0, 2)))

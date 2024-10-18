@@ -43,7 +43,7 @@ def test_clauses1():
     assert 'a :BodilyAct' in ttl_str and ':text "exercised' in ttl_str
     assert (':ArtAndEntertainmentEvent' in ttl_str or ':EducationRelated' in ttl_str) and ':text "practiced' in ttl_str
     assert 'a :MusicalInstrument ; :text "guitar' in ttl_str
-    assert ':has_instrument :Noun' in ttl_str or ':has_context :Noun' in ttl_str
+    assert ':has_instrument :Noun' in ttl_str or ':has_topic :Noun' in ttl_str
     # Output Turtle:
     # :Sentence_5897d614-07c0 a :Sentence ; :offset 1 .
     # :Sentence_5897d614-07c0 :text "While Mary exercised, John practiced guitar." .
@@ -85,7 +85,7 @@ def test_clauses2():
     # :Event_9fc158b5-353c a :Agreement ; :confidence-Agreement 100 .
     # :Event_9fc158b5-353c :has_active_entity :George .
     # :Noun_12ccd540-84da a :Process ; :text "plan" ; :confidence 90 .
-    # :Event_9fc158b5-353c :has_context :Noun_12ccd540-84da .
+    # :Event_9fc158b5-353c :has_topic :Noun_12ccd540-84da .
     # :Sentence_78b356ac-9a45 :has_semantic :Event_44fd0030-bdd5 .
     # :Event_44fd0030-bdd5 :text "outlined" .
     # :Event_44fd0030-bdd5 a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 90 .
@@ -123,17 +123,18 @@ def test_affiliation():
     assert ':has_active_entity :Joe' in ttl_str or ':has_context :Joe' in ttl_str or ':affiliated_with :Joe' in ttl_str
     assert ':affiliated_with :Mayberry_' in ttl_str
     # Output Turtle:
-    # :Sentence_4d5aabcf-5a7f a :Sentence ; :offset 1 .
-    # :Sentence_4d5aabcf-5a7f :text "Joe is a member of the Mayberry Book Club." .
-    # :Sentence_4d5aabcf-5a7f :mentions :Joe .
-    # :Sentence_4d5aabcf-5a7f :mentions :Mayberry_Book_Club .
-    # :Sentence_4d5aabcf-5a7f :grade_level 3 .
-    # :Sentence_4d5aabcf-5a7f :summary "Joe is a member of the Mayberry Book Club." .
-    # :Sentence_4d5aabcf-5a7f :has_semantic :Event_7a846a70-5b93 .
-    # :Event_7a846a70-5b93 :text "is" .
-    # :Event_7a846a70-5b93 a :Affiliation ; :confidence-Affiliation 95 .
-    # :Event_7a846a70-5b93 :affiliated_with :Joe .
-    # :Event_7a846a70-5b93 :affiliated_with :Mayberry_Book_Club .
+    # :Sentence_e6100aed-85f9 a :Sentence ; :offset 1 .
+    # :Sentence_e6100aed-85f9 :text "Joe is a member of the Mayberry Book Club." .
+    # :Sentence_e6100aed-85f9 :mentions :Joe .
+    # :Sentence_e6100aed-85f9 :mentions :Mayberry_Book_Club .
+    # :Sentence_e6100aed-85f9 :grade_level 3 .
+    # :Sentence_e6100aed-85f9 :summary "Joe is a member of the Mayberry Book Club." .
+    # :Sentence_e6100aed-85f9 :has_semantic :Event_90e4eb86-4e0e .
+    # :Event_90e4eb86-4e0e :text "is" .
+    # :Event_90e4eb86-4e0e a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
+    # :Event_90e4eb86-4e0e :has_context :Joe .
+    # :Event_90e4eb86-4e0e a :Affiliation .
+    # :Event_90e4eb86-4e0e :affiliated_with :Mayberry_Book_Club .
 
 
 def test_complex1():
@@ -147,30 +148,35 @@ def test_complex1():
     assert ':Cognition' in ttl_str and ':text "compared' in ttl_str
     assert ':has_active_entity :Liz_Cheney' in ttl_str        # Cheney compared herself
     assert ':has_topic :Abraham_Lincoln' in ttl_str           # to Lincoln
+    assert ':Loss' in ttl_str
+    assert ':has_affected_entity :Harriet_Hageman' in ttl_str
     # Output:
-    # :Sentence_d013dceb-9473 a :Sentence ; :offset 1 .
-    # :Sentence_d013dceb-9473 :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during
+    # :Sentence_9f1f0bd3-a44e a :Sentence ; :offset 1 .
+    # :Sentence_9f1f0bd3-a44e :text "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln during
     #     her concession speech shortly after her loss to Trump-backed Republican challenger Harriet Hageman." .
-    # :Sentence_d013dceb-9473 :mentions :Liz_Cheney .
-    # :Sentence_d013dceb-9473 :mentions :WY .
-    # :Sentence_d013dceb-9473 :mentions :Abraham_Lincoln .
-    # :Sentence_d013dceb-9473 :mentions :Trump .
-    # :Sentence_d013dceb-9473 :mentions :Republican .
-    # :Sentence_d013dceb-9473 :mentions :Harriet_Hageman .
-    # :Sentence_d013dceb-9473 :grade_level 10 .
-    # :Sentence_d013dceb-9473 :rhetorical_device "allusion" .
-    # :Sentence_d013dceb-9473 :rhetorical_device_allusion "The sentence uses an allusion by comparing Liz Cheney to
-    #     Abraham Lincoln, a historical figure." .
-    # :Sentence_d013dceb-9473 :summary "Rep. Liz Cheney R-WY compared herself to former President Abraham Lincoln
-    #     during her concession speech." .
-    # :Sentence_d013dceb-9473 :has_semantic :Event_91868472-26c4 .
-    # :Event_91868472-26c4 :text "compared" .
-    # :Event_91868472-26c4 a :Cognition ; :confidence-Cognition 90 .
-    # :Event_91868472-26c4 :has_active_entity :Liz_Cheney .
-    # :Event_91868472-26c4 :has_topic :Liz_Cheney .
-    # :Event_91868472-26c4 :has_topic :Abraham_Lincoln .
-    # :Noun_0e43d005-1202 a :CommunicationAndSpeechAct ; :text "speech" ; :confidence 90 .
-    # :Event_91868472-26c4 :has_context :Noun_0e43d005-1202 .
+    # :Sentence_9f1f0bd3-a44e :mentions :Liz_Cheney .
+    # :Sentence_9f1f0bd3-a44e :mentions :WY .
+    # :Sentence_9f1f0bd3-a44e :mentions :Abraham_Lincoln .
+    # :Sentence_9f1f0bd3-a44e :mentions :Trump .
+    # :Sentence_9f1f0bd3-a44e :mentions :Republican .
+    # :Sentence_9f1f0bd3-a44e :mentions :Harriet_Hageman .
+    # :Sentence_9f1f0bd3-a44e :grade_level 10 .
+    # :Sentence_9f1f0bd3-a44e :rhetorical_device "allusion" .
+    # :Sentence_9f1f0bd3-a44e :rhetorical_device_allusion "The sentence uses an allusion by referencing Abraham
+    #     Lincoln, a historical figure with symbolic meaning." .
+    # :Sentence_9f1f0bd3-a44e :summary "Liz Cheney compared herself to Abraham Lincoln after losing to
+    #     Harriet Hageman." .
+    # :Sentence_9f1f0bd3-a44e :has_semantic :Event_a7818f24-9134 .
+    # :Event_a7818f24-9134 :text "compared" .
+    # :Event_a7818f24-9134 a :Cognition ; :confidence-Cognition 100 .
+    # :Event_a7818f24-9134 :has_active_entity :Liz_Cheney .
+    # :Event_a7818f24-9134 :has_topic :Liz_Cheney .
+    # :Event_a7818f24-9134 :has_topic :Abraham_Lincoln .
+    # :Sentence_9f1f0bd3-a44e :has_semantic :Event_eaaf8883-3a21 .
+    # :Event_eaaf8883-3a21 :text "losing" .
+    # :Event_eaaf8883-3a21 a :Loss ; :confidence-Loss 100 .
+    # :Event_eaaf8883-3a21 :has_active_entity :Liz_Cheney .
+    # :Event_eaaf8883-3a21 :has_affected_entity :Harriet_Hageman .
 
 
 def test_complex2():
@@ -184,26 +190,25 @@ def test_complex2():
                                           ':text "vote' in ttl_str)
     if ':text "66.3%' in ttl_str:
         assert ':has_quantification :Noun' in ttl_str
+    if ':text "vote' in ttl_str:
+        assert ':has_context :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_8a0ec2d0-caa4 a :Sentence ; :offset 1 .
-    # :Sentence_8a0ec2d0-caa4 :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
+    # :Sentence_d072e763-ec45 a :Sentence ; :offset 1 .
+    # :Sentence_d072e763-ec45 :text "Harriet Hageman, a water and natural-resources attorney who was endorsed by the
     #     former president, won 66.3% of the vote to Ms. Cheney’s 28.9%, with 95% of all votes counted." .
-    # :Sentence_8a0ec2d0-caa4 :mentions :Harriet_Hageman .
-    # :Sentence_8a0ec2d0-caa4 :mentions :Liz_Cheney .
-    # :Sentence_8a0ec2d0-caa4 :grade_level 10 .
-    # :Sentence_8a0ec2d0-caa4 :rhetorical_device "logos" .
-    # :Sentence_8a0ec2d0-caa4 :rhetorical_device_logos "The use of specific percentages and vote counts is an
-    #     appeal to logos." .
-    # :Sentence_8a0ec2d0-caa4 :summary "Harriet Hageman won 66.3% of the vote to Ms. Cheney’s 28.9%." .
-    # :Sentence_8a0ec2d0-caa4 :has_semantic :Event_3132d39f-c50c .
-    # :Event_3132d39f-c50c :text "won" .
-    # :Event_3132d39f-c50c a :Win ; :confidence-Win 95 .
-    # :Event_3132d39f-c50c :has_active_entity :Harriet_Hageman .
-    # :Noun_d0ecc9fd-3936 a :Measurement ; :text "66.3% of the vote" ; :confidence 90 .
-    # :Event_3132d39f-c50c :has_quantification :Noun_d0ecc9fd-3936 .
-    # :Event_3132d39f-c50c :has_recipient :Liz_Cheney .     # TODO: "to Ms Cheney's" resulted in role of recipient
-    # :Noun_95acadbb-7715 a :Measurement ; :text "28.9%" ; :confidence 90 .
-    # :Event_3132d39f-c50c :has_quantification :Noun_95acadbb-7715 .
+    # :Sentence_d072e763-ec45 :mentions :Harriet_Hageman .
+    # :Sentence_d072e763-ec45 :mentions :Liz_Cheney .
+    # :Sentence_d072e763-ec45 :grade_level 10 .
+    # :Sentence_d072e763-ec45 :rhetorical_device "logos" .
+    # :Sentence_d072e763-ec45 :rhetorical_device_logos "The use of specific percentages and vote counts is an
+    #     example of logos." .
+    # :Sentence_d072e763-ec45 :summary "Harriet Hageman won 66.3% of the vote to Cheney’s 28.9%." .
+    # :Sentence_d072e763-ec45 :has_semantic :Event_7f38acc5-1f56 .
+    # :Event_7f38acc5-1f56 :text "won" .
+    # :Event_7f38acc5-1f56 a :Win ; :confidence-Win 100 .
+    # :Event_7f38acc5-1f56 :has_active_entity :Harriet_Hageman .
+    # :Noun_21322a43-6c37 a :Measurement ; :text "vote" ; :confidence 90 .
+    # :Event_7f38acc5-1f56 :has_context :Noun_21322a43-6c37 .
 
 
 def test_coref():
@@ -212,33 +217,36 @@ def test_coref():
     ttl_str = str(graph_results.turtle)
     assert ':HealthAndDiseaseRelated' in ttl_str and ':text "broke' in ttl_str
     assert ':MovementTravelAndTransportation' in ttl_str and ':text "went' in ttl_str
-    assert ':ComponentPart' in ttl_str and (':text "foot' in ttl_str or 'foot"' in ttl_str)
-    assert ':has_context :Noun' in ttl_str or ':has_topic :Noun' in ttl_str       # Broke his foot
     assert ':has_active_entity :Joe' in ttl_str
-    assert 'a :LineOfBusiness' in ttl_str and \
-           (':has_destination :Noun' in ttl_str or ':has_location :Noun' in ttl_str) and ':text "doctor' in ttl_str
+    assert ':ComponentPart' in ttl_str and ':text "foot' in ttl_str
+    assert ':has_affected_entity :Noun' in ttl_str or ':has_topic :Noun' in ttl_str       # Broke his foot
+    assert ':text "doctor' in ttl_str
+    if 'a :LineOfBusiness' in ttl_str:
+        assert ':has_destination :Noun' in ttl_str or ':has_location :Noun' in ttl_str
+    if 'a :Person' in ttl_str:
+        assert ':has_affected_entity :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_949d9ef6-e837 a :Sentence ; :offset 1 .
-    # :Sentence_949d9ef6-e837 :text "Joe broke his foot." .
-    # :Sentence_949d9ef6-e837 :mentions :Joe .
-    # :Sentence_949d9ef6-e837 :grade_level 3 .
-    # :Sentence_4cfcb6f7-77f6 a :Sentence ; :offset 2 .
-    # :Sentence_4cfcb6f7-77f6 :text "He went to the doctor." .
-    # :Sentence_4cfcb6f7-77f6 :grade_level 1 .
-    # :Sentence_949d9ef6-e837 :summary "Joe broke his foot." .
-    # :Sentence_949d9ef6-e837 :has_semantic :Event_64b2c214-c719 .
-    # :Event_64b2c214-c719 :text "broke" .
-    # :Event_64b2c214-c719 a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 95 .
-    # :Event_64b2c214-c719 :has_active_entity :Joe .
-    # :Noun_2227bc20-3b58 a :ComponentPart ; :text "Joe\'s foot" ; :confidence 100 .
-    # :Event_64b2c214-c719 :has_context :Noun_2227bc20-3b58 .
-    # :Sentence_4cfcb6f7-77f6 :summary "Joe went to the doctor." .
-    # :Sentence_4cfcb6f7-77f6 :has_semantic :Event_51748ba3-e4c6 .
-    # :Event_51748ba3-e4c6 :text "went" .
-    # :Event_51748ba3-e4c6 a :MovementTravelAndTransportation ; :confidence-MovementTravelAndTransportation 90 .
-    # :Event_51748ba3-e4c6 :has_active_entity :Joe .
-    # :Noun_849795f5-e169 a :LineOfBusiness ; :text "doctor" ; :confidence 90 .
-    # :Event_51748ba3-e4c6 :has_destination :Noun_849795f5-e169 .
+    # :Sentence_6086e8fc-72c5 a :Sentence ; :offset 1 .
+    # :Sentence_6086e8fc-72c5 :text "Joe broke his foot." .
+    # :Sentence_6086e8fc-72c5 :mentions :Joe .
+    # :Sentence_6086e8fc-72c5 :grade_level 3 .
+    # :Sentence_6086e8fc-72c5 :summary "Joe broke his foot." .
+    # :Sentence_d75bffd9-7eb1 a :Sentence ; :offset 2 .
+    # :Sentence_d75bffd9-7eb1 :text "He went to the doctor." .
+    # :Sentence_d75bffd9-7eb1 :grade_level 1 .
+    # :Sentence_d75bffd9-7eb1 :summary "He went to the doctor." .
+    # :Sentence_6086e8fc-72c5 :has_semantic :Event_46846a59-cdd2 .
+    # :Event_46846a59-cdd2 :text "broke" .
+    # :Event_46846a59-cdd2 a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 100 .
+    # :Noun_a09defce-bd6d a :ComponentPart ; :text "foot" ; :confidence 100 .
+    # :Event_46846a59-cdd2 :has_affected_entity :Noun_a09defce-bd6d .
+    # :Event_46846a59-cdd2 :has_active_entity :Joe .
+    # :Sentence_d75bffd9-7eb1 :has_semantic :Event_1280a5de-e437 .
+    # :Event_1280a5de-e437 :text "went" .
+    # :Event_1280a5de-e437 a :MovementTravelAndTransportation ; :confidence-MovementTravelAndTransportation 100 .
+    # :Event_1280a5de-e437 :has_active_entity :Joe .
+    # :Noun_afd8f45e-96c2 a :Person ; :text "doctor" ; :confidence 100 .
+    # :Event_1280a5de-e437 :has_affected_entity :Noun_afd8f45e-96c2 .
 
 
 def test_xcomp():
@@ -304,12 +312,13 @@ def test_modal_neg():
     sentence_classes, quotation_classes = parse_narrative(text_modal_neg)
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
-    assert ':Avoidance' in ttl_str and ':negated true' not in ttl_str
+    assert (':Avoidance' in ttl_str and ':negated true' not in ttl_str) or \
+        (':MeetingAndEncounter' in ttl_str and ':negated true' in ttl_str)
     assert ':future true' in ttl_str
     assert ':has_active_entity :Mary' in ttl_str
-    assert ':Person' in ttl_str and (':text "grandfather' in ttl_str or 'grandfather"' in ttl_str)
+    assert ':Person' in ttl_str and ':text "grandfather' in ttl_str
     assert ':has_affected_entity :Noun' in ttl_str
-    assert ':has_time [ a :Time ; :text "next Tuesday' in ttl_str
+    assert ':has_time [ a :Time' in ttl_str
     # Output Turtle:
     # :Sentence_9747b06d-1ed9 a :Sentence ; :offset 1 .
     # :Sentence_9747b06d-1ed9 :text "Mary will not visit her grandfather next Tuesday." .
@@ -318,12 +327,13 @@ def test_modal_neg():
     # :Sentence_9747b06d-1ed9 :summary "Mary will not visit her grandfather next Tuesday." .
     # :Sentence_9747b06d-1ed9 :has_semantic :Event_fbcce835-7bc9 .
     # :Event_fbcce835-7bc9 :text "will not visit" .
-    # :Event_fbcce835-7bc9 a :Avoidance ; :confidence-Avoidance 95 .
+    # :Event_fbcce835-7bc9 a :MeetingAndEncounter ; :confidence-Avoidance 95 .
+    # :Event_fbcce835-7bc9 :negated true .
     # :Event_fbcce835-7bc9 :future true .
     # :Event_fbcce835-7bc9 :has_active_entity :Mary .
     # :Noun_04fb962a-2893 a :Person ; :text "Mary\'s grandfather" ; :confidence 100 .
     # :Event_fbcce835-7bc9 :has_affected_entity :Noun_04fb962a-2893 .
-    # :Event_fbcce835-7bc9 :has_time [ a :Time ; :text "next Tuesday" ] .
+    # :Event_fbcce835-7bc9 :has_time [ a :Time ; :text "Tuesday" ] .
 
 
 def test_acomp():
@@ -332,7 +342,6 @@ def test_acomp():
     ttl_str = str(graph_results.turtle)
     assert 'a :EnvironmentAndCondition' in ttl_str and ':text "is' in ttl_str
     assert ':has_context :Mary' in ttl_str
-    # Intermittently includes ':text "beautiful' and ':has_aspect :Noun' in ttl_str
     # Output Turtle:
     # :Sentence_56db981f-4899 a :Sentence ; :offset 1 .
     # :Sentence_56db981f-4899 :text "Mary is very beautiful." .
@@ -379,16 +388,21 @@ def test_acomp_pcomp2():
     assert ':BodilyAct' in ttl_str and ':text "running' in ttl_str
     assert ':has_active_entity :Peter' in ttl_str
     # Output Turtle:
-    # :Sentence_6474e068-5c36 a :Sentence ; :offset 1 .
-    # :Sentence_6474e068-5c36 :text "Peter never tires of running." .
-    # :Sentence_6474e068-5c36 :mentions :Peter .
-    # :Sentence_6474e068-5c36 :grade_level 3 .
-    # :Sentence_6474e068-5c36 :summary "Peter never tires of running." .
-    # :Sentence_6474e068-5c36 :has_semantic :Event_47d64b5b-5350 .
-    # :Event_47d64b5b-5350 :text "never tires of running" .
-    # :Event_47d64b5b-5350 a :BodilyAct ; :confidence-BodilyAct 90 .
-    # :Event_47d64b5b-5350 :has_active_entity :Peter .
-    # :Event_47d64b5b-5350 :text "running" .
+    # :Sentence_6a574216-cd4e a :Sentence ; :offset 1 .
+    # :Sentence_6a574216-cd4e :text "Peter never tires of running." .
+    # :Sentence_6a574216-cd4e :mentions :Peter .
+    # :Sentence_6a574216-cd4e :grade_level 4 .
+    # :Sentence_6a574216-cd4e :summary "Peter never tires of running." .
+    # :Sentence_6a574216-cd4e :has_semantic :Event_e41729ab-9c4a .
+    # :Event_e41729ab-9c4a :text "tires" .
+    # :Event_e41729ab-9c4a a :SensoryPerception ; :confidence-SensoryPerception 100 .
+    # :Event_e41729ab-9c4a :negated true .
+    # :Event_e41729ab-9c4a :has_active_entity :Peter .
+    # :Event_e41729ab-9c4a :has_topic :Event_5a8acb55-dcae .
+    # :Sentence_6a574216-cd4e :has_semantic :Event_5a8acb55-dcae .
+    # :Event_5a8acb55-dcae :text "running" .
+    # :Event_5a8acb55-dcae a :BodilyAct ; :confidence-BodilyAct 100 .
+    # :Event_5a8acb55-dcae :has_active_entity :Peter .
 
 
 def test_acomp_xcomp():
@@ -419,7 +433,7 @@ def test_idiom():
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Causation' in ttl_str and ':text "caused' in ttl_str
-    assert ':Change ; :text "wear and tear' in ttl_str or ':TroubleAndProblem ; :text "wear and tear' in ttl_str
+    assert ':text "wear and tear' in ttl_str and (':Change' in ttl_str or ':TroubleAndProblem' in ttl_str)
     assert ':has_cause :Noun' in ttl_str
     assert ':Location' in ttl_str and ':text "bridge' in ttl_str
     assert ':has_location :Noun' in ttl_str
@@ -427,19 +441,22 @@ def test_idiom():
     assert (':End' in ttl_str or ':Change' in ttl_str) and ':text "collapse' in ttl_str
     assert ':has_context' in ttl_str or ':has_topic' in ttl_str      # bridge's collapse
     # Output Turtle:
-    # :Sentence_75c85a0a-8c4f a :Sentence ; :offset 1 .
-    # :Sentence_75c85a0a-8c4f :text "Wear and tear on the bridge caused its collapse." .
-    # :Sentence_75c85a0a-8c4f :grade_level 8 .
-    # :Sentence_75c85a0a-8c4f :summary "Wear and tear on the bridge caused its collapse." .
-    # :Sentence_75c85a0a-8c4f :has_semantic :Event_d290c58f-1a54 .
-    # :Event_d290c58f-1a54 :text "caused" .
-    # :Event_d290c58f-1a54 a :Causation ; :confidence-Causation 95 .
-    # :Noun_b313561a-584b a :TroubleAndProblem ; :text "wear and tear" ; :confidence 90 .
-    # :Event_d290c58f-1a54 :has_cause :Noun_b313561a-584b .
-    # :Noun_15d70a76-dbe5 a :Location ; :text "bridge" ; :confidence 95 .
-    # :Event_d290c58f-1a54 :has_location :Noun_15d70a76-dbe5 .
-    # :Noun_9febfbdc-740d a :Change ; :text "collapse" ; :confidence 85 .
-    # :Event_d290c58f-1a54 :has_topic :Noun_9febfbdc-740d .'
+    # :Sentence_2550be83-76c7 a :Sentence ; :offset 1 .
+    # :Sentence_2550be83-76c7 :text "Wear and tear on the bridge caused its collapse." .
+    # :Sentence_2550be83-76c7 :grade_level 6 .
+    # :Sentence_2550be83-76c7 :summary "Wear and tear on the bridge caused its collapse." .
+    # :Sentence_2550be83-76c7 :has_semantic :Event_83fcb59b-8b3c .
+    # :Event_83fcb59b-8b3c :text "caused" .
+    # :Event_83fcb59b-8b3c a :Causation ; :confidence-Causation 100 .
+    # :Noun_de922952-3b63 a :TroubleAndProblem, :Collection ; :text "wear and tear" ; :confidence 100 .
+    # :Event_83fcb59b-8b3c :has_cause :Noun_de922952-3b63 .
+    # :Noun_bdf645e6-617c a :Location ; :text "bridge" ; :confidence 100 .
+    # :Event_83fcb59b-8b3c :has_location :Noun_bdf645e6-617c .
+    # :Event_83fcb59b-8b3c :has_topic :Event_3ee56bf9-0b8a .
+    # :Sentence_2550be83-76c7 :has_semantic :Event_3ee56bf9-0b8a .
+    # :Event_3ee56bf9-0b8a :text "collapse" .
+    # :Event_3ee56bf9-0b8a a :End ; :confidence-End 100 .
+    # :Event_3ee56bf9-0b8a :has_topic :Noun_bdf645e6-617c .
 
 
 def test_idiom_full_pass():

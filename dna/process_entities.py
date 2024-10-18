@@ -235,14 +235,18 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
     for new_entity in new_entities:
         # Remove '.' to easily disambiguate (e.g.) US Supreme Court and U.S. Supreme Court
         entity_text = unidecode(new_entity.text.replace('.', empty_string))
+        # Remove articles and conjunctions
+        for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The '):
+            if entity_text.startswith(article):
+                entity_text = entity_text[len(article):].strip()
+                break
+        for conj in (' and', ' or'):
+            if entity_text.endswith(conj):
+                entity_text = entity_text[:len(article) * -1].strip()
+                break
         # Does the entity start with a capital letter (e.g., a proper noun)?
         if not entity_text[0].isupper():
             continue
-        # Remove articles and conjunctions
-        for article in ('a ', 'A ', 'an ', 'An ', 'the ', 'The ', ' and', ' or'):
-            if entity_text.startswith(article):
-                entity_text = entity_text[len(article):]
-                break
         if len(entity_text) < 2:
             continue
         # Remove "apostrophe" or "apostrophe s" at the end of the entity text (spaCy includes possessive)

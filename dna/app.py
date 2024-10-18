@@ -182,7 +182,7 @@ def narratives():
                 {error_str: 'missing',
                  detail: 'A "title", "source" and "text" MUST be specified in the request body '
                          'of a /narratives POST.'}), 400
-        logging.info(f'Posting narrative {type(narr_data)} {narr_data}')
+        logging.info(f'Posting narrative {type(narr_data)} {narr_data["title"]} {narr_data["source"]}')
         metadata = Metadata(narr_data['title'], narr_data['published'] if 'published' in narr_data else not_defined,
                             narr_data['source'], narr_data['url'] if 'url' in narr_data else not_defined,
                             number_sentences)

@@ -45,7 +45,6 @@ def add_remove_data(op_type: str, triples: str, repo: str, graph: str = empty_st
         ar_conn.begin()
         if op_type == 'add':
             # Remove unnecessary escaping for single quotes
-            triplex = triples.encode('utf-8')
             # Add to the database
             if not repo:
                 ar_conn.add(stardog.content.Raw(triples.encode('utf-8'), text_turtle))

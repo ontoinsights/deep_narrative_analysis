@@ -37,7 +37,8 @@ modal_mapping = {'can-present': ':ReadinessAndAbility',              # Ex: I can
 
 # TODO: (Future) co-agent, co-patient
 semantic_roles = ("affiliation", "agent", "patient", "content", "theme", "experiencer", "instrument", "cause",
-                  "location", "time", "goal", "source", "state", "subject", "recipient", "measure", "attribute")
+                  "location", "time", "goal", "source", "state", "subject", "purpose", "recipient",
+                  "measure", "attribute")
 
 semantic_role_mapping = {"affiliation": ":affiliated_with",
                          "agent": ":has_active_entity",
@@ -53,6 +54,7 @@ semantic_role_mapping = {"affiliation": ":affiliated_with",
                          "location": ":has_location",
                          "measure": ":has_quantification",
                          "patient": ":has_affected_entity",
+                         "purpose": ":has_goal",
                          "recipient": ":has_recipient",     # for locations -> has_destination
                          "source": ":has_origin",
                          "state": ":has_aspect",
@@ -119,9 +121,8 @@ def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict:
         predicate = _get_predicate(noun_text, noun_class_name, role, event_class)
         if predicate:
             if predicate == ':affiliated_with' and event_class != ':Affiliation':
-                # TODO: Determine which entity is affiliated with another; Define new Affiliation Event and
-                #       associate the nouns
-                continue
+                roles_ttl.append(f'{event_iri} a :Affiliation .')
+                # TODO: Determine which entities are affiliated with another (have only 1)
             roles_ttl.append(f'{event_iri} {predicate} {noun_iri} .')
     return roles_ttl
 
@@ -175,10 +176,10 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
     :return: A string holding the predicate associating the entity to the event/state
     """
     sem_role_lower = role.lower()
-    if event_class in measurement and any(c.isdigit() for c in noun_str):
+    if (event_class in measurement or noun_class_name in measurement) and any(c.isdigit() for c in noun_str):
        return ':has_quantification'
     if noun_class_name in measurement:
-       return ':has_quantification'
+       return ':has_context'
     if ':EnvironmentAndCondition' == event_class:
         if ':LineOfBusiness' in noun_class_name or ':EthnicGroup' in noun_class_name or \
                 ':PoliticalGroup' in noun_class_name or ':ReligiousGroup' in noun_class_name:
@@ -193,6 +194,8 @@ def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: 
     if ':MovementTravelAndTransportation' == event_class and sem_role_lower == 'theme' and \
             noun_class_name in location_business:
         return ':has_destination'
+    if event_class in (':EmotionalResponse', ':SensoryPerception', ':Cognition') and sem_role_lower == 'experiencer':
+        return ':has_active_entity'
     if sem_role_lower == 'location' and noun_class_name not in location_business:
         return ':has_context'
     if sem_role_lower == 'source' and noun_class_name in agent_classes:
@@ -279,14 +282,14 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
                         #       predicate = ':rhetorical_device {:evidence "' + device_detail['evidence'] + '"}'
                         predicate = f':rhetorical_device_{rhetorical_devices[device_numb - 1].replace(" ", "_")}'
                         ttl_list.append(f'{sentence_iri} :rhetorical_device "{rhetorical_devices[device_numb - 1]}" .')
-                        explanation = device_detail['explanation']
-                        ttl_list.append(f'{sentence_iri} {predicate} "{explanation}" .')
+                        ttl_list.append(f'{sentence_iri} {predicate} {literal(device_detail["explanation"])} .')
                     else:
                         logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sentence_text}')
                         continue
-        if 'summary' in sent_dict:
-            ttl_list.append(f'{sentence_iri} :summary {literal(sent_dict["summary"])} .')
+        summary = sentence_text
+        if 'summary' in sent_dict and sent_dict['summary']:
             summary = sent_dict['summary']
+        ttl_list.append(f'{sentence_iri} :summary {literal(summary)} .')
     return summary
 
 
@@ -405,7 +408,7 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
             ttl_txt = str(noun_ttl)
             prev_event = empty_string
             # TODO: Other classes?
-            if event_class_name in (':Avoidance', ':EmotionalResponse', ':SensoryPerception',
+            if event_class_name in (':Attempt', ':Avoidance', ':EmotionalResponse', ':SensoryPerception',
                                     ':CommunicationAndSpeechAct', ':Causation', ':LegalEvent') \
                     and not (':has_context' in ttl_txt or ':has_aspect' in ttl_txt or ':has_topic' in ttl_txt):
                 prev_event = event_iri

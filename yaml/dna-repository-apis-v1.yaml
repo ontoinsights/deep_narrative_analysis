@@ -81,7 +81,7 @@ info:
   license:
     name: Creative Commons Attribution 4.0 International Public License
     url: https://creativecommons.org/licenses/by/4.0/legalcode
-  version: '1.3'
+  version: '1.4'
 paths:
   /dna/v1/repositories:
     get:
@@ -246,8 +246,8 @@ paths:
         Process the names and entity types in the request 
         body, adding details such as alternate names 
         and descriptive information from Wikidata or GeoNames, to 
-        the specified repository; Return information indicates
-        the proper nouns that have been added as background and
+        the specified repository; Return information indicates 
+        the proper nouns that have been added as background and 
         any nouns that were skipped due to errors
       parameters:
         - $ref: '#/components/parameters/repository'
@@ -705,9 +705,8 @@ components:
             description: >-
               An enumerated value indicating if the name describes a
               "organization" (including businesses), "law", "person", 
-              "norp" (nationality, religious or political group), 
               "place" or "thing"
-            enum: [law, norp, organization, person, place, thing]
+            enum: [law, organization, person, place, thing]
             example: person
           isCollection:
             type: boolean

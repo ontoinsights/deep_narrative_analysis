@@ -98,7 +98,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {original_text}')
             print(traceback.format_exc())
             continue
-        if index + 1 < number_sentences:    # Full processing only up to the requested number of sentences
+        if index < number_sentences:    # Full processing only up to the requested number of sentences
             # Processing the events and states, and related nouns
             sentences[sentence_iri] = summary
     if sentences:
@@ -108,7 +108,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence semantics for the text')
             print(traceback.format_exc())
-    logging.info(f'Turtle {graph_ttl_list}')
+    logging.info(f'Narrative Turtle created')
     # Add the quotation details to the Turtle
     for quote in quotation_instance_list:
         quote_ttl_list = [f'{quote.iri} a :Quote ; :text {literal(quote.text)} .']

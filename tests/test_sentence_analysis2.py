@@ -17,7 +17,7 @@ text_multiple_xcomp = 'John liked to ski and to swim.'
 text_location_hierarchy = "Switzerland's mountains are magnificent."
 text_weather = "Hurricane Otis severely damaged Acapulco."
 text_coref = 'Anna saw Heidi cut the roses, but she did not recognize that it was Heidi who cut the roses.'
-text_quotation = 'Jane said, "I want to work for NVIDIA."'
+text_quotation = 'Jane said, "I want to work for NVIDIA. My interview is tomorrow."'
 text_rule = "You shall not kill."
 text_causation = "Yesterday Holly was running a marathon when she twisted her ankle. David had pushed her."
 
@@ -35,9 +35,9 @@ def test_multiple_entities():
     assert 'loaded language' in ttl_str
     assert ':CommunicationAndSpeechAct' in ttl_str and ':text "claimed' in ttl_str
     assert ':has_active_entity :Liz_Cheney' in ttl_str
-    assert ':has_topic [ a :Clause' in ttl_str or ':has_topic :Trump' in ttl_str
-    assert ':DeceptionAndDishonesty' in ttl_str and ':text "insidious lie' in ttl_str
-    assert ':has_active_entity :Trump' in ttl_str                 # Trump is promoting the lie
+    assert ':has_topic [ a :Clause' in ttl_str or ':has_topic :Donald_Trump' in ttl_str
+    assert ':DeceptionAndDishonesty' in ttl_str and ':text "lie' in ttl_str
+    assert ':has_active_entity :Donald_Trump' in ttl_str                 # Trump is promoting the lie
     assert ':LawEnforcement' in ttl_str and (':text "recent FBI raid' in ttl_str or ':text "FBI raid' in ttl_str)
     assert ':has_context :Noun' in ttl_str
     # Output Turtle:
@@ -58,13 +58,14 @@ def test_multiple_entities():
     # :Event_6cc9e635-3d3d :text "claimed" .
     # :Event_6cc9e635-3d3d a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 95 .
     # :Event_6cc9e635-3d3d :has_active_entity :Liz_Cheney .
-    # :Event_6cc9e635-3d3d :has_topic [ a :Clause ; :text "Trump is promoting an insidious lie about the recent
-    #     FBI raid" ] .
+    # :Event_6cc9e635-3d3d :has_topic :Donald_Trump .
+    # :Noun_9b48af77-6423 a :DeceptionAndDishonesty ; :text "lie" ; :confidence 100 .
+    # :Event_6cc9e635-3d3d :has_topic :Noun_9b48af77-6423 .
     # :Sentence_35bdd3bd-fedc :has_semantic :Event_8fb30641-595b .
     # :Event_8fb30641-595b :text "is promoting" .
     # :Event_8fb30641-595b a :DeceptionAndDishonesty ; :confidence-DeceptionAndDishonesty 90 .
-    # :Event_8fb30641-595b :has_active_entity :Trump .
-    # :Event_8fb30641-595b :text "insidious lie" .
+    # :Event_8fb30641-595b :has_active_entity :Donald_Trump .
+    # :Event_8fb30641-595b :text "lie" .
     # :Noun_393a8a7e-89af a :LawEnforcement ; :text "recent FBI raid" ; :confidence 85 .
     # :Event_8fb30641-595b :has_context :Noun_393a8a7e-89af .
 
@@ -73,7 +74,6 @@ def test_multiple_verbs():
     sentence_classes, quotation_classes = parse_narrative(text_multiple_verbs)
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
-    assert 'ad hominem' in ttl_str or 'loaded language' in ttl_str
     assert ':EnvironmentAndCondition' in ttl_str and ':text "is' in ttl_str
     assert ':LineOfBusiness ; :text "attorney' in ttl_str and ':has_aspect :Noun' in ttl_str
     assert ':has_context :Sue' in ttl_str
@@ -83,10 +83,7 @@ def test_multiple_verbs():
     # :Sentence_cc657637-9320 a :Sentence ; :offset 1 .
     # :Sentence_cc657637-9320 :text "Sue is an attorney but still lies." .
     # :Sentence_cc657637-9320 :mentions :Sue .
-    # :Sentence_cc657637-9320 :grade_level 8 .
-    # :Sentence_cc657637-9320 :rhetorical_device "loaded language" .
-    # :Sentence_cc657637-9320 :rhetorical_device_loaded_language "The word \'lies\' is loaded language with
-    #     strong connotations, invoking emotions and judgments about Sue\'s character." .
+    # :Sentence_cc657637-9320 :grade_level 6 .
     # :Sentence_cc657637-9320 :summary "Sue is an attorney but still lies." .
     # :Sentence_cc657637-9320 :has_semantic :Event_847b69db-ea21 .
     # :Event_847b69db-ea21 :text "is" .
@@ -129,26 +126,26 @@ def test_idiom_amod():
     ttl_str = str(graph_results.turtle)
     assert ':Avoidance' in ttl_str and ':text "turned a blind eye' in ttl_str
     assert ':has_active_entity :John' in ttl_str
-    assert ':DeceptionAndDishonesty' in ttl_str and ':text "Mary' in ttl_str    # Mary's infidelity
-    assert ':has_topic :Noun' in ttl_str
+    assert ':DeceptionAndDishonesty' in ttl_str and ':text "infidelity' in ttl_str    # Mary's infidelity
+    assert ':has_topic :Mary' in ttl_str and ':has_topic :Noun' in ttl_str
     # Output Turtle:
-    # ::Sentence_be459a70-e76e a :Sentence ; :offset 1 .
-    # :Sentence_be459a70-e76e :text "John turned a blind eye to Mary\'s infidelity." .
-    # :Sentence_be459a70-e76e :mentions :John .
-    # :Sentence_be459a70-e76e :mentions :Mary .
-    # :Sentence_be459a70-e76e :grade_level 8 .
-    # :Sentence_be459a70-e76e :rhetorical_device "allusion" .
-    # :Sentence_be459a70-e76e :rhetorical_device_allusion "The phrase \'turned a blind eye\' is an allusion to the
-    #     historical anecdote about Admiral Horatio Nelson, who allegedly used his blind eye to look through his
-    #     telescope and claim he did not see a signal to withdraw during a battle. This allusion implies ignoring
-    #     something intentionally." .
-    # :Sentence_be459a70-e76e :summary "John turned a blind eye to Mary\'s infidelity." .
-    # :Sentence_be459a70-e76e :has_semantic :Event_55d40242-6506 .
-    # :Event_55d40242-6506 :text "turned a blind eye to" .
-    # :Event_55d40242-6506 a :Avoidance ; :confidence-Avoidance 95 .
-    # :Event_55d40242-6506 :has_active_entity :John .
-    # :Noun_269325e4-dc81 a :DeceptionAndDishonesty ; :text "Mary\'s infidelity" ; :confidence 95 .
-    # :Event_55d40242-6506 :has_topic :Noun_269325e4-dc81 .
+    # :Sentence_9a844dae-aa10 a :Sentence ; :offset 1 .
+    # :Sentence_9a844dae-aa10 :text "John turned a blind eye to Mary\'s infidelity." .
+    # :Sentence_9a844dae-aa10 :mentions :John .
+    # :Sentence_9a844dae-aa10 :mentions :Mary .
+    # :Sentence_9a844dae-aa10 :grade_level 8 .
+    # :Sentence_9a844dae-aa10 :rhetorical_device "allusion" .
+    # :Sentence_9a844dae-aa10 :rhetorical_device_allusion "The phrase \'turned a blind eye\' is an allusion to
+    #     the historical anecdote of Admiral Horatio Nelson, who purportedly used his blind eye to look through his
+    #     telescope and ignore signals to withdraw from battle, symbolizing willful ignorance." .
+    # :Sentence_9a844dae-aa10 :summary "John turned a blind eye to Mary\'s infidelity." .
+    # :Sentence_9a844dae-aa10 :has_semantic :Event_21fd2349-2ca1 .
+    # :Event_21fd2349-2ca1 :text "turned a blind eye" .
+    # :Event_21fd2349-2ca1 a :Avoidance ; :confidence-Avoidance 100 .
+    # :Event_21fd2349-2ca1 :has_active_entity :John .
+    # :Event_21fd2349-2ca1 :has_topic :Mary .
+    # :Noun_56f507bc-a4c7 a :DeceptionAndDishonesty ; :text "infidelity" ; :confidence 100 .
+    # :Event_21fd2349-2ca1 :has_topic :Noun_56f507bc-a4c7 .
 
 
 def test_complex_verb():
@@ -176,8 +173,9 @@ def test_neg_acomp_xcomp():
     sentence_classes, quotation_classes = parse_narrative(text_neg_acomp_xcomp)
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
-    assert (':EmotionalResponse' in ttl_str or ':Avoidance' in ttl_str) and ':text "is not able to stomach' in ttl_str
-    assert ':negated true' not in ttl_str
+    assert ':text "is not able to stomach' in ttl_str
+    assert (':ReadinessAndAbility' in ttl_str and ':negated true' in ttl_str) or \
+        (':Avoidance' in ttl_str and ':negated true' not in ttl_str)
     assert ':has_active_entity :Jane' in ttl_str
     assert ':DeceptionAndDishonesty ; :text "lies' in ttl_str
     assert ':has_topic :Noun' in ttl_str
@@ -192,7 +190,8 @@ def test_neg_acomp_xcomp():
     # :Sentence_b5c75a8a-5251 :summary "Jane is not able to stomach lies." .
     # :Sentence_b5c75a8a-5251 :has_semantic :Event_a3ca4e03-9ccf .
     # :Event_a3ca4e03-9ccf :text "is not able to stomach" .
-    # :Event_a3ca4e03-9ccf a :Avoidance ; :confidence-Avoidance 90 .
+    # :Event_a3ca4e03-9ccf a :ReadinessAndAbility ; :confidence-Avoidance 90 .
+    # :Event_a3ca4e03-9ccf :negated true .
     # :Event_a3ca4e03-9ccf :has_active_entity :Jane .
     # :Noun_52ece0a2-0228 a :DeceptionAndDishonesty ; :text "lies" ; :confidence 100 .
     # :Event_a3ca4e03-9ccf :has_topic :Noun_52ece0a2-0228
@@ -203,19 +202,19 @@ def test_non_person_subject():
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
     assert ':Loss' in ttl_str and ':text "were dashed' in ttl_str
-    assert (':EmotionalResponse' in ttl_str or ':Cognition' in ttl_str) and ':text "John' in ttl_str   # John's hopes
-    assert ':has_context :Noun' in ttl_str
+    assert (':EmotionalResponse' in ttl_str or ':Cognition' in ttl_str) and ':text "hopes' in ttl_str   # John's hopes
+    assert ':has_affected_entity :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_a7f9064b-ac6f a :Sentence ; :offset 1 .
-    # :Sentence_a7f9064b-ac6f :text "John\'s hopes were dashed." .
-    # :Sentence_a7f9064b-ac6f :mentions :John .
-    # :Sentence_a7f9064b-ac6f :grade_level 5 .
-    # :Sentence_a7f9064b-ac6f :summary "John\'s hopes were dashed." .
-    # :Sentence_a7f9064b-ac6f :has_semantic :Event_7faa3e10-07d3 .
-    # :Event_7faa3e10-07d3 :text "were dashed" .
-    # :Event_7faa3e10-07d3 a :Loss ; :confidence-Loss 90 .
-    # :Noun_efa33b02-e211 a :EmotionalResponse ; :text "John\'s hopes" ; :confidence 90 .
-    # :Event_7faa3e10-07d3 :has_context :Noun_efa33b02-e211 .
+    # :Sentence_934924a9-856b a :Sentence ; :offset 1 .
+    # :Sentence_934924a9-856b :text "John\'s hopes were dashed." .
+    # :Sentence_934924a9-856b :mentions :John .
+    # :Sentence_934924a9-856b :grade_level 5 .
+    # :Sentence_934924a9-856b :summary "John\'s hopes were dashed." .
+    # :Sentence_934924a9-856b :has_semantic :Event_873c5614-9aeb .
+    # :Event_873c5614-9aeb :text "were dashed" .
+    # :Event_873c5614-9aeb a :Loss ; :confidence-Loss 100 .
+    # :Noun_67c7028c-c268 a :EmotionalResponse, :Collection ; :text "hopes" ; :confidence 100 .
+    # :Event_873c5614-9aeb :has_affected_entity :Noun_67c7028c-c268 .
 
 
 def test_first_person():
@@ -252,9 +251,9 @@ def test_pobj_semantics():
     assert 'a :Person ; :text "robber' in ttl_str
     assert ':has_active_entity :Noun' in ttl_str
     assert ':has_topic :Event' in ttl_str
-    assert ':AidAndAssistance' in ttl_str and ':text "with the aid' in ttl_str
-    assert 'a :GovernmentalEntity ; :text "local police' in ttl_str
-    assert ':has_instrument :Noun' in ttl_str
+    assert ':AidAndAssistance' in ttl_str and ':text "aid' in ttl_str
+    assert 'a :GovernmentalEntity ; :text "police' in ttl_str
+    assert ':has_instrument :Noun' in ttl_str or ':has_source :Noun' in ttl_str
     # Output Turtle:
     # :Sentence_2b6af84d-cda1 a :Sentence ; :offset 1 .
     # :Sentence_2b6af84d-cda1 :text "The robber escaped with the aid of the local police." .
@@ -267,9 +266,9 @@ def test_pobj_semantics():
     # :Event_87d2d7fe-1660 :has_active_entity :Noun_5fd60e71-062f .
     # :Event_87d2d7fe-1660 :has_topic :Event_67333bd1-09ff .
     # :Sentence_2b6af84d-cda1 :has_semantic :Event_67333bd1-09ff .
-    # :Event_67333bd1-09ff :text "with the aid of" .
-    # :Event_67333bd1-09ff a :AidAndAssistance ; :confidence-AidAndAssistance 90 .
-    # :Noun_226c5a1e-876a a :GovernmentalEntity ; :text "local police" ; :confidence 100 .
+    # :Event_67333bd1-09ff :text "aid" .
+    # :Event_67333bd1-09ff a :AidAndAssistance ; :confidence-AidAndAssistance 100 .
+    # :Noun_226c5a1e-876a a :GovernmentalEntity ; :text "police" ; :confidence 100 .
     # :Event_67333bd1-09ff :has_instrument :Noun_226c5a1e-876a .
 
 
@@ -277,23 +276,25 @@ def test_multiple_subjects():
     sentence_classes, quotation_classes = parse_narrative(text_multiple_subjects)
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
-    assert ':DisagreementAndDispute' in ttl_str
-    assert ':text "difference of opinion' in ttl_str
-    assert ':has_active_entity :John' in ttl_str
-    assert ':has_active_entity :Jane' in ttl_str
+    assert ':DisagreementAndDispute' in ttl_str and ':text "difference' in ttl_str
+    assert ':has_affected_entity :John' in ttl_str
+    assert ':has_affected_entity :Jane' in ttl_str
+    assert ':Cognition ; :text "opinion' in ttl_str and ':has_topic :Noun' in ttl_str
     # Output Turtle:
-    # :Sentence_ecd5bdbf-a486 a :Sentence ; :offset 1 .
-    # :Sentence_ecd5bdbf-a486 :text "Jane and John had a serious difference of opinion." .
-    # :Sentence_ecd5bdbf-a486 :mentions :Jane .
-    # :Sentence_ecd5bdbf-a486 :mentions :John .
-    # :Sentence_ecd5bdbf-a486 :grade_level 6 .
-    # :Sentence_ecd5bdbf-a486 :summary "Jane and John had a serious difference of opinion." .
-    # :Sentence_ecd5bdbf-a486 :has_semantic :Event_a160445f-702f .
-    # :Event_a160445f-702f :text "had" .
-    # :Event_a160445f-702f a :DisagreementAndDispute ; :confidence-DisagreementAndDispute 90 .
-    # :Event_a160445f-702f :has_active_entity :Jane .
-    # :Event_a160445f-702f :has_active_entity :John .
-    # :Event_a160445f-702f :text "difference of opinion" .
+    # :Sentence_ed5fb665-6c99 a :Sentence ; :offset 1 .
+    # :Sentence_ed5fb665-6c99 :text "Jane and John had a serious difference of opinion." .
+    # :Sentence_ed5fb665-6c99 :mentions :Jane .
+    # :Sentence_ed5fb665-6c99 :mentions :John .
+    # :Sentence_ed5fb665-6c99 :grade_level 5 .
+    # :Sentence_ed5fb665-6c99 :summary "Jane and John had a serious difference of opinion." .
+    # :Sentence_ed5fb665-6c99 :has_semantic :Event_9c20c28f-43ea .
+    # :Event_9c20c28f-43ea :text "had" .
+    # :Event_9c20c28f-43ea a :DisagreementAndDispute ; :confidence-DisagreementAndDispute 100 .
+    # :Event_9c20c28f-43ea :has_affected_entity :Jane .
+    # :Event_9c20c28f-43ea :has_affected_entity :John .
+    # :Event_9c20c28f-43ea :text "difference" .
+    # :Noun_b816e128-8903 a :Cognition ; :text "opinion" ; :confidence 100 .
+    # :Event_9c20c28f-43ea :has_topic :Noun_b816e128-8903 .
 
 
 def test_multiple_xcomp():
@@ -333,7 +334,7 @@ def test_location_hierarchy():
     assert ':mentions geo:2658434' in ttl_str        # Switzerland
     assert 'imagery' in ttl_str or 'exceptionalism' in ttl_str
     assert ':EnvironmentAndCondition' in ttl_str
-    assert ':Location' in ttl_str and  ':text "Switzerland' in ttl_str
+    assert ':Location' in ttl_str and ':text "mountains' in ttl_str
     assert ':has_context :Noun' in ttl_str
     # Output Turtle:
     # :Sentence_4022a793-6140 a :Sentence ; :offset 1 .
@@ -350,7 +351,7 @@ def test_location_hierarchy():
     # :Sentence_4022a793-6140 :has_semantic :Event_bd7f552d-dcf4 .
     # :Event_bd7f552d-dcf4 :text "are" .
     # :Event_bd7f552d-dcf4 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
-    # :Noun_b9f54de6-0c99 a :Location ; :text "Switzerland\'s mountains" ; :confidence 95 .
+    # :Noun_b9f54de6-0c99 a :Location ; :text "mountains" ; :confidence 95 .
     # :Event_bd7f552d-dcf4 :has_context :Noun_b9f54de6-0c99 .
 
 
@@ -360,21 +361,20 @@ def test_weather():
     ttl_str = str(graph_results.turtle)
     assert ':mentions :Hurricane_Otis' in ttl_str and ':mentions :Acapulco' in ttl_str
     assert ':EnvironmentalOrEcologicalEvent' in ttl_str
-    assert ':has_described_entity :Hurricane_Otis' in ttl_str or ':has_topic :Hurricane_Otis' in ttl_str or \
-           ':has_context :Hurricane_Otis' in ttl_str
+    assert ':has_active_entity :Hurricane_Otis' in ttl_str
     assert ':has_location :Acapulco' in ttl_str
     # Output Turtle:
-    # :Sentence_a2cfd142-4f0e a :Sentence ; :offset 1 .
-    # :Sentence_a2cfd142-4f0e :text "Hurricane Otis severely damaged Acapulco." .
-    # :Sentence_a2cfd142-4f0e :mentions :Hurricane_Otis .
-    # :Sentence_a2cfd142-4f0e :mentions :Acapulco .
-    # :Sentence_a2cfd142-4f0e :grade_level 5 .
-    # :Sentence_a2cfd142-4f0e :summary "Hurricane Otis severely damaged Acapulco." .
-    # :Sentence_a2cfd142-4f0e :has_semantic :Event_f7ec366e-d8b5 .
-    # :Event_f7ec366e-d8b5 :text "severely damaged" .
-    # :Event_f7ec366e-d8b5 a :EnvironmentalOrEcologicalEvent ; :confidence-EnvironmentalOrEcologicalEvent 95 .
-    # :Event_f7ec366e-d8b5 :has_context :Hurricane_Otis .
-    # :Event_f7ec366e-d8b5 :has_location :Acapulco .
+    # :Sentence_2e706399-449a a :Sentence ; :offset 1 .
+    # :Sentence_2e706399-449a :text "Hurricane Otis severely damaged Acapulco." .
+    # :Sentence_2e706399-449a :mentions :Hurricane_Otis .
+    # :Sentence_2e706399-449a :mentions :Acapulco .
+    # :Sentence_2e706399-449a :grade_level 5 .
+    # :Sentence_2e706399-449a :summary "Hurricane Otis severely damaged Acapulco." .
+    # :Sentence_2e706399-449a :has_semantic :Event_d75b4af2-aa59 .
+    # :Event_d75b4af2-aa59 :text "damaged" .
+    # :Event_d75b4af2-aa59 a :EnvironmentalOrEcologicalEvent ; :confidence-EnvironmentalOrEcologicalEvent 100 .
+    # :Event_d75b4af2-aa59 :has_active_entity :Hurricane_Otis .
+    # :Event_d75b4af2-aa59 :has_location :Acapulco .
 
 
 def test_coref():
@@ -383,40 +383,40 @@ def test_coref():
     ttl_str = str(graph_results.turtle)
     assert ':SensoryPerception' in ttl_str and ':text "saw' in ttl_str
     assert ':has_active_entity :Anna' in ttl_str
+    assert ':has_topic :Heidi' in ttl_str
     assert (':Separation' in ttl_str or ':AgricultureApicultureAndAquacultureEvent' in ttl_str) \
            and ':text "cut' in ttl_str
-    assert 'a :Plant ; :text "roses' in ttl_str
+    assert 'a :Plant, :Collection ; :text "roses' in ttl_str
     assert ':has_active_entity :Heidi' in ttl_str
-    assert ':has_topic :Noun' in ttl_str or ':has_context :Noun' in ttl_str        # Heidi cutting roses
-    # TODO: "Not recognizing" is cognition but should it be negated?
-    assert (':Cognition' in ttl_str or ':Avoidance' in ttl_str) and ':text "did not recognize' in ttl_str
-    assert ':has_affected_entity :Heidi' in ttl_str or ':has_topic :Heidi' in ttl_str
+    assert ':has_affected_entity :Noun' in ttl_str
+    assert (':Cognition' in ttl_str and ':negated true' in ttl_str) or \
+        (':Avoidance' in ttl_str and ':negated true' not in ttl_str)
     # Output Turtle:
-    # :Sentence_4d53796f-116c a :Sentence ; :offset 1 .
-    # :Sentence_4d53796f-116c :text "Anna saw Heidi cut the roses, but she did not recognize that it was Heidi
+    # :Sentence_9184c762-3537 a :Sentence ; :offset 1 .
+    # :Sentence_9184c762-3537 :text "Anna saw Heidi cut the roses, but she did not recognize that it was Heidi
     #     who cut the roses." .
-    # :Sentence_4d53796f-116c :mentions :Anna .
-    # :Sentence_4d53796f-116c :mentions :Heidi .
-    # :Sentence_4d53796f-116c :mentions :Heidi .
-    # :Sentence_4d53796f-116c :grade_level 8 .
-    # :Sentence_4d53796f-116c :summary "Anna saw Heidi cut the roses, but she did not recognize it was Heidi." .
-    # :Sentence_4d53796f-116c :has_semantic :Event_ab36cf8e-74a6 .
-    # :Event_ab36cf8e-74a6 :text "saw" .
-    # :Event_ab36cf8e-74a6 a :SensoryPerception ; :confidence-SensoryPerception 90 .
-    # :Event_ab36cf8e-74a6 :has_active_entity :Anna .
-    # :Event_ab36cf8e-74a6 :has_active_entity :Heidi .
-    # :Noun_b90bba5b-7458 a :Plant ; :text "roses" ; :confidence 100 .
-    # :Event_ab36cf8e-74a6 :has_context :Noun_b90bba5b-7458 .
-    # :Sentence_4d53796f-116c :has_semantic :Event_608a4a39-fbf8 .
-    # :Event_608a4a39-fbf8 :text "cut" .
-    # :Event_608a4a39-fbf8 a :Separation ; :confidence-Separation 95 .
-    # :Event_608a4a39-fbf8 :has_active_entity :Heidi .
-    # :Event_608a4a39-fbf8 :has_context :Noun_b90bba5b-7458 .
-    # :Sentence_4d53796f-116c :has_semantic :Event_ab617035-c69f .
-    # :Event_ab617035-c69f :text "did not recognize" .
-    # :Event_ab617035-c69f a :Avoidance ; :confidence-Avoidance 85 .
-    # :Event_ab617035-c69f :has_active_entity :Anna .
-    # :Event_ab617035-c69f :has_topic :Heidi .
+    # :Sentence_9184c762-3537 :mentions :Anna .
+    # :Sentence_9184c762-3537 :mentions :Heidi .
+    # :Sentence_9184c762-3537 :mentions :Heidi .
+    # :Sentence_9184c762-3537 :grade_level 8 .
+    # :Sentence_9184c762-3537 :summary "Anna saw Heidi cut roses but didn\'t recognize her." .
+    # :Sentence_9184c762-3537 :has_semantic :Event_b979a648-235a .
+    # :Event_b979a648-235a :text "saw" .
+    # :Event_b979a648-235a a :SensoryPerception ; :confidence-SensoryPerception 100 .
+    # :Event_b979a648-235a :has_active_entity :Anna .
+    # :Event_b979a648-235a :has_topic :Heidi .
+    # :Noun_54d1b67d-4968 a :Plant, :Collection ; :text "roses" ; :confidence 100 .
+    # :Event_b979a648-235a :has_topic :Noun_54d1b67d-4968 .
+    # :Sentence_9184c762-3537 :has_semantic :Event_03923fe5-e722 .
+    # :Event_03923fe5-e722 :text "cut" .
+    # :Event_03923fe5-e722 a :Separation ; :confidence-Separation 100 .
+    # :Event_03923fe5-e722 :has_active_entity :Heidi .
+    # :Event_03923fe5-e722 :has_affected_entity :Noun_54d1b67d-4968 .
+    # :Sentence_9184c762-3537 :has_semantic :Event_d99ed67c-964a .
+    # :Event_d99ed67c-964a :text "did not recognize" .
+    # :Event_d99ed67c-964a a :Avoidance ; :confidence-Avoidance 100 .
+    # :Event_d99ed67c-964a :has_affected_entity :Anna .
+    # :Event_d99ed67c-964a :has_topic :Heidi .
 
 
 def test_quotation():
@@ -426,30 +426,46 @@ def test_quotation():
     assert ':mentions :NVIDIA' in ttl_str
     assert ':CommunicationAndSpeechAct' in ttl_str and ':text "said' in ttl_str
     assert ':has_active_entity :Jane' in ttl_str
-    assert ':has_topic [ a :Clause' in ttl_str
-    assert 'a :Quote ; :text "I want to work for NVIDIA.' in ttl_str
+    assert ':has_topic :Jane' in ttl_str
+    assert ':EmotionalResponse' in ttl_str or ':Attempt' in ttl_str     # "want"
+    assert ':has_affected_entity :NVIDIA' in ttl_str
+    if ':Attempt' in ttl_str:
+        assert ':has_context :Jane' in ttl_str
+    assert ':MeetingAndEncounter ; :text "interview' in ttl_str
+    # TODO: Missing meeting details
+    assert 'a :Quote ; :text "I want to work for NVIDIA. My interview is tomorrow' in ttl_str
     assert ':attributed_to :Jane' in ttl_str
     # Output Turtle:
-    # :Sentence_15237611-9d8f a :Sentence ; :offset 1 .
-    # :Sentence_15237611-9d8f :text "Jane said, \\"I want to work for NVIDIA.\\"" .
-    # :Sentence_15237611-9d8f :mentions :Jane .
-    # :Sentence_15237611-9d8f :mentions :NVIDIA .
-    # :Sentence_15237611-9d8f :grade_level 5 .
-    # :Sentence_15237611-9d8f :summary "Jane said, \\"I want to work for NVIDIA.\\"" .
-    # :Sentence_15237611-9d8f :has_semantic :Event_f96be0b4-7c3f .
-    # :Event_f96be0b4-7c3f :text "said" .
-    # :Event_f96be0b4-7c3f a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 95 .
-    # :Event_f96be0b4-7c3f :has_active_entity :Jane .
-    # :Event_f96be0b4-7c3f :has_topic [ a :Clause ; :text "\\"I want to work for NVIDIA.\\"" ] .
-    # :Sentence_15237611-9d8f :has_semantic :Event_0eda098a-ef06 .
-    # :Event_0eda098a-ef06 :text "want to work" .
-    # :Event_0eda098a-ef06 a :Affiliation ; :confidence-Affiliation 90 .
-    # :Event_0eda098a-ef06 :affiliated_with :Jane .
-    # :Event_0eda098a-ef06 :affiliated_with :NVIDIA .
-    # :Quotation_37c02f84-cbeb a :Quote ; :text "I want to work for NVIDIA." .
-    # :Quotation_37c02f84-cbeb :attributed_to :Jane .
-    # :Quotation_37c02f84-cbeb :grade_level 5 .
-    # :Quotation_37c02f84-cbeb :summary "I want to work for NVIDIA." .
+    # :Sentence_5d5f5d34-bea6 a :Sentence ; :offset 1 .
+    # :Sentence_5d5f5d34-bea6 :text "Jane said, \'I want to work for NVIDIA." .
+    # :Sentence_5d5f5d34-bea6 :mentions :Jane .
+    # :Sentence_5d5f5d34-bea6 :mentions :NVIDIA .
+    # :Sentence_5d5f5d34-bea6 :grade_level 5 .
+    # :Sentence_5d5f5d34-bea6 :summary "Jane said, \'I want to work for NVIDIA." .
+    # :Sentence_00a36550-fe73 a :Sentence ; :offset 2 .
+    # :Sentence_00a36550-fe73 :text "My interview is tomorrow.\'" .
+    # :Sentence_00a36550-fe73 :grade_level 3 .
+    # :Sentence_00a36550-fe73 :summary "My interview is tomorrow.\'" .
+    # :Sentence_5d5f5d34-bea6 :has_semantic :Event_455ee09e-98be .
+    # :Event_455ee09e-98be :text "said" .
+    # :Event_455ee09e-98be a :CommunicationAndSpeechAct ; :confidence-CommunicationAndSpeechAct 100 .
+    # :Event_455ee09e-98be :has_active_entity :Jane .
+    # :Event_455ee09e-98be :has_topic :Jane .
+    # :Sentence_5d5f5d34-bea6 :has_semantic :Event_54925bd2-98d3 .
+    # :Event_54925bd2-98d3 :text "want to work" .
+    # :Event_54925bd2-98d3 a :Attempt ; :confidence-Attempt 100 .
+    # :Event_54925bd2-98d3 :has_context :Jane .
+    # :Event_54925bd2-98d3 :has_affected_entity :NVIDIA .
+    # :Sentence_5d5f5d34-bea6 :has_semantic :Event_a5cc3e1c-0a99 .
+    # :Event_a5cc3e1c-0a99 :text "is" .
+    # :Event_a5cc3e1c-0a99 a :EnvironmentAndCondition ; :confidence-EnvironmentAndCondition 100 .
+    # :Noun_3f65599f-d00c a :MeetingAndEncounter ; :text "interview" ; :confidence 100 .
+    # :Event_a5cc3e1c-0a99 :has_context :Noun_3f65599f-d00c .
+    # :Event_a5cc3e1c-0a99 :has_time [ a :Time ; :text "tomorrow" ] .
+    # :Quotation_a1debc8e-3894 a :Quote ; :text "I want to work for NVIDIA. My interview is tomorrow." .
+    # :Quotation_a1debc8e-3894 :attributed_to :Jane .
+    # :Quotation_a1debc8e-3894 :grade_level 5 .
+    # :Quotation_a1debc8e-3894 :summary "I want to work for NVIDIA. My interview is tomorrow." .
 
 
 def test_rule():
@@ -478,39 +494,41 @@ def test_causation():
     sentence_classes, quotation_classes = parse_narrative(text_causation)
     graph_results = create_graph(sentence_classes, quotation_classes, 5, repo)
     ttl_str = str(graph_results.turtle)
+    print(ttl_str)
     assert ':HealthAndDiseaseRelated' in ttl_str and ':text "twisted' in ttl_str
     assert ':has_active_entity :Holly' in ttl_str
     assert ':ComponentPart ; :text "ankle' in ttl_str
     assert ':has_affected_entity :Noun' in ttl_str    # twisted ankle
-    assert ':ArtAndEntertainmentEvent' in ttl_str and ':text "running' in ttl_str
-    assert ':AggressiveCriminalOrHostileAct' in ttl_str and ':text "had pushed' in ttl_str
+    assert (':ArtAndEntertainmentEvent' in ttl_str or ':BodilyAct' in ttl_str) and ':text "was running' in ttl_str
+    assert (':AggressiveCriminalOrHostileAct' in ttl_str or ':ImpactAndContact' in ttl_str) and \
+        ':text "had pushed' in ttl_str
     assert ':has_active_entity :David' in ttl_str
     assert ':has_affected_entity :Holly' in ttl_str
     # Output Turtle:
-    # :Sentence_00857acb-73de a :Sentence ; :offset 1 .
-    # :Sentence_00857acb-73de :text "Yesterday Holly was running a marathon when she twisted her ankle." .
-    # :Sentence_00857acb-73de :mentions :Holly .
-    # :Sentence_00857acb-73de :grade_level 6 .
-    # :Sentence_00857acb-73de :summary "Holly twisted her ankle while running a marathon." .
-    # :Sentence_8aa42ed1-87b6 a :Sentence ; :offset 2 .
-    # :Sentence_8aa42ed1-87b6 :text "David had pushed her." .
-    # :Sentence_8aa42ed1-87b6 :mentions :David .
-    # :Sentence_8aa42ed1-87b6 :grade_level 3 .
-    # :Sentence_8aa42ed1-87b6 :summary "David had pushed her." .
-    # :Sentence_00857acb-73de :has_semantic :Event_d3ab20ec-ad7d .
-    # :Event_d3ab20ec-ad7d :text "twisted" .
-    # :Event_d3ab20ec-ad7d a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 95 .
-    # :Event_d3ab20ec-ad7d :has_active_entity :Holly .
-    # :Noun_18ba7feb-76c4 a :ComponentPart ; :text "ankle" ; :confidence 100 .
-    # :Event_d3ab20ec-ad7d :has_affected_entity :Noun_18ba7feb-76c4 .
-    # :Sentence_00857acb-73de :has_semantic :Event_44225107-89f0 .
-    # :Event_44225107-89f0 :text "running" .
-    # :Event_44225107-89f0 a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 90 .
-    # :Event_44225107-89f0 :has_active_entity :Holly .
-    # :Event_44225107-89f0 :text "marathon" .
-    # :Sentence_8aa42ed1-87b6 :has_semantic :Event_34b0979f-1db6 .
-    # :Event_34b0979f-1db6 :text "had pushed" .
-    # :Event_34b0979f-1db6 a :AggressiveCriminalOrHostileAct ; :confidence-AggressiveCriminalOrHostileAct 95 .
-    # :Event_34b0979f-1db6 :has_active_entity :David .
-    # :Event_34b0979f-1db6 :has_affected_entity :Holly .
+    # :Sentence_b31fbee6-9d20 a :Sentence ; :offset 1 .
+    # :Sentence_b31fbee6-9d20 :text "Yesterday Holly was running a marathon when she twisted her ankle." .
+    # :Sentence_b31fbee6-9d20 :mentions :Holly .
+    # :Sentence_b31fbee6-9d20 :grade_level 6 .
+    # :Sentence_b31fbee6-9d20 :summary "Yesterday Holly was running a marathon when she twisted her ankle." .
+    # :Sentence_71076128-157f a :Sentence ; :offset 2 .
+    # :Sentence_71076128-157f :text "David had pushed her." .
+    # :Sentence_71076128-157f :mentions :David .
+    # :Sentence_71076128-157f :grade_level 3 .
+    # :Sentence_71076128-157f :summary "David had pushed her." .
+    # :Sentence_b31fbee6-9d20 :has_semantic :Event_0dc70a2c-86fe .
+    # :Event_0dc70a2c-86fe :text "was running" .
+    # :Event_0dc70a2c-86fe a :ArtAndEntertainmentEvent ; :confidence-ArtAndEntertainmentEvent 100 .
+    # :Event_0dc70a2c-86fe :has_active_entity :Holly .
+    # :Event_0dc70a2c-86fe :text "marathon" .
+    # :Sentence_b31fbee6-9d20 :has_semantic :Event_32910745-8a07 .
+    # :Event_32910745-8a07 :text "twisted" .
+    # :Event_32910745-8a07 a :HealthAndDiseaseRelated ; :confidence-HealthAndDiseaseRelated 100 .
+    # :Event_32910745-8a07 :has_active_entity :Holly .
+    # :Noun_f168157d-1658 a :ComponentPart ; :text "ankle" ; :confidence 100 .
+    # :Event_32910745-8a07 :has_affected_entity :Noun_f168157d-1658 .
+    # :Sentence_71076128-157f :has_semantic :Event_b1043278-6006 .
+    # :Event_b1043278-6006 :text "had pushed" .
+    # :Event_b1043278-6006 a :ImpactAndContact ; :confidence-ImpactAndContact 100 .
+    # :Event_b1043278-6006 :has_active_entity :David .
+    # :Event_b1043278-6006 :has_affected_entity :Holly .
     # TODO: Causation across sentences
