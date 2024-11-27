@@ -111,7 +111,7 @@
 ###  urn:ontoinsights:dna:has_affected_entity
 <urn:ontoinsights:dna:has_affected_entity> rdf:type owl:ObjectProperty ;
                                            rdfs:domain <urn:ontoinsights:dna:EventAndState> ;
-                                           rdfs:comment "References an entity who is affected by an EventAndState but does not actively participate in it."@en ;
+                                           rdfs:comment "References an entity who is affected by an EventAndState, or experiences it, but does not actively participate in it."@en ;
                                            rdfs:label "has affected entity"@en ;
                                            <urn:ontoinsights:dna:example> "For example, if a mob attacked a Person, then that event would be defined as an instance of an Attack (a subclass of EventAndState) where the mob (a GroupOfAgents) is referenced using the :has_active_entity property and the attacked Person is identified using the :has_affected_entity property."@en .
 
@@ -197,7 +197,7 @@
 
 ###  urn:ontoinsights:dna:has_first
 <urn:ontoinsights:dna:has_first> rdf:type owl:ObjectProperty ;
-                                 rdfs:subPropertyOf <urn:ontoinsights:dna:has_component> ;
+                                 rdfs:subPropertyOf <urn:ontoinsights:dna:has_member> ;
                                  rdfs:domain <urn:ontoinsights:dna:Process> ;
                                  rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                  rdfs:comment "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one EventAndState may initiate a Process. After the first individual, the 'next' is defined using the :has_next property."@en ;
@@ -226,7 +226,7 @@
 
 ###  urn:ontoinsights:dna:has_last
 <urn:ontoinsights:dna:has_last> rdf:type owl:ObjectProperty ;
-                                rdfs:subPropertyOf <urn:ontoinsights:dna:has_component> ;
+                                rdfs:subPropertyOf <urn:ontoinsights:dna:has_member> ;
                                 rdfs:domain <urn:ontoinsights:dna:Process> ;
                                 rdfs:range <urn:ontoinsights:dna:EventAndState> ;
                                 rdfs:comment "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process. The previous individual references the last using the :has_next property."@en ;
@@ -674,7 +674,7 @@
 <urn:ontoinsights:dna:interpretation> rdf:type owl:DatatypeProperty ;
                                       rdfs:domain <urn:ontoinsights:dna:Narrative> ;
                                       rdfs:range xsd:string ;
-                                      rdfs:comment "Defines how a Narrative might be interpreted by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."@en ;
+                                      rdfs:comment "Defines the emotional reaction expected of a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."@en ;
                                       rdfs:label "interpretation"@en .
 
 
@@ -940,7 +940,7 @@
 <urn:ontoinsights:dna:ranking> rdf:type owl:DatatypeProperty ;
                                rdfs:domain <urn:ontoinsights:dna:Narrative> ;
                                rdfs:range xsd:integer ;
-                               rdfs:comment "Defines how positively/negatively a Narrative might be viewed by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates a very negative view and 5 indicates a very positive view."@en ;
+                               rdfs:comment "Defines a Narrative's validity as considered by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates that the Narrative is not considered valid/truthful."@en ;
                                rdfs:label "ranking"@en .
 
 
@@ -1285,6 +1285,14 @@
                                    rdfs:range xsd:string ;
                                    rdfs:comment "A string specified using the pattern, <hours using a 24 hour clock>:<minutes>.<seconds with decimals allowed>. This adds time of day information to a PointInTime instance."@en ;
                                    rdfs:label "time of day"@en .
+
+
+###  urn:ontoinsights:dna:topic
+<urn:ontoinsights:dna:topic> rdf:type owl:DatatypeProperty ;
+                             rdfs:domain <urn:ontoinsights:dna:InformationSource> ;
+                             rdfs:range xsd:string ;
+                             rdfs:comment "String holding a topic of the InformationSource."@en ;
+                             rdfs:label "topic"@en .
 
 
 ###  urn:ontoinsights:dna:url
@@ -4176,6 +4184,7 @@
 
 ###  urn:ontoinsights:dna:Process
 <urn:ontoinsights:dna:Process> rdf:type owl:Class ;
+                               rdfs:subClassOf <urn:ontoinsights:dna:Collection> ;
                                rdfs:comment "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process) or GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state)."@en ;
                                rdfs:label "Process/Sequence"@en .
 

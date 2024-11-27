@@ -8,7 +8,7 @@
 ########################################################################
 # File defining general concepts used throughout the DNA ontologies
 # 
-# Created: February 9 2020
+# Created: November 7 2020
 # Last modified: July 19 2024
 # 
 # Licensed by OntoInsights, LLC
@@ -25,6 +25,7 @@
 #  Added external_identifier
 #  Changed negation to negated
 #  Renamed :causes to :has_cause and added :has_precondition
+#  Subclassed Process from Collection
 ########################################################################
 
 
@@ -105,6 +106,7 @@
   :wordnet_noun_synset "00029976" .
 
 :Process a owl:Class ;
+  rdfs:subClassOf :Collection ;
   rdfs:label "Process/Sequence"@en ;
   rdfs:comment "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process) or GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state)."@en .
 
@@ -272,7 +274,7 @@
 
 :has_first a owl:ObjectProperty ;
   rdfs:label "has first"@en ;
-  rdfs:subPropertyOf :has_component ;
+  rdfs:subPropertyOf :has_member ;
   rdfs:domain :Process ;
   rdfs:range :EventAndState ;
   rdfs:comment "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one EventAndState may initiate a Process. After the first individual, the 'next' is defined using the :has_next property."@en .
@@ -286,7 +288,7 @@
 
 :has_last a owl:ObjectProperty ;
   rdfs:label "has last"@en ;
-  rdfs:subPropertyOf :has_component ;
+  rdfs:subPropertyOf :has_member ;
   rdfs:domain :Process ;
   rdfs:range :EventAndState ;
   rdfs:comment "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process. The previous individual references the last using the :has_next property."@en .

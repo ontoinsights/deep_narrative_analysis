@@ -92,7 +92,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         #     elif punctuation == Punctuation.EXCLAMATION:
         #         sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
         try:
-            summary = get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary, repo)
+            get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary, repo)
             graph_ttl_list.extend(sentence_ttl_list)
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {original_text}')
@@ -100,7 +100,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
             continue
         if index < number_sentences:    # Full processing only up to the requested number of sentences
             # Processing the events and states, and related nouns
-            sentences[sentence_iri] = summary
+            sentences[sentence_iri] = original_text
     if sentences:
         try:
             semantics_ttl = sentence_semantics_processing(sentences, nouns_dictionary)

@@ -12,7 +12,7 @@ from dna.database import add_remove_data
 from dna.nlp import get_entities
 from dna.process_entities import agent_classes, check_if_noun_is_known, process_ner_entities
 from dna.query_openai import access_api, coref_prompt, event_categories, events_prompt, \
-    noun_categories, noun_categories_prompt, rhetorical_devices, sentence_prompt
+    noun_categories, noun_categories_prompt, rhetorical_devices, sentence_prompt, situations_prompt
 from dna.sentence_classes import Sentence, Quotation, Entity
 from dna.utilities_and_language_specific import empty_string, honorifics, literal, modals, ner_dict, ttl_prefixes
 
@@ -22,11 +22,11 @@ location_business = (':Location', ':GeopoliticalEntity', ':LineOfBusiness')
 
 measurement = (':Assessment', ':Measurement')
 
-modal_mapping = {'can-present': ':ReadinessAndAbility',              # Ex: I can swim.
-                 'can-not-present': ':OpportunityAndPossibility',    # Ex: I can visit tomorrow.
-                 'could-past': ':ReadinessAndAbility',               # Ex: I could skate when I was younger.
-                 'could-not-past': ':OpportunityAndPossibility',     # Ex: It could rain tomorrow.
-                 'have to': ':AdviceAndRecommendation',              # Ex: You have to leave.
+modal_mapping = {'can': ':ReadinessAndAbility',                      # Ex: I can swim.
+                 'can-future': ':OpportunityAndPossibility',         # Ex: I can visit tomorrow.
+                 'could': ':ReadinessAndAbility',                    # Ex: I could skate when I was younger.
+                 'could-future': ':OpportunityAndPossibility',       # Ex: It could rain tomorrow.
+                 'have to': ':RequirementAndDependence',             # Ex: You have to leave.
                  'may': ':OpportunityAndPossibility',                # Ex: It may rain.
                  'might': ':OpportunityAndPossibility',              # Ex: It might rain.
                  'must': ':RequirementAndDependence',                # Ex: I must leave.
@@ -35,191 +35,201 @@ modal_mapping = {'can-present': ':ReadinessAndAbility',              # Ex: I can
                  'should': ':AdviceAndRecommendation',               # Ex: They should go to the store.
                  'would': ':OpportunityAndPossibility'}              # Ex: I would take the train if possible.
 
-# TODO: (Future) co-agent, co-patient
-semantic_roles = ("affiliation", "agent", "patient", "content", "theme", "experiencer", "instrument", "cause",
-                  "location", "time", "goal", "source", "state", "subject", "purpose", "recipient",
-                  "measure", "attribute")
-
-semantic_role_mapping = {"affiliation": ":affiliated_with",
-                         "agent": ":has_active_entity",
-                         "attribute": ":has_aspect",
-                         "beneficiary": ":has_affected_entity",
-                         "cause": ":has_cause",
-                         "content": ":has_topic",
-                         # "co-agent": ":has_active_entity",
-                         # "co-patient": ":has_affected_entity",
-                         "experiencer": ":has_affected_entity",
-                         "goal": ":has_destination",        # only for locations; goal of person -> has_affected_entity
-                         "instrument": ":has_instrument",
-                         "location": ":has_location",
-                         "measure": ":has_quantification",
-                         "patient": ":has_affected_entity",
-                         "purpose": ":has_goal",
-                         "recipient": ":has_recipient",     # for locations -> has_destination
-                         "source": ":has_origin",
-                         "state": ":has_aspect",
-                         "subject": ":has_context",
-                         "theme": ":has_topic",
-                         "time": ":has_time"}
-
-@dataclass
-class VerbDetails:
-    category: int
-    same_opposite: str
-    correctness: int
-    iri: str
+# TODO: (Future)
+# semantic_roles = ("affiliation", "agent", "patient", "content", "theme", "experiencer", "instrument", "cause",
+#                  "location", "time", "goal", "source", "state", "subject", "purpose", "recipient",
+#                  "measure", "attribute")
+#
+#semantic_role_mapping = {"affiliation": ":affiliated_with", "agent": ":has_active_entity",
+                         # "attribute": ":has_aspect", "beneficiary": ":has_affected_entity",
+                         # "cause": ":has_cause", "content": ":has_topic", "co-agent": ":has_active_entity",
+                         # "co-patient": ":has_affected_entity", "experiencer": ":has_affected_entity",
+                         # "goal": ":has_destination",      # only for locations; goal of person -> has_affected_entity
+                         # "instrument": ":has_instrument", "location": ":has_location",
+                         # "measure": ":has_quantification", "patient": ":has_affected_entity",
+                         # "purpose": ":has_goal", "recipient": ":has_recipient",   # for locations -> has_destination
+                         # "source": ":has_origin", "state": ":has_aspect", "subject": ":has_context",
+                         # "theme": ":has_topic", "time": ":has_time"}
 
 
-def _deal_with_sem_roles(event_iri: str, verb_details: dict, sentence_noun_dict: dict,
-                         event_class: str, nouns_dict: dict) -> list:
+def _deal_with_nouns(event_iri: str, event_classes: list, noun_texts: list, short_texts: list,
+                     situation_nouns: list, nouns_dict: dict) -> list:
     """
-    Get the class details and appropriate relationship/predicate for nouns related to an
-    event or state via a variety of semantic roles.
+    Get the class details and appropriate predicates for nouns related to a situation.
 
-    :param event_iri: The IRI identifying the event
-    :param verb_details: Dictionary with key = verb text and value = VerbDetails dataclass
-    :param sentence_noun_dict: See query_openai's noun_categories_result for the key, "sentence_nouns"
-    :param event_classes: A string identifying the DNA class name applicable to the event/state
+    :param event_iri: The IRI identifying the situation
+    :param noun_texts: An array holding the 'active', 'passive' and 'topic' noun texts (where each
+                       text ends with either "_active", "_passive" or "_topic" as appropriate)
+    :param short_texts: An array holding the noun descriptions (entries are ordered
+                        by the texts in noun_texts)
+    :param situation_nouns: See query_openai's noun_categories_result for the key, "text_nouns"
+    :param event_classes: An array holding the DNA classes that categorize the situation
     :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
-    :return: An array holding the Turtle for the event's associated nouns
+    :return: An array holding the Turtle for the situation's associated nouns
     """
-    roles_ttl = []
-    for noun_detail in sentence_noun_dict['noun_information']:
-        noun_text = noun_detail['trigger_text']
-        for honorific in honorifics:
-            noun_text = noun_text.replace(honorific, '')
-        role = noun_detail['semantic_role']
-        if role == 'content' and len(noun_text.split()) > 3:
-            roles_ttl.append(f'{event_iri} :has_topic [ a :Clause ; :text {literal(noun_text)} ] .')
-            continue
-        if role == 'time':     # TODO: Time as NER
-            roles_ttl.append(f'{event_iri} :has_time [ a :Time ; :text {literal(noun_text)} ] .')
-            continue
-        category = noun_detail['category_number']
-        noun_class_name = 'owl:Thing'
-        if 0 < category < len(noun_categories) + 1:
-            noun_class_name = noun_categories[category - 1]
-        else:
-            logging.error(f'Invalid noun type ({category}) for {noun_text}')
-        if noun_text in verb_details:
-            noun_iri = verb_details[noun_text].iri
-            noun_ttl = []
-        else:
-            noun_iri, noun_ttl = _get_noun_details(noun_text, noun_class_name, noun_detail['is_plural'],
-                                                   noun_detail['correctness'], nouns_dict)
-        if noun_iri == event_iri:
-            continue
-        if event_class == noun_class_name and noun_iri.startswith(':Noun'):
-            roles_ttl.append(f'{event_iri} :text {literal(noun_text)} .')
-            continue
-        if noun_ttl:           # Turtle for a new noun
-            roles_ttl.extend(noun_ttl)
+    nouns_ttl = []
+    for index, noun_text in enumerate(noun_texts):
+        phrase = noun_text.rsplit('_', 1)[0]
+        noun_details = [phrase , noun_text.rsplit('_', 1)[1]]
+        full_spacy_type, noun_iri = check_if_noun_is_known(phrase, empty_string, nouns_dict)
+        noun_class = 'owl:Thing'
+        if full_spacy_type and noun_iri:
+            for key, value in ner_dict.items():
+                if key in full_spacy_type:
+                   noun_class = value
+                   break
+        if not noun_iri:
+            noun_iri, noun_class, noun_ttl = _get_noun_details(noun_details, short_texts[index], event_classes,
+                                                               situation_nouns[index]['phrase_information'], nouns_dict)
+            if noun_ttl:           # Turtle for a new noun
+                nouns_ttl.extend(noun_ttl)
         # Determine the predicate relating the noun to the event
-        predicate = _get_predicate(noun_text, noun_class_name, role, event_class)
+        predicate = _get_predicate(noun_details, noun_class, event_classes)
         if predicate:
-            if predicate == ':affiliated_with' and event_class != ':Affiliation':
-                roles_ttl.append(f'{event_iri} a :Affiliation .')
-                # TODO: Determine which entities are affiliated with another (have only 1)
-            roles_ttl.append(f'{event_iri} {predicate} {noun_iri} .')
-    return roles_ttl
+            nouns_ttl.append(f'{event_iri} {predicate} {noun_iri} .')
+    return nouns_ttl
 
 
-def _get_noun_details(noun_text: str, noun_class: str, plural: bool, correctness: int, nouns_dict: dict) -> (str, list):
+def _get_event_class(category: int, correctness: int) -> (str, int):
     """
-    Determine/define the entities associated with an event/condition. Return their iri,
-    and any new Turtle.
+    Determine the event/condition DNA class name for the situation category returned by OpenAI.
 
-    :param noun_text: String holding the noun text
-    :param noun_class: String holding DNA class name that defines the semantics of the noun
-    :param plural: Boolean indicating that the noun is plural (if true)
-    :param correctness: Integer between 0-100 indicating the confidence in the noun_class categorization
-                        of the noun_text
+    :param category: The event/condition category number.
+    :param correctness: The correctness of the semantic mapping to the category number, as
+                        estimated by OpenAI.
+    :return: The DNA class name corresponding to the category number and the mapping correctness
+    """
+    event_class_name = ':EventAndState'
+    if 0 < category < len(event_categories) + 1:      # A valid category #
+        if category < 68:                             # Every category except EventAndState/other
+            event_class_name = event_categories[category - 1]
+        else:
+            correctness = 0
+    return event_class_name, correctness
+
+
+def _get_noun_details(noun_details: list, short_text: str, event_classes: list, situation_noun_details: dict,
+                      nouns_dict: dict) -> (str, str, list):
+    """
+    Define the Turtle for a noun associated with a situation (event/condition). Return the noun iri,
+    and new Turtle.
+
+    :param noun_details: Array holding the noun_text and the string, "active", "passive" or "topic"
+    :param short_text: String holding the description for the noun
+    :param event_classes: An array holding the DNA classes that categorize the situation
+    :param situation_noun_details: See query_openai's noun_categories_result for the key, "text_nouns", and
+                               then "noun_information"
     :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
-    :return: A tuple consisting of the noun's assigned IRI, and any new Turtle for it
+    :return: A tuple consisting a string with the noun's assigned IRI, a string with its DNA class,
+             and an array with any new Turtle
     """
-    spacy_type, noun_iri = check_if_noun_is_known(noun_text, noun_class, nouns_dict)
-    if noun_iri:
-        return noun_iri, []
     new_turtle = []
+    noun_text = noun_details[0]
     noun_iri = f':Noun_{str(uuid.uuid4())[:13]}'
-    if noun_text in ('I', 'We', 'we', 'me', 'us'):
+    correctness = situation_noun_details['correctness']
+    same_or_opposite = situation_noun_details['category_same_or_opposite']
+    if noun_text in ('I', 'We', 'we', 'me', 'us', 'you'):
         # TODO: (Future) Assumes that every 'I' is the same person; Is this valid?
         noun_class = ':Person'
         if noun_text.lower in ('we', 'us'):
             noun_class += ', :Collection'
         nouns_dict[noun_text] = ('PERSON', noun_iri)
-        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {literal(noun_text)} ; :confidence 99 .')
+        correctness = 99
+        same_or_opposite = 'same'
     else:
         # Add to the nouns_dictionary
         nouns_dict[noun_text.replace('.', empty_string)] = empty_string, noun_iri
-        # Add to the turtle
-        if plural:
+        # Add to the Turtle
+        noun_class = 'owl:Thing'
+        category = situation_noun_details['category_number']
+        if 0 < category < len(noun_categories) + 1:      # A valid category #
+            if category < 98:                             # Every category except Thing/other
+                noun_class = noun_categories[category - 1]
+            else:
+                if ':EnvironmentAndCondition' in event_classes:
+                    noun_class = ':EnvironmentAndCondition'
+                    correctness = 80
+                else:
+                    correctness = 0
+        else:
+            logging.info(f'Invalid noun category ({category}) for {noun_text} for description {short_text}')
+        if situation_noun_details['singular_plural_not_noun'] == 'plural noun':
             noun_class += ', :Collection'
-        new_turtle.append(f'{noun_iri} a {noun_class} ; :text {literal(noun_text)} ; :confidence {correctness} .')
-    return noun_iri, new_turtle
+    new_turtle.append(f'{noun_iri} a {noun_class} ; :text {literal(noun_text)} ; '
+                      f'rdfs:label {literal(short_text)} ; :confidence {correctness} .')
+    if same_or_opposite == 'opposite':
+        new_turtle.append(f'{noun_iri} :negated true .')
+    return noun_iri, noun_class, new_turtle
 
 
-def _get_predicate(noun_str: str, noun_class_name: str, role: str, event_class: str) -> str:
+def _get_noun_texts(nouns_detail: list, noun_type: str, noun_texts: list, short_texts: list):
     """
-    Get the DNA property/predicate appropriate for the event and its associated entity.
+    Update the arrays holding an active, passive or topic noun tex, its short description and
+    the noun phrase (for mapping) for a situation in the query_openai's situations_result.
 
-    :param noun_str: String holding the text of the associated entity
+    :param nouns_detail: An array of active, passive or topic nouns for a situation
+    :param noun_type: String holding either "active", "passive" or "topic" as appropriate
+    :param noun_texts: An array holding the 'active', 'passive' or 'topic' noun texts
+    :param short_texts: An array holding the 'active', 'passive' or 'topic' noun descriptions
+                        (entries are ordered by the texts in noun_texts)
+    :return: N/A (the noun_texts and short_texts are updated)
+    """
+    for noun in nouns_detail:
+        if noun['text'] == "Unknown":
+            return
+        noun_texts.append(f'{noun["text"]}_{noun_type}')
+        short_texts.append(f'{noun["text"]}; {noun["description"]}')
+    return
+
+
+def _get_predicate(noun_details: list, noun_class_name: str, event_classes: list) -> str:
+    """
+    Get the DNA property/predicate appropriate for the situation and its associated entity.
+
+    :param noun_detail: Array holding the noun text in the first entry and whether
+                        "active"/"passive"/"topic" in the second
     :param noun_class_name: String holding the DNA class mapping for the entity
-    :param role: String holding the semantic role of the noun, as defined by OpenAI
-    :param event_class: A string holding the DNA class name(s) defining the semantics of the event/state
-    :return: A string holding the predicate associating the entity to the event/state
+    :param event_classes: An array holding the DNA classes that categorize the situation
+    :return: A string holding the predicate associating the entity to the situation
     """
-    sem_role_lower = role.lower()
-    if (event_class in measurement or noun_class_name in measurement) and any(c.isdigit() for c in noun_str):
-       return ':has_quantification'
-    if noun_class_name in measurement:
-       return ':has_context'
-    if ':EnvironmentAndCondition' == event_class:
+    if noun_details[1] == 'active':
+        if ':EnvironmentAndCondition' in event_classes:
+            return ':has_context'
+        else:
+            return ':has_active_entity'
+    if ':Affiliation' in event_classes:
+        return ':affiliated_with'
+    if noun_details[1] == 'topic':
+        if ':EnvironmentAndCondition' in event_classes:
+            return ':has_aspect'
+        else:
+            return ':has_topic'
+    if ':EnvironmentAndCondition' in event_classes:
         if ':LineOfBusiness' in noun_class_name or ':EthnicGroup' in noun_class_name or \
                 ':PoliticalGroup' in noun_class_name or ':ReligiousGroup' in noun_class_name:
             return ':has_aspect'
-        elif sem_role_lower in ('agent', 'experiencer') and noun_class_name in agent_classes:
-            return ':has_context'
-    if ':Affiliation' == event_class:
-        return ':has_active_entity' if sem_role_lower == 'agent' else ':affiliated_with'
-    if ':Affiliation' == noun_class_name:
-        # TODO: Determine which entity is affiliated with another; Define new Affiliation Event and associate the nouns
-        return empty_string
-    if ':MovementTravelAndTransportation' == event_class and sem_role_lower == 'theme' and \
-            noun_class_name in location_business:
-        return ':has_destination'
-    if event_class in (':EmotionalResponse', ':SensoryPerception', ':Cognition') and sem_role_lower == 'experiencer':
-        return ':has_active_entity'
-    if sem_role_lower == 'location' and noun_class_name not in location_business:
-        return ':has_context'
-    if sem_role_lower == 'source' and noun_class_name in agent_classes:
-        return ':has_source'
-    if sem_role_lower == 'recipient' and noun_class_name in location_business:
-        return ':has_destination'
-    if sem_role_lower in 'patient' and noun_class_name in location_business:
+    if noun_class_name in agent_classes and not any(class_name in event_classes for class_name in
+           (':Attempt', ':EmotionalResponse', ':SensoryPerception', ':CommunicationAndSpeechAct')):
+        return ':has_affected_entity'
+    if noun_class_name in location_business:
         return ':has_location'
-    if sem_role_lower == 'experiencer' and noun_class_name not in agent_classes_without_plant:
-        return ':has_context'
-    if sem_role_lower == 'goal':
-        if noun_class_name in agent_classes_without_plant:
-            return ':has_affected_entity'
-        elif noun_class_name not in location_business:
-            return ':has_context'
-    if sem_role_lower in semantic_roles:
-        return semantic_role_mapping[sem_role_lower]
-    else:
-        logging.info(f'Unknown semantic role: {sem_role_lower} in text: {noun_str}')
-        return empty_string
+    if any(class_name in event_classes for class_name in
+           (':Attempt', ':EmotionalResponse', ':SensoryPerception', ':CommunicationAndSpeechAct')) and \
+           not noun_class_name in agent_classes_without_plant:
+        return ':has_topic'
+    if noun_class_name not in agent_classes:
+        return ':has_topic'
+    return ':has_affected_entity'
 
 
 def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_list: list, sentence_type: str,
-                         nouns_dict: dict, repo: str) -> list:
+                         nouns_dict: dict, repo: str):
     """
     Retrieve sentence or quotation details (such as the summary or rhetorical devices)
     using the OpenAI API and create the Turtle representation of this information. Return the
@@ -234,7 +244,7 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
              more than 1 text.
     :param repo: String holding the repository name for the narrative graph
-    :return: The sentence's summary (and ttl_list is updated with the details from OpenAI)
+    :return: N/A (the ttl_list is updated with the details from OpenAI)
     """
     sentence_iri = sentence_or_quotation.iri
     sentence_text = sentence_or_quotation.text
@@ -267,7 +277,6 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
         if attrib_iri:
             ttl_list.append(f'{sentence_iri} :attributed_to {attrib_iri} .')
     # Process the sentence-level prompt
-    summary = empty_string
     sent_dict = access_api(sentence_prompt.replace("{sent_text}", sentence_text))   # Deref
     if sent_dict:   # Might not get reply from OpenAI
         if type(sent_dict['grade_level']) is int:
@@ -286,11 +295,12 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
                     else:
                         logging.error(f'Invalid rhetorical device ({device_numb}) for sentence, {sentence_text}')
                         continue
-        summary = sentence_text
-        if 'summary' in sent_dict and sent_dict['summary']:
-            summary = sent_dict['summary']
-        ttl_list.append(f'{sentence_iri} :summary {literal(summary)} .')
-    return summary
+        # summary = sentence_text
+        # if 'summary' in sent_dict and sent_dict['summary']:
+        #     summary = sent_dict['summary']
+        # ttl_list.append(f'{sentence_iri} :summary {literal(summary)} .')
+    # return summary
+    return
 
 
 def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
@@ -321,95 +331,71 @@ def sentence_semantics_processing(sentences: dict, nouns_dict: dict) -> list:
     for sentence in updated_sentences:
         sentence_texts.append(f'{str(index)}. {sentence}')
         index += 1
-    sentence_events_dict = access_api(events_prompt.replace('{numbered_sentences_texts}', ' '.join(sentence_texts)))
-    # Process the sentences and their verbs one by one; OpenAI has issues with too many sentences
-    processed_iris = []
-    for sentence_event in sentence_events_dict['sentences']:
-        index = int(sentence_event['sentence_number'])
+    sentence_situations_dict = access_api(situations_prompt.
+                                          replace('{numbered_sentences_texts}', ' '.join(sentence_texts)))
+    # Process the sentences and their situations one by one; OpenAI has issues with too many sentences
+    for sentence_detail in sentence_situations_dict['sentences']:
+        index = int(sentence_detail['sentence_number'])
+        sent_text = updated_sentences[index - 1]
         # Assemble the Turtle for the sentence
         sent_iri = sentence_iris[index - 1]
-        # Assemble the sentence with the verbs in parentheses at the end
-        verb_details = dict()    # Dictionary with key = verb text and value = VerbDetails dataclass
-        verb_texts = []          # List of the verbs' trigger texts
-        verb_numbers = []        # Array of verbs' DNA class mappings
-        for event_state in sentence_event['verbs']:
-            trigger_text = event_state["trigger_text"]
-            if event_state["category_number"] in verb_numbers and trigger_text.lower().startswith('to ') and \
-                    any([trigger_text in verb_text for verb_text in verb_texts]):
-                continue    # An infinitive that is already included
-            verb_texts.append(event_state["trigger_text"])
-            verb_numbers.append(event_state["category_number"])
-            verb_details[f'{event_state["trigger_text"]}'] = \
-                VerbDetails(event_state['category_number'], event_state['category_same_or_opposite'],
-                            event_state['correctness'], f':Event_{str(uuid.uuid4())[:13]}')
-        verb_texts_string = '", "'.join(verb_texts)
-        sent_with_verbs_text = f'{updated_sentences[index - 1]} ("{verb_texts_string}") '
-        noun_categories_dict = access_api(noun_categories_prompt.
-                                          replace('{sentence_text}', sent_with_verbs_text))
-        sentence_nouns = noun_categories_dict['sentence_nouns']     # See query_openai's noun_categories_result
-        # Assemble the Turtle for the verbs/events/states, along with the verbs' related concepts/nouns
-        prev_event = empty_string
-        for noun_details in sentence_nouns:
-            trigger_text = noun_details['verb_text']
-            verb_details_key = empty_string
-            if trigger_text in verb_texts:
-                verb_details_key = trigger_text
-            elif len(trigger_text) > 3:
-                for key in verb_details.keys():
-                    if trigger_text in key:      # TODO: Needs further testing
-                        verb_details_key = key
-                        break
-            if not verb_details_key:
-                logging.error(f'OpenAI returned unrequested verb text, {trigger_text}, for the sentence, '
-                              f'{updated_sentences[index - 1]}')
-                continue
-            event_iri = verb_details[verb_details_key].iri
-            if prev_event:              # Need a topic for the previous event
-                semantics_ttl.append(f'{prev_event} :has_topic {event_iri} .')
-            if event_iri in processed_iris:
-                semantics_ttl.append(f'{event_iri} :text {literal(trigger_text)} .')
-                break
-            else:
-                processed_iris.append(event_iri)
+        # Get the situation details
+        for situation in sentence_detail['ordered_situations']:
+            trigger_text = situation["summary"]
+            event_iri = f':Event_{str(uuid.uuid4())[:13]}'
             semantics_ttl.append(f'{sent_iri} :has_semantic {event_iri} .')
-            semantics_ttl.append(f'{event_iri} :text {literal(verb_details_key)} .')
-            category = int(verb_details[verb_details_key].category)
-            correctness = int(verb_details[verb_details_key].correctness)
-            event_class_name = ':EventAndState'
-            if 0 < category < len(event_categories) + 1:      # A valid category #
-                if category < 68:                             # Every category except EventAndState/other
-                    event_class_name = event_categories[category - 1]
+            semantics_ttl.append(f'{event_iri} rdfs:label {literal(trigger_text)} .')
+            if situation['future']:
+                semantics_ttl.append(f'{event_iri} :future true .')
+            if situation['modal'] in modals:
+                modal_text = situation['modal']
+                if situation['future'] and situation['modal'] in ('can', 'could'):
+                    modal_text += '-future'
+                semantics_ttl.append(f'{event_iri} a {modal_mapping[modal_text]} ; '
+                                     f':confidence-{modal_mapping[modal_text][1:]} 95 .')
+            situation_events_dict = access_api(events_prompt.
+                                               replace('{situation_text}', f'{situation["summary"]}; {sent_text}'))
+            noun_texts = []
+            short_texts = []
+            _get_noun_texts(situation["actives"], 'active', noun_texts, short_texts)
+            _get_noun_texts(situation["passives"], 'passive', noun_texts, short_texts)
+            _get_noun_texts(situation["topics"], 'topic', noun_texts, short_texts)
+            noun_phrases = [short_text.split(';')[0] for short_text in short_texts]
+            situation_nouns_dict = access_api(noun_categories_prompt.
+                                              replace('{noun_texts}', ' ** '.join(noun_phrases)))
+            # Get noun categories
+            noun_category_numbers = []
+            for noun_dict in situation_nouns_dict['text_phrases']:
+                noun_category_numbers.append(noun_dict['phrase_information']['category_number'])
+            event_classes = []
+            situation_events = []
+            for key, value in situation_events_dict.items():      # "mappings" and "infinitive_mappings" lists
+                situation_events.extend(value)
+            for index, event_state in enumerate(situation_events):
+                category = event_state['category_number']
+                if category in noun_category_numbers and len(situation_events) > 1:
+                    continue
+                correctness = event_state['correctness']
+                event_class_name = ':EventAndState'
+                if 0 < category < len(event_categories) + 1:      # A valid category #
+                    if category < 68:                             # Every category except EventAndState/other
+                        event_class_name = event_categories[category - 1]
+                    else:
+                        correctness = 0
                 else:
-                    correctness = 0
+                    logging.info(f'Invalid event category ({category}) for {trigger_text}')
+                if index != 0 and event_class_name == ':EnvironmentAndCondition':   # Ignore this type if not the first
+                    continue
+                event_classes.append(event_class_name)
                 semantics_ttl.append(
                     f'{event_iri} a {event_class_name} ; :confidence-{event_class_name[1:]} {correctness} .')
-                # TODO: Pending pystardog fix: Change line above to using RDF star property
-                if verb_details[verb_details_key].same_opposite == "opposite":
-                    semantics_ttl.append(f'{event_iri} :negated true .')
-            else:
-                logging.info(f'Invalid event category ({category}) for {trigger_text} for sentence index {index}')
-            future = False
-            if ' will ' in trigger_text or trigger_text.startswith('will '):
-                semantics_ttl.append(f'{event_iri} :future true . ')
-                future = True
-            for modal in modals:
-                if f' {modal}' in trigger_text or trigger_text.startswith(modal):
-                    modal_key = modal[:-1]
-                    # Some modifications based on tense
-                    if modal == 'can ':
-                        modal_key = 'can-present' if not future else 'can-not-present'
-                    elif modal == 'could ':
-                        modal_key = 'could-past' if not future else 'could-not-past'
-                    semantics_ttl.append(f'{event_iri} a {modal_mapping[modal_key]} ; '
-                                         f':confidence-{modal_mapping[modal_key][1:]} 95 .')
-            # Assemble the Turtle for the verbs/events/states' nouns and their semantic roles
-            noun_ttl = _deal_with_sem_roles(event_iri, verb_details, noun_details, event_class_name, nouns_dict)
+                    # TODO: Pending pystardog fix: Change line above to using RDF star property
+                if event_state['category_same_or_opposite'] == "opposite":
+                    semantics_ttl.append(f'{event_iri} :negated-{event_class_name[1:]} true .')
+                elif situation['modal'] in modals and 'not' in sent_text:
+                    semantics_ttl.append(f'{event_iri} :negated-{event_class_name[1:]} true .')
+            # Assemble the Turtle for the nouns
+            noun_ttl = _deal_with_nouns(event_iri, event_classes, noun_texts, short_texts,
+                                        situation_nouns_dict['text_phrases'], nouns_dict)
             semantics_ttl.extend(noun_ttl)
-            ttl_txt = str(noun_ttl)
-            prev_event = empty_string
-            # TODO: Other classes?
-            if event_class_name in (':Attempt', ':Avoidance', ':EmotionalResponse', ':SensoryPerception',
-                                    ':CommunicationAndSpeechAct', ':Causation', ':LegalEvent') \
-                    and not (':has_context' in ttl_txt or ':has_aspect' in ttl_txt or ':has_topic' in ttl_txt):
-                prev_event = event_iri
     return semantics_ttl

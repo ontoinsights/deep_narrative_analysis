@@ -150,7 +150,11 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     except requests.exceptions.RequestException as e:
         logging.error(f'GeoNames query error: Query={request} and Exception={str(e)}')
         return None
-    orig_root = etree.fromstring(response.content)
+    try:
+        orig_root = etree.fromstring(response.content)
+    except Exception as e:
+        logging.error(f'etree.fromstring Exception={str(e)} for response, {response.content}')
+        return None
     toponym_name = _get_xml_value('./geoname/toponymName', orig_root)
     ascii_name = _get_xml_value('./geoname/asciiName', orig_root)
     if toponym_name.lower() == loc_str.lower() or loc_str.lower().startswith(toponym_name.lower()):

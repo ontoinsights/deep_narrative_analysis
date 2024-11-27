@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: September 25 2024
+# Last modified: November 13 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -61,7 +61,7 @@
 
 :interpretation a owl:DatatypeProperty ;
   rdfs:label "interpretation"@en ;
-  rdfs:comment "Defines how a Narrative might be interpreted by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."@en ;
+  rdfs:comment "Defines the emotional reaction expected of a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."@en ;
   rdfs:domain :Narrative ;
   rdfs:range xsd:string .
 
@@ -110,7 +110,7 @@
 
 :ranking a owl:DatatypeProperty ;
   rdfs:label "ranking"@en ;
-  rdfs:comment "Defines how positively/negatively a Narrative might be viewed by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates a very negative view and 5 indicates a very positive view."@en ;
+  rdfs:comment "Defines a Narrative's validity as considered by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates that the Narrative is not considered valid/truthful."@en ;
   rdfs:domain :Narrative ;
   rdfs:range xsd:integer .
 
@@ -175,6 +175,12 @@
 :text a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "text"@en ;
   rdfs:comment "String holding the text of an InformationSource."@en ;
+  rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+                                      
+:topic a owl:DatatypeProperty ;
+  rdfs:label "topic"@en ;
+  rdfs:comment "String holding a topic of the InformationSource."@en ;
   rdfs:domain :InformationSource ;
   rdfs:range xsd:string .
 

@@ -216,19 +216,21 @@ def get_metadata_ttl(repo: str, narr_id: str, narr: str, metadata: Metadata,
                    f':external_link "{metadata.url}" .',
                    f':Narrative_{narr_id} :text {literal(narr)} .'])
     summary_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr))
-    turtle.append(f':Narrative_{narr_id} :summary {literal(summary_dict["summary"])} .')
     for goal in summary_dict['goal_numbers']:
         turtle.append(f':Narrative_{narr_id} :narrative_goal "{narrative_goals[int(goal) - 1]}" .')
-    for interpreted_text in summary_dict['interpreted_text']:
-        perspective = interpreted_text['perspective']
+    for topic in summary_dict['topics']:
+        turtle.append(f':Narrative_{narr_id} :topic {literal(topic)} .')
+    turtle.append(f':Narrative_{narr_id} :summary {literal(summary_dict["summary"])} .')
+    for reaction in summary_dict['reader_reactions']:
+        perspective = reaction['perspective']
         # TODO: Pending pystardog fix; edge = f':interpretation {:segment_label "' + {perspective} + '"}'
         predicate = f':interpretation_{perspective}'
-        turtle.append(f':Narrative_{narr_id} {predicate} {literal(interpreted_text["interpretation"])} .')
-    for ranking in summary_dict['ranking_by_perspective']:
-        perspective = ranking['perspective']
+        turtle.append(f':Narrative_{narr_id} {predicate} {literal(reaction["reaction"])} .')
+    for validity in summary_dict['validity_views']:
+        perspective = validity['perspective']
         # TODO: Pending pystardog fix; edge = f':ranking {:segment_label "' + {perspective} + '"}'
         predicate = f':ranking_{perspective}'
-        turtle.append(f':Narrative_{narr_id} {predicate} {ranking["ranking"]} .')
+        turtle.append(f':Narrative_{narr_id} {predicate} {validity["validity"]} .')
     if 'sentiment' in summary_dict:
         sentiment = summary_dict['sentiment']
         turtle.append(f':Narrative_{narr_id} :sentiment "{sentiment}" .')

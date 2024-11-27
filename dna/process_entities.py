@@ -60,35 +60,20 @@ def _create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -
            + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
 
-def _get_last_name(agent_text: str) -> (str, str):
+def _get_names(agent_text: str) -> list:
     """
     Get the last names for a person's name text. If there are multiple last names (e.g.,
     Mary Gardner Smith), then return both "Smith" and "Gardner Smith".
 
     :param agent_text: Text specifying the person's name
-    :return: A tuple of two string holding a person's last names
+    :return: An array holding first, middle and last names when names are separated by space or hyphen
     """
+    all_names = []
     split_names = agent_text.split()
-    if len(split_names) == 1:
-        return empty_string, empty_string
-    if len(split_names) == 2:
-        return split_names[1], empty_string
-    return split_names[-1], " ".join(split_names)[-2:]    # TODO: (Future) Is this acceptable if a middle name is given?
-
-
-# Future
-def _get_name_permutations(name: str) -> list:
-    """
-    Get the combinations of first and middle/maiden/last names.
-
-    :param name: A string holding a Person's full name
-    :return: A list of strings combining the first and second, first and third, ... names
-    """
-    poss_names = []
-    names = name.split()
-    for i in range(1, len(names)):
-        poss_names.append(f'{names[0]} {names[i]}')
-    return poss_names
+    for split_name in split_names:
+        for name in split_name.split('-'):
+            all_names.append(name)
+    return all_names
 
 
 def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str, list):
@@ -136,9 +121,10 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         if 'NORP' not in noun_type:
             if 'PERSON' in noun_type:
                 noun_type = check_name_gender(noun_text)
-                last_name, last_name2 = _get_last_name(noun_text)
-                if last_name and last_name not in nouns_dict and last_name not in labels:
-                    labels.append(last_name)
+                names = _get_names(noun_text)
+                for name in names:
+                    if name not in labels:
+                        labels.append(name)
             noun_ttl.extend(create_agent_ttl(noun_iri, labels, noun_type, class_map, description_details.wiki_desc,
                                              description_details.wiki_url, description_details.wikidata_id))
         else:   # NORP
@@ -188,11 +174,13 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
     if noun_text in nouns_dict:                                  # Key is text; exact match of text
         return nouns_dict[noun_text]
-    if noun_text.islower() and len(noun_text) > 5:               # Check match of substring if not a proper noun
+    if len(noun_text) > 5:                                        # Check match of substring
         for noun in nouns_dict:
-            if noun_text in noun:
+            if noun_text.islower() and noun_text in noun:
+                # TODO: (Future) Improve with synonym check
                 return nouns_dict[noun]
-    # TODO: (Future) Improve with synonym check
+            if noun_text.istitle() and noun in noun_text:
+                return nouns_dict[noun]
     return noun_type, empty_string
 
 

@@ -111,6 +111,7 @@ def background():
                 {error_str: 'missing',
                  detail: 'A request body MUST be defined when issuing a /background POST.'}), 400
         background_data = json.loads(request.data)
+        # TODO: Allow definition of membership in collections
         if 'backgroundNames' not in background_data:
             return jsonify(
                 {error_str: 'missing',

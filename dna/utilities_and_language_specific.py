@@ -36,7 +36,7 @@ concept_map = {'politic': ':PoliticalIdeology',
                'ethno': ':Ethnicity',
                'nationality': 'Ethnicity'}
 
-modals = ("can ", "could ", "have to ", "may ", "might ", "must ", "ought to ", "shall ", "should ", "would ")
+modals = ("can", "could", "have to", "may", "might", "must", "ought to", "shall", "should", "would")
 
 # TODO: (Future) Move texts to separate file for maintenance/extension by users
 # Times

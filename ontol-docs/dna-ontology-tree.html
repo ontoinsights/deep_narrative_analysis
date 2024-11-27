@@ -770,13 +770,52 @@ p {
   "Agent": {
     "iri": "urn:ontoinsights:dna:Agent",
     "WordNet noun synset": [
-      "09506868",
       "09786620",
+      "09506868",
       "00007347",
       "09836176"
     ],
     "comment": [
       "Superclass representing any entity, such as a person, organization or organism, that can influence or be influenced by its environment. Agents are the participants in, are affected by or are the holders of EventAndState occurrences and conditions. Note that an 'imaginary' being/Agent is identified using the :imaginary boolean."
+    ]
+  },
+  "Goal-Directed Process": {
+    "iri": "urn:ontoinsights:dna:GoalDirectedProcess",
+    "WordNet verb synset": [
+      "01096497",
+      "02595732"
+    ],
+    "WordNet noun synset": [
+      "00797381",
+      "00410304",
+      "01025762"
+    ],
+    "comment": [
+      "A series of interrelated/interdependent events or states/conditions that progress along a timeline that are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ]
+  },
+  "Natural Process": {
+    "iri": "urn:ontoinsights:dna:NaturalProcess",
+    "WordNet noun synset": [
+      "00029976"
+    ],
+    "comment": [
+      "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ]
+  },
+  "Process/Sequence": {
+    "iri": "urn:ontoinsights:dna:Process",
+    "comment": [
+      "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process) or GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state)."
+    ],
+    "SubClass Of": [
+      "<a href=\"javascript:jumpTo('Collection')\">Collection</a>"
     ]
   },
   "Collection": {
@@ -848,8 +887,8 @@ p {
     "WordNet noun synset": [
       "14503072",
       "00032912",
-      "13261412",
       "00043933",
+      "13261412",
       "14502904",
       "09783624",
       "00811126",
@@ -951,8 +990,8 @@ p {
   "Attack, Damage and Assault": {
     "iri": "urn:ontoinsights:dna:AttackDamageAndAssault",
     "WordNet verb synset": [
-      "00259743",
       "00864347",
+      "00259743",
       "00090640",
       "00478872"
     ],
@@ -976,8 +1015,8 @@ p {
   "Threat and Warning": {
     "iri": "urn:ontoinsights:dna:ThreatAndWarning",
     "WordNet verb synset": [
-      "02246403",
       "01069216",
+      "02246403",
       "00871877",
       "01784999",
       "00012130"
@@ -1203,8 +1242,8 @@ p {
       "02421408"
     ],
     "WordNet noun synset": [
-      "13864062",
       "01205394",
+      "13864062",
       "00412397"
     ],
     "comment": [
@@ -1235,8 +1274,8 @@ p {
     "iri": "urn:ontoinsights:dna:MaintenanceAndRepair",
     "WordNet verb synset": [
       "01572394",
-      "00207826",
       "01634614",
+      "00207826",
       "00206293",
       "00261534",
       "00230988"
@@ -1344,8 +1383,8 @@ p {
   "Agriculture, Apiculture, Aquaculture and Viticulture Event": {
     "iri": "urn:ontoinsights:dna:AgricultureApicultureAndAquacultureEvent",
     "WordNet verb synset": [
-      "01746607",
       "01383909",
+      "01746607",
       "01322669",
       "02425530",
       "00056076"
@@ -1360,8 +1399,8 @@ p {
   "Art and Entertainment Event": {
     "iri": "urn:ontoinsights:dna:ArtAndEntertainmentEvent",
     "WordNet verb synset": [
-      "01075360",
       "00013321",
+      "01075360",
       "01151936",
       "02423521",
       "01718067",
@@ -1446,8 +1485,8 @@ p {
       "00596701",
       "00596900",
       "00618547",
-      "02123706",
-      "01061436"
+      "01061436",
+      "02123706"
     ],
     "WordNet noun synset": [
       "05714175",
@@ -1603,8 +1642,8 @@ p {
     ],
     "WordNet noun synset": [
       "13581941",
-      "13520031",
       "13569553",
+      "13520031",
       "13520596"
     ],
     "comment": [
@@ -1642,8 +1681,8 @@ p {
     "iri": "urn:ontoinsights:dna:StateAndPhysicalChange",
     "WordNet verb synset": [
       "00139943",
-      "00255753",
       "00283693",
+      "00255753",
       "00209244",
       "00313162",
       "00140787",
@@ -1744,8 +1783,8 @@ p {
       "00674352"
     ],
     "WordNet noun synset": [
-      "05770995",
       "05740701",
+      "05770995",
       "05811387",
       "00875745",
       "00143485"
@@ -1785,8 +1824,8 @@ p {
       "05708052",
       "05658424",
       "05712213",
-      "04670308",
-      "05712641"
+      "05712641",
+      "04670308"
     ],
     "comment": [
       "The act of a Person paying attention to/concentrating on something or someone. The entity who/which is concentrated on is indicated by the :has_topic property."
@@ -1904,8 +1943,8 @@ p {
   "Forgetting": {
     "iri": "urn:ontoinsights:dna:Forgetting",
     "WordNet verb synset": [
-      "00611721",
       "00610654",
+      "00611721",
       "00599897",
       "00616520",
       "00600024"
@@ -1961,23 +2000,23 @@ p {
   "Knowledge and Skill": {
     "iri": "urn:ontoinsights:dna:KnowledgeAndSkill",
     "WordNet verb synset": [
-      "00608509",
       "00597025",
+      "00608509",
       "00590283",
-      "00600349",
       "00598039",
+      "00600349",
       "00596016",
       "00830768",
       "00589616",
       "00595732",
-      "02268987",
       "00592510",
+      "02268987",
       "00597527",
       "00597879",
       "02392628",
       "00601387",
-      "00599310",
-      "00597330"
+      "00597330",
+      "00599310"
     ],
     "WordNet noun synset": [
       "05760541",
@@ -1989,8 +2028,8 @@ p {
       "00891150",
       "05813910",
       "00884975",
-      "00637704",
       "00729939",
+      "00637704",
       "00895653",
       "00730147",
       "05625389",
@@ -2104,9 +2143,9 @@ p {
     "WordNet verb synset": [
       "02110460",
       "02168177",
-      "02174146",
       "02133754",
       "02195992",
+      "02174146",
       "02174335",
       "02131823",
       "02129213"
@@ -2163,8 +2202,8 @@ p {
     "WordNet verb synset": [
       "02444597",
       "02003830",
-      "00878196",
       "00876925",
+      "00878196",
       "00876672",
       "00877973"
     ],
@@ -2208,8 +2247,8 @@ p {
     ],
     "WordNet noun synset": [
       "07230608",
-      "07194603",
       "07217786",
+      "07194603",
       "06641368",
       "06483913",
       "00154781"
@@ -2346,8 +2385,8 @@ p {
       "06646403",
       "06642524",
       "06646199",
-      "06705943",
       "06646103",
+      "06705943",
       "06645870"
     ],
     "comment": [
@@ -2408,8 +2447,8 @@ p {
       "06646602",
       "01228486",
       "01228670",
-      "07270069",
       "07221933",
+      "07270069",
       "00202772",
       "00204191"
     ],
@@ -2568,8 +2607,8 @@ p {
     "WordNet noun synset": [
       "01238738",
       "04756076",
-      "07196595",
       "07155686",
+      "07196595",
       "00772032",
       "07195447",
       "00069993"
@@ -2598,8 +2637,8 @@ p {
       "01085001",
       "00813016",
       "04336084",
-      "00373415",
       "08479216",
+      "00373415",
       "01085569",
       "13389225",
       "00809586"
@@ -2799,8 +2838,8 @@ p {
     "WordNet noun synset": [
       "01149281",
       "00089545",
-      "01149089",
-      "14020535"
+      "14020535",
+      "01149089"
     ],
     "comment": [
       "An act involving the taking and/or detention of a Person (typically by authority of the law). However, imprisonment may also not be authorized and reflect an illegal act. In the case of the latter, the event should also be an instance of AggressiveCriminalorHostileAct. The Agent who performs the arrest or imprisonment is specified using the :has_active_agent property, while the Person(s) who are arrested/imprisoned are identified using :has_affected_agent."
@@ -2879,8 +2918,8 @@ p {
   "Compliance": {
     "iri": "urn:ontoinsights:dna:Compliance",
     "WordNet verb synset": [
-      "02548492",
       "00150596",
+      "02548492",
       "00150107"
     ],
     "WordNet noun synset": [
@@ -3056,8 +3095,8 @@ p {
     "iri": "urn:ontoinsights:dna:StarvationAndMalnutrition",
     "WordNet verb synset": [
       "01190677",
-      "02126423",
       "01190070",
+      "02126423",
       "01190481",
       "01190273"
     ],
@@ -3721,8 +3760,8 @@ p {
     "WordNet verb synset": [
       "01016830",
       "02267740",
-      "01015049",
       "00762621",
+      "01015049",
       "02588535",
       "00908688",
       "00896020",
@@ -3730,15 +3769,15 @@ p {
     ],
     "WordNet noun synset": [
       "08431076",
-      "01183047",
       "01194465",
       "01187304",
+      "01183047",
       "01081986",
       "01204674",
       "01183702",
       "01183965",
-      "06660952",
-      "01183348"
+      "01183348",
+      "06660952"
     ],
     "comment": [
       "Any activity based on following legal practices, or related to or allowed by laws or the legal system."
@@ -3827,8 +3866,8 @@ p {
       "01180685",
       "08375259",
       "01245509",
-      "01180193",
-      "01170859"
+      "01170859",
+      "01180193"
     ],
     "comment": [
       "A meeting to support or object to something, someone or some cause. The thing or Agent which is the focus of the Event is defined using the :has_topic property.  Note that these types of events can be supportive or show opposition. It is recommended that an Event classified as a rally should also be typed as either a :FriendlyOrSupportiveAct or a :DisagreementOrDispute."
@@ -3903,17 +3942,17 @@ p {
       "02063390",
       "01957669",
       "02006752",
-      "02236972",
-      "01955339",
       "01954657",
+      "01955339",
+      "02236972",
       "01517828",
       "00270891",
       "01452567",
       "02060895",
       "01091334",
       "01438013",
-      "01839438",
       "00415334",
+      "01839438",
       "01569697"
     ],
     "WordNet noun synset": [
@@ -3962,8 +4001,8 @@ p {
   "Production, Manufacture and Creation": {
     "iri": "urn:ontoinsights:dna:ProductionManufactureAndCreation",
     "WordNet verb synset": [
-      "01656984",
       "01660471",
+      "01656984",
       "01635953",
       "01624592",
       "00094214"
@@ -4028,8 +4067,8 @@ p {
       "01261392",
       "01165936",
       "01313320",
-      "01445640",
-      "01166163"
+      "01166163",
+      "01445640"
     ],
     "WordNet noun synset": [
       "00924782",
@@ -4165,8 +4204,8 @@ p {
       "00494042",
       "00492724",
       "00494319",
-      "00491361",
-      "00431125"
+      "00431125",
+      "00491361"
     ],
     "comment": [
       "An Event where an Agent takes a risk (or performs a risky action) in the hopes of success/reward/a desired result."
@@ -4197,8 +4236,8 @@ p {
   "Search": {
     "iri": "urn:ontoinsights:dna:Search",
     "WordNet verb synset": [
-      "01318273",
       "01146304",
+      "01318273",
       "02004900",
       "00790800",
       "01320383"
@@ -4253,10 +4292,10 @@ p {
     "WordNet noun synset": [
       "04273485",
       "09300592",
-      "04273014",
       "04273124",
-      "04272778",
+      "04273014",
       "00293825",
+      "04272778",
       "07383246",
       "00314328",
       "04273272",
@@ -4330,8 +4369,8 @@ p {
     "WordNet noun synset": [
       "00643063",
       "13476660",
-      "00103599",
-      "00951435"
+      "00951435",
+      "00103599"
     ],
     "comment": [
       "An activity involved with understanding or using science and technology, involving computers, computer networks, and scientific devices and instruments. Included in this semantic is the collection, manipulation, protection or disruption of data/information. Note that the activities of protection and disruption are often referred to as 'cyber' activities."
@@ -4343,8 +4382,8 @@ p {
   "Utilization And Consumption": {
     "iri": "urn:ontoinsights:dna:UtilizationAndConsumption",
     "WordNet verb synset": [
-      "01161188",
       "01167359",
+      "01161188",
       "01159815",
       "01160888"
     ],
@@ -4490,8 +4529,8 @@ p {
       "00917553",
       "00917978",
       "00918295",
-      "00920103",
       "01106311",
+      "00920103",
       "00916760",
       "08092123"
     ],
@@ -4523,8 +4562,8 @@ p {
     "WordNet noun synset": [
       "08262093",
       "08262346",
-      "08263223",
       "08261980",
+      "08263223",
       "08262723",
       "01114037",
       "08260983"
@@ -4824,8 +4863,8 @@ p {
       "Examples are mining, drilling/boring/reaming, logging, fishing and processing such as distillation and refinery."
     ],
     "WordNet noun synset": [
-      "08020281",
       "08020061",
+      "08020281",
       "00455145"
     ],
     "comment": [
@@ -4932,12 +4971,12 @@ p {
     "iri": "urn:ontoinsights:dna:TransportBusiness",
     "WordNet noun synset": [
       "01113655",
-      "01113857",
-      "08091976",
       "01107164",
+      "08091976",
+      "01113857",
       "08020159",
-      "08020531",
-      "08020652"
+      "08020652",
+      "08020531"
     ],
     "comment": [
       "Involved with the logistics and movement of goods, humans, plants and/or animals to/from different locations, as performed by dock workers, truckers/long haulers/drivers, shippers, receivers, transporters, etc."
@@ -5099,8 +5138,8 @@ p {
     "WordNet noun synset": [
       "13852504",
       "08578999",
-      "08578888",
       "08578767",
+      "08578888",
       "08579251",
       "08578618",
       "08579372",
@@ -5148,42 +5187,6 @@ p {
       "A place, whether real, virtual or imagined. Locations can be defined by coordinates (such as latitude and longitude), by name (such as geopolitical entities), by online location (such as an IP address or URL), by geographic or anthropogenic feature (such as the name of a body of water or a road), etc. An Event's or State's Location is specified using the :has_location property or one of its subproperties. Note that an 'imaginary' Location (such as C.S. Lewis' Narnia) is identified using the :imaginary boolean."
     ]
   },
-  "Goal-Directed Process": {
-    "iri": "urn:ontoinsights:dna:GoalDirectedProcess",
-    "WordNet verb synset": [
-      "01096497",
-      "02595732"
-    ],
-    "WordNet noun synset": [
-      "00797381",
-      "00410304",
-      "01025762"
-    ],
-    "comment": [
-      "A series of interrelated/interdependent events or states/conditions that progress along a timeline that are specifically designed to achieve a goal (where the goal is indicated using the property, :has_goal)."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
-    ]
-  },
-  "Natural Process": {
-    "iri": "urn:ontoinsights:dna:NaturalProcess",
-    "WordNet noun synset": [
-      "00029976"
-    ],
-    "comment": [
-      "A series of interrelated/interdependent events or states/conditions that progress along a timeline. Examples are the aging process, climate change or a chemical process."
-    ],
-    "SubClass Of": [
-      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
-    ]
-  },
-  "Process/Sequence": {
-    "iri": "urn:ontoinsights:dna:Process",
-    "comment": [
-      "A series of interrelated and/or interdependent events or states/conditions that progress along a timeline or that may be specifically designed to achieve a goal. Subclasses are NaturalProcesses (such as the aging process, climate change or a chemical process) or GoalDirectedProcesses (which describes a business process or series of actions that are designed to achieve a specific end state)."
-    ]
-  },
   "Art and Collectible": {
     "iri": "urn:ontoinsights:dna:ArtAndCollectible",
     "WordNet noun synset": [
@@ -5192,8 +5195,8 @@ p {
       "04609048",
       "03073217",
       "02726679",
-      "07971449",
       "08480980",
+      "07971449",
       "07975256",
       "07970085",
       "07971162"
@@ -5208,8 +5211,8 @@ p {
   "Clothing and Accessory": {
     "iri": "urn:ontoinsights:dna:ClothingAndAccessory",
     "WordNet noun synset": [
-      "02759103",
       "03055525",
+      "02759103",
       "02731365",
       "02674410"
     ],
@@ -5375,8 +5378,8 @@ p {
       "13377127",
       "06492177",
       "06483696",
-      "13399691",
       "13419414",
+      "13399691",
       "13309007",
       "13399521"
     ],
@@ -5441,8 +5444,8 @@ p {
   "Vehicle": {
     "iri": "urn:ontoinsights:dna:Vehicle",
     "WordNet noun synset": [
-      "03515727",
       "04474542",
+      "03515727",
       "04203545",
       "04477048",
       "04221349",
@@ -5470,8 +5473,8 @@ p {
       "03739416",
       "04459089",
       "02732781",
-      "03705309",
       "04154560",
+      "03705309",
       "04479147",
       "03857800",
       "03818716",
@@ -6285,8 +6288,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3865483",
     "synonym": [
       "Argentine Republic",
-      "United Provinces of the Río de la Plata",
       "Argentine Nation",
+      "United Provinces of the Río de la Plata",
       "Argentine Confederation",
       "Argentina"
     ],
@@ -6348,8 +6351,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3572887",
     "synonym": [
       "The Bahamas",
-      "Bahama Islands",
       "Commonwealth of the Bahama Islands",
+      "Bahama Islands",
       "Commonwealth of The Bahamas"
     ],
     "Type": [
@@ -6807,8 +6810,8 @@ p {
   "Democratic Republic of the Congo": {
     "iri": "urn:ontoinsights:geonames:203312",
     "synonym": [
-      "Zaire",
       "Democratic Republic of the Congo",
+      "Zaire",
       "Congo Kinshasa",
       "Democratic Republic of Congo"
     ],
@@ -6829,8 +6832,8 @@ p {
   "Djibouti": {
     "iri": "urn:ontoinsights:geonames:223816",
     "synonym": [
-      "Obock Territory",
       "French Somaliland",
+      "Obock Territory",
       "Republic of Djibouti",
       "Djibouti",
       "French Territory of the Afars and the Issas"
@@ -6995,8 +6998,8 @@ p {
   "French Guinea": {
     "iri": "urn:ontoinsights:geonames:2420477",
     "synonym": [
-      "Guinea-Conakry",
       "French Guinea",
+      "Guinea-Conakry",
       "Guinea",
       "Republic of Guinea"
     ],
@@ -7519,8 +7522,8 @@ p {
     "iri": "urn:ontoinsights:geonames:718075",
     "synonym": [
       "Former Yugoslav Republic of Macedonia",
-      "Republic of North Macedonia",
       "Macedonia",
+      "Republic of North Macedonia",
       "North Macedonia"
     ],
     "Type": [
@@ -7764,8 +7767,8 @@ p {
     "iri": "urn:ontoinsights:geonames:2750405",
     "synonym": [
       "Batavia",
-      "Netherlands",
       "Holland",
+      "Netherlands",
       "Kingdom of the Netherlands"
     ],
     "Type": [
@@ -8055,11 +8058,11 @@ p {
   "Russia": {
     "iri": "urn:ontoinsights:geonames:2017370",
     "synonym": [
-      "Russia",
       "U.S.S.R.",
+      "Russia",
       "Russian Federation",
-      "Soviet Union",
       "USSR",
+      "Soviet Union",
       "Union of Soviet Socialist Republics"
     ],
     "Type": [
@@ -8081,8 +8084,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3578476",
     "synonym": [
       "St. Bartholomew",
-      "St Bartholomew",
       "Saint Bartholomew",
+      "St Bartholomew",
       "Saint Barthelemy",
       "St Barthelemy",
       "St. Barts",
@@ -8099,14 +8102,14 @@ p {
     "iri": "urn:ontoinsights:geonames:3575174",
     "synonym": [
       "St. Kitts Nevis",
-      "Saint Christopher and Nevis",
       "Saint Christopher",
+      "Saint Christopher and Nevis",
       "St. Kitts",
       "Federation of Saint Christopher and Nevis",
       "Nevis",
       "St Kitts",
-      "Saint Kitts and Nevis",
       "Saint Kitts",
+      "Saint Kitts and Nevis",
       "Federation of Saint Kitts and Nevis"
     ],
     "Type": [
@@ -8116,8 +8119,8 @@ p {
   "Saint Helena and Ascension and Tristan da Cunha": {
     "iri": "urn:ontoinsights:geonames:3370751",
     "synonym": [
-      "St Helena",
       "Saint Helena",
+      "St Helena",
       "Ascension",
       "St. Helena",
       "Tristan da Cunha",
@@ -8131,8 +8134,8 @@ p {
     "iri": "urn:ontoinsights:geonames:3576468",
     "synonym": [
       "St. Lucia",
-      "Saint Lucia",
-      "St Lucia"
+      "St Lucia",
+      "Saint Lucia"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -8194,8 +8197,8 @@ p {
   "Sao Tome and Principe": {
     "iri": "urn:ontoinsights:geonames:2410758",
     "synonym": [
-      "Principe",
       "Sao Tome",
+      "Principe",
       "Sao Tome and Principe"
     ],
     "Type": [
@@ -8437,8 +8440,8 @@ p {
     "iri": "urn:ontoinsights:geonames:1668284",
     "synonym": [
       "Taiwan",
-      "Taiwan, Province of China",
       "Republic of China",
+      "Taiwan, Province of China",
       "Formosa"
     ],
     "Type": [
@@ -8522,8 +8525,8 @@ p {
       "Trinidad",
       "Republic of Trinidad and Tobago",
       "Tobago",
-      "Trinidad and Tobago",
-      "Trinbago"
+      "Trinbago",
+      "Trinidad and Tobago"
     ],
     "Type": [
       "<a href=\"javascript:jumpTo('Country')\">Country</a>"
@@ -9820,7 +9823,7 @@ p {
   "interpretation": {
     "iri": "urn:ontoinsights:dna:interpretation",
     "comment": [
-      "Defines how a Narrative might be interpreted by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."
+      "Defines the emotional reaction expected of a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property."
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Narrative')\">Narrative</a>"
@@ -10197,7 +10200,7 @@ p {
   "ranking": {
     "iri": "urn:ontoinsights:dna:ranking",
     "comment": [
-      "Defines how positively/negatively a Narrative might be viewed by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates a very negative view and 5 indicates a very positive view."
+      "Defines a Narrative's validity as considered by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates that the Narrative is not considered valid/truthful."
     ],
     "Domains": [
       "<a href=\"javascript:jumpTo('Narrative')\">Narrative</a>"
@@ -10455,6 +10458,18 @@ p {
       "Functional"
     ]
   },
+  "topic": {
+    "iri": "urn:ontoinsights:dna:topic",
+    "comment": [
+      "String holding a topic of the InformationSource."
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Information Source')\">'Information Source'</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('string')\">string</a>"
+    ]
+  },
   "Uniform Resource Locator (URL)": {
     "iri": "urn:ontoinsights:dna:url",
     "comment": [
@@ -10614,36 +10629,6 @@ p {
       "<a href=\"javascript:jumpTo('Person')\">Person</a>"
     ]
   },
-  "has first": {
-    "iri": "urn:ontoinsights:dna:has_first",
-    "comment": [
-      "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one EventAndState may initiate a Process. After the first individual, the 'next' is defined using the :has_next property."
-    ],
-    "SubProperty Of": [
-      "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
-    ],
-    "Domains": [
-      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
-    ],
-    "Ranges": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
-  "has last": {
-    "iri": "urn:ontoinsights:dna:has_last",
-    "comment": [
-      "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process. The previous individual references the last using the :has_next property."
-    ],
-    "SubProperty Of": [
-      "<a href=\"javascript:jumpTo('has component')\">'has component'</a>"
-    ],
-    "Domains": [
-      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
-    ],
-    "Ranges": [
-      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
-    ]
-  },
   "has component": {
     "iri": "urn:ontoinsights:dna:has_component",
     "comment": [
@@ -10766,6 +10751,36 @@ p {
     ],
     "Ranges": [
       "<a href=\"javascript:jumpTo('Location')\">Location</a>"
+    ]
+  },
+  "has first": {
+    "iri": "urn:ontoinsights:dna:has_first",
+    "comment": [
+      "References the first individual in a series of interrelated and/or interdependent events or states/conditions. Note that this is NOT a functional property, and more than one EventAndState may initiate a Process. After the first individual, the 'next' is defined using the :has_next property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has member')\">'has member'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
+    ]
+  },
+  "has last": {
+    "iri": "urn:ontoinsights:dna:has_last",
+    "comment": [
+      "References the last individual in a series of interrelated and/or interdependent events or states/Conditions. Note that this is NOT a functional property, and more than one EventAndState may terminate a Process. The previous individual references the last using the :has_next property."
+    ],
+    "SubProperty Of": [
+      "<a href=\"javascript:jumpTo('has member')\">'has member'</a>"
+    ],
+    "Domains": [
+      "<a href=\"javascript:jumpTo('Process/Sequence')\">Process/Sequence</a>"
+    ],
+    "Ranges": [
+      "<a href=\"javascript:jumpTo('Event and State')\">'Event and State'</a>"
     ]
   },
   "has member": {
@@ -11176,6 +11191,17 @@ p {
               },
               {
                 "id": "Religious Group"
+              }
+            ]
+          },
+          {
+            "id": "Process/Sequence",
+            "children": [
+              {
+                "id": "Goal-Directed Process"
+              },
+              {
+                "id": "Natural Process"
               }
             ]
           }
@@ -12193,17 +12219,6 @@ p {
           },
           {
             "id": "Residence"
-          }
-        ]
-      },
-      {
-        "id": "Process/Sequence",
-        "children": [
-          {
-            "id": "Goal-Directed Process"
-          },
-          {
-            "id": "Natural Process"
           }
         ]
       },
@@ -13999,6 +14014,9 @@ p {
         "id": "time of day"
       },
       {
+        "id": "topic"
+      },
+      {
         "id": "Uniform Resource Locator (URL)"
       },
       {
@@ -14050,15 +14068,7 @@ p {
         "id": "has citizenship"
       },
       {
-        "id": "has component",
-        "children": [
-          {
-            "id": "has first"
-          },
-          {
-            "id": "has last"
-          }
-        ]
+        "id": "has component"
       },
       {
         "id": "has context"
@@ -14090,7 +14100,15 @@ p {
         ]
       },
       {
-        "id": "has member"
+        "id": "has member",
+        "children": [
+          {
+            "id": "has first"
+          },
+          {
+            "id": "has last"
+          }
+        ]
       },
       {
         "id": "has next"
