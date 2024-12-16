@@ -13,7 +13,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: July 10 2024
+# Last Modified: December 12 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,13 +24,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Simplified the EconomicEnvironment hierarchy by removing subclasses
-#    such as SavingsAndInvestment that are better captured as Measurements
-#  Removed CaptivityAndDetention as its semantics are similar to 
-#    ArrestAndImprisonment
-#  Clarified semantics by adding "Access" to several class names
-#  Added Culture, LaborRelated and Residence
+#  Reset change history and simplified, Dec 2024
 ########################################################################
 
 
@@ -50,9 +44,9 @@
   rdfs:comment "Superclass representing any characteristic, trait or aspect of an entity that identifies or distinguishes it."@en .
 
 :Capacity a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :AttributeAndCharacteristic ;
   rdfs:label "Capacity"@en ;
-  rdfs:comment "The maximum amount (or an evaluation of the amount, using :has_assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate."@en ;
+  rdfs:comment "The maximum amount (or an evaluation of the amount, using :assessment) that can be contained, stored, produced, delivered, experienced, etc. If the Capacity is 'held' by an Agent (such as an Country's or Organization's ability to produce goods), this can be indicated using the :has_holder property. Also, Capacity can be defined for a Resource (e.g., a pipeline with the capacity of x trillion cubic feet of natural gas, or the amount of cargo that can be loaded on a vessel). For the latter, the Resource is identified using the :has_holding_resource predicate."@en ;
   :wordnet_noun_synset "00916626", "05112565", "05209765", "13801244" .
 
 :CaringForDependents a owl:Class ;
@@ -69,58 +63,70 @@
   :wordnet_noun_synset "13470623", "13509513", "11481667" .
 
 :Compatibility a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :AttributeAndCharacteristic ;
   rdfs:label "Compatibility"@en ;
-  rdfs:comment "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "The condition of being able to coexist. The entities that are compatible are described as/grouped in a Collection and associated via the :has_topic predicate.  The overall situation regarding Compatibility can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "04720011", "13980554" ;
   :wordnet_verb_synset "02610484", "02663315" .
 
 :Compliance a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :AttributeAndCharacteristic, :Agreement ;
   rdfs:label "Compliance"@en ;
-  rdfs:comment "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "The condition of being consistent with some law, command, standards/recommendations, etc. The thing to which the entity 'is compliant' is specified using the :has_topic property, while the Agent 'in compliance' is defined using the :has_holder predicate. The overall situation regarding Compliance can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "01169636", "01206166" ;
   :wordnet_verb_synset "02548492", "00150107", "00150596" .
 
-:Culture  a owl:Class ;
-  rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Culture"@en ;
-  rdfs:comment "Concepts related to the customs, arts, social constructs and behaviors of a particular society or of society in general."@en ;
-  :wordnet_noun_synset "00411260", "05759791" .
+:DamageAndDifficulty a owl:Class ;
+  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "Damage and Difficulty"@en ;
+  rdfs:comment "A situation describing and assessing (via the :assessment property) difficulties, damage or problems being experienced by a Person, Organization, community, etc."@en ;
+  :wordnet_noun_synset "05694760" ;
+  :wordnet_verb_synset "01802000", "01802298" .
 
 :Deflation a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment, :Decrease ;
+  rdfs:subClassOf :EconomyAndFinanceRelated, :Decrease ;
   rdfs:label "Deflation"@en ;
-  rdfs:comment "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "An economic concept involving a 'decrease in the general price level of goods and services. Deflation occurs when the inflation rate falls below 0% (a negative inflation rate). Inflation reduces the value of currency over time, but sudden deflation increases it. This allows more goods and services to be bought than before with the same amount of currency.' (https://en.wikipedia.org/w/index.php?title=Deflation&oldid=1013116235)  The overall situation regarding Deflation can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "13481024", "13520793" .
 
-:EconomicEnvironment a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Economic Environment"@en ;
-  rdfs:comment "A superclass for a variety of characterizations related to the overall state of an Agent or GroupOfAgents (e.g., GeopoliticalEntities, Organizations, Families, ...). The Agent whose economic condition is reported is identified using the :has_holder property. And, the overall economic situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that EconomicEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Inflation) define the specific semantics of an economy."@en ;
-  :wordnet_noun_synset "14512178" .
+:Disaster a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue;
+  rdfs:label "Disaster"@en ;
+  rdfs:comment "An Event (either natural or human-made) with 'serious disruption occurring over a short or long period of time that causes widespread human, material, economic or environmental loss which exceeds the ability of the affected [Agent], community or society to cope using its own resources' (https://en.wikipedia.org/w/index.php?title=Disaster&oldid=1013917618)."@en ;
+  :wordnet_noun_synset "00218366", "07329438" .
 
 :EducationAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Access to Education"@en ;
-  rdfs:comment "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :has_assessment predicate."@en .
+  rdfs:comment "A condition describing that access to instruction/training is available to a population/GroupOfAgents. The overall availability and accessibility regarding Education can be described using the :assessment predicate."@en .
+
+:EmploymentRelated a owl:Class ;
+  rdfs:subClassOf :LaborRelated, :Measurement ;
+  rdfs:label "Employment Related"@en ;
+  rdfs:comment "Measurement information such as employment/unemployment rates for a region overall or industry-specific job numbers, average wages, etc."@en .
 
 :EnvironmentalIssue a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Environmental Issue"@en ;
-  rdfs:comment "An condition related to environmental concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific concerns are captured as subclasses. The overall situation regarding the issue can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "An condition related to environmental events (such as natural and man-made disasters) and concerns (such as acid rain, pollution, climate change, mining, drift net fishing, etc). Specific events and concerns are captured as subclasses. The overall situation regarding the issue can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "00820935", "14540103", "13508041" .
 
-:FoodAndNutritionAccess a owl:Class ;
+:FoodAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Access to Food and Nutrition"@en ;
-  rdfs:comment "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :has_assessment predicate."@en .
+  rdfs:label "Access to Food"@en ;
+  rdfs:comment "A condition describing that healthy and nutritious foods are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding food and nutrition can be described using the :assessment predicate."@en .
 
 :FreedomAndSupportForHumanRights a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Support for Human Rights"@en ;
-  rdfs:comment "A situation assessing (via the :has_assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)"@en ;
+  rdfs:label "Freedom and Support for Human Rights"@en ;
+  rdfs:comment "A situation assessing (via the :assessment property) whether 'rights we have simply because we exist as human beings' are available to a population/GroupOfAgents. These rights 'range from the most fundamental - the right to life - to those that make life worth living, such as the rights to food, education, work, health, and liberty'. (https://www.ohchr.org/en/issues/pages/whatarehumanrights.aspx)"@en ;
   :wordnet_noun_synset "14015308", "05184373" .
+
+:GreenAndRenewableEnergy a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Green and Renewable Energy"@en ;
+  rdfs:comment "An energy source that is naturally replenished over time and produces minimal pollution, also known as 'clean energy'."@en ;
+  :example "Examples are solar, wind and hydro- power, and geothermal energy."@en .
 
 :GreenhouseGas a owl:Class ;
   rdfs:subClassOf :AdverseCompound ;
@@ -132,38 +138,48 @@
 :HealthcareAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Access to Healthcare"@en ;
-  rdfs:comment "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :has_assessment predicate."@en .
+  rdfs:comment "A condition describing that access to medical services are available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding Healthcare can be described using the :assessment predicate."@en .
 
-:HousingAccess a owl:Class ;
+:Housing a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
-  rdfs:label "Access to Housing and Lodging"@en ;
-  rdfs:comment "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :has_assessment predicate."@en ;
+  rdfs:label "Access to Housing"@en ;
+  rdfs:comment "A condition describing access to dwellings or structures to protect individuals from dangerous or harmful aspects of the environment. The overall availability and accessibility of Housing can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "13966105",  "13966288", "01055844" ;
   :wordnet_verb_synset "00414801", "00416323", "00540418" . 
 
+:ImportAndExportRelated a owl:Class ;
+  rdfs:subClassOf :EconomyAndFinanceRelated, :Measurement ;
+  rdfs:label "Import and Export Related"@en ;
+  rdfs:comment "Measurement that calculates the total dollar value of goods and services a country buys from other countries (imports) and sells to other countries (exports). If the difference between the two numbers is a positive number that indicates a trade surplus, but a negative number indicates a trade deficit. Other measurements include import/export price indexes."@en .
+
 :Inflation a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment, :Increase ;
+  rdfs:subClassOf :EconomyAndFinanceRelated, :Increase ;
   rdfs:label "Inflation"@en ;
-  rdfs:comment "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "An economic concept involving a 'general rise in the price level in an economy over a period of time. When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation reflects a reduction in the purchasing power per unit of money – a loss of real value in the medium of exchange and unit of account within the economy ... The common measure of inflation is the inflation rate, the annualised percentage change in a general price index, usually the consumer price index, over time.' (https://en.wikipedia.org/w/index.php?title=Inflation&oldid=1014491103) The overall situation regarding Inflation can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "13569553", "13520031", "13520596", "13581941" ;
   :wordnet_verb_synset "00564177" .
 
-:LaborRelated a owl:Class ;
+:InternationalRelations a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:label "International Relations"@en ;
+  rdfs:comment "The condition/state of global affairs and the political, economic, social, and cultural interactions between countries, international organizations, non-governmental organizations (NGOs), multinational corporations, and other global entities. It considers how the entities cooperate, compete, and influence one another. An assessment whether relations are 'positive', 'negative' or 'neutral' can be made using the :assessment property."@en .
+
+:LaborRelated a owl:Class ;
+  rdfs:subClassOf :EconomyAndFinanceRelated ;
   rdfs:label "Labor Related"@en ;
   rdfs:comment "A concept related to labor such as employment/unemployment, the labor market, labor relations, retirement, and union negotiations and representation. Note that a reference to a union should be defined as an OrganizationalEntity."@en .
 
 :LawAndPolicy a owl:Class ;
-  rdfs:subClassOf :PoliticalEnvironment ;
+  rdfs:subClassOf :PoliticsRelated, :LawRelated ;
   rdfs:label "Law and Policy"@en ;
-  rdfs:comment "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeoPoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents."@en ;
+  rdfs:comment "A state/condition created by any law, policy or other formal declaration/instruction which is issued by a GeopoliticalEntity or governing Agent and defines or restricts actions and behavior for a population/GroupOfAgents."@en ;
   :wordnet_noun_synset "06544321", "01128014", "08458195", "06551761", "05910115", "06669153" ;
   :wordnet_verb_synset "02432763", "00717773" .
 
 :LivingCondition a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
   rdfs:label "Living Condition"@en ;
-  rdfs:comment "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingCondition are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingCondition can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingCondition is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and Toleration) define specific semantics."@en .
+  rdfs:comment "Any 'existing circumstance, situation or state affecting the life, welfare and relations of human beings in [a location or] community' (https://www.eionet.europa.eu/gemet/en/concept/7784). The Person/population/GroupOfAgents that experience the LivingCondition are defined using the :has_holder property, while the location and time (if applicable) are specified using the :has_location/:has_time predicates (respectively). The overall situation regarding LivingCondition can be described using the :assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that LivingCondition is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as Housing and FreedomAndSupportForHumanRights) define specific semantics."@en .
 
 :LossOfHabitatAndBiodiversity a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue ;
@@ -177,16 +193,10 @@
   rdfs:label "(Presence of) Particulate Matter"@en ;
   rdfs:comment "Fine, inhalable particles in the air. Particulate matter (PM) is referenced by its size in microns. Of concern is PM2.5 - particles with diameters that are 2.5 microns or less. These can penetrate deep into the lungs, and (with large surface areas) can also carry toxic substances."@en .
 
-:PoliticalEnvironment a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Political Environment"@en ;
-  rdfs:comment "A superclass for a variety of characterizations related to governance in a region (including describing the distribution of responsibility and power at all levels of governance). It includes the conditions of Agents who are formally recognized authorities, as well as informal political groups. The Agent whose political condition is reported is identified using the :has_holder property. And, the overall political situations can be described using the :has_assessment predicate. Subclasses are defined, although this list is NOT exhaustive. Note that PoliticalEnvironment is intended to be an abstract superclass (i.e., it should not be instantiated). Its subclasses (such as LawAndPolicy and PoliticalIdeology) define specific semantics."@en ;
-  :wordnet_noun_synset "08384807" .
-
 :PotableWaterAccess a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Access to Potable Water"@en ;
-  rdfs:comment "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :has_assessment predicate."@en .
+  rdfs:comment "A condition describing that clean water is available and accessible by a population/GroupOfAgents. The overall availability and accessibility regarding clean, drinkable water can be described using the :assessment predicate."@en .
 
 :ReadinessAndAbility a owl:Class ;
   rdfs:subClassOf :EnvironmentAndCondition ;
@@ -196,9 +206,9 @@
   :wordnet_verb_synset "00407168", "01089608", "01654986", "00513958" . 
 
 :Recession a owl:Class ;
-  rdfs:subClassOf :Decrease, :EconomicEnvironment ;
+  rdfs:subClassOf :Decrease, :EconomyAndFinanceRelated ;
   rdfs:label "Recession"@en ;
-  rdfs:comment "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "Recession is a 'decline of economic activity, which means that the public has stopped buying products for a while which can cause the downfall of GDP ... This causes inflation (the rise of product prices). In a recession, the rate of inflation slows down, stops, or becomes negative.' (https://en.wikipedia.org/w/index.php?title=Recession&oldid=1015003996) The pace of the Recession can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "14036839" .
 
 :RequirementAndDependence a owl:Class ;
@@ -209,7 +219,7 @@
   :wordnet_verb_synset "00408253", "01191258" . 
 
 :Residence a owl:Class ;
-  rdfs:subClassOf :LivingCondition, :Location ;
+  rdfs:subClassOf :Housing, :Location ;
   rdfs:label "Residence"@en ;
   rdfs:comment "Information related to the place where someone or something lives/resides."@en ;
   :wordnet_noun_synset "01055844" ;
@@ -218,39 +228,51 @@
 :Safety a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Safety and Safe Conditions"@en ;
-  rdfs:comment "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "A condition describing a population/GroupOfAgents is not exposed to risks, dangers or harm. The overall availability and accessibility regarding Safety can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "08661508" .
 
 :SanitaryCondition a owl:Class ;
   rdfs:subClassOf :LivingCondition ;
   rdfs:label "Sanitary Condition"@en ;
-  rdfs:comment "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :has_assessment predicate."@en ;
+  rdfs:comment "A condition describing that sewage and discarded materials are managed for a population/GroupOfAgents. The overall availability and accessibility regarding SanitationFacilities can be described using the :assessment predicate."@en ;
   :wordnet_noun_synset "14518300" ;
   :wordnet_verb_synset "00555545", "00062353" .
+
+:Scandal a owl:Class ;
+  rdfs:subClassOf :DamageAndDifficulty ;
+  rdfs:label "Scandal"@en ;
+  rdfs:comment "The outcome/consequence of a disgraceful or inappropriate action that damages a person's/group's reputation and public image. The Person/GroupOfAgents that experience the Scandal are defined using the :has_holder property, while the original inappropriate action is specified using the :has_cause predicate. The overall assessment of the Scandal can be described using the :assessment predicate."@en .
 
 :SoilDegradation a owl:Class ;
   rdfs:subClassOf :EnvironmentalIssue ;
   rdfs:label "Soil Degradation and Erosion"@en ;
   rdfs:comment "SoilDegradation is 'damage to the land's productive capacity because of poor agricultural practices such as the excessive use of pesticides or fertilizers, soil compaction from heavy equipment, or erosion of topsoil, eventually resulting in reduced ability to produce agricultural products'. Erosion is 'the removal of soil by the action of water or wind, compounded by poor agricultural practices, deforestation, overgrazing, and desertification'. (https://www.cia.gov/the-world-factbook/field/environment-current-issues)"@en .
 
-:SupportForGovernment a owl:Class ;
-  rdfs:subClassOf :PoliticalEnvironment ;
-  rdfs:label "Support for Government"@en ;
-  rdfs:comment "A situation assessing (via the :has_assessment property) whether a population/GroupOfAgents views their government favorably or unfavorably."@en .
+:Spending a owl:Class ;
+  rdfs:subClassOf :EconomyAndFinanceRelated ;
+  rdfs:label "Spending"@en ;
+  rdfs:comment "The act of using money for a specific purpose, or the money used for that purpose."@en ;
+  :example "Examples are consumer and governement spending. For the latter, defense spending is often scrutinized."@en .
 
-:Taxes a owl:Class ;
-  rdfs:subClassOf :EconomicEnvironment ;
-  rdfs:label "Taxes"@en ;
-  rdfs:comment "A situation describing and assessing (via the :has_assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863)"@en ;
+:StarvationAndMalnutrition a owl:Class ;
+  rdfs:subClassOf :NutritionAndDiet, :FoodAccess ;
+  rdfs:label "Starvation and Malnutrition"@en ;
+  rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :assessment predicate."@en ;
+  :wordnet_noun_synset "01153157", "14223182", "14063016", "07330390" ;
+  :wordnet_verb_synset "01190677", "02126423", "01190070", "01190481", "01190273" .
+
+:StockMarketRelated a owl:Class ;
+  rdfs:subClassOf :EconomyAndFinanceRelated ;
+  rdfs:label "Stock Market Related"@en ;
+  rdfs:comment "The StockMarket is actually a collection of marketplaces where investors buy and sell stocks, or equity, issued by companies. This allows the companies to raise capital by selling shares to investors, and allows investors to potentially profit from a company's success. Investors buy shares with the expectation of receiving dividends or benefiting from the growth of the stock price. Note that share prices determine a company's market value."@en ;
+  :example "Stock exchanges are organized marketplaces such as the New York Stock Exchange (NYSE) and the Nasdaq. Over-the-counter marketplaces are where investors trade directly without formal exchange supervision. In addition, equity crowdfunding involves an online offering of private company securities to a group of people for investment."@en .
+
+:TaxesAndTariffs a owl:Class ;
+  rdfs:subClassOf :EconomyAndFinanceRelated ;
+  rdfs:label "Taxes and Tariffs"@en ;
+  rdfs:comment "A situation describing and assessing (via the :assessment property) a 'compulsory financial charge or some other type of levy imposed on a taxpayer [an Agent] by a governmental organization [a GeopoliticalEntity] in order to fund government spending and various public expenditures ... Taxes consist of direct or indirect taxes and may be paid in money or as its labour equivalent.' (https://en.wikipedia.org/w/index.php?title=Tax&oldid=1014774863). As for tariffs, these are 'indirect' taxes levied on imported and/or exported goods and applied when goods enter or leave a country."@en ;
   :wordnet_noun_synset "01162657", "13330021" ;
   :wordnet_verb_synset "02311442" .
-
-:TroubleAndProblem a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
-  rdfs:label "Trouble and Problem"@en ;
-  rdfs:comment "A situation describing and assessing (via the :has_assessment property)  difficulties or problems being experienced by a Person, Organization, community, etc."@en ;
-  :wordnet_noun_synset "05694760" ;
-  :wordnet_verb_synset "01802000", "01802298" .
 
 :VolatileOrganicCompound a owl:Class ;
   rdfs:subClassOf :AdverseCompound ;
@@ -264,12 +286,19 @@
   :wordnet_noun_synset "14560040" .
 
 :War a owl:Class ;
-  rdfs:subClassOf :EnvironmentAndCondition ;
+  rdfs:subClassOf :CrimeAndHostileConflict, :EnvironmentAndCondition ;
   rdfs:label "War"@en ;
   rdfs:comment "A condition/environment of sustained armed conflict between two or more Agents (typically nations and countries, or groups within countries)."@en ;
   :wordnet_noun_synset "00975181" ;
   :wordnet_verb_synset "01095583", "01096197" .
 :War :has_component :Battle .
+
+:WeatherEvent a owl:Class ;
+  rdfs:subClassOf :EnvironmentalIssue ;
+  rdfs:label "Weather Event"@en ;
+  rdfs:comment "Any environmental occurrence related to atmospheric conditions in an area. If the event is also a Disaster, also add that class as a type."@en ;
+  :wordnet_noun_synset "06763412", "11445694", "11482925" ;
+  :wordnet_verb_synset "02762779", "00217578", "02775199", "02776493" . 
 
 
 ########################################################################

@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: April 29 2023
+# Last Modified: December 11 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,8 +23,10 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Corrected subclassing of SurrenderAndYielding
+#  Reset change history and simplified, Nov 2023
+#  Corrected subclassing of :SurrenderAndYielding
+#  Added :CourtRuling, :Debate, :Insult, :Polling
+#  Clarified/corrected several descriptions
 ########################################################################
 
 
@@ -35,35 +37,35 @@
 :Acknowledgment a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Acknowledgment"@en ;
-  rdfs:comment "An admission of responsibility or guilt for some act. The Agent making the admission is indicated using the :has_active_agent property, while the thing that is confessed is defined using :has_topic."@en ;
+  rdfs:comment "An admission of responsibility or guilt for some act. The Agent making the admission is indicated using the :has_active_entity property, while the thing that is confessed is defined using :has_topic."@en ;
   :wordnet_noun_synset "06641368", "07194603", "06483913", "07230608", "00154781", "07217786" ;
   :wordnet_verb_synset "00449245", "00818972" .
 
 :AdviceAndRecommendation a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Advice and Recommendation"@en ;
-  rdfs:comment "An act of recommending or suggesting something. The Agent doing the communicating is indicated using the :has_active_agent property, while the entity being advised is defined using :has_affected_agent."@en ;
+  rdfs:comment "An act of recommending or suggesting something. The Agent doing the communicating is indicated using the :has_active_entity property, while the entity being advised is defined using :has_affected_entity."@en ;
   :wordnet_noun_synset "06684229", "05924749", "09793689", "06663446" ;
   :wordnet_verb_synset "02444597", "02003830", "00876925", "00876672", "00877973", "00878196" .
 
 :AppointmentAndNomination a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Appointment and Nomination"@en ;
-  rdfs:comment "An act of proposing an Agent for a task or position. The Agent doing the proposing is indicated using the :has_active_agent property, while the Agent being appointed/nominated is defined using :has_affected_agent."@en ;
+  rdfs:comment "An act of proposing an Agent for a task or position. The Agent doing the proposing is indicated using the :has_active_entity property, while the Agent being appointed/nominated is defined using :has_affected_entity."@en ;
   :wordnet_noun_synset "00164600", "01142792" ;
   :wordnet_verb_synset "02401347", "00881061", "02480684" .
 
 :AssertionAndDeclaration a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Assertion and Declaration"@en ;
-  rdfs:comment "A claim or statement of fact or of belief. The Agent making the declaration is indicated using the :has_active_agent property, while the entity discussed is defined using :has_topic."@en ;
+  rdfs:comment "A claim or statement of fact or of belief. The Agent making the declaration is indicated using the :has_active_entity property, while the entity discussed is defined using :has_topic."@en ;
   :wordnet_noun_synset "06699481", "06735202", "07216025", "07189892", "07214225", "07222998", "07226850", "07228055", "07245162", "07247081" ;
   :wordnet_verb_synset "00758383", "01018787", "01011267", "00833312", "00758383" .
 
 :Challenge a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Challenge"@en ;
-  rdfs:comment "A request/invitation to take part in a contest or competition. The Agent issuing the challenge is indicated using the :has_active_agent property, while the Person who is challenged is defined using :has_affected_agent."@en ;
+  rdfs:comment "A request/invitation to take part in a contest or competition. The Agent issuing the challenge is indicated using the :has_active_entity property, while the Person who is challenged is defined using :has_affected_entity."@en ;
   :wordnet_noun_synset "07245954", "00790898" ;
   :wordnet_verb_synset "00870255", "01124374" .
 
@@ -77,37 +79,52 @@
 :CommandAndDemand a owl:Class ;
   rdfs:subClassOf :RequestAndAppeal ;
   rdfs:label "Command and Demand"@en ;
-  rdfs:comment "A communication that issues orders, mandates, etc. The Agent issuing the command/making the demand is indicated using the :has_active_agent property, while the Person with whom the Agent is communicating is defined using :has_affected_agent. The subject of the demand is specified using the :has_topic property."@en ;
+  rdfs:comment "A communication that issues orders, mandates, etc. The Agent issuing the command/making the demand is indicated using the :has_active_entity property, while the Person with whom the Agent is communicating is defined using :has_affected_entity. The subject of the demand is specified using the :has_topic property."@en ;
   :wordnet_noun_synset "07182782", "00805278", "01217047", "07205939" ; 
   :wordnet_verb_synset "00749139", "02396945", "00748704", "00756987", "00718950" .
 
 :Complaint a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Complaint"@en ;
-  rdfs:comment "An expression of displeasure or annoyance about something. The Agent doing the complaining is indicated using the :has_active_agent property, while the thing complained about is defined using :has_topic."@en ;
+  rdfs:comment "An expression of displeasure or annoyance about something. The Agent doing the complaining is indicated using the :has_active_entity property, while the thing complained about is defined using :has_topic."@en ;
   :wordnet_noun_synset "07223368", "05741963", "07224625" ;
   :wordnet_verb_synset "00845977", "00909100", "00828170" .
+
+:CourtOrderAndRuling a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct, :LawRelated ;
+  rdfs:label "Court Order and Ruling"@en ;
+  rdfs:comment "A court's decision on a legal case or party's motion in a legal case, and/or an order for an entity to do or not do something. The court is indicated using the :has_active_entity property, while the legal case is defined using :has_topic. The decision is identified using :has_goal."@en .
+
+:Debate a owl:Class ;
+  rdfs:subClassOf :MeetingAndEncounter, :CommunicationAndSpeechAct ;
+  rdfs:label "Debate"@en ;
+  rdfs:comment "A discussion or competition considering one or more topics, where different individuals or teams present their positions. The persons/teams involved in a debate are indicated using the :has_active_entity property."@en .
 
 :Denial a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration ;
   rdfs:label "Denial"@en ;
-  rdfs:comment "A claim that something is untrue. The Agent making the declaration is indicated using the :has_active_agent property, while the entity discussed is defined using :has_topic."@en ;
+  rdfs:comment "A claim that something is untrue. The Agent making the declaration is indicated using the :has_active_entity property, while the entity discussed is defined using :has_topic."@en ;
   :wordnet_noun_synset "07219061", "07247648" ;
   :wordnet_verb_synset "00818664", "00818217" . 
 
 :ExpressiveAndExclamation a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Expressive and Exclamation"@en ;
-  rdfs:comment "Any statements that express attitude or emotion. The Agent making the declaration is indicated using the :has_active_agent property. The instance is also defined as a sub-class of EmotionalResponse to indicate the emotion that is expressed. Note that this kind of statement/sentence may include an exclamation point (!)."@en ;
+  rdfs:comment "Any statements that express attitude or emotion. The Agent making the declaration is indicated using the :has_active_entity property. The instance is also defined as a sub-class of EmotionalResponse to indicate the emotion that is expressed. Note that this kind of statement/sentence may include an exclamation point (!)."@en ;
   :wordnet_noun_synset "06642524", "06646403", "06646199", "06645870", "06646103", "06705943" ;
   :wordnet_verb_synset "00914001", "00894444", "00898638", "00898754" .
 
 :Inquiry a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
   rdfs:label "Inquiry"@en ;
-  rdfs:comment "A CommunicationAndSpeechAct involving asking questions/for information. The Agent making the inquiry is indicated using the :has_active_agent property. The thing that is inquired about is indicated using :has_topic."@en ;
+  rdfs:comment "A CommunicationAndSpeechAct involving asking questions/for information. The Agent making the inquiry is indicated using the :has_active_entity property. The thing that is inquired about is indicated using :has_topic."@en ;
   :wordnet_noun_synset "07207844", "07208618" ; 
   :wordnet_verb_synset "00899241", "00788478" .
+
+:Insult a owl:Class ;
+  rdfs:subClassOf :CommunicationAndSpeechAct ;
+  rdfs:label "Insult"@en ;
+  rdfs:comment "An act of being verbally disrespectful, scornful or abusive. The Agent doing the insulting is indicated using the :has_active_entity property, while the Agent being insulted is defined using :has_affected_entity."@en .
 
 :Permission a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct ;
@@ -115,6 +132,11 @@
   rdfs:comment "An act of allowing or authorizing something to occur. The thing that is allowed is indicated using the :has_topic property."@en ;
   :wordnet_noun_synset "01141515" ;
   :wordnet_verb_synset "02479404", "00803980", "02449527" .
+
+:Polling a owl:Class ;
+  rdfs:subClassOf :Inquiry ;
+  rdfs:label "Polling"@en ;
+  rdfs:comment "An act of inquiry in order to obtain the opinion and thoughts of a set of people."@en .
 
 :PromiseAndOath a owl:Class ;
   rdfs:subClassOf :AssertionAndDeclaration, :Agreement ;
@@ -147,7 +169,7 @@
 :ThreatAndWarning a owl:Class ;
   rdfs:subClassOf :CommunicationAndSpeechAct, :CoercionAndIntimidation ;
   rdfs:label "Threat and Warning"@en ;
-  rdfs:comment "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_agent, while the threatened Agent is identified using :has_affected_agent."@en ;
+  rdfs:comment "A CommunicationAndSpeechAct intended to frighten by expressing the intention to take action in response to something (some Event) done or not done. The Event that is done/not done is specified using the :has_topic predicate. The Agent who is making the threats is defined using :has_active_entity, while the threatened Agent is identified using :has_affected_entity."@en ;
   :wordnet_noun_synset "06746225", "00786042" ; 
   :wordnet_verb_synset "00871877", "00012130", "01069216", "01784999", "02246403" .
 

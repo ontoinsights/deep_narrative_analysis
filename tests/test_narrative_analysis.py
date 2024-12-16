@@ -4,7 +4,6 @@ from dna.app_functions import get_metadata_ttl, Metadata
 from dna.create_narrative_turtle import create_graph
 from dna.database import add_remove_data
 from dna.nlp import parse_narrative
-from dna.query_openai import access_api, narrative_goals, narrative_summary_prompt
 
 # From NYT Editorial, https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html
 narr_text = \
@@ -23,85 +22,55 @@ narr_text = \
     'surviving for another 25 years, and his strategy has been to use these militant proxies to achieve that goal.'
 
 
-def test_narrative_dict_results():
-    narr_dict = access_api(narrative_summary_prompt.replace("{narr_text}", narr_text))
-    assert 1 in narr_dict['goal_numbers']
-    assert 'topic' in narr_dict
-    assert 'summary' in narr_dict
-    assert 'reader_reactions' in narr_dict
-    assert narr_dict['reader_reactions'][0]['perspective'] in ('conservative', 'liberal', 'neutral')
-    assert 'validity_views' in narr_dict
-    assert narr_dict['validity_views'][0]['perspective'] in ('conservative', 'liberal', 'neutral')
-    assert 'sentiment' in narr_dict
-    # The returned results (in narr_dict) are:
-    #  {'goal_numbers': ['1', '2'],
-    #  'topics': ['U.S. peacemaking policy', 'Israel-Palestine conflict', 'Hamas', "Iran's influence",
-    #      'Middle East geopolitics'],
-    #  'summary': "The article is a personal narrative from a professional with 35 years of experience in U.S.
-    #      peacemaking policy, focusing on the Israel-Palestine conflict. The author argues that peace between Israel
-    #      and the Palestinians is unattainable as long as Hamas remains in control of Gaza. The piece highlights the
-    #      threat posed by Hamas and Hezbollah, both backed by Iran, to Israel's existence. The author suggests that
-    #      these groups aim to make Israel unlivable, aligning with Iran's long-term strategy against Israel.",
-    #  'reader_reactions': [
-    #      {'perspective': 'conservative', 'reaction': 'Supportive, as the article aligns with a strong
-    #          stance against Hamas and highlights security concerns for Israel.'},
-    #      {'perspective': 'liberal', 'reaction': 'Mixed, as some may agree with the security concerns but also
-    #          worry about the humanitarian impact on Gazan civilians.'},
-    #      {'perspective': 'neutral', 'reaction': 'Informative, providing a perspective on the complexities of the
-    #          Israel-Palestine conflict and regional geopolitics.'}],
-    #  'validity_views': [
-    #      {'perspective': 'conservative', 'validity': 5},
-    #      {'perspective': 'liberal', 'validity': 3},
-    #      {'perspective': 'neutral', 'validity': 4}],
-    #  'sentiment': 'negative',
-    #  'sentiment_explanation': "The sentiment is negative due to the focus on the ongoing conflict, the threat to
-    #      Israel's existence, and the bleak outlook for peace as long as Hamas remains in power."}
-
-
 def test_narrative_turtle():
     sentence_classes, quotation_classes = parse_narrative(narr_text)
-    graph_results = create_graph(sentence_classes, quotation_classes, 5, 'foo')
+    graph_results = create_graph(sentence_classes, quotation_classes, narr_text, ':Narrative_123',
+                                 ['politics and international'], 100, 'foo')
     add_remove_data('add', ' '.join(graph_results.turtle), 'foo', '123')   # Add to dna db's foo_123 graph
     narr_meta = Metadata('I Might Have Once Favored a Cease-Fire With Hamas, but Not Now', '2023-10-27',
-                         'New York Times', 'https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html', 2)
-    metadata_results = get_metadata_ttl('foo', '123', narr_text, narr_meta, 10, 2)
+                         'New York Times', 'https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html', 10)
+    metadata_results = get_metadata_ttl('foo', '123', narr_text, narr_meta, 10)
     ttl_str = str(metadata_results.turtle)
+    print(ttl_str)
     assert ':text ' in ttl_str
     assert ':topic ' in ttl_str and ':summary ' in ttl_str
     assert ':narrative_goal "analyze' in ttl_str
     assert ':interpretation_conservative' in ttl_str
-    assert ':ranking_conservative' in ttl_str
     assert ':sentiment "negative' in ttl_str
     assert ':sentiment_explanation' in ttl_str
     # Output Turtle:
-    # :123 a :InformationGraph ; dc:created "2024-11-13T12:07:27"^^xsd:dateTime ;
-    # :number_triples 218 ; :encodes :Narrative_123 .
+    # Full article processing in ~ 2 minutes
+    # :123 a :InformationGraph ; dc:created "2024-12-13T19:13:02"^^xsd:dateTime ;
+    #   :number_triples 238 ; :encodes :Narrative_123 .
     # :Narrative_123 a :Narrative ; dc:created "2023-10-27"^^xsd:dateTime ;
-    # :number_sentences 10 ; :number_ingested 2 ; :source "New York Times" ;
-    #     dc:title "I Might Have Once Favored a Cease-Fire With Hamas, but Not Now" ;
-    #     :external_link "https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html" .
+    #   :number_sentences 10 ; :source "New York Times" ;
+    #   dc:title "I Might Have Once Favored a Cease-Fire With Hamas, but Not Now" ;
+    #   :external_link "https://www.nytimes.com/2023/10/27/opinion/hamas-war-gaza-israel.html" .
     # :Narrative_123 :text "For 35 years, I’ve devoted my professional life to U.S. peacemaking policy ..." .
-    # :Narrative_123 :narrative_goal "advocate" .
+    # :Narrative_123 :subject_area "politics and international" .
+    # :Narrative_123 :subject_area "crime and law" .
     # :Narrative_123 :narrative_goal "analyze" .
-    # :Narrative_123 :topic "U.S. peacemaking policy" .
+    # :Narrative_123 :narrative_goal "establish-authority" .
+    # :Narrative_123 :information_flow "analytical" .
+    # :Narrative_123 :information_flow "causal" .
+    # :Narrative_123 :narrative_plotline "conflict and resolution" .
+    # :Narrative_123 :narrative_plotline "overcoming the monster/heroic acts" .
     # :Narrative_123 :topic "Israel-Palestine conflict" .
     # :Narrative_123 :topic "Hamas" .
     # :Narrative_123 :topic "Iran\'s influence" .
-    # :Narrative_123 :topic "Middle East geopolitics" .
-    # :Narrative_123 :summary "The article is a personal narrative from a professional with 35 years of experience in U.S.
-    #     peacemaking policy, focusing on the Israel-Palestine conflict. The author argues that peace between Israel
-    #     and the Palestinians is unattainable as long as Hamas remains in control of Gaza. The piece highlights the
-    #     threat posed by Hamas and Hezbollah, both backed by Iran, to Israel's existence. The author suggests that
-    #     these groups aim to make Israel unlivable, aligning with Iran's long-term strategy against Israel." .
-    # :Narrative_123 :interpretation_conservative "Supportive, as the article aligns with a strong
-    #    stance against Hamas and highlights security concerns for Israel." .
-    # :Narrative_123 :interpretation_liberal "Mixed, as some may agree with the security concerns but also
-    #    worry about the humanitarian impact on Gazan civilians." .
-    # :Narrative_123 :interpretation_neutral "Informative, providing a perspective on the complexities of the
-    #    Israel-Palestine conflict and regional geopolitics." .
-    # :Narrative_123 :ranking_conservative 5 .
-    # :Narrative_123 :ranking_liberal 3 .
-    # :Narrative_123 :ranking_neutral 4 .
+    # :Narrative_123 :topic "Middle East peace process" .
+    # :Narrative_123 :topic "Gaza" .
+    # :Narrative_123 :summary "The article discusses the author\'s perspective on the Israel-Palestine conflict,
+    #     emphasizing the need for a lasting peace solution that involves dismantling Hamas\'s power in Gaza.
+    #     The author argues that as long as Hamas remains a military force, peace will be unattainable, and Israel\'s
+    #     survival is at risk. The article also highlights the role of Iran in supporting militant groups like Hamas
+    #     and Hezbollah, which aim to destabilize Israel." .
+    # :Narrative_123 :interpretation_conservative "Conservatives may agree with the article\'s stance on the necessity
+    #     of dismantling Hamas to ensure Israel\'s security." .
+    # :Narrative_123 :interpretation_liberal "Liberals might be concerned about the implications for Palestinian
+    #     civilians and the broader peace process." .
+    # :Narrative_123 :interpretation_neutral "Neutral readers may appreciate the analysis of the complex geopolitical
+    #     dynamics in the region." .
     # :Narrative_123 :sentiment "negative" .
-    # :Narrative_123 :sentiment_explanation "The sentiment is negative due to the focus on the ongoing conflict, the
-    #     threat of violence, and the bleak outlook for peace as long as Hamas remains in power." .
+    # :Narrative_123 :sentiment_explanation "The sentiment is negative due to the focus on ongoing conflict,
+    #     threats to Israel\'s existence, and the challenges in achieving peace." .

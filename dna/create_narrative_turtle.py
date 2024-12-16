@@ -13,10 +13,14 @@ from typing import List
 
 from dna.database import query_database
 from dna.database_queries import query_corrections, query_manual_corrections
-from dna.process_sentences import get_sentence_details, sentence_semantics_processing
+from dna.process_sentences import EventsAndNouns, get_sentence_details, situation_semantics_processing
+from dna.prompting_ontology_details import event_categories, political_event_categories, event_category_texts, \
+    political_event_category_texts, political_event_category_replacements, noun_categories, noun_category_texts
 from dna.sentence_classes import Sentence, Punctuation
 from dna.utilities_and_language_specific import empty_string, literal, ner_dict, personal_pronouns, space, \
-        ttl_prefixes, underscore
+    ttl_prefixes, underscore
+from dna.query_openai import access_api, narrative_chronology_prompt
+
 
 @dataclass
 class GraphResults:
@@ -61,13 +65,16 @@ def _update_nouns(bindings: list, nouns_dictionary: dict):
     return
 
 
-def create_graph(sentence_instance_list: list, quotation_instance_list: list,
-                 number_sentences: int, repo: str) -> GraphResults:
+def create_graph(sentence_instance_list: list, quotation_instance_list: list, narr: str, narr_id: str,
+                 subject_areas: list, number_sentences: int, repo: str) -> GraphResults:
     """
     Based on the sentences and quotations, create the Turtle rendering of the details.
 
     :param sentence_instance_list: An array of Sentence Class instances extracted from a narrative
     :param quotation_instance_list: An array of Quotation Class instances extracted from a narrative
+    :param narr: The text of the narrative to be analyzed
+    :param narr_id: The IRI identifying the narrative
+    :param subject_areas: A list of the subject areas of the narrative, as defined by OpenAI
     :param number_sentences: An integer indicating the number of sentences to fully ingest (a number
             greater than 1; by default up to 10 sentences are ingested)
     :param repo: String holding the repository name for the narrative graph
@@ -79,11 +86,11 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
     #    due to co-reference/multiple reference
     # Keys = the texts and Values = entity's spaCy NER type and its IRI
     nouns_dictionary = nouns_preload(repo)
-    sentences = dict()      # Will hold sentence text up to the total number of sentences to be analyzed
     for index, sentence_instance in enumerate(sentence_instance_list):
         sentence_iri = sentence_instance.iri
         original_text = sentence_instance.text
-        sentence_ttl_list = [f'{sentence_iri} a :Sentence ; :offset {sentence_instance.offset} .',
+        sentence_ttl_list = [f'{narr_id} :has_component {sentence_iri} .',
+                             f'{sentence_iri} a :Sentence ; :offset {sentence_instance.offset} .',
                              f'{sentence_iri} :text {literal(original_text)} .']
         # TODO: (Future) Should DNA Capture whether the sentence is a question or exclamation?
         # for punctuation in sentence_instance_list[index].punctuations:
@@ -92,18 +99,35 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
         #     elif punctuation == Punctuation.EXCLAMATION:
         #         sentence_ttl_list.append(f'{sentence_iri} a :ExpressiveAndExclamation .')
         try:
-            get_sentence_details(sentence_instance, sentence_ttl_list, 'sentence', nouns_dictionary, repo)
+            get_sentence_details(sentence_instance, sentence_ttl_list,'sentence', nouns_dictionary, repo)
             graph_ttl_list.extend(sentence_ttl_list)
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence details for the text, {original_text}')
             print(traceback.format_exc())
             continue
-        if index < number_sentences:    # Full processing only up to the requested number of sentences
-            # Processing the events and states, and related nouns
-            sentences[sentence_iri] = original_text
-    if sentences:
+        # if index < number_sentences:    # TODO: Full processing only up to the requested number of sentences
+    # Get the events/situations from the narrative
+    chronology_dict = access_api(narrative_chronology_prompt.replace("{narr_text}", narr))
+    if 'events_situations' in chronology_dict:
+        # Get the event categories given the article's subject_areas
+        # TODO: Generalize for all subject areas
+        events = event_categories[:]
+        event_texts = event_category_texts
+        if 'political and international' in subject_areas:
+            events = event_categories[:-1] + political_event_categories + [':EventAndState']
+            event_texts = event_category_texts[:-1] + political_event_category_texts + ['other']
+            for key, value in political_event_category_replacements:
+                event_texts = event_texts.replace(key, value)
+        # And add the noun information and get numbered lists
+        nouns = events[:-1] + noun_categories
+        noun_texts = event_texts[:-1] + noun_category_texts
+        numbered_events = " ".join([f'{index}. {text}' for index, text in enumerate(event_texts, start=1)])
+        numbered_nouns = " ".join([f'{index}. {text}' for index, text in enumerate(noun_texts, start=1)])
+        events_and_nouns = EventsAndNouns(events, numbered_events, nouns, numbered_nouns)
         try:
-            semantics_ttl = sentence_semantics_processing(sentences, nouns_dictionary)
+            semantics_ttl = \
+                situation_semantics_processing(chronology_dict['events_situations'], events_and_nouns,
+                                               narr_id, subject_areas, nouns_dictionary)
             graph_ttl_list.extend(semantics_ttl)
         except Exception as e:
             logging.error(f'Exception ({str(e)}) in getting sentence semantics for the text')
@@ -119,9 +143,7 @@ def create_graph(sentence_instance_list: list, quotation_instance_list: list,
             logging.error(f'Exception ({str(e)}) in getting quote details for the text, {quotation.text}')
             print(traceback.format_exc())
             continue
-    return GraphResults(
-        True, number_sentences if len(sentence_instance_list) > number_sentences else len(sentence_instance_list),
-        graph_ttl_list)
+    return GraphResults(True, len(sentence_instance_list), graph_ttl_list)
 
 
 def nouns_preload(repo: str) -> dict:

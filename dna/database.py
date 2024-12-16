@@ -67,7 +67,7 @@ def add_remove_data(op_type: str, triples: str, repo: str, graph: str = empty_st
         ar_conn.commit()
         return empty_string
     except Exception as add_rem_err:
-        curr_error = f'Database ({op_type}) exception: {str(add_rem_err)}'
+        curr_error = f'Database ({op_type}) exception: {str(add_rem_err)}, turtle: {triples}'
         logging.error(curr_error)
         return curr_error
 

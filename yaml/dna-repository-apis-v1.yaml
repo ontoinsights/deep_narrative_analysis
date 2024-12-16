@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: Deep Narrative Analysis RESTful APIs v1.3
+  title: Deep Narrative Analysis RESTful APIs v1.4
   description: |-
     Defines the interface for ingesting, retrieving, editing and deleting 
     narratives and news articles using the Deep Narrative Analysis (DNA) 
@@ -10,35 +10,32 @@ info:
     the [GitHub DNA repository](https://github.com/ontoinsights/deep_narrative_analysis).
     Note that this implementation assumes storage of graphs in a Stardog database.
     Environment variables define the location of that database (typically a 
-    Stardog Cloud instance), and a username/password to access it (specially, 
-    STARDOG_ENDPOINT, STARDOG_USER and STARDOG_PASSWORD). In addition,
-    GEONAMES_ID and OPENAI_API_KEY environment variables MUST be set. If the 
-    environment variables are not defined, DNA will not function.
+    Stardog Cloud instance), and a username/password to access it (specifically, 
+    the information stored in the environment variables, STARDOG_ENDPOINT, 
+    STARDOG_USER and STARDOG_PASSWORD). In addition, GEONAMES_ID and 
+    OPENAI_API_KEY environment variables MUST be set. If the environment 
+    variables are not defined, DNA will not function.
     
     The following is a typical workflow after starting the DNA application:
     - Create a new repository by POSTing to
-      /dna/v1/repositories?repository=repo_name, or an existing repository may 
-      be reused
-    - OR -
-    - Use an existing repository (existing repositories are listed by 
-      GETting /dna/v1/repositories)
+      /dna/v1/repositories?repository=repo_name, or 
+    - OR an existing repository may be reused (existing repositories are 
+      listed by GETting /dna/v1/repositories)
     - THEN (optionally) - 
     - Add background details (people, places, businesses, 
       ...) by POSTing to 
-      /dna/v1/repositories/background?repository=repo_name their 
-      entity types
+      /dna/v1/repositories/background?repository=repo_name 
       - Adding background information improves processing time
         and assures better named entity resolution
       - Note that it is not necessary to input country names as
-        background, since these details are already captured
-    - It is also possible to review the background entities by
-      GETting /dna/v1/repositories/background?repository=repo_name 
-    - OR -
-    - If an entity is incorrectly entered/typed, remove it by
-      DELETEing the entry using
-      /dna/v1/repositories/background?repository=repo_name&
-      name=noun_name
-    - THEN -
+        background, since these details are already in the database
+      - It is also possible to review the current background entities by
+        GETting /dna/v1/repositories/background?repository=repo_name 
+      - If an entity is incorrectly entered/typed, remove it by
+        DELETEing the entry using
+        /dna/v1/repositories/background?repository=repo_name&
+        name=noun_name
+    - THEN (if new articles should be added to the repository) -
     - Ingest a narrative or news article by POSTing its metadata 
       and text to 
       /dna/v1/repositories/narrative-texts?repository=repo_name 
@@ -46,17 +43,16 @@ info:
       (the response body will contain the narrative's id as stored in
       the repository)
       - Only English text articles are currently processed
-      - Automated ingest will be supported in the future but many 
-        sites require subscriptions which must be resolved 
-    - OR - 
-    - Determine which (already ingested) articles or narratives 
-      are of interest by GETting 
+      - Automated news ingest will be supported in the future but many 
+        sites require subscriptions (which must be resolved)
+    - OR to determine which (already ingested) articles or narratives 
+      are of interest, GET 
       /dna/v1/repositories/narratives?repository=repo_name
       (the response body will contain a list of all narratives/articles
       and their metadata)
     - THEN -
     - Select articles to be analyzed/compared
-      - Note that these APIs are currently under development
+      - Note that these APIs will not be open-sourced
       
     To review the specific triples in a narrative or article, GET 
     /dna/v1/repositories/narratives/graphs?repository=repo_name&narrativeId=narr_id
@@ -240,15 +236,15 @@ paths:
     post:
       summary: >-
         Input one or more proper nouns and their types
-        (people, places, organizations, ...)  as background 
+        (people, places, organizations, ...) as background 
         details to the specified repository
       description: >-
         Process the names and entity types in the request 
-        body, adding details such as alternate names 
-        and descriptive information from Wikidata or GeoNames, to 
-        the specified repository; Return information indicates 
-        the proper nouns that have been added as background and 
-        any nouns that were skipped due to errors
+        body, adding details such as alternate names and 
+        descriptive information from Wikidata or GeoNames, 
+        to the specified repository; Return information 
+        indicates the proper nouns that have been added as 
+        background and any nouns that were skipped due to errors
       parameters:
         - $ref: '#/components/parameters/repository'
       operationId: inputNames
@@ -705,14 +701,24 @@ components:
             description: >-
               An enumerated value indicating if the name describes a
               "organization" (including businesses), "law", "person", 
-              "place" or "thing"
-            enum: [law, organization, person, place, thing]
+              "nationality/religious/political group", "place" or "thing"
+            enum: [law, norp, organization, person, place, thing]
             example: person
+          alsoKnownAs:
+            type: array
+            example: ["Doug", "Douglas", "Adams"]
+            description: >-
+              If non-blank, indicates other names/nicknames/aliases
+              for the entity. Note that alternate names for 
+              background entities are queried from Wikidata, but
+              all alternatives may not be defined. 
+            items:
+              type: string
           isCollection:
             type: boolean
             default: false
             description: >-
-              Boolean indicating whether the noun describes a 
+              Boolean indicating whether the noun describes a
               collection/group of businesses, laws, persons, ...
             example: false
     NarrativeDetails:

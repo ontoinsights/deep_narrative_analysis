@@ -12,7 +12,7 @@
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: March 2 2023
+# Last Modified: December 11 2023
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -23,9 +23,12 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history, no other changes
-#  Clarified StarvationHungerAndMalnutrition to be StarvationAndMalNutrition
-#    (Hunger is now a subclass of SensoryPerception in misc-event-subclasses.ttl)
+#  Reset change history, no other changes, Nov 2023
+#  Moved :StarvationAndMalnutrition to environment-subclasses.ttl
+#  Added :DiagnosticTest, :EpidemicAndPandemic, :FitnessAndExercise, 
+#    :MentalHealth, :NutritionAndDiet and :TherapyAndMedicalCare
+#  Added :RemovalAndRestriction as a superclass of :ObstructionAndConcretion
+#  Added the properties, :diagnosed_by and :treated_by
 ########################################################################
 
 
@@ -70,6 +73,12 @@
   :wordnet_noun_synset "14064328", "14064142" ;
   :wordnet_verb_synset "02126525" .
 
+:DiagnosticTest a owl:Class ;
+  rdfs:subClassOf :Search ;
+  rdfs:label "Diagnostic Test"@en ;
+  rdfs:comment "A procedure or measurement that aids in determining disease and medical conditions, and in monitoring treatment. The medical condition being diagnosed is the subject of the :diagnosed_by property, and the test is the object of the property. The patient undergoing the test is associated to it via the :has_affected_entity relationship."@en ;
+  :example "Examples of DiagnosticTest are laboratory, genetic and imaging tests, biopsies, and physical exams."@en .
+
 :Disability a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Disability"@en ;
@@ -87,6 +96,16 @@
   rdfs:label "Disorder"@en ;
   rdfs:comment "A condition characterized by abnormal functioning of physical or mental processes."@en ;
   :wordnet_noun_synset "14075885" .
+
+:EpidemicAndPandemic a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Epidemic and Pandemic"@en ;
+  rdfs:comment "A large and perhaps unexpected increase in the number of cases of a disease/disorder/health-related condition in a specific location. When the increase is exponential and crosses country borders, then the increase is considered a pandemic. The disease/disorder/condition which is increasing is identified using :has_topic."@en .
+
+:FitnessAndExercise a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Fitness and Exercise"@en ;
+  rdfs:comment "Per Wikipedia, 'A state of health and well-being and, more specifically, the ability to perform aspects of sports, occupations, and daily activities. Physical fitness is generally achieved through proper nutrition, moderate-vigorous physical exercise, and sufficient rest along with a formal recovery plan... [It is] considered a measure of the ... ability to function efficiently and effectively in work and leisure activities, to be healthy, to resist hypokinetic diseases, to improve immune system function, and to meet emergency situations.' (https://en.wikipedia.org/w/index.php?title=Physical_fitness&oldid=1249298330) 'Exercise or workout is physical activity that enhances or maintains fitness and overall health, which is performed for various reasons, including weight loss or maintenance, to aid growth and improve strength, develop muscles and the cardiovascular system, prevent injuries, hone athletic skills, improve health, or simply for enjoyment.' (https://en.wikipedia.org/w/index.php?title=Exercise&oldid=1261062803)"@en .
 
 :Frailty a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
@@ -107,8 +126,18 @@
   :wordnet_noun_synset "14042038" ;
   :wordnet_verb_synset "00088284" .
 
-:ObstructionAndConcretion a owl:Class ;
+:MentalHealth a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Mental Health"@en ;
+  rdfs:comment "'Mental health encompasses emotional, psychological, and social well-being, influencing cognition, perception, and behavior. According to the World Health Organization (WHO), it is a \"state of well-being in which the individual realizes his or her abilities, can cope with the normal stresses of life, can work productively and fruitfully, and can contribute to his or her community\". It likewise determines how an individual handles stress, interpersonal relationships, and decision-making. Mental health includes subjective well-being, perceived self-efficacy, autonomy, competence, intergenerational dependence, and self-actualization of ... intellectual and emotional potential, among others. From the perspectives of positive psychology or holism, mental health may include [the] ability to enjoy life and to create a balance between life activities and efforts to achieve psychological resilience.' (https://en.wikipedia.org/w/index.php?title=Mental_health&oldid=1260909394)"@en .
+
+:NutritionAndDiet a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Nutrition and Diet"@en ;
+  rdfs:comment "Nutrition concerns the nutrients that food and supplements provide and how the body absorbs and utilizes them to grow and survive, while Diet describes the specific foods and beverages a person consumes (or should consume) on a regular basis to be healthy."@en .
+
+:ObstructionAndConcretion a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated, :RemovalAndRestriction ;
   rdfs:label "Obstruction and Concretion"@en ;
   rdfs:comment "A blockage or the formation of a hard, solid mass in some part of the body. The 'hard, solid mass' is sometimes referred to a 'stone', 'calculus' or 'concretion'."@en ;
   :wordnet_noun_synset "14531751", "09253675" .
@@ -125,13 +154,6 @@
   rdfs:comment "A condition resulting from the administration/ingestion of a toxic substance."@en ;
   :wordnet_noun_synset "14533314" .
 
-:StarvationAndMalnutrition a owl:Class ;
-  rdfs:subClassOf :HealthAndDiseaseRelated, :FoodAndNutritionAccess ;
-  rdfs:label "Starvation and Malnutrition"@en ;
-  rdfs:comment "A condition where an individual is unable to obtain sufficient, nutritious food and/or that access to healthy and nutritious foods are NOT available or NOT accessible by a population/GroupOfAgents. The overall condition of starvation/famine can be described using the :has_assessment predicate."@en ;
-  :wordnet_noun_synset "01153157", "14223182", "14063016", "07330390" ;
-  :wordnet_verb_synset "01190677", "02126423", "01190070", "01190481", "01190273" .
-
 :Sterility a owl:Class ;
   rdfs:subClassOf :HealthAndDiseaseRelated ;
   rdfs:label "Sterility"@en ;
@@ -144,6 +166,12 @@
   rdfs:comment "A physical or mental sensation or change in functioning which is associated with/can indicate a disease or illness."@en ;
   :wordnet_noun_synset "14323139" . 
 
+:TherapyAndMedicalCare a owl:Class ;
+  rdfs:subClassOf :HealthAndDiseaseRelated ;
+  rdfs:label "Therapy and Medical Care"@en ;
+  rdfs:comment "The care and management of a patient to treat a health-related or medical condition."@en ;
+  :example "Examples include wound care, radiation/chemo-therapy, transfusions, palliative care, etc."@en .
+
 
 ########################################################################
 # Datatype Properties
@@ -154,8 +182,21 @@
 # Object Properties
 ########################################################################
 
+:diagnosed_by a owl:ObjectProperty ;
+  rdfs:label "diagnosed by"@en ;
+  rdfs:comment "Relationship between a disease, disorder, illness. etc. and a test/procedure that would determine if an entity is afflicted with it, and/or if the treatment is/was effective."@en ;
+  rdfs:domain :HealthAndDiseaseRelated ;
+  rdfs:range :DiagnosticTest .
+
 :indicated_by a owl:ObjectProperty ;
   rdfs:label "indicated by"@en ;
   rdfs:comment "Relationship between a disease, disorder, illness. etc. and its Symptoms."@en ;
   rdfs:domain :HealthAndDiseaseRelated ;
   rdfs:range :Symptom .
+
+:treated_by a owl:ObjectProperty ;
+  rdfs:label "treated by"@en ;
+  rdfs:comment "Relationship between a disease, disorder, illness. etc. and its possible treatments/drugs."@en ;
+  rdfs:domain :HealthAndDiseaseRelated ;
+  rdfs:range [ a owl:Class ;
+                owl:unionOf ( :PharmaceuticalAndMedicinal :TherapyAndMedicalCare ) ] .

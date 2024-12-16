@@ -5,59 +5,25 @@ import re
 from unidecode import unidecode
 
 from dna.create_entities_turtle import create_agent_ttl, create_location_ttl, create_named_entity_ttl, create_norp_ttl
-from dna.query_openai import access_api, event_categories, noun_events_prompt
+from dna.prompting_ontology_details import event_categories
+from dna.query_openai import access_api, noun_events_prompt
 from dna.query_sources import get_event_details_from_wikidata, get_wikipedia_description
 from dna.sentence_classes import Entity
-from dna.utilities_and_language_specific import check_name_gender, days, empty_string, literal, months, \
-    names_to_geo_dict, ner_dict, ner_types, underscore
+from dna.utilities_and_language_specific import add_unique_to_array, check_name_gender, days, empty_string, \
+    literal, months, names_to_geo_dict, ner_dict, ner_types, underscore
 
 agent_classes = (':Person', ':Person, :Collection', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
-                 ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
-                 ':EthnicGroup, :Collection', ':PoliticalGroup', ':PoliticalGroup, :Collection',
-                 ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
+                 ':GeopoliticalEntity', ':GeopoliticalEntity, :Collection', ':OrganizationalEntity',
+                 ':OrganizationalEntity, :Collection', ':EthnicGroup', ':EthnicGroup, :Collection',
+                 ':PoliticalGroup', ':PoliticalGroup, :Collection', ':ReligiousGroup',
+                 ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
                  ':Plant', ':Plant, :Collection')
-
-location_classes = (':Location', ':PhysicalLocation', ':GovernmentalEntity', ':GovernmentalEntity, :Collection',
-                    ':OrganizationalEntity', ':OrganizationalEntity, :Collection', ':EthnicGroup',
-                    ':EthnicGroup, :Collection', ':PoliticalGroup', ':PoliticalGroup, :Collection',
-                    ':ReligiousGroup', ':ReligiousGroup, :Collection', ':Animal', ':Animal, :Collection',
-                    ':Plant', ':Plant, :Collection')
 
 # TODO: (Future) Non-US dates
 month_pattern = re.compile('|'.join(months))
 year_pattern = re.compile('[0-9]{4}')
 day_pattern1 = re.compile('[0-9] | [0-9],|[0-2][0-9] |[0-2][0-9],|3[0-1] |3[0-1],')
 day_pattern2 = re.compile('|'.join(days))
-
-
-def _create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -> str:
-    """
-    Creates an IRI for a time that is defined by a year, month and/or day.
-
-    :param before_after_str: A string = 'before', 'after' or the empty string
-    :param str_text: Text which holds a time
-    :param ymd_required: Boolean indicating that a result should not be returned unless the
-                time is specified using the format, name of the month - space - day numeric -
-                space - 4 digit year (or just month, or month - space - year)
-    :return: A string specified as ":PiT_", followed by an optional "_Yrxxxx", an optional
-              "_Moxxxx" and an optional "_Dayxx", or an empty sting
-    """
-    year_search = year_pattern.search(str_text)
-    month_search = month_pattern.search(str_text)
-    day_search1 = day_pattern1.search(str_text)
-    day_search2 = day_pattern2.search(str_text)
-    if not year_search and not month_search and not day_search1 and not day_search2:
-        if ymd_required:
-            return empty_string
-        else:
-            return f':PiT_{str_text.lower().replace(space, underscore).replace(".", empty_string)}'
-    if year_search or month_search or day_search1:
-        return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
-               + (f'_Yr{year_search.group()}' if year_search else empty_string) \
-               + (f'_Mo{month_search.group()}' if month_search else empty_string) \
-               + (f'_Day{day_search1.group().replace(",", empty_string).strip()}' if day_search1 else empty_string)
-    return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
-           + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
 
 def _get_names(agent_text: str) -> list:
@@ -76,13 +42,13 @@ def _get_names(agent_text: str) -> list:
     return all_names
 
 
-def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict: dict) -> (str, str, list):
+def _get_noun_ttl(sentence_text: str, noun_text: str, noun_entity: Entity, nouns_dict: dict) -> (str, str, list):
     """
     Create Turtle for a new noun/entity.
 
     :param sentence_text: String holding the sentence
     :param noun_text: Text for the entity/noun
-    :param noun_type: String holding the NER type identified by spaCy
+    :param noun_entity: String holding Entity class details for the noun
     :param nouns_dict: A dictionary holding the nouns/named entities encountered in the narrative;
              The dictionary keys are the text for the noun, and its values are a tuple consisting
              of the spaCy entity type and the noun's IRI. An IRI value may be associated with
@@ -92,13 +58,14 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
              Turtle statements defining the noun (also, the nouns_dict may be updated)
     """
     labels = []
+    noun_type = noun_entity.ner_type
     base_type = noun_type.replace('PLURAL', empty_string).replace('SING', empty_string).\
         replace('FEMALE', empty_string).replace('MALE', empty_string)
     class_map = f'{ner_dict[base_type]}, :Correction'     # Identifying as possible Correction for co-ref resolution
     class_map = f'{class_map}, :Collection' if 'PLURAL' in noun_type and ':Collection' not in class_map else class_map
     if base_type == 'DATE':
         # TODO: Resolve how dates are managed
-        # noun_iri = _create_time_iri(empty_string, noun_text, True)
+        # noun_iri = create_time_iri(empty_string, noun_text, True)
         return empty_string, empty_string, []
     else:
         noun_iri = re.sub(r'[^:a-zA-Z0-9_]', underscore, noun_text.strip()).replace('__', underscore)
@@ -107,7 +74,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
     noun_ttl = [f'{noun_iri} :text {literal(noun_text)} .']
     # Process by location, agent, and event/other NER types
     if base_type in ('GPE', 'LOC', 'FAC', 'ORG'):    # spaCy incorrectly reports some locations as ORG
-        geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type)
+        geo_ttl, labels = create_location_ttl(noun_iri, noun_text, class_map, base_type, noun_entity.also_knowns)
         if geo_ttl:
             noun_ttl.extend(geo_ttl)
             base_type = 'LOC' if base_type == 'ORG' else base_type    # Found a location; Update the base_type
@@ -118,6 +85,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
             labels.extend(description_details.labels)
         if noun_text not in description_details.labels:
             labels.append(noun_text)
+        add_unique_to_array(noun_entity.also_knowns, labels)
         if 'NORP' not in noun_type:
             if 'PERSON' in noun_type:
                 noun_type = check_name_gender(noun_text)
@@ -141,6 +109,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
         event_details = get_event_details_from_wikidata(noun_text)
         if noun_text not in labels:
             labels.append(noun_text)
+        add_unique_to_array(noun_entity.also_knowns, labels)
         start_time_iri = empty_string if not event_details.start_time else f':PiT_{event_details.start_time}'
         end_time_iri = empty_string if not event_details.end_time else f':PiT_{event_details.end_time}'
         noun_ttl.extend(create_named_entity_ttl(noun_iri, event_details.labels, class_map, event_details.wiki_desc,
@@ -149,6 +118,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_type: str, nouns_dict
     else:
         if noun_text not in labels:
             labels.append(noun_text)
+        add_unique_to_array(noun_entity.also_knowns, labels)
         noun_ttl.extend(create_named_entity_ttl(noun_iri, labels, class_map, empty_string))
     if len(noun_ttl) > 1:    # More than just the noun text is in the Turtle
         for label in labels:
@@ -174,14 +144,48 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
     if noun_text in nouns_dict:                                  # Key is text; exact match of text
         return nouns_dict[noun_text]
-    if len(noun_text) > 5:                                        # Check match of substring
-        for noun in nouns_dict:
-            if noun_text.islower() and noun_text in noun:
-                # TODO: (Future) Improve with synonym check
-                return nouns_dict[noun]
-            if noun_text.istitle() and noun in noun_text:
-                return nouns_dict[noun]
+    if len(noun_text) > 5 or (len(noun_text) > 1 and noun_text[0].isupper()):
+        if any(c.isupper() for c in noun_text):
+            matches = [noun for noun in nouns_dict.keys() if noun in noun_text]
+            if matches:
+                return nouns_dict[matches[0]]
+        elif noun_text.islower():
+            matches = [noun for noun in nouns_dict.keys() if noun_text in noun]
+            # TODO: (Future) Improve with synonym check
+            if matches:
+                return nouns_dict[matches[0]]
     return noun_type, empty_string
+
+
+def create_time_iri(before_after_str: str, str_text: str, ymd_required: bool) -> str:
+    """
+    Creates an IRI for a time that is defined by a year, month and/or day.
+
+    :param before_after_str: A string = 'before', 'after' or the empty string
+    :param str_text: Text which holds a time
+    :param ymd_required: Boolean indicating that a result should not be returned unless the
+                time is specified using the format, name of the month - space - day numeric -
+                space - 4 digit year (or just month, or month - space - year)
+    :return: A string specified as ":PiT_", followed by an optional "_Yrxxxx", an optional
+              "_Moxxxx" and an optional "_Dayxx", or an empty sting
+    """
+    year_search = year_pattern.search(str_text)
+    month_search = month_pattern.search(str_text)
+    day_search1 = day_pattern1.search(str_text)
+    day_search2 = day_pattern2.search(str_text)
+    if not year_search and not month_search and not day_search1 and not day_search2:
+        if ymd_required:
+            return empty_string
+        else:
+            time_text = re.sub(r'[^A-Za-z0-9 ]', '', str_text)
+            return f':PiT_{time_text.lower().replace(" ", underscore)}'
+    if year_search or month_search or day_search1:
+        return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
+               + (f'_Yr{year_search.group()}' if year_search else empty_string) \
+               + (f'_Mo{month_search.group()}' if month_search else empty_string) \
+               + (f'_Day{day_search1.group().replace(",", empty_string).strip()}' if day_search1 else empty_string)
+    return ':PiT' + (f'_{before_after_str}' if before_after_str else empty_string) \
+           + (f'_Day{day_search2.group()}' if day_search2 else empty_string)
 
 
 def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -> (list, list):
@@ -209,7 +213,7 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
                 if f'{entities[offset].text}, {entities[offset + 1].text}' in sentence_text and \
                         (entities[offset].ner_type == entities[offset + 1].ner_type):  # Types same
                     new_entities.append(Entity(f'{entities[offset].text},{entities[offset + 1].text}',
-                                               entities[offset].ner_type))
+                                               entities[offset].ner_type, []))
                     offset += 2
                 else:
                     new_entities.append(entities[offset])
@@ -232,9 +236,14 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
             if entity_text.endswith(conj):
                 entity_text = entity_text[:len(article) * -1].strip()
                 break
-        # Does the entity start with a capital letter (e.g., a proper noun)?
+        # Does the entity start with a capital letter (e.g., is it a proper noun)?
         if not entity_text[0].isupper():
-            continue
+            found = -1
+            for i, char in enumerate(entity_text):
+                if char.isupper():
+                    found = i
+                    break
+            entity_text = entity_text[found:].strip()
         if len(entity_text) < 2:
             continue
         # Remove "apostrophe" or "apostrophe s" at the end of the entity text (spaCy includes possessive)
@@ -246,7 +255,7 @@ def process_ner_entities(sentence_text: str, entities: list, nouns_dict: dict) -
         if not entity_iri:
             # Need to define the Turtle for a new entity
             entity_type, entity_iri, new_ttl = \
-                 _get_noun_ttl(sentence_text, entity_text, new_entity.ner_type, nouns_dict)
+                 _get_noun_ttl(sentence_text, entity_text, new_entity, nouns_dict)
             if new_ttl:
                 entities_ttl.extend(new_ttl)
         if entity_iri:

@@ -11,7 +11,7 @@
 # Codes (https://www.geonames.org/export/codes.html).
 # 
 # Created: February 9, 2020
-# Last modified: October 31 2023
+# Last modified: December 11 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -22,7 +22,8 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
+#  Reset change history and simplified, Nov 2023
+#  Added :Prison
 ########################################################################
 
 
@@ -119,6 +120,11 @@
   rdfs:label "Postal Address"@en ;
   rdfs:comment "A point or site on/in the Earth as specified by a numeric identifier and street name or a post office box, along with other details such as a part of a city, a town/city name, state or other country locality information, country name and postal code. The details of a PostalAddress are defined using the properties, :street_address1, :street_address2, :city_part_name, :city_name, :state_or_region_name, :country_name and :postal_code, assembled in that order into a complete postal address. Note that all properties do NOT have to be specified."@en ;
   :wordnet_noun_synset "08508037" .
+
+:Prison a owl:Class ;
+  rdfs:subClassOf :BuildingAndDwelling ;
+  rdfs:label "Prison"@en ;
+  rdfs:comment "A building, detention area or facility in which people are legally or illegally detained and/or held for punishment or awaiting trial. The location is identified by latitude/longitude/altitude, by name or street address, or by nearby points and sites."@en .
 
 :RelativeDirectionLocation a owl:Class ;
   rdfs:subClassOf :PhysicalLocation ;

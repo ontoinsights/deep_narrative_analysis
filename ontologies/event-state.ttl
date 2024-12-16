@@ -9,7 +9,7 @@
 # File defining semantics related to events and states/conditions/situations
 # 
 # Created: February 9 2020
-# Last modified: October 4 2024
+# Last modified: December 11 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -20,12 +20,14 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Added AchievementAndAccomplishment and has_source
-#  Separated Win, Loss
+#  Reset change history and simplified, Nov 2023
+#  Added :AchievementAndAccomplishment and :has_source
+#  Separated :Win, :Loss
 #  Added disjointess and :has_aspect
-#  Removed :has_described_entity in lieu of :has_context
-#  Removed :has_provider in lieu of :has_source
+#  Removed :has_described_entity in lieu of :has_context, and 
+#    :has_provider in lieu of :has_source
+#  Changed range of :has_recipient to owl:Thing
+#  Clarified several descriptions
 ########################################################################
 
 
@@ -157,8 +159,7 @@
 :has_recipient a owl:ObjectProperty ;
   rdfs:label "has receiving agent"@en ;
   rdfs:domain :EventAndState ;
-  rdfs:range :Agent ;
-  rdfs:comment "References the Actor that receives goods, information, ... when an EventAndState involves movement of persons, cargos, etc."@en .
+  rdfs:comment "References the entity that receives goods, information, ... when an EventAndState involves movement of persons, cargos, etc. or the application of medicine, chemicals, etc."@en .
 
 :has_source a owl:ObjectProperty ;
   rdfs:label "has source"@en ;

@@ -14,7 +14,7 @@
 # of interest.
 # 
 # Created: February 9 2020
-# Last modified: March 2 2024
+# Last modified: December 11 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -25,7 +25,9 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
+#  Reset change history and simplified, Nov 2023
+#  Added example to :PharmaceuticalAndMedicinal, :MachineAndTool and
+#    :LegalInstrument
 ########################################################################
 
 
@@ -168,7 +170,8 @@
 :LegalInstrument a owl:Class ;
   rdfs:subClassOf :Resource ;
   rdfs:label "Legal Instrument"@en ;
-  rdfs:comment "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement. Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments."@en ;
+  rdfs:comment "Per Wikipedia (https://en.wikipedia.org/w/index.php?title=Legal_instrument&oldid=1012886023), a LegalInstrument is a 'term of art that is used for any formally executed written document that can be ... attributed to its author, records and formally expresses a legally enforceable act, process, or contractual duty, obligation, or right, and therefore evidences that act, process, or agreement."@en ; 
+  :example "Examples include a certificate, deed, bond, contract, will, legislative act, notarial act, court writ or process, or any law passed by a competent legislative body in municipal (domestic) or international law.' Note that legal instruments such as contracts transferring ownership of an asset are both Legal and FinancialInstruments."@en ;
   :wordnet_noun_synset "06491336" .
 
 :MachineAndTool a owl:Class ;
@@ -200,6 +203,7 @@
   rdfs:subClassOf :Resource ;
   rdfs:label "Pharmaceutical and Medicinal Entity"@en ;
   rdfs:comment "A Resource (naturally occurring or manufactured) that is used to cure/heal, relieve pain and/or administer to injuries or illnesses."@en ;
+  :example "Examples include medicines, bandages/wraps/casts, and chemotherapy implants."@en ;
   :wordnet_noun_synset "03745652" .
 
 :PreciousMetalPearlAndGemstone a owl:Class ;

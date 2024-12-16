@@ -10,7 +10,7 @@
 # and states/situations
 # 
 # Created: February 9 2020
-# Last modified: March 1 2024
+# Last modified: December 11 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,7 +21,9 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
+#  Reset change history and simplified, Nov 2023
+#  Added :PoliticalGroup as a superclass of :PoliticalParty
+#  Renamed :JudicialGroup and :ExecutiveAndLegislativeGroup to :xxxBody
 ########################################################################
 
 
@@ -53,9 +55,9 @@
   rdfs:comment "An EthnicGroup is a sett of persons who identify based on ethnicity - e.g., having a common genealogy, ancestry, language, history, culture, nation, ...'."@en ;
   :wordnet_noun_synset "04806382" .
 
-:ExecutiveAndLegislativeGroup a owl:Class ;
+:ExecutiveAndLegislativeBody a owl:Class ;
   rdfs:subClassOf :GovernmentalEntity ;
-  rdfs:label "Executive and Legislative Group"@en ;
+  rdfs:label "Executive and Legislative Body"@en ;
   rdfs:comment "A type of GovernmentalEntity responsible for legislation (such as the US Congress) and for enforcing those laws and governing."@en .
 
 :FaithBasedOrganization a owl:Class ;
@@ -76,9 +78,9 @@
   :example "Examples of a groups of Agents are OrganizationalEntity, or the concept of a family. However, even an indistinct 'mob' is classified as a group of Agents, as well as the 'population' of a region."@en ;
   :wordnet_noun_synset "07967506", "07991473" .
 
-:JudicialGroup a owl:Class ;
+:JudicialBody a owl:Class ;
   rdfs:subClassOf :GovernmentalEntity ;
-  rdfs:label "Judicial Group"@en ;
+  rdfs:label "Judicial Body"@en ;
   rdfs:comment "A type of GovernmentalEntity responsible for interpreting laws, and applying them to individual cases."@en .
 
 :LineOfBusiness a owl:Class ;
@@ -117,7 +119,7 @@
   :wordnet_noun_synset "06222574" .
 
 :PoliticalParty a owl:Class ;
-  rdfs:subClassOf :OrganizationalEntity ;
+  rdfs:subClassOf :OrganizationalEntity, :PoliticalGroup ;
   rdfs:label "Political Party"@en ;
   rdfs:comment "An organized group of Persons with similar opinions and goals related to how governement and society should be structured and operate. PoliticalParties work to get their candidates elected to political office."@en ;
   :wordnet_noun_synset "08273889" .

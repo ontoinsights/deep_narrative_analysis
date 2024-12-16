@@ -22,7 +22,7 @@ query_background = 'prefix : <urn:ontoinsights:dna:> SELECT ?name ?type ?plural 
                    '?s a :Background; :text ?name . OPTIONAL {?s a :Collection. BIND(true as ?plural)} ' \
                    '{{?s a :Person . BIND("person" as ?type)} UNION {?s a :Resource . BIND("thing" as ?type)} ' \
                    'UNION {?s a :OrganizationalEntity . BIND("organization" as ?type)} UNION ' \
-                   '{{{?s a :GeoPoliticalEntity} UNION {?s a :Location}}. BIND("place" as ?type)} UNION ' \
+                   '{{{?s a :GeopoliticalEntity} UNION {?s a :Location}}. BIND("place" as ?type)} UNION ' \
                    '{?s a :LawAndPolicy . BIND("law" as ?type)}} }}'
 
 query_corrections = \

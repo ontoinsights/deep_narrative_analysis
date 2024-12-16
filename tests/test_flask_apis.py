@@ -111,8 +111,8 @@ def test_repositories_get2(client):
 def test_background_post(client):
     name1 = {"name": "Kamala Harris", "type": "person"}
     name2 = {"name": "Donald Trump", "type": "person"}
-    name3 = {"name": "ABC News", "type": "organization"}
-    name4 = {"name": "ABC moderators", "type": "person", "isCollection": True}
+    name3 = {"name": "ABC News", "type": "organization", "alsoKnownAs": ["ABC"]}
+    name4 = {"name": "Blue States", "type": "place", "isCollection": True}
     req_data = json.dumps({"backgroundNames": [name1, name2, name3, name4]})
     resp = client.post('/dna/v1/repositories/background', content_type='application/json',
                        query_string={'repository': 'foo'}, data=req_data)
@@ -128,7 +128,7 @@ def test_background_get1(client):
     assert resp.status_code == 200
     background_data = resp.get_json()['backgroundNames']
     assert len(background_data) == 4
-    assert background_data[0]['name']['value'] in ('Kamala Harris', 'Donald Trump', 'ABC News', 'ABC moderators')
+    assert background_data[0]['name']['value'] in ('Kamala Harris', 'Donald Trump', 'ABC News', 'Blue States')
 
 
 def test_background_delete(client):
@@ -145,9 +145,9 @@ def test_background_get2(client):
     assert resp.status_code == 200
     background_data = resp.get_json()['backgroundNames']
     assert len(background_data) == 3
-    assert background_data[0]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
-    assert background_data[1]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
-    assert background_data[2]['name']['value'] in ('Donald Trump', 'ABC News', 'ABC moderators')
+    assert background_data[0]['name']['value'] in ('Donald Trump', 'ABC News', 'Blue States')
+    assert background_data[1]['name']['value'] in ('Donald Trump', 'ABC News', 'Blue States')
+    assert background_data[2]['name']['value'] in ('Donald Trump', 'ABC News', 'Blue States')
 
 
 # dna/v1/repositories/narratives

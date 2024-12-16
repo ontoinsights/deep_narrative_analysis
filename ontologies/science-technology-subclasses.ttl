@@ -1,0 +1,86 @@
+@prefix : <urn:ontoinsights:dna:> .
+@prefix dna: <urn:ontoinsights:dna:> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+########################################################################
+# File defining several topic areas related to science and technology.
+# 
+# These subclasses should be extended as needed for a domain of interest.
+# 
+# Created: December 12 2024
+# 
+# Licensed by OntoInsights, LLC
+# Creative Commons Attribution 4.0 International (CC BY 4.0)
+# 
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,
+# either express or implied.
+# 
+# Changes:
+#  New
+########################################################################
+
+
+########################################################################
+# Classes
+########################################################################
+
+
+:ArtificialIntelligenceAndMachineLearning a owl:Class ;
+  rdfs:subClassOf :ComputerScience ;
+  rdfs:label "Artificial Intelligence and Machine Learning"@en ;
+  rdfs:comment "An area of computer science exploring how machines can mimic human cognitive abilities like learning and problem-solving. Machine learning is a subset of artificial intelligence focusing on creating and training algorithms for learning from data without explicit programming, and identifying patterns within data sets."@en .
+
+:Astronomy a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Astronomy"@en ;
+  rdfs:comment "A branch of science dealing with off-Earth, celestial objects, space, and the universe as a whole."@en .
+
+:BiotechnologyAndGenetics a owl:Class ;
+  rdfs:subClassOf :NaturalSciences ;
+  rdfs:label "Biotechnology and Genetics"@en ;
+  rdfs:comment "The application of biology, biological systems and organisms to develop useful products (such as medicines) and solve problems. Genetic engineering is a key component of biotechnology, related to understanding and manipulating genetic material. Genetics provides the scientific knowledge about genes and their functions, which allows biotechnologists to target specific genes for manipulation."@en .
+  
+:ComputerScience a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Computer Science"@en ;
+  rdfs:comment "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Computer_science&oldid=1261413236), 'omputer science is the study of computation, information, and automation. [It] spans theoretical disciplines (such as algorithms, theory of computation, and information theory) to applied disciplines (including the design and implementation of hardware and software).'"@en .
+
+:Cybersecurity a owl:Class ;
+  rdfs:subClassOf :ComputerScience ;
+  rdfs:label "Cybersecurity"@en ;
+  rdfs:comment "From Wikipedia (https://en.wikipedia.org/w/index.php?title=Computer_security&oldid=1262474366), 'computer security (also cybersecurity, digital security, or information technology (IT) security) is the protection of computer software, systems and networks from threats that can lead to unauthorized information disclosure, theft or damage to hardware, software, or data, as well as from the disruption or misdirection of the services they provide.'"@en .
+
+:Nanotechnology a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Nanotechnology"@en ;
+  rdfs:comment "The imaging, measuring, modeling and manipulation of matter at the nanoscale level (1 to 100 nanometers, nm). At this scale, materials have unique properties and can lead to the development of very small devices and new products."@en .
+
+:NaturalSciences a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Natural Sciences"@en ;
+  rdfs:comment "The branches of science dealing with the physical world, including physics, chemistry, geology and biology."@en .
+
+:QuantumComputing a owl:Class ;
+  rdfs:subClassOf :ComputerScience, :Nanotechnology ;
+  rdfs:label "Quantum Computing"@en ;
+  rdfs:comment "A field of ComputerScience that leverages the principles of quantum mechanics to solve problems much faster than traditional computers, utilizing 'qubits' which can exist in multiple states simultaneously. Note that this is related to nanotechnology since the latter is crucial for creating the physical components of quantum computers, and manipulating individual atoms to build qubits on a chip."@en .
+
+:Robotics a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Robotics"@en ;
+  rdfs:comment "Technology area involving the design, construction, and use of robots."@en .
+
+:SatelliteTechnology a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Satellite Technology"@en ;
+  rdfs:comment "The use of satellites (machines launched into space and orbiting a planet or other celestial object) to observe, explore, and/or enable communication."@en .
+
+:SpaceExploration a owl:Class ;
+  rdfs:subClassOf :ScienceAndTechnologyRelated ;
+  rdfs:label "Space Exploration"@en ;
+  rdfs:comment "The study of space and celestial bodies using both robotic and human missions. Its goal is to gain knowledge about the universe, and potentially colonize other planets."@en .

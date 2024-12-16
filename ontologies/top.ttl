@@ -9,7 +9,7 @@
 # File defining general concepts used throughout the DNA ontologies
 # 
 # Created: November 7 2020
-# Last modified: July 19 2024
+# Last modified: December 12 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -20,12 +20,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Removed invalid "subclassOf" predicate 
-#  Added external_identifier
-#  Changed negation to negated
-#  Renamed :causes to :has_cause and added :has_precondition
-#  Subclassed Process from Collection
+#  Reset change history and simplified, Dec 2024
 ########################################################################
 
 
@@ -68,7 +63,7 @@
 
 :EventAndState a owl:Class ;
   rdfs:label "Event and State"@en ;
-  rdfs:comment "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the specific subclass of :EventAndState), to whom (defined using :has_agent or its sub-properties), when (defined using :has_time property or its sub-properties), how (defined using :has_instrument) and where (defined using :has_location or its sub-properties). A state is a factor, situation or condition that an Agent (defined using :has_agent or its subproperty, :has_holder) or Resouce (defined using :has_object) experiences at some time (defined using :has_time or its sub-properties) and possibly place (defined using :has_location)."@en ;
+  rdfs:comment "Superclass for any occurrence/event, factor or condition/state. An event is an occurrence or happening that is typically described by what happened (the specific subclass of :EventAndState), to whom (defined using :has_active/affected_entity), when (defined using :has_time property or its sub-properties), how (defined using :has_instrument) and where (defined using :has_location or its sub-properties). A state is a factor, situation or condition that an Agent (defined using :has_holder) or Resouce (defined using :has_object) experiences at some time (defined using :has_time or its sub-properties) and possibly place (defined using :has_location)."@en ;
   :wordnet_noun_synset "07298313", "00024900", "08584764", "13957629" .
 
 :GoalDirectedProcess a owl:Class ;
@@ -85,7 +80,8 @@
 
 :InformationSource a owl:Class ;
   rdfs:label "Information Source"@en ;
-  rdfs:comment "A document, book, news article, database, spreadsheet, file, web page or other textual artifact with non-fictional, or fictional content."@en ;
+  rdfs:comment "Any artifact with non-fictional or fictional content."@en ;
+  :example "Examples are documents, news articles, databases, spreadsheets, web pages, videos, etc."@en ;
   :wordnet_noun_synset "06278749", "03222161", "06650349", "06520807", "06413674" .
 
 :Location a owl:Class ;
@@ -160,7 +156,7 @@
 
 :external_identifier a owl:DatatypeProperty ;
   rdfs:label "external identifier"@en ;
-  rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property."@en ;
+  rdfs:comment "Text specifying an identifier from an external 'system', such as Wikidata. The 'system' is identified using the property, :identifier_source, as an RDF edge property. At present, the source is restricted to Wikidata."@en ;
   rdfs:range xsd:string .
 
 :external_link a owl:DatatypeProperty ;
@@ -205,7 +201,7 @@
 :probability a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "probability/likelihood"@en ;
   rdfs:comment "Decimal that is an RDF* property extension indicating the likelihood of the subject being related to the object using the predicate. A variety of objects MAY be related to the subject-predicate pair, where the probabilities for all the pairs should add to 1.0. In order to indicate the likelihood that the subject-predicate relationship is NOT applicable, the object can be defined as owl:Nothing."@en ;
-  rdfs:comment "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean."@en ;
+  :example "An example of the usage of :probability is to indicate that :Bird :Flies {:probability 0.9} \"true\"^^xsd:boolean and :Bird :Flies {:probability 0.1} \"false\"^^xsd:boolean."@en ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:decimal ;
                owl:withRestrictions ( [ xsd:minInclusive "0.00"^^xsd:decimal ]

@@ -10,7 +10,7 @@
 # and their graphs.
 # 
 # Created: October 31 2023
-# Last modified: November 13 2024
+# Last modified: December 13 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -21,9 +21,11 @@
 # either express or implied.
 # 
 # Changes:
-#  Added/clarified number_sentences, number_ingested and rhetorical devices
-#  Added Clause
-#  Added interpretation, ranking, segment_level and sentiment_explanation
+#  Added/clarified :number_sentences, :number_ingested and :rhetorical_device
+#  Added :interpretation, :segment_level, :sentiment_explanation and :subject_area
+#  Updated :text_quote to :partial_quote
+#  Changed the domain of :rhetorical_device
+#  Added :NarrativeEvent, :describes, :clarifying_text and :clarifying_reference
 ########################################################################
 
 
@@ -31,10 +33,10 @@
 # Classes
 ########################################################################
 
-:Clause a owl:Class ;
-  rdfs:label "Clause"@en ;
-  rdfs:subClassOf :InformationSource ;
-  rdfs:comment "A portion of a Sentence with an identifiable subject and verb. Typically, it is referenced as the 'topic' of event, such as a CommunicationAndSpeechAct."@en .
+:NarrativeEvent a owl:Class ;
+  rdfs:subClassOf :EventAndState ;
+  rdfs:label "Narrative Event"@en ;
+  rdfs:comment "A main event or situation described in a Narrative. The NarrativeEvent is related to the Narrative using the :describes property. The :offset property indicates the ordering of the NarrativeEvents as they occur in the Narrative."@en .
 
 
 ########################################################################
@@ -45,6 +47,11 @@
   rdfs:label "author"@en ;
   rdfs:comment "String holding the author/creator of the InformationSource. There may be more than one."@en ;
   rdfs:domain :InformationSource ;
+  rdfs:range xsd:string .
+
+:clarifying_text a owl:DatatypeProperty ;
+  rdfs:label "clarifying text"@en ;
+  rdfs:comment "String holding the text of an adjective, preposition or possessive that clarifies the context of the entity."@en ;
   rdfs:range xsd:string .
 
 :errors a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -58,6 +65,16 @@
   rdfs:comment "Defines the grade level of an individual who can understand the full semantics of the Sentence."@en ;
   rdfs:domain :Sentence ;
   rdfs:range xsd:integer .
+
+:information_flow a owl:DatatypeProperty ;
+  rdfs:label "information flow"@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('narrative/episodic' 'chronological' 'comparative' 'thematic/multifaceted' 'analytical'
+                   'argumentative' 'causal' 'fragmented' 'speculative/forward-looking' 'historical context'
+                   'cyclical' 'spiral' 'summarized' 'inverted pyramid' 'question-answer' ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate the possible flows of information in a narrative/article. Examples include 'episodic', 'argumentative' and 'summarized'."@en .
 
 :interpretation a owl:DatatypeProperty ;
   rdfs:label "interpretation"@en ;
@@ -73,6 +90,15 @@
                owl:oneOf  ('advocate' 'analyze' 'describe-set' 'describe-current' 'entertain'
                            'establish-authority' 'inspire' 'life-story' ) ] ;
   rdfs:comment "String restricted to a set of values that indicate the possible purposes/goals for publishing a narrative. There are many possible goals that may apply to a single Narrative. As an example, values include 'advocate'ing, 'analyze'ing and 'entertain'ing."@en .
+
+:narrative_plotline a owl:DatatypeProperty ;
+  rdfs:label "narrative plotline"@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ('conflict and resolution' 'rise and fall' 'overcoming the monster/heroic acts' 'rags to riches'
+                           'scandal and accountability' 'quest' 'personal transformation' 'justice and revenge' ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate archetypal story themes/plotlines tied to human experiences and desires, that may be used in a narrative/article. There are many possible plotlines that may apply to a single Narrative. As an example, values include 'conflict and resolution', 'scandal and accountability' and 'rags to riches'."@en .
 
 :number_characters a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:subPropertyOf :count ;
@@ -108,6 +134,13 @@
   rdfs:domain :Sentence ;
   rdfs:range xsd:integer .
 
+:partial_quote a owl:DatatypeProperty ;
+  rdfs:subPropertyOf :text ;
+  rdfs:label "partial quote"@en ;
+  rdfs:comment "String holding the text of a short quotation (a few words without a subject and verb) in a Sentence."@en ;
+  rdfs:domain :Sentence ;
+  rdfs:range xsd:string .
+
 :ranking a owl:DatatypeProperty ;
   rdfs:label "ranking"@en ;
   rdfs:comment "Defines a Narrative's validity as considered by a reader with a certain viewpoint or perspective. The latter is specified using :segment_label as an edge property. The ranking is an integer from 1 to 5, where 1 indicates that the Narrative is not considered valid/truthful."@en ;
@@ -116,8 +149,7 @@
 
 :rhetorical_device a owl:DatatypeProperty ;
   rdfs:label "rhetorical device"@en ;
-  rdfs:domain [ a owl:Class ;
-                owl:unionOf ( :Narrative :Sentence ) ] ;
+  rdfs:domain :Sentence ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:oneOf  ('ad baculum' 'ad hominem' 'ad populum' 'allusion' 'antanagoge' 'aphorism' 'ethos' 'exceptionalism' 
@@ -142,7 +174,7 @@
   rdfs:domain :Narrative ;
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
-               owl:oneOf  ( "negative" "neutral" "positive" ) ] ;
+               owl:oneOf ( 'negative' 'neutral' 'positive' ) ] ;
   rdfs:comment "String restricted to a set of values that indicate whether a Narrative conveys a 'positive', 'negative' or 'neutral' sentiment."@en .
 
 :sentiment_explanation a owl:DatatypeProperty, owl:FunctionalProperty ;
@@ -156,6 +188,15 @@
   rdfs:comment "String indicates the agent, location or means by which the InformationSource was obtained."@en ;
   rdfs:domain :InformationSource ;
   rdfs:range xsd:string .
+
+:subject_area a owl:DatatypeProperty ;
+  rdfs:label "subject area"@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range [ a rdfs:Datatype ;
+               owl:onDatatype xsd:string ;
+               owl:oneOf  ( 'crime/law' 'economy/business' 'education' 'entertainment' 'environment/ecology' 'health' 
+                            'lifestyle' 'politics/international' 'science/technology' 'sports' ) ] ;
+  rdfs:comment "String restricted to a set of values that indicate the subject areas that describe a Narrative. As an example, values include 'crime/law', 'health' and 'politics'."@en .
 
 :summary a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "summary"@en ;
@@ -171,23 +212,16 @@
   rdfs:range [ a rdfs:Datatype ;
                owl:onDatatype xsd:string ;
                owl:oneOf  ('neutral' 'past' 'present') ] .
-                                      
+
 :text a owl:DatatypeProperty, owl:FunctionalProperty ;
   rdfs:label "text"@en ;
   rdfs:comment "String holding the text of an InformationSource."@en ;
   rdfs:domain :InformationSource ;
   rdfs:range xsd:string .
-                                      
+
 :topic a owl:DatatypeProperty ;
   rdfs:label "topic"@en ;
   rdfs:comment "String holding a topic of the InformationSource."@en ;
-  rdfs:domain :InformationSource ;
-  rdfs:range xsd:string .
-
-:text_quote a owl:DatatypeProperty, owl:FunctionalProperty ;
-  rdfs:subPropertyOf :text ;
-  rdfs:label "text quote"@en ;
-  rdfs:comment "String holding the text of a quotation in an InformationSource."@en ;
   rdfs:domain :InformationSource ;
   rdfs:range xsd:string .
   
@@ -210,6 +244,16 @@
   rdfs:comment "Relationship between a Quote and the Agent to whom/which it is attributed."@en ;
   rdfs:domain :Quote ;
   rdfs:range :Agent .
+
+:clarifying_reference a owl:ObjectProperty, owl:FunctionalProperty ;
+  rdfs:label "clarifying reference"@en ;
+  rdfs:comment "Relationship from an entity to another, typically indicating that the subject is part of or owned by the object, or that the object provides the context for the subject. The :clarifying_text indicates the string that was analyzed to determine the :clarifying_reference."@en .
+
+:describes a owl:ObjectProperty ;
+  rdfs:label "describes"@en ;
+  rdfs:comment "Relationship between a Narrative and the main events/situations detailed in it."@en ;
+  rdfs:domain :Narrative ;
+  rdfs:range :NarrativeEvent .
 
 :has_semantic a owl:ObjectProperty ;
   rdfs:label "has semantic"@en ;

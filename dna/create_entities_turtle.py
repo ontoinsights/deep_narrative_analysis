@@ -81,7 +81,7 @@ def create_agent_ttl(agent_iri: str, alt_names: list, agent_type: str, agent_cla
     return agent_ttl
 
 
-def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: str) -> (list, list):
+def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: str, also_knowns: list) -> (list, list):
     """
     Create the Turtle for a location including additional details as described by GeoNames and Wikidata.
 
@@ -89,11 +89,12 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: s
     :param loc_text: The text of the location
     :param loc_class: The mapping of the entity type to the DNA ontology
     :param ner_type: The NER type assigned by spaCy
+    :param also_knowns: Alternate names for the entity (may be empty)
     :return: A tuple consisting of a list of the Location's Turtle declaration, and a list of
              alternate names for the Location
     """
     geonames_ttl = []
-    alt_names = []
+    alt_names = [] if not also_knowns else also_knowns[:]
     geonames_details = get_geonames_location(loc_text)
     if geonames_details.location_class:
         geonames_ttl.append(f'{loc_iri} a {geonames_details.location_class} .')

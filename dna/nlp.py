@@ -91,12 +91,13 @@ def _get_quotation_attribution(complete_text: str, quotation: str) -> str:
     return empty_string
 
 
-def _resolve_quotations(narr: str) -> list:
+def _resolve_quotations(narr: str) -> (str, list):
     """
     Capture the quotations in the text.
 
     :param narr: The narrative text
-    :return: A list of Quotation class instances
+    :return: A tuple where the first element is the quotation mark type (\u0022, \u2018, \u201c) and
+             the second is a list of Quotation class instances
     """
     # Determine what format is used to indicate a quotation (", right/left quotes, ...) and extract
     #     all quoted text
@@ -113,9 +114,9 @@ def _resolve_quotations(narr: str) -> list:
         index_max = max(range(len(lengths)), key=lengths.__getitem__)
         quotes = quotations_list[int(index_max)]   # List of quotations to be processed
     else:
-        return []
+        return -1, []
     # Create an array of Quotation class instances
-    quotations = []         #
+    quotations = []
     for quote in quotes:    # Process the individual quotations
         quote_doc = nlp(quote)
         quote_verbs = [wd for wd in list(quote_doc) if wd.pos_ in ('VERB', 'AUX')]  # Root verb may be AUX
@@ -126,7 +127,7 @@ def _resolve_quotations(narr: str) -> list:
                 break
         if verb_and_subj:                # Have a subject+verb
             quotations.append(Quotation(quote, 0, [], _get_quotation_attribution(narr, quote)))
-    return quotations
+    return index_max, quotations
 
 
 def _update_token_separation(sentence_text: str) -> str:
@@ -136,7 +137,6 @@ def _update_token_separation(sentence_text: str) -> str:
     :param sentence_text: The current text of the sentence
     :return: Updated sentence text
     """
-    #
     updated_text = re.sub(r'([0-9]) %', r'\1%', sentence_text)
     updated_text = re.sub(r' (]) ', r'\1', updated_text)
     # Need to execute re.sub twice since a string of hyphens may be defined (e.g., xxx- xxx- xxx)
@@ -156,7 +156,7 @@ def get_entities(text: str) -> list:
     for ent in doc.ents:
         # Ignoring 'TIME'
         if ent.label_ in ner_types and ent.label_ != 'TIME':    # Using strings for now to aid in debug
-            entities.append(Entity(ent.text, ent.label_))
+            entities.append(Entity(ent.text, ent.label_, []))
     return entities
 
 
@@ -172,20 +172,21 @@ def parse_narrative(narr_text: str) -> (list, list):
              of the Quotation class
     """
     narrative = narr_text.replace('\n', space).replace("  ", space).strip()
-    quotations = _resolve_quotations(narrative)
+    quotation_mark, quotations = _resolve_quotations(narrative)
+    # TODO: Use the quotation_mark info (0 = \u0022, 1 = \u2018, 2 = \u201c) to find all quotes
     doc = nlp(narrative)
     sentence_instance_list = []
     sentence_offset = 0
     for sentence in doc.sents:
         sentence_offset += 1
         sentence_text = _update_token_separation(sentence.text.strip())
-        # Determine if special punctuation is present (question and exclamation marks for now); Other punctuation?
+        # TODO: Determine if special punctuation is present (question mark, exclamation, other?)
         # punctuations = _get_punctuations(sentence_text)
         # Short sentences are mainly for reader effect and result in parsing problems - capture but ignore processing
         if len(sentence_text) < 3 or not any(c.isalnum() for c in sentence_text):
             # No NER
-            sentence_instance_list.append(Sentence(sentence_text, sentence_offset, []))
+            sentence_instance_list.append(Sentence(sentence_text, sentence_offset, [], []))
             continue
         sentence_instance_list.append(
-            Sentence(sentence_text, sentence_offset, get_entities(sentence_text)))
+            Sentence(sentence_text, sentence_offset, get_entities(sentence_text), []))
     return sentence_instance_list, quotations

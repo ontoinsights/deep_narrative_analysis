@@ -8,12 +8,12 @@
 ########################################################################
 # File defining semantics related to a variety of events that are 
 # sub-classes of AcquisitionPossesionAndTransfer, Avoidance, 
-# AggressiveCriminalOrHostileAct, FriendlyOrSupportiveAct and Cognition.
+# DeceptionAndDishonesty, FriendlyOrSupportiveAct and Cognition.
 # 
 # These subclasses should be extended as needed for a domain of interest.
 # 
 # Created: April 1 2021
-# Last Modified: May 5 2024
+# Last Modified: December 12 2024
 # 
 # Licensed by OntoInsights, LLC
 # Creative Commons Attribution 4.0 International (CC BY 4.0)
@@ -24,11 +24,7 @@
 # either express or implied.
 # 
 # Changes:
-#  Reset change history and simplified
-#  Removed LearningAndEducation from the KnowledgeAndSkill hierarchy
-#  Removed CaptureAndSeizure as overlapping with the AcquisitionPossession
-#    AndTransfer superclass
-#  Added DiscriminationAndPrejudice and OpenMindednessAndTolerance
+#  Reset change history and simplified, Dec 2024
 ########################################################################
 
 
@@ -37,7 +33,7 @@
 ########################################################################
 
 :Abduction a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
   rdfs:label "Abduction"@en ;
   rdfs:comment "An act of taking an Agent (a Person or GroupOfAgents/Persons) against their will."@en ;
   :wordnet_noun_synset "00776957", "00777199", "00784853" ;
@@ -51,7 +47,7 @@
   :wordnet_verb_synset "00081834", "02553283" .
 
 :Arson a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:subClassOf :AttackHarmAndAssault ;
   rdfs:label "Arson"@en ;
   rdfs:comment "An Event where a fire is intentionally set in order to destroy or damage property."@en ;
   :wordnet_noun_synset "00378877", "03571171" ;
@@ -64,10 +60,10 @@
   :wordnet_noun_synset "00875745", "05740701", "00143485", "05770995", "05811387" ;
   :wordnet_verb_synset "00672179", "00958719", "00654571", "02170904", "00636134", "01028104", "00594278", "00683348", "00674352" .
 
-:AttackDamageAndAssault a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
-  rdfs:label "Attack, Damage and Assault"@en ;
-  rdfs:comment "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_agent predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_agent predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."@en ;
+:AttackHarmAndAssault a owl:Class ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
+  rdfs:label "Attack, Harm and Assault"@en ;
+  rdfs:comment "An aggressive action taken against other Agent(s) and/or things and which is intended to cause harm or damage. If the action involved the use of weapons, these can identified using the :has_instrument property. The location of the attack or damage is defined using the :has_location property, while the attacking Agents are specified using the :has_active_entity predicate. The thing or Agent that is attacked is defined using the :has_affected_resource/:has_affected_entity predicates (respectively). Note that if the action involved a statement/communication, then the Event should also be classified as a :CommunicationAndSpeechAct."@en ;
   :wordnet_noun_synset "00403900", "00974725", "00982124", "00775311", "00217881" ;
   :wordnet_verb_synset "00864347", "00259743", "00090640", "00478872" . 
 
@@ -79,7 +75,7 @@
   :wordnet_verb_synset "00724156", "02134765", "01787213" .
 
 :Battle a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:subClassOf :AttackHarmAndAssault ;
   rdfs:label "Battle"@en ;
   rdfs:comment "Any Event that involves fighting (typically) between military/paramilitary/armed forces."@en ;
   :wordnet_noun_synset "00955670", "00961007" ;
@@ -102,12 +98,19 @@
 :BoycottAndBan a owl:Class ;
   rdfs:subClassOf :Avoidance, :RefusalAndRejection ;
   rdfs:label "Boycott and Ban"@en ;
-  rdfs:comment "An act of abstaining from interacting with (such as working with or buying from) an Agent. The Agent which is boycotting another entity is identified using :has_active_agent, while the Agent boycotted against is specified using :has_affected_agent."@en ;
+  rdfs:comment "An act of abstaining from interacting with (such as working with or buying from) an Agent. The Agent which is boycotting another entity is identified using :has_active_entity, while the Agent boycotted against is specified using :has_affected_entity."@en ;
   :wordnet_noun_synset "00206979", "07269842", "06673141" ;
   :wordnet_verb_synset "02470917", "02509666" .
 
+:Bribe a owl:Class ;
+  rdfs:subClassOf :RewardAndCompensation, :CorruptionAndFraud ;
+  rdfs:label "Bribe"@en ;
+  rdfs:comment "Offering of money or thing(s) of value to induce a Person to perform certain actions."@en ;
+  :wordnet_noun_synset "00777759" ;
+  :wordnet_verb_synset "02288941" . 
+
 :CoercionAndIntimidation a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
   rdfs:label "Coercion and Intimidation"@en ;
   rdfs:comment "An action involving the use of force and/or authority to compel or prevent action, and/or to induce fear."@en ;
   :wordnet_noun_synset "00157632", "01224966", "05202630", "14019785" ; 
@@ -120,12 +123,24 @@
   :wordnet_noun_synset "01050836", "04659534", "04254139" ;
   :wordnet_verb_synset "02149298", "02163017", "00314788" . 
 
-:DeceptionAndDishonesty a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
-  rdfs:label "Deception and Dishonesty"@en ;
-  rdfs:comment "An act of concealing or misrepresenting the truth."@en ;
-  :wordnet_noun_synset "00752488", "00750872", "00751748" ;
-  :wordnet_verb_synset "02581157",  "02580280", "02583006", "02580591" .
+:CorruptionAndFraud a owl:Class ;
+  rdfs:subClassOf :DeceptionAndDishonesty ;
+  rdfs:label "Corruption and Fraud"@en ;
+  rdfs:comment "An act of deception for personal gain. Whereas fraud usually is a deception of another individual, corruption is the abuse of a position of power or trust."@en ;
+  :example "Examples include bribery, extortion, embezzlement and misuse of information."@en .
+
+:CrimeAndHostileConflict a owl:Class ;
+  rdfs:subClassOf :DeceptionAndDishonesty ;
+  rdfs:label "Crime and Hostile Conflict"@en ;
+  rdfs:comment "Offensive, damaging, belligerent, hostile and/or criminal actions."@en ;
+  :wordnet_noun_synset "14004330", "00966680", "01224100", "07563271", "00734044" ;
+  :wordnet_verb_synset "01793315", "01811281", "01827478", "02519655" .
+
+:Cybercrime a owl:Class ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
+  rdfs:label "Cybercrime"@en ;
+  rdfs:comment "Criminal activity carried out using computers and the internet."@en ;
+  :example "Examples include phishing, malware, ransonware, hacking and denial-of-service attacks."@en .
 
 :DecisionMakingAndChoice a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -176,12 +191,22 @@
   :wordnet_noun_synset "01088005", "01091702", "13285910", "13290913" ;
   :wordnet_verb_synset "01062618", "02206050", "02313721", "02204104", "02205200" .
 
+:HateCrime a owl:Class ;
+  rdfs:subClassOf :AttackHarmAndAssault, :DiscriminationAndPrejudice ;
+  rdfs:label "Hate Crime"@en ;
+  rdfs:comment "A crime involving violence and motivated by prejudice/biases based on race, ethnicity, religion, sexual orientation, gender identify, medical conditions, etc."@en . 
+
 :Hunger a owl:Class ;
   rdfs:subClassOf :SensoryPerception ;
   rdfs:label "Hunger"@en ;
   rdfs:comment "Sensation of needing food."@en ;
   :wordnet_noun_synset "14063016", "14063792" ; 
   :wordnet_verb_synset "01190677" .
+
+:IdentityTheft a owl:Class ;
+  rdfs:subClassOf :RobberyAndTheft, :Cybercrime ;
+  rdfs:label "Identity Theft"@en ;
+  rdfs:comment "Stealing or unauthorized use of personal information, such as credit card numbers, social security numbers, or online accounts, for fraudulent or malicious purposes."@en .
 
 :IgnoringAndOverlooking a owl:Class ;
   rdfs:subClassOf :Avoidance, :Cognition ;
@@ -198,14 +223,14 @@
   :wordnet_verb_synset "00710809", "00710367", "00711208", "00706456" .
 
 :InvasionAndOccupation a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
   rdfs:label "Invasion and Occupation"@en ;
-  rdfs:comment "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_agent property, while the entity that is invaded/occupied is specified using :has_affected_agent or :has_resource."@en ;
+  rdfs:comment "Taking and maintaining control of something/some place (for example, a country) by force. The Agent doing the invading/occupying is identified using the :has_active_entity property, while the entity that is invaded/occupied is specified using :has_affected_entity or :has_resource."@en ;
   :wordnet_noun_synset "00977538", "00079356", "00089847", "01135427" ;
   :wordnet_verb_synset "01128786", "00463047", "02277394", "02308993" .
 
 :KnowledgeAndSkill a owl:Class ;
-  rdfs:subClassOf :Cognition, :Resource ;
+  rdfs:subClassOf :Cognition ;
   rdfs:label "Knowledge and Skill"@en ;
   rdfs:comment "Involved with 'a familiarity, awareness, or understanding of someone or something, such as facts (descriptive knowledge), skills (procedural knowledge), or objects (acquaintance knowledge). By most accounts, knowledge can be acquired in many different ways and from many sources, including but not limited to perception, reason, memory, testimony, scientific inquiry, education, and practice.'  (https://en.wikipedia.org/w/index.php?title=Knowledge&oldid=1014835309). This semantic also includes education-related activities such as graduations and awarding of certificates, test taking, attending classes, etc."@en ;
   :wordnet_noun_synset "05648278", "04897307", "05629222", "05813910", "05625389", "05160767", "05624569", "05760541", "00729939", "00798247", "00891150", "00895653", "00730147", "00884975", "00637704", "06710094", "06490253" ;
@@ -226,14 +251,14 @@
   :wordnet_verb_synset "00611237", "00609334", "00612810", "00613356" .
 
 :Mistake a owl:Class ;
-  rdfs:subClassOf :AssessmentAndCharacterization, :TroubleAndProblem ;
+  rdfs:subClassOf :AssessmentAndCharacterization ;
   rdfs:label "Mistake"@en ;
-  rdfs:comment "An act of Cognition/judgment indicating that a thought or action is/was in error or faulty. If the erroneous thought/action is known, such as an AggressiveCriminalOrHostileAct, decision or Belief,  that can be identified using the :has_topic property."@en ;
+  rdfs:comment "An act of Cognition/judgment indicating that a thought or action is/was in error or faulty. If the erroneous thought/action is known, such as an CrimeAndHostileConflict, decision or Belief,  that can be identified using the :has_topic property."@en ;
   :wordnet_noun_synset "05714576", "05902260", "04811700" ;
   :wordnet_verb_synset "00641140", "00621541", "00619438" .
 
 :MurderAndHomicide a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault, :Death ;
+  rdfs:subClassOf :AttackHarmAndAssault, :Death ;
   rdfs:label "Murder and Homicide"@en ;
   rdfs:comment "Any Event that is related to killing a person or living thing."@en ;
   :wordnet_noun_synset "00220890" ;
@@ -263,29 +288,23 @@
 :PurchaseAndSale a owl:Class ;
   rdfs:subClassOf :AcquisitionPossessionAndTransfer ;
   rdfs:label "Purchase and Sale"@en ;
-  rdfs:comment "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_agent, while the 'seller' is identified using the :has_affected_agent predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."@en ;
+  rdfs:comment "An act of Acquisition/transfer of ownership of something by the exchange of money, assets, etc. The 'buyer' is identified using the property, :has_active_entity, while the 'seller' is identified using the :has_affected_entity predicate. The details of what monies, assets, etc. are used are expressed using the :has_instrument property, while the thing sold is defined using the :has_topic property."@en ;
   :wordnet_noun_synset "00084549", "00079838", "00791195", "00079838", "01115160", "10498913" ; 
   :wordnet_verb_synset "02211988", "02262178" .
 
-:Resistance a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct, :RefusalAndRejection ;
-  rdfs:label "Resistance"@en ;
-  rdfs:comment "An act of opposition to someone or something, or a refusal to accept or comply with something. The entity that is being resisted is identified using the :has_topic predicate."@en ;
-  :wordnet_noun_synset "00203133", "01171807", "00966007", "00964240" ;
-  :wordnet_verb_synset "01093838", "02712676", "02590043", "02589224" .
-
 :RobberyAndTheft a owl:Class ;
-  rdfs:subClassOf :AggressiveCriminalOrHostileAct ;
+  rdfs:subClassOf :CrimeAndHostileConflict ;
   rdfs:label "Robbery and Theft"@en ;
-  rdfs:comment "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_agent property, while the Agent stolen from is identified using :has_affected_agent. The thing(s) taken are indicated using the :has_topic predicate."@en ;
+  rdfs:comment "An act involved with taking something unlawfully, from an Agent. The Agent who is the thief is specified using the :has_active_entity property, while the Agent stolen from is identified using :has_affected_entity. The thing(s) taken are indicated using the :has_topic predicate."@en ;
   :wordnet_noun_synset "00782543", "00786699" ;
-  :wordnet_verb_synset "02326737" . 
+  :wordnet_verb_synset "02326737" .
 
-:ScienceAndTechnology a owl:Class ;
-  rdfs:subClassOf :KnowledgeAndSkill ;
-  rdfs:label "Science and Technology"@en ;
-  rdfs:comment "Superclass for various areas of study 'of the structure and behavior of the physical world, especially by watching, measuring, and doing experiments, and the development of theories to describe the results of these activities' (https://dictionary.cambridge.org/us/dictionary/english/science)."@en ;
-  :wordnet_noun_synset "06008975", "06005806" .
+:ScienceAndTechnologyRelated a owl:Class ;
+  rdfs:subClassOf :Cognition ;
+  rdfs:label "Science and Technology Related"@en ;
+  rdfs:comment "Any activity involved with understanding or using science and technology, especially involving computers, computer networks, and scientific devices and instruments. Included in this semantic is the collection, manipulation, protection or disruption of data/information. Note that the activities of protection and disruption are often referred to as 'cyber' activities."@en ;
+  :wordnet_noun_synset "00103599", "13476660", "00643063", "00951435", "06008975", "06005806" ;
+  :wordnet_verb_synset "01751525" .  
 
 :SensoryPerception a owl:Class ;
   rdfs:subClassOf :Cognition ;
@@ -295,7 +314,7 @@
   :wordnet_verb_synset "02129213", "02133754", "02174146", "02174335", "02110460", "02131823", "02168177", "02195992" . 
 
 :SexualAssaultAndRape a owl:Class ;
-  rdfs:subClassOf :AttackDamageAndAssault ;
+  rdfs:subClassOf :AttackHarmAndAssault ;
   rdfs:label "Sexual Assault and Rape"@en ;
   rdfs:comment "Any Event that involves sexual assault of a Person."@en ;
   :wordnet_noun_synset "00775604" ;
@@ -308,13 +327,18 @@
   :wordnet_noun_synset "01135602" ;
   :wordnet_verb_synset "02173796", "02436818" .
 
+:Terrorism a owl:Class ;
+  rdfs:subClassOf :AttackHarmAndAssault ;
+  rdfs:label "Terrorism"@en ;
+  rdfs:comment "The use of violence or the threat of violence to achieve a political, religious, ideological, or social goal, and to instill fear. Acts of terrorism include assassinations (also classified as :MurderAndHomicide), kidnappings and hijackings (also classified as :Abductions), bombings, cyber attacks, and the use of chemical, biological, nuclear, and radiological weapons."@en .
+
 
 ########################################################################
 # Disjointness
 ########################################################################
 
 [] rdf:type owl:AllDisjointClasses ;
-  owl:members  ( :AttackDamageAndAssault :MaintenanceAndRepair ) .
+  owl:members  ( :AttackHarmAndAssault :MaintenanceAndRepair ) .
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :AttentionAndFocus :IgnoringAndOverlooking ) .
@@ -330,4 +354,3 @@
 
 [] rdf:type owl:AllDisjointClasses ;
   owl:members  ( :MurderAndHomicide :Suicide ) .
-

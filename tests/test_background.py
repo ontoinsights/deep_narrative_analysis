@@ -2,9 +2,9 @@ from dna.app_functions import process_background, BackgroundAndNarrativeResults
 
 name1 = {"name": "Eric Adams", "type": "person"}
 name2 = {"name": "Las Vegas, CA", "type": "location"}
-name3 = {"name": "New York City, NY", "type": "place"}
+name3 = {"name": "New York City, NY", "type": "place", "alsoKnownAs": ["Big Apple", "Best Pizza"]}
 name4 = {"name": "NY politicians", "type": "person", "isCollection": True}
-name5 = {"name": "House", "type": "organization", "isCollection": False}
+name5 = {"name": "House", "type": "organization", "alsoKnownAs": ["HoR", "Congress, House"], "isCollection": False}
 
 
 def test_post():

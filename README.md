@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 31 May 2024
+Updated 13 December 2024
 
 ## License
 Creative Commons 
@@ -45,7 +45,7 @@ The semantics (ontologies) and processing are captured in the directories of thi
 * _yaml_ contains a file with the DNA Repositories RESTful API definintions
   * The APIs are also viewable, in a more human-friendly manner, at https://ontoinsights.github.io/dna-swagger/
 
-The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The second version (using WordNet to include synonyms and do multi-language processing) was _archived with the tag, v0.5.0-preChat, in March 2023. The current code is refactored to obtain news articles using the news.org API, better capture semantics using OpenAI APIs, and enable more automated NL and ML analyses. In addition, the ontologies have been simplified and updated. Note that the ontology definitions still include WordNet noun and verb synset ids.
+The original, "proof-of-concept" DNA codebase (based on analyzing Holocaust narratives) was _archived with the tag, v0.1.0-poc_, in July 2022. The second version (using WordNet to include synonyms and do multi-language processing) was _archived with the tag, v0.5.0-preChat, in March 2023. The third version (using OpenAI to do the majority of the NLP) was _archived with the tag, v0.7.0, in December 2024. The current code includes preliminary processing to obtain news articles using the news.org API, better capture semantics using OpenAI APIs, and enable more automated NL and ML analyses. In addition, the ontologies have been simplified and updated. Note that many of the ontology definitions still include WordNet noun and verb synset ids.
 
 ## Environment and Execution
 
