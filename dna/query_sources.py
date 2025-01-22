@@ -12,14 +12,11 @@ import requests
 from typing import Union
 import xml.etree.ElementTree as etree
 
-# TODO: (Future) Modify code to 'replace' the language tag when the query is executed, vs hardcoding
-from dna.query_openai import access_api, wikipedia_prompt
-from dna.utilities_and_language_specific import empty_string, language_tag, space, underscore
+# TODO: Move from hardcoding country and language
+from dna.utilities_and_language_specific import add_unique_to_array, country_qualifier, empty_string, \
+    language_tags, space, underscore
 
-country_qualifier = 'United_States'   # TODO: Move to environment variable
-
-geonamesUser = os.environ.get('GEONAMES_ID')
-
+geonames_user = os.environ.get('GEONAMES_ID')
 geocodes_mapping = {'H': ':WaterFeature',
                     'L': ':DesignatedArea',
                     'R': ':TransportationFeature',
@@ -27,17 +24,33 @@ geocodes_mapping = {'H': ':WaterFeature',
                     'T': ':GeographicFeature',
                     'U': ':WaterFeature',
                     'V': ':GeographicFeature'}
+geonames_url = 'http://api.geonames.org/search?'
 
-# Future
-query_wikidata_instance_of = \
-    'SELECT DISTINCT ?instanceOf WHERE {?item wd:P31 ?instanceOf}'
+wikibase_bearer = os.environ.get('WDATA_BEARER')
+wikibase_headers = {'Content-Type': 'application/json',
+                    'Authorization': f'Bearer {wikibase_bearer}'}
+wikipedia_summary_url = 'https://en.wikipedia.org/api/rest_v1/page/summary/'
+# Mapping of spaCy NER types to Wikidata Q-ids
+qid_mapping = {'PERSON': 'Q5, Q214339, Q4164871, Q12737077, Q28640',  # human, role, position, occupation, profession
+               'NORP': 'Q231002, Q41710, Q7210356, '                  # nationality, ethnic grp, political org,
+                       'Q12909644, Q111252415, Q13414953',            #  + pol ideology, religious grp, rel denomination
+               'ORG': 'Q43229, Q106668099, Q131085629',               # organization, corporate body, collective agent
+               'GPE': 'Q16562419, Q1063239, Q3455524',                # political entity, polity, administrative region
+               'LOC': 'Q17334923, Q123349660',                        # physical location, geo-locatable entity
+               'FAC': ':Q27096235',                                   # artificial geographic entity (non-natural)
+               'EVENT': 'Q1190554, Q3505845, Q483247',                # occurrence, state, phenomenon
+               'DATE': 'Q26907166',                                   # temporal entity
+               'LAW': 'Q7748, Q1151067,Q1156854',                     # law, rule, policy
+               'PRODUCT': 'Q2424752',                                 # product
+               'WORK_OF_ART': 'Q838948, Q2342494'}                    # work of art, collectible
+wikidata_rest_url = 'https://www.wikidata.org/w/rest.php/wikibase/v1/entities/items/'
 
-language_filter = f'FILTER(lang(?label) = "{language_tag[1:]}")'
-query_wikidata_labels = \
-    'SELECT DISTINCT ?label WHERE {{?item rdfs:label ?label . ' + language_filter + ' } UNION ' \
-    '{?item skos:altLabel ?label . ' + language_filter + ' }}'
-
-query_wikidata_time = 'SELECT DISTINCT ?time WHERE {?item wdt:timeProp ?time}'
+wdqs_url = 'https://query.wikidata.org/sparql?format=json&query='
+wdqs_instance_of = \
+    'SELECT ?instanceOf WHERE { ?item wdt:P31 ?instanceOf . ?instanceOf wdt:P279* wd:poss_super }'
+wdqs_event_time = \
+    'SELECT ?type ?startTime ?endTime WHERE { ?item wdt:P31 ?type .' \
+    'OPTIONAL { ?item wdt:P580 ?startTime } OPTIONAL { ?item wdt:P582 ?endTime } }'
 
 @dataclass
 class DescriptionDetails:
@@ -74,67 +87,7 @@ class GeoNamesDetails:
     wiki_link: str          # Wikipedia page link or empty string
 
 
-def _call_wikipedia(noun_text: str) -> dict:
-    """
-    Queries the REST API of Wikipedia for information about a specific concept/noun.
-
-    :param noun_text: String holding the noun/concept text
-    :return: Dictionary holding the details returned from Wikipedia
-    """
-    try:
-        resp = requests.get(f'https://en.wikipedia.org/api/rest_v1/page/summary/{noun_text}')
-    except requests.exceptions.ConnectTimeout:
-        logging.error(f'Wikipedia description timeout: Noun={noun_text}')
-        return dict()
-    except requests.exceptions.RequestException as e:
-        logging.error(f'Wikipedia description query exception for noun: {noun_text}. Exception: {str(e)}')
-        return dict()
-    wiki_dict = resp.json()
-    if 'title' in wiki_dict and 'not found' in wiki_dict['title'].lower():
-        return dict()
-    return wiki_dict
-
-
-def _get_wikidata_delay(date: str) -> int:
-    """
-    If too many Wikidata requests are made, then a 'retry after' time limit is set. This method
-    calculates the time limit.
-
-    :param date: A string with the 'retry after' time
-    :return: An integer indicating how many seconds to delay
-    """
-    try:
-        datetime_obj = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S GMT')
-        timeout = int((datetime_obj - datetime.datetime.now()).total_seconds())
-    except ValueError:
-        timeout = int(date)
-    return timeout
-
-
-def _get_geonames_alt_names(root: etree.Element) -> (list, str):
-    """
-    Retrieve all alternativeName elements (there is almost always more than 1) having the specified language(s)
-    in the XML tree. And, return the Wikipedia link for the entity, if available.
-
-    :param root: The root element of the XML tree
-    :return: A tuple consisting of an array holding the string values of the alternative names
-             or an empty array (if not defined), and a string holding the Wikipedia link for
-             additional details
-    """
-    names = set()
-    link = empty_string
-    elems = root.findall('./geoname/alternateName[@lang]')
-    for elem in elems:
-        lang = elem.get('lang')
-        # access = True if ('isPreferredName' in elem.attrib or 'isShortName' in elem.attrib) else False
-        if lang == 'en':
-            names.add(elem.text)
-        if lang == 'link' and 'en.wikipedia' in elem.text:
-            link = elem.text
-    return list(names), link
-
-
-def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, None]:
+def _call_geonames(request: str, loc_str: str) -> Union[etree.Element, None]:
     """
     Send and process a query to the GeoNames API.
 
@@ -162,7 +115,7 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     # Try again, forcing a match of fcode = ADM1 - for ex, New York returns New York City, not the state
     if 'fcode=' not in request:
         request += '&fcode=ADM1'
-        root = _get_geonames_response(request, loc_str)
+        root = _call_geonames(request, loc_str)
         if root:
             return root
     # Relax the match to the toponym or ascii name containing the location string
@@ -171,9 +124,119 @@ def _get_geonames_response(request: str, loc_str: str) -> Union[etree.Element, N
     return None
 
 
+def _call_wdqs(query: str, retry: bool = True) -> Union[dict, None]:
+    """
+    Processes a query to the Wikidata query service.
+
+    :param query: String holding the query.
+    :param retry: Boolean indicating that the request be retried on an exception or 'too many requests' error
+    :return: Either the query results or None if the request was not successful
+    """
+    try:
+        response = requests.get(f'{wdqs_url}{query.replace(" ", "%20")}')
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikidata timeout: Query={query}')
+        return None
+    except requests.exceptions.RequestException as e:
+        if retry:
+            return _call_wdqs(query, retry=False)
+        else:
+            return None
+    if response.status_code == 200:
+        if response.json()['results']['bindings']:
+            return response.json()
+        else:
+            return None
+    if response.status_code == 429:     # Too many requests
+        timeout = _get_wikidata_delay(response.headers['retry-after'])
+        logging.info(f'Wikidata timeout: {timeout} seconds')
+        time.sleep(timeout)
+        return _call_wdqs(query)
+    return None
+
+
+def _call_wikidata_rest(path_parameters: str) -> Union[str, list]:
+    """
+    Queries the Wikidata REST API with the given path parameters. This method assumes that either a
+    single string or an array of strings is returned (which is true for labels and alias requests
+    with a language tag).
+
+    :param path_parameters: String holding the path parameters
+    :return: The Wikidata REST API result as defined
+    """
+    try:
+        response = requests.get(f'{wikidata_rest_url}{path_parameters}', headers=wikibase_headers)
+    except requests.exceptions as e:
+        logging.error(f'Wikidata REST exception for parameters: {path_parameters}. Exception: {str(e)}')
+        return empty_string
+    if response.status_code == 200:
+        return response.json()
+    return empty_string
+
+
+def _call_wikipedia(noun_text: str) -> dict:
+    """
+    Queries the REST API of Wikipedia for information about a specific concept/noun.
+
+    :param noun_text: String holding the noun/concept text
+    :return: Dictionary holding the details returned from Wikipedia
+    """
+    try:
+        response = requests.get(f'{wikipedia_summary_url}{noun_text}')
+    except requests.exceptions.ConnectTimeout:
+        logging.error(f'Wikipedia description timeout: Noun={noun_text}')
+        return dict()
+    except requests.exceptions.RequestException as e:
+        logging.error(f'Wikipedia description query exception for noun: {noun_text}. Exception: {str(e)}')
+        return dict()
+    wiki_dict = response.json()
+    if 'title' in wiki_dict and 'not found' in wiki_dict['title'].lower():
+        return dict()
+    return wiki_dict
+
+
+def _get_geonames_alt_names(root: etree.Element) -> (list, str):
+    """
+    Retrieve all alternativeName elements (there is almost always more than 1) having the specified language(s)
+    in the XML tree. And, return the Wikipedia link for the entity, if available.
+
+    :param root: The root element of the XML tree
+    :return: A tuple consisting of an array holding the string values of the alternative names
+             or an empty array (if not defined), and a string holding the Wikipedia link for
+             additional details
+    """
+    names = set()
+    link = empty_string
+    elems = root.findall('./geoname/alternateName[@lang]')
+    for elem in elems:
+        lang = elem.get('lang')
+        # access = True if ('isPreferredName' in elem.attrib or 'isShortName' in elem.attrib) else False
+        if lang == 'en':
+            names.add(elem.text)
+        if lang == 'link' and 'en.wikipedia' in elem.text:
+            link = elem.text
+    return list(names), link
+
+
+def _get_wikidata_delay(date: str) -> int:
+    """
+    If too many Wikidata requests are made, then a 'retry after' time limit is set. This method
+    calculates the time limit.
+
+    :param date: A string with the 'retry after' time
+    :return: An integer indicating how many seconds to delay
+    """
+    try:
+        datetime_obj = datetime.datetime.strptime(date, '%a, %d %b %Y %H:%M:%S GMT')
+        timeout = int((datetime_obj - datetime.datetime.now()).total_seconds())
+    except ValueError:
+        timeout = int(date)
+    return timeout
+
+
 def _get_wikidata_labels(wikidata_id: str, retry: bool = True) -> list:
     """
-    Get the labels (labels and alt_names) for a Wikidata item.
+    Get the labels (labels and aliases) for a Wikidata item using the Wikidata REST API.
 
     :param wikidata_id: String holding the Q ID of the Wikidata item
     :param retry: Boolean indicating that the request be retried on an exception
@@ -182,43 +245,45 @@ def _get_wikidata_labels(wikidata_id: str, retry: bool = True) -> list:
     if not wikidata_id:
         return []
     labels = []
-    query_labels = query_wikidata_labels.replace('?item', f'wd:{wikidata_id}').replace(' ', '%20')
-    resp_json = _make_wikidata_query(f'https://query.wikidata.org/sparql?format=json&query={query_labels}')
-    if resp_json and 'results' in resp_json and 'bindings' in resp_json['results']:
-        for result in resp_json['results']['bindings']:
-            label = result['label']['value'].replace('"', "'")
-            labels.append(label)
+    for tag in language_tags:
+        label = _call_wikidata_rest(f'{wikidata_id}/labels/{tag}')
+        if label:
+            add_unique_to_array([label], labels)
+        aliases = _call_wikidata_rest(f'{wikidata_id}/aliases/{tag}')
+        if aliases:
+            add_unique_to_array(aliases, labels)
     return labels
 
 
-def _get_wikidata_time(query: str, is_start: bool, retry: bool = True) -> str:
+def _get_wikidata_time(query: str, retry: bool = True) -> (str, str):
     """
-    Send the query, query_wikidata_time, to WDQS asking for the start and end times of an
+    Send the query, wdqs_wikidata_time, to WDQS asking for the start and end times of an
     event identified by text (in the mwapi search parameters).
 
     :param query: The query to be sent with the wikidata ID already in the string
-    :param is_start: Boolean indicating that the start time is requested (if true); Otherwise,
-                     the end time is requested
     :param retry: Boolean indicating that the request be retried on an exception
-    :return: A string holding the start or end time if defined; Otherwise, an empty string
+    :return: A tuple with strings holding the start and/or end times if defined; Otherwise, empty strings
     """
-    time_query = (query.replace('timeProp', 'P580').replace(' ', '%20') if is_start
-                  else query.replace('timeProp', 'P582').replace(' ', '%20'))
-    resp_json = _make_wikidata_query(f'https://query.wikidata.org/sparql?format=json&query={time_query}')
+    resp_json = _call_wdqs(query)
+    start_time = end_time = empty_string
     if resp_json and 'results' in resp_json and 'bindings' in resp_json['results'] and \
                 len(resp_json['results']['bindings']) > 0:
-            return resp_json['results']['bindings'][0]['time']['value']
-    return empty_string
+            binding = resp_json['results']['bindings'][0]
+            if 'startTime' in binding:
+                start_time = binding['startTime']['value']
+            if 'endTime' in binding:
+                end_time = binding['endTime']['value']
+    return start_time, end_time
 
 
-def _get_wikipedia_description(noun_text: str, noun_class: str, explicit_link: str) -> dict:
+def _get_wikipedia_description(noun_text: str, ner_type: str, explicit_link: str) -> dict:
     """
     Wikipedia call to get page summary information for a concept. If information is not retrieved
-    due to the need to disambiguate or due to the return of non-relevant information, the request is
-    retried with the addition of the country name.
+    due to the need to disambiguate, nothing is returned. If the entity returned is not an instance of
+    an appropriate Q-id in Wikidata, again, nothing is returned.
 
     :param noun_text: String holding the concept text (with spaces replaced by underscores)
-    :param noun_class: DNA class name corresponding to the concept
+    :param ner_type: Entity type defined by spaCy
     :param explicit_link: A link to a Wikipedia article provided by another source
     :return: A dictionary with the Wikipedia information returned from the request
     """
@@ -227,18 +292,23 @@ def _get_wikipedia_description(noun_text: str, noun_class: str, explicit_link: s
         wiki_dict = _call_wikipedia(explicit_link.split('/')[-1])
     if not wiki_dict:
         noun_text = noun_text.replace(' ', underscore)
-        wiki_dict = _call_wikipedia(f'{country_qualifier}_{noun_text}')
+        wiki_dict = _call_wikipedia(f'{country_qualifier}_{noun_text}')   # TODO: (Future) Refine context
         if not wiki_dict:
             wiki_dict = _call_wikipedia(noun_text)
     # Check if the wikipedia text/extract matches the DNA class semantic
-    if wiki_dict and 'extract' in wiki_dict and 'See the web site' not in wiki_dict['extract']:
-        # Remove a second class name and the beginning ':' from noun_class and then split the upper camel case
-        #    text into individual words
-        concept = space.join(re.findall(r'[A-Z](?:[a-z]+|[A-Z]*(?=[A-Z]|$))', noun_class.split(',')[0][1:]))
-        wikipedia_dict = access_api(
-            wikipedia_prompt.replace("{text_type}", concept).replace("{wiki_def}", wiki_dict['extract']))
-        if type(wikipedia_dict['consistent']) is bool and wikipedia_dict['consistent']:
-            return wiki_dict    # Consistent - return the result
+    if wiki_dict and 'type' in wiki_dict and wiki_dict['type'] != 'disambiguation':
+        # TODO: (Future) Examine disambiguated entities for possible match
+        if 'wikibase_item' not in wiki_dict:
+            return dict()
+        qid = wiki_dict['wikibase_item']
+        if ner_type in qid_mapping:
+            for possible_superclass in qid_mapping[ner_type].split(', '):
+                class_query = wdqs_instance_of.replace('?item', f'wd:{qid}').\
+                    replace('poss_super', possible_superclass)
+                resp_json = _call_wdqs(class_query)
+                if resp_json and 'results' in resp_json and 'bindings' in resp_json['results'] and \
+                        len(resp_json['results']['bindings']) > 0:
+                    return wiki_dict
     return dict()
 
 
@@ -258,37 +328,6 @@ def _get_xml_value(xpath: str, root: etree.Element) -> str:
         return empty_string
 
 
-def _make_wikidata_query(query: str, retry: bool = True) -> Union[dict, None]:
-    """
-    Processes a query to the Wikidata query service.
-
-    :param query: String holding the query.
-    :param retry: Boolean indicating that the request be retried on an exception or 'too many requests' error
-    :return: Either the query results or None if the request was not successful
-    """
-    try:
-        resp = requests.get(query)
-    except requests.exceptions.ConnectTimeout:
-        logging.error(f'Wikidata timeout: Query={query}')
-        return None
-    except requests.exceptions.RequestException as e:
-        if retry:
-            return _make_wikidata_query(query, retry=False)
-        else:
-            return None
-    if resp.status_code == 200:
-        if resp.json()['results']['bindings']:
-            return resp.json()
-        else:
-            return None
-    if resp.status_code == 429:     # Too many requests
-        timeout = _get_wikidata_delay(resp.headers['retry-after'])
-        logging.info(f'Wikidata timeout: {timeout} seconds')
-        time.sleep(timeout)
-        return _make_wikidata_query(query)
-    return None
-
-
 def get_event_details_from_wikidata(event_text: str) -> EventDetails:
     """
     Get the start and end times and alternate names of an event, if it is known to Wikidata.
@@ -296,13 +335,11 @@ def get_event_details_from_wikidata(event_text: str) -> EventDetails:
     :param event_text: Text defining the event
     :return: An instance of the EventDetails dataclass
     """
-    start_time = empty_string
-    end_time = empty_string
-    description_details = get_wikipedia_description(event_text, ':Event')
-    if description_details.wiki_desc and 'See the web site' not in description_details.wiki_desc:
-        time_query = query_wikidata_time.replace('?item', f'wd:{description_details.wikidata_id}')
-        start_time = _get_wikidata_time(time_query, True)
-        end_time = _get_wikidata_time(time_query, False)
+    start_time = end_time = empty_string
+    description_details = get_wikipedia_description(event_text, 'EVENT')
+    if description_details.wikidata_id:
+        time_query = wdqs_event_time.replace('?item', f'wd:{description_details.wikidata_id}')
+        start_time, end_time = _get_wikidata_time(time_query, True)
     return EventDetails(description_details.wiki_desc, description_details.wiki_url,
                         description_details.wikidata_id, start_time, end_time, description_details.labels)
 
@@ -317,22 +354,21 @@ def get_geonames_location(loc_text: str) -> GeoNamesDetails:
     # TODO: Add sleep to meet geonames timing requirements
     name_startswith = False
     if ',' in loc_text:   # Different query parameters are defined based on ',' or space in the location text
-        request = f'http://api.geonames.org/search?q={loc_text.lower().replace(space, "+").replace(",", "+")}' \
-                  f'&style=full&maxRows=1&username={geonamesUser}'
+        request = f'{geonames_url}q={loc_text.lower().replace(space, "+").replace(",", "+")}' \
+                  f'&style=full&maxRows=1&username={geonames_user}'
     elif space in loc_text:
-        request = f'http://api.geonames.org/search?q={loc_text.lower().replace(space, "+")}' \
-                  f'&name_equals={loc_text.lower().replace(space, "+")}&style=full&maxRows=1&username={geonamesUser}'
+        request = f'{geonames_url}q={loc_text.lower().replace(space, "+")}&name_equals=' \
+                  f'{loc_text.lower().replace(space, "+")}&style=full&maxRows=1&username={geonames_user}'
     else:
         name_startswith = True
-        request = f'http://api.geonames.org/search?q={loc_text.lower()}&name_startsWith={loc_text.lower()}' \
-                  f'&style=full&maxRows=1&username={geonamesUser}'
-    root = _get_geonames_response(request, loc_text)
+        request = f'{geonames_url}q={loc_text.lower()}&name_startsWith={loc_text.lower()}' \
+                  f'&style=full&maxRows=1&username={geonames_user}'
+    root = _call_geonames(request, loc_text)
     if root is None:
         if name_startswith:
             # Try less restrictive search
-            request = f'http://api.geonames.org/search?q={loc_text.lower()}' \
-                      f'&style=full&maxRows=1&username={geonamesUser}'
-            root = _get_geonames_response(request, loc_text)
+            request = f'{geonames_url}q={loc_text.lower()}&style=full&maxRows=1&username={geonames_user}'
+            root = _call_geonames(request, loc_text)
     if root is None:
         return GeoNamesDetails(empty_string, empty_string, 0, [], empty_string)
     country = _get_xml_value('./geoname/countryName', root)
@@ -372,18 +408,18 @@ def get_geonames_location(loc_text: str) -> GeoNamesDetails:
     return GeoNamesDetails(class_type, country, admin_level, alt_names, wiki_link)
 
 
-def get_wikipedia_description(noun: str, noun_class: str, explicit_link: str = empty_string) -> DescriptionDetails:
+def get_wikipedia_description(noun: str, ner_type: str, explicit_link: str = empty_string) -> DescriptionDetails:
     """
     Get the first paragraph of the Wikipedia web page for the specified organization, group, ...
     and a link to display the full page.
 
     :param noun: String holding the concept name
-    :param noun_class: DNA class name corresponding to the concept
+    :param ner_type: Entity type defined by spaCy
     :param explicit_link: A link retrieved from another source (such as GeoNames) to a Wikipedia
                           entry for the noun
     :return: An instance of the DescriptionDetails dataclass
     """
-    wikipedia_dict = _get_wikipedia_description(noun.replace(space, '_'), noun_class, explicit_link)
+    wikipedia_dict = _get_wikipedia_description(noun.replace(space, '_'), ner_type, explicit_link)
     if not wikipedia_dict:
         return DescriptionDetails(empty_string, empty_string, empty_string, [])
     if 'type' in wikipedia_dict and wikipedia_dict['type'] == 'disambiguation':

@@ -10,7 +10,8 @@ base_dir = Path(__file__).resolve().parent.parent
 dna_dir = base_dir / 'dna'
 resources_dir = dna_dir / 'resources'
 
-language_tag = '@en'
+country_qualifier = 'United_States'
+language_tags = ('mul', 'en')
 
 empty_string: str = ''
 space: str = ' '

@@ -492,27 +492,59 @@ def test_weather():
     graph_results = create_graph(sentence_classes, quotation_classes, text_weather,
                                  ':Narrative_foo', [], 5, repo)
     ttl_str = str(graph_results.turtle)
+    print(ttl_str)
     assert ':mentions :Hurricane_Otis' in ttl_str and ':mentions :Acapulco' in ttl_str
     assert ':EnvironmentalIssue' in ttl_str or ':DamageAndDifficulty' in ttl_str
     assert ':has_active_entity :Hurricane_Otis' in ttl_str
     assert ':has_affected_entity :Acapulco' in ttl_str
     # Output Turtle:
-    # :Narrative_foo :has_component :Sentence_53328b70-90d3 .
-    # :Sentence_53328b70-90d3 a :Sentence ; :offset 1 .
-    # :Sentence_53328b70-90d3 :text "Hurricane Otis severely damaged Acapulco." .
-    # :Sentence_53328b70-90d3 :mentions :Hurricane_Otis .
-    # :Sentence_53328b70-90d3 :mentions :Acapulco .
-    # :Sentence_53328b70-90d3 :grade_level 6 .
-    # :Narrative_foo :describes :NarrativeEvent_76509580-dc5e .
-    # :NarrativeEvent_76509580-dc5e a :NarrativeEvent ; :offset 0 .
-    # :NarrativeEvent_76509580-dc5e :text "Hurricane Otis severely damaged Acapulco." .
-    # :NarrativeEvent_76509580-dc5e :has_semantic :Event_6467b992-d866 .
-    # :NarrativeEvent_76509580-dc5e :has_first :Event_6467b992-d866 .
-    # :Event_6467b992-d866 :text "Hurricane Otis damaged Acapulco." .
-    # :Event_6467b992-d866 a :EnvironmentalIssue ; :confidence-EnvironmentalIssue 100 .
-    # :Event_6467b992-d866 a :DamageAndDifficulty ; :confidence-DamageAndDifficulty 90 .
-    # :Event_6467b992-d866 :has_active_entity :Hurricane_Otis .
-    # :Event_6467b992-d866 :has_affected_entity :Acapulco .
+    # :Narrative_foo :has_component :Sentence_fbc53a36-fb27 .
+    # :Sentence_fbc53a36-fb27 a :Sentence ; :offset 1 .
+    # :Sentence_fbc53a36-fb27 :text "Hurricane Otis severely damaged Acapulco." .
+    # :Hurricane_Otis :text "Hurricane Otis" .          # Example of background data from Wikidata and GeoNames
+    # :Hurricane_Otis a :EnvironmentalIssue .
+    # :Hurricane_Otis rdfs:label "Hurricane Otis", "Otis" .
+    # :Hurricane_Otis rdfs:comment "From Wikipedia (wikibase_item: Q123178445): \'Hurricane Otis was a compact but
+    #     very powerful tropical cyclone which made a devastating landfall in October 2023 near Acapulco as a
+    #     Category 5 hurricane. Otis was the first Pacific hurricane to make landfall at Category 5 intensity and
+    #     surpassed Hurricane Patricia as the strongest landfalling Pacific hurricane on record. The resulting damage
+    #     made Otis the costliest tropical cyclone to strike Mexico on record. The fifteenth tropical storm,
+    #     tenth hurricane, eighth major hurricane, and second Category 5 hurricane of the 2023 Pacific hurricane
+    #     season, Otis originated from a disturbance several hundred miles south of the Gulf of Tehuantepec.
+    #     Initially forecast to stay offshore and to only be a weak tropical storm at peak intensity, Otis instead
+    #     underwent explosive intensification to reach peak winds of 165 mph (270 km/h) and weakened only slightly
+    #     before making landfall as a powerful Category 5 hurricane. Once inland, the hurricane quickly weakened
+    #     before dissipating the following day.\'" .
+    # :Hurricane_Otis :external_link "https://en.wikipedia.org/wiki/Hurricane_Otis" .
+    # :Hurricane_Otis :external_identifier "Q123178445" .
+    # :Hurricane_Otis :has_beginning :PiT_2023-10-22T00:00:00Z .
+    # :Hurricane_Otis :has_end :PiT_2023-10-25T00:00:00Z .
+    # :Acapulco :text "Acapulco" .
+    # :Acapulco a :OrganizationalEntity, :Correction .
+    # :Acapulco rdfs:label "Acapulco", "Acapulco de julio", "Acapulco de Juarez", "Acapulco, Guerrero",
+    #     "Acapulco de Juárez" .
+    # :Acapulco rdfs:comment "From Wikipedia (wikibase_item: Q81398): \'Acapulco de Ju?rez, commonly called Acapulco,
+    #     is a city and major seaport in the state of Guerrero on the Pacific Coast of Mexico, 380 kilometres (240 mi)
+    #     south of Mexico City. Located on a deep, semicircular bay, Acapulco has been a port since the early colonial
+    #     period of Mexico\'s history. It is a port of call for shipping and cruise lines running between Panama and
+    #     San Francisco, California, United States. The city of Acapulco is the largest in the state, far larger than
+    #     the state capital Chilpancingo. Acapulco is also Mexico\'s largest beach and balneario resort city. Acapulco
+    #     de Ju?rez, Guerrero is the municipal seat of the municipality of Acapulco, Guerrero.\'" .
+    # :Acapulco :external_link "https://en.wikipedia.org/wiki/Acapulco" .
+    # :Acapulco :external_identifier "Q81398" .
+    # :Sentence_fbc53a36-fb27 :mentions :Hurricane_Otis .
+    # :Sentence_fbc53a36-fb27 :mentions :Acapulco .
+    # :Sentence_fbc53a36-fb27 :grade_level 6 .
+    # :Narrative_foo :describes :NarrativeEvent_64c2ccf0-f199 .
+    # :NarrativeEvent_64c2ccf0-f199 a :NarrativeEvent ; :offset 0 .
+    # :NarrativeEvent_64c2ccf0-f199 :text "Hurricane Otis severely damaged Acapulco." .
+    # :NarrativeEvent_64c2ccf0-f199 :has_semantic :Event_2086fccb-ea95 .
+    # :NarrativeEvent_64c2ccf0-f199 :has_first :Event_2086fccb-ea95 .
+    # :Event_2086fccb-ea95 :text "Hurricane Otis damaged Acapulco." .
+    # :Event_2086fccb-ea95 a :EnvironmentalIssue ; :confidence-EnvironmentalIssue 100 .
+    # :Event_2086fccb-ea95 a :DamageAndDifficulty ; :confidence-DamageAndDifficulty 90 .
+    # :Event_2086fccb-ea95 :has_active_entity :Hurricane_Otis .
+    # :Event_2086fccb-ea95 :has_affected_entity :Acapulco .
 
 
 def test_coref():

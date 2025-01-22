@@ -1,5 +1,5 @@
 # Deep Narrative Analysis (DNA)
-Updated 13 December 2024
+Updated 22 January 2025
 
 ## License
 Creative Commons 
@@ -57,6 +57,9 @@ These environment variables need to be set for the DNA application:
 
 * `PATH` needs to specifically include the GitHub project's dna directory (for ease of testing) 
 * `GEONAMES_ID` (geonames.org) MUST be set for background information retrieval
+* `WDATA_BEARER` (wikidata.org) MUST be set for background information retrieval using the Wikidata REST API
+  * The Wikidata REST API uses OAuth2 for authentication
+  * Details for getting an OAuth access token are specified on the page, https://www.wikidata.org/wiki/Wikidata:REST_API/Authentication 
 * `OPENAI_API_KEY`(openai.com) MUST be set and reference a billable account 
 * `STARDOG_ENDPOINT`, `STARDOG_USER`, `STARDOG_PASSWORD` MUST be set where:
   * The STARDOG_ENDPOINT is the address of a Stardog Cloud instance - usage of the free tier is acceptable

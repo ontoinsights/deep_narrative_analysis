@@ -190,8 +190,6 @@ attribution_result = '{"speaker": "string"}'
 
 chronology_result = '{"events_situations": ["string"]}'
 
-consistency_result = '{"consistent": bool}'
-
 coref_result = '{"updated_sentences": ["string"]}'
 
 noun_categories_result = '{"noun_phrases": [{' \
@@ -405,20 +403,6 @@ situation_prompt = \
     'winner has the role of "agent", and the loser has the role of "patient".> ' \
     '<Input: 1. Sentence: {sit_text} ** 2. Event Semantic Categories: {events_text} >' + \
     f'<Output: Return the results as a JSON object using the following structure: {situation_result}>'
-
-
-# Validating Wikipedia result
-wikipedia_prompt = \
-    'Task: You are ChatGPT, a large language model trained by OpenAI using the GPT-4 architecture, with expertise ' \
-    'in research. Your objective is to determine if a noun described by the Input text is correctly categorized ' \
-    'as a type of  "{text_type}".> ' \
-    'Instructions: 1. Input Format: You will receive a description of a noun, followed by the string "**", ' \
-    'which should be ignored. ' \
-    '2. Text Analysis: Analyze the provided description to determine if the described entity qualifies as ' \
-    'a type of "{text_type}".> ' \
-    '<Input: {wiki_def} **> ' + \
-    f'<Output: Return the results as a JSON object using the following structure: {consistency_result} Note ' + \
-    'that "consistent" should be true if the noun is categorized correctly as a "{text_type}" and false otherwise.>'
 
 
 # @retry(stop=stop_after_delay(20) | stop_after_attempt(2), wait=(wait_fixed(3) + wait_random(0, 2)))

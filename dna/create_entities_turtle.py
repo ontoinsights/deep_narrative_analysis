@@ -100,7 +100,9 @@ def create_location_ttl(loc_iri: str, loc_text: str, loc_class: str, ner_type: s
         geonames_ttl.append(f'{loc_iri} a {geonames_details.location_class} .')
         _add_labels_to_ttl(loc_iri, geonames_details.alt_names, geonames_ttl)
         alt_names.extend(geonames_details.alt_names)
-        description_details = get_wikipedia_description(loc_text, ':Location', geonames_details.wiki_link)
+        base_type = ner_type.replace('PLURAL', empty_string).replace('SING', empty_string).\
+            replace('FEMALE', empty_string).replace('MALE', empty_string)
+        description_details = get_wikipedia_description(loc_text, base_type, geonames_details.wiki_link)
         for label in description_details.labels:
             if label not in geonames_details.alt_names:
                 alt_names.append(label)

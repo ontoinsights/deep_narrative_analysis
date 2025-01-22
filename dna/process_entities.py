@@ -80,7 +80,7 @@ def _get_noun_ttl(sentence_text: str, noun_text: str, noun_entity: Entity, nouns
             base_type = 'LOC' if base_type == 'ORG' else base_type    # Found a location; Update the base_type
             class_map = class_map.replace('OrganizationalEntity', 'Location')    # And class_map
     if base_type in ('PERSON', 'NORP', 'ORG'):   # TODO: spaCy does not identify some companies as ORGs
-        description_details = get_wikipedia_description(noun_text, class_map)
+        description_details = get_wikipedia_description(noun_text, base_type)
         if description_details.labels:
             labels.extend(description_details.labels)
         if noun_text not in description_details.labels:
