@@ -88,9 +88,8 @@ def _deal_with_nouns(event_iri: str, event_classes: list, sit_nouns_dict: dict, 
     for noun_details in sit_nouns_dict['noun_phrases']:
         phrase = noun_details['text']
         noun_context = noun_details['clarifying_text']
-        noun_text = phrase
-        if noun_context:
-            noun_text = phrase.replace(noun_context, empty_string)
+        noun_text = phrase if not noun_context else phrase.replace(noun_context, empty_string)
+        # Sometimes OpenAI returns the correct phrase text but with additional adjectives, modifiers
         if phrase not in noun_roles_dict:
             revised = phrase.split(' ')
             if len(revised) > 1:
@@ -123,13 +122,13 @@ def _deal_with_nouns(event_iri: str, event_classes: list, sit_nouns_dict: dict, 
                 nouns_ttl.extend(noun_ttl)
         # Process the clarifying text - TODO: Refine
         # Does the text refer to an existing concept?
-        clarifying_type, clarifying_iri = check_if_noun_is_known(noun_context, empty_string, nouns_dict)
-        if clarifying_iri:
-            if any(':Affiliation' in event_class for event_class in event_classes) or ':Affiliation' in noun_class:
-                nouns_ttl.append(f'{noun_iri} :affiliated_with {clarifying_iri} .')
-            else:
-                nouns_ttl.append(f'{noun_iri} :clarifying_reference {clarifying_iri} .')
         if noun_context:
+            clarifying_type, clarifying_iri = check_if_noun_is_known(noun_context, empty_string, nouns_dict)
+            if clarifying_iri:
+                if any(':Affiliation' in event_class for event_class in event_classes) or ':Affiliation' in noun_class:
+                    nouns_ttl.append(f'{noun_iri} :affiliated_with {clarifying_iri} .')
+                else:
+                    nouns_ttl.append(f'{noun_iri} :clarifying_reference {clarifying_iri} .')
             nouns_ttl.append(f'{noun_iri} :clarifying_text {literal(noun_context)} .')
         # Determine the predicate relating the noun to the event
         predicate = _get_predicate(noun_details, noun_class, noun_roles_dict, event_classes)
@@ -296,7 +295,25 @@ def get_sentence_details(sentence_or_quotation: Union[Sentence, Quotation], ttl_
     entity_iris = []
     entity_ttls = []
     if sentence_or_quotation.entities:
-        new_iris, new_ttl = process_ner_entities(sentence_text, sentence_or_quotation.entities, nouns_dict)
+        # Deal with hyphenated names (e.g., 'Biden-Harris campaign')
+        new_entities = []
+        for entity in sentence_or_quotation.entities:
+            if '-' in entity.text:
+                # TODO: Improve - names must be previously encountered as background information or full names in text
+                if entity.text in nouns_dict:    # Check first for an exact match of a hyphenated name
+                    new_entities.append(entity)
+                # Not previously encountered
+                split_names = entity.text.split('-')
+                # Are ALL the split names encountered?
+                encountered = all(split_name in nouns_dict.keys() for split_name in split_names)
+                if encountered:
+                    new_entities.extend(
+                        [Entity(split_name, entity.ner_type, []) for split_name in split_names])
+                else:
+                    new_entities.append(entity)
+            else:
+                new_entities.append(entity)
+        new_iris, new_ttl = process_ner_entities(sentence_text, new_entities, nouns_dict)
         entity_iris.extend(new_iris)
         entity_ttls.extend(new_ttl)
     if entity_ttls:
@@ -403,11 +420,11 @@ def situation_semantics_processing(situations: list, events_and_nouns: EventsAnd
                                       f'{prev_event} :has_next {event_iri} .',
                                       f'{event_iri} :text {literal(sent_text)} .'])
             prev_event = event_iri
-            if sentence['future']:
+            if sentence['future_tense']:
                 semantics_ttl.append(f'{event_iri} :future true .')
             if sentence['modal'] in modals:
                 modal_text = sentence['modal']
-                if sentence['future'] and modal_text in ('can', 'could'):
+                if sentence['future_tense'] and modal_text in ('can', 'could'):
                     modal_text += '-future'
                 semantics_ttl.append(f'{event_iri} a {modal_mapping[modal_text]} ; '
                                      f':confidence-{modal_mapping[modal_text][1:]} 95 .')

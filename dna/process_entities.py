@@ -140,20 +140,39 @@ def check_if_noun_is_known(noun_text: str, noun_type: str, nouns_dict: dict) -> 
     :return: A tuple holding the spaCy entity type and IRI of the noun; The IRI may be
              empty if the noun has not already been encountered
     """
+    if not noun_text:
+        return noun_type, empty_string
     if noun_text in names_to_geo_dict:                           # Location is a country name
         return noun_type, f'geo:{names_to_geo_dict[noun_text]}'
     if noun_text in nouns_dict:                                  # Key is text; exact match of text
         return nouns_dict[noun_text]
-    if len(noun_text) > 5 or (len(noun_text) > 1 and noun_text[0].isupper()):
-        if any(c.isupper() for c in noun_text):
-            matches = [noun for noun in nouns_dict.keys() if noun in noun_text]
-            if matches:
-                return nouns_dict[matches[0]]
-        elif noun_text.islower():
-            matches = [noun for noun in nouns_dict.keys() if noun_text in noun]
-            # TODO: (Future) Improve with synonym check
-            if matches:
-                return nouns_dict[matches[0]]
+    base_words = empty_string
+    if ' ' in noun_text and any(c.isupper() for c in noun_text):
+        # Start from the end of the string, e.g., "campaign" in "Democratic campaign" or
+        #    "Harriet Hageman" in "challenger Harriet Hageman"
+        noun_words = noun_text.split()
+        noun_words.reverse()
+        if noun_words[0][0].isupper():     # Get only upper case words
+            for noun_word in noun_words:
+                if noun_word[0].islower():
+                    break
+                base_words = f'{noun_word} {base_words}'.strip()
+        else:     # Get only lower case words
+            for noun_word in noun_words:
+                if noun_word[0].isupper():
+                    break
+                base_words = f'{noun_word} {base_words}'.strip()
+    noun_string = noun_text if not base_words else base_words
+    # Check for a substring match in base_words
+    matches = [noun for noun in nouns_dict.keys() if noun in noun_string]   # E.g., "Cheney" in "Rep. Liz Cheney"
+    if len(matches) >= 1:
+        return nouns_dict[matches[0]]
+    # TODO: else: Return most recent match
+    # Check for the base_word in the encountered nouns - e.g., "campaign" in "Biden-Harris campaign"
+    matches = [noun for noun in nouns_dict.keys() if noun_string in noun]
+    if len(matches) >= 1:
+        return nouns_dict[matches[0]]
+    # TODO: else: Return most recent match
     return noun_type, empty_string
 
 

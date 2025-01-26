@@ -213,7 +213,7 @@ sentence_result = '{"grade_level": int, ' \
                   '"rhetorical_devices": [{"device_number": int, "explanation": "string"}]}'
 
 situation_result = '{"simpler_sentences": [{' \
-                   '"text": "string", "future": bool, "modal": "string", ' \
+                   '"text": "string", "future_tense": bool, "modal": "string", ' \
                    '"semantics": [{ ' \
                    '"category_number": int, "same_or_opposite": "string", "correctness": int}], ' \
                    '"nouns": [{ ' \
@@ -269,17 +269,19 @@ noun_categories_prompt = \
     'phrases" array. For each phrase, return the following information: a) Indicate whether the phrase is singular ' \
     'or not. b) Determine if the phrase represents one of the following: "person", "geopolitical entity", "location" ' \
     '(other than a geopolitical entity), or "occupation", indicate this in the JSON response as the value ' \
-    'for "specific_representation". c) Map the semantics of the phrase to one of the numbered ' \
-    'categories provided in the inputs, following the instructions in "Phrase Semantic Mappings". d) If the phrase ' \
-    'involves a possessive, clarifying adjective or preposition, return that text as the value for the JSON key, ' \
+    'for "specific_representation". Avoid indicating a "specific_representation" for an attributive or possessive ' \
+    'noun. c) Map the semantics of the phrase to one of the numbered categories provided in the inputs, following ' \
+    'the instructions in "Phrase Semantic Mappings". d) If an attributive noun, possessive noun or prepositional ' \
+    'phrase occurs in the noun phrase, return that noun or prepositional text as the value for the JSON key, ' \
     '"clarifying_text". If there is no clarifying text, then return an empty string. ' \
     '3. Phrase Semantic Mappings: a) When choosing the mapping, examine all categories before selecting the most ' \
-    'appropriate one. Review all possible categories before selecting the most relevant. {subject_area_text} ' \
-    'b) Make sure to consider each category and what it EXCLUDES. c) Double check the mapping to validate that ' \
-    'it is the most appropriate. d) When returning the event category, return its number from the categories list. ' \
-    'e) Indicate whether the category matches the meaning of the phrase ("same") or is the "opposite". ' \
+    'relevant and appropriate one. Consider both the phrase and its root word, putting focus on the semantics of ' \
+    'the root word. {subject_area_text} b) Make sure to consider each category and what it EXCLUDES. ' \
+    'c) Double check the mapping to validate that it is the most appropriate. d) When returning the semantic ' \
+    'category, return its number from the input categories list. e) Indicate whether the category matches the ' \
+    'meaning of the phrase and root word ("same") or is the "opposite". ' \
     'f) Assign a correctness score (0-100) to indicate confidence in the mapping, where 0 indicates low confidence. ' \
-    'g) If the phrase is some kind of personal activity, such as exercising or washing, map it to ' \
+    'g) If the phrase indicates some kind of personal activity, such as exercising, grooming or smoking, map it to ' \
     'the category, "bodily activity". h) If the phrase is an idiom, legal term, or legalese, make sure ' \
     'to use its idiomatic meaning in the mapping. i) Always map noun phrases referring to people to "person", ' \
     'regardless of their role. For example, a "musician" is mapped to the semantic of "person", not to ' \
@@ -368,39 +370,44 @@ situation_prompt = \
     'of event semantic categories are also provided. ' \
     '2. Situation Simplification: Break the complex sentence into simpler noun-verb or noun-verb-object sentences. ' \
     'Validate that all aspects of the sentence are captured in the set of simple sentences. Do NOT create a ' \
-    'simpler sentence just to capture time-related information, but include the time in the appropriate previous ' \
-    'sentence. Make sure to capture the semantics of infinitive verbs as a separate, simple sentence. ' \
+    'simpler sentence just to capture time-related information, but include the time in the appropriate simpler ' \
+    'sentence. Make sure to capture the semantics of infinitive verbs and gerund phrases as separate, simple ' \
+    'sentences. ' \
     'For each of the simpler sentences: a) Do NOT use any pronouns in the simpler sentences. Resolve ' \
-    'pronouns to their specific references, and return the resolved text. b) Indicate if the simpler sentence is ' + \
-    f'future tense or is about an event in the future. c) List any modal verbs ("{modal_text}") that apply to the ' \
-    f'simpler sentence. d) Classify the semantics of the sentence using the considerations in "Semantic ' \
-    f'Considerations". e) Provide the text of nouns that have a semantic role of {semantic_role_text}. When ' \
-    'providing the noun phrases and its semantic roles, follow the considerations in "Noun Text/Role ' \
-    'Considerations". ' \
-    '3. Semantic Considerations: a) Map each simpler sentence semantic to two of the numbered event/state ' \
-    'categories provided in the input. Review all possible categories before selecting the two most relevant ones. ' \
-    '{subject_area_text} b) Make sure to consider each category and what it EXCLUDES. c) If the semantic involves ' \
-    'an idiom, legal term, or legalese, make sure to use its idiomatic meaning in the mapping. ' \
-    'd) Indicate whether the selected event/state category matches the meaning of the situation ("same") or ' \
-    'is the "opposite", accounting for negation in the sentence. ' \
-    'e) Assign a correctness score (0-100) to each category mapping, where 0 indicates low ' \
-    'confidence. f) For sentences with verbs based solely on the lemmas "be" or "become", assign category ' \
-    '{description_number} ("description"). g) If no appropriate category is available, assign category ' \
-    '{other_number} ("other"). ' \
-    '4. Noun Text/Role Considerations: a) Make sure to consider whether the sentence is in the active or ' \
-    'passive voice when assigning the semantic role. b) Do NOT return nouns that are attributive nouns or noun ' \
-    'adjuncts. c) Do NOT return articles in the text. d) Modify the text that is returned if the noun is a person ' \
-    'and includes their proper name. ONLY return the person’s first and/or last names and validate that there are ' \
-    'no adjectives, honorifics, titles, etc. e) Make sure to distinguish the semantics of communication, sensory ' \
-    'perception, emotion, attempt or indication of causation, from what is communicated, perceived, felt, attempted ' \
-    'or caused. Do NOT return the semantic of what is communicated, perceived, felt, attempted or caused. The ' \
-    'latter should be returned as a noun phrase with the "semantic role" of "theme". f) If the sentence describes ' \
-    'a characteristic, attribute or role of an entity, such as a physical appearance, occupation, demographic, etc., ' \
-    'return that characteristic/attribute/role with the semantic role of "theme" and return the described entity ' \
-    'with the semantic role of "experiencer". g) Make sure to correctly define the semantic role when dealing with ' \
-    'winning/losing. Specifically, if the sentence is concerned with a loss, the loser should have the semantic role ' \
-    'of "agent", and the winner should have the role of "patient". If the sentence is concerned with a win, the ' \
-    'winner has the role of "agent", and the loser has the role of "patient".> ' \
+    'pronouns to their specific references, and return the resolved text. b) Indicate if the simpler sentence uses ' \
+    'future tense (true) or not (false). Determine this solely on the basis of the sentence text. ' + \
+    f'c) List any modal verbs ("{modal_text}") that apply to the simpler sentence. d) Classify the semantics ' \
+    f'of the sentence using the considerations in "Semantic Considerations". e) Provide the text of nouns that ' \
+    f'have a semantic role of {semantic_role_text}. When providing the noun phrases and its semantic roles, ' \
+    'follow the considerations in "Noun Text/Role Considerations". ' \
+    '3. Semantic Considerations: a) Map each simpler sentence semantic to one or two of the numbered event/state ' \
+    'categories provided in the input. Review all possible categories before selecting the most relevant ones. ' \
+    '{subject_area_text} b) Make sure to consider each category and what it EXCLUDES. c) If the simpler sentence ' \
+    'concerns emotions, sensory perception, communication/reporting, avoidance or agreement/disagreement about some ' \
+    'topic, EXCLUDE the semantics of the topic from the mappings. d) Map only the exact semantics of the ' \
+    'simple sentence. For example, the semantics of "Jane cannot tolerate lies" is about the lack of ability to ' \
+    'tolerate lies and NOT an act of avoidance. ' \
+    'e) Double check the mappings to validate that they are most relevant. f) When returning the mappings, return ' \
+    'their numbers from the event categories list. g) Indicate whether the selected event categories match the ' \
+    'meaning of the simpler sentence’s semantic ("same") or are the "opposite", accounting for negation in the ' \
+    'sentence. h) Assign a correctness score (0-100) to indicate confidence in each mapping, where 0 indicates ' \
+    'low confidence. i) If the sentence semantic involves an idiom, legal term, or legalese, make sure to use its ' \
+    'idiomatic meaning in the mapping. j) If the sentence semantic is some kind of personal activity, such as ' \
+    'exercising, washing or smoking, map it to the category, "bodily activity". k) For sentences with verbs based ' \
+    'solely on the lemmas "be" or "become", assign category {description_number} ("description"). ' \
+    'l) If no appropriate category is available, assign {other_number} ("other").> ' \
+    '4. Noun Text/Role Considerations: a) Make sure to consider whether the simple sentence is in the active or ' \
+    'passive voice when assigning the semantic role. b) Do NOT return articles in the text. c) Modify the text ' \
+    'that is returned if the noun is a person and includes their proper name. ONLY return the person’s first ' \
+    'and/or last names and validate that there are no adjectives, honorifics, titles, etc. d) Return ' \
+    'the topic of a communication, sensory perception, emotion, avoidance or agreement/disagreement ' \
+    'as a noun phrase with the "semantic role" of "theme". e) If the simple sentence describes a characteristic, ' \
+    'attribute or role of an entity, such as a physical appearance, occupation, demographic, etc., return that ' \
+    'characteristic/attribute/role with the semantic role of "theme" and return the described entity with the ' \
+    'semantic role of "experiencer". f) Make sure to correctly define the semantic role when dealing with ' \
+    'winning/losing. Specifically, if the sentence is concerned with a loss, the loser should have the semantic ' \
+    'role of "agent", and the winner should have the role of "patient". If the sentence is concerned with a win, ' \
+    'the winner has the role of "agent", and the loser has the role of "patient".> ' \
     '<Input: 1. Sentence: {sit_text} ** 2. Event Semantic Categories: {events_text} >' + \
     f'<Output: Return the results as a JSON object using the following structure: {situation_result}>'
 

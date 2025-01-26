@@ -185,7 +185,8 @@ noun_category_texts = [
     'pharmaceutical or medicinal entity, EXCLUDING vaccines',
     'plant',
     'police force',
-    'set of persons with a common political ideology or a political party',
+    'set of persons with a common political ideology or a political party, EXCLUDING the activities, campaigns, '
+    'etc. in which the persons or party are involved',
     'a natural or goal-directed process (including campaigns, plans and strategies) involving several related or '
     'interdependent events and conditions',
     'a named product or service which is bought, sold or traded, EXCLUDING locations where something is bought',  # +35
@@ -201,7 +202,7 @@ noun_category_texts = [
     'trash, residue, refuse, litter, junk, detritus, scrap material, dregs, sewage, etc., EXCLUDING activities '
     'related to waste management',
     'any physical, man-made thing or part thereof that can be used, harvested, mined or made/manufactured, ' 
-    'EXCLUDING locations, elements of the landscape, devices, tools, instruments, pharmaceutical/medical '
+    'EXCLUDING buildings and infrastructure, devices, musical or scientific instruments, pharmaceutical/medical '
     'items and vehicles',
     'other']   # +46
 
